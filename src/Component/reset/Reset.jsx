@@ -1,0 +1,85 @@
+import { Box, Button, InputAdornment, TextField, Typography, useTheme } from '@mui/material'
+import React from 'react'
+
+import MarkunreadOutlinedIcon from '@mui/icons-material/MarkunreadOutlined';
+import ArrowRightOutlinedIcon from '@mui/icons-material/ArrowRightOutlined';
+import { useNavigate } from 'react-router';
+
+
+export const Reset = () => {
+    const navigate = useNavigate();
+    const theme=useTheme()
+    return (
+        <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        sx={{
+            padding: 2,
+        }}
+    >
+    
+        <Typography variant="body2" 
+        sx={{  fontSize:"13px" , color: "#222240" ,margin : "50px 0px 8px 0px"  , letterSpacing:"12px",
+            fontFamily:"serif"
+        }}>
+            Password Reset
+        </Typography>
+
+        <Box 
+            sx={{ 
+                borderBottom: "3px solid #E57C00", 
+                width : {lg: "85%", md: "50%", xs: "50%"}, 
+                marginBottom: 5
+            }} 
+        />
+
+    
+        <Typography variant="body1" sx={{ color: "#AAAAAA", width:"58%",marginBottom: 4,fontSize:"12px" ,  textAlign: 'center' }}>
+            You Will Receive Instructions For Reseting Your Password.
+        </Typography>
+
+        <TextField
+            variant="outlined"
+            placeholder="Email"
+            fullWidth
+            InputProps={{
+                startAdornment: (
+                    <InputAdornment position="start" >
+                        <MarkunreadOutlinedIcon   sx={{ fontSize:"16px" }}/>
+                    </InputAdornment>
+                ),
+                sx: {
+                    border : "1px solid gray",
+                    height:"35px" , 
+                    fontSize:"10px"  ,
+                    borderRadius: '50px',
+                    '& fieldset': { border: 'none' },
+                }
+            }}
+            sx={{  marginBottom: 2, maxWidth: 400 }}
+        />
+
+<Button
+    variant="contained"
+    fullWidth
+    sx={{
+        maxWidth: 400,
+        borderRadius: '50px',
+        backgroundColor: theme.palette.bluePrimary.main ,
+        textTransform: 'none',
+        padding: "8px 0",fontSize:"12px",
+        '&:hover': {
+            backgroundColor: "#222240",
+        },
+        color: "#fff"
+    }}
+    endIcon={<ArrowRightOutlinedIcon sx={{ color:"white",fontSize:"18px" }} />}
+    onClick={() => navigate('/reset-password')}
+>
+    Send
+</Button>
+    </Box>
+    )
+}

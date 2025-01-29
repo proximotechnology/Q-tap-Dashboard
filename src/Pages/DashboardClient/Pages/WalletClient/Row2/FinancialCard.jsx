@@ -1,0 +1,81 @@
+import React from 'react';
+import { Box, Grid, Paper, Typography } from '@mui/material';
+import StraightIcon from '@mui/icons-material/Straight';
+import SouthIcon from '@mui/icons-material/South';
+import financialData from "./FinancialData"
+
+
+const Financial = ({ icon, percentage, direction, label, amount, description, iconColor }) => (
+    <Paper sx={{ padding: '30px 25px', borderRadius: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <Box display="flex" alignItems="center" justifyContent="space-between">
+            <Box>
+                {icon}
+                <Typography variant="h6" sx={{ fontSize: "13px", color: "#575756", }}>
+                    {label}
+                </Typography>
+            </Box>
+
+            <Box display="flex" alignItems="center" color={iconColor}>
+                <Typography variant="body1" sx={{ color: "gray", fontSize: "27px", }}>
+                    {percentage}
+                </Typography>
+
+                {direction === 'up' ? <StraightIcon sx={{ fontSize: "33px" }} /> :
+                    direction === 'down' ? <SouthIcon sx={{ fontSize: "33px" }} /> :
+                        <Box sx={{display:"flex" ,alignItems:"center"}}>
+                            <img src='/images/paymob.jpg' alt='paymob' style={{ width: "100px", height: "27px", marginRight: "10px" }} />
+                            <span class="icon-share" style={{ fontSize: "23px",color:"#ef7d00" }} ></span>
+                            <Box>
+
+                            </Box>
+                        </Box>
+                }
+            </Box>
+
+        </Box>
+        <Typography variant="h6" sx={{ color: "black", fontSize: "25px" }}>
+            {direction === 'up' ? <Box sx={{ marginTop: "20px" }}>{amount}
+                <span style={{ color: "gray", fontSize: "14px" }}> EGP</span>
+            </Box>
+                :
+                direction === 'down' ? <Box sx={{ marginTop: "20px" }}>{amount}
+                    <span style={{ color: "gray", fontSize: "14px" }}> EGP</span>
+                </Box>
+                    :
+                    <Box sx={{ fontSize: "35px", marginTop: "8px", color: "#ef7d00" }}>
+                        {amount}
+                        <span style={{ color: "gray", fontSize: "14px" }}> EGP</span>
+                    </Box>
+            }
+
+        </Typography>
+
+
+        <Typography variant="body2" sx={{ margin: "15px 0px", color: "#D8E0E0" }} >
+            {description}
+        </Typography>
+
+    </Paper>
+);
+
+const FinancialCard = () => {
+    return (
+        <Grid container spacing={2} sx={{ marginTop: "5px" }}>
+            {financialData.map((item, index) => (
+                <Grid item xs={index < 2 ? 3 : 6} key={index}>
+                    <Financial
+                        icon={item.icon}
+                        percentage={item.percentage}
+                        direction={item.direction}
+                        label={item.label}
+                        amount={item.amount}
+                        description={item.description}
+                        iconColor={item.iconColor}
+                    />
+                </Grid>
+            ))}
+        </Grid>
+    );
+};
+
+export default FinancialCard;

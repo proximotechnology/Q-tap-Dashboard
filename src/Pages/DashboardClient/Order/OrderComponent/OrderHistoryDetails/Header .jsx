@@ -1,0 +1,69 @@
+import React from 'react';
+import { Grid, Typography, Chip, Box, IconButton, Divider } from '@mui/material';
+
+const Header = ({ order, onClick  }) => {
+
+
+  if (!order) {
+    return <Typography variant="body1" color="error">Order data is missing</Typography>;
+  }
+  return (
+    <>
+
+      <Grid container alignItems="center" justifyContent="space-between" style={{ padding: '5px' }}>
+
+        <Grid item>
+          <Box display="flex" alignItems="center" >
+            <Chip
+              label={`ID ${order.id}`}
+              style={{ backgroundColor: '#78c2a4', color: 'black', fontSize: "12px", padding: "0px 8px" }}
+            />
+
+            <img src="/assets/balance.svg" alt="icon" style={{ width: "18px", margin: "0px 6px", height: "18px" }} />
+            <Typography variant="body1" style={{ fontSize: "12px", color: "green", }}>
+              {order.payment}
+            </Typography>
+
+            <Typography variant="body2" style={{ fontSize: "11px", marginLeft: '25px', color: '#888' }}>
+              {order.created}
+            </Typography>
+          </Box>
+        </Grid>
+
+        <Grid item>
+          <Box display="flex" alignItems="center">
+
+            <Box style={{ marginRight: '15px' }}>
+              <Typography variant="body2" style={{ display:"flex", alignItems:"center" ,marginLeft: '5px', fontSize: "12px" }}>
+                {order.status === "Done" ? (
+                  <span class="icon-double-check" style={{ fontSize: "20px", marginRight: "5px" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
+
+                ) : order.status === "Rejected" ? (
+                  <span class="icon-close" style={{fontSize:"15px",marginRight:"6px"}}></span>
+                ) : (
+                  <></>
+                )}
+                {order.status}
+              </Typography>
+            </Box>
+
+
+            <IconButton  >
+              <span class="icon-printer" style={{ fontSize: "20px" }} />
+            </IconButton>
+
+            <IconButton onClick={onClick} sx={{marginLeft:"16px"}} >
+            <span class="icon-close-1" style={{fontSize:"13px" }}></span>
+            </IconButton>
+          </Box>
+        </Grid>
+      </Grid>
+
+      {/* Divider Line */}
+      <Divider style={{ backgroundColor: "#E57C00", borderBottom: "none", height: '2px', marginBottom: "20px" }} />
+    </>
+
+  );
+};
+
+export default Header;
