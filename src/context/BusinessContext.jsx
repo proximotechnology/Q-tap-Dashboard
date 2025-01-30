@@ -39,7 +39,13 @@ export const BusinessProvider = ({ children }) => {
         },
         paymentTime: {
             beforeServing: true,
-            afterServing: true
+            afterServing: false
+        },
+        tableCount: '',
+        servingWays: {
+            dineIn: true,
+            takeaway: true,
+            delivery: true
         }
     });
 
@@ -59,6 +65,10 @@ export const BusinessProvider = ({ children }) => {
             paymentTime: {
                 ...prevData.paymentTime,
                 ...(newData.paymentTime || {})
+            },
+            servingWays: {
+                ...prevData.servingWays,
+                ...(newData.servingWays || {})
             }
         }));
     };
@@ -89,7 +99,13 @@ export const BusinessProvider = ({ children }) => {
             },
             paymentTime: {
                 beforeServing: true,
-                afterServing: true
+                afterServing: false
+            },
+            tableCount: '',
+            servingWays: {
+                dineIn: true,
+                takeaway: true,
+                delivery: true
             }
         });
     };

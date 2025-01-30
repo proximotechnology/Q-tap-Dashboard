@@ -17,8 +17,8 @@ import { toast } from 'react-toastify';
 
 
 export const Save = () => {
-    const { businessData } = useBusinessContext();
-    const { personalData } = usePersonalContext();
+    const { businessData, updateBusinessData } = useBusinessContext();
+    const { personalData, updatePersonalData } = usePersonalContext();
     const navigate = useNavigate();
 
     // Business Info State
@@ -93,51 +93,187 @@ export const Save = () => {
         
     }, [businessData]);
 
+    // Handle Personal Info Changes
+    const handlePersonalChange = (field, value) => {
+        const updatedData = { ...personalData, [field]: value };
+        updatePersonalData(updatedData);
+        console.log('Updated Personal Data:', updatedData); // Debug log
+    };
+
+    // Handle Business Info Changes
+    const handleBusinessChange = (field, value) => {
+        const updatedData = { ...businessData, [field]: value };
+        updateBusinessData(updatedData);
+        console.log('Updated Business Data:', updatedData); // Debug log
+    };
+
     const handleSave = async() => {
-        const allData = {
-            personal: personalData,
-            business: {
-                selectedBranch,
-                businessName,
-                businessPhone,
-                businessEmail,
-                country: businessCountry,
-                city: businessCity,
-                currency,
-                businessType,
-                menuLanguage,
-                tableCount,
-                mode,
-                design,
-                workingHours,
-                servingWays,
-                paymentMethods,
-                paymentTime
+        // Currency mapping function - returns numeric IDs
+        const getCurrencyId = (country) => {
+            const currencyMap = {
+                'US': 1,    // Changed from '1' to 1
+                'UK': 2,    // Changed from '2' to 2
+                'EU': 3,    // Changed from '3' to 3
+                'egypt': 4, // Changed from '4' to 4
+                'EG': 4,    // Added alternative code
+                'UAE': 5,   // Add more as needed
+                'SA': 6
+            };
+            return currencyMap[country] || 1; // Default to 1 if not found
+        };
+
+        const apiData = {
+            // Personal Info
+            name: personalData.fullName?.trim() || '',
+            mobile: personalData.phone?.trim() || '',
+            email: personalData.email?.trim().toLowerCase() || '',
+            birth_date: personalData.year && personalData.month && personalData.day 
+                ? `${personalData.year}-${personalData.month}-${personalData.day}`
+                : '',
+            country: personalData.country || '',
+            password: personalData.password || "1",
+            user_type: "qtap_clients",
+            img: "", 
+
+            // Business Info
+            brunch1: {
+                contact_info: {
+                    business_phone: [businessData.businessPhone?.trim() || ''],
+                    business_email: [businessData.businessEmail?.trim() || ''],
+                    facebook: ["www.facebook.com"],
+                    twitter: ["www.twitter.com"],
+                    instagram: ["www.instagram.com"],
+                    address: [""],
+                    website: [businessData.website?.trim() || ""]
+                },
+                currency_id: getCurrencyId(businessData.country), // Now returns a number
+                workschedules: {
+                    Saturday: ["9am", "7pm"],
+                    Sunday: ["9am", "7pm"],
+                    Monday: ["9am", "7pm"],
+                    Tuesday: ["9am", "7pm"],
+                    Wednesday: ["9am", "7pm"],
+                    Thursday: ["9am", "7pm"],
+                    Friday: ["9am", "7pm"]
+                },
+                serving_ways: ["dine_in", "take_away", "delivery"],
+                tables_number: parseInt(businessData.tableCount) || 0, // Convert to number
+                pricing_id: 1,  // Changed from "1" to 1
+                payment_services: ["wallet", "cash", "card"],
+                discount_id: 1, // Changed from "1" to 1
+                business_name: businessData.businessName?.trim() || '',
+                business_country: businessData.country || '',
+                business_city: businessData.city || "",
+                latitude: "846.668848",
+                longitude: "648.4684684",
+                business_format: (businessData.format || "uk").toLowerCase(),
+                payment_method: "cash",
+                menu_design: businessData.design || "grid",
+                default_mode: businessData.mode === 'light' ? 'white' : 'dark',
+                payment_time: businessData.paymentTime?.beforeServing ? 'before' : 'after',
+                call_waiter: businessData.callWaiter ? 'active' : 'inactive'
             }
         };
 
-        console.log('All Saved Data:', allData);
+        // Add debug logging
+        console.log('Currency ID being sent:', apiData.brunch1.currency_id);
+        console.log('Country value:', businessData.country);
+        console.log('Full API Data:', apiData);
+
+        // Validate currency_id is a number
+        if (typeof apiData.brunch1.currency_id !== 'number') {
+            toast.error('Invalid currency format');
+            console.error('Currency ID is not a number:', apiData.brunch1.currency_id);
+            return;
+        }
+
+        // Detailed validation function
+        const validateData = (data) => {
+            const errors = [];
+
+            // Personal Info Validation
+            if (!data.name) errors.push('Full Name is required');
+            if (!data.mobile) errors.push('Mobile number is required');
+            if (!data.email) errors.push('Email is required');
+            if (!data.birth_date) errors.push('Birth date is required');
+            if (!data.country) errors.push('Country is required');
+            if (!data.password) errors.push('Password is required');
+
+            // Business Info Validation
+            if (!data.brunch1.business_name) errors.push('Business Name is required');
+            if (!data.brunch1.contact_info.business_phone[0]) errors.push('Business Phone is required');
+            if (!data.brunch1.business_country) errors.push('Business Country is required');
+            if (!data.brunch1.business_city) errors.push('Business City is required');
+
+            // Format Validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(data.email)) errors.push('Invalid email format');
+
+            // Phone number validation
+            const phoneRegex = /^\d{6,15}$/;
+            if (!phoneRegex.test(data.mobile)) errors.push('Invalid mobile number format');
+            if (!phoneRegex.test(data.brunch1.contact_info.business_phone[0])) 
+                errors.push('Invalid business phone format');
+
+            return errors;
+        };
+
+        // Validate before sending
+        const validationErrors = validateData(apiData);
+        if (validationErrors.length > 0) {
+            console.error('Validation Errors:', validationErrors);
+            toast.error(validationErrors.join('\n'));
+            return;
+        }
+
         try {
             const response = await fetch("https://highleveltecknology.com/Qtap/api/qtap_clients", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
-                body: JSON.stringify(allData)
+                body: JSON.stringify(apiData)
             });
-            console.log("response data " , response);
-            
 
+            const responseData = await response.json();
+            
             if (response.ok) {
-                const data = await response.json();
                 toast.success('Data saved successfully!');
-                console.log('API Response:', data);
+                navigate('/welcome')
+                console.log('API Response:', responseData);
             } else {
-                toast.error('Failed to save data');
+                console.error('API Error Response:', responseData);
+                
+                if (responseData.error_details) {
+                    // Parse and display SQL error in a more readable format
+                    const sqlError = responseData.error_details;
+                    console.error('SQL Error:', sqlError);
+                    
+                    if (sqlError.includes('SQLSTATE')) {
+                        const errorMessage = sqlError.split('SQL:')[0];
+                        toast.error(`Database Error: ${errorMessage}`);
+                    } else {
+                        toast.error(responseData.message);
+                    }
+                } else if (response.status === 422) {
+                    // Display validation errors from the server
+                    const errors = responseData.errors;
+                    if (errors) {
+                        const errorMessages = Object.entries(errors)
+                            .map(([field, messages]) => `${field}: ${messages.join(', ')}`)
+                            .join('\n');
+                        toast.error(errorMessages);
+                    } else {
+                        toast.error(responseData.message || 'Validation error');
+                    }
+                } else {
+                    toast.error('An unexpected error occurred. Please try again.');
+                }
             }
         } catch (error) {
-            console.error('Error saving data:', error);
-            toast.error('Error saving data');
+            console.error('Network Error:', error);
+            toast.error('Network error or server is not responding. Please try again later.');
         }
     };
 
@@ -320,7 +456,10 @@ export const Save = () => {
             <Box >
                 <Grid container spacing={1}>
                     <Grid item xs={12} md={5}>
-                        <PersonalInfo />
+                        <PersonalInfo 
+                            personalData={personalData}
+                            onInputChange={handlePersonalChange}
+                        />
                     </Grid>
 
                     <Box item sx={{ display: { xs: 'none', sm: 'block' } }}>
@@ -331,24 +470,8 @@ export const Save = () => {
 
                     <Grid item xs={12} md={6}>
                         <BusinessInfo 
-                            businessData={{
-                                selectedBranch,
-                                businessName,
-                                businessPhone,
-                                businessEmail,
-                                country: businessCountry,
-                                city: businessCity,
-                                currency,
-                                businessType,
-                                menuLanguage,
-                                tableCount,
-                                mode,
-                                design,
-                                workingHours,
-                                servingWays,
-                                paymentMethods,
-                                paymentTime
-                            }}
+                            businessData={businessData}
+                            onInputChange={handleBusinessChange}
                         />
                     </Grid>
                 </Grid>

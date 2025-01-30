@@ -16,9 +16,9 @@ import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined
 import { useNavigate } from 'react-router';
 import { usePersonalContext } from '../../../../context/PersonalContext';
 
-export const PersonalInfo = () => { 
+export const PersonalInfo = ({ personalData, onInputChange }) => { 
     const navigate = useNavigate();
-    const { personalData, updatePersonalData, clearPersonalData } = usePersonalContext();
+    const { updatePersonalData, clearPersonalData } = usePersonalContext();
     const [fullName, setFullName] = useState(personalData.fullName || '');
     const [phone, setPhone] = useState(personalData.phone || '');
     const [email, setEmail] = useState(personalData.email || '');
@@ -88,13 +88,13 @@ export const PersonalInfo = () => {
 
                 <FormControl variant="outlined" fullWidth>
                     <OutlinedInput
+                        value={personalData.fullName || ''}
+                        onChange={(e) => onInputChange('fullName', e.target.value)}
                         startAdornment={
                             <InputAdornment position="start">
                                 <PersonOutlinedIcon sx={{ fontSize: "20px" }} />
                             </InputAdornment>
                         }
-                        value={fullName}
-                        onChange={(e) => setFullName(e.target.value)}
                         placeholder="Full Name"
                         sx={{ borderRadius: '10px', marginBottom: "18px", height: '33px', fontSize: "12px" }}
                     />
@@ -103,13 +103,13 @@ export const PersonalInfo = () => {
 
                 <FormControl variant="outlined" fullWidth>
                     <OutlinedInput
+                        value={personalData.phone || ''}
+                        onChange={(e) => onInputChange('phone', e.target.value)}
                         startAdornment={
                             <InputAdornment position="start">
                                 <PhoneOutlinedIcon sx={{ fontSize: "20px" }} />
                             </InputAdornment>
                         }
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
                         placeholder="Mobile Number"
                         sx={{ borderRadius: '10px', marginBottom: "18px", height: '33px', fontSize: "12px" }}
                     />
@@ -117,13 +117,13 @@ export const PersonalInfo = () => {
 
                 <FormControl variant="outlined" fullWidth>
                     <OutlinedInput
+                        value={personalData.email || ''}
+                        onChange={(e) => onInputChange('email', e.target.value)}
                         startAdornment={
                             <InputAdornment position="start">
                                 <MailOutlinedIcon sx={{ fontSize: "20px" }} />
                             </InputAdornment>
                         }
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
                         placeholder="Email"
                         sx={{ borderRadius: '10px', marginBottom: "18px", height: '33px', fontSize: "12px" }}
                     />
@@ -131,6 +131,8 @@ export const PersonalInfo = () => {
 
                 <FormControl variant="outlined" fullWidth>
                     <OutlinedInput
+                        value={personalData.website || ''}
+                        onChange={(e) => onInputChange('website', e.target.value)}
                         startAdornment={
                             <InputAdornment position="start">
                                 <LanguageOutlinedIcon sx={{ fontSize: "18px" }} />
@@ -151,8 +153,8 @@ export const PersonalInfo = () => {
                         <FormControl fullWidth>
                             <Select
                                 id="outlined-country"
-                                value={month}
-                                onChange={(e) => setMonth(e.target.value)}
+                                value={personalData.month || ''}
+                                onChange={(e) => onInputChange('month', e.target.value)}
                                 displayEmpty
                                 sx={{ borderRadius: '10px', height: '33px', fontSize: "12px", color: "gray", marginRight: "5px" }}
                             >
@@ -180,8 +182,8 @@ export const PersonalInfo = () => {
 
                             <Select
                                 id="outlined-country"
-                                value={day}
-                                onChange={(e) => setDay(e.target.value)}
+                                value={personalData.day || ''}
+                                onChange={(e) => onInputChange('day', e.target.value)}
                                 displayEmpty
                                 sx={{ borderRadius: '10px', height: '33px', fontSize: "12px", color: "gray", marginRight: "5px" }}
                             >
@@ -201,8 +203,8 @@ export const PersonalInfo = () => {
                         <FormControl fullWidth>
                             <Select
                                 id="outlined-country"
-                                value={year}
-                                onChange={(e) => setYear(e.target.value)}
+                                value={personalData.year || ''}
+                                onChange={(e) => onInputChange('year', e.target.value)}
                                 displayEmpty
                                 sx={{ borderRadius: '10px', height: '33px', fontSize: "12px", color: "gray" }}
                             >
@@ -222,8 +224,8 @@ export const PersonalInfo = () => {
                 <FormControl variant="outlined" fullWidth >
                     <Select
                         id="outlined-country"
-                        value={country}
-                        onChange={(e) => setCountry(e.target.value)}
+                        value={personalData.country || ''}
+                        onChange={(e) => onInputChange('country', e.target.value)}
                         displayEmpty
                         sx={{ marginBottom: "18px", borderRadius: '10px', height: '33px', fontSize: "12px", color: "gray" }}
                         startAdornment={
@@ -245,8 +247,8 @@ export const PersonalInfo = () => {
                     <OutlinedInput
                         id="outlined-password"
                         type={showPassword ? 'text' : 'password'}
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        value={personalData.password || ''}
+                        onChange={(e) => onInputChange('password', e.target.value)}
                         startAdornment={
                             <InputAdornment position="start">
                                 <LockOutlinedIcon sx={{ fontSize: "20px" }} />
@@ -271,8 +273,8 @@ export const PersonalInfo = () => {
                     <OutlinedInput
                         id="outlined-confirm-password"
                         type={showConfirmPassword ? 'text' : 'password'}
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        value={personalData.confirmPassword || ''}
+                        onChange={(e) => onInputChange('confirmPassword', e.target.value)}
                         startAdornment={
                             <InputAdornment position="start">
                                 <LockOutlinedIcon sx={{ fontSize: "20px" }} />

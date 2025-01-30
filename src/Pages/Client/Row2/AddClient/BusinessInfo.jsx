@@ -18,9 +18,7 @@ import { ArrowForwardIos, ArrowBackIos } from '@mui/icons-material';
 import { useBusinessContext } from '../../../../context/BusinessContext';
 
 const daysOfWeek = ['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr'];
-export const BusinessInfo = () => {
-    const { businessData, updateBusinessData } = useBusinessContext();
-
+export const BusinessInfo = ({ businessData, onInputChange }) => {
     const {
         selectedBranch,
         businessName,
@@ -42,31 +40,29 @@ export const BusinessInfo = () => {
 
     // Update handlers to directly modify context
     const handleBranchClick = (branch) => {
-        updateBusinessData({ selectedBranch: branch });
+        onInputChange('selectedBranch', branch);
     };
 
     const handleModeChange = (event, newMode) => {
         if (newMode !== null) {
-            updateBusinessData({ mode: newMode });
+            onInputChange('mode', newMode);
         }
     };
 
     const handleDesignChange = (event, newDesign) => {
         if (newDesign !== null) {
-            updateBusinessData({ design: newDesign });
+            onInputChange('design', newDesign);
         }
     };
 
     const handleInputChange = (field, value) => {
-        updateBusinessData({ [field]: value });
+        onInputChange(field, value);
     };
 
     const handleWorkingHoursChange = (updates) => {
-        updateBusinessData({
-            workingHours: {
-                ...businessData.workingHours,
-                ...updates
-            }
+        onInputChange('workingHours', {
+            ...businessData.workingHours,
+            ...updates
         });
     };
 
@@ -174,7 +170,7 @@ export const BusinessInfo = () => {
                             placeholder="Business Name"
                             sx={{ borderRadius: '10px', marginBottom: "10px !important", height: '33px', fontSize: "12px" }}
                             value={businessName}
-                            onChange={(e) => handleInputChange('businessName', e.target.value)}
+                            onChange={(e) => onInputChange('businessName', e.target.value)}
                         />
                     </FormControl>
 
@@ -190,7 +186,7 @@ export const BusinessInfo = () => {
                             placeholder="Business Phone"
                             sx={{ borderRadius: '10px', height: '33px', marginBottom: "10px", fontSize: "12px" }}
                             value={businessPhone}
-                            onChange={(e) => handleInputChange('businessPhone', e.target.value)}
+                            onChange={(e) => onInputChange('businessPhone', e.target.value)}
                         />
                     </FormControl>
 
@@ -207,7 +203,7 @@ export const BusinessInfo = () => {
                             type='email'
                             sx={{ borderRadius: '10px', marginBottom: "10px", height: '33px', fontSize: "12px" }}
                             value={businessEmail}
-                            onChange={(e) => handleInputChange('businessEmail', e.target.value)}
+                            onChange={(e) => onInputChange('businessEmail', e.target.value)}
                         />
                     </FormControl>
 
@@ -216,7 +212,7 @@ export const BusinessInfo = () => {
                             <Select
                                 id="outlined-country"
                                 value={country}
-                                onChange={(e) => handleInputChange('country', e.target.value)}
+                                onChange={(e) => onInputChange('country', e.target.value)}
                                 displayEmpty
                                 sx={{ borderRadius: '10px', height: '33px', fontSize: "12px", color: "gray" }}
                                 startAdornment={
@@ -238,7 +234,7 @@ export const BusinessInfo = () => {
                             <Select
                                 id="outlined-city"
                                 value={city}
-                                onChange={(e) => handleInputChange('city', e.target.value)}
+                                onChange={(e) => onInputChange('city', e.target.value)}
                                 displayEmpty
                                 sx={{ borderRadius: '10px', height: '33px', fontSize: "12px", color: "gray" }}
                                 startAdornment={
@@ -275,7 +271,7 @@ export const BusinessInfo = () => {
                         <Select
                             id="outlined-Currency"
                             value={currency}
-                            onChange={(e) => handleInputChange('currency', e.target.value)}
+                            onChange={(e) => onInputChange('currency', e.target.value)}
                             displayEmpty
                             sx={{ borderRadius: '10px', height: '33px', fontSize: "12px", color: "gray" }}
                             startAdornment={
@@ -297,7 +293,7 @@ export const BusinessInfo = () => {
                         <Select
                             id="outlined-BusinessType"
                             value={businessType}
-                            onChange={(e) => handleInputChange('businessType', e.target.value)}
+                            onChange={(e) => onInputChange('businessType', e.target.value)}
                             displayEmpty
                             sx={{ borderRadius: '10px', height: '33px', fontSize: "12px", color: "gray" }}
                             startAdornment={
@@ -326,7 +322,7 @@ export const BusinessInfo = () => {
                         <Select
                             id="outlined-MenuDefaultLanguage"
                             value={menuLanguage}
-                            onChange={(e) => handleInputChange('menuLanguage', e.target.value)}
+                            onChange={(e) => onInputChange('menuLanguage', e.target.value)}
                             displayEmpty
                             sx={{ borderRadius: '10px', height: '33px', fontSize: "12px", color: "gray" }}
                             startAdornment={
@@ -348,7 +344,7 @@ export const BusinessInfo = () => {
                         <Select
                             id="outlined-TableCount"
                             value={tableCount}
-                            onChange={(e) => handleInputChange('tableCount', e.target.value)}
+                            onChange={(e) => onInputChange('tableCount', e.target.value)}
                             displayEmpty
                             sx={{ borderRadius: '10px', height: '33px', fontSize: "12px", color: "gray" }}
                             startAdornment={

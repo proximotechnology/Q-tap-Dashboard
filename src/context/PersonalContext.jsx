@@ -13,6 +13,7 @@ export const PersonalProvider = ({ children }) => {
         country: '',
         password: '',
         confirmPassword: '',
+        img: ''
     });
 
     const updatePersonalData = (newData) => {
@@ -33,7 +34,7 @@ export const PersonalProvider = ({ children }) => {
             country: '',
             password: '',
             confirmPassword: '',
-            
+            img: ''
         });
     };
 
