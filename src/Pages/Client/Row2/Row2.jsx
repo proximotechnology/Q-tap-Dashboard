@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Button, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
@@ -25,6 +25,28 @@ export const Row2 = () => {
     navigate('/dashboard-home');
   };
 
+  // get data from api 
+  const [data, setData] = React.useState([]);
+  useEffect(()=>{
+    const getData = () => {
+      fetch('https://highleveltecknology.com/Qtap/api/qtap_clients', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+        },
+      })
+       .then(response => response.json())
+       .then(data => {
+        setData(data)
+        console.log("dataaaaa" , data);
+        
+       })
+       .catch(error => console.error('Error:', error));
+    
+    }
+    getData();
+  },[])
 
   return (
     <Box sx={{ padding: "0 20px", marginTop: "20px" }}>
@@ -76,11 +98,11 @@ export const Row2 = () => {
             </TableHead>
 
             <TableBody>
-              {clients.map((row, index) => (
+              {data?.qtap_clients?.map((row) => (
                 <TableRow
-                  key={index}
+                  key={row.id}
                   sx={{
-                    backgroundColor: index % 2 === 0 ? '#EBEDF3' : 'white',
+                    backgroundColor: (row.id) % 2 === 0 ? '#EBEDF3' : 'white',
                     height: "5px",
                     borderRadius: '20px',
                     '&:nth-of-type(odd)': {
@@ -118,9 +140,9 @@ export const Row2 = () => {
                     {row.name}
                   </TableCell>
 
-                  <TableCell sx={{ lineHeight: '1', color: "#222240", fontSize: '11px', padding: "0px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.city}</TableCell>
-                  <TableCell sx={{ lineHeight: '1', color: "#222240", fontSize: '11px', padding: "0px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.bundle}</TableCell>
-                  <TableCell sx={{ lineHeight: '1', color: "#222240", fontSize: '11px', padding: "0px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.date}</TableCell>
+                  <TableCell sx={{ lineHeight: '1', color: "#222240", fontSize: '11px', padding: "0px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.email}</TableCell>
+                  <TableCell sx={{ lineHeight: '1', color: "#222240", fontSize: '11px', padding: "0px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.country}</TableCell>
+                  <TableCell sx={{ lineHeight: '1', color: "#222240", fontSize: '11px', padding: "0px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.birth_date}</TableCell>
                   <TableCell
                     sx={{
                       padding: "0px",

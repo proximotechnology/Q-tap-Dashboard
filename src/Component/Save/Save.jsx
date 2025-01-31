@@ -54,6 +54,7 @@ export const Save = () => {
         beforeServing: true,
         afterServing: true
     });
+    const [selectedServingWays, setSelectedServingWays] = useState([]);
 
     // Load data from context when component mounts
     useEffect(() => {
@@ -80,6 +81,7 @@ export const Save = () => {
                 takeaway: true,
                 delivery: true
             });
+            setSelectedServingWays(businessData.selectedServingWays || []);
             setPaymentMethods(businessData.paymentMethods || {
                 cash: true,
                 digitalWallet: true,
@@ -156,7 +158,15 @@ export const Save = () => {
                     Thursday: ["9am", "7pm"],
                     Friday: ["9am", "7pm"]
                 },
-                serving_ways: ["dine_in", "take_away", "delivery"],
+                serving_ways: selectedServingWays.map(way => {
+                    // Map the serving ways to the API format
+                    switch(way) {
+                        case 'dinein': return 'dine_in';
+                        case 'takeaway': return 'take_away';
+                        case 'delivery': return 'delivery';
+                        default: return way;
+                    }
+                }),
                 tables_number: parseInt(businessData.tableCount) || 0, // Convert to number
                 pricing_id: 1,  // Changed from "1" to 1
                 payment_services: ["wallet", "cash", "card"],
@@ -493,6 +503,15 @@ export const Save = () => {
                         <CheckOutlinedIcon sx={{ fontSize: "22px", mr: 1 }} /> Save
                     </Button>
                 </Grid>
+            </Box>
+
+            <Box>
+                <Typography variant="h6">Selected Serving Ways:</Typography>
+                {selectedServingWays.map((way, index) => (
+                    <Typography key={index} variant="body1">
+                        {way.charAt(0).toUpperCase() + way.slice(1)}
+                    </Typography>
+                ))}
             </Box>
 
         </Box>

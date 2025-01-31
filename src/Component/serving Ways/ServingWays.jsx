@@ -76,56 +76,78 @@ export const ServingWays = () => {
                 </Box>
 
                 <Box display="flex" flexWrap="wrap" justifyContent="flex-start" gap={2} sx={{ marginBottom: 4 }}>
-                    {serviceOptions.map((option, index) => (
-                        <Box
-                            key={index}
-                            onClick={() => handleBoxClick(index)}
-                            sx={{
-                                width: { xs: "115px", sm: "115px" },
-                                marginRight: "20px",
-                                height: "160px",
-                                borderRadius: "20px",
-                                backgroundColor: "#222240",
-                                cursor: "pointer",
-                            }} >
-                            <Typography
-                                variant="h6"
-                                sx={{
-                                    fontSize: "13px",
-                                    color: "#E57C00",
-                                    padding: "20px 0px 2px 0px",
-                                    display: "flex",
-                                    justifyContent: "center"
-                                }}
-                            >
-                                {option.name}
-                            </Typography>
-                            <Divider2 />
-
+                    {serviceOptions.map((option, index) => {
+                        const serviceName = option.name.toLowerCase().replace(' ', '');
+                        return (
                             <Box
-                                sx={{
-                                
-                                    color: "gray",
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center"
-                                }}
-                            >
-                                {React.cloneElement(option.icon)}
-                            </Box>
+                                key={index}
+                                onClick={() => {
+                                    const newOptions = serviceOptions.map((opt, i) => ({
+                                        ...opt,
+                                        selected: i === index ? !opt.selected : opt.selected
+                                    }));
+                                    setServiceOptions(newOptions);
 
-                            {option.selected && (
-                                <CheckOutlinedIcon
+                                    // Create array of selected services
+                                    const selectedServices = newOptions
+                                        .filter(opt => opt.selected)
+                                        .map(opt => opt.name.toLowerCase().replace(' ', ''));
+
+                                    // Update context with array of selected services
+                                    updateBusinessData({
+                                        servingWays: {
+                                            dineIn: selectedServices.includes('dinein'),
+                                            takeaway: selectedServices.includes('takeaway'), 
+                                            delivery: selectedServices.includes('delivery')
+                                        }
+                                    });
+                                }}
+                                sx={{
+                                    width: { xs: "115px", sm: "115px" },
+                                    marginRight: "20px",
+                                    height: "160px", 
+                                    borderRadius: "20px",
+                                    backgroundColor: "#222240",
+                                    cursor: "pointer",
+                                }} >
+                                <Typography
+                                    variant="h6"
                                     sx={{
-                                        position: "relative",
-                                        bottom: "20px",
-                                        left: "10px",
-                                        fontSize: "23px",
-                                        color: "#FF7F3F",
-                                    }} />
-                            )}
-                        </Box>
-                    ))}
+                                        fontSize: "13px",
+                                        color: "#E57C00",
+                                        padding: "20px 0px 2px 0px",
+                                        display: "flex",
+                                        justifyContent: "center"
+                                    }}
+                                >
+                                    {option.name}
+                                </Typography>
+                                <Divider2 />
+
+                                <Box
+                                    sx={{
+                                        color: "gray",
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center"
+                                    }}
+                                >
+                                    {React.cloneElement(option.icon)}
+                                </Box>
+
+                                {option.selected && (
+                                    <CheckOutlinedIcon
+                                        sx={{
+                                            position: "relative",
+                                            bottom: "20px",
+                                            left: "10px",
+                                            fontSize: "23px",
+                                            color: "#FF7F3F",
+                                        }} />
+                                )}
+                            </Box>
+                        );
+                    })}
                 </Box>
 
                 {isDineInSelected && (

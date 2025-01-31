@@ -46,7 +46,8 @@ export const BusinessProvider = ({ children }) => {
             dineIn: true,
             takeaway: true,
             delivery: true
-        }
+        },
+        selectedServingWays: ['dinein', 'takeaway', 'delivery'],
     });
 
     const updateBusinessData = (newData) => {
@@ -106,7 +107,8 @@ export const BusinessProvider = ({ children }) => {
                 dineIn: true,
                 takeaway: true,
                 delivery: true
-            }
+            },
+            selectedServingWays: ['dinein', 'takeaway', 'delivery'],
         });
     };
 
