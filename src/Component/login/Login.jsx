@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import {
   Button,
@@ -12,6 +11,8 @@ import {
   Typography,
   useTheme,
   CircularProgress,
+  Radio,
+  RadioGroup,
 } from '@mui/material';
 import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
@@ -28,6 +29,7 @@ export const Login = () => {
   const [apiError, setApiError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [apiSuccess, setApiSuccess] = useState('');
+  const [userType, setUserType] = useState('qtap_admins');
 
   const handleSubmit = async () => {
     // Reset API states
@@ -44,6 +46,7 @@ export const Login = () => {
     const data = {
       email,
       password,
+      user_type: userType,
     };
   
     // Send data to API
@@ -149,6 +152,31 @@ export const Login = () => {
             color: 'gray',
           }}
         />
+      </FormControl>
+
+      <FormControl fullWidth margin="normal">
+        <RadioGroup
+          row
+          value={userType}
+          onChange={(e) => setUserType(e.target.value)}
+          sx={{ justifyContent: 'center' }}
+        >
+          <FormControlLabel 
+            value="qtap_admins" 
+            control={<Radio sx={{ '& .MuiSvgIcon-root': { fontSize: 18 , color: '#e2944a'}  }} />} 
+            label={<Typography sx={{ fontSize: '12px' }}>Admin</Typography>}
+          />  
+          <FormControlLabel 
+            value="qtap_affiliates" 
+            control={<Radio sx={{ '& .MuiSvgIcon-root': { fontSize: 18 , color: '#e2944a'}  }} />} 
+            label={<Typography sx={{ fontSize: '12px' }}>Affiliate</Typography>}
+          />
+          <FormControlLabel 
+            value="qtap_clients" 
+            control={<Radio sx={{ '& .MuiSvgIcon-root': { fontSize: 18 , color: '#e2944a'}  }} />} 
+            label={<Typography sx={{ fontSize: '12px' }}>Client</Typography>}
+          />
+        </RadioGroup>
       </FormControl>
 
       <Typography

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Grid, Box, List, ListItem, ListItemAvatar, Avatar, ListItemText, Paper, TextField, IconButton, Typography, Divider } from '@mui/material';
+import React, { useEffect, useState, useRef } from 'react';
+import { Grid, Box, List, ListItem, ListItemAvatar, Avatar, ListItemText, Paper, TextField, IconButton, Typography, Divider, CircularProgress } from '@mui/material';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
@@ -10,34 +10,186 @@ import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlin
 import './chat.css';
 
 
-const messagesData = [
-    { id: 5, name: "Mostafa Adel", address: "tanta", mobile: "0111111111", email: "mostafa@gmail.com", avatarColor: "gray", lastMessage: "Lorem ipsum dolor sit amet.", time: "08:30pm", date: '20/02/2024' },
-    { id: 1, name: "Mohamed said", address: "tanta", mobile: "02222222222", email: "Mohamed@gmail.com", avatarColor: "#ef7d00", lastMessage: "Lorem ipsum dolor sit amet.", time: "03:30pm", date: '20/02/2024' },
-    { id: 2, name: "walaa Badwy", address: "tanta", mobile: "03333333333", email: "walaa@gmail.com", avatarColor: "gray", lastMessage: "Lorem ipsum dolor sit amet.", time: "04:30pm", date: '20/02/2024' },
-    { id: 3, name: "Shimaa Nossier", address: "tanta", mobile: "0444444444", email: "Shimaa@gmail.com", avatarColor: "gray", lastMessage: "Lorem ipsum dolor sit amet.", time: "01:30pm", date: '20/02/2024' },
-    { id: 4, name: "Afaf Nossier", address: "tanta", mobile: "055555555", email: "Afaf@gmail.com", avatarColor: "gray", lastMessage: "Lorem ipsum dolor sit amet.", time: "03:30pm", date: '20/02/2024' },
-    { id: 6, name: "Ahmed Nossier", address: "tanta", mobile: "0666666666", email: "Ahmed@gmail.com", avatarColor: "gray", lastMessage: "Lorem ipsum dolor sit amet.", time: "05:30pm", date: '20/02/2024' },
-];
 
 const ChatApp = () => {
     const [selectedChat, setSelectedChat] = useState(null);
     const [messageInput, setMessageInput] = useState('');
+    const [users, setUsers] = useState([]);
+    const [lastMessages, setLastMessages] = useState({});  // Store last message for each user
+    const [isLoading, setIsLoading] = useState(false);
+    const [unreadMessages, setUnreadMessages] = useState({});  // Store unread status for each user
 
-    const handleSelectChat = (chat) => {
-        setSelectedChat(chat);
-    };
-    const handleSendMessage = () => {
-        if (selectedChat && messageInput.trim()) {
-            const updatedMessages = [
-                ...(selectedChat.messages ? selectedChat.messages : []),
-                {
-                    text: messageInput,
-                    time: new Date().toLocaleTimeString(),
-                    sender: "me"
+    // Add a ref to store the last known message timestamps
+    const lastKnownMessages = useRef({});
+
+    // Add request queue management
+    const requestQueue = useRef([]);
+    const isProcessingQueue = useRef(false);
+    const isRequestPending = useRef(false);
+
+    // Add cache for messages
+    const messageCache = useRef({});
+
+    // Process queue function
+    const processQueue = async () => {
+        if (isProcessingQueue.current || requestQueue.current.length === 0) return;
+        
+        isProcessingQueue.current = true;
+        
+        while (requestQueue.current.length > 0) {
+            const { url, options, resolve, reject } = requestQueue.current[0];
+            
+            try {
+                // Wait before making the next request
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                const response = await fetch(url, options);
+                if (!response.ok) {
+                    if (response.status === 429) {
+                        // If rate limited, wait and try again
+                        await new Promise(resolve => setTimeout(resolve, 2000));
+                        continue;
+                    }
+                    throw new Error(`Network error: ${response.status}`);
                 }
+                
+                const data = await response.json();
+                resolve(data);
+                requestQueue.current.shift();
+            } catch (error) {
+                reject(error);
+                requestQueue.current.shift();
+            }
+        }
+        
+        isProcessingQueue.current = false;
+    };
+
+    // Wrapper for making API requests
+    const makeRequest = async (url, options) => {
+        return new Promise((resolve, reject) => {
+            requestQueue.current.push({ url, options, resolve, reject });
+            processQueue();
+        });
+    };
+
+    // Optimized initial data fetch
+    const getInitialData = async () => {
+        setIsLoading(true);
+        try {
+            // Fetch users and their last messages in parallel
+            const [usersResponse, lastMessagesResponse] = await Promise.all([
+                fetch('https://highleveltecknology.com/Qtap/api/customer_info', {
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem('adminToken')}`
+                    }
+                }),
+                fetch('https://highleveltecknology.com/Qtap/api/last_messages', { // Assuming this endpoint exists
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem('adminToken')}`
+                    }
+                })
+            ]);
+
+            const usersData = await usersResponse.json();
+            const lastMessagesData = await lastMessagesResponse.json();
+
+            // Update states
+            setUsers(usersData.customer_info);
+            setLastMessages(lastMessagesData);
+        } catch (error) {
+            console.error('Error fetching initial data:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    // Optimized chat selection
+    const handleSelectChat = async (chat) => {
+        setSelectedChat({ ...chat, messages: messageCache.current[chat.id] || [] });
+        setIsLoading(true);
+
+        try {
+            const response = await fetch(
+                `https://highleveltecknology.com/Qtap/api/chat?customer_id=${chat.id}`,
+                {
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem('adminToken')}`
+                    }
+                }
+            );
+            const data = await response.json();
+            
+            if (data.success) {
+                const messages = [
+                    ...data.customer.map(msg => ({
+                        text: msg.message,
+                        sender: 'user',
+                        time: new Date(msg.created_at).toLocaleTimeString(),
+                        created_at: msg.created_at
+                    })),
+                    ...data.support.map(msg => ({
+                        text: msg.message,
+                        sender: 'me',
+                        time: new Date(msg.created_at).toLocaleTimeString(),
+                        created_at: msg.created_at
+                    }))
+                ].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+
+                // Update cache
+                messageCache.current[chat.id] = messages;
+                setSelectedChat({ ...chat, messages });
+            }
+        } catch (error) {
+            console.error('Error fetching chat history:', error);
+        } finally {
+            setIsLoading(false);
+        }
+
+        // Clear unread status
+        setUnreadMessages(prev => ({
+            ...prev,
+            [chat.id]: false
+        }));
+    };
+
+    // Handle new messages more efficiently
+    const handleNewMessage = (message) => {
+        const newMessage = {
+            text: message.message,
+            sender: message.sender_type === 'support' ? 'me' : 'user',
+            time: new Date(message.created_at).toLocaleTimeString(),
+            created_at: message.created_at
+        };
+
+        // Update cache
+        if (messageCache.current[message.sender_id]) {
+            messageCache.current[message.sender_id] = [
+                ...messageCache.current[message.sender_id],
+                newMessage
             ];
-            setSelectedChat({ ...selectedChat, messages: updatedMessages });
-            setMessageInput('');
+        }
+
+        // Update last messages
+        setLastMessages(prev => ({
+            ...prev,
+            [message.sender_id]: message
+        }));
+
+        // Update unread status
+        if (selectedChat?.id !== message.sender_id && message.sender_type === 'user') {
+            setUnreadMessages(prev => ({
+                ...prev,
+                [message.sender_id]: true
+            }));
+        }
+
+        // Update current chat if selected
+        if (selectedChat?.id === message.sender_id) {
+            setSelectedChat(prev => ({
+                ...prev,
+                messages: [...(prev.messages || []), newMessage]
+            }));
         }
     };
 
@@ -51,6 +203,215 @@ const ChatApp = () => {
         setAnchorEl(null);
     };
 
+
+    // Modified fetchLastMessage function
+    const fetchLastMessage = async (userId) => {
+        try {
+            const url = `https://highleveltecknology.com/Qtap/api/chat?customer_id=${userId}`;
+            const options = {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem('adminToken')}`
+                },
+            };
+
+            const data = await makeRequest(url, options);
+            if (data.success) {
+                const allMessages = [
+                    ...data.customer.map(msg => ({
+                        ...msg,
+                        sender: 'user'
+                    })),
+                    ...data.support.map(msg => ({
+                        ...msg,
+                        sender: 'me'
+                    }))
+                ];
+
+                if (allMessages.length > 0) {
+                    allMessages.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                    return allMessages[0];
+                }
+            }
+            return null;
+        } catch (error) {
+            console.error('Error fetching last message:', error);
+            return null;
+        }
+    };
+
+    // Modify the polling interval and add debouncing
+    useEffect(() => {
+        getUsers();
+        
+        const pollInterval = setInterval(() => {
+            getUsers();
+        }, 10000); // Increased to 10 seconds for better performance
+
+        return () => clearInterval(pollInterval);
+    }, []);
+
+    // Optimize getUsers function with debouncing and caching
+    const getUsers = async () => {
+        if (isRequestPending.current) return;
+        
+        isRequestPending.current = true;
+        try {
+            const url = `https://highleveltecknology.com/Qtap/api/customer_info`;
+            const options = {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem('adminToken')}`
+                },
+            };
+
+            const data = await makeRequest(url, options);
+            const dataUsers = data?.customer_info;
+
+            // Batch fetch last messages in chunks
+            const BATCH_SIZE = 5;
+            const newLastMessages = {};
+            let hasNewMessages = false;
+
+            for (let i = 0; i < dataUsers.length; i += BATCH_SIZE) {
+                const batch = dataUsers.slice(i, i + BATCH_SIZE);
+                const promises = batch.map(user => fetchLastMessage(user.id));
+                const messages = await Promise.all(promises);
+
+                messages.forEach((msg, index) => {
+                    if (msg) {
+                        const userId = batch[index].id;
+                        newLastMessages[userId] = msg;
+                        const lastKnownMsg = lastKnownMessages.current[userId];
+                        
+                        if (!lastKnownMsg || 
+                            new Date(msg.created_at) > new Date(lastKnownMsg.created_at)) {
+                            hasNewMessages = true;
+                            if (selectedChat?.id !== userId && msg.sender === 'user') {
+                                setUnreadMessages(prev => ({
+                                    ...prev,
+                                    [userId]: true
+                                }));
+                            }
+                        }
+                    }
+                });
+            }
+
+            if (hasNewMessages) {
+                setLastMessages(newLastMessages);
+                lastKnownMessages.current = newLastMessages;
+
+                setUsers(prevUsers => {
+                    const sortedUsers = [...dataUsers].sort((a, b) => {
+                        const msgA = newLastMessages[a.id];
+                        const msgB = newLastMessages[b.id];
+                        if (!msgA && !msgB) return 0;
+                        if (!msgA) return 1;
+                        if (!msgB) return -1;
+                        return new Date(msgB.created_at) - new Date(msgA.created_at);
+                    });
+
+                    // Only update if there are actual changes
+                    if (JSON.stringify(prevUsers) !== JSON.stringify(sortedUsers)) {
+                        return sortedUsers;
+                    }
+                    return prevUsers;
+                });
+            }
+        } catch (error) {
+            console.error('Error fetching users:', error);
+        } finally {
+            setTimeout(() => {
+                isRequestPending.current = false;
+            }, 1000); // Reduced cooldown time
+        }
+    };
+
+    // Optimize message sending
+    const handleSendMessage = async () => {
+        if (messageInput.trim() === '' || !selectedChat) return;
+
+        const messageData = {
+            sender_id: "1",
+            receiver_id: selectedChat.id,
+            sender_type: "support",
+            message: messageInput,
+        };
+
+        // Optimistic update
+        const newMessage = {
+            text: messageInput,
+            sender: 'me',
+            time: new Date().toLocaleTimeString(),
+            created_at: new Date().toISOString()
+        };
+
+        setSelectedChat(prev => ({
+            ...prev,
+            messages: [...(prev.messages || []), newMessage]
+        }));
+        setMessageInput('');
+
+        try {
+            const response = await fetch("https://highleveltecknology.com/Qtap/api/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem('adminToken')}`
+                },
+                body: JSON.stringify(messageData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to send message');
+            }
+        } catch (error) {
+            console.error('Error sending message:', error);
+            // Rollback optimistic update if needed
+        }
+    };
+
+    // Optimize message list rendering with virtualization
+    const MessageList = React.memo(({ messages }) => {
+        const listRef = useRef(null);
+
+        useEffect(() => {
+            if (listRef.current) {
+                listRef.current.scrollTop = listRef.current.scrollHeight;
+            }
+        }, [messages]);
+
+        return (
+            <Box ref={listRef} sx={{ overflowY: 'auto', flexGrow: 1, padding: "0px 20px" }}>
+                {messages.map((msg, index) => (
+                    <Box 
+                        key={`${msg.created_at}-${index}`} 
+                        sx={{ 
+                            display: 'flex', 
+                            justifyContent: msg.sender === 'me' ? 'flex-end' : 'flex-start',
+                            marginBottom: 1
+                        }}
+                    >
+                        <Box sx={{
+                            bgcolor: msg.sender === 'me' ? '#E57C00' : '#F1F1F1',
+                            color: msg.sender === 'me' ? 'white' : 'black',
+                            padding: "6px 20px",
+                            width: "50%",
+                            maxWidth: "70%",
+                            fontSize: "12px",
+                            borderRadius: msg.sender === 'me' ? '30px 30px 0px 30px' : '30px 30px 30px 0px',
+                        }}>
+                            {msg.text}
+                        </Box>
+                    </Box>
+                ))}
+            </Box>
+        );
+    });
+
     return (
         <Paper sx={{ height: "70vh", borderRadius: "20px" }}>
             <Typography variant='body2' sx={{ fontSize: "12px", padding: "20px", color: "#363535fa" }}>
@@ -59,8 +420,8 @@ const ChatApp = () => {
 
             <Grid container>
                 <Grid item width="30%">
-                    <List>
-                        {messagesData.map((user) => (
+                    <List sx={{ height: "60vh", overflowY: "scroll" }}>
+                        {users.map((user) => (
                             <ListItem
                                 button
                                 key={user.id}
@@ -70,6 +431,7 @@ const ChatApp = () => {
                                     padding: "3px 20px",
                                     display: 'flex',
                                     justifyContent: 'space-between',
+                                    position: 'relative',
                                     '&:hover': {
                                         backgroundColor: "#f7f7f7fa"
                                     }
@@ -82,12 +444,32 @@ const ChatApp = () => {
                                             width: 35, height: 35,
                                         }}>
                                             <PersonOutlineOutlinedIcon sx={{ fontSize: "18px" }} />
-                                            {/* {user.name.charAt(0)} */}
                                         </Avatar>
                                     </ListItemAvatar>
                                     <ListItemText
-                                        primary={<Typography sx={{ fontSize: "11px", color: "#575756" }}>{user.name}</Typography>}
-                                        secondary={<Typography sx={{ fontSize: "8px", color: "gray", marginLeft: "10px" }}>{user.lastMessage}</Typography>}
+                                        primary={
+                                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                                <Typography sx={{ fontSize: "11px", color: "#575756" }}>
+                                                    {user.name}
+                                                </Typography>
+                                                {unreadMessages[user.id] && (
+                                                    <Box
+                                                        sx={{
+                                                            width: 8,
+                                                            height: 8,
+                                                            borderRadius: '50%',
+                                                            backgroundColor: 'red',
+                                                            marginLeft: 1
+                                                        }}
+                                                    />
+                                                )}
+                                            </Box>
+                                        }
+                                        secondary={
+                                            <Typography sx={{ fontSize: "8px", color: "gray", marginLeft: "10px" }}>
+                                                {lastMessages[user.id]?.message || ''}
+                                            </Typography>
+                                        }
                                     />
                                 </Box>
                                 <Typography
@@ -98,8 +480,16 @@ const ChatApp = () => {
                                         textAlign: 'right'
                                     }}
                                 >
-                                    <span style={{ color: "#AAAAAA" }}>{user.date}</span>
-                                    <span style={{ color: "#AAAAAA" }}>{user.time}</span>
+                                    {lastMessages[user.id] && (
+                                        <>
+                                            <span style={{ color: "#AAAAAA" }}>
+                                                {new Date(lastMessages[user.id].created_at).toLocaleDateString()}
+                                            </span>
+                                            <span style={{ color: "#AAAAAA" }}>
+                                                {new Date(lastMessages[user.id].created_at).toLocaleTimeString()}
+                                            </span>
+                                        </>
+                                    )}
                                 </Typography>
 
                             </ListItem>
@@ -128,7 +518,7 @@ const ChatApp = () => {
                                         {selectedChat ? selectedChat.name : "Name"}
                                     </Typography>
 
-                                    
+
                                     <Box>
                                         <span class="icon-magnifier" sx={{ fontSize: "20px", color: "#3c3d3d", cursor: "pointer" }} ></span>
                                         <LocalPhoneIcon sx={{ fontSize: "20px", color: "#3c3d3d", margin: "0px 13px", cursor: "pointer" }} />
@@ -137,24 +527,18 @@ const ChatApp = () => {
                                 </Box>
                                 <Divider />
 
-                                {selectedChat.messages && selectedChat.messages.map((msg, index) => (
-                                    <Box key={index} sx={{ display: 'flex', justifyContent: msg.sender === 'me' ? 'flex-end' : 'flex-start' }}>
-
-                                        <Box sx={{
-                                            bgcolor: msg.sender === 'me' ? '#E57C00' : '#F1F1F1',
-                                            color: msg.sender === 'me' ? 'white' : 'black', 
-                                            padding: "6px 20px",
-
-                                            margin: "3px 0px",width:"50% ",
-                                            maxWidth: "70%", fontSize: "12px",
-
-                                            borderRadius: msg.sender === 'me'? '30px 30px 0px 30px'
-                                            :'30px 30px 30px 0px' ,
-                                        }}>
-                                            {msg.text}
-                                        </Box>
+                                {isLoading ? (
+                                    <Box sx={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        height: '100%'
+                                    }}>
+                                        <CircularProgress sx={{ color: '#E57C00' }} />
                                     </Box>
-                                ))}
+                                ) : (
+                                    <MessageList messages={selectedChat.messages} />
+                                )}
                             </Box>
 
                             <Box
@@ -166,12 +550,12 @@ const ChatApp = () => {
                                     padding: "20px 40px",
                                     width: '100%',
                                     gap: 1,
-                                    margin: '0 auto', 
+                                    margin: '0 auto',
                                 }}
                             >
                                 <IconButton edge="start" sx={{ color: "#ef7d00" }}>
-                                    <span class="icon-plus" style={{ fontSize: "22px", WebkitTextFillColor: "#ef7d00"}}>
-                                        <span class="path1" ></span><span style={{WebkitTextFillColor: "white"}} class="path2"></span></span>
+                                    <span class="icon-plus" style={{ fontSize: "22px", WebkitTextFillColor: "#ef7d00" }}>
+                                        <span class="path1" ></span><span style={{ WebkitTextFillColor: "white" }} class="path2"></span></span>
                                 </IconButton>
 
                                 <IconButton edge="start" sx={{ color: "#ef7d00" }}>
@@ -220,7 +604,7 @@ const ChatApp = () => {
                     PaperProps={{
                         sx: {
                             minWidth: '100px',
-                            
+
                         }
                     }}
                 >
@@ -235,7 +619,7 @@ const ChatApp = () => {
                         <LocalPhoneOutlinedIcon sx={{ fontSize: 15, marginRight: '10px' }} />
                         <Box>
                             <Typography sx={{ fontSize: '10px', color: '#575756' }}>Mobile:</Typography>
-                            <Typography sx={{ fontSize: '10px', color: 'gray' }}>{selectedChat ? selectedChat.mobile : "Mobile"}</Typography>
+                            <Typography sx={{ fontSize: '10px', color: 'gray' }}>{selectedChat ? selectedChat.phone : "Mobile"}</Typography>
                         </Box>
                     </MenuItem>
                     <MenuItem>

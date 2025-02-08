@@ -39,7 +39,7 @@ export const Row2 = () => {
        .then(response => response.json())
        .then(data => {
         setData(data)
-        console.log("dataaaaa" , data);
+        // console.log("dataaaaa" , data);
         
        })
        .catch(error => console.error('Error:', error));

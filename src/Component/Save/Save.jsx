@@ -43,16 +43,16 @@ export const Save = () => {
     const [servingWays, setServingWays] = useState({
         dineIn: true,
         takeaway: true,
-        delivery: true
+        delivery: false
     });
     const [paymentMethods, setPaymentMethods] = useState({
         cash: true,
         digitalWallet: true,
-        card: true
+        card: false
     });
     const [paymentTime, setPaymentTime] = useState({
         beforeServing: true,
-        afterServing: true
+        afterServing: false
     });
     const [selectedServingWays, setSelectedServingWays] = useState([]);
 
