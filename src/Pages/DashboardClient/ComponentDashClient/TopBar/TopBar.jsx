@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, IconButton, MenuItem, Typography, Popover, Button, Menu } from "@mui/material";
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
@@ -12,6 +12,7 @@ import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import { useLocation, useNavigate } from "react-router";
 import { makeStyles } from "@mui/styles";
 import Language from "./Language";
+import { useBranch } from "../../../../context/BranchContext";
 
 const useStyles = makeStyles({
     button: {
@@ -55,21 +56,52 @@ export default function TopBar() {
     const classes = useStyles();
     const navigate = useNavigate();
     const [mode, setMode] = useState('light');
+    const { branches, setBranches, selectedBranch, setSelectedBranch } = useBranch();
+    const [branch, setBranch] = useState(null);
+
+    // Load branches and selected branch from localStorage on component mount
+    useEffect(() => {
+        const storedBranches = localStorage.getItem('branches');
+        const storedSelectedBranch = localStorage.getItem('selectedBranch');
+        
+        if (storedBranches) {
+            const parsedBranches = JSON.parse(storedBranches);
+            setBranches(parsedBranches);
+            
+            // If no branch is selected, set the first one as default
+            if (!storedSelectedBranch && parsedBranches.length > 0) {
+                setSelectedBranch(parsedBranches[0].id);
+                localStorage.setItem('selectedBranch', parsedBranches[0].id);
+            } else if (storedSelectedBranch) {
+                setSelectedBranch(storedSelectedBranch);
+            }
+        }
+    }, [setBranches, setSelectedBranch]);
 
     const handleToggleMode = () => {
         setMode(prevMode => prevMode === 'light' ? 'dark' : 'light');
     };
-    const [branch, setBranch] = useState(null);
-    const [selectedBranch, setSelectedBranch] = useState("Branch 1");
 
     const BranchOpen = (event) => {
         setBranch(event.currentTarget);
     };
 
-    const BranchClose = (branchName) => {
-        if (branchName) setSelectedBranch(branchName);
+    const BranchClose = (branchId) => {
+        if (branchId) {
+            setSelectedBranch(branchId);
+            localStorage.setItem('selectedBranch', branchId);
+        }
         setBranch(null);
     };
+
+    // Helper function to get branch name
+    const getCurrentBranchName = () => {
+        if (!branches.length) return 'Branch 1';
+        const currentBranch = branches.find(b => b.id === selectedBranch);
+        const branchIndex = branches.findIndex(b => b.id === selectedBranch);
+        return currentBranch ? `Branch ${branchIndex + 1}` : 'Branch 1';
+    };
+
     const handleToggle = (event) => {
         setMode(event.target.checked ? 'light' : 'dark');
     };
@@ -114,8 +146,8 @@ export default function TopBar() {
                         fontSize: "11px", borderRadius: "20px", color: "white",
                         textTransform: "capitalize", justifyContent: "center",
                     }}>
-                    <span class="icon-store" style={{ fontSize: "15px", marginRight: "3px" }} ></span>
-                    {selectedBranch}
+                    <span className="icon-store" style={{ fontSize: "15px", marginRight: "3px" }}></span>
+                    {getCurrentBranchName()}
                     <KeyboardArrowDownIcon sx={{ color: "#ef7d00", fontSize: "16px" }} />
                 </Button>
 
@@ -139,25 +171,24 @@ export default function TopBar() {
                         },
                     }}
                 >
-                    <MenuItem onClick={() => BranchClose('Branch 1')}
-                        sx={{ fontSize: "9px", color: "#949493" }}>
-                        <span class="icon-store" style={{ fontSize: "13px", marginRight: "5px" }} ></span>
-                        Branch 1
-                    </MenuItem>
-                    <Divider sx={{ width: "80%", margin: "auto", }} />
-
-                    <MenuItem onClick={() => BranchClose('Branch 2')}
-                        sx={{ fontSize: "9px", color: "#949493" }}>
-                        <span class="icon-store" style={{ fontSize: "13px", marginRight: "5px" }} ></span>
-                        Branch 2
-                    </MenuItem>
-                    <Divider sx={{ width: "80%", margin: "auto", }} />
-
-                    <MenuItem onClick={() => BranchClose('Branch 3')}
-                        sx={{ fontSize: "9px", color: "#949493" }} >
-                        <span class="icon-store" style={{ fontSize: "13px", marginRight: "5px" }} ></span>
-                        Branch 3
-                    </MenuItem>
+                    {branches.map((branch, index) => (
+                        <React.Fragment key={branch.id}>
+                            <MenuItem
+                                onClick={() => BranchClose(branch.id)}
+                                sx={{ 
+                                    fontSize: "9px", 
+                                    color: "#949493",
+                                    backgroundColor: selectedBranch === branch.id ? 'rgba(239, 125, 0, 0.1)' : 'transparent'
+                                }}
+                            >
+                                <span className="icon-store" style={{ fontSize: "13px", marginRight: "5px" }}></span>
+                                {`Branch ${index + 1}`}
+                            </MenuItem>
+                            {index < branches.length - 1 && (
+                                <Divider sx={{ width: "80%", margin: "auto" }} />
+                            )}
+                        </React.Fragment>
+                    ))}
                 </Menu>
 
                 <IconButton onClick={toggleIcon}>

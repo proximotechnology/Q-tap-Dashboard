@@ -52,6 +52,7 @@ import { ProductsPage } from './Component/Products/ProductsPage';
 import { ToastContainer } from 'react-toastify';
 import { PersonalProvider } from './context/PersonalContext';
 import { BusinessProvider } from './context/BusinessContext';
+import { BranchProvider } from './context/BranchContext';
 
 function App() {
   const routes = createBrowserRouter([
@@ -272,16 +273,18 @@ function App() {
 
 
   return (
-    <PersonalProvider>
+    <BranchProvider>
+      <PersonalProvider>
         <BusinessProvider>
-    <div style={{ minHeight: "100vh" }}>
-      <div className="w-100 ">
-        <RouterProvider router={routes}></RouterProvider>
-      </div>
-      <ToastContainer />
-    </div>
-    </BusinessProvider>
-    </PersonalProvider>
+          <div style={{ minHeight: "100vh" }}>
+            <div className="w-100 ">
+              <RouterProvider router={routes}></RouterProvider>
+            </div>
+            <ToastContainer />
+          </div>
+        </BusinessProvider>
+      </PersonalProvider>
+    </BranchProvider>
   );
 }
 

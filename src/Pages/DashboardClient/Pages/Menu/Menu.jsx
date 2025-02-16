@@ -9,7 +9,7 @@ export const Menu = () => {
   return (
     <Box >
       <Header />
-      <Content/> 
+      <Content />
     </Box>
   )
 }

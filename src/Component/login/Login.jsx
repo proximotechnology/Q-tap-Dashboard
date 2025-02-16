@@ -18,6 +18,7 @@ import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
+import { useBranch } from '../../context/BranchContext';
 
 export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -30,25 +31,26 @@ export const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [apiSuccess, setApiSuccess] = useState('');
   const [userType, setUserType] = useState('qtap_admins');
+  const { setBranches, setSelectedBranch } = useBranch();
 
   const handleSubmit = async () => {
     // Reset API states
     setApiError('');
     setApiSuccess('');
-  
+
     // Validate inputs
     if (!email || !password) {
       setApiError('All fields are required!');
       return;
     }
-  
+
     // Prepare data for API
     const data = {
       email,
       password,
       user_type: userType,
     };
-  
+
     // Send data to API
     try {
       setIsLoading(true);
@@ -59,17 +61,13 @@ export const Login = () => {
           headers: { 'Content-Type': 'application/json' },
         }
       );
-  
+
       console.log('API Response:', response.data); // Debug log
-  
+
       if (response?.data?.user) {
         setApiSuccess('Successful login!');
-  
-        // Determine user type with fallback logic
-        const loginUserType = response.data.user?.user_type ;
-        console.log('User Type:', loginUserType); // Debug log
-  
-        // Navigate based on user role
+        const loginUserType = response.data.user?.user_type;
+
         if (loginUserType === 'qtap_admins') {
           localStorage.setItem('adminToken', response.data.token);
           navigate('/dashboard-home');
@@ -78,6 +76,14 @@ export const Login = () => {
           navigate('/dashboard-affiliate');
         } else if (loginUserType === 'qtap_clients') {
           localStorage.setItem('clientToken', response.data.token);
+          // Store branches in both context and localStorage
+          if (response?.data?.brunches && response.data.brunches.length > 0) {
+            setBranches(response.data.brunches);
+            localStorage.setItem('branches', JSON.stringify(response.data.brunches));
+            // Set and store the first branch as default
+            setSelectedBranch(response.data.brunches[0].id);
+            localStorage.setItem('selectedBranch', response.data.brunches[0].id);
+          }
           navigate('/logo-cient');
         } else {
           navigate('/');
@@ -161,19 +167,19 @@ export const Login = () => {
           onChange={(e) => setUserType(e.target.value)}
           sx={{ justifyContent: 'center' }}
         >
-          <FormControlLabel 
-            value="qtap_admins" 
-            control={<Radio sx={{ '& .MuiSvgIcon-root': { fontSize: 18 , color: '#e2944a'}  }} />} 
+          <FormControlLabel
+            value="qtap_admins"
+            control={<Radio sx={{ '& .MuiSvgIcon-root': { fontSize: 18, color: '#e2944a' } }} />}
             label={<Typography sx={{ fontSize: '12px' }}>Admin</Typography>}
-          />  
-          <FormControlLabel 
-            value="qtap_affiliates" 
-            control={<Radio sx={{ '& .MuiSvgIcon-root': { fontSize: 18 , color: '#e2944a'}  }} />} 
+          />
+          <FormControlLabel
+            value="qtap_affiliates"
+            control={<Radio sx={{ '& .MuiSvgIcon-root': { fontSize: 18, color: '#e2944a' } }} />}
             label={<Typography sx={{ fontSize: '12px' }}>Affiliate</Typography>}
           />
-          <FormControlLabel 
-            value="qtap_clients" 
-            control={<Radio sx={{ '& .MuiSvgIcon-root': { fontSize: 18 , color: '#e2944a'}  }} />} 
+          <FormControlLabel
+            value="qtap_clients"
+            control={<Radio sx={{ '& .MuiSvgIcon-root': { fontSize: 18, color: '#e2944a' } }} />}
             label={<Typography sx={{ fontSize: '12px' }}>Client</Typography>}
           />
         </RadioGroup>

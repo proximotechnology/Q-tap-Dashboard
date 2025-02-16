@@ -1,13 +1,46 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Grid, Card, CardContent, IconButton, Paper, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { AddButton } from './Header';
 import { Box } from '@mui/system';
-import { items } from './items';
+// import { items } from './items';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { useNavigate } from 'react-router';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useBranch } from '../../../../context/BranchContext';
+import { Image } from '@mui/icons-material';
+
 export const Content = () => {
     const navigate = useNavigate();
+    const [items, setItems] = useState([]);
+    const { selectedBranch } = useBranch();
+    // console.log("selectedBranch content", selectedBranch);
+    const getContent = async () => {
+        try {
+            const response = await axios.get('https://highleveltecknology.com/Qtap/api/meals', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+                },
+                params: {
+                    brunch_id: selectedBranch
+                }
+            });
+            // console.log("response content", response?.data);
+
+            if (response.data) {
+                setItems(response.data || []);
+                console.log("response content", response.data);
+            }
+        } catch (error) {
+            console.error('Error fetching items:', error);
+            toast.error('Error fetching items');
+        }
+    };
+
+    useEffect(() => {
+        getContent();
+    }, [selectedBranch]);
 
     return (
         <Paper style={{ padding: '10px 0px', borderRadius: "20px", marginTop: "40px" }}>
@@ -59,17 +92,19 @@ export const Content = () => {
                                 width: "100%", backgroundColor: "#F1F2F2", borderRaduis: "30px", height: "45%",
                                 display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center"
                             }}>
-                                <span class="icon-image-gallery" style={{ fontSize: "26px", color: "gray" }}></span>
+                                {/* <span class="icon-image-gallery" style={{ fontSize: "26px", color: "gray" }}></span> */}
+                                <img src={`https://highleveltecknology.com/Qtap/${item.img}`} alt="item" style={{ width: "100%", height: "100%" }} />
                             </Box>
                             <CardContent sx={{ padding: "5px" }}>
                                 <Typography variant='body1' sx={{ fontSize: "10px", color: "#ef7d00" }}>{item.name}</Typography>
-                                <Typography variant='body2' sx={{ fontSize: "9px", color: "gray" }}>{item.description}</Typography>
+                                <Typography variant='body2' sx={{ fontSize: "9px", color: "gray" }}>{item.Description}</Typography>
                                 <Button
                                     sx={{ backgroundColor: "#46B479", color: "white", padding: "1px 0px", fontSize: "8px", borderRadius: "20px" }} >{item.price}
                                 </Button>
 
                                 <Typography variant='body2' sx={{ fontSize: "7px", marginTop: "5px", color: "#222240", textAlign: "center", alignItems: "center" }}>
-                                    {item.icon} {item.status}</Typography>
+                                    {item.icon} {item.status}
+                                    </Typography>
                             </CardContent>
                         </Card>
                     ))}
