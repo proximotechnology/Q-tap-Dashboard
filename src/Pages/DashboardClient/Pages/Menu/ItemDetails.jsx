@@ -1,12 +1,12 @@
 import CheckIcon from '@mui/icons-material/Check';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Box, Paper, Divider, Grid, TextField, Button } from '@mui/material';
 import StraightOutlinedIcon from '@mui/icons-material/StraightOutlined';
-import { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-export const ItemDetails = () => {
+import { useBranch } from '../../../../context/BranchContext';
 
+export const ItemDetails = ({ categoryId }) => {
     const [name, setName] = useState('');
     const [brief, setBrief] = useState('');
     const [description, setDescription] = useState('');
@@ -19,93 +19,104 @@ export const ItemDetails = () => {
     const [priceLarge, setPriceLarge] = useState('');
     const [price, setPrice] = useState('');
     const [discount, setDiscount] = useState('');
-    const [image, setImage] = useState('');
-
+    const [image, setImage] = useState(null);
     const selectedBranch = localStorage.getItem('selectedBranch');
-    console.log("selectedBranch itemDetails", selectedBranch);
+    const { discountContent } = useBranch();
+    const [loading ,setloading] = useState(false);
+    console.log("selectedBranch itemDetails", selectedBranch, categoryId, discountContent);
 
-    // const handleImageUpload = (e) => {
-    //     const fileInput = document.createElement('input');
-    //     fileInput.type = 'file';
-    //     fileInput.accept = 'image/*';
-    //     fileInput.onchange = (e) => {
-    //         if (!e.target || !e.target.files || e.target.files.length === 0) {
-    //             console.warn('No file selected');
-    //             return;
-    //         }
-    //         const file = e.target.files[0];
-    //         if (file) {
-    //             const reader = new FileReader();
-    //             reader.onload = (e) => {
-    //                 if (e.target && e.target.result) {
-    //                     const imageUrl = e.target.result;
-    //                     setImage(imageUrl);
-    //                 }
-    //             };
-    //             reader.onerror = (error) => {
-    //                 console.error('Error reading file:', error);
-    //             };
-    //             reader.readAsDataURL(file);
-    //         }
-    //     };
-    //     fileInput.click();
-    // }
+    useEffect(() => {
+        console.log('ItemDetails discountContent:', discountContent);
+    }, [discountContent]);
 
+    const handleImageUpload = (e) => {
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*';
+        fileInput.onchange = (e) => {
+            if (!e.target || !e.target.files || e.target.files.length === 0) {
+                console.warn('No file selected');
+                return;
+            }
+            const file = e.target.files[0];
+            if (file) {
+                setImage(file);
+            }
+        };
+        fileInput.click();
+    }
 
     const handleSave = async () => {
         try {
-            // التحقق من أن جميع الحقول ممتلئة
-            if (!name || !brief || !description || !ingredients || !calories || !time || !tax || !priceSmall || !priceMedium || !priceLarge || !price || !discount) {
+            setloading(true)
+            // Check if all fields are filled
+            if (!name || !brief || !description || !ingredients || !calories || !time || !tax || !priceSmall || !priceMedium || !priceLarge || !price || !discount || !image) {
                 toast.error("Please fill in all fields");
                 return;
             }
-            // إنشاء بيانات الطلب
-            const formData = {
-                name: name,
-                img: image,
-                Brief: brief,
-                Description: description,
-                Ingredients: ingredients,
-                Calories: calories,
-                Time: time,
-                Tax: tax,
-                price_small: priceSmall,
-                price_medium: priceMedium,
-                price_large: priceLarge,
-                price: price,
-                discount_id: "6",
-                categories_id: "4",
-                brunch_id: selectedBranch
-            };
+            
+            const discountId = discountContent?.find((item) => item.code === discount)?.id;
+            if (!discountId) {
+                toast.error("Discount code not found");
+                return;
+            }
+            console.log(discountId);
+            
+
+            // Create form data
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('img', image);
+            formData.append('Brief', brief);
+            formData.append('Description', description);
+            formData.append('Ingredients', ingredients);
+            formData.append('Calories', calories);
+            formData.append('Time', time);
+            formData.append('Tax', tax);
+            formData.append('price_small', priceSmall);
+            formData.append('price_medium', priceMedium);
+            formData.append('price_large', priceLarge);
+            formData.append('price', price);
+            formData.append('discount_id', discountId);
+            formData.append('categories_id', categoryId);
+            formData.append('brunch_id', selectedBranch);
 
             console.log("formData", formData);
 
-            // إرسال الطلب
+            // Send request
             const response = await axios.post(
                 "https://highleveltecknology.com/Qtap/api/meals",
-                formData,  // البيانات يتم تمريرها هنا مباشرة
+                formData,
                 {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'multipart/form-data'
                     }
                 }
             );
+            setloading(false)
 
-            // التحقق من نجاح الطلب
+            // Check if request was successful
             if (response.status === 201) {
                 toast.success("Item added successfully");
                 window.location.reload();
+
             }
             console.log("response itemDetails", response);
 
         } catch (error) {
-            // const errorMes = error.response?.data?.errors.map(error => error[0])
-            toast.error(error.response?.data?.message || "An error occurred");
+            setloading(false)
+
+            if (error.response?.data?.errors) {
+                Object.values(error.response.data.errors).forEach(err => {
+                    toast.error(err.join(', '));
+                });
+            } else {
+                toast.error(error.response?.data?.message || "An error occurred");
+            }
             console.log("Error:", error);
         }
     };
-
 
     return (
         <Paper sx={{ marginTop: "-20px", marginBottom: "30px", borderRadius: "10px", padding: "20px 50px" }}>
@@ -216,7 +227,7 @@ export const ItemDetails = () => {
                             sx={{ width: "160px", height: "90px", backgroundColor: "#f4f6fc", borderRadius: '8px', overflow: 'hidden' }}>
                             {image ? (
                                 <img
-                                    src={image}
+                                    src={URL.createObjectURL(image)}
                                     alt="Uploaded item"
                                     style={{
                                         width: '100%',
@@ -226,7 +237,7 @@ export const ItemDetails = () => {
                                 />
                             ) : (
                                 <Box display="flex" justifyContent="center" alignItems="center" width={"80%"}>
-                                    <span class="icon-image-gallery" style={{ fontSize: "40px", color: "gray" }}></span>
+                                    <span className="icon-image-gallery" style={{ fontSize: "40px", color: "gray" }}></span>
                                 </Box>
                             )}
                         </Box>
@@ -239,7 +250,7 @@ export const ItemDetails = () => {
                         >
                             <Typography variant="body2" sx={{ fontSize: "8px", color: "gray", margin: "5px" }}>Item Image 200x200px</Typography>
                             <Button
-                                // onClick={handleImageUpload}
+                                onClick={handleImageUpload}
                                 variant="contained"
                                 startIcon={<StraightOutlinedIcon sx={{ fontSize: '10px', color: '#ef7d00' }} />}
                                 sx={{
@@ -261,7 +272,6 @@ export const ItemDetails = () => {
                             Sizes
                         </Typography>
 
-
                         {/* Input Fields */}
                         <Grid container spacing={1} alignItems="center">
                             <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
@@ -278,7 +288,6 @@ export const ItemDetails = () => {
                                         backgroundColor: "#ef7d00",
                                         color: "white",
                                         fontSize: "10px",
-
                                     }}
                                 >
                                     S
@@ -301,7 +310,6 @@ export const ItemDetails = () => {
                                     />
                                 </Grid>
                             </Box>
-
 
                             <Box display={"flex"} justifyContent={"center"} alignItems={"center"} margin={"0px 12px"}>
                                 <Box
@@ -334,7 +342,6 @@ export const ItemDetails = () => {
                                         InputProps={{
                                             sx: { height: '30px', fontSize: "10px", width: "100px" },
                                             endAdornment: <Typography sx={{ fontSize: "10px", color: "gray" }}>EGP</Typography>,
-
                                         }}
                                     />
                                 </Grid>
@@ -374,15 +381,12 @@ export const ItemDetails = () => {
                                             sx:
                                                 { height: '30px', fontSize: "10px", width: "100px" },
                                             endAdornment: <Typography sx={{ fontSize: "9px", color: "gray" }}>EGP</Typography>,
-
-
                                         }}
                                     />
                                 </Grid>
                             </Box>
                         </Grid>
                     </Grid>
-
 
                     <Grid item xs={6} marginTop={"20px"} marginBottom={"20px"}>
                         <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>Price</Typography>
@@ -406,7 +410,6 @@ export const ItemDetails = () => {
                             variant="outlined"
                             fullWidth
                             type="number"
-
                             InputProps={{
                                 sx: { height: '35px', fontSize: "10x" },
                                 endAdornment: <Typography sx={{ fontSize: "12px", color: "gray" }}>%</Typography>,
@@ -435,14 +438,12 @@ export const ItemDetails = () => {
                         }}
                     >
                         <CheckIcon sx={{ fontSize: "18px", marginRight: "5px" }} />
-                        Save
+                        {loading ? "loading.." : "Save"}
                     </Button>
 
-                    <span class="icon-delete" style={{ fontSize: "25px", cursor: "pointer" }} />
+                    <span className="icon-delete" style={{ fontSize: "25px", cursor: "pointer" }} />
                 </Box>
-
             </Box>
         </Paper>
-
     )
 }

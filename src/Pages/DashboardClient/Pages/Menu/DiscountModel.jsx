@@ -1,21 +1,17 @@
-
 import { Divider, IconButton, InputAdornment, Modal, Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { Box, Grid, TextField, Button, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useBranch } from '../../../../context/BranchContext';
-export const DiscountModel = ({ open, handleClose }) => {
-  const [discounts, setDiscounts] = useState([
-    { code: '123456', discount: '10%', date: '8/10/2024', status: 'Active' },
-    { code: '123457', discount: '10%', date: '8/10/2024', status: 'Inactive' }
-  ]);
 
+export const DiscountModel = ({ open, handleClose }) => {
+  const [discounts, setDiscounts] = useState([]);
   const [code, setCode] = useState('');
   const [discount, setDiscount] = useState('');
-  const { selectedBranch } = useBranch();
-  // console.log("selectedBranch discount", selectedBranch); 
+  const { selectedBranch, discountContent, setDiscountContent } = useBranch();
 
+  console.log("selectedBranch discount", selectedBranch, discountContent);
 
   const handleAdd = async () => {
     try {
@@ -43,7 +39,6 @@ export const DiscountModel = ({ open, handleClose }) => {
 
       if (response.data) {
         toast.success('Discount added successfully!');
-        // Update local state
         const today = new Date().toLocaleDateString();
         const newDiscount = {
           code,
@@ -52,7 +47,6 @@ export const DiscountModel = ({ open, handleClose }) => {
           status: 'Active'
         };
         setDiscounts([...discounts, newDiscount]);
-        // Reset form
         setCode('');
         setDiscount('');
       }
@@ -94,11 +88,12 @@ export const DiscountModel = ({ open, handleClose }) => {
           brunch_id: selectedBranch
         }
       });
-      // console.log("response discount", response?.data?.discounts);
 
       if (response.data) {
         setDiscounts(response.data.discounts || []);
-        // console.log("response discount", response.data.discounts);
+        setDiscountContent(response.data.discounts || []);
+        localStorage.setItem("dicountId", response.data.discount || []);
+        console.log("response discount", response.data.discounts);
       }
     } catch (error) {
       console.error('Error fetching discounts:', error);
@@ -107,7 +102,9 @@ export const DiscountModel = ({ open, handleClose }) => {
   };
 
   useEffect(() => {
-    getDiscounts();
+    if (selectedBranch) {
+      getDiscounts();
+    }
   }, [selectedBranch]);
 
   return (
@@ -128,11 +125,8 @@ export const DiscountModel = ({ open, handleClose }) => {
               Discount Codes
             </Typography>
             <IconButton onClick={handleClose}>
-
-              <span class="icon-close-1" style={{ fontSize: "12px" }}></span>
+              <span className="icon-close-1" style={{ fontSize: "12px" }}></span>
             </IconButton>
-
-
           </Box>
           <Divider sx={{ backgroundColor: '#F58125', height: '1px' }} />
 
@@ -226,12 +220,12 @@ export const DiscountModel = ({ open, handleClose }) => {
                   </Box>
                 </TableCell>
                 <TableCell sx={{ fontSize: "10px", textAlign: "center", padding: '3px 0px', borderBottom: "none" }}>
-                  <IconButton size="small"  >
-                    <span class="icon-edit" sx={{ fontSize: "10px", color: "black" }}></span>
+                  <IconButton size="small">
+                    <span className="icon-edit" sx={{ fontSize: "10px", color: "black" }}></span>
                   </IconButton>
 
                   <IconButton size="small" onClick={() => handleDelete(index, discount.id)} color="error">
-                    <span class="icon-delete" sx={{ fontSize: "10px" }}></span>
+                    <span className="icon-delete" sx={{ fontSize: "10px" }}></span>
                   </IconButton>
                 </TableCell>
               </TableRow>

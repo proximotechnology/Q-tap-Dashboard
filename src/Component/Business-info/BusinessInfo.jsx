@@ -248,7 +248,7 @@ export const BusinessInfo = () => {
                                     sx={{ borderRadius: '10px', height: '35px', fontSize: "10px", color: "gray" }}
                                     startAdornment={
                                         <InputAdornment position="start">
-                                            <span class="icon-briefcase" style={{ fontSize: "18px" }} ></span>
+                                            <span className="icon-briefcase" style={{ fontSize: "18px" }} ></span>
                                         </InputAdornment>
                                     }
                                 >
@@ -268,7 +268,7 @@ export const BusinessInfo = () => {
                                     <Typography variant="body1" display="flex" alignItems="center"
                                         sx={{ fontSize: '15px', color: "gray" }}>
 
-                                        <span class="icon-working-hour" style={{ marginRight: "10px", fontSize: "20px" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span></span>
+                                        <span className="icon-working-hour" style={{ marginRight: "10px", fontSize: "20px" }}><span className="path1"></span><span className="path2"></span><span className="path3"></span><span className="path4"></span><span className="path5"></span><span className="path6"></span><span className="path7"></span><span className="path8"></span></span>
                                         Working Hours
                                     </Typography>
 
@@ -458,8 +458,8 @@ export const BusinessInfo = () => {
                                     },
                                 }}
                             >
-                                <span class="icon-map-1" style={{ fontSize: "18px", marginRight: "5px" }}
-                                ><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span><span class="path14"></span><span class="path15"></span></span>
+                                <span className="icon-map-1" style={{ fontSize: "18px", marginRight: "5px" }}
+                                ><span className="path1"></span><span className="path2"></span><span className="path3"></span><span className="path4"></span><span className="path5"></span><span className="path6"></span><span className="path7"></span><span className="path8"></span><span className="path9"></span><span className="path10"></span><span className="path11"></span><span className="path12"></span><span className="path13"></span><span className="path14"></span><span className="path15"></span></span>
 
                                 Pin Your Location
                             </Button>
@@ -522,7 +522,7 @@ export const BusinessInfo = () => {
                                                 color: design === "grid" ? "#E57C00" : "inherit"
                                             }}
                                         >
-                                            <span class=" icon-grid"
+                                            <span className=" icon-grid"
                                                 style={{ fontSize: "25px", color: design === "grid" ? "#E57C00" : "#AAAAAA" }} />
                                         </ToggleButton>
                                         <ToggleButton
@@ -533,7 +533,7 @@ export const BusinessInfo = () => {
                                                 color: design === "list" ? "##E57C00" : "inherit"
                                             }}
                                         >
-                                            <span class="icon-list"
+                                            <span className="icon-list"
                                                 style={{ fontSize: "25px", color: design === "list" ? "#E57C00" : "#AAAAAA" }} />
                                         </ToggleButton>
                                     </ToggleButtonGroup>
@@ -568,7 +568,7 @@ export const BusinessInfo = () => {
                                                 display: 'flex',
                                                 alignItems: 'center',
                                             }}>
-                                                <span class="icon-hand-up" style={{ fontSize: "20px", color: 'gray', marginRight: "6px" }} ></span>
+                                                <span className="icon-hand-up" style={{ fontSize: "20px", color: 'gray', marginRight: "6px" }} ></span>
                                                 <Typography sx={{ fontSize: "14px", color: "gray" }}>
                                                     Activate Call Waiter
                                                 </Typography>
@@ -625,7 +625,7 @@ export const BusinessInfo = () => {
                                             }
                                             label={
                                                 <span style={{ display: 'flex',fontSize:"11px", alignItems: 'center' }}>
-                                                    <span class="icon-wallet" style={{ marginRight: '2px', fontSize: "15px" }} ><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span></span>
+                                                    <span className="icon-wallet" style={{ marginRight: '2px', fontSize: "15px" }} ><span className="path1"></span><span className="path2"></span><span className="path3"></span><span className="path4"></span><span className="path5"></span><span className="path6"></span><span className="path7"></span><span className="path8"></span><span className="path9"></span><span className="path10"></span><span className="path11"></span><span className="path12"></span></span>
                                                     Digital Wallet
                                                 </span>
                                             }

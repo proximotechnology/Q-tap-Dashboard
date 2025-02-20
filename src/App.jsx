@@ -53,6 +53,7 @@ import { ToastContainer } from 'react-toastify';
 import { PersonalProvider } from './context/PersonalContext';
 import { BusinessProvider } from './context/BusinessContext';
 import { BranchProvider } from './context/BranchContext';
+import { ContentMenuProvider } from './context/ContentMenuContext';
 
 function App() {
   const routes = createBrowserRouter([
@@ -273,6 +274,7 @@ function App() {
 
 
   return (
+    <ContentMenuProvider>
     <BranchProvider>
       <PersonalProvider>
         <BusinessProvider>
@@ -285,6 +287,7 @@ function App() {
         </BusinessProvider>
       </PersonalProvider>
     </BranchProvider>
+  </ContentMenuProvider>
   );
 }
 

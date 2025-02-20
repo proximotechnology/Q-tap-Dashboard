@@ -5,118 +5,98 @@ import StraightIcon from '@mui/icons-material/Straight';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useBranch } from '../../../../context/BranchContext';
-const CategoryForm = ({ open, handleClose }) => {
 
+const CategoryForm = ({ open, handleClose }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState(null);
+  const [cover, setCover] = useState(null);
   const [categories, setCategories] = useState([]);
   const { selectedBranch } = useBranch();
-  // console.log("selectedBranch", selectedBranch);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // const handleAdd = async () => {
-  //   try {
-  //     if (!name || !description) {
-  //       toast.error('Please fill in all fields');
-  //       return;
-  //     }
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImage(file);
+    }
+  };
 
-  //     const formData = {
-  //       name: name,
-  //       description: description,
-  //       image: image
-  //     };
+  const handleCoverChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setCover(file);
+    }
+  };
 
-  //     const response = await axios({
-  //       method: 'POST',
-  //       url: 'https://highleveltecknology.com/Qtap/api/meals_categories',
-  //       data: formData,
-  //       headers: {
-  //         'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
-  //         'Content-Type': 'application/json'
-  //       }
-  //     });
+  const handleAdd = async () => {
+    try {
+      setIsLoading(true);
+      if (!name || !description) {
+        toast.error('Please fill in all fields');
+        setIsLoading(false);
+        return;
+      }
 
-  //     if (response.data) {
-  //       toast.success('Discount added successfully!');
-  //       // Update local state
-  //       const today = new Date().toLocaleDateString();
-  //       const newCategory = {
-  //         name,
-  //         description,
-  //         image,
-  //         date: today,
-  //         status: 'Active'
-  //       };
-  //       setCategories([...categories, newCategory]);
-  //       // Reset form
-  //       setName('');
-  //       setDescription('');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error adding discount:', error);
-  //     const errorMessage = error.response?.data?.message || 'Error adding discount';
-  //     toast.error(errorMessage);
-  //   }
-  // };
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('description', description);
+      formData.append('image', image);
+      formData.append('cover', cover);
+      formData.append('brunch_id', selectedBranch);
 
-  // const handleDelete = async (index, discountId) => {
-  //   try {
-  //     const response = await axios({
-  //       method: 'DELETE',
-  //       url: `https://highleveltecknology.com/Qtap/api/meals_categories/${discountId}`,
-  //       headers: {
-  //         'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
-  //       }
-  //     });
+      const response = await axios({
+        method: 'POST',
+        url: 'https://highleveltecknology.com/Qtap/api/meals_categories',
+        data: formData,
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+          'Content-Type': 'multipart/form-data'
+        }
+      });
 
-  //     if (response.data) {
-  //       toast.success('Discount deleted successfully!');
-  //       const updatedCategories = categories.filter((_, i) => i !== index);
-  //       setCategories(updatedCategories);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error deleting discount:', error);
-  //     toast.error('Error deleting discount');
-  //   }
-  // };
-
-  // const getDiscounts = async () => {
-  //   try {
-  //     const response = await axios.get('https://highleveltecknology.com/Qtap/api/meals_categories', {
-  //       headers: {
-  //         'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
-  //       }
-  //     });
-
-  //     if (response.data) {
-  //       setCategories(response.data.data || []);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error fetching discounts:', error);
-  //     toast.error('Error fetching discounts');
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getDiscounts();
-  // }, []);
-
+      if (response.data) {
+        toast.success('Category added successfully!');
+        // reload page to get new category whic added now
+        const today = new Date().toLocaleDateString();
+        const newCategory = {
+          name,
+          description,
+          image: URL.createObjectURL(image),
+          date: today,
+          status: 'Active'
+        };
+        setCategories([...categories, newCategory]);
+        setName('');
+        setDescription('');
+        setImage(null);
+        setCover(null);
+      }
+    } catch (error) {
+      console.error('Error adding category:', error);
+      const errorMessage = error.response?.data?.message || 'Error adding category';
+      if (error.response?.data?.errors) {
+        Object.values(error.response.data.errors).forEach(err => {
+          toast.error(err.join(', '));
+        });
+      } else {
+        toast.error(errorMessage);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Dialog open={open} disableScrollLock>
       <DialogContent sx={{ width: "400px", backgroundColor: 'white', borderRadius: "20px" }}>
-
-
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography variant="body1" fontSize={"13px"} color={"#575756"}>Add Category</Typography>
           <IconButton onClick={handleClose}>
-            <span class="icon-close-1" style={{ fontSize: "11px" }}></span>
+            <span className="icon-close-1" style={{ fontSize: "11px" }}></span>
           </IconButton>
         </Box>
         <Divider sx={{ background: 'linear-gradient(to left, #ff7e5f, #feb47b)', marginBottom: "10px", height: 1 }} />
-
-
         <Box display="flex" flexDirection="column" gap={2} sx={{ marginBottom: 2 }}>
           <Box display="flex" justifyContent="space-between" gap={2}>
             <Box flex={1}>
@@ -139,8 +119,6 @@ const CategoryForm = ({ open, handleClose }) => {
             </Box>
           </Box>
         </Box>
-
-
         <Box sx={{ marginY: 3, display: 'flex', flexDirection: 'column', textAlign: 'center', alignItems: 'center' }}>
           <Box sx={{ marginBottom: 2 }}>
             <Box sx={{
@@ -155,31 +133,41 @@ const CategoryForm = ({ open, handleClose }) => {
               alignItems: 'center',
               textAlign: 'center',
             }}>
-              <span class="icon-image-gallery" style={{ fontSize: "30px", color: "gray" }}></span>
-              <Box sx={{
-                position: 'absolute',
-                bottom: 0,
-                width: '100%',
-                height: '25%',
-                backgroundColor: '#222240',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                textAlign: 'center',
-                color: 'white',
-                fontSize: '8px',
-              }}>
-                <StraightIcon sx={{ color: "#ef7d00", fontSize: '10px', marginRight: '4px' }} />
-                Upload
-              </Box>
+              {image ? (
+                <img src={URL.createObjectURL(image)} alt="Category" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              ) : (<>
+                <span className="icon-image-gallery" style={{ fontSize: "30px", color: "gray" }}></span>
+                <Box sx={{
+                  position: 'absolute',
+                  bottom: 0,
+                  width: '100%',
+                  height: '25%',
+                  backgroundColor: '#222240',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                  color: 'white',
+                  fontSize: '8px',
+                }}>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    id="image-upload"
+                    onChange={handleImageChange}
+                  />
+                  <label htmlFor="image-upload" style={{ cursor: 'pointer' }}>
+                    <StraightIcon sx={{ color: "#ef7d00", fontSize: '10px', marginRight: '4px' }} />
+                    Upload
+                  </label>
+                </Box>
+              </>)}
             </Box>
-
             <Typography variant="body2" sx={{ fontSize: "8px", color: "#9d9d9c", marginTop: '4px', textAlign: 'center' }}>
               (Grid Menu) Category Icon 200x200px
             </Typography>
-
-          </Box>   {/* upload1 */}
-
+          </Box>
           <Box sx={{ marginBottom: 1 }}>
             <Box sx={{
               width: '250px',
@@ -193,44 +181,51 @@ const CategoryForm = ({ open, handleClose }) => {
               alignItems: 'center',
               textAlign: 'center',
             }}>
-              <span class="icon-image-gallery " style={{ fontSize: "35px", color: "gray" }}></span>
-              <Box sx={{
-                position: 'absolute',
-                bottom: 0,
-                width: '100%',
-                height: '20%',
-                backgroundColor: '#222240',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                textAlign: 'center',
-                color: 'white',
-                fontSize: '8px',
-              }}>
-                <StraightIcon sx={{ color: "#ef7d00", fontSize: '10px', marginRight: '4px' }} />
-                Upload
-              </Box>
+              <input
+                type="file"
+                accept="image/*"
+                style={{ display: 'none' }}
+                id="cover-upload"
+                onChange={handleCoverChange}
+              />
+              <label htmlFor="cover-upload" style={{ cursor: 'pointer' }}>
+                {cover ? (
+                  <img src={URL.createObjectURL(cover)} alt="Cover" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                ) : (<>
+                  <span className="icon-image-gallery" style={{ fontSize: "35px", color: "gray" }}></span>
+                  <Box sx={{
+                    position: 'absolute',
+                    bottom: 0,
+                    width: '100%',
+                    height: '20%',
+                    backgroundColor: '#222240',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    color: 'white',
+                    fontSize: '8px',
+                  }}>
+                    <StraightIcon sx={{ color: "#ef7d00", fontSize: '10px', marginRight: '4px' }} />
+                    Upload
+                  </Box>
+                </>)}
+              </label>
             </Box>
-
             <Typography variant="body2" sx={{ fontSize: "8px", color: "#9d9d9c", marginTop: '4px', textAlign: 'center' }}>
               (Grid Menu) Category Icon 200x200px
             </Typography>
-          </Box> {/* upload2 */}
-
-          {/* Save Button */}
+          </Box>
           <Button
+            onClick={handleAdd}
             variant="contained" color="warning" fullWidth
             sx={{ width: "40%", fontSize: "11px", borderRadius: "20px", marginTop: 2, textTransform: "capitalize" }}>
-            <CheckIcon sx={{ fontSize: "16px", marginRight: "5px" }} />
-            Save
+            {/* <CheckIcon sx={{ fontSize: "16px", marginRight: "5px" }} /> */}
+            {isLoading ? "Loading..." : "Save"}
           </Button>
         </Box>
-
       </DialogContent>
-    </Dialog >
-
-
-
+    </Dialog>
   );
 };
 

@@ -22,7 +22,7 @@ export const BranchesPage = () => {
   };
 
   const getLanguageIcon = () => {
-    return selectedLanguage === 'ar' ? <span class="icon-translation" style={{ color: "#ef7d00", fontSize: "22px" }}> </span>
+    return selectedLanguage === 'ar' ? <span className="icon-translation" style={{ color: "#ef7d00", fontSize: "22px" }}> </span>
       : <LanguageOutlinedIcon sx={{ color: "#ef7d00", fontSize: "22px" }} />;
   };
 
@@ -49,7 +49,7 @@ export const BranchesPage = () => {
               sx={{ padding: "2px" }}
             >
               <MenuItem onClick={() => handleLanguageClose('ar')}>
-                <span class="icon-translation" style={{ color: "#575756", marginRight: '8px', fontSize: "20px" }}></span>
+                <span className="icon-translation" style={{ color: "#575756", marginRight: '8px', fontSize: "20px" }}></span>
                 <span style={{ fontSize: "12px", color: "#575756" }}>Arabic</span>
               </MenuItem>
               <Divider />

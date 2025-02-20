@@ -5,9 +5,15 @@ const BranchContext = createContext();
 export const BranchProvider = ({ children }) => {
   const [branches, setBranches] = useState([]);
   const [selectedBranch, setSelectedBranch] = useState(null);
+  const [discountContent, setDiscountContent] = useState(null);
 
   return (
-    <BranchContext.Provider value={{ branches, setBranches, selectedBranch, setSelectedBranch }}>
+    <BranchContext.Provider value={{
+      branches, setBranches,
+      selectedBranch, setSelectedBranch,
+      discountContent, setDiscountContent
+      
+    }}>
       {children}
     </BranchContext.Provider>
   );
