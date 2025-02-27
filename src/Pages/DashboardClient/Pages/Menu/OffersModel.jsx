@@ -17,9 +17,9 @@ export const OffersModel = ({ open, handleClose }) => {
     
     const handleAdd = async () => {
         const newOffer = {
-            discount: "10%", // قيمة ثابتة
-            before_discount: "22", // قيمة ثابتة
-            after_discount: "22", // قيمة ثابتة
+            discount: "0%", // قيمة ثابتة
+            before_discount: "0", // قيمة ثابتة
+            after_discount: "0", // قيمة ثابتة
             meals_id: "4", // قيمة ثابتة
             brunch_id: selectedBranch // يتم استخدام الـ branch المحدد
         };

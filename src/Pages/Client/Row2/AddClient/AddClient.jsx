@@ -10,10 +10,106 @@ import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import { useNavigate } from "react-router";
 import { PersonalInfo } from './PersonalInfo';
 import { BusinessInfo } from './BusinessInfo';
+import axios from 'axios';
+import { useRegisterClient } from '../../../../context/RegisterClientContext';
+import { toast } from 'react-toastify';
 export const AddClient = () => {
 
   const navigate = useNavigate();
 
+  const { clientData ,setClientData } = useRegisterClient();
+
+  const handleSave = async () => {
+    try {
+      // console.log("clientData ", clientData);
+
+      // Function to serialize arrays to JSON strings
+      const serializeArrays = (obj) => {
+        const newObj = { ...obj };
+        for (const key in newObj) {
+          if (Array.isArray(newObj[key])) {
+            newObj[key] = JSON.stringify(newObj[key]);
+          } else if (typeof newObj[key] === 'object' && newObj[key] !== null) {
+            newObj[key] = serializeArrays(newObj[key]);
+          }
+        }
+        return newObj;
+      };
+
+      const allClientData = {
+        name: clientData.personalInfo.fullName,
+        mobile: clientData.personalInfo.phone,
+        email: clientData.personalInfo.email,
+        birth_date: `${clientData.personalInfo.year}-${clientData.personalInfo.month}-${clientData.personalInfo.day}`,
+        country: clientData.personalInfo.country,
+        password: clientData.personalInfo.password,
+        user_type: "qtap_clients",
+        img: '', // Add image if available
+        payment_method: Object.keys(clientData.businessInfo.paymentMethods).filter(
+          key => clientData.businessInfo.paymentMethods[key]
+        ),
+        brunch1: {
+          contact_info: {
+            business_phone: clientData.businessInfo.contactInfo.businessPhone,
+            business_email: clientData.businessInfo.contactInfo.businessEmail,
+            facebook: clientData.businessInfo.contactInfo.facebook,
+            twitter: clientData.businessInfo.contactInfo.twitter,
+            instagram: clientData.businessInfo.contactInfo.instagram,
+            address: clientData.businessInfo.contactInfo.address,
+            website: clientData.businessInfo.contactInfo.website
+          },
+          // currency_id: clientData.businessInfo.currency || '', 
+          currency_id: "1",
+          workschedules: clientData.businessInfo.workSchedules,
+          serving_ways: Object.keys(clientData.businessInfo.servingWays).filter(
+            key => clientData.businessInfo.servingWays[key]
+          ), // Convert servingWays object to array
+          tables_number: clientData.businessInfo.numberOfTables,
+          // pricing_id: clientData.businessInfo.pricingId || '', // Add if available
+          pricing_id: "1",
+          payment_services: Object.keys(clientData.businessInfo.paymentMethods).filter(
+            key => clientData.businessInfo.paymentMethods[key]
+          ), // Convert paymentMethods object to array
+          // discount_id: clientData.businessInfo.discountId || '', // Add if available
+          discount_id: "1",
+          business_name: clientData.businessInfo.businessName,
+          business_country: clientData.businessInfo.country,
+          business_city: clientData.businessInfo.city,
+          latitude: "846.668848",
+          longitude: "648.4684684",
+          // business_format: clientData.businessInfo.businessType, 
+          business_format: "uk",
+          menu_design: clientData.businessInfo.design,
+          default_mode: clientData.businessInfo.mode,
+
+          payment_time: clientData.businessInfo.paymentTime.beforeServing ? 'before' : 'after',
+          // payment_time: Object.keys(clientData.businessInfo.paymentTime).filter(
+          //   key => clientData.businessInfo.paymentTime[key]
+          // ).join(" "),
+          call_waiter: 'active' // Default value, update if needed
+        }
+      };
+
+      console.log('Client allClientData', allClientData);
+
+      const response = await axios.post('https://highleveltecknology.com/Qtap/api/qtap_clients', allClientData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      console.log('Client registered response', response);
+
+      if (response.status === 201) {
+
+        toast.success('Client registered successfully');
+        
+      }
+    } catch (error) {
+      console.error('Error registering client:', error);
+      toast.error(` ${error.response.data.message}`);
+    }
+  };
   const [anchorElLanguage, setAnchorElLanguage] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState('en');
   const openLanguage = Boolean(anchorElLanguage);
@@ -42,6 +138,47 @@ export const AddClient = () => {
     setAnchorElUser(null);
   };
 
+  const deleteAllData = () => {
+    setClientData({
+      name: "",
+      mobile: "",
+      email: "",
+      birth_date: "",
+      country: "",
+      password: "",
+      user_type: "qtap_clients",
+      payment_method: "",
+      brunch1: {
+        contact_info: {
+          business_phone: "",
+          business_email: "",
+          facebook: "",
+          twitter: "",
+          instagram: "",
+          address: "",
+          website: ""
+        },
+        // currency_id: clientData.businessInfo.currency || '', 
+        currency_id: "1",
+        workschedules: "",
+        serving_ways: "",
+        tables_number: " ",
+        pricing_id: "1",
+        payment_services: "",
+        discount_id: "1",
+        business_name: "",
+        business_country: "",
+        business_city: "",
+        latitude: "846.668848",
+        longitude: "648.4684684",
+        business_format: "",
+        menu_design: "",
+        default_mode: "",
+        payment_time: " ",
+        call_waiter: '' // Default value, update if needed
+      }
+    })
+  }
   return (
     <Box sx={{ backgroundColor: "white", height: "100%" }}>
       <Box
@@ -209,13 +346,14 @@ export const AddClient = () => {
         <Grid container justifyContent="center" sx={{ marginTop: 3 }}>
           <Button
             sx={{
-              width: '160px', textTransform: "capitalize", backgroundColor: "#ef7d00", 
+              width: '160px', textTransform: "capitalize", backgroundColor: "#ef7d00",
               color: "white", borderRadius: "20px", padding: "5px",
               '&:hover': {
                 backgroundColor: "#ef7d10",
               }
-            }}>
-            <CheckOutlinedIcon sx={{ fontSize: "22px", mr: 1 }} /> Save
+            }}
+            onClick={handleSave}>
+            <CheckOutlinedIcon sx={{ fontSize: "22px", mr: 1 }} /> Saveg
           </Button>
         </Grid>
       </Box>
@@ -223,3 +361,5 @@ export const AddClient = () => {
     </Box>
   )
 }
+
+export default AddClient;

@@ -20,29 +20,36 @@ const PaymentGatewayForm = () => {
             Token1: token1,
             Token2: token2,
             Ifram: iframe,
+            brunch_id: localStorage.getItem("selectedBranch")
         }
-        
+
         try {
-            const options =  {
+            const options = {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem("adminToken")}`
+                    'Authorization': `Bearer ${localStorage.getItem("clientToken")}`
                 },
                 body: JSON.stringify(formData)
             }
-            const response = await fetch('https://highleveltecknology.com/Qtap/api/settings/payment', options);
-            // console.log("response", response);
-            
+            const response = await fetch('https://highleveltecknology.com/Qtap/api/payment', options);
+            // console.log("response payment", response);
+
             const data = await response.json();
 
             if (!response.ok) {
                 throw new Error(data.error || 'Something went wrong');
             }
-            
-            toast.success("Payment Gateway Saved Successfully");
+
+            if (response.ok) {
+                toast.success("Payment Gateway Saved Successfully");
+                setApiKey('');
+                setToken1('');
+                setToken2('');
+                setIframe('');
+            }
             // console.log("data", data);
-            
+
         } catch (error) {
             toast.error(error.message);
             console.error('Error:', error);

@@ -71,6 +71,7 @@ const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onC
   );
 };
 
+
 const Support = () => {
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [tickets, setTickets] = useState([]);
@@ -233,3 +234,119 @@ const Support = () => {
 };
 
 export default Support;
+
+// // try this code again !!!
+// import React, { useState, useEffect } from 'react';
+// import { Box, Grid, Paper, Typography, IconButton, Button, TextField, Modal } from '@mui/material';
+// import AddIcon from '@mui/icons-material/Add';
+// import TicketDetails from '../DashboardClient/Pages/SupportClient/TicketDetails';
+// import ChatApp from './ChatApp';
+// import axios from 'axios';
+// import { toast } from 'react-toastify';
+
+// const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onClick, onUpdate }) => {
+//   const statusStyles = {
+//     'in_progress': { backgroundColor: '#222240', color: '#f4f6fc' },
+//     'open': { backgroundColor: '#EBEDF3', color: '#575756' },
+//   };
+
+//   const formattedDate = new Date(created_at).toLocaleDateString();
+
+//   return (
+//     <Paper
+//       elevation={3}
+//       sx={{
+//         padding: "10px",
+//         width: 150,
+//         height: 150,
+//         borderRadius: 6,
+//         position: 'relative',
+//         cursor: "pointer",
+//         backgroundColor: statusStyles[status]?.backgroundColor || '#EBEDF3',
+//         color: statusStyles[status]?.color || '#575756',
+//       }}
+//       onClick={onClick}
+//     >
+//       <Typography variant="body2" sx={{ fontSize: "11px", paddingBottom: "10px" }}>
+//         Ticket No.#{id}
+//       </Typography>
+//       <Typography variant="body2" sx={{ fontSize: "9px", paddingBottom: "10px" }}>
+//         Name: {Customer_Name}
+//       </Typography>
+//       <Typography variant="body2" sx={{ fontSize: "9px", paddingBottom: "10px" }}>
+//         Mail: {Customer_Email}
+//       </Typography>
+//       <Typography variant="body2" sx={{ fontSize: "9px", paddingBottom: "10px" }}>
+//         Date: {formattedDate}
+//       </Typography>
+//       <Button size="small" onClick={onUpdate} sx={{ position: 'absolute', bottom: 5, left: '50%', transform: 'translateX(-50%)' }}>Update</Button>
+//     </Paper>
+//   );
+// };
+
+// const Support = () => {
+//   const [tickets, setTickets] = useState([]);
+//   const [selectedTicket, setSelectedTicket] = useState(null);
+//   const [openModal, setOpenModal] = useState(false);
+//   const [newTicket, setNewTicket] = useState({ Customer_Name: '', Customer_Email: '', content: '', status: 'open', Customer_Phone: '' });
+
+//   const fetchTickets = async () => {
+//     try {
+//       const response = await axios.get('https://highleveltecknology.com/Qtap/api/ticket', {
+//         headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
+//       });
+//       setTickets(response.data);
+//     } catch (error) {
+//       toast.error('Failed to fetch tickets');
+//     }
+//   };
+
+//   useEffect(() => { fetchTickets(); }, []);
+
+//   const addTicket = async () => {
+//     try {
+//       const response = await axios.post('https://highleveltecknology.com/Qtap/api/ticket', newTicket, {
+//         headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}`, 'Content-Type': 'application/json' }
+//       });
+//       setTickets([...tickets, response.data.ticket]);
+//       toast.success('Ticket added successfully');
+//       setOpenModal(false);
+//     } catch (error) {
+//       toast.error('Failed to add ticket');
+//     }
+//   };
+
+//   return (
+//     <Box sx={{ padding: "0px 20px" }}>
+//       <Grid sx={{ marginBottom: "15px" }}>
+//         <ChatApp />
+//       </Grid>
+//       <Paper sx={{ padding: "10px 20px", borderRadius: "20px" }}>
+//         <Grid container spacing={2} alignItems="center">
+//           {tickets.map(ticket => (
+//             <Grid item key={ticket.id}>
+//               <TicketCard {...ticket} onClick={() => setSelectedTicket(ticket)} onUpdate={() => setSelectedTicket(ticket)} />
+//             </Grid>
+//           ))}
+//           <Grid item>
+//             <Paper elevation={3} sx={{ width: 150, height: 150, borderRadius: 6, display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#ECECEC', cursor: "pointer" }} onClick={() => setOpenModal(true)}>
+//               <AddIcon sx={{ fontSize: 45, fontWeight: "bolder" }} />
+//             </Paper>
+//           </Grid>
+//         </Grid>
+//       </Paper>
+//       {selectedTicket && <TicketDetails open={Boolean(selectedTicket)} handleClose={() => setSelectedTicket(null)} ticket={selectedTicket} />}
+//       <Modal open={openModal} onClose={() => setOpenModal(false)}>
+//         <Box sx={{ padding: 4, backgroundColor: 'white', width: 300, margin: 'auto', mt: 10, borderRadius: 2 }}>
+//           <Typography variant="h6">Add New Ticket</Typography>
+//           <TextField fullWidth label="Name" value={newTicket.Customer_Name} onChange={(e) => setNewTicket({ ...newTicket, Customer_Name: e.target.value })} sx={{ mt: 2 }} />
+//           <TextField fullWidth label="Email" value={newTicket.Customer_Email} onChange={(e) => setNewTicket({ ...newTicket, Customer_Email: e.target.value })} sx={{ mt: 2 }} />
+//           <TextField fullWidth label="Content" value={newTicket.content} onChange={(e) => setNewTicket({ ...newTicket, content: e.target.value })} sx={{ mt: 2 }} />
+//           <Button fullWidth variant="contained" sx={{ mt: 2 }} onClick={addTicket}>Add Ticket</Button>
+//         </Box>
+//       </Modal>
+//     </Box>
+//   );
+// };
+
+// export default Support;

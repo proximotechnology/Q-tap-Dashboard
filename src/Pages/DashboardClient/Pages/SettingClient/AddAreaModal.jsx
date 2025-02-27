@@ -1,21 +1,120 @@
-import React from 'react';
+
+
+import React, { useContext, useEffect, useState } from 'react';
 import { Box, Modal, TextField, Button, Typography, IconButton, Divider } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { ClientLoginData } from '../../../../context/ClientLoginDataContext';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const AddAreaModal = ({ open, onClose }) => {
-    const rows = [
-        { id: 'B01' },
-        { id: 'C04' }
-    ];
+    const [name, setName] = useState('');
+    const [editingAreaId, setEditingAreaId] = useState(null); // حالة لحفظ ID المنطقة التي يتم تعديلها
+    const selectedBranch = localStorage.getItem("selectedBranch");
+    const { areaData, getAreaData } = useContext(ClientLoginData);
+    const { areas } = areaData;
+
+    useEffect(() => {
+        console.log("area data", areas);
+    }, []);
+
+    //========================================== حفظ منطقة جديدة
+    const handleSaveArea = async () => {
+        if (name === '') {
+            toast.error('Please fill all fields');
+            return;
+        }
+        try {
+            const response = await axios.post(`https://highleveltecknology.com/Qtap/api/area`, {
+                brunch_id: selectedBranch,
+                name
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
+                }
+            });
+
+            if (response.data) {
+                toast.success("Area added successfully!");
+                getAreaData();
+                setName('');
+            }
+        } catch (error) {
+            console.log("Error adding area", error);
+            toast.error("Error adding area");
+        }
+    };
+
+    //========================================== تحديث المنطقة
+    const handleUpdateArea = async (id) => {
+        if (name === '') {
+            toast.error('Please fill all fields');
+            return;
+        }
+
+        try {
+            const response = await axios.post(`https://highleveltecknology.com/Qtap/api/area/${id}`, {
+                brunch_id: selectedBranch,
+                name
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
+                }
+            });
+
+            if (response.data) {
+                toast.success("Area updated successfully!");
+                getAreaData();
+                setName('');
+                setEditingAreaId(null); // إعادة تعيين ID التعديل بعد التحديث
+            }
+        } catch (error) {
+            console.log("Error updating area", error);
+            toast.error("Error updating area");
+        }
+    };
+
+    //========================================== حذف المنطقة
+    const handleDeleteArea = async (id) => {
+        try {
+            const response = await axios.delete(`https://highleveltecknology.com/Qtap/api/area/${id}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
+                }
+            });
+
+            if (response.data) {
+                toast.success("Area deleted successfully!");
+                getAreaData();
+            }
+        } catch (error) {
+            console.log("Error deleting area", error);
+            toast.error("Error deleting area");
+        }
+    };
+
+    //========================================== عند الضغط على زر التعديل
+    const handleUpdateClick = (area) => {
+        setName(area.name);  // إدخال اسم المنطقة في الحقل
+        setEditingAreaId(area.id);  // حفظ ID المنطقة التي يتم تعديلها
+    };
+
+    //========================================== عند الضغط على زر الحفظ
+    const handleSubmit = () => {
+        if (editingAreaId) {
+            handleUpdateArea(editingAreaId); // تحديث المنطقة إذا كان هناك تعديل
+        } else {
+            handleSaveArea(); // إضافة منطقة جديدة
+        }
+    };
 
     return (
-        <Modal
-        open={open} onClose={onClose}
-            aria-labelledby="add-area-modal"
-            aria-describedby="add-area-description"
-        >
+        <Modal open={open} onClose={onClose} aria-labelledby="add-area-modal" aria-describedby="add-area-description">
             <Box
                 sx={{
                     width: 400,
@@ -28,31 +127,30 @@ const AddAreaModal = ({ open, onClose }) => {
                     position: 'relative'
                 }}>
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <Typography variant="body1" sx={{ fontSize: "13px", color: "#424242" }}>Add Area</Typography>
+                    <Typography variant="body1" sx={{ fontSize: "13px", color: "#424242" }}>
+                        {editingAreaId ? "Update Area" : "Add Area"}
+                    </Typography>
                     <IconButton onClick={onClose}>
                         <CloseIcon sx={{ fontSize: "20px", color: "gray" }} />
                     </IconButton>
                 </Box>
 
                 <Divider sx={{ backgroundColor: '#FF6600', height: '1px' }} />
-                <Box sx={{
-                    marginTop: "20px",
-                    display: "flex",
-                    flexDirection: "column",
-                    width: "100%",
-                    alignItems: "left",
-                }}>
+                <Box sx={{ marginTop: "20px", display: "flex", flexDirection: "column", width: "100%", alignItems: "left" }}>
                     <Typography variant='body2' sx={{ width: "25%", textAlign: "center" }} color={"#424242"} fontSize={"12px"}>
                         Name
                     </Typography>
                     <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
                         <TextField
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
                             sx={{
                                 width: "90%",
                                 '& .MuiInputBase-input': {
                                     height: "35px",
                                     padding: "0px 14px",
-                                    textAlign: "left", fontSize: "12px",
+                                    textAlign: "left",
+                                    fontSize: "12px",
                                     color: "gray",
                                 }
                             }}
@@ -62,13 +160,9 @@ const AddAreaModal = ({ open, onClose }) => {
                     </Box>
                 </Box>
 
-                <Box sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "100%",
-                }}>
+                <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%" }}>
                     <Button
+                        onClick={handleSubmit}
                         variant="contained"
                         color="warning"
                         sx={{
@@ -80,7 +174,8 @@ const AddAreaModal = ({ open, onClose }) => {
                             textTransform: "capitalize",
                         }}
                     >
-                        <AddOutlinedIcon sx={{ fontSize: "18px", color: "white", mr: 1 }} /> Add
+                        <AddOutlinedIcon sx={{ fontSize: "18px", color: "white", mr: 1 }} />
+                        {editingAreaId ? 'Update' : 'Add'}
                     </Button>
                 </Box>
 
@@ -88,27 +183,20 @@ const AddAreaModal = ({ open, onClose }) => {
                     <Table sx={{ width: "100%" }} aria-label="simple table">
                         <TableHead>
                             <TableRow sx={{ height: "24px" }}>
-                                <TableCell align="center" sx={{
-                                    fontSize: "10px",
-                                    borderBottom: "none",
-                                    backgroundColor: '#EBEDF3',
-                                    padding: "0px"
-                                }}>Name</TableCell>
+                                <TableCell align="center" sx={{ fontSize: "10px", borderBottom: "none", backgroundColor: '#EBEDF3', padding: "0px" }}>Name</TableCell>
                                 <TableCell align="center" sx={{ fontSize: "10px", borderBottom: "none", backgroundColor: '#EBEDF3', padding: "0px" }}>Action</TableCell>
                             </TableRow>
                         </TableHead>
-
                         <TableBody>
-                            {rows.map((row) => (
+                            {areas.filter(area => area.brunch_id == selectedBranch).map((row) => (
                                 <TableRow key={row.id} sx={{ height: "30px" }}>
-                                    <TableCell align="center" sx={{ padding: "0px", fontSize: "10px", color: "gray" }}>{row.id}</TableCell>
+                                    <TableCell align="center" sx={{ padding: "0px", fontSize: "10px", color: "gray" }}>{row.name}</TableCell>
                                     <TableCell align="center" sx={{ padding: "0px" }}>
-
-                                        <IconButton size="small"  >
-                                            <span class="icon-edit" style={{ color: "black", fontSize: "18px" }} />
+                                        <IconButton onClick={() => handleUpdateClick(row)} size="small">
+                                        <span class="icon-edit" style={{ fontSize: "18px" }} />
                                         </IconButton>
-                                        <IconButton size="small" color='error'>
-                                            <span class="icon-delete" style={{ fontSize: "18px" }} />
+                                        <IconButton onClick={() => handleDeleteArea(row.id)} size="small" color='error'>
+                                        <span class="icon-delete" style={{ fontSize: "18px" }} />
                                         </IconButton>
                                     </TableCell>
                                 </TableRow>
@@ -122,3 +210,4 @@ const AddAreaModal = ({ open, onClose }) => {
 };
 
 export default AddAreaModal;
+ 

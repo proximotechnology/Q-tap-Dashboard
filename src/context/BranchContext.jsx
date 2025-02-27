@@ -12,7 +12,6 @@ export const BranchProvider = ({ children }) => {
       branches, setBranches,
       selectedBranch, setSelectedBranch,
       discountContent, setDiscountContent
-      
     }}>
       {children}
     </BranchContext.Provider>

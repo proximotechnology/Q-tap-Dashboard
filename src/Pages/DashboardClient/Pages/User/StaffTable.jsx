@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Divider, IconButton, Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -6,6 +6,8 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from
 import { staffData } from './userData';
 import { AddStaff } from './AddStaff';
 import * as XLSX from 'xlsx';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export const StaffTable = () => {
     const [modalOpen, setModalOpen] = useState(false);
@@ -31,7 +33,59 @@ export const StaffTable = () => {
 
         XLSX.writeFile(workbook, "User_Data.xlsx");
     };
+    //========================================== get RestStaff data 
 
+    const [RestStaff, setRestStaff] = useState([]);
+    const selectedBranch = localStorage.getItem("selectedBranch")
+
+    const getRestStaff = async () => {
+        try {
+            const response = await axios.get('https://highleveltecknology.com/Qtap/api/restaurant_staff', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
+                },
+                params: {
+                    brunch_id: selectedBranch
+                }
+
+            })
+
+            if (response.data) {
+                setRestStaff(response.data.restaurant_staff);
+            }
+            console.log("RestStaff data response ", response.data);
+
+        } catch (error) {
+            console.log("error RestStaff data ", error);
+
+        }
+
+    }
+    useEffect(() => {
+        getRestStaff();
+    }, [])
+    //========================================== handle delete RestStaff
+
+    const handleDeleteRestStaff = async (id) => {
+        try {
+            const response = await axios.delete(`https://highleveltecknology.com/Qtap/api/restaurant_staff/${id}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
+                }
+            })
+
+            if (response.data) {
+                toast.success("RestStaff deleted successfully!");
+                getRestStaff();
+            }
+        } catch (error) {
+            console.log("error delete RestStaff ", error);
+            toast.error("Error deleting RestStaff");
+
+        }
+    }
 
     return (
         <Paper sx={{ padding: "15px 30px 50px 30px", marginTop: "20px", borderRadius: "20px" }}>
@@ -43,7 +97,7 @@ export const StaffTable = () => {
                 padding="5px 0"
             >
                 <Box sx={{ display: "flex", alignItem: "center" }}>
-                    <span class="icon-manager" style={{ fontSize: "25px", color: "#D8E0E0" , marginRight: "10px"}}></span>
+                    <span class="icon-manager" style={{ fontSize: "25px", color: "#D8E0E0", marginRight: "10px" }}></span>
                     <Typography variant='body1' sx={{ fontSize: "16px", color: "#575756" }}>Staff</Typography>
                 </Box>
 
@@ -91,7 +145,7 @@ export const StaffTable = () => {
                     </TableHead>
 
                     <TableBody>
-                        {staffData.map((row) => (
+                        {RestStaff.map((row) => (
                             <TableRow
                                 key={row.id}
                                 sx={{

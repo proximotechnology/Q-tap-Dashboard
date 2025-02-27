@@ -3,9 +3,10 @@ import { Modal, Box, Typography, Divider, IconButton } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 
-
 const DetailsModal = ({ open, onClose, rowData }) => {
-    const { rate, satisfied } = rowData;
+    if (!rowData) return null;
+
+    const { id, client, star, satisfied } = rowData;
 
     return (
         <Modal open={open} onClose={onClose}>
@@ -23,7 +24,7 @@ const DetailsModal = ({ open, onClose, rowData }) => {
             >
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>
-                        Add Question
+                        Feedback Details
                     </Typography>
                     <IconButton onClick={onClose}>
                         <span className="icon-close-1" style={{ fontSize: "12px", color: "#AAAAAA" }} />
@@ -40,16 +41,17 @@ const DetailsModal = ({ open, onClose, rowData }) => {
                     color: "#575756", fontSize: "12px", marginTop: "10px",
                     marginBottom: "15px"
                 }}>
-                    Order ID:<span style={{ color: "#E57C00", marginLeft: "20px", }}> #{rowData.orderId}</span>
+                    Order ID:<span style={{ color: "#E57C00", marginLeft: "20px", }}> #{id}</span>
                 </Typography>
 
                 <Typography variant="body1" sx={{ color: "#575756", fontSize: "12px", marginBottom: "15px" }}>
-                    Name :<span style={{ color: "#949493", marginLeft: "20px", }}>{rowData.name}</span>
+                    Name :<span style={{ color: "#949493", marginLeft: "20px", }}>{client.name}</span>
                 </Typography>
 
                 <Typography variant="body1" sx={{ color: "#575756", fontSize: "12px", marginBottom: "15px" }}>
-                    Phone :<span style={{ color: "#949493", marginLeft: "20px", }}>{rowData.phone}</span>
+                    Phone :<span style={{ color: "#949493", marginLeft: "20px", }}>{client.mobile}</span>
                 </Typography>
+
 
                 <Box sx={{ marginBottom: "15px" }}>
                     <Typography variant="body1" sx={{ color: "#575756", fontSize: "12px", }}>
@@ -58,7 +60,7 @@ const DetailsModal = ({ open, onClose, rowData }) => {
                     <Box sx={{ display: 'flex', gap: 1 }}>
                         {Array.from({ length: 5 }).map((_, index) => (
                             <IconButton key={index} disableRipple sx={{ padding:"0px"}}>
-                                {index < rate ? (
+                                {index < star ? (
                                     <StarIcon sx={{ fontSize: "22px", color: "#E57C00" }} />
                                 ) : (
                                     <StarOutlineIcon sx={{ fontSize: "22px", color: "#E57C00" }} />
@@ -75,12 +77,12 @@ const DetailsModal = ({ open, onClose, rowData }) => {
                     <Box sx={{ display: 'flex', }}>
                         {Array.from({ length: 10 }).map((_, index) => (
                             <IconButton key={index} disableRipple  sx={{ padding:"3px"}}>
-                                {index < satisfied ? (
+                                {index < star ? (
                                     <Box sx={{
                                         width: "22px", height: "22px", borderRadius: "50%", justifyContent: "center",
                                         alignItems: "center", backgroundColor: "#575756",
                                         color: "white", fontSize: "11px", position: "relative",display: "flex",
-                                    }} >{index}</Box>
+                                    }} >{index + 1}</Box>
                                 ) : (
                                     <Box sx={{
                                         width: "22px", height: "22px", borderRadius: "50%", display: "flex", justifyContent: "center",
@@ -88,7 +90,7 @@ const DetailsModal = ({ open, onClose, rowData }) => {
                                         color: "#575756", fontSize: "11px",
                                         position: "relative",
 
-                                    }}>{index}</Box>
+                                    }}>{index + 1}</Box>
                                 )}
                             </IconButton>
                         ))}

@@ -9,11 +9,11 @@ import { ServingWaysPage } from './Component/serving Ways/ServingWaysPage';
 import { HomePage } from './Pages/HomePage';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from './Pages/DashboardHome/Home/Home';
-import Product from "./Pages/product/Product" ; 
-import Client from './Pages/Client/Client' ; 
-import Wallet from './Pages/Wallet/Wallet' ;
+import Product from "./Pages/product/Product";
+import Client from './Pages/Client/Client';
+import Wallet from './Pages/Wallet/Wallet';
 import ErrorPage from './Pages/ErrorPage/ErrorPage';
-import  Support  from './Pages/Support/Support';
+import Support from './Pages/Support/Support';
 import { Pricing } from './Pages/Pricing/Pricing';
 import { Affiliate } from './Pages/Affiliate/Affiliate';
 import { Setting } from './Pages/Setting/Setting';
@@ -23,11 +23,11 @@ import { LoginAdmin } from './Component/DashboardClient/LoginAdmin';
 import { OrderBody } from './Pages/DashboardClient/Order/OrderComponent/OrderBody';
 import HomeClient from './Pages/DashboardClient/Pages/DashHome/HomeClient';
 import { DashboardClient } from './Pages/DashboardClient/Pages/DashHome/DashboardClient';
-import {Order} from './Pages/DashboardClient/Pages/Order/Order'
+import { Order } from './Pages/DashboardClient/Pages/Order/Order'
 import { WalletClient } from './Pages/DashboardClient/Pages/WalletClient/WalletClient';
-import {Menu} from './Pages/DashboardClient/Pages/Menu/Menu';
-import SupportClient from './Pages/DashboardClient/Pages/SupportClient/SupportClient' ;
-import {Customers} from './Pages/DashboardClient/Pages/Customers/Customers'
+import { Menu } from './Pages/DashboardClient/Pages/Menu/Menu';
+import SupportClient from './Pages/DashboardClient/Pages/SupportClient/SupportClient';
+import { Customers } from './Pages/DashboardClient/Pages/Customers/Customers'
 import { SettingClient } from './Pages/DashboardClient/Pages/SettingClient/SettingClient';
 import { OrderHistory } from './Pages/DashboardClient/Order/OrderComponent/OrderHistory';
 import { Transaction } from './Pages/DashboardClient/Pages/WalletClient/Transaction/Transaction';
@@ -54,6 +54,8 @@ import { PersonalProvider } from './context/PersonalContext';
 import { BusinessProvider } from './context/BusinessContext';
 import { BranchProvider } from './context/BranchContext';
 import { ContentMenuProvider } from './context/ContentMenuContext';
+import { RegisterClientProvider } from './context/RegisterClientContext';
+import { ClientLoginDataProvider } from './context/ClientLoginDataContext';
 
 function App() {
   const routes = createBrowserRouter([
@@ -92,7 +94,7 @@ function App() {
     },
     {
       path: "/save",
-      element: <Save/>,
+      element: <Save />,
     },
     {
       path: "/welcome",
@@ -116,103 +118,103 @@ function App() {
     },
     {
       path: "order",
-      element: <Order /> ,  
+      element: <Order />,
     },
     {
       path: "add-item",
-      element: <AddItem /> ,  
+      element: <AddItem />,
     },
     {
       path: "add-client",
-      element: <AddClient /> ,  
+      element: <AddClient />,
     },
     {
       path: "add-user",
-      element: <AddUsers /> ,  
+      element: <AddUsers />,
     },
     {
       path: "add-Affiliate",
-      element: <AddAffiliate /> ,  
+      element: <AddAffiliate />,
     },
     {
       path: "delivery-riders",
-      element: < DeliveryLogin /> ,  
+      element: < DeliveryLogin />,
     },
     {
       path: "delivered",
-      element: <Delivered /> ,  
+      element: <Delivered />,
     },
 
     {
       path: "menu-client",
-      element: <MenuClient /> ,  
+      element: <MenuClient />,
     },
-    
+
 
     //  dashboard-Affiliate
     {
-      path:"/",
-      element:<HomeAffiliate />,
+      path: "/",
+      element: <HomeAffiliate />,
       children: [
         {
           index: true,
-          path:"/dashboard-affiliate" , 
-          element: <DashboardAffiliate />, 
+          path: "/dashboard-affiliate",
+          element: <DashboardAffiliate />,
         },
         {
           path: "wallet-affiliate",
-          element: <WalletAffiliate /> ,  
+          element: <WalletAffiliate />,
         },
       ]
     },
     // dashboard-client 
     {
-      path:"/",
-      element :<HomeClient />,// صفحات الداش بورد بتاعت ال client الأساسية 
+      path: "/",
+      element: <HomeClient />,// صفحات الداش بورد بتاعت ال client الأساسية 
       children: [
         {
           index: true,
-          path:"/dashboard-client" , 
-          element: <DashboardClient />, 
+          path: "/dashboard-client",
+          element: <DashboardClient />,
         },
         {
           path: "wallet-client",
-          element: <WalletClient /> ,  
+          element: <WalletClient />,
         },
         {
           path: "transaction",
-          element: <Transaction /> ,  
+          element: <Transaction />,
         },
-        
+
         {
           path: "menu",
-          element: <Menu /> ,  
+          element: <Menu />,
         },
 
         {
           path: "support-client",
-          element: <SupportClient /> ,  
+          element: <SupportClient />,
         },
         {
           path: "user",
-          element: <User /> ,  
+          element: <User />,
         },
         {
           path: "customers-log",
-          element: <Customers /> ,  
+          element: <Customers />,
         },
 
         {
           path: "setting-client",
-          element: <SettingClient /> ,  
+          element: <SettingClient />,
         },
-        
+
         {
           path: "feedback",
-          element: <Feedback /> ,  
+          element: <Feedback />,
         },
       ]
-      
+
     },
     // dashboard-Admin
     {
@@ -221,12 +223,12 @@ function App() {
       children: [
         {
           index: true,
-          path:"dashboard-home" , 
-          element: <DashboardHome />, 
+          path: "dashboard-home",
+          element: <DashboardHome />,
         },
         {
           path: "client",
-          element: <Client /> ,  
+          element: <Client />,
         },
         {
           path: "wallet",
@@ -266,28 +268,33 @@ function App() {
 
 
     {
-      path: "*",  
+      path: "*",
       element: <ErrorPage />,
     },
   ]);
-  
+
 
 
   return (
-    <ContentMenuProvider>
-    <BranchProvider>
-      <PersonalProvider>
-        <BusinessProvider>
-          <div style={{ minHeight: "100vh" }}>
-            <div className="w-100 ">
-              <RouterProvider router={routes}></RouterProvider>
-            </div>
-            <ToastContainer />
-          </div>
-        </BusinessProvider>
-      </PersonalProvider>
-    </BranchProvider>
-  </ContentMenuProvider>
+    <ClientLoginDataProvider>
+      <RegisterClientProvider>
+        <ContentMenuProvider>
+          <BranchProvider>
+            <PersonalProvider>
+              <BusinessProvider>
+                <div style={{ minHeight: "100vh" }}>
+                  <div className="w-100 ">
+                    <RouterProvider router={routes}></RouterProvider>
+                  </div>
+                  <ToastContainer />
+                </div>
+              </BusinessProvider>
+            </PersonalProvider>
+          </BranchProvider>
+        </ContentMenuProvider>
+      </RegisterClientProvider>
+    </ClientLoginDataProvider>
+
   );
 }
 

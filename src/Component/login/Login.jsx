@@ -76,6 +76,8 @@ export const Login = () => {
           navigate('/dashboard-affiliate');
         } else if (loginUserType === 'qtap_clients') {
           localStorage.setItem('clientToken', response.data.token);
+          localStorage.setItem('allClientData',JSON.stringify(response.data));
+
           // Store branches in both context and localStorage
           if (response?.data?.brunches && response.data.brunches.length > 0) {
             setBranches(response.data.brunches);

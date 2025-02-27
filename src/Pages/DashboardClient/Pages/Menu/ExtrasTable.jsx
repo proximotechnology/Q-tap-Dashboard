@@ -1,59 +1,168 @@
-import { Button, Divider, FormControl, IconButton, MenuItem, Paper, Select, Typography } from '@mui/material';
-import React, { useState } from 'react';
+
+
+import { Button, Divider, FormControl, IconButton, MenuItem, Paper, Select, TextField, Typography } from '@mui/material';
+import React, { useContext, useEffect, useState } from 'react';
 import { Box, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { AddExtras } from './AddExtras';
+import DoneIcon from '@mui/icons-material/Done';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import { ContentMenu } from '../../../../context/ContentMenuContext';
 
 export const ExtrasTable = () => {
-    const Extras = [
-        {
-            id: 1,
-            price: '5.00 EGP',
-            name: 'Name of extra here',
-            for: "All",
-        }];
-        const [openExtras, setOpenExtras] = useState(false);
+    const [openVariant, setOpenOffers] = useState(false);
+    const [allExtras, setAllExtras] = useState([]);
+    const [variantIdFromMenuUpdate, setVariantIdFromMenuUpdate] = useState([])
+    const selectedBranch = localStorage.getItem('selectedBranch');
+    const { variantsContext } = useContext(ContentMenu);
 
-        const handleExtrasOpen = () => {
-            setOpenExtras(true);
-        };
-    
-        const handleClose = () => {
-            setOpenExtras(false);
-        };
-    
+
+    useEffect(() => {
+        getExtras();
+        // console.log("variantsContext extara table page ", variantsContext)
+
+    }, [selectedBranch]);
+
+    const handleOffersOpen = () => {
+        setOpenOffers(true);
+    };
+
+    const handleClose = () => {
+        setOpenOffers(false);
+    };
+    const getExtras = async () => {
+        try {
+            const response = await axios.get('https://highleveltecknology.com/Qtap/api/meals_extra', {
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('clientToken')}` },
+                params: { brunch_id: selectedBranch }
+            });
+
+            if (response.data) {
+                const updatedExtras = response.data.map(extra => ({
+                    ...extra,
+                    isEditing: false,
+                }));
+                console.log("extra data", response?.data)
+                setAllExtras(updatedExtras);
+            }
+        } catch (error) {
+            console.error('Error fetching extras:', error);
+            toast.error('Error fetching extras');
+        }
+    };
+
+    const handleDelete = async (id) => {
+        try {
+            await axios.delete(`https://highleveltecknology.com/Qtap/api/meals_extra/${id}`, {
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('clientToken')}` }
+            });
+            toast.success("Extra deleted");
+            getExtras();
+        } catch (error) {
+            console.error('Error deleting extra:', error);
+            toast.error('Error deleting extra');
+        }
+    };
+
+    const handleEditToggle = (index) => {
+        const updatedExtras = [...allExtras];
+        updatedExtras[index].isEditing = !updatedExtras[index].isEditing;
+        setAllExtras(updatedExtras);
+    };
+
+    const handleInputChange = (index, field, value) => {
+        const updatedExtras = [...allExtras];
+        updatedExtras[index][field] = value;
+        setAllExtras(updatedExtras);
+    };
+
+    const handleUpdate = async (index) => {
+        const extra = allExtras[index];
+
+        try {
+
+            const response = await axios.put(
+                `https://highleveltecknology.com/Qtap/api/meals_extra/${extra.id}`,
+                {
+                    name: extra.name,
+                    price: extra.price,
+                    variants_id: variantIdFromMenuUpdate,
+                    brunch_id: selectedBranch
+                },
+                {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('clientToken')}` }
+                }
+            );
+
+            if (response.data) {
+                toast.success('Updated successfully');
+                handleEditToggle(index);
+                getExtras();
+            }
+        } catch (error) {
+            console.error('Error updating extra:', error);
+            toast.error('Error updating extra');
+        }
+    };
+
     return (
-        <Paper
-            sx={{
-                borderRadius: "10px", padding: "20px 30px", marginTop: "20px"
-            }} >
-
+        <Paper sx={{ borderRadius: "10px", padding: "20px 30px", marginTop: "-20px" }}>
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <Typography variant="body1" sx={{ fontSize: "13px", color: "#424242" }}>
+                <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>
                     Extras
                 </Typography>
-                <Button onClick={handleExtrasOpen} >
-                    <Typography variant='body1' sx={{ fontSize: "12px",textTransform:"capitalize", color: "#ef7d00" }}>
-                        + Add One</Typography>
+                <Button>
+                    <Typography
+                        onClick={handleOffersOpen}
+                        variant='body1' sx={{ fontSize: "13px", textTransform: "capitalize", color: "#ef7d00" }}>
+                        + Add One
+                    </Typography>
                 </Button>
-                <AddExtras open={openExtras} handleClose={handleClose} />
+                <AddExtras open={openVariant} handleClose={handleClose} />
             </Box>
-            <Divider sx={{ backgroundColor: '#ef7d00',  }} />
+
+            <Divider sx={{ backgroundColor: '#ef7d00' }} />
 
             <Table sx={{ mt: 3, mb: 5, width: '100%', tableLayout: 'fixed' }}>
                 <TableHead>
-                    <TableRow sx={{ backgroundColor: "#EBEDF3" }}>
-                        <TableCell sx={{ fontSize: "10px", padding: '3px 10px', borderBottom: "none", textAlign: "left"  }}>Price</TableCell>
-                        <TableCell sx={{ fontSize: "10px", padding: '3px 10px', borderBottom: "none", textAlign: "left"  }}>Name</TableCell>
-                        <TableCell sx={{ fontSize: "10px", padding: '3px 10px', borderBottom: "none", textAlign: "center"}}>For</TableCell>
-                        <TableCell sx={{ fontSize: "10px", padding: '3px 10px', borderBottom: "none", textAlign: "left"  }}></TableCell>
+                    <TableRow sx={{ backgroundColor: "#EBEDF3"}}>
+                        <TableCell sx={{ fontSize: "10px", textAlign: "left", color: "#575756" , padding:"3px 10px"}}>Price</TableCell>
+                        <TableCell sx={{ fontSize: "10px", textAlign: "left", color: "#575756", padding:"3px 10px" }}>Name</TableCell>
+                        <TableCell sx={{ fontSize: "10px", textAlign: "center", color: "#575756", padding:"3px 10px" }}>Actions</TableCell>
+                        <TableCell sx={{ fontSize: "10px", textAlign: "center", color: "#575756", padding:"3px 10px" }}></TableCell>
                     </TableRow>
                 </TableHead>
 
                 <TableBody>
-                    {Extras.map((discount, index) => (
-                        <TableRow key={index} sx={{ height: '36px' }}>
-                            <TableCell sx={{ textAlign: "left", fontSize: "10px", color: "gray", padding: '3px 10px', width: `${100 / 4}%` }}>{discount.price}</TableCell>
-                            <TableCell sx={{ textAlign: "left", fontSize: "10px", color: "gray", padding: '3px 10px', width: `${100 / 4}%` }}>{discount.name}</TableCell>
+                    {allExtras.map((extra, index) => (
+                        <TableRow key={extra.id} sx={{ height: '36px' }}>
+                            <TableCell sx={{ textAlign: "left", fontSize: "11px", color: "gray" }}>
+                                {extra.isEditing ? (
+                                    <TextField
+                                        value={extra.price}
+                                        onChange={(e) => handleInputChange(index, "price", e.target.value)}
+                                        variant="outlined"
+                                        size="small"
+                                    />
+                                ) : (
+                                    extra.price
+                                )}
+                            </TableCell>
+
+                            <TableCell sx={{ textAlign: "left", fontSize: "11px", color: "gray" }}>
+                                {extra.isEditing ? (
+                                    <TextField
+                                        value={extra.name}
+                                        onChange={(e) => handleInputChange(index, "name", e.target.value)}
+                                        variant="outlined"
+                                        size="small"
+                                    />
+                                ) : (
+                                    extra.name
+                                )}
+                            </TableCell>
                             <TableCell sx={{ textAlign: "center", fontSize: "10px", color: "gray", padding: '3px 10px', width: '25%' }}>
                                 <FormControl fullWidth size="small" sx={{ minWidth: 80 }}>
                                     <Select
@@ -63,9 +172,9 @@ export const ExtrasTable = () => {
                                         sx={{
                                             fontSize: '10px',
                                             height: '25px',
-                                            lineHeight:"30px",
+                                            lineHeight: "30px",
                                             borderRadius: "5px",
-                                            color:"gray",
+                                            color: "gray",
                                             '& .MuiSelect-select': {
                                                 padding: '5px',
                                                 fontSize: "10px",
@@ -78,20 +187,35 @@ export const ExtrasTable = () => {
                                                 backgroundColor: 'transparent'
                                             }
                                         }}
-                                    >
-                                        <MenuItem value="variant1" sx={{ color: "gray", fontSize: "10px", textAlign: 'center' }}>{discount.for}</MenuItem>
-                                        <MenuItem value="variant2" sx={{ color: "gray", fontSize: "10px", textAlign: 'center' }}>Variants Name</MenuItem>
+                                    >   
+                                        {
+                                            variantsContext?.map((variant) => (
+                                                <MenuItem
+                                                    key={variant.id}
+                                                    value={variant.id}
+                                                    selected={variant.id === variantIdFromMenuUpdate}
+                                                    onClick={() => setVariantIdFromMenuUpdate(variant.id)}
+                                                    sx={{ color: "gray", fontSize: "10px", textAlign: 'center' }}>
+                                                    {variant.name}
+                                                </MenuItem>
+                                            ))
+                                        }
                                     </Select>
 
                                 </FormControl>
                             </TableCell>
-
-                            <TableCell sx={{ fontSize: "12px", padding: '3px 10px', width: `${100 / 4}%`, textAlign: "center" }}>
-                            <IconButton size="small" color='success'  >
-                                    <span class="icon-edit" style={{ fontSize: "18px"  }} />
-                                </IconButton>
-                                <IconButton size="small" color='error'>
-                                    <span class="icon-delete" style={{ fontSize: "18px"}} />
+                            <TableCell sx={{ textAlign: "center", fontSize: "12px" }}>
+                                {extra.isEditing ? (
+                                    <IconButton size="small" color='success' onClick={() => handleUpdate(index)}>
+                                        <DoneIcon sx={{ fontSize: "18px" }} />
+                                    </IconButton>
+                                ) : (
+                                    <IconButton size="small" color='success' onClick={() => handleEditToggle(index)}>
+                                    <span class="icon-edit" style={{ fontSize: "18px" }} />
+                                    </IconButton>
+                                )}
+                                <IconButton size="small" color='error' onClick={() => handleDelete(extra.id)}>
+                                <span class="icon-delete" style={{ fontSize: "18px" }} />
                                 </IconButton>
                             </TableCell>
                         </TableRow>
@@ -99,5 +223,5 @@ export const ExtrasTable = () => {
                 </TableBody>
             </Table>
         </Paper>
-    )
-}
+    );
+};

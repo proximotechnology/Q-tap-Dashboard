@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Grid, Paper, Typography, IconButton, Divider, TableCell, TableRow, TableBody, Table, TableHead } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ticketData from './ticketData';
@@ -9,31 +9,45 @@ import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import StarIcon from "@mui/icons-material/Star";
 import { AddQuestion } from './AddQuestion';
 import DetailsModal from './DetailsModal';
-const TicketCard = ({ ticketNumber, name, mail, date, status, onClick }) => {
+import axios from 'axios';
+import { toast } from 'react-toastify';
+const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onClick }) => {
   const statusStyles = {
-    'In Progress': { backgroundColor: '#222240', color: '#f4f6fc' },
-    Done: { backgroundColor: '#ECECEC', color: '#9d9d9c' },
+    'in_progress': { backgroundColor: '#222240', color: '#f4f6fc' },
+    'open': { backgroundColor: '#EBEDF3', color: '#575756' },
+    // "Done": { backgroundColor: '#00A343', color: '#f4f6fc' },
   };
+
+  // Format the date
+  const formattedDate = new Date(created_at).toLocaleDateString();
+
   return (
     <Paper
-      elevation={0}
+      elevation={3}
       sx={{
+        padding: "10px",
         width: 150,
         height: 150,
         borderRadius: 6,
-        padding: 2,
         position: 'relative',
         cursor: "pointer",
-        backgroundColor: statusStyles[status].backgroundColor,
-        color: statusStyles[status].color,
-        textShadow: "none",
+        backgroundColor: statusStyles[status]?.backgroundColor || '#EBEDF3',
+        color: statusStyles[status]?.color || '#575756',
       }}
       onClick={onClick}
     >
-      <Typography variant="body2" sx={{ fontSize: "10px", paddingBottom: "10px" }}>No. #{ticketNumber}</Typography>
-      <Typography variant="body2" sx={{ fontSize: "9px", paddingBottom: "10px" }}>Name: {name}</Typography>
-      <Typography variant="body2" sx={{ fontSize: "9px", paddingBottom: "10px" }}>Mail: {mail}</Typography>
-      <Typography variant="body2" sx={{ fontSize: "9px", paddingBottom: "10px" }}>Date: {date}</Typography>
+      <Typography variant="body2" sx={{ fontSize: "11px", paddingBottom: "10px" }}>
+        Ticket No.#{id}
+      </Typography>
+      <Typography variant="body2" sx={{ fontSize: "9px", paddingBottom: "10px" }}>
+        Name: {Customer_Name}
+      </Typography>
+      <Typography variant="body2" sx={{ fontSize: "9px", paddingBottom: "10px" }}>
+        Mail: {Customer_Email}
+      </Typography>
+      <Typography variant="body2" sx={{ fontSize: "9px", paddingBottom: "10px" }}>
+        Date: {formattedDate}
+      </Typography>
       <Box
         sx={{
           position: 'absolute',
@@ -43,16 +57,26 @@ const TicketCard = ({ ticketNumber, name, mail, date, status, onClick }) => {
           alignItems: 'center',
         }}
       >
-        {status === 'In Progress' ? (
+
+        {status === 'in_progress' ? (
           <>
-            <span class="icon-processing-time" style={{ fontSize: "16px", color: "#ef7d00" }} ></span>
-            <Typography variant="body1" sx={{ fontSize: "10px", color: "#ef7d00", ml: 1 }}>In Progress</Typography>
+            <span className="icon-processing-time" style={{ fontSize: "13px", color: "#ef7d00" }} />
+            <Typography variant="body1" sx={{ fontSize: "11px", color: "#ef7d00", ml: 1 }}>
+              In Progress
+            </Typography>
+          </>
+        ) : status === "Done" ? (
+          <>
+            <span className="icon-check" style={{ fontSize: "12px", color: "black" }} />
+            <Typography variant="body1" sx={{ fontSize: "11px", color: "black", ml: 1 }}>
+              Done
+            </Typography>
           </>
         ) : (
           <>
-            <span class="icon-check" style={{ fontSize: "16px", color: "black" }} ></span>
-            <Typography variant="body1" sx={{ fontSize: "10px", color: "black", ml: 1 }}>
-              Done
+            <span className="icon-check" style={{ fontSize: "12px", color: "#222240" }} />
+            <Typography variant="body1" sx={{ fontSize: "11px", color: "#222240", ml: 1 }}>
+              Open
             </Typography>
           </>
         )}
@@ -80,22 +104,22 @@ const Support = () => {
     );
   };
   // ===============================================================
-  const [selectedTicket, setSelectedTicket] = useState(null);
+  // const [selectedTicket, setSelectedTicket] = useState(null);
 
-  const handleClickOpen = (ticket) => {
-    setSelectedTicket(ticket);
-  };
+  // const handleClickOpen = (ticket) => {
+  //   setSelectedTicket(ticket);
+  // };
 
-  const handleClose = () => {
-    setSelectedTicket(null);
-  };
+  // const handleClose = () => {
+  //   setSelectedTicket(null);
+  // };
   const discounts =
     [
       { name: 'Mohamed Ahmed', phone: '010203034450', orderId: '123344', status: 'sad', rate: "2", satisfied: "3" },
       { name: 'Ahmed Alaa', phone: '010203034450', orderId: '123344', status: 'happy', rate: "4", satisfied: "8" }
     ]
 
-  const [activeStars, setActiveStars] = useState(discounts.map(item => item.rate));
+  const [activeStars, setActiveStars] = useState(discounts.map(item => item.star));
   const handleStarClick = (index, rowIndex) => {
     const newStars = [...activeStars];
     newStars[rowIndex] = index + 1;
@@ -106,6 +130,7 @@ const Support = () => {
   const handleOpenModel = () => {
     setOpenModal(true);
   };
+
   const handleCloseModel = () => {
     setOpenModal(false);
   };
@@ -123,6 +148,185 @@ const Support = () => {
     setOpenModalRow(false);
   };
 
+  //========================================== get feedback data 
+
+  const [feedbackData, setFeedbackData] = useState([]);
+
+  const getFeedbackData = async () => {
+    try {
+      const response = await axios.get('https://highleveltecknology.com/Qtap/api/feedback', {
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
+        }
+      })
+
+      if (response.data) {
+        setFeedbackData(response.data);
+      }
+      console.log("feedback data response ", response.data);
+
+    } catch (error) {
+      console.log("error feedback data ", error);
+
+    }
+
+  }
+  useEffect(() => {
+    getFeedbackData();
+  }, [])
+  //========================================== handle delete feedback
+
+  const handleDeleteFeedback = async (id) => {
+    try {
+      const response = await axios.delete(`https://highleveltecknology.com/Qtap/api/feedback/${id}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
+        }
+      })
+
+      if (response.data) {
+        toast.success("Feedback deleted successfully!");
+        getFeedbackData();
+      }
+    } catch (error) {
+      console.log("error delete feedback ", error);
+      toast.error("Error deleting feedback");
+
+    }
+  }
+
+  ///========================================================== tickets code
+  const [selectedTicket, setSelectedTicket] = useState(null);
+  const [tickets, setTickets] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [customerName, setCustomerName] = useState('');
+  const [customerEmail, setCustomerEmail] = useState('');
+  const [content, setContent] = useState('');
+  const [status, setStatus] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+
+  // Fetch tickets from API
+  const fetchTickets = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get('https://highleveltecknology.com/Qtap/api/ticket', {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+        }
+      });
+      setTickets(response.data);
+      // console.log('Tickets:', response.data);
+
+    } catch (error) {
+      console.error('Error fetching tickets:', error);
+      toast.error('Failed to fetch tickets');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTickets();
+  }, []);
+
+  const handleClickOpen = (ticket) => {
+    setSelectedTicket(ticket);
+    // Populate form fields with ticket data
+    setCustomerName(ticket.Customer_Name || '');
+    setCustomerEmail(ticket.Customer_Email || '');
+    setContent(ticket.content || '');
+    setStatus(ticket.status || '');
+    setPhoneNumber(ticket.Customer_Phone || '');
+  };
+
+  const handleClose = () => {
+    setSelectedTicket(null);
+    // Reset form fields
+    setCustomerName('');
+    setCustomerEmail('');
+    setContent('');
+    setStatus('');
+    setPhoneNumber('');
+  };
+
+  const addTicket = async () => {
+    try {
+
+      const data = {
+        Customer_Name: customerName,
+        Customer_Email: customerEmail,
+        content: content,
+        status: status,
+        Customer_Phone: phoneNumber,
+        client_id: "10",
+        brunch_id: localStorage.getItem("selectedBranch")
+      };
+
+      console.log(" dat2a add", data);
+
+      const response = await axios.post(
+        'https://highleveltecknology.com/Qtap/api/ticket',
+        data,
+        {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      if (response.data) {
+        setTickets([...tickets, response.data.ticket]);
+        toast.success('Ticket added successfully');
+        handleClose();
+      }
+    } catch (error) {
+      console.error('Error adding ticket:', error);
+      toast.error(error.response?.data?.message || 'Failed to add ticket');
+    }
+  };
+  const updateTicket = async () => {
+    try {
+      if (!selectedTicket) return;
+
+      const data = {
+        Customer_Name: customerName,
+        Customer_Email: customerEmail,
+        content: content,
+        status: status,
+        Customer_Phone: phoneNumber,
+        client_id: "10",          /////////////////////////////????????????❌
+        brunch_id: localStorage.getItem("selectedBranch")
+      };
+
+      console.log(" dat2a", data);
+
+      const response = await axios.put(
+        `https://highleveltecknology.com/Qtap/api/ticket/${selectedTicket.id}`,
+        data,
+        {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      if (response.data.ticket) {
+        // Update tickets list with the updated ticket
+        setTickets(tickets.map(ticket =>
+          ticket.id === selectedTicket.id ? response.data.ticket : ticket
+        ));
+        toast.success('Ticket updated successfully');
+        handleClose(); // Close the modal and reset form
+      }
+    } catch (error) {
+      console.error('Error updating ticket:', error);
+      toast.error(error.response?.data?.message || 'Failed to update ticket');
+    }
+  };
   return (
     <>
       <Paper sx={{ padding: 3, borderRadius: "10px" }}>
@@ -140,7 +344,7 @@ const Support = () => {
           </Grid>
 
           {/* the ticket */}
-          {ticketData.map((ticket, index) => (
+          {tickets.map((ticket, index) => (
             <Grid item key={index}>
               <TicketCard {...ticket} onClick={() => handleClickOpen(ticket)} />
             </Grid>
@@ -161,12 +365,15 @@ const Support = () => {
                 textShadow: "none",
               }}
             >
-              <AddIcon sx={{ fontSize: 50, fontWeight: "bolder" }} />
+              <IconButton onClick={handleClickOpen}>
+                <AddIcon sx={{ fontSize: 50, fontWeight: "bolder" }} />
+              </IconButton>
             </Paper>
           </Grid>{/* add ticket */}
         </Grid>
 
       </Paper>
+
 
       <Paper sx={{ borderRadius: "10px", marginTop: "25px", paddingBottom: "30px" }}>
 
@@ -178,7 +385,7 @@ const Support = () => {
           <Typography
             onClick={handleOpenModel}
             variant="body1" sx={{ fontSize: "10px", color: "#E57C00", cursor: "pointer" }}>
-            <img src="/assets/add.svg" alt="add icon " style={{ width: "8px", height: "8px" }} />
+            <img src="/assets/add.svg" alt="add icon " style={{ width: "8px", height: "8px", marginRight: "5px" }} />
             Add Question
           </Typography>
 
@@ -191,7 +398,7 @@ const Support = () => {
         }} />
 
         <Box sx={{ width: '100%', padding: "0px 30px ", display: 'flex', flexDirection: 'column', gap: 1 }}>
-          {questions.map((question, index) => (
+          {feedbackData.slice(0, 3).map((question, index) => (
             <Box
               key={index}
               sx={{
@@ -205,7 +412,7 @@ const Support = () => {
                   color: '#575756',
                 }}
               >
-                {question}
+                {question.comment}
               </Typography>
 
               <Box sx={{ display: 'flex', gap: 1 }}>
@@ -234,14 +441,14 @@ const Support = () => {
           </TableHead>
 
           <TableBody>
-            {discounts.map((discount, rowIndex) => (
+            {feedbackData.map((discount, rowIndex) => (
               <TableRow key={rowIndex}
-                onClick={() => handleRowClick(discount)}
                 sx={{ height: '36px', cursor: 'pointer' }}>
 
-                <TableCell sx={{ textAlign: "center", fontSize: "11px", color: "gray", padding: '5px 0px', borderBottom: "none" }}>{discount.name}</TableCell>
-                <TableCell sx={{ textAlign: "center", fontSize: "11px", color: "gray", padding: '5px 0px', borderBottom: "none" }}>{discount.phone}</TableCell>
-                <TableCell sx={{ textAlign: "center", fontSize: "11px", color: "#E57C00", padding: '5px 0px', borderBottom: "none" }}>#{discount.orderId}</TableCell>
+                <TableCell sx={{ textAlign: "center", fontSize: "11px", color: "gray", padding: '5px 0px', borderBottom: "none" }}>{discount.client.name}</TableCell>
+                <TableCell sx={{ textAlign: "center", fontSize: "11px", color: "gray", padding: '5px 0px', borderBottom: "none" }}>{discount.client.mobile}</TableCell>
+                <TableCell sx={{ textAlign: "center", fontSize: "11px", color: "#E57C00", padding: '5px 0px', borderBottom: "none" }}>#{discount.id}</TableCell>
+
                 <TableCell
                   sx={{
                     padding: '5px 0px',
@@ -254,7 +461,7 @@ const Support = () => {
                     spacing={0}
                     sx={{
                       display: 'flex',
-                      justifyContent: 'center', 
+                      justifyContent: 'center',
                     }}
                   >
                     {Array.from({ length: 5 }).map((_, index) => (
@@ -267,12 +474,11 @@ const Support = () => {
                         }}
                       >
                         <IconButton
-                          onClick={() => handleStarClick(index, rowIndex)}
                           sx={{
                             padding: '3px',
                           }}
                         >
-                          {index < activeStars[rowIndex] ? (
+                          {index < discount.star ? (
                             <StarIcon
                               sx={{
                                 fontSize: '20px',
@@ -295,18 +501,23 @@ const Support = () => {
 
 
                 <TableCell sx={{ textAlign: "center", fontSize: "20px", color: "gray", padding: '5px 0px', borderBottom: "none" }}>
-                  {discount.status === "sad" ? <SentimentVeryDissatisfiedIcon sx={{ fontSize: "35px", color: "red" }} /> :
-                    discount.status === "happy" ? <SentimentSatisfiedAltIcon sx={{ fontSize: "35px", color: "green" }} /> :
-                      ""}
+                  {discount.emoji === "said" ? <SentimentVeryDissatisfiedIcon sx={{ fontSize: "35px", color: "red" }} /> :
+                    discount.emoji === "happy" ? <SentimentSatisfiedAltIcon sx={{ fontSize: "35px", color: "rgb(229, 124, 0)" }} /> :
+                      discount.emoji === "very happy" ? <SentimentSatisfiedAltIcon sx={{ fontSize: "35px", color: "green" }} /> :
+                        ""}
                 </TableCell>
 
-                <TableCell sx={{ textAlign: "center", padding: '5px 0px', borderBottom: "none" }}>
+                <TableCell
+                  onClick={() => handleRowClick(discount)}
+                  sx={{ textAlign: "center", padding: '5px 0px', borderBottom: "none" }}>
                   <IconButton size="small" >
                     <span class="icon-information" style={{ fontSize: "25px", color: "#E57C00" }}></span>
                   </IconButton>
                 </TableCell>
 
-                <TableCell sx={{ textAlign: "center", padding: '5px 0px', borderBottom: "none" }}>
+                <TableCell
+                  onClick={() => handleDeleteFeedback(discount.id)}
+                  sx={{ textAlign: "center", padding: '5px 0px', borderBottom: "none" }}>
                   <IconButton size="small" color="error">
                     <span class="icon-delete" style={{ fontSize: "25px" }}></span>
                   </IconButton>
@@ -327,6 +538,18 @@ const Support = () => {
           open={Boolean(selectedTicket)}
           handleClose={handleClose}
           ticket={selectedTicket}
+          customerName={customerName}
+          customerEmail={customerEmail}
+          content={content}
+          status={status}
+          phoneNumber={phoneNumber}
+          setCustomerName={setCustomerName}
+          setCustomerEmail={setCustomerEmail}
+          setContent={setContent}
+          setStatus={setStatus}
+          setPhoneNumber={setPhoneNumber}
+          updateTicket={updateTicket}
+          addTicket={addTicket}
         />
       )}
       {selectedRow && (

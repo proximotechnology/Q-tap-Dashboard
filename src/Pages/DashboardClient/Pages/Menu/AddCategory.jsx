@@ -71,6 +71,8 @@ const CategoryForm = ({ open, handleClose }) => {
         setDescription('');
         setImage(null);
         setCover(null);
+        window.location.reload();
+
       }
     } catch (error) {
       console.error('Error adding category:', error);

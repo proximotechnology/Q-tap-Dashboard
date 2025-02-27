@@ -4,6 +4,9 @@ import { Box, Grid, TextField, Button, Table, TableBody, TableCell, TableHead, T
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useBranch } from '../../../../context/BranchContext';
+import DoneIcon from '@mui/icons-material/Done';
+import { Select, MenuItem } from '@mui/material';
+
 
 export const DiscountModel = ({ open, handleClose }) => {
   const [discounts, setDiscounts] = useState([]);
@@ -44,7 +47,7 @@ export const DiscountModel = ({ open, handleClose }) => {
           code,
           discount: `${discount}%`,
           date: today,
-          status: 'Active'
+          status: 'active'
         };
         setDiscounts([...discounts, newDiscount]);
         setCode('');
@@ -101,6 +104,47 @@ export const DiscountModel = ({ open, handleClose }) => {
     }
   };
 
+  const handleEditToggle = (index) => {
+    const updatedDiscounts = [...discounts];
+    updatedDiscounts[index].isEditing = !updatedDiscounts[index].isEditing;
+    setDiscounts(updatedDiscounts);
+  };
+
+  const handleInputChange = (index, field, value) => {
+    const updatedDiscounts = [...discounts];
+    updatedDiscounts[index][field] = value;
+    setDiscounts(updatedDiscounts);
+  };
+  const handleUpdate = async (index) => {
+    const discountToUpdate = discounts[index];
+
+    try {
+      const response = await axios.put(
+        `https://highleveltecknology.com/Qtap/api/meals_discount/${discountToUpdate.id}`,
+        {
+          code: discountToUpdate.code,
+          discount: discountToUpdate.discount,
+          brunch_id: selectedBranch,
+          status: discountToUpdate.status
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+          }
+        }
+      );
+
+      if (response.data) {
+        toast.success('updated successful');
+        discountToUpdate.isEditing = false; // إيقاف وضع التعديل بعد الحفظ
+        setDiscounts([...discounts]);
+      }
+    } catch (error) {
+      console.error('Error updating discount:', error);
+      toast.error('Error updating discount');
+    }
+  };
+
   useEffect(() => {
     if (selectedBranch) {
       getDiscounts();
@@ -141,7 +185,7 @@ export const DiscountModel = ({ open, handleClose }) => {
                   onChange={(e) => setCode(e.target.value)}
                   placeholder="Please enter only digits"
                   InputProps={{
-                    sx: { height: 33, lineHeight: "33px", borderRadius: "6px", fontSize: "10px" }
+                    sx: { height: 33, lineHeight: "25px", borderRadius: "6px", fontSize: "10px" }
                   }}
                 />
               </Grid>
@@ -155,7 +199,7 @@ export const DiscountModel = ({ open, handleClose }) => {
                   placeholder="Please enter only digits"
                   InputProps={{
                     endAdornment: <InputAdornment position="end">%</InputAdornment>,
-                    sx: { height: 33, lineHeight: "33px", borderRadius: "6px", fontSize: "10px" }
+                    sx: { height: 33, lineHeight: "25px", borderRadius: "6px", fontSize: "10px" }
                   }}
                 />
               </Grid>
@@ -197,32 +241,69 @@ export const DiscountModel = ({ open, handleClose }) => {
           <TableBody className="bg-green-500">
             {discounts.map((discount, index) => (
               <TableRow key={index} sx={{ height: '36px' }}>
-                <TableCell sx={{ textAlign: "center", fontSize: "10px", color: "gray", padding: '3px 0px', borderBottom: "none" }}>
-                  {discount.code}
+                <TableCell sx={{ textAlign: "center", fontSize: "10px", color: "gray", padding: '0px', borderBottom: "none" }}>
+                  {discount.isEditing ? (
+                    <TextField
+                      value={discount.code}
+                      onChange={(e) => handleInputChange(index, "code", e.target.value)}
+                      size="small"
+                      sx={{ fontSize: "10px" }}
+                    />
+                  ) : (
+                    discount.code
+                  )}
                 </TableCell>
-                <TableCell sx={{ textAlign: "center", fontSize: "10px", color: "gray", padding: '3px 0px', borderBottom: "none" }}>
-                  {discount.discount}
+                <TableCell sx={{ textAlign: "center", fontSize: "10px", color: "gray", padding: '0px', borderBottom: "none" }}>
+                  {discount.isEditing ? (
+                    <TextField
+                      value={discount.discount}
+                      onChange={(e) => handleInputChange(index, "discount", e.target.value)}
+                      size="small"
+                      sx={{ fontSize: "10px" }}
+                    />
+                  ) : (
+                    discount.discount
+                  )}
                 </TableCell>
-                <TableCell sx={{ textAlign: "center", fontSize: "10px", color: "gray", padding: '3px 0px', borderBottom: "none" }}>
+
+                <TableCell sx={{ textAlign: "center", fontSize: "10px", color: "gray", padding: '0px', borderBottom: "none" }}>
                   {discount.created_at ? discount.created_at.split('T')[0] : discount.date}
                 </TableCell>
-                <TableCell sx={{ textAlign: "center", fontSize: "10px", color: "gray", padding: '3px 0px', borderBottom: "none" }}>
-                  <Box
-                    sx={{
+
+                <TableCell sx={{ textAlign: "center", fontSize: "10px", color: "gray", padding: '0px', borderBottom: "none" }}>
+                  {discount.isEditing ? (
+                    <Select
+                      value={discount.status}
+                      onChange={(e) => handleInputChange(index, "status", e.target.value)}
+                      size="small"
+                      sx={{ fontSize: "10px", width: "80px" }}
+                    >
+                      <MenuItem value="active">Active</MenuItem>
+                      <MenuItem value="inactive">Inactive</MenuItem>
+                    </Select>
+                  ) : (
+                    <Box sx={{
                       color: "white",
-                      backgroundColor: discount.status === 'Active' ? "#479947" : "#f05e5e",
-                      width: "55px", padding: "2px 0px",
+                      backgroundColor: discount.status === 'active' ? "#479947" : "#f05e5e",
+                      width: "55px", padding: "0px",
                       borderRadius: '12px',
                       display: 'inline-block',
-                    }}
-                  >
-                    {discount.status}
-                  </Box>
+                    }}>
+                      {discount.status}
+                    </Box>
+                  )}
                 </TableCell>
-                <TableCell sx={{ fontSize: "10px", textAlign: "center", padding: '3px 0px', borderBottom: "none" }}>
-                  <IconButton size="small">
-                    <span className="icon-edit" sx={{ fontSize: "10px", color: "black" }}></span>
-                  </IconButton>
+
+                <TableCell sx={{ fontSize: "10px", textAlign: "center", padding: '0px', borderBottom: "none" }}>
+                  {discount.isEditing ? (
+                    <IconButton size="small" onClick={() => handleUpdate(index)} color="success">
+                      <DoneIcon sx={{ fontSize: "18px" }} />
+                    </IconButton>
+                  ) : (
+                    <IconButton size="small" onClick={() => handleEditToggle(index)} color="success">
+                      <span className="icon-edit" sx={{ fontSize: "10px", color: "black" }}></span>
+                    </IconButton>
+                  )}
 
                   <IconButton size="small" onClick={() => handleDelete(index, discount.id)} color="error">
                     <span className="icon-delete" sx={{ fontSize: "10px" }}></span>

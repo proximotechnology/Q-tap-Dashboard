@@ -1,23 +1,58 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Modal, Box, Typography, TextField, Button, IconButton, Divider, FormControl, Select, MenuItem } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import AddAreaModal from './AddAreaModal';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
+import { ClientLoginData } from '../../../../context/ClientLoginDataContext';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const AddTableModal = ({ open, onClose, onSave }) => {
-
-
-    const [area, setArea] = useState('');
-    const handleSave = () => {
-        onSave({ area });
-        onClose();
-    };
-
+    const selectedBranch = localStorage.getItem("selectedBranch")
+    const { areaData , getAreaData , getTableDataRes } = useContext(ClientLoginData)
+    const { areas } = areaData
+    const [areaMenu, setAreaMenu] = useState('');
+    const [size, setSize] = useState('');
+    const [name, setName] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
 
     const handleOpen = () => setModalOpen(true);
     const handleClose = () => setModalOpen(false);
+
+    useEffect(() => {
+        console.log("area data", areas);
+    }, []);
+
+    const handleSave = async () => {
+        try {
+            const dataFormate = {
+                brunch_id: selectedBranch,
+                area_id: areaMenu,
+                name,
+                size,
+                link: "no link until now",
+            }
+            const response = await axios.post(`https://highleveltecknology.com/Qtap/api/tables`, dataFormate, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
+                }
+            })
+            console.log("response area", response ,dataFormate);
+
+            if (response.data) {
+                toast.success("area deleted successfully!");
+                getTableDataRes();
+                onClose();
+
+            }
+        } catch (error) {
+            console.log("error delete area ", error);
+            toast.error("Error deleting area");
+
+        }
+    }
 
     return (
         <Modal open={open} onClose={onClose}>
@@ -60,6 +95,8 @@ const AddTableModal = ({ open, onClose, onSave }) => {
                         width: "100%",
                     }}>
                         <TextField
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
                             sx={{
                                 width: "90%",
                                 '& .MuiInputBase-input': {
@@ -92,6 +129,8 @@ const AddTableModal = ({ open, onClose, onSave }) => {
                         width: "100%",
                     }}>
                         <TextField
+                            value={size}
+                            onChange={(e) => setSize(e.target.value)}
                             sx={{
                                 width: "90%",
                                 '& .MuiInputBase-input': {
@@ -137,13 +176,13 @@ const AddTableModal = ({ open, onClose, onSave }) => {
                                 }}
                                 fullWidth
                                 displayEmpty
-                                value={area}
-                                onChange={(e) => setArea(e.target.value)}
+                                value={areaMenu}
+                                onChange={(e) => setAreaMenu(e.target.value)}
                                 placeholder="Select Area"
                             >
-                                <MenuItem value="" disabled sx={{ fontSize: "12PX", color: "gray" }}>Select Area</MenuItem>
-                                <MenuItem value={"B"} sx={{ fontSize: "12PX", color: "gray" }}>B01</MenuItem>
-                                <MenuItem value={"C"} sx={{ fontSize: "12PX", color: "gray" }}>C01</MenuItem>
+                                {areas.filter(area => area.brunch_id == selectedBranch).map(area => (
+                                    <MenuItem key={area.id} value={area.id}>{area.name}</MenuItem>
+                                ))}
                             </Select>
                         </FormControl>
                     </Box>
@@ -153,7 +192,7 @@ const AddTableModal = ({ open, onClose, onSave }) => {
                     sx={{ float: "right", position: "relative", top: "-30px", left: "20px", cursor: "pointer" }}>
                     <AddOutlinedIcon sx={{ fontSize: "32px", color: "#ef7d00" }} />
                 </Box>
-                    <AddAreaModal open={modalOpen} onClose={handleClose} />
+                <AddAreaModal open={modalOpen} onClose={handleClose} />
 
 
                 <Box sx={{
@@ -183,3 +222,4 @@ const AddTableModal = ({ open, onClose, onSave }) => {
 };
 
 export default AddTableModal;
+

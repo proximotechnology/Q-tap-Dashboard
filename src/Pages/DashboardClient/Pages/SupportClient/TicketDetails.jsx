@@ -16,12 +16,17 @@ const TicketDetails = ({
   setContent,
   setStatus,
   setPhoneNumber,
-  updateTicket
+  updateTicket,
+  addTicket // Add this prop to handle adding a new ticket
 }) => {
-  const [note, setNote] = useState(ticket.note || '');
+  const [note, setNote] = useState(ticket?.note || '');
 
   const handleSave = () => {
-    updateTicket();
+    if (ticket && ticket.id) {
+      updateTicket();
+    } else {
+      addTicket();
+    }
     handleClose();
   };
 
@@ -62,7 +67,7 @@ const TicketDetails = ({
         <Grid container spacing={3}>
           <Grid item xs={12} display="flex" justifyContent="space-between" alignItems="center">
             <Typography variant="body1" sx={{ fontSize: '13px' }}>
-              Ticket No.#{ticket.id}
+              Ticket No.#{ticket?.id || 'New Ticket'}
             </Typography>
             <Box display="flex" alignItems="center">
               <span className="icon-printer" style={{ marginRight: '30px', cursor: 'pointer', fontSize: '20px' }} />
@@ -106,7 +111,7 @@ const TicketDetails = ({
                       fontSize: '13px',
                     },
                   }}
-                  defaultValue={ticket.created_at}
+                  defaultValue={ticket?.created_at}
                   sx={{
                     '& .MuiInputBase-input': {
                       fontSize: '10px',
@@ -127,7 +132,7 @@ const TicketDetails = ({
                       fontSize: '13px',
                     },
                   }}
-                  defaultValue={new Date(ticket.created_at).toLocaleTimeString()}
+                  defaultValue={ticket ? new Date(ticket.created_at).toLocaleTimeString() : ''}
                   sx={{
                     '& .MuiInputBase-input': {
                       fontSize: '10px',
@@ -186,8 +191,8 @@ const TicketDetails = ({
               <Grid container alignItems="center" justifyContent="center">
                 <Grid item>
                   <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <IconButton 
-                      sx={{ 
+                    <IconButton
+                      sx={{
                         bgcolor: status === 'open' ? '#ef7d00' : '#9d9d9c',
                         '&:hover': { bgcolor: status === 'open' ? '#ef7d00' : '#b0b0b0' }
                       }}
@@ -195,12 +200,12 @@ const TicketDetails = ({
                     >
                       <span className="icon-share" style={{ fontSize: 13, color: 'white' }} />
                     </IconButton>
-                    <Typography 
-                      variant="caption" 
-                      sx={{ 
-                        color: status === 'open' ? '#ef7d00' : '#9d9d9c', 
-                        fontSize: '9px', 
-                        mt: 1 
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        color: status === 'open' ? '#ef7d00' : '#9d9d9c',
+                        fontSize: '9px',
+                        mt: 1
                       }}
                     >
                       Opened
@@ -214,8 +219,8 @@ const TicketDetails = ({
 
                 <Grid item>
                   <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <IconButton 
-                      sx={{ 
+                    <IconButton
+                      sx={{
                         bgcolor: status === 'in_progress' ? '#ef7d00' : '#9d9d9c',
                         '&:hover': { bgcolor: status === 'in_progress' ? '#ef7d00' : '#b0b0b0' }
                       }}
@@ -223,12 +228,12 @@ const TicketDetails = ({
                     >
                       <span className="icon-processing-time" style={{ fontSize: 13, color: 'white' }} />
                     </IconButton>
-                    <Typography 
-                      variant="caption" 
-                      sx={{ 
-                        color: status === 'in_progress' ? '#ef7d00' : '#9d9d9c', 
-                        fontSize: '9px', 
-                        mt: 1 
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        color: status === 'in_progress' ? '#ef7d00' : '#9d9d9c',
+                        fontSize: '9px',
+                        mt: 1
                       }}
                     >
                       In Progress
@@ -242,15 +247,15 @@ const TicketDetails = ({
 
                 <Grid item>
                   <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <IconButton 
-                      sx={{ 
-                        bgcolor: status === 'done' ? '#ef7d00' : '#9d9d9c',
-                        '&:hover': { bgcolor: status === 'done' ? '#ef7d00' : '#b0b0b0' }
+                    <IconButton
+                      sx={{
+                        bgcolor: status === 'Done' ? '#ef7d00' : '#9d9d9c',
+                        '&:hover': { bgcolor: status === 'Done' ? '#ef7d00' : '#b0b0b0' }
                       }}
-                      onClick={() => handleStatusChange('done')}
+                      onClick={() => handleStatusChange('Done')}
                     >
-                      <span 
-                        className="icon-check" 
+                      <span
+                        className="icon-check"
                         style={{
                           fontSize: 13,
                           color: 'white',
@@ -259,11 +264,11 @@ const TicketDetails = ({
                         }}
                       />
                     </IconButton>
-                    <Typography 
-                      variant="caption" 
-                      sx={{ 
-                        color: status === 'done' ? '#ef7d00' : '#9d9d9c', 
-                        fontSize: '9px' 
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        color: status === 'Done' ? '#ef7d00' : '#9d9d9c',
+                        fontSize: '9px'
                       }}
                     >
                       Done
@@ -280,6 +285,7 @@ const TicketDetails = ({
                 Note:
               </Typography>
               <TextField
+
                 variant="standard"
                 fullWidth
                 multiline
@@ -293,8 +299,8 @@ const TicketDetails = ({
                     color: 'gray',
                   },
                 }}
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
               />
 
               <Grid item xs={12} display="flex" justifyContent="center" sx={{ marginTop: '50px' }}>

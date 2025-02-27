@@ -1,6 +1,8 @@
-import { Button, Divider, Grid, Paper, RadioGroup, TextField, Typography } from '@mui/material'
-import { Box } from '@mui/system'
-import React from 'react'
+
+
+import { Button, Divider, Grid, Paper, RadioGroup, TextField, Typography, IconButton } from '@mui/material';
+import { Box } from '@mui/system';
+import React, { useState } from 'react';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
@@ -8,11 +10,66 @@ import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt
 import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfied';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
-
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export const Feedback = () => {
+    const [star, setStar] = useState(0);
+    const [emoji, setEmoji] = useState("");
+    const [yourGoals, setYourGoals] = useState("");
+    const [missingQtapMenus, setMissingQtapMenus] = useState("");
+    const [comment, setComment] = useState("");
+
+    const handleStarClick = (index) => {
+        setStar(index + 1);
+    };
+
+    const handleEmojiClick = (selectedEmoji) => {
+        setEmoji(emoji === selectedEmoji ? "" : selectedEmoji);
+    };
+
+    const handleYourGoals = (goal) => {
+        setYourGoals(goal);
+    };
+
+    const handleMissingQtapMenus = (event) => {
+        setMissingQtapMenus(event.target.value);
+    };
+
+    const handleCommentChange = (event) => {
+        setComment(event.target.value);
+    };
+
+    const handleSaveFeedback = async () => {
+        try {
+            const dataFormat = {
+                client_id: "1",
+                star: star.toString(),
+                emoji: emoji,
+                your_goals: yourGoals,
+               "missing_Q-tap_Menus": missingQtapMenus,
+                comment: comment
+            };
+            console.log("data formate", dataFormat);
+
+
+            await axios.post(`https://highleveltecknology.com/Qtap/api/feedback`, dataFormat, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+                }
+            });
+
+            toast.success("Feedback sent successfully!");
+        } catch (error) {
+            toast.error("Error in sending feedback");
+            console.log("data error feedback ", error);
+
+        }
+    };
+
     return (
-        <Paper sx={{ padding: "15px 30px 50px 30px", borderRadius: "20px" }} >
+        <Paper sx={{ padding: "15px 30px 50px 30px", borderRadius: "20px" }}>
             <Box
                 display="flex"
                 justifyContent="space-between"
@@ -26,67 +83,67 @@ export const Feedback = () => {
                         Tell us about your experiment
                     </Typography>
                 </Box>
-
             </Box>
             <Divider
                 sx={{
-                    backgroundImage:'linear-gradient(to right , #FDB913, #E57C00 )',
+                    backgroundImage: 'linear-gradient(to right , #FDB913, #E57C00 )',
                     height: '2px',
                     width: "100%", border: "none",
                 }}
             />
 
             <Grid container spacing={4} padding={"25px 40px"}>
-                {/* الجزء الأيسر */}
+                {/* Left Section */}
                 <Grid item xs={12} md={6}>
                     <Typography variant="body1" gutterBottom sx={{ fontSize: "12px" }}>
                         How much you satisfied with the product?
                     </Typography>
-                    <Box sx={{ margin: "10px 0px" }}>
-                        <StarIcon sx={{ color: "#ef7d00" }} />
-                        <StarIcon sx={{ color: "#ef7d00", marginLeft: "8px" }} />
-                        <StarIcon sx={{ color: "#ef7d00", marginLeft: "8px" }} />
-                        <StarIcon sx={{ color: "#ef7d00", marginLeft: "8px" }} />
-                        <StarBorderIcon sx={{ color: "#ef7d00", marginLeft: "8px" }} />
+
+                    <Box sx={{ margin: "20px 0px", display: 'flex' }}>
+                        {[...Array(5)].map((_, index) => (
+                            <IconButton key={index} onClick={() => handleStarClick(index)} sx={{ padding: 0 }}>
+                                {index < star ? (
+                                    <StarIcon sx={{ color: "#ef7d00", marginLeft: index !== 0 ? "8px" : 0 }} />
+                                ) : (
+                                    <StarBorderIcon sx={{ color: "#ef7d00", marginLeft: index !== 0 ? "8px" : 0 }} />
+                                )}
+                            </IconButton>
+                        ))}
                     </Box>
 
                     <Typography variant="body1" gutterBottom sx={{ fontSize: "12px" }}>
                         How happy are you with the product?
                     </Typography>
+
                     <Box>
-                        <RadioGroup row sx={{ margin: "10px 0px" }}>
-                            <Box>
-                                <SentimentVeryDissatisfiedIcon sx={{ fontSize: "35px", color: "red" }} />
+                        <RadioGroup row sx={{ margin: "20px 0px" }}>
+                            <Box onClick={() => handleEmojiClick("said")}>
+                                <SentimentVeryDissatisfiedIcon sx={{ fontSize: "35px", color: emoji === "said" ? "red" : "gray" }} />
                                 <Typography variant="body2" gutterBottom sx={{ fontSize: "10px", color: "gray" }}>said</Typography>
                             </Box>
-                            <Box sx={{ marginLeft: "15px" }}>
-                                <SentimentSatisfiedAltIcon sx={{ fontSize: "35px", color: "#ef7d00" }} />
+                            <Box sx={{ marginLeft: "15px" }} onClick={() => handleEmojiClick("happy")}>
+                                <SentimentSatisfiedAltIcon sx={{ fontSize: "35px", color: emoji === "happy" ? "#ef7d00" : "gray" }} />
                                 <Typography variant="body2" gutterBottom sx={{ fontSize: "10px", color: "gray" }}>happy</Typography>
                             </Box>
-
-                            <Box sx={{ marginLeft: "15px" }}>
-                                <SentimentVerySatisfiedIcon sx={{ fontSize: "35px", color: "green" }} />
+                            <Box sx={{ marginLeft: "15px" }} onClick={() => handleEmojiClick("very happy")}>
+                                <SentimentVerySatisfiedIcon sx={{ fontSize: "35px", color: emoji === "very happy" ? "green" : "gray" }} />
                                 <Typography variant="body2" gutterBottom sx={{ fontSize: "10px", color: "gray" }}>very happy</Typography>
-
                             </Box>
-
                         </RadioGroup>
                     </Box>
 
                     <Typography variant="body1" gutterBottom sx={{ fontSize: "12px" }}>
                         Does the product help you achieve your goals?
                     </Typography>
-                    <Box>
+                    <Box sx={{ margin: "20px 0px" }}>
                         <RadioGroup row>
-                            <Box >
-                                <CheckIcon sx={{ padding: "5px", fontSize: "30px", backgroundColor: "green", borderRadius: "50%", color: "white" }} />
+                            <Box onClick={() => handleYourGoals("yes")}>
+                                <CheckIcon sx={{ padding: "5px", fontSize: "30px", backgroundColor: yourGoals === "yes" ? "green" : "gray", borderRadius: "50%", color: "white" }} />
                                 <Typography variant="body2" gutterBottom sx={{ fontSize: "10px", color: "gray" }}>Yes</Typography>
                             </Box>
-
-                            <Box sx={{ marginLeft: "15px" }}>
-                                <ClearIcon sx={{ padding: "5px", fontSize: "30px", border: "1px solid red", borderRadius: "50%", color: "red" }} />
+                            <Box sx={{ marginLeft: "15px" }} onClick={() => handleYourGoals("no")}>
+                                <ClearIcon sx={{ padding: "5px", fontSize: "30px", border: "1px solid ", borderRadius: "50%", color: yourGoals === "no" ? "red" : "gray" }} />
                                 <Typography variant="body2" gutterBottom sx={{ fontSize: "10px", color: "gray" }}>No</Typography>
-
                             </Box>
                         </RadioGroup>
                     </Box>
@@ -99,54 +156,57 @@ export const Feedback = () => {
                         multiline
                         sx={{ width: '70%' }}
                         inputProps={{
-                            style: { fontSize: '10px' } 
+                            style: { fontSize: '10px' }
                         }}
                         rows={2}
                         placeholder="Please give your opinion and thoughts so we can improve our services."
+                        value={missingQtapMenus}
+                        onChange={handleMissingQtapMenus}
                     />
-
                 </Grid>
 
-                {/* الجزء الأيمن */}
+                {/* Right Section */}
                 <Grid item xs={12} md={6}>
                     <Box sx={{ textAlign: 'center' }}>
                         <img
                             src="/images/feedback.jpg"
                             alt="Experiment illustration"
-                            width={"300px"}
-                            style={{ maxWidth: '100%' ,margin:"10px 0px" }}
+                            width={"425px"}
+                            style={{ maxWidth: '100%', margin: "10px 0px" }}
                         />
                     </Box>
 
-        
                     <Typography variant="body1" gutterBottom sx={{ fontSize: "12px" }}>
-                        Comment</Typography>
+                        Comment
+                    </Typography>
                     <TextField
                         fullWidth
                         multiline
                         sx={{ width: '100%' }}
                         inputProps={{
-                            style: { fontSize: '12px' } 
+                            style: { fontSize: '12px' }
                         }}
                         rows={4}
                         placeholder="Please write a brief about your experiment."
+                        value={comment}
+                        onChange={handleCommentChange}
                     />
                 </Grid>
-
             </Grid>
-            <Box sx={{ textAlign: 'center', marginTop: '30px' ,justifyContent:"center"}}>
-                        <Button  
-                        sx={{textTransform:"capitalize",color:"white" ,padding:"3px 45px" ,
-                            backgroundImage: "linear-gradient(to right, #FDB913, #E57C00)" ,
-                            fontSize:"12px",borderRadius:"20px",
-                            '&:hover':{
-                                backgroundImage:'linear-gradient(to right , #FDB913, #E57C00 )'
-
-                            }
-                        }}>
-                            <CheckIcon sx={{marginRight:"6px",fontSize:"15px"}}/> Submit
-                        </Button>
-                    </Box>
+            <Box sx={{ textAlign: 'center', marginTop: '30px', justifyContent: "center" }}>
+                <Button
+                    onClick={handleSaveFeedback}
+                    sx={{
+                        textTransform: "capitalize", color: "white", padding: "3px 45px",
+                        backgroundImage: "linear-gradient(to right, #FDB913, #E57C00)",
+                        fontSize: "12px", borderRadius: "20px",
+                        '&:hover': {
+                            backgroundImage: 'linear-gradient(to right , #FDB913, #E57C00 )'
+                        }
+                    }}>
+                    <CheckIcon sx={{ marginRight: "6px", fontSize: "15px" }} /> Submit👍
+                </Button>
+            </Box>
         </Paper>
-    )
-}
+    );
+};
