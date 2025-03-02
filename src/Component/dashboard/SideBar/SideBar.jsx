@@ -89,119 +89,122 @@ export default function SideBar() {
             top: 0,
             left: 0,
             height: '100vh',
-            // overflowY: 'auto',  
+            // removed overflowY: 'auto'
+            display: 'flex',
+            flexDirection: 'column',
             zIndex: 1000
         }}>
-            <Box sx={{ display: "felx", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
-                <img src="/images/logoDash.jpg" alt="Logo" style={{ width: '110px' }} />
+            <Box sx={{ display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
+            <img src="/images/logoDash.jpg" alt="Logo" style={{ width: '110px' }} />
             </Box>
 
-            <List >
-                {Arr1.map((item, index) => (
-                    <Tooltip
-                        ListItem
-                        key={index}
-                        placement="left-start"
+            <List sx={{ flex: 1 }}>
+            {Arr1.map((item, index) => (
+                <Tooltip
+                ListItem
+                key={index}
+                placement="left-start"
+                >
+                <Box sx={{ display: "block" }}>
+                    <ListItemButton
+                    sx={{
+                        justifyContent: "center",
+                        px: 2,
+                        py: 0.5, // reduced padding
+                        color:
+                        location.pathname === item.path
+                            ? "#ef7d00"
+                            : "gray",
+                    }}
+                    onClick={() => { navigate(item.path); }}>
+
+                    <ListItemIcon
+                        sx={{
+                        minWidth: 0,
+                        justifyContent: "center",
+                        marginRight: "10px",
+                        color:
+                            location.pathname === item.path
+                            ? "#ef7d00"
+                            : "gray",
+
+                        }}
                     >
-                        <Box sx={{ display: "block" }}>
-                            <ListItemButton
-                                sx={{
-                                    justifyContent: "center",
-                                    px: 2,
-                                    color:
-                                        location.pathname === item.path
-                                            ? "#ef7d00"
-                                            : "gray",
-                                }}
-                                onClick={() => { navigate(item.path); }}>
-
-                                <ListItemIcon
-                                    sx={{
-                                        minWidth: 0,
-                                        justifyContent: "center",
-                                        marginRight: "10px",
-                                        color:
-                                            location.pathname === item.path
-                                                ? "#ef7d00"
-                                                : "gray",
-
-                                    }}
-                                >
-                                    {React.cloneElement(item.icon, {
-                                        fontSize: "small",
-                                        color: location.pathname === item.path ? "#ef7d00" : "gray",
-                                    })}
-                                </ListItemIcon>
+                        {React.cloneElement(item.icon, {
+                        fontSize: "small",
+                        color: location.pathname === item.path ? "#ef7d00" : "gray",
+                        })}
+                    </ListItemIcon>
 
 
-                                <ListItemText
-                                    primary={item.text}
-                                    primaryTypographyProps={{ fontSize: "12px"}}
-                                />
-                            </ListItemButton>
-                        </Box>
-                    </Tooltip>
-                ))}
+                    <ListItemText
+                        primary={item.text}
+                        primaryTypographyProps={{ fontSize: "12px"}}
+                    />
+                    </ListItemButton>
+                </Box>
+                </Tooltip>
+            ))}
             </List>
 
-            <List sx={{ marginTop: "5vh" }}>
-                <Divider sx={{ width: "70%" }} />
-                {Arr2.map((item, index) => (
-                    <Tooltip
-                        ListItem
-                        key={index}
-                        placement="left-start"
+            <List>
+            <Divider sx={{ width: "70%" }} />
+            {Arr2.map((item, index) => (
+                <Tooltip
+                ListItem
+                key={index}
+                placement="left-start"
+                >
+                <Box sx={{ display: "block" }}>
+                    <ListItemButton
+                    sx={{
+                        justifyContent: "center",
+                        px: 2,
+                        py: 0.5, // reduced padding
+                        color:
+                        location.pathname === item.path
+                            ? theme.palette.mode === "dark"
+                            ? grey[600]
+                            : "#ef7d00"
+                            : "gray",
+                    }}
+                    onClick={() => {
+                        navigate(item.path);
+                    }}
                     >
-                        <Box sx={{ display: "block" }}
-                        >
-                            <ListItemButton
-                                sx={{
-                                    justifyContent: "center",
-                                    px: 2,
-                                    color:
-                                        location.pathname === item.path
-                                            ? theme.palette.mode === "dark"
-                                                ? grey[600]
-                                                : "#ef7d00"
-                                            : "gray",
-                                }}
-                                onClick={() => {
-                                    navigate(item.path);
-                                }}
-                            >
-                                <ListItemIcon
-                                    sx={{
-                                        minWidth: 0,
-                                        justifyContent: "center",
-                                        marginRight: "10px",
-                                        color: 
-                                            location.pathname === item.path
-                                                ? theme.palette.mode === "dark"
-                                                    ? grey[50]
-                                                    : "#ef7d00"
-                                                : "gray",
-                                    }}
-                                >
-                                    {React.cloneElement(item.icon, { fontSize: "small" })}
-                                </ListItemIcon>
+                    <ListItemIcon
+                        sx={{
+                        minWidth: 0,
+                        justifyContent: "center",
+                        marginRight: "10px",
+                        color: 
+                            location.pathname === item.path
+                            ? theme.palette.mode === "dark"
+                                ? grey[50]
+                                : "#ef7d00"
+                            : "gray",
+                        }}
+                    >
+                        {React.cloneElement(item.icon, { fontSize: "small" })}
+                    </ListItemIcon>
 
-                                <ListItemText
-                                    primary={item.text}
-                                    primaryTypographyProps={{
-                                        fontSize: "12px",
-                                        style: {
-                                            color: item.text.toLowerCase() === "help" ?
-                                            "#D8E0E0" : "inherit",
-                                        }
-                                    }}
-                                />
+                    <ListItemText
+                        primary={item.text}
+                        primaryTypographyProps={{
+                        fontSize: "12px",
+                        style: {
+                            color: item.text.toLowerCase() === "help" ?
+                            "#D8E0E0" : "inherit",
+                        }
+                        }}
+                    />
 
-                            </ListItemButton>
+                    </ListItemButton>
 
-                        </Box>
-                    </Tooltip>
-                ))}
+                </Box>
+                </Tooltip>
+            ))}
             </List>
         </Box>
-    );
+        );
 }
