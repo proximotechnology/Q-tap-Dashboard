@@ -626,30 +626,33 @@ const ProfilePage = () => {
     // const { clientData } = useContext(ClientLoginData);
     const selectedBranch = localStorage.getItem("selectedBranch");
     const { user } = JSON.parse(allClientData);
+    const { clientData } = useContext(ClientLoginData);
+    const { qtap_clients } = clientData
+    const [logoImage, setLogoImage] = useState(qtap_clients?.img || null);
+    console.log("profileData allll: :::::::::::", qtap_clients);
 
     useEffect(() => {
-        if (allClientData) {
-            const { user, brunches } = JSON.parse(allClientData);
-            const [year, month, day] = user.birth_date.split('-');
+        if (qtap_clients) {
+            const [year, month, day] = qtap_clients.birth_date.split('-');
 
             // Populate Personal Info
-            setFullName(user.name || '');
-            setPhone(user.mobile || '');
+            setFullName(qtap_clients.name || '');
+            setPhone(qtap_clients.mobile || '');
             setEmail(user.email || '');
             setMonth(month || '');
             setDay(day || '');
             setYear(year || '');
-            setCountry(user.country || '');
+            setCountry(qtap_clients.country || '');
             setPassword(user.password || '');
             setConfirmPassword(user.confirmPassword || '');
 
             // Populate Business Info
             if (selectedBranch) {
-                const branch = brunches.find(b => b.id === parseInt(selectedBranch));
+                const branch = qtap_clients?.brunchs?.find(b => b.id === parseInt(selectedBranch));
                 if (branch) {
                     setBusinessName(branch.business_name || '');
-                    setBusinessPhone(branch.business_phone || '');
-                    setBusinessEmail(branch.business_email || '');
+                    setBusinessPhone(branch.contact_info?.[0]?.business_phone?.split(",")[0] || '');
+                    setBusinessEmail(branch.contact_info?.[0]?.business_email?.split(",")[0] || '');
                     setBusinessCountry(branch.business_country || '');
                     setBusinessCity(branch.business_city || '');
                     setLatitude(branch.latitude || '555.668848');
@@ -660,6 +663,8 @@ const ProfilePage = () => {
                     setDefaultMode(branch.default_mode || '');
                     setPaymentTime(branch.payment_time || '');
                     setCallWaiter(branch.call_waiter || '');
+                    setWebsite(branch.contact_info?.[0]?.website?.split(",")[0] || '');
+
                 }
             }
         }
@@ -718,6 +723,14 @@ const ProfilePage = () => {
             alert('An error occurred while updating the profile.');
         }
     };
+    const handleLogoUpload = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const imageUrl = URL.createObjectURL(file);
+            setLogoImage(imageUrl);
+        }
+    };
+
     return (
         <Paper elevation={3} style={{ padding: '20px 30px', borderRadius: "10px", marginTop: '16px' }}>
             <Box elevation={3} sx={{ paddingTop: "15px" }}>
@@ -751,11 +764,15 @@ const ProfilePage = () => {
                                         color: 'white',
                                         fontSize: '8px',
                                     }}>
-                                        <EditOutlinedIcon sx={{ color: "white", fontSize: '20px' }} />
+                                        <input type="file" accept="image/*" onChange={handleLogoUpload} style={{ display: 'none' }} />
+                                        <label htmlFor="logo-upload">
+                                            <EditOutlinedIcon sx={{ color: "white", fontSize: '20px' }}  />
+                                        </label>
                                     </Box>
                                 </Box>
                                 <Typography variant="body2" sx={{ fontSize: "14px", color: "#3b3a3a", marginTop: "8px" }}>
-                                    User01
+                                    {fullName}
+
                                 </Typography>
                             </Box>
                         </Grid>

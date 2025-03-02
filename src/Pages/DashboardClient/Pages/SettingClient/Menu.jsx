@@ -667,30 +667,31 @@ const ImageBox = styled(Box)(({ imageUrl }) => ({
 const Menu = () => {
     const { clientData } = useContext(ClientLoginData);
     const { qtap_clients } = clientData;
-    const [selectedButtons, setSelectedButtons] = useState([]); // Change to array for multiple selections
     const selectedBranch = localStorage.getItem("selectedBranch");
 
     const existBranch = qtap_clients.brunchs.find(branch => branch.id == selectedBranch) || {};
-    const [mode, setMode] = useState(existBranch?.default_mode);
+    const [mode, setMode] = useState(existBranch?.default_mode?.toLowerCase() || 'light');
     const [design, setDesign] = useState(existBranch?.menu_design?.toLowerCase() || 'grid');
     const [logoImage, setLogoImage] = useState(existBranch?.logo || null);
     const [bannerImage, setBannerImage] = useState(existBranch?.cover || null);
     const [servingWays, setServingWays] = useState(existBranch?.serving_ways?.map(way => way.name) || []);
-    const [tablesNumber, setTablesNumber] = useState(existBranch?.serving_ways?.find(way => way.name === 'dine_in')?.tables_number || '');
-    const [workSchedules, setWorkSchedules] = useState(existBranch?.workschedule || []);
+    const [tablesNumber, setTablesNumber] = useState(existBranch?.serving_ways?.find(way => way.name === 'dine_in')?.tables_number || '12');
+
     const [paymentServices, setPaymentServices] = useState(existBranch?.payment_services?.map(service => service.name) || []);
     const [callWaiter, setCallWaiter] = useState(existBranch?.call_waiter || 'active');
     const [paymentTime, setPaymentTime] = useState(existBranch?.payment_time || 'before');
+    const [selectedButtons, setSelectedButtons] = useState([]);
+    // i want disply data which selected as default in workschedule
+    const [workSchedules, setWorkSchedules] = useState(
+        existBranch?.workschedule?.filter(day => day.day) || []
+    );
+    const [times, setTimes] = useState({
+        startTime: '9:00 am',
+        endTime: '5:00 pm',
+    });
 
     console.log("alll data you want existBranch 30 qtap_clients", existBranch, selectedBranch, qtap_clients)
-    // Handle multiple selections for working hours
-    const handleButtonClick = (day) => {
-        if (selectedButtons.includes(day)) {
-            setSelectedButtons(selectedButtons.filter(d => d !== day));
-        } else {
-            setSelectedButtons([...selectedButtons, day]);
-        }
-    };
+
 
     // Handle save
     const handleSave = async (id) => {
@@ -763,24 +764,58 @@ const Menu = () => {
         }
     };
 
-    const handlePaymentServiceChange = (service) => {
-        if (paymentServices.includes(service)) {
-            setPaymentServices(paymentServices.filter(s => s !== service));
+    const handlePaymentServiceChange = (service) =>
+        setPaymentServices(
+            paymentServices.includes(service)
+                ? paymentServices.filter(s => s !== service)
+                : [...paymentServices, service]
+        );
+
+
+
+
+    // Handle day selection
+    const handleButtonClick = (day) => {
+        if (selectedButtons.includes(day)) {
+            // Remove the day from selectedButtons
+            setSelectedButtons(selectedButtons.filter((d) => d !== day));
+            // Remove the corresponding entry from workSchedules
+            setWorkSchedules(workSchedules.filter((schedule) => schedule.day !== day));
         } else {
-            setPaymentServices([...paymentServices, service]);
+            // Add the day to selectedButtons
+            setSelectedButtons([...selectedButtons, day]);
+            // Add a new entry to workSchedules
+            setWorkSchedules([
+                ...workSchedules,
+                {
+                    day,
+                    opening_time: times.startTime,
+                    closing_time: times.endTime,
+                },
+            ]);
         }
     };
-    const [times, setTimes] = useState({
-        startTime: '9:00 am',
-        endTime: '5:00 pm'
-    });
 
+    // Handle time change
     const handleTimeChange = (event) => {
         const { name, value } = event.target;
         setTimes({
             ...times,
-            [name]: value
+            [name]: value,
         });
+
+        // Update workSchedules for the selected day
+        const updatedSchedules = workSchedules.map((schedule) => {
+            if (selectedButtons.includes(schedule.day)) {
+                return {
+                    ...schedule,
+                    opening_time: name === 'startTime' ? value : schedule.opening_time,
+                    closing_time: name === 'endTime' ? value : schedule.closing_time,
+                };
+            }
+            return schedule;
+        });
+        setWorkSchedules(updatedSchedules);
     };
 
     return (
@@ -1175,24 +1210,17 @@ const Menu = () => {
                 <Divider orientation="vertical" flexItem />
 
                 {/* Third Column */}
-               
-                <Grid item xs={3}  >
-                    <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1, padding: "10px 0px" }}>
-                        <span class="icon-working-hour" style={{ fontSize: "18px", marginRight: '10px', }}><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span></span>
+
+                <Grid item xs={3}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1, padding: '10px 0px' }}>
+                        <span className="icon-working-hour" style={{ fontSize: '18px', marginRight: '10px' }}></span>
                         <Typography variant="h6" sx={{ fontSize: '13px', color: 'gray' }}>
                             Working Hours
                         </Typography>
                     </Box>
 
                     {Days.map((item) => (
-                        <Box
-                            key={item.day}
-                            sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                borderRadius: 2,
-                            }}
-                        >
+                        <Box key={item.day} sx={{ display: 'flex', alignItems: 'center', borderRadius: 2 }}>
                             <Button
                                 key={item.day}
                                 sx={{
@@ -1201,13 +1229,13 @@ const Menu = () => {
                                     height: 30,
                                     borderRadius: 2,
                                     marginRight: 2,
-                                    marginBottom: "20px",
-                                    fontSize: "13px",
+                                    marginBottom: '20px',
+                                    fontSize: '13px',
                                     border: `1px solid ${selectedButtons.includes(item.day) ? '#ef7d00' : '#9d9d9c'}`,
                                 }}
                                 onClick={() => handleButtonClick(item.day)}
                             >
-                                {item.day}
+                                {item.value}
                             </Button>
 
                             {/* Time Selectors */}
@@ -1219,14 +1247,20 @@ const Menu = () => {
                                             name="endTime"
                                             value={times.endTime}
                                             onChange={handleTimeChange}
-                                            sx={{ fontSize: '10px', color: "gray" }}
+                                            sx={{ fontSize: '10px', color: 'gray' }}
                                             MenuProps={{
                                                 disableScrollLock: true,
                                             }}
                                         >
-                                            <MenuItem value="5:00 pm" sx={{ fontSize: "13px", color: "gray" }}>5:00 pm</MenuItem>
-                                            <MenuItem value="6:00 pm" sx={{ fontSize: "13px", color: "gray" }}>6:00 pm</MenuItem>
-                                            <MenuItem value="7:00 pm" sx={{ fontSize: "13px", color: "gray" }}>7:00 pm</MenuItem>
+                                            <MenuItem value="5:00 pm" sx={{ fontSize: '13px', color: 'gray' }}>
+                                                5:00 pm
+                                            </MenuItem>
+                                            <MenuItem value="6:00 pm" sx={{ fontSize: '13px', color: 'gray' }}>
+                                                6:00 pm
+                                            </MenuItem>
+                                            <MenuItem value="7:00 pm" sx={{ fontSize: '13px', color: 'gray' }}>
+                                                7:00 pm
+                                            </MenuItem>
                                         </Select>
                                     </FormControl>
                                 </Box>
@@ -1234,18 +1268,24 @@ const Menu = () => {
                                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                     <Typography sx={{ fontSize: '11px', color: '#BDBDBD', marginRight: 1 }}>From:</Typography>
                                     <FormControl variant="outlined" size="small" sx={{ minWidth: 70 }}>
-                                        <Select disableScrollLock
+                                        <Select
                                             name="startTime"
                                             value={times.startTime}
                                             onChange={handleTimeChange}
-                                            sx={{ fontSize: '10px', color: "gray" }}
+                                            sx={{ fontSize: '10px', color: 'gray' }}
                                             MenuProps={{
                                                 disableScrollLock: true,
                                             }}
                                         >
-                                            <MenuItem value="9:00 am" sx={{ fontSize: "13px", color: "gray" }}>9:00 am</MenuItem>
-                                            <MenuItem value="8:00 am" sx={{ fontSize: "13px", color: "gray" }}>8:00 am</MenuItem>
-                                            <MenuItem value="7:00 am" sx={{ fontSize: "13px", color: "gray" }}>7:00 am</MenuItem>
+                                            <MenuItem value="9:00 am" sx={{ fontSize: '13px', color: 'gray' }}>
+                                                9:00 am
+                                            </MenuItem>
+                                            <MenuItem value="8:00 am" sx={{ fontSize: '13px', color: 'gray' }}>
+                                                8:00 am
+                                            </MenuItem>
+                                            <MenuItem value="7:00 am" sx={{ fontSize: '13px', color: 'gray' }}>
+                                                7:00 am
+                                            </MenuItem>
                                         </Select>
                                     </FormControl>
                                 </Box>
@@ -1257,10 +1297,19 @@ const Menu = () => {
             </Grid >
 
             <Box textAlign="center" mt={2}>
-                <Button sx={{
-                    fontSize: "13px", padding: "3px 50px", borderRadius: "20px", backgroundColor: "#ef7d00",
-                    color: "white", textTransform: "capitalize"
-                }}
+                <Button
+                    variant="contained"
+                    sx={{
+                        fontSize: "13px",
+                        padding: "3px 50px",
+                        borderRadius: "20px",
+                        backgroundColor: "#ef7d00",
+                        color: "white",
+                        textTransform: "capitalize",
+                        '&:hover': {
+                            backgroundColor: "#ef7d00",
+                        },
+                    }}
                     startIcon={<CheckOutlinedIcon />}
                     onClick={() => handleSave(qtap_clients.id)}
                 >
