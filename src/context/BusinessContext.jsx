@@ -9,17 +9,17 @@ export const BusinessProvider = ({ children }) => {
         website: '',
         businessEmail: '',
         businessPhone: '',
-        
+
         // Location Info
         country: '',
         city: '',
-        
+
         // Business Settings
         mode: 'light',
         design: 'grid',
         format: '',
         currency: '',
-        
+
         // Working Hours
         workingHours: {
             selectedDays: ['Sa', 'Su'],
@@ -27,10 +27,10 @@ export const BusinessProvider = ({ children }) => {
             fromTime: '9:00 am',
             toTime: '5:00 pm',
         },
-        
+
         // Features
         callWaiter: true,
-        
+
         // Payment Settings
         paymentMethods: {
             cash: true,
@@ -42,11 +42,12 @@ export const BusinessProvider = ({ children }) => {
             afterServing: false
         },
         tableCount: '',
-        servingWays: {
-            dineIn: true,
-            takeaway: true,
-            delivery: true
-        },
+        // servingWays: {
+        //     dineIn: true,
+        //     takeaway: true,
+        //     delivery: true
+        // },
+        servingWays: [],
         selectedServingWays: ['dinein', 'takeaway', 'delivery'],
     });
 
@@ -103,11 +104,12 @@ export const BusinessProvider = ({ children }) => {
                 afterServing: false
             },
             tableCount: '',
-            servingWays: {
-                dineIn: true,
-                takeaway: true,
-                delivery: true
-            },
+            // servingWays: {
+            //     dineIn: true,
+            //     takeaway: true,
+            //     delivery: true
+            // },
+            servingWays: [],
             selectedServingWays: ['dinein', 'takeaway', 'delivery'],
         });
     };

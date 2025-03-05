@@ -13,7 +13,8 @@ export const PersonalProvider = ({ children }) => {
         country: '',
         password: '',
         confirmPassword: '',
-        img: ''
+        img: '',
+        website :'',
     });
 
     const updatePersonalData = (newData) => {
@@ -34,13 +35,14 @@ export const PersonalProvider = ({ children }) => {
             country: '',
             password: '',
             confirmPassword: '',
-            img: ''
+            img: '',
+            website :'',
         });
     };
 
 
     return (
-        <PersonalContext.Provider value={{ personalData, updatePersonalData, clearPersonalData }}>
+        <PersonalContext.Provider value={{ personalData, updatePersonalData, clearPersonalData , setPersonalData}}>
             {children}
         </PersonalContext.Provider>
     );
