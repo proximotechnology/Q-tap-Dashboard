@@ -99,21 +99,7 @@ export const PersonalInfo = () => {
                             </label>
                         </Box>
                     </Box>
-                    <TextField
-                        value={clientData.personalInfo.fullName}
-                        variant="outlined"
-                        fullWidth
-                        placeholder="User 01"
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    {/* Add an icon if needed */}
-                                </InputAdornment>
-                            ),
-                            style: { textAlign: 'center' },
-                        }}
-                        sx={{ marginTop: "18px" }}
-                    />
+                    <Typography sx={{ marginTop: "10px", fontSize: "15px" }}>{clientData.personalInfo.fullName}</Typography>
                 </Box>
             </Grid>
 

@@ -187,7 +187,7 @@ export const Save = () => {
 
         // Add debug logging
         console.log('Currency ID being sent:', apiData.brunch1.currency_id);
-        console.log('Country value:', businessData.country);
+        // console.log('Country value:', businessData.country);
         console.log('Full API Data:', apiData);
 
         // Validate currency_id is a number
@@ -220,10 +220,10 @@ export const Save = () => {
             if (!emailRegex.test(data.email)) errors.push('Invalid email format');
 
             // Phone number validation
-            const phoneRegex = /^\d{6,15}$/;
-            if (!phoneRegex.test(data.mobile)) errors.push('Invalid mobile number format');
-            if (!phoneRegex.test(data.brunch1.contact_info.business_phone[0])) 
-                errors.push('Invalid business phone format');
+            // const phoneRegex = /^\d{6,15}$/;
+            // if (!phoneRegex.test(data.mobile)) errors.push('Invalid mobile number format');
+            // if (!phoneRegex.test(data.brunch1.contact_info.business_phone[0])) 
+            //     errors.push('Invalid business phone format');
 
             return errors;
         };
@@ -500,19 +500,12 @@ export const Save = () => {
                                 backgroundColor: "#ef7d10",
                             }
                         }}>
-                        <CheckOutlinedIcon sx={{ fontSize: "22px", mr: 1 }} /> Save
+                        <CheckOutlinedIcon sx={{ fontSize: "22px", mr: 1 }} /> Saved
                     </Button>
                 </Grid>
             </Box>
 
-            <Box>
-                <Typography variant="h6">Selected Serving Ways:</Typography>
-                {selectedServingWays.map((way, index) => (
-                    <Typography key={index} variant="body1">
-                        {way.charAt(0).toUpperCase() + way.slice(1)}
-                    </Typography>
-                ))}
-            </Box>
+
 
         </Box>
     )

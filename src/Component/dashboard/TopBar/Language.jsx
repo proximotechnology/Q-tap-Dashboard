@@ -36,7 +36,7 @@ export const Language = () => {
     };
 
     return (
-        <Box sx={{ cursor: "pointer", display: "flex", alignItems: "center" }} >
+        <Box sx={{ cursor: "pointer", display: "flex", alignItems: "center" , marginRight:"20px"}} >
             <Box onClick={handleClick} sx={{ display: "flex", alignItems: "center" }}>
                 {getLanguageIcon()}
                 <KeyboardArrowDownIcon sx={{ fontSize: "15px", color: "#575756" }} />

@@ -665,11 +665,11 @@ const ImageBox = styled(Box)(({ imageUrl }) => ({
 }));
 
 const Menu = () => {
-    const { clientData } = useContext(ClientLoginData);
+    const { clientData, getClientData } = useContext(ClientLoginData);
     const { qtap_clients } = clientData;
     const selectedBranch = localStorage.getItem("selectedBranch");
 
-    const existBranch = qtap_clients.brunchs.find(branch => branch.id == selectedBranch) || {};
+    const existBranch = qtap_clients?.brunchs?.find(branch => branch?.id == selectedBranch) || {};
     const [mode, setMode] = useState(existBranch?.default_mode?.toLowerCase() || 'light');
     const [design, setDesign] = useState(existBranch?.menu_design?.toLowerCase() || 'grid');
     const [logoImage, setLogoImage] = useState(existBranch?.logo || null);
@@ -680,8 +680,7 @@ const Menu = () => {
     const [paymentServices, setPaymentServices] = useState(existBranch?.payment_services?.map(service => service.name) || []);
     const [callWaiter, setCallWaiter] = useState(existBranch?.call_waiter || 'active');
     const [paymentTime, setPaymentTime] = useState(existBranch?.payment_time || 'before');
-    const [selectedButtons, setSelectedButtons] = useState([]);
-    // i want disply data which selected as default in workschedule
+    const [selectedButtons, setSelectedButtons] = useState(existBranch?.workschedule?.map(day => day.day) || []);
     const [workSchedules, setWorkSchedules] = useState(
         existBranch?.workschedule?.filter(day => day.day) || []
     );
@@ -690,7 +689,8 @@ const Menu = () => {
         endTime: '5:00 pm',
     });
 
-    console.log("alll data you want existBranch 30 qtap_clients", existBranch, selectedBranch, qtap_clients)
+    // console.log("alll data you want existBranch 30 qtap_clients", existBranch, selectedBranch, qtap_clients)
+    // console.log("workingsecheduel" , existBranch?.workschedule?.map(day => day.day))
 
 
     // Handle save
@@ -726,6 +726,7 @@ const Menu = () => {
             if (response.ok) {
                 toast.success('Menu updated successfully!');
                 console.log(response);
+                getClientData();
 
             } else {
                 toast.error('Failed to update menu.');
@@ -774,9 +775,9 @@ const Menu = () => {
 
 
 
-    // Handle day selection
+    // Handle day selection to display on boxes to know this is chosen
     const handleButtonClick = (day) => {
-        if (selectedButtons.includes(day)) {
+        if (selectedButtons?.includes(day)) {
             // Remove the day from selectedButtons
             setSelectedButtons(selectedButtons.filter((d) => d !== day));
             // Remove the corresponding entry from workSchedules
@@ -1234,6 +1235,7 @@ const Menu = () => {
                                     border: `1px solid ${selectedButtons.includes(item.day) ? '#ef7d00' : '#9d9d9c'}`,
                                 }}
                                 onClick={() => handleButtonClick(item.day)}
+                                value={existBranch?.workschedule?.find(day => day.day == item.day)?.day}
                             >
                                 {item.value}
                             </Button>

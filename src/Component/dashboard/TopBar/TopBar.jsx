@@ -8,17 +8,18 @@ import Switch from '@mui/material/Switch';
 import { useLocation, useNavigate } from "react-router";
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
+import Language from "./Language";
 
 const pageTitles = {
     '/dashboard-home': 'Dashboard',
     '/client': 'Client',
     '/wallet': 'Wallet',
     '/product': 'Product',
-    "/support":"Support",
-    '/pricing':"Pricing",
-    '/affiliate' : 'Affiliate',
+    "/support": "Support",
+    '/pricing': "Pricing",
+    '/affiliate': 'Affiliate',
     "/setting": "Setting",
-    "/notification":"Notification",
+    "/notification": "Notification",
     "/feedback-admin": "Feedback",
 };
 export default function TopBar() {
@@ -33,43 +34,46 @@ export default function TopBar() {
         setMode(prevMode => prevMode === 'light' ? 'dark' : 'light');
     };
 
-    const [anchorElLanguage, setAnchorElLanguage] = useState(null); 
-    const [selectedLanguage, setSelectedLanguage] = useState('en');  
+    const [anchorElLanguage, setAnchorElLanguage] = useState(null);
+    const [selectedLanguage, setSelectedLanguage] = useState('en');
     const openLanguage = Boolean(anchorElLanguage);
 
     const handleLanguageClick = (event) => {
-        setAnchorElLanguage(event.currentTarget); 
+        setAnchorElLanguage(event.currentTarget);
     };
-    
+
     const handleLanguageClose = (language) => {
-        setAnchorElLanguage(null);  
-        setSelectedLanguage(language); 
+        if (language) {
+            setSelectedLanguage(language);
+        }
+        setAnchorElLanguage(null);
     };
+
 
     const getLanguageIcon = () => {
         return selectedLanguage === 'ar' ? <span class="icon-translation" style={{ color: "#ef7d00", fontSize: "22px" }}> </span>
             : <LanguageOutlinedIcon sx={{ color: "#ef7d00", fontSize: "22px" }} />;
     };
-    const [anchorElUser, setAnchorElUser] = useState(null); 
+    const [anchorElUser, setAnchorElUser] = useState(null);
     const openUserPopover = Boolean(anchorElUser);
 
     const handleUserClick = (event) => {
-        setAnchorElUser(event.currentTarget); 
+        setAnchorElUser(event.currentTarget);
     };
 
     const handleUserClose = () => {
-        setAnchorElUser(null);  
+        setAnchorElUser(null);
     };
 
     const iconColor = mode === 'light' ? '#ff9800' : '#ff9800';
-    const location = useLocation(); 
+    const location = useLocation();
     return (
         <Box sx={{
             display: "flex", justifyContent: "space-between", alignItems: "center",
             padding: "30px 60px 0px 60px ",
         }}>
             <Typography variant="body1" sx={{ fontSize: "15px", color: "#222240" }}>
-            {pageTitles[location.pathname] || 'Dashboard'}
+                {pageTitles[location.pathname] || 'Dashboard'}
             </Typography>
 
             <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
@@ -108,33 +112,14 @@ export default function TopBar() {
                         sx={{ fontSize: "20px", fill: mode === 'dark' ? iconColor : '#575756' }} />
                 </Box>
 
-                <Box sx={{ cursor: "pointer", display: "flex", marginRight: "20px", alignItems: "center" }}
-                    onClick={handleLanguageClick}>
-                    {getLanguageIcon()}
-                    <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: "#575756" }} />
-                    <Menu
-                        anchorEl={anchorElLanguage}
-                        open={openLanguage} 
-                        onClose={() => setAnchorElLanguage(null)} 
-                        sx={{padding:"2px"}} 
-                    >
-                        <MenuItem onClick={() => handleLanguageClose('ar')}>
-                            <span class="icon-translation" style={{ color: "#575756", marginRight: '8px', fontSize: "20px" }}></span>
-                            <span style={{ fontSize: "12px", color: "#575756" }}>Arabic</span>
-                        </MenuItem>
-                        <Divider />
-                        <MenuItem onClick={() => handleLanguageClose('en')}>
-                            <LanguageOutlinedIcon sx={{ color: "#575756", marginRight: '8px', fontSize: "20px" }} />
-                            <span style={{ fontSize: "12px", color: "#575756" }}>English</span>
-                        </MenuItem>
-                    </Menu>
-                </Box>
 
-                
-                <Box  
-                aria-describedby={openUserPopover ? 'simple-popover' : undefined}
-                onClick={handleUserClick}
-                sx={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "3px" }}>
+                <Language />
+
+
+                <Box
+                    aria-describedby={openUserPopover ? 'simple-popover' : undefined}
+                    onClick={handleUserClick}
+                    sx={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "3px" }}>
                     <IconButton color="inherit" sx={{
                         backgroundColor: '#ef7d00', borderRadius: '30%', padding: '5px',
                         '&:hover': {
@@ -194,11 +179,11 @@ export default function TopBar() {
 
                             <ListItem sx={{ cursor: "pointer" }} oonClick={handleUserClose}>
                                 <ListItemIcon>
-                                <img src="/assets/setting.svg" alt="icon" style={{ width: "16px", height: "16px" }} />
+                                    <img src="/assets/setting.svg" alt="icon" style={{ width: "16px", height: "16px" }} />
                                 </ListItemIcon>
                                 <ListItemText primary="Edit Profile"
                                     primaryTypographyProps={{
-                                        sx: { color: '#5D5D5C', fontSize: '12px',marginLeft: "-30px" }
+                                        sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: "-30px" }
                                     }} />
                             </ListItem>
 
@@ -224,7 +209,7 @@ export default function TopBar() {
 
                             <ListItem sx={{ cursor: "pointer" }} onClick={handleUserClose}>
                                 <ListItemIcon>
-                                <img src="/assets/logout.svg" alt="icon" style={{ width: "16px", height: "16px" }} />
+                                    <img src="/assets/logout.svg" alt="icon" style={{ width: "16px", height: "16px" }} />
                                 </ListItemIcon>
                                 <ListItemText primary="Logout"
                                     primaryTypographyProps={{
