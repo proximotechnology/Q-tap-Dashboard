@@ -54,7 +54,7 @@ export const ClientLoginDataProvider = ({ children }) => {
                 }
             })
 
-            console.log("Table data response ", response);
+            // console.log("Table data response ", response);
             if (response.data) {
                 setTableDataRes(response.data.tables);
             }

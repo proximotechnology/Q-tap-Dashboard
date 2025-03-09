@@ -1,5 +1,6 @@
-import { Box, Button, Grid, InputAdornment, styled, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
+
+import { Box, Button, Grid, InputAdornment, styled, TextField, Typography } from '@mui/material';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import TableBarOutlinedIcon from '@mui/icons-material/TableBarOutlined';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
@@ -23,42 +24,45 @@ const Divider2 = styled(Box)({
     marginBottom: "20px"
 });
 
-
 export const ServingWays = () => {
     const navigate = useNavigate();
-    const { updateBusinessData } = useBusinessContext();
+    const { updateBusinessData, businessData } = useBusinessContext();
+    const [servingWays, setServingWays] = useState(businessData.servingWays || []);
+
     const [serviceOptions, setServiceOptions] = useState([
-        { name: "Dine In", icon: <span class="icon-chair" style={{fontSize:"80px"}}></span>, selected: false },
-        { name: "Takeaway", icon: <span class="icon-takeaway"  style={{fontSize:"80px"}}></span>, selected: false },
-        { name: "Delivery", icon: <span class="icon-fast-shipping" style={{fontSize:"80px"}}></span>, selected: false }
+        { name: "Dine In", value: "dine_in", icon: <span className="icon-chair" style={{ fontSize: "80px" }}></span>, selected: false },
+        { name: "Takeaway", value: "take_away", icon: <span className="icon-takeaway" style={{ fontSize: "80px" }}></span>, selected: false },
+        { name: "Delivery", value: "delivery", icon: <span className="icon-fast-shipping" style={{ fontSize: "80px" }}></span>, selected: false }
     ]);
 
-    const handleBoxClick = (index) => { 
+    const handleBoxClick = (index) => {
+        // Toggle the selected state of the clicked service
         const newOptions = serviceOptions.map((option, i) => ({
             ...option,
             selected: i === index ? !option.selected : option.selected
         }));
         setServiceOptions(newOptions);
 
-        // Update BusinessContext with new serving ways
+        // Update servingWays array with only the selected services
+        const selectedServices = newOptions
+            .filter(option => option.selected) // Filter only selected options
+            .map(option => option.value); // Extract their values
+
+        setServingWays(selectedServices);
+
+        // Update BusinessContext with the new serving ways
         updateBusinessData({
-            servingWays: {
-                dineIn: newOptions[0].selected,
-                takeaway: newOptions[1].selected,
-                delivery: newOptions[2].selected
-            }
+            servingWays: selectedServices
         });
     };
 
     const handleNextClick = () => {
-        if(isDineInSelected){
+        if (servingWays.length > 0) {
             navigate('/branches');
-        }else{
-            toast.error("Please select a service");
+        } else {
+            toast.error("Please select at least one service option");
         }
     };
-    
-    const isDineInSelected = serviceOptions.find(option => option.name === "Dine In").selected;
 
     return (
         <Box marginTop={"50px"} flexGrow={1}>
@@ -69,7 +73,7 @@ export const ServingWays = () => {
 
             <Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
-                    <span class="icon-waiter" style={{ color: 'grey', marginRight: "6px" }}></span>
+                    <span className="icon-waiter" style={{ color: 'grey', marginRight: "6px" }}></span>
                     <Typography variant="h6" sx={{ fontSize: { xs: "12px", md: "12px" }, color: "gray" }}>
                         Serving Ways
                     </Typography>
@@ -77,39 +81,19 @@ export const ServingWays = () => {
 
                 <Box display="flex" flexWrap="wrap" justifyContent="flex-start" gap={2} sx={{ marginBottom: 4 }}>
                     {serviceOptions.map((option, index) => {
-                        const serviceName = option.name.toLowerCase().replace(' ', '');
                         return (
                             <Box
                                 key={index}
-                                onClick={() => {
-                                    const newOptions = serviceOptions.map((opt, i) => ({
-                                        ...opt,
-                                        selected: i === index ? !opt.selected : opt.selected
-                                    }));
-                                    setServiceOptions(newOptions);
-
-                                    // Create array of selected services
-                                    const selectedServices = newOptions
-                                        .filter(opt => opt.selected)
-                                        .map(opt => opt.name.toLowerCase().replace(' ', ''));
-
-                                    // Update context with array of selected services
-                                    updateBusinessData({
-                                        servingWays: {
-                                            dineIn: selectedServices.includes('dinein'),
-                                            takeaway: selectedServices.includes('takeaway'), 
-                                            delivery: selectedServices.includes('delivery')
-                                        }
-                                    });
-                                }}
+                                onClick={() => handleBoxClick(index)}
                                 sx={{
                                     width: { xs: "115px", sm: "115px" },
                                     marginRight: "20px",
-                                    height: "160px", 
+                                    height: "160px",
                                     borderRadius: "20px",
                                     backgroundColor: "#222240",
                                     cursor: "pointer",
-                                }} >
+                                }}
+                            >
                                 <Typography
                                     variant="h6"
                                     sx={{
@@ -143,15 +127,18 @@ export const ServingWays = () => {
                                             left: "10px",
                                             fontSize: "23px",
                                             color: "#FF7F3F",
-                                        }} />
+                                        }}
+                                    />
                                 )}
                             </Box>
                         );
                     })}
                 </Box>
 
-                {isDineInSelected && (
+                {servingWays.includes("dine_in") && (
                     <TextField
+                        value={businessData.tableCount}
+                        onChange={(e) => updateBusinessData({ tableCount: e.target.value })}
                         variant="outlined"
                         placeholder="How Many Tables Do You Have (optional)"
                         fullWidth
@@ -172,6 +159,7 @@ export const ServingWays = () => {
                         sx={{ marginTop: 4, maxWidth: { xs: "100%", sm: 330 } }}
                     />
                 )}
+
                 <Grid item xs={12}>
                     <Button
                         variant="contained"
@@ -182,7 +170,8 @@ export const ServingWays = () => {
                             backgroundColor: "#E57C00",
                             textTransform: 'none',
                             padding: "6px 0",
-                            position: "fixed", bottom: "30px",
+                            position: "fixed",
+                            bottom: "30px",
                             left: "55%",
                             '&:hover': {
                                 backgroundColor: "#E57C00",
@@ -194,9 +183,8 @@ export const ServingWays = () => {
                         Next
                         <TrendingFlatIcon sx={{ marginLeft: "8px", fontSize: "18px" }} />
                     </Button>
-                </Grid> {/* الزرار  */}
+                </Grid>
             </Box>
         </Box>
-
-    )
-}
+    );
+};

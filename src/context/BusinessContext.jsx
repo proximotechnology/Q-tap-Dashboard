@@ -4,131 +4,71 @@ const BusinessContext = createContext();
 
 export const BusinessProvider = ({ children }) => {
     const [businessData, setBusinessData] = useState({
-        // Basic Business Info
         businessName: '',
         website: '',
         businessEmail: '',
         businessPhone: '',
-
-        // Location Info
         country: '',
         city: '',
-
-        // Business Settings
-        mode: 'light',
+        mode: 'white',
         design: 'grid',
         format: '',
         currency: '',
-
-        // Working Hours
         workingHours: {
             selectedDays: ['Sa', 'Su'],
             currentDay: 'Sunday',
             fromTime: '9:00 am',
             toTime: '5:00 pm',
         },
-
-        // Features
-        callWaiter: true,
-
-        // Payment Settings
-        paymentMethods: {
-            cash: true,
-            digitalWallet: true,
-            card: true
-        },
-        paymentTime: {
-            beforeServing: true,
-            afterServing: false
-        },
+        callWaiter: '',
+        paymentTime:'',
         tableCount: '',
-        // servingWays: {
-        //     dineIn: true,
-        //     takeaway: true,
-        //     delivery: true
-        // },
+        paymentMethods: [],
         servingWays: [],
-        selectedServingWays: ['dinein', 'takeaway', 'delivery'],
     });
+
+    const [branches, setBranches] = useState([]);
+    const [selectedBranch, setSelectedBranch] = useState(null);
 
     const updateBusinessData = (newData) => {
-        setBusinessData(prevData => ({
-            ...prevData,
-            ...newData,
-            // Ensure nested objects are properly merged
-            workingHours: {
-                ...prevData.workingHours,
-                ...(newData.workingHours || {})
-            },
-            paymentMethods: {
-                ...prevData.paymentMethods,
-                ...(newData.paymentMethods || {})
-            },
-            paymentTime: {
-                ...prevData.paymentTime,
-                ...(newData.paymentTime || {})
-            },
-            servingWays: {
-                ...prevData.servingWays,
-                ...(newData.servingWays || {})
-            }
-        }));
+        if (selectedBranch !== null) {
+            setBranches((prevBranches) => {
+                const updatedBranches = [...prevBranches];
+                updatedBranches[selectedBranch] = { ...updatedBranches[selectedBranch], ...newData };
+                return updatedBranches;
+            });
+        } else {
+            setBusinessData((prevData) => ({
+                ...prevData,
+                ...newData,
+            }));
+        }
     };
 
-    const clearBusinessData = () => {
-        setBusinessData({
-            businessName: '',
-            website: '',
-            businessEmail: '',
-            businessPhone: '',
-            country: '',
-            city: '',
-            mode: 'light',
-            design: 'grid',
-            format: '',
-            currency: '',
-            workingHours: {
-                selectedDays: ['Sa', 'Su'],
-                currentDay: 'Sunday',
-                fromTime: '9:00 am',
-                toTime: '5:00 pm',
-            },
-            callWaiter: true,
-            paymentMethods: {
-                cash: true,
-                digitalWallet: true,
-                card: true
-            },
-            paymentTime: {
-                beforeServing: true,
-                afterServing: false
-            },
-            tableCount: '',
-            // servingWays: {
-            //     dineIn: true,
-            //     takeaway: true,
-            //     delivery: true
-            // },
-            servingWays: [],
-            selectedServingWays: ['dinein', 'takeaway', 'delivery'],
-        });
+    const addBranch = () => {
+        const newBranch = { ...businessData };
+        setBranches((prevBranches) => [...prevBranches, newBranch]);
     };
 
-    // Example of how to access specific data
-    const getWorkingHours = () => businessData.workingHours;
-    const getPaymentSettings = () => ({
-        methods: businessData.paymentMethods,
-        timing: businessData.paymentTime
-    });
+    const selectBranch = (index) => {
+        setSelectedBranch(index);
+        if (branches[index]) {
+            setBusinessData(branches[index]);
+        }
+    };
 
     return (
-        <BusinessContext.Provider value={{
-            businessData,
-            updateBusinessData,
-            clearBusinessData,
-            getWorkingHours,
-            getPaymentSettings
-        }}>
+        <BusinessContext.Provider
+            value={{
+                businessData,
+                branches,
+                setBranches,
+                selectedBranch,
+                updateBusinessData,
+                addBranch,
+                selectBranch,
+            }}
+        >
             {children}
         </BusinessContext.Provider>
     );
