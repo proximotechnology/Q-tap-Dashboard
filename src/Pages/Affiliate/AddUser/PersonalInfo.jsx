@@ -54,12 +54,12 @@ export const PersonalInfo = ({
                         justifyContent: 'center',
                         alignItems: 'center',
                     }}>
-                        <img 
-                            src={selectedImage ? URL.createObjectURL(selectedImage) : "/images/User.jpg"} 
-                            alt="user" 
-                            width="100%" 
+                        <img
+                            src={selectedImage ? URL.createObjectURL(selectedImage) : "/images/User.jpg"}
+                            alt="user"
+                            width={"200px"} height={"180px"}
                         />
-                        <Box 
+                        <Box
                             component="label"
                             htmlFor="image-upload"
                             sx={{
@@ -235,13 +235,12 @@ export const PersonalInfo = ({
                         }
                     >
                         <MenuItem value="" disabled>Country</MenuItem>
-                        <MenuItem value="syria" sx={{fontSize:"10px", color:"gray"}}>Syria</MenuItem>
-                        <MenuItem value="US" sx={{fontSize:"10px", color:"gray"}}>United States</MenuItem>
-                        <MenuItem value="CA" sx={{fontSize:"10px", color:"gray"}}>Canada</MenuItem>
-                        <MenuItem value="UK" sx={{fontSize:"10px", color:"gray"}}>United Kingdom</MenuItem>
+                        <MenuItem value="syria" sx={{ fontSize: "10px", color: "gray" }}>Syria</MenuItem>
+                        <MenuItem value="US" sx={{ fontSize: "10px", color: "gray" }}>United States</MenuItem>
+                        <MenuItem value="CA" sx={{ fontSize: "10px", color: "gray" }}>Canada</MenuItem>
+                        <MenuItem value="UK" sx={{ fontSize: "10px", color: "gray" }}>United Kingdom</MenuItem>
                     </Select>
                 </FormControl>
-
                 <FormControl variant="outlined" fullWidth>
                     <OutlinedInput
                         type="password"
@@ -276,7 +275,7 @@ export const PersonalInfo = ({
 
                 <FormControl fullWidth>
                     <Select
-                        value={selectedOption}
+                        value={selectedOption || "Winter Campaign"}
                         onChange={(e) => setSelectedOption(e.target.value)}
                         displayEmpty
                         IconComponent={ArrowDropDownIcon}

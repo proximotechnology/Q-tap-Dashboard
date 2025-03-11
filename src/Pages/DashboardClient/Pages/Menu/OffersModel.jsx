@@ -14,7 +14,7 @@ export const OffersModel = ({ open, handleClose }) => {
     ]);
     const { contentForMenu } = useContext(ContentMenu);
     // console.log("contentForMenu", contentForMenu);
-    
+
     const handleAdd = async () => {
         const newOffer = {
             discount: "0%", // قيمة ثابتة
@@ -33,12 +33,12 @@ export const OffersModel = ({ open, handleClose }) => {
             });
 
             if (response.data) {
-                toast.success('تم الإضافة بنجاح');
+                toast.success('added successfully ');
                 getOffers(); // إعادة جلب البيانات لتحديث الجدول
             }
         } catch (error) {
             console.error('Error adding offer:', error);
-            toast.error('حدث خطأ أثناء الإضافة');
+            toast.error('Error adding offer');
         }
     };
     const handleDelete = async (id) => {
@@ -48,11 +48,11 @@ export const OffersModel = ({ open, handleClose }) => {
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
                 }
             });
-            toast.success('تم الحذف بنجاح');
+            toast.success('added successfully ');
             getOffers(); // إعادة جلب البيانات بعد الحذف
         } catch (error) {
             console.error('Error deleting offer:', error);
-            toast.error('حدث خطأ أثناء الحذف');
+            toast.error('Error deleting offer');
         }
     };
 
@@ -86,12 +86,12 @@ export const OffersModel = ({ open, handleClose }) => {
                 );
 
                 if (response.data) {
-                    toast.success('تم التحديث بنجاح');
+                    toast.success('added successfully ');
                     getOffers(); // إعادة جلب البيانات لتحديث الجدول
                 }
             } catch (error) {
                 console.error('Error updating offer:', error);
-                toast.error('حدث خطأ أثناء التحديث');
+                toast.error('Error updating offer');
             }
         }
 

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import {
   Box,
@@ -19,11 +20,18 @@ const Campaigns = () => {
   const [commission, setCommission] = useState("");
   const [limit, setLimit] = useState("");
   const [loading, setLoading] = useState(false);
+  const [editingCampaign, setEditingCampaign] = useState(null);
 
   const toggleForm = () => {
     setOpenForm(!openForm);
+    if (editingCampaign) {
+      setEditingCampaign(null);
+      setName("");
+      setCommission("");
+      setLimit("");
+    }
   };
-  // get campaigns
+
   const getCampaigns = async () => {
     try {
       const response = await axios.get(
@@ -39,10 +47,11 @@ const Campaigns = () => {
       console.error("Error fetching campaigns:", error);
     }
   };
+
   useEffect(() => {
     getCampaigns();
   }, []);
-  // delete campaign
+
   const handleDeleteCampaign = async (campaignId) => {
     try {
       await axios.delete(
@@ -61,11 +70,9 @@ const Campaigns = () => {
     }
   };
 
-  // add campaign
   const handleAddCampaign = async () => {
     try {
       setLoading(true);
-      // Validate inputs
       if (!name || !commission || !limit) {
         toast.error("Please fill in all fields");
         return;
@@ -105,27 +112,45 @@ const Campaigns = () => {
       setLoading(false);
     }
   };
-  // // edit campaign
-  // const handleEditCampaign = async (campaignId) => {
-  //     try {
-  //         const response = await axios.put(`https://highleveltecknology.com/Qtap/api/campaigns/${campaignId}`, {
-  //             name: name.trim(),
-  //             commission: parseFloat(commission),
-  //             limit: parseInt(limit)
-  //         }, {
-  //             headers: {
-  //                 'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
-  //             }
-  //         });
-  //         toast.success('Campaign updated successfully');
-  //         getCampaigns();
 
-  //     } catch (error) {
-  //         console.error('Error editing campaign:', error);
-  //         const errorMessage = error.response?.data?.message || 'Enrror editing campaig';
-  //         // toast.error(errorMessage);
-  //     }
-  // };
+  const handleEditCampaign = async (campaignId) => {
+    try {
+      const response = await axios.put(
+        `https://highleveltecknology.com/Qtap/api/campaigns/${campaignId}`,
+        {
+          name: name.trim(),
+          commission: parseFloat(commission),
+          limit: parseInt(limit),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
+        }
+      );
+      toast.success("Campaign updated successfully");
+      getCampaigns();
+      setEditingCampaign(null);
+      setName("");
+      setCommission("");
+      setLimit("");
+      setOpenForm(false);
+    } catch (error) {
+      console.error("Error editing campaign:", error);
+      const errorMessage =
+        error.response?.data?.message || "Error editing campaign";
+      toast.error(errorMessage);
+    }
+  };
+
+  const openEditForm = (campaign) => {
+    setEditingCampaign(campaign.id);
+    setName(campaign.name);
+    setCommission(campaign.commission);
+    setLimit(campaign.limit);
+    setOpenForm(true);
+  };
+
   return (
     <Paper sx={{ borderRadius: "20px", padding: "10px 20px", height: "250px" }}>
       <Box>
@@ -171,7 +196,7 @@ const Campaigns = () => {
               gutterBottom
               sx={{ color: "#575756", fontSize: "11px", marginBottom: "10px" }}
             >
-              New Campaign
+              {editingCampaign ? "Edit Campaign" : "New Campaign"}
             </Typography>
             <Typography variant="body2" sx={{ fontSize: "9px", color: "gray" }}>
               Name
@@ -245,7 +270,11 @@ const Campaigns = () => {
               }}
             >
               <Button
-                onClick={handleAddCampaign}
+                onClick={
+                  editingCampaign
+                    ? () => handleEditCampaign(editingCampaign)
+                    : handleAddCampaign
+                }
                 disabled={loading}
                 variant="contained"
                 sx={{
@@ -275,51 +304,52 @@ const Campaigns = () => {
       >
         {campaigns.map((campaign) => (
           <Card
+            key={campaign.id}
             sx={{
-              width: "130px",
-              height: "130px",
+              width: "160px",
+              height: "175px",
               backgroundColor: "#222240",
               borderRadius: "20px",
-              padding: "10px 15px",
+              padding: "12px 15px",
               color: "white",
               position: "relative",
             }}
           >
             <Typography
               variant="body2"
-              sx={{ fontSize: "7px", color: "white" }}
+              sx={{ fontSize: "8px", color: "white" }}
             >
               Name
             </Typography>
             <Typography
               variant="body2"
-              sx={{ marginBottom: "8px", fontSize: "9px", color: "#ef7d00" }}
+              sx={{ marginBottom: "8px", fontSize: "18px", color: "#ef7d00" }}
             >
               {campaign.name}
             </Typography>
 
             <Typography
               variant="body2"
-              sx={{ fontSize: "7px", color: "white" }}
+              sx={{ fontSize: "8px", color: "white" }}
             >
               Commission
             </Typography>
             <Typography
               variant="body2"
-              sx={{ marginBottom: "8px", fontSize: "9px", color: "#ef7d00" }}
+              sx={{ marginBottom: "8px", fontSize: "18px", color: "#ef7d00" }}
             >
-              {campaign.commission}
+              {campaign.commission}%
             </Typography>
 
             <Typography
               variant="body2"
-              sx={{ fontSize: "7px", color: "white" }}
+              sx={{ fontSize: "8px", color: "white" }}
             >
               Affiliate no.
             </Typography>
             <Typography
               variant="body2"
-              sx={{ fontSize: "9px", color: "#ef7d00" }}
+              sx={{ fontSize: "18px", color: "#ef7d00" }}
             >
               {campaign.limit}
             </Typography>
@@ -327,7 +357,7 @@ const Campaigns = () => {
             <Box sx={{ display: "flex", justifyContent: "center" }}>
               <IconButton sx={{ color: "white" }}>
                 <span
-                  class="icon-delete"
+                  className="icon-delete"
                   style={{ fontSize: "15px" }}
                   onClick={() => handleDeleteCampaign(campaign.id)}
                 ></span>
@@ -337,8 +367,8 @@ const Campaigns = () => {
                   src="/assets/setting.svg"
                   alt="icon"
                   style={{ color: "white", width: "16px", height: "16px" }}
+                  onClick={() => openEditForm(campaign)}
                 />
-                {/* <img src="/assets/setting.svg" alt="icon" style={{ color: "white", width: "16px", height: "16px" }} onClick={() => handleEditCampaign(campaign.id)} /> */}
               </IconButton>
             </Box>
           </Card>

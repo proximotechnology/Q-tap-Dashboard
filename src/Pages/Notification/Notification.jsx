@@ -61,7 +61,7 @@ export const Notification = () => {
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Typography sx={{ color: "#575756", fontSize: "15px" }}>History</Typography>
           <IconButton onClick={handleOpen}>
-            <AddIcon sx={{ fontSize: "28px", color: "#ef7d00", cursor: "pointer" }} />
+            <AddIcon sx={{ fontSize: "35px",fontWeight:"bolder", color: "#ef7d00", cursor: "pointer" }} />
           </IconButton>
         </Box>
         <AddNotification 

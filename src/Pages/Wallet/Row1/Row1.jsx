@@ -19,15 +19,15 @@ export const Row1 = () => {
   return (
     <Paper
       sx={{
-        height: "250px",
+        height: "270px",
         borderRadius: "20px",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
       }}
     >
-      <Grid width={"80%"}>
-        <Grid container justifyContent="space-between" alignItems="center">
+      <Grid width={"80%"} >
+        <Grid container justifyContent="space-between" alignItems="center" sx={{ margin: "20px 5px" }}>
           <Grid
             item
             sx={{
@@ -101,12 +101,12 @@ export const Row1 = () => {
               color: "#575756",
               marginTop: "8px",
               border: "2px solid #ef7d00",
-              padding: "2px 25px",
+              padding: "2px 20px",
               borderRadius: "30px",
               width: "140px", height: "40px",
             }}
           >
-            501,420
+            501,420 <span style={{ fontSize: "20px"  , opacity:'0.5'}}>£</span>
           </Typography>
 
           <Grid
@@ -139,7 +139,7 @@ export const Row1 = () => {
               <Box
                 component="span"
                 sx={{
-                  backgroundColor: "#2DA0F6",
+                  backgroundImage: "linear-gradient(to right,rgb(135, 195, 241), #1C7FCB)",
                   width: "25px",
                   borderRadius: "20px",
                   height: "10px",
@@ -164,7 +164,7 @@ export const Row1 = () => {
               <Box
                 component="span"
                 sx={{
-                  backgroundColor: "#AD4081",
+                  backgroundImage: "linear-gradient(to right,rgb(250, 160, 214), #8A2C5E)",
                   width: "25px",
                   borderRadius: "20px",
                   height: "10px",

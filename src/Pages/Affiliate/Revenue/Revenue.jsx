@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Grid, MenuItem, Paper, Select, Typography } from "@mui/material";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import LineChart1 from "../../Wallet/Row1/LineChart1";
+import LineChart2 from "../LineChart2";
 
 export const Revenue = () => {
   const [year, setYear] = React.useState("2024");
@@ -11,14 +11,14 @@ export const Revenue = () => {
   };
 
   return (
-    
+
     <Paper
       sx={{
         padding: "30px 30px",
         minHeight: "250px",
         height: "fit-content",
         width: "100%",
-        borderRadius: "20px", 
+        borderRadius: "20px",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
@@ -29,7 +29,7 @@ export const Revenue = () => {
           <Box display={"flex"} justifyContent="space-between">
             <Typography
               variant="body1"
-              sx={{ fontSize: "12px", color: "#575756" }}
+              sx={{ fontSize: "18px", color: "#575756" }}
             >
               Revenue
             </Typography>
@@ -57,16 +57,16 @@ export const Revenue = () => {
             </Box>
           </Box>
           <span
-            style={{ color: "#D8E0E0", fontSize: "8px", marginTop: "-10px" }}
+            style={{ color: "#D8E0E0", fontSize: "8px", marginTop: "-5px" }}
           >
             Affiliate Marketing
           </span>
 
           <Typography
             variant="body1"
-            sx={{ fontSize: "20px", marginTop: "-5px", color: "#ef7d00" }}
+            sx={{ fontSize: "28px", marginTop: "15px", color: "#ef7d00" }}
           >
-            200.234 <span style={{ fontSize: "12px", color: "gray" }}>EGP</span>
+            200.234 <span style={{ fontSize: "15px", color: "gray" }}>EGP</span>
           </Typography>
         </Grid>
 
@@ -79,7 +79,7 @@ export const Revenue = () => {
             marginLeft: "-40px",
           }}
         >
-          <LineChart1 />
+          <LineChart2 />
         </Grid>
       </Grid>
 
@@ -112,8 +112,8 @@ export const Revenue = () => {
               color: "#575756",
             }}
           >
-            <PersonOutlinedIcon sx={{ fontSize: "16px", color: "#575756" }} />{" "}
-            users
+            <PersonOutlinedIcon sx={{ fontSize: "18px", color: "#575756", marginBottom: "5px" }} />{" "}
+            Users
           </Typography>
           <Typography
             variant="body2"
@@ -133,7 +133,7 @@ export const Revenue = () => {
               <Box
                 component="span"
                 sx={{
-                  backgroundColor: "#2DA0F6",
+                  background: "linear-gradient(to right, rgb(163, 215, 255), #2DA0F6)",
                   width: "20px",
                   borderRadius: "20px",
                   height: "8px",
@@ -158,7 +158,7 @@ export const Revenue = () => {
               <Box
                 component="span"
                 sx={{
-                  backgroundColor: "#AD4081",
+                  backgroundImage: "linear-gradient(to right, rgb(250, 160, 214), #AD4081)",
                   width: "20px",
                   borderRadius: "20px",
                   height: "8px",

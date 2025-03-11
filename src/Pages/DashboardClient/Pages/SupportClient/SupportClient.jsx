@@ -104,15 +104,7 @@ const Support = () => {
     );
   };
   // ===============================================================
-  // const [selectedTicket, setSelectedTicket] = useState(null);
 
-  // const handleClickOpen = (ticket) => {
-  //   setSelectedTicket(ticket);
-  // };
-
-  // const handleClose = () => {
-  //   setSelectedTicket(null);
-  // };
   const discounts =
     [
       { name: 'Mohamed Ahmed', phone: '010203034450', orderId: '123344', status: 'sad', rate: "2", satisfied: "3" },

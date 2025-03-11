@@ -39,7 +39,7 @@ export const FeedbackAdmin = () => {
 
             if (response.data) {
                 setFeedbackData(response.data);
-                console.log('Fetched feedback:', response.data);
+                // console.log('Fetched feedback:', response.data);
             }
         } catch (error) {
             console.error('Error fetching feedback data:', error);
@@ -63,16 +63,20 @@ export const FeedbackAdmin = () => {
 
     // publish feedback data
     
-    const publishFeedback = async (id) => {
+    // toggle the publishing status of the feedback
+    const publishFeedback = async (id, currentStatus) => {
+        const newStatus = currentStatus === "yes" ? "no" : "yes";
+        console.log('newStatus:', newStatus , currentStatus);
+        
         await axios.put(`https://highleveltecknology.com/Qtap/api/feedback/${id}`, {
-            publish: "yes"
+            publish: newStatus
         }, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
             }   
         });
         getFeedbackData();
-        toast.success('Feedback published successfully');
+        toast.success(`Feedback publishing status updated to ${newStatus}`);
     };
     return (
         <Box sx={{ padding: "0px 20px" }}>
@@ -198,7 +202,7 @@ export const FeedbackAdmin = () => {
                                                     }
                                                 }} >
 
-                                                <span onClick={() => publishFeedback(row.id)} style={{ marginLeft: "5px" }}>{row.publish === "yes" || row.publish === "Yes" ? "Publish" : "Unpublish"}</span>
+                                                <span onClick={() => publishFeedback(row.id , row.publish)} style={{ marginLeft: "5px" }}>{row.publish === "yes" || row.publish === "Yes" ? "Unpublish" : "Publish"}</span>
                                                 <span>
                                                     {row.publish === "yes" || row.publish === "Yes" ? (
                                                         <ArrowRightAltOutlinedIcon sx={{ color: '#E57C00', fontSize: "15px" }} />

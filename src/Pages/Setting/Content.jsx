@@ -108,7 +108,7 @@ const Content = forwardRef((props, ref) => {
 
 	return (
 		<Box>
-			<Typography variant="body1" sx={{ fontSize: "13px", marginLeft: "30px", color: "#575756", marginBottom: '10px' }}>
+			<Typography variant="body1" sx={{ fontSize: "15px", marginLeft: "30px", color: "#575756", marginBottom: '10px' }}>
 				Home
 			</Typography>
 
@@ -211,7 +211,7 @@ const Content = forwardRef((props, ref) => {
 				</IconButton>
 			</Box>
 
-			<Typography variant="body1" sx={{ fontSize: "13px", marginLeft: "30px", color: "#575756", marginBottom: '10px' }}>
+			<Typography variant="body1" sx={{ fontSize: "15px", marginLeft: "30px", color: "#575756", marginBottom: '10px' }}>
 				Products
 			</Typography>
 

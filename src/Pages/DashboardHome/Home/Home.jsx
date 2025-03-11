@@ -4,11 +4,11 @@ import { Box, createTheme, CssBaseline } from "@mui/material";
 import Content from "../../../Component/DashboardContent/Content";
 import TopBar from "../../../Component/dashboard/TopBar/TopBar";
 import { getDesignTokens } from "../../Themes/dark";
- 
+
 
 export default function Home() {
-    const [mode, setMode] = useState('light'); 
-    const theme = createTheme(getDesignTokens(mode));  
+    const [mode, setMode] = useState('light');
+    const theme = createTheme(getDesignTokens(mode));
     return (
         <Box
             sx={{
@@ -19,12 +19,12 @@ export default function Home() {
                 minHeight: "100vh",
                 width: "100%",
                 overflow: "hidden",
-                transition: "all 0.3s ease-in-out"
+                transition: "all 0.3s ease-in-out",
             }}>
             <CssBaseline />
             <SideBar />
-            <Box 
-                sx={{ 
+            <Box
+                sx={{
                     flexGrow: 1,
                     width: 'calc(100% - 200px)',
                     marginLeft: '200px',
@@ -34,10 +34,11 @@ export default function Home() {
                     borderRadius: "10px",
                     display: "flex",
                     flexDirection: "column",
-                    gap: "20px"
+                    gap: "20px",
+
                 }}
             >
-                <TopBar mode={mode} setMode={setMode} />  
+                <TopBar mode={mode} setMode={setMode} />
                 <Content />
             </Box>
         </Box>

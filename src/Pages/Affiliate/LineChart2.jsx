@@ -30,7 +30,7 @@ const CustomTooltip = ({ active, payload }) => {
     return null;
 };
 
-const LineChart1 = () => {
+const LineChart2 = () => {
     return (
         <ResponsiveContainer width="100%" height={180}>
             <LineChart data={data} margin={{ top: 5, right: 20, left: 0, bottom: 0 }}>
@@ -40,8 +40,9 @@ const LineChart1 = () => {
                     tick={{ fontSize: 9 }} tickLine={false} />
 
                 <Tooltip content={<CustomTooltip />} />
-                <Line type="linear" dataKey="value1" stroke="#575756" strokeWidth={2} dot={{ fill: 'url(#lineChartGradient2)', r: 5, stroke: 'none', zIndex: 10 }} />
-                <Line type="linear" dataKey="value2" stroke="#575756" strokeWidth={2} dot={{ fill: 'url(#lineChartGradient1)', r: 5, stroke: 'none', zIndex: 10 }} />
+                    
+                <Line type="linear" dataKey="value1" stroke='url(#lineChartGradient2)' strokeWidth={2} dot={{ fill: 'url(#lineChartGradient2)', r: 5, stroke: 'none', zIndex: 10 }} />
+                <Line type="linear" dataKey="value2" stroke='url(#lineChartGradient1)' strokeWidth={2} dot={{ fill: 'url(#lineChartGradient1)', r: 5, stroke: 'none', zIndex: 10 }} />
                 <defs>
                     <linearGradient id="lineChartGradient1" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="0%" stopColor="rgb(250, 160, 214)" />
@@ -57,4 +58,4 @@ const LineChart1 = () => {
     );
 };
 
-export default LineChart1;
+export default LineChart2;

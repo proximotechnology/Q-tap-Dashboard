@@ -112,6 +112,7 @@ export const Row2 = () => {
               display: "flex",
               fontSize: "18px",
               alignItems: "center",
+              marginLeft: "20px"
             }}
           >
             <img
@@ -121,7 +122,8 @@ export const Row2 = () => {
                 color: "#D8E0E0",
                 width: "22px",
                 height: "22px",
-                marginRight: "10px",
+                marginRight: "12px",
+                opacity: 0.5,
               }}
             />
             Clients
@@ -171,32 +173,46 @@ export const Row2 = () => {
           </Box>
         </Box>
 
-        <TableContainer sx={{ 
-            height: "300px",
-            "&::-webkit-scrollbar": {
-              width: "8px",
-              height: "8px",
+        <TableContainer sx={{
+          height: "300px",
+          "&::-webkit-scrollbar": {
+            width: "8px",
+            height: "8px",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "#f1f1f1",
+            borderRadius: "4px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: "#E57C00",
+            borderRadius: "4px",
+            width: '2px',
+            "&:hover": {
+              background: "#ef7d00",
             },
-            "&::-webkit-scrollbar-track": {
-              background: "#f1f1f1",
-              borderRadius: "4px",
-            },
-            "&::-webkit-scrollbar-thumb": {
-              background: "#E57C00",
-              borderRadius: "4px",
-              width : '2px',
-              "&:hover": {
-                background: "#ef7d00",
-              },
-            },
-          }}>
+          },
+        }}>
           <Table
             size="small"
             sx={{ borderCollapse: "separate", borderSpacing: "0 5px" }}
           >
             <TableHead>
               <TableRow>
-                {["Business", "Data", "City", "Bundle", "Status", ""].map(
+                <TableCell
+                  sx={{
+                    color: "#575756",
+                    fontSize: "12px",
+                    padding: "0px",
+                    borderBottom: "none",
+                    width: `${100 / 6}%`,
+                      textAlign: "start",
+                     paddingLeft: "35px"
+                    }}
+                >
+                  Business
+                </TableCell>
+
+                {["Data", "City", "Bundle", "Status", ""].map(
                   (header) => (
                     <TableCell
                       key={header}
@@ -217,19 +233,13 @@ export const Row2 = () => {
             </TableHead>
 
             <TableBody>
-              {data?.qtap_clients?.map((row) => (
+              {data?.qtap_clients?.map((row, index) => (
                 <TableRow
                   key={row.id}
                   sx={{
-                    backgroundColor: row.id % 2 === 0 ? "#EBEDF3" : "white",
+                    backgroundColor: index % 2 === 0 ? "#EBEDF3" : "white",
                     height: "5px",
                     borderRadius: "20px",
-                    "&:nth-of-type(odd)": {
-                      borderRadius: "20px",
-                    },
-                    "&:nth-of-type(even)": {
-                      borderRadius: "20px",
-                    },
                     "& td:first-of-type": {
                       borderTopLeftRadius: "20px",
                       borderBottomLeftRadius: "20px",
@@ -267,7 +277,7 @@ export const Row2 = () => {
                         color: "#686666",
                       }}
                     >
-                      <PersonOutlineOutlinedIcon sx={{ fontSize: "12px" }} />
+                      <PersonOutlineOutlinedIcon sx={{ fontSize: "14px" }} />
                     </span>
                     {row.name}
                   </TableCell>
@@ -333,8 +343,8 @@ export const Row2 = () => {
                           row.status === "active"
                             ? "#ef7d00"
                             : row.status === "inactive"
-                            ? "gray"
-                            : "defaultColor",
+                              ? "gray"
+                              : "defaultColor",
                         padding:
                           row.status === "Confirm Payment" ? "5px 9px" : "0px",
                         fontSize:

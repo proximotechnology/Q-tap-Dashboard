@@ -67,7 +67,7 @@ export const Pricing = () => {
       <Box sx={{
         borderRadius: '50px 50px 50px 0px',
         padding: '20px 35px',
-        maxWidth: '29%',
+        width: '28%',
         backgroundColor: 'white',
         margin: '20px',
         marginTop: "70px",
@@ -143,8 +143,8 @@ export const Pricing = () => {
     })
       .then(response => response.json())
       .then(data => {
-        setPricing(data);
-        // console.log(data);
+        setPricing(data.data);
+        console.log("price data", data);  
       })
       .catch(error => console.error('Error fetching pricing data:', error));
   }, []);
@@ -187,7 +187,7 @@ export const Pricing = () => {
       }} />
 
       <Box display="flex" justifyContent="center" flexWrap="wrap">
-        {pricing.map((item) => (
+        {Array.isArray(pricing) ? pricing.map((item) => (
           <PricingCard
             key={item.id}
             title={item.name}
@@ -197,7 +197,7 @@ export const Pricing = () => {
             features={JSON.parse(item.feature)}
             id={item.id}
           />
-        ))}
+        )) : null}
       </Box>
     </Box>
   );

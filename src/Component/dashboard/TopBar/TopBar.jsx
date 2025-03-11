@@ -12,12 +12,12 @@ import Language from "./Language";
 
 const pageTitles = {
     '/dashboard-home': 'Dashboard',
-    '/client': 'Client',
+    '/client': 'Clients',
     '/wallet': 'Wallet',
-    '/product': 'Product',
+    '/product-admin': 'Products',
     "/support": "Support",
     '/pricing': "Pricing",
-    '/affiliate': 'Affiliate',
+    '/affiliate': 'Affiliate Marketing',
     "/setting": "Setting",
     "/notification": "Notification",
     "/feedback-admin": "Feedback",
@@ -72,7 +72,7 @@ export default function TopBar() {
             display: "flex", justifyContent: "space-between", alignItems: "center",
             padding: "30px 60px 0px 60px ",
         }}>
-            <Typography variant="body1" sx={{ fontSize: "15px", color: "#222240" }}>
+            <Typography variant="body1" sx={{ fontSize: "20px", color: "#222240" }}>
                 {pageTitles[location.pathname] || 'Dashboard'}
             </Typography>
 
@@ -128,7 +128,7 @@ export default function TopBar() {
                     }}>
                         <PersonOutlineOutlinedIcon sx={{ fontSize: "20px", color: "white" }} />
                     </IconButton>
-                    <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>User01</Typography>
+                    <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756", marginLeft: "3px" }}>{localStorage.getItem('userName')}</Typography>
                     <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: "#575756" }} />
                 </Box>
                 <Popover
@@ -141,19 +141,19 @@ export default function TopBar() {
                         horizontal: 'left',
                     }}
                 >
-                    <Box sx={{ width: 200, padding: '10px' }}>
+                    <Box sx={{ width: 200, padding: '20px 10px' }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row', marginBottom: '20px', gap: '10px' }}>
                             <Avatar sx={{ bgcolor: '#ef7d00', width: 40, height: 40 }}>
                                 <PersonOutlineOutlinedIcon sx={{ fontSize: "22px" }} />
                             </Avatar>
                             <Box>
-                                <Typography variant="h6" sx={{ fontSize: "14px" }}>User01</Typography>
-                                <Typography variant="body2" sx={{ fontSize: "12px" }} color="textSecondary">Mail@mail.com</Typography>
+                                <Typography variant="h6" sx={{ fontSize: "14px" }}>{localStorage.getItem('userName')}</Typography>
+                                <Typography variant="body2" sx={{ fontSize: "12px" }} color="textSecondary">{localStorage.getItem('userEmail')}</Typography>
                             </Box>
                         </Box>
-                        <Divider />
+                        <Divider sx={{ marginBottom: "10px" }} />
 
-                        <List>
+                        <List >
                             <Box
                                 onClick={() => navigate('/')}
                                 sx={{
@@ -207,7 +207,10 @@ export default function TopBar() {
                                     }} />
                             </ListItem>
 
-                            <ListItem sx={{ cursor: "pointer" }} onClick={handleUserClose}>
+                            <ListItem sx={{ cursor: "pointer"  }} onClick={() => {
+                                localStorage.removeItem("adminToken");
+                                navigate('/');
+                            }}>
                                 <ListItemIcon>
                                     <img src="/assets/logout.svg" alt="icon" style={{ width: "16px", height: "16px" }} />
                                 </ListItemIcon>

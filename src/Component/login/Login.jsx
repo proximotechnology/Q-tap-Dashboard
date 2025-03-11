@@ -70,6 +70,8 @@ export const Login = () => {
 
         if (loginUserType === 'qtap_admins') {
           localStorage.setItem('adminToken', response.data.token);
+          localStorage.setItem("userName" , response.data.user.name);
+          localStorage.setItem("userEmail" , response.data.user.email);
           navigate('/dashboard-home');
         } else if (loginUserType === 'qtap_affiliates') {
           localStorage.setItem('affiliateToken', response.data.token);

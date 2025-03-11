@@ -29,6 +29,7 @@ export const Setting = () => {
 
     {
       label: "Our Clients",
+
       icon: (
         <img
           src="/assets/Clients.svg"
@@ -53,7 +54,7 @@ export const Setting = () => {
 
     {
       label: "Content",
-      icon: <ContentPasteIcon sx={{ fontSize: "22px" }} />,
+      icon: <ContentPasteIcon sx={{ fontSize: "18px" }} />,
       content: <Content ref={contentRef} />,
     },
     {
@@ -106,7 +107,7 @@ export const Setting = () => {
               label={
                 <Box display="flex" alignItems="center">
                   {tab.icon}
-                  <Box marginLeft={"6px"} fontSize={"12px"}>
+                  <Box marginLeft={"6px"} fontSize={"14px"}>
                     {tab.label}
                   </Box>
                 </Box>

@@ -43,11 +43,23 @@ const FinancialCard = () => {
                       strokeWidth={10}
                       styles={buildStyles({
                         textSize: "20px",
-                        pathColor: "#AD4181",
+                        pathColor: `url(#gradient-${data.title === "Balance" ? "balance" : "other"})`,
                         textColor: "#AD4181",
                         trailColor: "#D8E0E0",
                       })}
                     />
+                    <svg style={{ height: 0 }}>
+                      <defs>
+                        <linearGradient id="gradient-balance" x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%" stopColor="rgb(163, 215, 255)" />
+                          <stop offset="100%" stopColor="#1C7FCB" />
+                        </linearGradient>
+                        <linearGradient id="gradient-other" x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%" stopColor="rgb(250, 160, 214)" />
+                          <stop offset="100%" stopColor="#8A2C5E" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
                   </Box>
                 </Box>
 
@@ -59,7 +71,7 @@ const FinancialCard = () => {
                     fontWeight: "bold",
                     display: "flex",
                     alignItems: "center",
-                    gap : 1
+                    gap: 1
                   }}
                 >
                   {data.value}
@@ -97,7 +109,9 @@ const FinancialCard = () => {
                         marginRight: "5px",
                         width: 15,
                         height: 7,
-                        backgroundColor: "#AD4181",
+                        backgroundImage: data.title === "Balance"
+                          ? "linear-gradient(to right,rgb(163, 215, 255), #1C7FCB)"
+                          : "linear-gradient(to right,rgb(250, 160, 214), #8A2C5E)",
                         borderRadius: "20px",
                       }}
                     />

@@ -94,15 +94,30 @@ const Product = () => {
                   src={`https://highleveltecknology.com/Qtap/${menu.img}`} 
                   alt={menu.name}
                   style={{ 
-                    width: "100%", 
-                    height: "150px", 
+                    width: "70px", 
+                    height: "70px", 
                     objectFit: "cover",
                     borderRadius: "10px",
                     marginBottom: "10px"
                   }} 
                 />
               )}
-              <Typography variant="body2" sx={{ letterSpacing: "2px", fontSize:"17px" }}>
+              {menu.img && (
+                <img 
+                  src={`https://highleveltecknology.com/Qtap/${menu.img}`} 
+                  alt={menu.name}
+                  style={{ 
+                    width: "120px", 
+                    height: "120px", 
+                    objectFit: "cover",
+                    position: "absolute",
+                    bottom: "10px",
+                    right: "-1%",
+                    opacity:'.2'
+                  }} 
+                />
+              )}
+              <Typography variant="body2" sx={{ letterSpacing: "2px", fontSize:"18px" }}>
                 {menu.name}
               </Typography>
             </Box>

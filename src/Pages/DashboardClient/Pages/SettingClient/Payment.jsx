@@ -70,7 +70,8 @@ const PaymentGatewayForm = () => {
                     sx={{
                         textAlign: "left",
                         fontSize: "15px",
-                        color: "#575756"
+                        color: "#575756",
+                        margin:"10px 0px 15px 0px"
                     }}
                 >
                     Payment Gateway

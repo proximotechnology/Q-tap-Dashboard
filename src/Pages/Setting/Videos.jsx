@@ -110,7 +110,7 @@ export const Videos = forwardRef((props, ref) => {
                 ))}
 
                 <IconButton onClick={addUrlInput}>
-                    <AddIcon fontSize="large" sx={{ color: 'grey' }} />
+                    <AddIcon fontSize="large" sx={{ color: 'grey' , opacity: 0.5 }} />
                 </IconButton>
             </Box>
         </Paper>

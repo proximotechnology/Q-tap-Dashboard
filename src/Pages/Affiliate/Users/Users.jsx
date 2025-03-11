@@ -33,11 +33,13 @@ export const Users = () => {
     setAnchorEl(event.currentTarget);
     setSelectedUser(user);
   };
+  console.log("sletected user", selectedUser);
 
   const handleClose = () => {
     setAnchorEl(null);
     setSelectedUser(null);
   };
+
 
   const getUsers = async () => {
     try {
@@ -60,13 +62,30 @@ export const Users = () => {
   };
 
   // active users
-  const handleActiveUsers = async (userId) => {
+  const handleActiveUsers = async (userId, currentStatus) => {
+
     try {
+      const newStatus = currentStatus === "active" ? "inactive" : "active";
       const response = await axios.post(
         `https://highleveltecknology.com/Qtap/api/qtap_affiliate/${userId}`,
         {
-          status: "active",
+          status: newStatus,
         },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
+        }
+      );
+      getUsers();
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+  const handleDeleteUser = async (userId) => {
+    try {
+      const response = await axios.delete(
+        `https://highleveltecknology.com/Qtap/api/affiliate/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
@@ -267,17 +286,19 @@ export const Users = () => {
                     }}
                   >
                     <span
-                      onClick={() => handleActiveUsers(user.id)}
+                      onClick={() => handleActiveUsers(user.id, user.status)}
                       style={{
-                        backgroundColor:
+                        color:
                           user.status === "active" ? "#ef7d00" : "#575756",
-                        color: "white",
                         borderRadius: "30px",
-                        padding: "3px 10px",
+                        padding: "3px 10px 10px 10px",
                         cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center"
                       }}
                     >
-                      {user.status}
+                      <span style={{ color: user.status === "active" ? "#ef7d00" : "#575756", fontWeight: "bolder", fontSize: "20px", marginRight: "3px" }}>&#8226; </span>
+                      {user.status.charAt(0).toUpperCase() + user.status.slice(1)}
                     </span>
                   </TableCell>
 
@@ -306,8 +327,11 @@ export const Users = () => {
           }}
         >
           <Box
-            onClick={handleClose}
-            sx={{ display: "flex", alignItems: "center" }}
+            onClick={() => {
+              // handleEditUser(selectedUser.id);
+              handleClose();
+            }}
+            sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
           >
             <IconButton>
               <img
@@ -324,8 +348,11 @@ export const Users = () => {
             </Typography>
           </Box>
           <Box
-            onClick={handleClose}
-            sx={{ display: "flex", alignItems: "center" }}
+            onClick={() => {
+              handleDeleteUser(selectedUser.id);
+              handleClose();
+            }}
+            sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
           >
             <IconButton>
               <span className="icon-delete" style={{ fontSize: "15px" }}></span>
@@ -339,6 +366,6 @@ export const Users = () => {
           </Box>
         </Menu>
       </Paper>
-    </Box>
+    </Box >
   );
 };

@@ -294,7 +294,7 @@ const OurClients = forwardRef((props, ref) => {
                 W:500px H:500px
             </Typography>
 
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2  ,padding: "20px 20px"}}>
                 {clients.map((client) => (
                     <Box
                         key={client.id}
@@ -356,7 +356,7 @@ const OurClients = forwardRef((props, ref) => {
                     {isLoading ? (
                         <CircularProgress size={24} />
                     ) : (
-                        <AddIcon sx={{ fontSize: "30px", color: "gray" }} />
+                        <AddIcon sx={{ fontSize: "50px", fontWeight: "bolder", color: "gray", opacity: 0.5 }} />
                     )}
                 </Box>
 

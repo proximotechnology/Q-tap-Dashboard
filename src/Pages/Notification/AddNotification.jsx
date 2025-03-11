@@ -69,7 +69,6 @@ export const AddNotification = ({ open, handleClose, addNotification }) => {
                         </IconButton>
                     </Box>
                     <Divider sx={{ marginBottom: "15px", backgroundColor: "#F78E20" }} />
-
                     <TextField
                         placeholder="Title (En)"
                         variant="outlined"
@@ -77,7 +76,17 @@ export const AddNotification = ({ open, handleClose, addNotification }) => {
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         sx={{ marginBottom: '15px' }}
-                        InputProps={{ sx: { height: '40px', fontSize: '12px', borderRadius: "6px" } }}
+                        InputProps={{
+                            sx: {
+                                height: '40px',
+                                fontSize: '12px',
+                                borderRadius: "6px",
+                                '& .MuiOutlinedInput-notchedOutline': {
+                                    border: 'none',
+                                    borderBottom:".5px solid rgba(0, 0, 0, 0.1)"
+                                },
+                            },
+                        }}
                     />
                     <TextField
                         placeholder="Aa"
@@ -88,7 +97,16 @@ export const AddNotification = ({ open, handleClose, addNotification }) => {
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
                         sx={{ marginBottom: '15px' }}
-                        InputProps={{ sx: { fontSize: '12px', borderRadius: "6px" } }}
+                        InputProps={{
+                            sx: {
+                                fontSize: '12px',
+                                borderRadius: "6px",
+                                '& .MuiOutlinedInput-notchedOutline': {
+                                    border: 'none',
+                                    borderBottom:".5px solid rgba(0, 0, 0, 0.1)"
+                                },
+                            },
+                        }}
                     />
 
                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
