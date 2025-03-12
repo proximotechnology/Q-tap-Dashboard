@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { 
-    Box, 
-    Modal, 
-    Typography, 
-    TextField, 
-    Button, 
+import {
+    Box,
+    Modal,
+    Typography,
+    TextField,
+    Button,
     IconButton,
-    Divider, 
+    Divider,
     CircularProgress
 } from '@mui/material';
 import axios from 'axios';
@@ -104,35 +104,47 @@ const AddMenuModal = ({ open, handleClose, onSuccess }) => {
                             <Button
                                 variant="outlined"
                                 component="span"
-                                sx={{ mr: 2 }}
+                                sx={{
+                                    mr: 2,
+                                    borderRadius: '10px',
+                                    textTransform: 'capitalize',
+                                    borderColor: '#ef7d00',
+                                    color: '#ef7d00',
+                                    '&:hover': {
+                                        borderColor: '#ef7d00',
+                                        backgroundColor: 'rgba(239, 125, 0, 0.1)'
+                                    }
+                                }}
                             >
                                 Upload Image
                             </Button>
                         </label>
                         {previewUrl && (
                             <Box sx={{ mt: 2 }}>
-                                <img 
-                                    src={previewUrl} 
-                                    alt="Preview" 
-                                    style={{ 
-                                        maxWidth: '100%', 
+                                <img
+                                    src={previewUrl}
+                                    alt="Preview"
+                                    style={{
+                                        maxWidth: '100%',
                                         maxHeight: '200px',
                                         objectFit: 'cover',
                                         borderRadius: '10px'
-                                    }} 
+                                    }}
                                 />
                             </Box>
                         )}
                     </Box>
 
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 3 }}>
-                        <Button 
+                        <Button
                             type="submit"
                             variant="contained"
                             sx={{
-                                backgroundColor: "#E57C00",
+                                backgroundColor: "#ef7d00",
+                                borderRadius: '10px',
+                                textTransform: 'capitalize',
                                 '&:hover': {
-                                    backgroundColor: "#E57C00",
+                                    backgroundColor: "#ef7d00",
                                 }
                             }}
                         >
@@ -149,4 +161,4 @@ const AddMenuModal = ({ open, handleClose, onSuccess }) => {
     );
 };
 
-export default AddMenuModal; 
+export default AddMenuModal;

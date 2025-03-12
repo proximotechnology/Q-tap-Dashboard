@@ -16,16 +16,25 @@ import { toast } from 'react-toastify';
 
 
 export const FeedbackAdmin = () => {
+    const [selectedIndex, setSelectedIndex] = useState(null);
+    const [open, setOpen] = useState(false);
 
     const [feedbackData, setFeedbackData] = useState([]);
 
     const handleDelete = (id) => {
         setFeedbackData(feedbackData.filter(row => row.id !== id));
     };
-    const [open, setOpen] = useState(false);
 
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+
+    const handleOpen = (index) => {
+        setSelectedIndex(index);
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+        setSelectedIndex(null);
+    };
 
     // get data from backend to display in the table
     const getFeedbackData = async () => {
@@ -62,21 +71,21 @@ export const FeedbackAdmin = () => {
 
 
     // publish feedback data
-    
+
     // toggle the publishing status of the feedback
     const publishFeedback = async (id, currentStatus) => {
         const newStatus = currentStatus === "yes" ? "no" : "yes";
-        console.log('newStatus:', newStatus , currentStatus);
-        
+        console.log('newStatus:', newStatus, currentStatus);
+
         await axios.put(`https://highleveltecknology.com/Qtap/api/feedback/${id}`, {
             publish: newStatus
         }, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
-            }   
+            }
         });
         getFeedbackData();
-        toast.success(`Feedback publishing status updated to ${newStatus}`);
+        // toast.success(`Feedback publishing status updated to ${newStatus}`);
     };
     return (
         <Box sx={{ padding: "0px 20px" }}>
@@ -147,11 +156,12 @@ export const FeedbackAdmin = () => {
                                         textAlign: "center",
                                         borderBottom: "none",
                                     }}>
-                                        {row.star >= 3 ? (
-                                            <SentimentSatisfiedAltIcon sx={{ color: '#73CB3C', fontSize: "34px" }} />
-                                        ) : (
-                                            <SentimentVeryDissatisfiedIcon sx={{ color: '#E02828', fontSize: "34px" }} />
-                                        )}
+                                        {row.emoji === 'sad' ? (<SentimentVeryDissatisfiedIcon sx={{ color: '#E02828', fontSize: "34px" }} />) :
+                                            row.emoji === 'happy' ? (<SentimentSatisfiedAltIcon sx={{ color: '#FFC107', fontSize: "34px" }} />) :
+                                                row.emoji === "very happy" ? (<SentimentSatisfiedAltIcon sx={{ color: '#73CB3C', fontSize: "34px" }} />) : null
+
+                                        }
+
                                     </TableCell>
 
                                     <TableCell
@@ -160,7 +170,7 @@ export const FeedbackAdmin = () => {
                                             textAlign: "center",
                                             borderBottom: "none",
                                         }} >
-                                        {row.your_goals === "Yes" ? (
+                                        {row.your_goals === "yes" ? (
                                             <CheckCircleOutlineIcon sx={{ color: '#73CB3C', fontSize: "34px" }} />
                                         ) : (
                                             <CancelIcon sx={{ color: '#E02828', fontSize: "34px" }} />
@@ -173,10 +183,10 @@ export const FeedbackAdmin = () => {
                                             textAlign: "center",
                                             borderBottom: "none",
                                         }}>
-                                        <IconButton onClick={handleOpen} >
+                                        <IconButton onClick={() => handleOpen(index)}>
                                             <span class="icon-information" style={{ fontSize: '22px', color: "#E57C00" }} />
                                         </IconButton>
-                                        <FeedbackDetailsModal open={open} handleClose={handleClose} />
+                                        <FeedbackDetailsModal open={open} handleClose={handleClose} pageId={selectedIndex} />
                                     </TableCell>
 
 
@@ -188,9 +198,10 @@ export const FeedbackAdmin = () => {
                                         }}>
                                         <Box>
                                             <Button
+                                                onClick={() => publishFeedback(row.id, row.publish)} style={{ marginLeft: "5px" }}
                                                 variant="contained"
                                                 sx={{
-                                                    backgroundColor: row.publish === "yes" || row.publish === "Yes" ? '#222240' : '#808285',
+                                                    backgroundColor: row.publish === "yes" || row.publish === "Yes" ? '#808285' : '#222240',
                                                     color: 'white',
                                                     borderRadius: '20px',
                                                     textTransform: 'capitalize',
@@ -198,16 +209,16 @@ export const FeedbackAdmin = () => {
                                                     marginRight: '10px',
                                                     fontSize: "9px", alignItems: "center",
                                                     "&:hover": {
-                                                        backgroundColor: row.publish === "yes" || row.publish === "Yes" ? '#1A1A33' : '#5A5A5A',
+                                                        backgroundColor: row.publish === "yes" || row.publish === "Yes" ? '#5A5A5A' : '#1A1A33',
                                                     }
                                                 }} >
+                                                {row.publish === "yes" || row.publish === "Yes" ? "Unpublish" : "Publish"}
 
-                                                <span onClick={() => publishFeedback(row.id , row.publish)} style={{ marginLeft: "5px" }}>{row.publish === "yes" || row.publish === "Yes" ? "Unpublish" : "Publish"}</span>
                                                 <span>
                                                     {row.publish === "yes" || row.publish === "Yes" ? (
-                                                        <ArrowRightAltOutlinedIcon sx={{ color: '#E57C00', fontSize: "15px" }} />
+                                                        <KeyboardBackspaceOutlinedIcon sx={{ color: '#E57C00', fontSize: "15px", margin: "4px 0 0 3px" }} />
                                                     ) : (
-                                                        <KeyboardBackspaceOutlinedIcon sx={{ color: '#E57C00', fontSize: "14px" }} />
+                                                        <ArrowRightAltOutlinedIcon sx={{ color: '#E57C00', fontSize: "14px", margin: "4px 0 0 3px" }} />
                                                     )}
                                                 </span>
                                             </Button>

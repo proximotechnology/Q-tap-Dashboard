@@ -10,7 +10,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import axios from 'axios';
 
-const FeedbackDetailsModal = ({ open, handleClose }) => {
+const FeedbackDetailsModal = ({ open, handleClose, pageId }) => {
 
     const [feedbackData, setFeedbackData] = useState([]);
 
@@ -29,7 +29,7 @@ const FeedbackDetailsModal = ({ open, handleClose }) => {
 
             if (response.data) {
                 setFeedbackData(response.data);
-                console.log('Fetched feedback:', response.data);
+                console.log('Fetched feedback::::::', response.data);
             }
         } catch (error) {
             console.error('Error fetching feedback data:', error);
@@ -37,7 +37,7 @@ const FeedbackDetailsModal = ({ open, handleClose }) => {
     };
     useEffect(() => {
         getFeedbackData();
-        
+
     }, []);
 
 
@@ -55,14 +55,14 @@ const FeedbackDetailsModal = ({ open, handleClose }) => {
                 p: 2,
                 borderRadius: 2
             }}>
-             
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Typography variant="body1" sx={{ color: '#575756', fontSize: "13px" }}>
-                            Details
+
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Typography variant="body1" sx={{ color: '#575756', fontSize: "13px" }}>
+                        Details
                     </Typography>
                     <Box>
                         <IconButton onClick={handlePrint}>
-                            <span class="icon-printer" style={{ fontSize: "18px" }}></span>
+                            <span className="icon-printer" style={{ fontSize: "18px" }}></span>
                         </IconButton>
                         <IconButton onClick={handleClose} >
                             <span class="icon-close-1" style={{ fontSize: "15px" }}></span>
@@ -78,7 +78,7 @@ const FeedbackDetailsModal = ({ open, handleClose }) => {
                 <Box sx={{ display: 'flex', marginTop: "0px", p: 0 }}>
                     {[1, 2, 3, 4, 5].map((index) => (
                         <IconButton key={index}>
-                            {index <= 4 ? <StarIcon sx={{ color: '#AAAAAA', fontSize: "20px" }} />
+                            {index <= feedbackData[pageId]?.star ? <StarIcon sx={{ color: '#ef7d00', fontSize: "20px" }} />
                                 : <StarBorderIcon sx={{ color: '#AAAAAA', fontSize: "20px" }} />}
                         </IconButton>
                     ))}
@@ -87,23 +87,40 @@ const FeedbackDetailsModal = ({ open, handleClose }) => {
                 <Typography variant="body1" sx={{ mt: 1, color: '#575756', fontSize: "12px" }}>
                     How happy are you with the product?
                 </Typography>
+
                 <Box sx={{ display: 'flex', gap: 2, marginTop: "6px" }}>
+                    {/* Sad Icon */}
                     <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
-                        <SentimentVeryDissatisfiedIcon sx={{ fontSize: 35, color: '#AAAAAA' }} />
+                        <SentimentVeryDissatisfiedIcon
+                            sx={{
+                                fontSize: 35,
+                                color: feedbackData[pageId]?.emoji === 'sad' ? 'red' : '#AAAAAA'
+                            }}
+                        />
                         <Typography style={{ fontSize: 9, color: '#AAAAAA' }}>Sad</Typography>
                     </Box>
 
+                    {/* Neutral Icon */}
                     <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
-                        <SentimentNeutralIcon sx={{ fontSize: 35, color: '#AAAAAA' }} />
+                        <SentimentNeutralIcon
+                            sx={{
+                                fontSize: 35,
+                                color: feedbackData[pageId]?.emoji === 'happy' ? '#FFC107' : '#AAAAAA'
+                            }}
+                        />
                         <Typography style={{ fontSize: 9, color: '#AAAAAA' }}>happy</Typography>
                     </Box>
 
+                    {/* Very Happy Icon */}
                     <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
-                        <SentimentSatisfiedAltIcon sx={{ fontSize: 35, color: '#AAAAAA' }} />
-                        <Typography style={{ fontSize: 9, color: '#AAAAAA' }}>very happy</Typography>
+                        <SentimentSatisfiedAltIcon
+                            sx={{
+                                fontSize: 35,
+                                color: feedbackData[pageId]?.emoji === 'very happy' ? '#73CB3C' : '#AAAAAA'
+                            }}
+                        />
+                        <Typography style={{ fontSize: 9, color: '#AAAAAA' }}>Very Happy</Typography>
                     </Box>
-
-
                 </Box>
 
                 <Typography variant="body1" sx={{ mt: 1, color: '#575756', fontSize: "12px" }}>
@@ -112,12 +129,12 @@ const FeedbackDetailsModal = ({ open, handleClose }) => {
 
                 <Box sx={{ display: 'flex', gap: 3, marginTop: "6px" }}>
                     <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
-                        <CheckCircleIcon sx={{ fontSize: 35, color: '#AAAAAA' }} />
+                        <CheckCircleIcon sx={{ fontSize: 35, color: feedbackData[pageId]?.your_goals === 'yes' ? 'green' : '#AAAAAA' }} />
                         <Typography style={{ fontSize: 9, color: '#AAAAAA' }}>yes</Typography>
                     </Box>
 
                     <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
-                        <CancelIcon sx={{ fontSize: 35, color: '#AAAAAA' }} />
+                        <CancelIcon sx={{ fontSize: 35, color: feedbackData[pageId]?.your_goals === 'no' ? 'red' : '#AAAAAA' }} />
                         <Typography style={{ fontSize: 9, color: '#AAAAAA' }}>no</Typography>
                     </Box>
                 </Box>
@@ -126,8 +143,10 @@ const FeedbackDetailsModal = ({ open, handleClose }) => {
                         What are the things missing in Q-tap Menus?
                     </Typography>
                     <Typography variant="body2" sx={{ mt: 1, color: 'gray', fontSize: "10px" }}>
-                        Please give your opinion and thoughts so we can improve
-                        our services.</Typography>
+                        {/* { feedbackData.find((feed) => feed.id == pageId).missing_Q-tap_Menus} */}
+                        {feedbackData[pageId]?.comment}
+
+                    </Typography>
                 </Box>
                 <Box>
 
@@ -135,7 +154,7 @@ const FeedbackDetailsModal = ({ open, handleClose }) => {
                         Comment
                     </Typography>
                     <Typography variant="body2" sx={{ mt: 1, color: 'gray', fontSize: "10px" }}>
-                        Please write a brief about your experiment.
+                        {feedbackData[pageId]?.comment}
                     </Typography>
                 </Box>
                 <Box sx={{ justifyContent: "center", textAlign: "center", }}>

@@ -3,7 +3,7 @@ import { Box, Typography, IconButton, Divider } from '@mui/material';
 import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import AddBundle from './AddBundle';
-import { DiscountModel } from '../DashboardClient/Pages/Menu/DiscountModel';
+import { DiscountModelAdmin } from './DiscountModelAdmin';
 
 export const Pricing = () => {
   const [open, setOpen] = useState(false);
@@ -32,7 +32,7 @@ export const Pricing = () => {
   const handleDiscountClose = () => {
     setOpenDiscount(false);
   };
-/// card pricing structure 
+  /// card pricing structure 
   const PricingCard = ({ title, priceMonthly, priceYearly, description, features, id }) => {
     // delete pricing data from api
     const handleDelete = () => {
@@ -42,25 +42,25 @@ export const Pricing = () => {
           'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
         }
       })
-      .then(response => {
-        if (response.status === 204) {
-          return { success: true };
-        }
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.text().then(text => {
-          return text ? JSON.parse(text) : { success: true };
+        .then(response => {
+          if (response.status === 204) {
+            return { success: true };
+          }
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.text().then(text => {
+            return text ? JSON.parse(text) : { success: true };
+          });
+        })
+        .then(data => {
+          console.log('Delete successful:', data);
+          window.location.reload();
+        })
+        .catch(error => {
+          console.error('Error deleting pricing data:', error);
+          alert('Failed to delete pricing data. Please try again.');
         });
-      })
-      .then(data => {
-        console.log('Delete successful:', data);
-        window.location.reload();
-      })
-      .catch(error => {
-        console.error('Error deleting pricing data:', error);
-        alert('Failed to delete pricing data. Please try again.');
-      });
     };
 
     return (
@@ -134,7 +134,7 @@ export const Pricing = () => {
   const [pricing, setPricing] = useState([]);
   // get pricing data from api
   useEffect(() => {
-    fetch('https://highleveltecknology.com/Qtap/api/pricing' ,{
+    fetch('https://highleveltecknology.com/Qtap/api/pricing', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -144,7 +144,7 @@ export const Pricing = () => {
       .then(response => response.json())
       .then(data => {
         setPricing(data.data);
-        console.log("price data", data);  
+        console.log("price data", data);
       })
       .catch(error => console.error('Error fetching pricing data:', error));
   }, []);
@@ -156,14 +156,14 @@ export const Pricing = () => {
 
         <Box sx={{ display: "flex" }}>
           <Typography onClick={handleDiscountOpen}
-          sx={{
-            color: "#222240", cursor: "pointer", border: "1px solid gray",
-            padding: "3px 15px", borderRadius: "30px", fontSize: "12px"
-          }}>
+            sx={{
+              color: "#222240", cursor: "pointer", border: "1px solid gray",
+              padding: "3px 15px", borderRadius: "30px", fontSize: "12px"
+            }}>
             <span style={{ color: "#ef7d00", fontSize: "17px", marginRight: "5px" }}>%</span>
             Discount Codes
           </Typography>
-          <DiscountModel open={openDiscount} handleClose={handleDiscountClose} />
+          <DiscountModelAdmin open={openDiscount} handleClose={handleDiscountClose} />
 
           <AddOutlinedIcon
             onClick={handleOpen}
@@ -173,9 +173,9 @@ export const Pricing = () => {
               fontSize: '32px', marginLeft: "15px", cursor: "pointer",
             }}
           />
-          <AddBundle 
-            open={open} 
-            onClose={handleClose} 
+          <AddBundle
+            open={open}
+            onClose={handleClose}
             editData={selectedBundle}
           />
         </Box>
@@ -187,7 +187,7 @@ export const Pricing = () => {
       }} />
 
       <Box display="flex" justifyContent="center" flexWrap="wrap">
-        {Array.isArray(pricing) ? pricing.map((item) => (
+        {Array.isArray(pricing) ? pricing?.map((item) => (
           <PricingCard
             key={item.id}
             title={item.name}

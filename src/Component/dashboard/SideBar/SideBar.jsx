@@ -3,18 +3,22 @@ import React from "react";
 import { Box, Divider, List, ListItemButton, ListItemIcon, ListItemText, Tooltip, useTheme } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { grey } from "@mui/material/colors";
+import SettingsIcon from '@mui/icons-material/Settings';
+import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import GridViewIcon from '@mui/icons-material/GridView';
 
 const Arr1 = [
     {
 
         text: "Dashboard",
-        icon: <img src="/assets/dashboard.svg" alt="icon" style={{ width: "16px", height: "16px" }} />,
+        icon: <GridViewIcon style={{fontSize:"18px"  ,marginLeft:"-1px"}}></GridViewIcon>,
         path: "/dashboard-home"
     },
 
     {
         text: "Client ",
-        icon: <img src="/assets/Clients.svg" alt="icon" style={{ width: "16px", height: "16px" }} />,
+        icon: <PeopleOutlineIcon style={{fontSize:"20px"  ,marginLeft:"-1px"}}></PeopleOutlineIcon>,
         path: "/client"
     },
     {
@@ -46,7 +50,7 @@ const Arr1 = [
 
     {
         text: "Setting",
-        icon: <img src="/assets/setting.svg" alt="icon" style={{ width: "16px", height: "16px" }} />,
+        icon: <SettingsIcon style={{fontSize:"18px" ,marginLeft:"-1px"}}></SettingsIcon>,
         path: "/setting",
     },
     {
@@ -56,7 +60,7 @@ const Arr1 = [
     },
     {
         text: "Feedback",
-        icon: <span class="icon-star" style={{ color: "ef7d00" }}></span>,
+        icon: <StarBorderIcon style={{fontSize:"20px" ,marginLeft:"-1px"}}></StarBorderIcon>,
         path: "/feedback-admin",
     },
 ];

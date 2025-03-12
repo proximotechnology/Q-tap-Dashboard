@@ -27,7 +27,6 @@
 
 .icon-wallet1:before {
   content: "\eb20";
-  color: #575756;
 }
 .icon-d-printer:before {
   content: "\e900";
@@ -2284,7 +2283,6 @@
 }
 .icon-star:before {
   content: "\eaec";
-  color: #ffc107;
 }
 .icon-store-1:before {
   content: "\eaed";

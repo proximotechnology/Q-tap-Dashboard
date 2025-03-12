@@ -32,8 +32,14 @@ export const Row1 = () => {
 
 
                     <Box display={"flex"} justifyContent="center" alignItems="center">
-                        <Box sx={{ display: "flex" }}   gap={2}>
+                        <Box sx={{ display: "flex" }} gap={2}>
                             <PieChart width={110} height={110}>
+                                <defs>
+                                    <linearGradient id="gradientFree" x1="0" y1="0" x2="100%" y2="0">
+                                        <stop offset="0%" stopColor="rgb(255, 194, 133)" />
+                                        <stop offset="100%" stopColor="#ef7d00" /> {/* Lighter shade of orange */}
+                                    </linearGradient>
+                                </defs>
                                 <Pie
                                     data={data01}
                                     cx={50}
@@ -43,14 +49,19 @@ export const Row1 = () => {
                                     fill="#D8E0E0"
                                     paddingAngle={0}
                                 >
-                                    <Cell fill={COLORS[0]} />
+                                    <Cell fill="url(#gradientFree)" />
                                     <Cell fill="#D8E0E0" />
-                                    <Cell fill="#d3d3d3" />
                                 </Pie>
                                 <text x={55} y={57} textAnchor="middle" dominantBaseline="middle" fill={COLORS[0]} fontSize="18">{data01[0].value}%</text>
                             </PieChart>
 
                             <PieChart width={110} height={110}>
+                                <defs>
+                                    <linearGradient id="gradientStarter" x1="0" y1="0" x2="100%" y2="0">
+                                        <stop offset="0%" stopColor="rgb(255, 174, 216)" />
+                                        <stop offset="100%" stopColor="#AD4181" /> {/* Lighter shade of purple */}
+                                    </linearGradient>
+                                </defs>
                                 <Pie
                                     data={data02}
                                     cx={50}
@@ -60,14 +71,19 @@ export const Row1 = () => {
                                     fill="#D8E0E0"
                                     paddingAngle={0}
                                 >
-                                    <Cell fill={COLORS[1]} />
-                                    <Cell fill="#D8E0E0" />
+                                    <Cell fill={`url(#gradientStarter)`} />
                                     <Cell fill="#d3d3d3" />
                                 </Pie>
                                 <text x={55} y={57} textAnchor="middle" dominantBaseline="middle" fill={COLORS[1]} fontSize="18">{data02[0].value}%</text>
                             </PieChart>
 
                             <PieChart width={110} height={110}>
+                                <defs>
+                                    <linearGradient id="gradientPro" x1="0" y1="0" x2="100%" y2="0">
+                                        <stop offset="0%" stopColor="rgb(170, 214, 243)" />
+                                        <stop offset="100%" stopColor="#2EA6F7" /> {/* Lighter shade of blue */}
+                                    </linearGradient>
+                                </defs>
                                 <Pie
                                     data={data03}
                                     cx={50}
@@ -77,8 +93,7 @@ export const Row1 = () => {
                                     fill="#D8E0E0"
                                     paddingAngle={0}
                                 >
-                                    <Cell fill={COLORS[2]} />
-                                    <Cell fill="#D8E0E0" />
+                                    <Cell fill={`url(#gradientPro)`} />
                                     <Cell fill="#d3d3d3" />
                                 </Pie>
                                 <text x={55} y={57} textAnchor="middle" dominantBaseline="middle" fill={COLORS[2]} fontSize="18">{data03[0].value}%</text>
@@ -86,21 +101,30 @@ export const Row1 = () => {
                         </Box>
                     </Box>
 
-                    <Box sx={{marginRight:"70px"}}>
+                    <Box sx={{ marginRight: "70px" }}>
                         <Box display={"flex"} textAlign={"center"} alignItems={"center"} >
-                            <Box component="span" sx={{ backgroundColor: COLORS[0], width: '22px', borderRadius: "20px", height: '10px', display: 'inline-block', marginRight: '8px' }} />
-                            <Typography variant="body2" sx={{ fontSize: "10px",color:"gray" }}>Free</Typography>
+                            <Box component="span" sx={{
+                                background: 'linear-gradient(to right, #ef7d00,rgb(248, 203, 158))',
+                                width: '22px', borderRadius: "20px", height: '10px', display: 'inline-block', marginRight: '8px'
+                            }} />
+                            <Typography variant="body2" sx={{ fontSize: "10px", color: "gray" }}>Free</Typography>
                         </Box>
 
 
                         <Box display={"flex"} textAlign={"center"} alignItems={"center"} margin={"4px 0px"}>
-                            <Box component="span" sx={{ backgroundColor: COLORS[1], width: '22px', borderRadius: "20px", height: '10px',  display: 'inline-block', marginRight: '8px' }} />
-                            <Typography variant="body2" sx={{fontSize: "10px",color:"gray" }}>Starter</Typography>
+                            <Box component="span" sx={{
+                                background: 'linear-gradient(to right, #AD4181,rgb(255, 174, 216))',
+                                width: '22px', borderRadius: "20px", height: '10px', display: 'inline-block', marginRight: '8px'
+                            }} />
+                            <Typography variant="body2" sx={{ fontSize: "10px", color: "gray" }}>Starter</Typography>
                         </Box>
 
                         <Box display={"flex"} textAlign={"center"} alignItems={"center"}>
-                            <Box component="span" sx={{ backgroundColor: COLORS[2],  width: '22px', borderRadius: "20px", height: '10px',  display: 'inline-block', marginRight: '8px' }} />
-                            <Typography variant="body2"   sx={{fontSize: "10px",color:"gray"}}>Pro</Typography>
+                            <Box component="span" sx={{
+                                background: 'linear-gradient(to right, #2EA6F7,rgb(170, 214, 243))',
+                                width: '22px', borderRadius: "20px", height: '10px', display: 'inline-block', marginRight: '8px'
+                            }} />
+                            <Typography variant="body2" sx={{ fontSize: "10px", color: "gray" }}>Pro</Typography>
                         </Box>
                     </Box>
                 </Box>

@@ -42,7 +42,7 @@ const AddBundle = ({ open, onClose, editData = null }) => {
             description: description,
             feature: features,
             is_active: "active",
-            specific_number: "10"
+            orders_limit: "10"
         };
 
         const url = editData 
