@@ -5,6 +5,7 @@ import QtapHome from "../Component/QtapHome";
 import { Box, MenuItem, Grid, Menu, Divider } from "@mui/material";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { useTranslation } from "react-i18next";
 
 export const HomePage = () => {
   const [selectedTab, setSelectedTab] = useState("login");
@@ -12,13 +13,16 @@ export const HomePage = () => {
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const openLanguage = Boolean(anchorElLanguage);
 
+  const { i18n } = useTranslation();
+
   const handleLanguageClick = (event) => {
     setAnchorElLanguage(event.currentTarget);
   };
 
   const handleLanguageClose = (language) => {
-    setAnchorElLanguage(null);
+    setAnchorElLanguage(null); // Close menu first
     setSelectedLanguage(language);
+    i18n.changeLanguage(language);
   };
 
   const getLanguageIcon = () => {
@@ -80,7 +84,7 @@ export const HomePage = () => {
                 onClose={() => setAnchorElLanguage(null)}
                 sx={{ padding: "2px" }}
               >
-                <MenuItem onClick={() => handleLanguageClose("ar")}>
+                <MenuItem onClick={(event) => { handleLanguageClose("ar") }}>
                   <span
                     class="icon-translation"
                     style={{

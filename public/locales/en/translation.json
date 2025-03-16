@@ -1,0 +1,40 @@
+{
+    "logIn":"Log In",
+    "signUp":"Sign Up",
+    "registerAgree":"I agree to the terms and conditions and privacy policy. Learn More",
+
+    
+    "email": "Email",
+    "password": "Password",
+    "confirmPass": "Confirm Password",
+    "resetPassword": "Reset Password",
+    "stayLogIn": "Stay Log In",
+    "admin": "Admin",
+    "affiliate": "Affiliate",
+    "client": "Client",
+    "fieldAreRequired": "fieldAreRequired",
+    "PasswordsDoNotMatch": "Passwords do not match!",
+    "BirthDateFieldMustBeValid": "The birth date field must be a valid date",
+    "countryFieldIsRequired": "'The country field is required'",
+    "userTypeRequired": "'The user type field is required'",
+    "registrationSuccess": "Registration successful!",
+    "registerFiald": "'Failed to register. Please try again.'",
+    "checkEmailOrPhoneDublicated": "check email or phone again may be dublicated!'",
+    
+    "logInSuccess": "Successful login!",
+    "invEmailOrPassword":"Invalid email or password.",
+    "loginFaild":"Failed to login. Please try again.",
+
+    "fullName": "Full Name",
+    "verify": "Verify",
+    "mobileNumber": "Mobile Number",
+    "dateOfBirth": "Date of Birth :",
+    "month": "Month",
+    "day": "Day",
+    "year": "Year",
+    "country": "Country",
+    "userType": "User Type",
+    "qtapLogoPageTitle":"Your Business in your pocket now .",
+    "qtapLogoPageParagraph":"Create a Smart menu Suitable for any type of business, Engage more with your customers. Create a Smart menu Suitable for any type of business, Engage more with your customers. Create a Smart menu Suitable for any type of business, Engage more with your customers. ",
+    "":""
+}

@@ -19,6 +19,7 @@ import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined
 import { useNavigate } from 'react-router';
 import axios from 'axios';
 import { useBranch } from '../../context/BranchContext';
+import { useTranslation } from 'react-i18next';
 
 export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -32,6 +33,7 @@ export const Login = () => {
   const [apiSuccess, setApiSuccess] = useState('');
   const [userType, setUserType] = useState('qtap_admins');
   const { setBranches, setSelectedBranch } = useBranch();
+  const { t } = useTranslation();
 
   const handleSubmit = async () => {
     // Reset API states
@@ -40,7 +42,7 @@ export const Login = () => {
 
     // Validate inputs
     if (!email || !password) {
-      setApiError('All fields are required!');
+      setApiError(t("fieldAreRequired"));
       return;
     }
 
@@ -65,20 +67,20 @@ export const Login = () => {
       console.log('API Response:', response.data); // Debug log
 
       if (response?.data?.user) {
-        setApiSuccess('Successful login!');
+        setApiSuccess(t("logInSuccess"));
         const loginUserType = response.data.user?.user_type;
 
         if (loginUserType === 'qtap_admins') {
           localStorage.setItem('adminToken', response.data.token);
-          localStorage.setItem("userName" , response.data.user.name);
-          localStorage.setItem("userEmail" , response.data.user.email);
+          localStorage.setItem("userName", response.data.user.name);
+          localStorage.setItem("userEmail", response.data.user.email);
           navigate('/dashboard-home');
         } else if (loginUserType === 'qtap_affiliates') {
           localStorage.setItem('affiliateToken', response.data.token);
           navigate('/dashboard-affiliate');
         } else if (loginUserType === 'qtap_clients') {
           localStorage.setItem('clientToken', response.data.token);
-          localStorage.setItem('allClientData',JSON.stringify(response.data));
+          localStorage.setItem('allClientData', JSON.stringify(response.data));
 
           // Store branches in both context and localStorage
           if (response?.data?.brunches && response.data.brunches.length > 0) {
@@ -93,11 +95,11 @@ export const Login = () => {
           navigate('/');
         }
       } else {
-        setApiError(response?.data?.message || 'Invalid email or password.');
+        setApiError(response?.data?.message || t("invEmailOrPassword"));
       }
     } catch (error) {
       console.error('Login Error:', error); // Debug log
-      setApiError(error.response?.data?.message || 'Failed to login. Please try again.');
+      setApiError(error.response?.data?.message || t("loginFaild"));
     } finally {
       setIsLoading(false);
     }
@@ -107,7 +109,7 @@ export const Login = () => {
     <Box>
       <FormControl variant="outlined" fullWidth margin="normal">
         <OutlinedInput
-          placeholder="Email"
+          placeholder={t("email")}
           onChange={(e) => setEmail(e.target.value)}
           startAdornment={
             <InputAdornment position="start">
@@ -154,7 +156,7 @@ export const Login = () => {
               </IconButton>
             </InputAdornment>
           }
-          placeholder="Password"
+          placeholder={t("password")}
           sx={{
             borderRadius: '50px',
             height: '35px',
@@ -174,17 +176,17 @@ export const Login = () => {
           <FormControlLabel
             value="qtap_admins"
             control={<Radio sx={{ '& .MuiSvgIcon-root': { fontSize: 18, color: '#e2944a' } }} />}
-            label={<Typography sx={{ fontSize: '12px' }}>Admin</Typography>}
+            label={<Typography sx={{ fontSize: '12px' }}>{t("admin")}</Typography>}
           />
           <FormControlLabel
             value="qtap_affiliates"
             control={<Radio sx={{ '& .MuiSvgIcon-root': { fontSize: 18, color: '#e2944a' } }} />}
-            label={<Typography sx={{ fontSize: '12px' }}>Affiliate</Typography>}
+            label={<Typography sx={{ fontSize: '12px' }}>{t("affiliate")}</Typography>}
           />
           <FormControlLabel
             value="qtap_clients"
             control={<Radio sx={{ '& .MuiSvgIcon-root': { fontSize: 18, color: '#e2944a' } }} />}
-            label={<Typography sx={{ fontSize: '12px' }}>Client</Typography>}
+            label={<Typography sx={{ fontSize: '12px' }}>{t("client")}</Typography>}
           />
         </RadioGroup>
       </FormControl>
@@ -199,7 +201,7 @@ export const Login = () => {
         }}
         onClick={() => navigate('/reset')}
       >
-        <span style={{ borderBottom: '1px solid #2E3189' }}>Reset Password</span>
+        <span style={{ borderBottom: '1px solid #2E3189' }}>{t("resetPassword")}</span>
       </Typography>
 
       {apiError && (
@@ -225,7 +227,7 @@ export const Login = () => {
         onClick={handleSubmit}
         disabled={isLoading}
       >
-        {isLoading ? <CircularProgress size={24} /> : 'Log In'}
+        {isLoading ? <CircularProgress size={24} /> : t("logIn")}
       </Button>
 
       <FormControlLabel
@@ -238,7 +240,7 @@ export const Login = () => {
             }}
           />
         }
-        label={<Typography sx={{ fontSize: '10px', color: 'gray' }}>Stay Logged In</Typography>}
+        label={<Typography sx={{ fontSize: '10px', color: 'gray' }}>{t("stayLogIn")}</Typography>}
       />
     </Box>
   );

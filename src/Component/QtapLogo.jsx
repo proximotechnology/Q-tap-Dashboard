@@ -3,6 +3,7 @@ import React from 'react'
 import { Grid, Typography, Box } from '@mui/material';
 import { styled } from '@mui/system';
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
+import { useTranslation } from 'react-i18next';
 
 
 const ImageContainer = styled(Box)({
@@ -46,22 +47,22 @@ const Divider = styled(Box)({
 
 });
 const QtapLogo = () => {
-
+    const { t } = useTranslation();
     return (
 
         <Grid item xs={12} md={6} sx={{ position: 'relative' }}>
             <ImageContainer>
-                    <ChevronLeftOutlinedIcon sx={{ position:"absolute",top:"40px",left:"10%",color: "white", fontSize: "33px", zIndex: "8" }} />
+                <ChevronLeftOutlinedIcon sx={{ position: "absolute", top: "40px", left: "10%", color: "white", fontSize: "33px", zIndex: "8" }} />
                 <TextOverlay sx={{ width: "80%" }}>
 
                     <Typography variant="h1" sx={{ width: "80%", fontSize: "27px", fontWeight: "500", wordSpacing: "3px" }}>
-                        Your Business in your pocket now .
+                       {t("qtapLogoPageTitle")}
                     </Typography>
 
 
                     <Divider />
-                    <Typography variant="body1" sx={{ fontSize: "11px", width: "70%",color:"#F1F2F2" }} >
-                    Create a Smart menu Suitable for any type of business, Engage more with your customers. Create a Smart menu Suitable for any type of business, Engage more with your customers. Create a Smart menu Suitable for any type of business, Engage more with your customers. 
+                    <Typography variant="body1" sx={{ fontSize: "11px", width: "70%", color: "#F1F2F2" }} >
+                        { t("qtapLogoPageParagraph")}
                     </Typography>
                 </TextOverlay>
 
