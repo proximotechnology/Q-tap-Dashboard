@@ -3,6 +3,7 @@ import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { PieChart, Pie, Cell } from "recharts";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
+import { useTranslation } from "react-i18next";
 
 const data01 = [
   { name: "Subscriptions", value: 20 },
@@ -18,6 +19,7 @@ const COLORS = ["#ef7d00", "#AD4181"];
 export const Cart4 = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedYear, setSelectedYear] = useState("2023-2024");
+  const {t} = useTranslation()
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -147,7 +149,7 @@ export const Cart4 = () => {
               color="text.secondary"
               sx={{ fontSize: "9px", color: "gray" }}
             >
-              Subscriptions
+              {t("subscriptions")}
             </Typography>
           </Box>
 
@@ -168,7 +170,7 @@ export const Cart4 = () => {
               color="text.secondary"
               sx={{ fontSize: "9px", color: "gray" }}
             >
-              Order
+              {t("order")}
             </Typography>
           </Box>
         </Box>

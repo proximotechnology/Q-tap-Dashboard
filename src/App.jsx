@@ -102,11 +102,11 @@ function App() {
     },
     {
       path: "/logo-cient",
-      element: <LogoClient />,
+      element: <LogoClient />,// معدلتش الترجمه هنا
     },
     {
       path: "/admin-login",
-      element: <LoginAdmin />,
+      element: <LoginAdmin />,// معدلتش الترجمه هنا
     },
     {
       path: "order-body",

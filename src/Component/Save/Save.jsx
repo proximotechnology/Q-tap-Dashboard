@@ -29,6 +29,7 @@ import { PersonalInfo } from '../../Pages/Client/Row2/AddClient/PersonalInfo';
 import { BusinessInfo } from '../../Pages/Client/Row2/AddClient/BusinessInfo';
 import { usePersonalContext } from '../../context/PersonalContext';
 import { useBusinessContext } from '../../context/BusinessContext';
+import { useTranslation } from 'react-i18next';
 
 export const Save = () => {
   const { businessData, updateBusinessData, branches, setBranches } = useBusinessContext();
@@ -48,6 +49,8 @@ export const Save = () => {
   const [tableCount, setTableCount] = useState('');
   const [mode, setMode] = useState('light');
   const [design, setDesign] = useState('grid');
+  const {t} = useTranslation()
+
   const [workingHours, setWorkingHours] = useState({
     selectedDays: ['Sa', 'Su'],
     currentDay: 'Sunday',
@@ -208,16 +211,15 @@ export const Save = () => {
     };
 
     console.log('Full API Data:', fullApiData);
-
     // Validate data
     const validateData = (data) => {
       const errors = [];
-      if (!data.name) errors.push('Full Name is required');
-      if (!data.mobile) errors.push('Mobile number is required');
-      if (!data.email) errors.push('Email is required');
-      if (!data.birth_date) errors.push('Birth date is required');
-      if (!data.country) errors.push('Country is required');
-      if (!data.password) errors.push('Password is required');
+      if (!data.name) errors.push(t("fullNameRequired"));
+      if (!data.mobile) errors.push(t("mobileRequired"));
+      if (!data.email) errors.push(t("emailRequired"));
+      if (!data.birth_date) errors.push(t("birthRequired"));
+      if (!data.country) errors.push(t("countryRequired"));
+      if (!data.password) errors.push(t("passwordRequired"));
       return errors;
     };
 
@@ -242,16 +244,16 @@ export const Save = () => {
       const responseData = await response.json();
 
       if (response.ok) {
-        toast.success('Data saved successfully!');
+        toast.success(t("dataSavedSuccessfully"));
         navigate('/welcome');
         console.log('API Response:', responseData);
       } else {
         console.error('API Error Response:', responseData);
-        toast.error(responseData.message || 'An error occurred while saving data.');
+        toast.error(responseData.message || t("errorWhileSavingData"));
       }
     } catch (error) {
       console.error('Network Error:', error);
-      toast.error('Network error or server is not responding. Please try again later.');
+      toast.error(t("NetworkError"));
     }
   };
 
@@ -409,7 +411,7 @@ export const Save = () => {
                     style={{ color: '#ef7d00', marginRight: '5px', fontSize: '15px' }}
                   />
                   <span style={{ color: 'white', fontSize: '12px', textTransform: 'capitalize' }}>
-                    Home
+                    {t("home")}
                   </span>
                 </Box>
 
@@ -504,7 +506,7 @@ export const Save = () => {
               },
             }}
           >
-            <CheckOutlined sx={{ fontSize: '22px', mr: 1 }} /> Saved
+            <CheckOutlined sx={{ fontSize: '22px', mr: 1 }} /> {t("saved")}
           </Button>
         </Grid>
       </Box>

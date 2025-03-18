@@ -17,6 +17,7 @@ import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutl
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { useNavigate } from "react-router";
 import * as XLSX from "xlsx";
+import { useTranslation } from "react-i18next";
 
 const exportToExcel = () => {
   const worksheet = XLSX.utils.json_to_sheet(clients);
@@ -53,6 +54,7 @@ const clients = [
 export const Row2 = () => {
   const [data, setData] = React.useState([]);
   const navigate = useNavigate();
+  const { t } = useTranslation()
 
   const handleDashboardClick = () => {
     navigate("/dashboard-home");
@@ -126,7 +128,7 @@ export const Row2 = () => {
                 opacity: 0.5,
               }}
             />
-            Clients
+            {t("client")}
           </Typography>
 
           <Box
@@ -150,8 +152,8 @@ export const Row2 = () => {
                 fontSize: "12px",
               }}
             >
-              {" "}
-              Add
+              {t("add")}
+              
               <AddIcon sx={{ color: "#575756", fontSize: "12px" }} />
             </Button>
 
@@ -165,7 +167,7 @@ export const Row2 = () => {
                 gap: 1,
               }}
             >
-              Export
+              {t("export")}
               <ArrowForwardIosOutlinedIcon
                 sx={{ color: "#575756", fontSize: "10px" }}
               />
@@ -205,14 +207,14 @@ export const Row2 = () => {
                     padding: "0px",
                     borderBottom: "none",
                     width: `${100 / 6}%`,
-                      textAlign: "start",
-                     paddingLeft: "35px"
-                    }}
+                    textAlign: "start",
+                    paddingLeft: "35px"
+                  }}
                 >
-                  Business
+                  {t("business")}
                 </TableCell>
 
-                {["Data", "City", "Bundle", "Status", ""].map(
+                {[t("data"), t("city"), t("bundle"), t("status"), ""].map(
                   (header) => (
                     <TableCell
                       key={header}
@@ -362,7 +364,7 @@ export const Row2 = () => {
                           marginRight: "5px",
                         }}
                       ></span>
-                      {row.status}
+                      {t(row.status)}
                     </span>
                   </TableCell>
 

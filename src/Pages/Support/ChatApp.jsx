@@ -1688,6 +1688,7 @@ import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import AddLocationAltOutlinedIcon from "@mui/icons-material/AddLocationAltOutlined";
 import "./chat.css";
+import { useTranslation } from "react-i18next";
 
 const ChatApp = () => {
   const [selectedChat, setSelectedChat] = useState(null);
@@ -1703,6 +1704,7 @@ const ChatApp = () => {
   const isProcessingQueue = useRef(false);
   const isRequestPending = useRef(false);
   const messageCache = useRef({});
+  const { t } = useTranslation();
 
   const processQueue = async () => {
     if (isProcessingQueue.current || requestQueue.current.length === 0) return;
@@ -2087,7 +2089,7 @@ const ChatApp = () => {
         variant="body2"
         sx={{ fontSize: "12px", padding: "20px", color: "#363535fa" }}
       >
-        Live Chat
+        {t("liveChat")}
       </Typography>
 
       <Grid container>

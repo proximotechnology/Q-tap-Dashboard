@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { PieChart, Pie, Cell } from 'recharts';
 
 const data01 = [{ name: 'Free', value: 50 }, { name: 'Remaining', value: 50 }];
@@ -10,6 +11,7 @@ const data03 = [{ name: 'Pro', value: 10 }, { name: 'Remaining', value: 90 }];
 const COLORS = ['#ef7d00', '#AD4181', '#2EA6F7'];
 
 export const Cart1 = () => {
+    const { t } = useTranslation();
     return (
         <>
             <Box display="flex" justifyContent="center" alignItems="center">
@@ -126,7 +128,7 @@ export const Cart1 = () => {
                         }}
                     />
                     <Typography variant="body2" color="text.secondary" sx={{ fontSize: "9px" }}>
-                        Free
+                        {t("free")}
                     </Typography>
                 </Box>
 
@@ -143,7 +145,7 @@ export const Cart1 = () => {
                         }}
                     />
                     <Typography variant="body2" color="text.secondary" sx={{ fontSize: "9px" }}>
-                        Starter
+                        {t("starter")}
                     </Typography>
                 </Box>
 
@@ -160,7 +162,7 @@ export const Cart1 = () => {
                         }}
                     />
                     <Typography variant="body2" color="text.secondary" sx={{ fontSize: "9px" }}>
-                        Pro
+                        {t("pro")}
                     </Typography>
                 </Box>
             </Box>

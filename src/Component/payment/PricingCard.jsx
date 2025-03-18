@@ -4,6 +4,7 @@ import { useState } from "react";
 import { FormControlLabel, RadioGroup } from "@mui/material";
 import CircleIcon from "@mui/icons-material/Circle";
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
+import { useTranslation } from "react-i18next";
 
 
 
@@ -18,7 +19,7 @@ const Divider = styled(Box)({
 
 export function PricingCard({ title, pricePerMonth, pricePerYear, orders, buttonText }) {
     const [buttonColor, setButtonColor] = useState(false);
-
+    const {t} = useTranslation()
     const handleClick = () => {
         setButtonColor(prevIsOrange => !prevIsOrange);
     };
@@ -54,13 +55,13 @@ export function PricingCard({ title, pricePerMonth, pricePerYear, orders, button
                         <Box sx={{ padding: "10px 0px" }}>
                             <Typography variant="body1" sx={{ margin: "15px 0", fontSize: "10px" }}>
                                 <sup style={{ color: "#E57C00", fontSize: "8px", margin: "0px 5px 0px 0px" }}>EGP</sup>
-                                <span style={{ fontSize: "18px" }}>{pricePerMonth}</span>/Month
+                                <span style={{ fontSize: "18px" }}>{pricePerMonth}</span>/{t("month")}
                             </Typography>
 
                             <Divider />
                             <Typography variant="body1" sx={{ marginBottom: "15px", fontSize: "10px" }}>
                                 <sup style={{ color: "#E57C00", fontSize: "8px", margin: "0px 5px 0px 0px" }}>EGP</sup>
-                                <span style={{ fontSize: "18px" }}>{pricePerYear}</span> /Year
+                                <span style={{ fontSize: "18px" }}>{pricePerYear}</span> /{t("year")}
                             </Typography>
                         </Box>
 
@@ -70,7 +71,7 @@ export function PricingCard({ title, pricePerMonth, pricePerYear, orders, button
                         }} >
                             <Typography variant="body2" sx={{ color: "white", fontSize: "12px" }}>
                                 <span style={{ color: "#222240", fontSize: "16px" }}>{orders} </span>
-                                orders
+                                {t("order")}
                             </Typography>
                         </Box>
                     </Box>
@@ -106,7 +107,7 @@ export function PricingCard({ title, pricePerMonth, pricePerYear, orders, button
                                     checkedIcon={<CircleIcon style={{ color: "#E57C00", fontSize: "15px" }} />} // دائرة ملونة عند التفعيل
                                 />
                             }
-                            label={<Typography  sx={{ color: "#AAAAAA", fontSize: "11px" }}>Monthly</Typography>}
+                            label={<Typography  sx={{ color: "#AAAAAA", fontSize: "11px" }}>{t("monthly")}</Typography>}
                         />
                     </Box>
                     <Box>
@@ -118,7 +119,7 @@ export function PricingCard({ title, pricePerMonth, pricePerYear, orders, button
                                     checkedIcon={<CircleIcon style={{ color: "#E57C00", fontSize: "15px" }} />}
                                 />
                             }
-                            label={<Typography sx={{ color: "#AAAAAA", fontSize: "11px" }}>Yearly</Typography>}
+                            label={<Typography sx={{ color: "#AAAAAA", fontSize: "11px" }}>{t("yearly")}</Typography>}
                         />
                     </Box>
                 </RadioGroup>

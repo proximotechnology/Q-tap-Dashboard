@@ -9,9 +9,11 @@ import {
   Typography,
 } from "@mui/material";
 import LineChart1 from "./LineChart1";
+import { useTranslation } from "react-i18next";
 
 export const Row1 = () => {
   const [year, setYear] = React.useState("2024");
+  const { t } = useTranslation()
   const handleYearChange = (event) => {
     setYear(event.target.value);
   };
@@ -46,7 +48,7 @@ export const Row1 = () => {
               component="div"
               sx={{ fontSize: "14px", color: "#575756" }}
             >
-              Sales Volume
+              {t("salesVolume")}
             </Typography>
           </Grid>
           <Grid item sx={{ paddingLeft: "20px" }}>
@@ -106,7 +108,7 @@ export const Row1 = () => {
               width: "140px", height: "40px",
             }}
           >
-            501,420 <span style={{ fontSize: "20px"  , opacity:'0.5'}}>£</span>
+            501,420 <span style={{ fontSize: "20px", opacity: '0.5' }}>£</span>
           </Typography>
 
           <Grid
@@ -152,7 +154,7 @@ export const Row1 = () => {
                 color="text.secondary"
                 sx={{ fontSize: "9px" }}
               >
-                Sales Volume
+                {t("salesVolume")}
               </Typography>
             </Box>
             <Box
@@ -177,7 +179,7 @@ export const Row1 = () => {
                 color="text.secondary"
                 sx={{ fontSize: "9px" }}
               >
-                Sales
+                {t("sales")}
               </Typography>
             </Box>
           </Box>

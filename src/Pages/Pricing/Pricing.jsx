@@ -4,11 +4,13 @@ import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import AddBundle from './AddBundle';
 import { DiscountModelAdmin } from './DiscountModelAdmin';
+import { useTranslation } from 'react-i18next';
 
 export const Pricing = () => {
   const [open, setOpen] = useState(false);
   const [selectedBundle, setSelectedBundle] = useState(null);
   const [openDiscount, setOpenDiscount] = useState(false);
+  const { t } = useTranslation()
 
   const handleOpen = () => {
     setSelectedBundle(null);
@@ -152,7 +154,7 @@ export const Pricing = () => {
   return (
     <Box sx={{ padding: "0px 20px" }}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", textAlign: "center", }}>
-        <Typography sx={{ fontSize: "14px", color: "#575756" }}>Bundles</Typography>
+        <Typography sx={{ fontSize: "14px", color: "#575756" }}>{t("bundle")}</Typography>
 
         <Box sx={{ display: "flex" }}>
           <Typography onClick={handleDiscountOpen}
@@ -161,7 +163,7 @@ export const Pricing = () => {
               padding: "3px 15px", borderRadius: "30px", fontSize: "12px"
             }}>
             <span style={{ color: "#ef7d00", fontSize: "17px", marginRight: "5px" }}>%</span>
-            Discount Codes
+            {t("disCode")}
           </Typography>
           <DiscountModelAdmin open={openDiscount} handleClose={handleDiscountClose} />
 

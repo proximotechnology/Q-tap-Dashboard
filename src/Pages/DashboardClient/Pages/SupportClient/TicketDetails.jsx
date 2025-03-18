@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Box, Grid, Typography, IconButton, TextField, Button } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
+import { useTranslation } from 'react-i18next';
 
 const TicketDetails = ({
   open,
@@ -20,6 +21,8 @@ const TicketDetails = ({
   addTicket // Add this prop to handle adding a new ticket
 }) => {
   const [note, setNote] = useState(ticket?.note || '');
+
+  const {t} = useTranslation()
 
   const handleSave = () => {
     if (ticket && ticket.id) {
@@ -67,7 +70,7 @@ const TicketDetails = ({
         <Grid container spacing={3}>
           <Grid item xs={12} display="flex" justifyContent="space-between" alignItems="center">
             <Typography variant="body1" sx={{ fontSize: '13px' }}>
-              Ticket No.#{ticket?.id || 'New Ticket'}
+              {t("ticketNO")}{ticket?.id || t("newTicket")}
             </Typography>
             <Box display="flex" alignItems="center">
               <span className="icon-printer" style={{ marginRight: '30px', cursor: 'pointer', fontSize: '20px' }} />
@@ -80,7 +83,7 @@ const TicketDetails = ({
               <Grid item xs={12}>
                 <TextField
                   id="customer-name"
-                  label="Customer Name:"
+                  label={t("customerName")}
                   variant="standard"
                   fullWidth
                   size="small"
@@ -102,7 +105,7 @@ const TicketDetails = ({
               <Grid item xs={6}>
                 <TextField
                   id="date"
-                  label="Date:"
+                  label={t("date")}
                   variant="standard"
                   fullWidth
                   size="small"
@@ -123,7 +126,7 @@ const TicketDetails = ({
               <Grid item xs={6}>
                 <TextField
                   id="time"
-                  label="Time:"
+                  label={t("time")}
                   variant="standard"
                   fullWidth
                   size="small"
@@ -144,7 +147,7 @@ const TicketDetails = ({
               <Grid item xs={12}>
                 <TextField
                   id="mail"
-                  label="Mail:"
+                  label={t("mail")}
                   variant="standard"
                   fullWidth
                   size="small"
@@ -166,7 +169,7 @@ const TicketDetails = ({
               <Grid item xs={12}>
                 <TextField
                   id="mobile-number"
-                  label="Mobile Number:"
+                  label={t("mobileNumber")}
                   variant="standard"
                   fullWidth
                   size="small"
@@ -208,7 +211,7 @@ const TicketDetails = ({
                         mt: 1
                       }}
                     >
-                      Opened
+                      {t("opened")}
                     </Typography>
                   </Box>
                 </Grid>
@@ -236,7 +239,7 @@ const TicketDetails = ({
                         mt: 1
                       }}
                     >
-                      In Progress
+                      {t("inProgress")}
                     </Typography>
                   </Box>
                 </Grid>
@@ -271,7 +274,7 @@ const TicketDetails = ({
                         fontSize: '9px'
                       }}
                     >
-                      Done
+                      {t("done")}
                     </Typography>
                   </Box>
                 </Grid>
@@ -282,7 +285,7 @@ const TicketDetails = ({
           <Grid item xs={6}>
             <Box>
               <Typography variant="body2" sx={{ fontSize: '12px', mb: 1 }}>
-                Note:
+                {t("note")}
               </Typography>
               <TextField
 
@@ -314,7 +317,7 @@ const TicketDetails = ({
                   }}
                   onClick={handleSave}
                 >
-                  <DoneIcon sx={{ fontSize: '18px', mr: 1 }} /> Save
+                  <DoneIcon sx={{ fontSize: '18px', mr: 1 }} /> {t("save")}
                 </Button>
               </Grid>
             </Box>

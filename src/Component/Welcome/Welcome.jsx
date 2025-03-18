@@ -7,6 +7,7 @@ import { styled } from '@mui/system';
 import { useNavigate } from 'react-router';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram, faFacebookF, faXTwitter, faTiktok } from "@fortawesome/free-brands-svg-icons";
+import { useTranslation } from 'react-i18next';
 
 
 const Divider2 = styled(Box)({
@@ -21,6 +22,8 @@ export const Welcome = () => {
   const [anchorElLanguage, setAnchorElLanguage] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState('en');
   const openLanguage = Boolean(anchorElLanguage);
+
+  const {t} = useTranslation()
 
   const handleLanguageClick = (event) => {
     setAnchorElLanguage(event.currentTarget);
@@ -112,15 +115,15 @@ export const Welcome = () => {
         <img src="/assets/qtapwhite.svg" alt="qtap" style={{ width: "200px", height: "60px", marginBottom: "60px" }} />
 
         <Typography variant="body2" sx={{ fontSize: "16px", width: "400px", lineHeight: 2, mb: 2 }}>
-          Hi Partner, Thanks for joining us, your account will be activated after payment confirmation.
+          {t("welcomeP1")}
         </Typography>
         <Divider2 />
 
         <Typography variant="body2" sx={{ fontSize: "12px", mt: 2, mb: 2 }}>
-          Please get in touch with our sales team
+          {t("welcomeP2")}
         </Typography>
 
-        <Typography variant="body2" sx={{ fontSize: "13px", mb: 3}}>
+        <Typography variant="body2" sx={{ fontSize: "13px", mb: 3 }}>
           <a href="mailto:your-email@example.com" style={{ color: "white" }}>
             sales@qtap.com</a>
 
@@ -131,18 +134,18 @@ export const Welcome = () => {
             +201063879878</a>
         </Typography>
 
-        <Box sx={{ display: "flex", textAlign: "center", justifyContent: "center", gap: "6px"}}>
-          <IconButton sx={{color: "#FFFFFF",fontSize:"16px", "&:hover": { color: "#E57C00" }, }}>
+        <Box sx={{ display: "flex", textAlign: "center", justifyContent: "center", gap: "6px" }}>
+          <IconButton sx={{ color: "#FFFFFF", fontSize: "16px", "&:hover": { color: "#E57C00" }, }}>
             <FontAwesomeIcon icon={faInstagram} />
           </IconButton>
 
-          <IconButton sx={{color: "#FFFFFF",fontSize:"16px", "&:hover": { color: "#E57C00" }, }}>
+          <IconButton sx={{ color: "#FFFFFF", fontSize: "16px", "&:hover": { color: "#E57C00" }, }}>
             <FontAwesomeIcon icon={faFacebookF} />
           </IconButton>
-          <IconButton sx={{color: "#FFFFFF",fontSize:"16px" , "&:hover": { color: "#E57C00" },}}>
+          <IconButton sx={{ color: "#FFFFFF", fontSize: "16px", "&:hover": { color: "#E57C00" }, }}>
             <FontAwesomeIcon icon={faXTwitter} />
           </IconButton>
-          <IconButton sx={{color: "#FFFFFF",fontSize:"16px", "&:hover": { color: "#E57C00" }, }}>
+          <IconButton sx={{ color: "#FFFFFF", fontSize: "16px", "&:hover": { color: "#E57C00" }, }}>
             <FontAwesomeIcon icon={faTiktok} />
           </IconButton>
 

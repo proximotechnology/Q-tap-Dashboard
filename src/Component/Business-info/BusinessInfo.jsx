@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router';
 import { ArrowForwardIos, ArrowBackIos } from '@mui/icons-material';
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import { useBusinessContext } from '../../context/BusinessContext';
+import { useTranslation } from 'react-i18next';
 
 const daysOfWeek = ['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr'];
 
@@ -47,7 +48,7 @@ export const BusinessInfo = () => {
     const [paymentTime, setPaymentTime] = useState(businessData.paymentTime || '');
     const [activeWaiter, setActiveWaiter] = useState(businessData.callWaiter || 'inactive');
 
-
+    const { t } = useTranslation()
     // Update context whenever any value changes
     useEffect(() => {
 
@@ -104,7 +105,14 @@ export const BusinessInfo = () => {
     };
 
     const handleDayToggle = (direction) => {
-        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const days = [
+            t("sunday"),
+            t("monday"),
+            t("tuesday"),
+            t("wednesday"),
+            t("thursday"),
+            t("friday"),
+            t("saturday")];
         const currentIndex = days.indexOf(currentDay);
         const newIndex = (currentIndex + (direction === 'next' ? 1 : -1) + days.length) % days.length;
         setCurrentDay(days[newIndex]);
@@ -113,32 +121,32 @@ export const BusinessInfo = () => {
     const handleNextClick = () => {
         // Required fields validation
         if (!businessName.trim()) {
-            alert('Please enter Business Name');
+            alert(t("plEntBusinessName"));
             return;
         }
 
         if (!businessPhone.trim()) {
-            alert('Please enter Business Phone');
+            alert(t("plEntBusinessPhone"));
             return;
         }
 
         if (!country) {
-            alert('Please select Country');
+            alert(t("plSelectCountry"));
             return;
         }
 
         if (!city) {
-            alert('Please select City');
+            alert(t("plSelectCity"));
             return;
         }
 
         if (!currency) {
-            alert('Please select Currency');
+            alert(t("plSelectCurrency"));
             return;
         }
 
         if (!format) {
-            alert('Please select Business Format');
+            alert(t("plSelectBusinessFormat"));
             return;
         }
 
@@ -150,18 +158,18 @@ export const BusinessInfo = () => {
         setFormat('');
         setCurrency('');
         setCountry('');
-        setCity(''); 
-        setBusinessName(''); 
-        setWebsite(''); 
-        setBusinessEmail(''); 
-        setBusinessPhone(''); 
+        setCity('');
+        setBusinessName('');
+        setWebsite('');
+        setBusinessEmail('');
+        setBusinessPhone('');
         setSelectedDays(['Sa', 'Su']);
-        setCurrentDay('Sunday'); 
-        setFromTime('9:00 am'); 
-        setToTime('5:00 pm'); 
-        setPaymentMethods([]); 
-        setPaymentTime(''); 
-        setActiveWaiter('inactive'); 
+        setCurrentDay('Sunday');
+        setFromTime('9:00 am');
+        setToTime('5:00 pm');
+        setPaymentMethods([]);
+        setPaymentTime('');
+        setActiveWaiter('inactive');
         navigate('/serving-ways');
 
     };
@@ -169,7 +177,7 @@ export const BusinessInfo = () => {
     return (
         <Box marginTop={"50px"}>
             <Typography variant="body1" sx={{ fontSize: "18px", color: "#222240" }}>
-                Business Info ..
+                {t("busnessInfo")}
             </Typography>
             <Divider />
 
@@ -181,7 +189,7 @@ export const BusinessInfo = () => {
                         <Grid item xs={12} md={6}>
                             <TextField
                                 fullWidth
-                                placeholder="Business Name"
+                                placeholder={t("businessName")}
                                 value={businessName}
                                 onChange={(e) => setBusinessName(e.target.value)}
                                 InputProps={{
@@ -203,7 +211,7 @@ export const BusinessInfo = () => {
                             />
                             <TextField
                                 fullWidth
-                                placeholder="Website (Optional)"
+                                placeholder={t("website")}
                                 value={website}
                                 onChange={(e) => setWebsite(e.target.value)}
                                 InputProps={{
@@ -224,7 +232,7 @@ export const BusinessInfo = () => {
                             />
                             <TextField
                                 fullWidth
-                                placeholder="Business Email (Optional)"
+                                placeholder={t("businessEmail")}
                                 value={businessEmail}
                                 onChange={(e) => setBusinessEmail(e.target.value)}
                                 InputProps={{
@@ -260,7 +268,7 @@ export const BusinessInfo = () => {
                                 >
                                     <MenuItem value="" disabled>
                                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                            Currency
+                                        {t("currency")}
                                         </Box>
                                     </MenuItem>
                                     <MenuItem value="US" sx={{ fontSize: "12px", color: "gray" }}>United States </MenuItem>
@@ -284,7 +292,7 @@ export const BusinessInfo = () => {
                                 >
                                     <MenuItem value="" disabled>
                                         <Box sx={{ display: 'flex', alignItems: 'center', fontSize: "12px", color: "gray" }}>
-                                            business Format
+                                            {t("businessFormat")}
                                         </Box>
                                     </MenuItem>
                                     <MenuItem value="ul" sx={{ fontSize: "12px", color: "gray" }}>UL</MenuItem>
@@ -299,7 +307,7 @@ export const BusinessInfo = () => {
                                         sx={{ fontSize: '15px', color: "gray" }}>
 
                                         <span className="icon-working-hour" style={{ marginRight: "10px", fontSize: "20px" }}><span className="path1"></span><span className="path2"></span><span className="path3"></span><span className="path4"></span><span className="path5"></span><span className="path6"></span><span className="path7"></span><span className="path8"></span></span>
-                                        Working Hours
+                                        {t("workHours")}
                                     </Typography>
 
                                     <Grid item xs={12} display={"flex"} justifyContent={"space-between"}>
@@ -354,7 +362,7 @@ export const BusinessInfo = () => {
 
                                                 <Box display={"flex"}>
                                                     <Grid item>
-                                                        <Typography variant='body1' sx={{ fontSize: '11px', color: "gray", mr: 1 }}>From:</Typography>
+                                                        <Typography variant='body1' sx={{ fontSize: '11px', color: "gray", mr: 1 }}>{t("from")}</Typography>
                                                     </Grid>
                                                     <Grid item>
                                                         <TextField
@@ -376,7 +384,7 @@ export const BusinessInfo = () => {
 
                                                 <Box display={"flex"} marginTop={"3px"} marginLeft={"10px"}>
                                                     <Grid item>
-                                                        <Typography variant='body1' sx={{ fontSize: '11px', color: "gray", mr: 1 }}>To:</Typography>
+                                                        <Typography variant='body1' sx={{ fontSize: '11px', color: "gray", mr: 1 }}>{t("to")}</Typography>
                                                     </Grid>
                                                     <Grid item>
                                                         <TextField

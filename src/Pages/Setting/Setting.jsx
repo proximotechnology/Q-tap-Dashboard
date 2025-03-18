@@ -9,6 +9,7 @@ import { Videos } from "./Videos";
 import Content from "./Content";
 import Payment from "../DashboardClient/Pages/SettingClient/Payment";
 import ContentPasteIcon from "@mui/icons-material/ContentPaste";
+import { useTranslation } from "react-i18next";
 
 export const Setting = () => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -17,10 +18,11 @@ export const Setting = () => {
   const faqRef = useRef();
   const contentRef = useRef();
   const ourClientsRef = useRef();
+  const {t} = useTranslation()
 
   const tabData = [
     {
-      label: "Features",
+      label: t("features"),
       icon: (
         <span class="icon-new-features" style={{ fontSize: "18px" }}></span>
       ),
@@ -28,7 +30,7 @@ export const Setting = () => {
     },
 
     {
-      label: "Our Clients",
+      label: t("ourClients"),
 
       icon: (
         <img
@@ -41,24 +43,24 @@ export const Setting = () => {
     },
 
     {
-      label: "Videos",
+      label: t("videos"),
       icon: <PlayArrowOutlinedIcon sx={{ fontSize: "22px" }} />,
       content: <Videos ref={videosRef} />,
     },
 
     {
-      label: "FAQ",
+      label: t("faq"),
       icon: <span class="icon-question" style={{ fontSize: "18px" }}></span>,
       content: <FAQ ref={faqRef} />,
     },
 
     {
-      label: "Content",
+      label: t("content"),
       icon: <ContentPasteIcon sx={{ fontSize: "18px" }} />,
       content: <Content ref={contentRef} />,
     },
     {
-      label: "Payment",
+      label: t("payment"),
       icon: <PaymentOutlinedIcon style={{ width: "18px", height: "18px" }} />,
       content: <Payment />,
     },
@@ -136,7 +138,7 @@ export const Setting = () => {
             },
           }}
         >
-          ✔ Save
+          ✔ {t("save")}
         </Button>
       </Box>
 

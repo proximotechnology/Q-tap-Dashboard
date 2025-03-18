@@ -2,10 +2,11 @@ import React from "react";
 import { Box, Grid, MenuItem, Paper, Select, Typography } from "@mui/material";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import LineChart2 from "../LineChart2";
+import { useTranslation } from "react-i18next";
 
 export const Revenue = () => {
   const [year, setYear] = React.useState("2024");
-
+  const { t } = useTranslation()
   const handleYearChange = (event) => {
     setYear(event.target.value);
   };
@@ -31,7 +32,7 @@ export const Revenue = () => {
               variant="body1"
               sx={{ fontSize: "18px", color: "#575756" }}
             >
-              Revenue
+              {t("Revenue")}
             </Typography>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Select
@@ -59,7 +60,7 @@ export const Revenue = () => {
           <span
             style={{ color: "#D8E0E0", fontSize: "8px", marginTop: "-5px" }}
           >
-            Affiliate Marketing
+            {t("affiliateMarketing")}
           </span>
 
           <Typography
@@ -113,7 +114,7 @@ export const Revenue = () => {
             }}
           >
             <PersonOutlinedIcon sx={{ fontSize: "18px", color: "#575756", marginBottom: "5px" }} />{" "}
-            Users
+            {t("users")}
           </Typography>
           <Typography
             variant="body2"
@@ -146,7 +147,7 @@ export const Revenue = () => {
                 color="text.secondary"
                 sx={{ fontSize: "9px" }}
               >
-                Revenue
+                {t("Revenue")}
               </Typography>
             </Box>
             <Box
@@ -171,7 +172,7 @@ export const Revenue = () => {
                 color="text.secondary"
                 sx={{ fontSize: "9px" }}
               >
-                users
+                {t("users")}
               </Typography>
             </Box>
           </Box>

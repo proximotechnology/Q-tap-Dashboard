@@ -1,6 +1,7 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import { useTranslation } from 'react-i18next';
 export const ClientsLog = () => {
     const rows = [
         { userName: 'name', time: '11:15 PM', date: '22.06.2024', status: 'Active now', statusColor: 'orange' },
@@ -9,14 +10,14 @@ export const ClientsLog = () => {
         {}, {}, {}, {}, {}, {}, {}, {}, {}
 
     ];
-
+    const {t} = useTranslation()
     
     return (
         <TableContainer component={Paper} sx={{ borderRadius: "20px", boxShadow: 'none' }}>
             <Grid container justifyContent="space-between" alignItems="center" sx={{ padding: "20px 20px 0px 20px" }}>
                 <Grid item>
                     <Typography variant="body1" component="div" sx={{ fontSize: '13px', color: "#575756" }}>
-                        Clients Log
+                        {t("clientLog")}
                     </Typography>
                 </Grid>
                 <Grid item>
@@ -31,10 +32,10 @@ export const ClientsLog = () => {
             <Table sx={{ borderCollapse: 'separate', borderSpacing: '0px', padding: "10px" }}>
                 <TableHead>
                     <TableRow sx={{ height: "30px" }}>
-                        <TableCell sx={{ textAlign: "left", fontSize: "11px", border: 'none', padding: "0px 20px" }}>Business</TableCell>
-                        <TableCell sx={{ textAlign: "center", fontSize: "11px", border: 'none', padding: "0px 0px" }}>Time</TableCell>
-                        <TableCell sx={{ textAlign: "center", fontSize: "11px", border: 'none', padding: "0px 0px" }}>Date</TableCell>
-                        <TableCell sx={{ textAlign: "center", fontSize: "11px", border: 'none', padding: "0px 0px" }}>Status</TableCell>
+                        <TableCell sx={{ textAlign: "left", fontSize: "11px", border: 'none', padding: "0px 20px" }}>{t("business")}</TableCell>
+                        <TableCell sx={{ textAlign: "center", fontSize: "11px", border: 'none', padding: "0px 0px" }}>{t("time")}</TableCell>
+                        <TableCell sx={{ textAlign: "center", fontSize: "11px", border: 'none', padding: "0px 0px" }}>{t("date")}</TableCell>
+                        <TableCell sx={{ textAlign: "center", fontSize: "11px", border: 'none', padding: "0px 0px" }}>{t("status")}</TableCell>
                     </TableRow>
                 </TableHead>
 

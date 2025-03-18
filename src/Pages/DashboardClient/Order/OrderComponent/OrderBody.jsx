@@ -5,6 +5,7 @@ import OrderCard from './OrderCard';
 import Footer from './Footer';
 import RejectionModal from './RejectionModal';
 import OrderDetails from './OrderDetails';
+import { useTranslation } from 'react-i18next';
 
 export const OrderBody = () => {
     const [selectedOrder, setSelectedOrder] = useState(null);
@@ -14,6 +15,7 @@ export const OrderBody = () => {
     const [servedOrders, setServedOrders] = useState([]);
     const [doneOrders, setDoneOrders] = useState([]);
     const [closeOrders, setCloseOrders] = useState([]);
+    const {t} = useTranslation()
     const [orders, setOrders] = useState([
         {
             id: '3208',
@@ -167,7 +169,7 @@ export const OrderBody = () => {
                                 marginRight: "60px",
                                 borderRadius: "5px",
                             }} >
-                                New Order
+                                {t("newOrder")}
                             </Box>
 
 
@@ -206,7 +208,7 @@ export const OrderBody = () => {
                                 marginRight: "60px",
                                 borderRadius: "5px",
                             }} >
-                            Accepted
+                            {t("accepted")}
                             </Box>
                         {orders.map((order) => (
                             ([...acceptedOrders, ...paidOrders, ...servedOrders,...doneOrders].includes(order.id)) &&
@@ -245,7 +247,7 @@ export const OrderBody = () => {
                                 marginRight: "60px",
                                 borderRadius: "5px",
                             }} >
-                            Done
+                            {t("done")}
                             </Box>
                             {orders.map((order) => (
                             ([...closeOrders ].includes(order.id)) && (

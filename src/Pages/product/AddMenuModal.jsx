@@ -10,6 +10,7 @@ import {
     CircularProgress
 } from '@mui/material';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 const AddMenuModal = ({ open, handleClose, onSuccess }) => {
     const [menuData, setMenuData] = useState({
@@ -60,7 +61,7 @@ const AddMenuModal = ({ open, handleClose, onSuccess }) => {
             setLoading(false);
         }
     };
-
+    const {t} = useTranslation()
     return (
         <Modal open={open} onClose={handleClose}>
             <Box sx={{
@@ -75,7 +76,7 @@ const AddMenuModal = ({ open, handleClose, onSuccess }) => {
                 borderRadius: 2
             }}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                    <Typography variant="h6">Add New Menu</Typography>
+                    <Typography variant="h6">{t("addNewMenu")}</Typography>
                     <IconButton onClick={handleClose}>
                         <span className="icon-close-1" style={{ fontSize: "15px" }}></span>
                     </IconButton>
@@ -85,7 +86,7 @@ const AddMenuModal = ({ open, handleClose, onSuccess }) => {
                 <form onSubmit={handleSubmit}>
                     <TextField
                         fullWidth
-                        label="Menu Name"
+                        label={t("menuName")}
                         value={menuData.name}
                         onChange={(e) => setMenuData(prev => ({ ...prev, name: e.target.value }))}
                         margin="normal"
@@ -116,7 +117,7 @@ const AddMenuModal = ({ open, handleClose, onSuccess }) => {
                                     }
                                 }}
                             >
-                                Upload Image
+                                {t("uploadImage")}
                             </Button>
                         </label>
                         {previewUrl && (
@@ -151,7 +152,7 @@ const AddMenuModal = ({ open, handleClose, onSuccess }) => {
                             {loading ? (
                                 <CircularProgress size={20} color="inherit" />
                             ) : (
-                                'Add Menu'
+                                t("addMenu")
                             )}
                         </Button>
                     </Box>

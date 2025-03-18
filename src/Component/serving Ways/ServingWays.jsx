@@ -7,6 +7,7 @@ import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import { toast } from 'react-toastify';
 import { useBusinessContext } from '../../context/BusinessContext';
+import { useTranslation } from 'react-i18next';
 
 const Divider = styled(Box)({
     width: '5%',
@@ -35,6 +36,8 @@ export const ServingWays = () => {
         { name: "Delivery", value: "delivery", icon: <span className="icon-fast-shipping" style={{ fontSize: "80px" }}></span>, selected: false }
     ]);
 
+    const {t} = useTranslation()
+
     const handleBoxClick = (index) => {
         // Toggle the selected state of the clicked service
         const newOptions = serviceOptions.map((option, i) => ({
@@ -60,14 +63,14 @@ export const ServingWays = () => {
         if (servingWays.length > 0) {
             navigate('/branches');
         } else {
-            toast.error("Please select at least one service option");
+            toast.error(t("plSelectOneService"));
         }
     };
 
     return (
         <Box marginTop={"50px"} flexGrow={1}>
             <Typography variant="body1" sx={{ fontSize: "18px", color: "#222240" }}>
-                Business Info .
+                {t("busnessInfo")}
             </Typography>
             <Divider />
 
@@ -75,7 +78,7 @@ export const ServingWays = () => {
                 <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
                     <span className="icon-waiter" style={{ color: 'grey', marginRight: "6px" }}></span>
                     <Typography variant="h6" sx={{ fontSize: { xs: "12px", md: "12px" }, color: "gray" }}>
-                        Serving Ways
+                        {t("servingWay")}
                     </Typography>
                 </Box>
 
@@ -180,7 +183,7 @@ export const ServingWays = () => {
                         }}
                         onClick={handleNextClick}
                     >
-                        Next
+                        {t("next")}
                         <TrendingFlatIcon sx={{ marginLeft: "8px", fontSize: "18px" }} />
                     </Button>
                 </Grid>

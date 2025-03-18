@@ -2,12 +2,14 @@ import React from 'react';
 import { Modal, Box, Typography, Divider, IconButton } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
+import { useTranslation } from 'react-i18next';
 
 const DetailsModal = ({ open, onClose, rowData }) => {
+    const {t} = useTranslation()
     if (!rowData) return null;
-
+    
     const { id, client, star, satisfied } = rowData;
-
+    
     return (
         <Modal open={open} onClose={onClose}>
             <Box
@@ -24,7 +26,7 @@ const DetailsModal = ({ open, onClose, rowData }) => {
             >
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>
-                        Feedback Details
+                        {t("feedbackDetails")}
                     </Typography>
                     <IconButton onClick={onClose}>
                         <span className="icon-close-1" style={{ fontSize: "12px", color: "#AAAAAA" }} />
