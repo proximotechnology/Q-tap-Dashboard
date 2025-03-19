@@ -3,73 +3,77 @@ import React from "react";
 import { Box, List, ListItemButton, ListItemIcon, ListItemText, Tooltip, useTheme } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { grey } from "@mui/material/colors";
+import { useTranslation } from "react-i18next";
 
-const Arr1 = [
-    {
-        text: "Dashboard",
-        icon: <img src="/assets/dashboard.svg" alt="icon" style={{ width: "16px", height: "16px" }} />,
-        path: "/dashboard-client"
-    },
 
-    {
-        text: "Orders", icon: <span class="icon-shopping-bag-1" style={{ fontSize: "13px" }} />,
-        path: "/order"
-    },
-    {
-        text: "Wallet",
-        icon: <span class="icon-wallet1" style={{ width: "34.539", height: "34.544" }}></span>,
-        path: "/wallet-client",
-    },
-    {
-        text: "Menu",
-        icon: <img src="/assets/menu.svg" alt="menu icon" style={{ width: "17px", height: "17px" }} />,
-        path: "/menu",
-    },
-    {
-        text: "Support",
-        icon: <span class="icon-messenger" style={{ width: "34.539", height: "34.544" }}></span>,
-        path: "/support-client",
-    },
-    {
-        text: "User | Staff",
-        icon: <img src="/assets/user.svg" alt="user icon" style={{ width: "17px", height: "17px" }} />,
-        path: "/user",
-    },
-    {
-        text: "Customers Log",
-        icon: <span class="icon-show"></span>,
-        path: "/customers-log",
-    },
-    {
-        text: "Setting",
-        icon: <img src="/assets/setting.svg" alt="icon" style={{ width: "16px", height: "16px" }} />,
-        path: "/setting-client",
-    },
-
-];
-const Arr2 = [
-    {
-        text: "Feedback",
-        icon: <span class="icon-star" style={{
-            background: 'linear-gradient(to right, #FDB913, #F2672E)',
-            WebkitBackgroundClip: 'text' ,
-            WebkitTextFillColor:'transparent',
-        }}></span>,
-        path: "/feedback"
-    },
-    {
-        text: "Logout",
-        icon: <img src="/assets/logout.svg" alt="icon" style={{ width: "16px", height: "16px" }} />,
-        path: "/"
-    },
-    {
-        text: "Help",
-        icon: <img src="/assets/help.svg" alt="icon" style={{ width: "17px", height: "17px" }} />,
-        path: "/help"
-    },
-];
 
 export default function SideBar() {
+    const { t } = useTranslation();
+    const Arr1 = [
+        {
+            text: t("dashboard"),
+            icon: <img src="/assets/dashboard.svg" alt="icon" style={{ width: "16px", height: "16px" }} />,
+            path: "/dashboard-client"
+        },
+
+        {
+            text: t("orders"), 
+            icon: <span class="icon-shopping-bag-1" style={{ fontSize: "13px" }} />,
+            path: "/order"
+        },
+        {
+            text: t("wallet"),
+            icon: <span class="icon-wallet1" style={{ width: "34.539", height: "34.544" }}></span>,
+            path: "/wallet-client",
+        },
+        {
+            text: t("menu"),
+            icon: <img src="/assets/menu.svg" alt="menu icon" style={{ width: "17px", height: "17px" }} />,
+            path: "/menu",
+        },
+        {
+            text: t("support"),
+            icon: <span class="icon-messenger" style={{ width: "34.539", height: "34.544" }}></span>,
+            path: "/support-client",
+        },
+        {
+            text: `${t("user")} | ${t("staff")}`,
+            icon: <img src="/assets/user.svg" alt="user icon" style={{ width: "17px", height: "17px" }} />,
+            path: "/user",
+        },
+        {
+            text: t("customerLog"),
+            icon: <span class="icon-show"></span>,
+            path: "/customers-log",
+        },
+        {
+            text: t("setting"),
+            icon: <img src="/assets/setting.svg" alt="icon" style={{ width: "16px", height: "16px" }} />,
+            path: "/setting-client",
+        },
+
+    ];
+    const Arr2 = [
+        {
+            text: t("feedback"),
+            icon: <span class="icon-star" style={{
+                background: 'linear-gradient(to right, #FDB913, #F2672E)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+            }}></span>,
+            path: "/feedback"
+        },
+        {
+            text: t("logout"),
+            icon: <img src="/assets/logout.svg" alt="icon" style={{ width: "16px", height: "16px" }} />,
+            path: "/"
+        },
+        {
+            text: t("help"),
+            icon: <img src="/assets/help.svg" alt="icon" style={{ width: "17px", height: "17px" }} />,
+            path: "/help"
+        },
+    ];
     const location = useLocation();
     const navigate = useNavigate();
     const theme = useTheme();
@@ -128,7 +132,7 @@ export default function SideBar() {
                                         minWidth: 0,
                                         justifyContent: "center",
                                         // marginRight: "10px",
-                                        marginRight: item.path === "/order" ? "3px" : "10px", 
+                                        marginRight: item.path === "/order" ? "3px" : "10px",
                                         color: item.path === "/order" ? "white" :
                                             location.pathname === item.path
                                                 ? theme.palette.mode === "dark"

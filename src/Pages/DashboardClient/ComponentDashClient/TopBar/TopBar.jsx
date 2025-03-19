@@ -13,6 +13,7 @@ import { useLocation, useNavigate } from "react-router";
 import { makeStyles } from "@mui/styles";
 import Language from "./Language";
 import { useBranch } from "../../../../context/BranchContext";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles({
     button: {
@@ -35,18 +36,18 @@ const useStyles = makeStyles({
 });
 
 export default function TopBar() {
-
+    const {t} = useTranslation();
     const pageTitles = {
-        '/dashboard-client': 'Dashboard',
-        '/order': 'order',
-        '/wallet-client': 'Wallet',
-        '/menu': 'Menu',
-        "/support-client": "Support",
-        '/user': "User",
-        '/customers-log': 'Customers',
-        "/setting-client": "Setting",
-        "/notification": "Notification",
-        "/feedback": "Feedback",
+        '/dashboard-client': t("dashboard"),
+        '/order': t("order"),
+        '/wallet-client': t("wallet"),
+        '/menu': t("menu"),
+        "/support-client": t("support"),
+        '/user': t("user"),
+        '/customers-log': t("customer"),
+        "/setting-client": t("setting"),
+        "/notification": t("notification"),
+        "/feedback": t("feedback"),
         "/transaction":
             <IconButton onClick={() => navigate('/wallet-client')} >
                 <ArrowBackIosIcon sx={{ fontSize: "23px", color: "black" }} />

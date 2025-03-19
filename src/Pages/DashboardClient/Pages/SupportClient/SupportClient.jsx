@@ -11,6 +11,7 @@ import { AddQuestion } from './AddQuestion';
 import DetailsModal from './DetailsModal';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onClick }) => {
   const statusStyles = {
     'in_progress': { backgroundColor: '#222240', color: '#f4f6fc' },
@@ -20,7 +21,7 @@ const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onC
 
   // Format the date
   const formattedDate = new Date(created_at).toLocaleDateString();
-
+  const { t } = useTranslation();
   return (
     <Paper
       elevation={3}
@@ -37,16 +38,16 @@ const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onC
       onClick={onClick}
     >
       <Typography variant="body2" sx={{ fontSize: "11px", paddingBottom: "10px" }}>
-        Ticket No.#{id}
+        {t("ticketNo")}{id}
       </Typography>
       <Typography variant="body2" sx={{ fontSize: "9px", paddingBottom: "10px" }}>
-        Name: {Customer_Name}
+        {t("name")} {Customer_Name}
       </Typography>
       <Typography variant="body2" sx={{ fontSize: "9px", paddingBottom: "10px" }}>
-        Mail: {Customer_Email}
+        {t("mail")} {Customer_Email}
       </Typography>
       <Typography variant="body2" sx={{ fontSize: "9px", paddingBottom: "10px" }}>
-        Date: {formattedDate}
+        {t("date")} {formattedDate}
       </Typography>
       <Box
         sx={{
@@ -62,21 +63,21 @@ const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onC
           <>
             <span className="icon-processing-time" style={{ fontSize: "13px", color: "#ef7d00" }} />
             <Typography variant="body1" sx={{ fontSize: "11px", color: "#ef7d00", ml: 1 }}>
-              In Progress
+              {t("inProgress")}
             </Typography>
           </>
         ) : status === "Done" ? (
           <>
             <span className="icon-check" style={{ fontSize: "12px", color: "black" }} />
             <Typography variant="body1" sx={{ fontSize: "11px", color: "black", ml: 1 }}>
-              Done
+              {t("done")}
             </Typography>
           </>
         ) : (
           <>
             <span className="icon-check" style={{ fontSize: "12px", color: "#222240" }} />
             <Typography variant="body1" sx={{ fontSize: "11px", color: "#222240", ml: 1 }}>
-              Open
+              {t("open")}
             </Typography>
           </>
         )}
@@ -92,7 +93,7 @@ const Support = () => {
     "How much you satisfied with the service?",
   ]);
 
-
+  const { t } = useTranslation();
   const addQuestion = (newQuestion) => {
     if (newQuestion.trim() !== "") {
       setQuestions([...questions, newQuestion]);
@@ -179,12 +180,12 @@ const Support = () => {
       })
 
       if (response.data) {
-        toast.success("Feedback deleted successfully!");
+        toast.success(t("feedbacks.deleteSucc"));
         getFeedbackData();
       }
     } catch (error) {
       console.log("error delete feedback ", error);
-      toast.error("Error deleting feedback");
+      toast.error(t("feedbacks.deleteErr"));
 
     }
   }
@@ -213,7 +214,7 @@ const Support = () => {
 
     } catch (error) {
       console.error('Error fetching tickets:', error);
-      toast.error('Failed to fetch tickets');
+      toast.error(t("feedbacks.fetchErr"));
     } finally {
       setLoading(false);
     }

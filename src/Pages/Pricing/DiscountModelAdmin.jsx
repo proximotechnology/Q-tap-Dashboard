@@ -8,17 +8,18 @@ import DoneIcon from '@mui/icons-material/Done';
 import { Select, MenuItem } from '@mui/material';
 import { useBranch } from '../../context/BranchContext';
 import { Dot } from 'recharts';
+import { useTranslation } from 'react-i18next';
 
 export const DiscountModelAdmin = ({ open, handleClose }) => {
     const [discounts, setDiscounts] = useState([]);
     const [code, setCode] = useState('');
     const [discount, setDiscount] = useState('');
     const { setDiscountContent } = useBranch();
-
+    const { t } = useTranslation();
     const handleAdd = async () => {
         try {
             if (!code || !discount) {
-                toast.error('Please fill in all fields');
+                toast.error(t("plFillAllField"));
                 return;
             }
 
@@ -39,7 +40,7 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
 
             if (response.data) {
                 getDiscounts();
-                toast.success('Discount added successfully!');
+                toast.success(t("discount.addSucc"));
                 const newDiscount = {
                     id: response.data.id, // Ensure the response contains an ID
                     code: response.data.code,
@@ -53,7 +54,7 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
             }
         } catch (error) {
             console.error('Error adding discount:', error);
-            const errorMessage = error.response?.data?.message || 'Error adding discount';
+            const errorMessage = error.response?.data?.message || t("discount.addErr");
             toast.error(errorMessage);
         }
     };
@@ -69,13 +70,13 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
             });
 
             if (response.data) {
-                toast.success('Discount deleted successfully!');
+                toast.success(t("discount.deleteSucc"));
                 const updatedDiscounts = discounts.filter((_, i) => i !== index);
                 setDiscounts(updatedDiscounts);
             }
         } catch (error) {
             console.error('Error deleting discount:', error);
-            toast.error('Error deleting discount');
+            toast.error(t("discount.deleteErr"));
         }
     };
 
@@ -94,7 +95,7 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
             }
         } catch (error) {
             console.error('Error fetching discounts:', error);
-            toast.error('Error fetching discounts');
+            toast.error(t("discount.fetchErr"));
         }
     };
 
@@ -129,13 +130,13 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
             );
 
             if (response.data) {
-                toast.success('Discount updated successfully');
+                toast.success(t("discount.updateSucc"));
                 discountToUpdate.isEditing = false; // Stop editing mode after saving
                 setDiscounts([...discounts]);
             }
         } catch (error) {
             console.error('Error updating discount:', error);
-            toast.error('Error updating discount');
+            toast.error(t("discount.updateErr"));
         }
     };
 
@@ -158,7 +159,7 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
                 <Box sx={{ padding: "20px" }}>
                     <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                         <Typography variant="body1" sx={{ fontSize: "12px", color: "#575756" }}>
-                            Discount Codes
+                            {t("discount.codes")}
                         </Typography>
                         <IconButton onClick={handleClose}>
                             <span className="icon-close-1" style={{ fontSize: "12px" }}></span>
@@ -169,7 +170,7 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
                     <Box sx={{ marginTop: "10px" }}>
                         <Grid container spacing={2} sx={{ mb: 2, marginTop: "12px" }}>
                             <Grid item xs={6}>
-                                <Typography variant='body2' sx={{ fontSize: "10px", color: "#575756" }}>Code</Typography>
+                                <Typography variant='body2' sx={{ fontSize: "10px", color: "#575756" }}>{t("code")}</Typography>
                                 <TextField
                                     fullWidth
                                     type="text"
@@ -182,7 +183,7 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
                                 />
                             </Grid>
                             <Grid item xs={6}>
-                                <Typography variant='body2' sx={{ fontSize: "10px", color: "#575756" }}>Discount</Typography>
+                                <Typography variant='body2' sx={{ fontSize: "10px", color: "#575756" }}>{t("discount.one")}</Typography>
                                 <TextField
                                     fullWidth
                                     type="number"
@@ -223,11 +224,11 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
                 <Table sx={{ p: 0, mt: 2, mb: 5, width: '100%', tableLayout: 'fixed', overflowY: "auto", backgroundColor: "white", borderRadius: "10px" }}>
                     <TableHead>
                         <TableRow sx={{ backgroundColor: "#EBEDF3" }}>
-                            <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>Code</TableCell>
-                            <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>Discount</TableCell>
-                            <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>Date</TableCell>
-                            <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>Status</TableCell>
-                            <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>Action</TableCell>
+                            <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>{t("code")}</TableCell>
+                            <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>{t("discount.one")}</TableCell>
+                            <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>{t("date")}</TableCell>
+                            <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>{t("status")}</TableCell>
+                            <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>{t("action")}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -270,8 +271,8 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
                                             size="small"
                                             sx={{ fontSize: "10px", width: "70px", borderRadius:"7px" }}
                                         >
-                                            <MenuItem value="active" sx={{ fontSize: "10px" }}>Active</MenuItem>
-                                            <MenuItem value="inactive" sx={{ fontSize: "10px" }}>Inactive</MenuItem>
+                                            <MenuItem value="active" sx={{ fontSize: "10px" }}>{t("active")}</MenuItem>
+                                            <MenuItem value="inactive" sx={{ fontSize: "10px" }}>{t("inactive")}</MenuItem>
                                         </Select>
                                     ) : (
                                         <Box sx={{

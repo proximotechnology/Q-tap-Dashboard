@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Box, Modal, TextField, Button, IconButton, Typography, Divider } from '@mui/material';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 export const AddNotification = ({ open, handleClose, addNotification }) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
- 
+    const {t} = useTranslation();
 
     // add notification to api
     const handleSend = () => {
@@ -40,12 +41,12 @@ export const AddNotification = ({ open, handleClose, addNotification }) => {
                 // Optional: Show success message
                 // toast.success('Notification sent successfully!');   
             } else {
-                toast.error('Failed to send notification');
+                toast.error(t("failedSendNoti"));
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            toast.error('Error sending notification');
+            toast.error(t("errorSendNoti"));
         });
     };
 
@@ -63,14 +64,14 @@ export const AddNotification = ({ open, handleClose, addNotification }) => {
                     }}
                 >
                     <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <Typography variant='body1' sx={{ fontSize: "14px", color: "#575756" }}>Send Notification</Typography>
+                        <Typography variant='body1' sx={{ fontSize: "14px", color: "#575756" }}>{t("sendNoti")}</Typography>
                         <IconButton onClick={handleClose}>
                             <span className="icon-close-1" style={{ fontSize: "14px" }}></span>
                         </IconButton>
                     </Box>
                     <Divider sx={{ marginBottom: "15px", backgroundColor: "#F78E20" }} />
                     <TextField
-                        placeholder="Title (En)"
+                        placeholder={t("title")}
                         variant="outlined"
                         fullWidth
                         value={title}
@@ -89,7 +90,7 @@ export const AddNotification = ({ open, handleClose, addNotification }) => {
                         }}
                     />
                     <TextField
-                        placeholder="Aa"
+                        placeholder={t("aa")}
                         variant="outlined"
                         fullWidth
                         multiline
@@ -125,7 +126,7 @@ export const AddNotification = ({ open, handleClose, addNotification }) => {
                             }}
                             endIcon={<ArrowRightAltIcon sx={{ color: '#E57C00' }} />}
                         >
-                            Send
+                            {t("send")}
                         </Button>
                     </Box>
                 </Box>

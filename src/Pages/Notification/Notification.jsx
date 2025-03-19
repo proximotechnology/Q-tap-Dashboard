@@ -4,11 +4,12 @@ import AddIcon from '@mui/icons-material/Add';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import { AddNotification } from './AddNotification';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 export const Notification = () => {
   const [open, setOpen] = useState(false);
   const [notificationsData, setNotificationsData] = useState([]);
-
+  const {t} = useTranslation();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -49,7 +50,7 @@ export const Notification = () => {
         // toast.success('Notification deleted successfully!');
         getNotifications();
       } else {
-        toast.error('Failed to delete notification');
+        toast.error(t("faildDeleteNotification"));
       }
     })
     .catch(error => console.error('Error deleting notification:', error));
@@ -59,7 +60,7 @@ export const Notification = () => {
     <Box sx={{padding:"0px 20px"}}> 
       <Paper sx={{ borderRadius: "20px", padding: "30px", height: "80vh" }}>
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <Typography sx={{ color: "#575756", fontSize: "15px" }}>History</Typography>
+          <Typography sx={{ color: "#575756", fontSize: "15px" }}>{t("history")}</Typography>
           <IconButton onClick={handleOpen}>
             <AddIcon sx={{ fontSize: "35px",fontWeight:"bolder", color: "#ef7d00", cursor: "pointer" }} />
           </IconButton>

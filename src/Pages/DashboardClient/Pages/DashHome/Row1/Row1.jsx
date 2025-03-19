@@ -5,8 +5,10 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import Chart1 from './Chart1';
 import { Chart2 } from "./Chart2";
 import { Cart4 } from "../../../../../Component/DashboardContent/Row1/Cart4";
+import { useTranslation } from "react-i18next";
 
 export default function Dashboard() {
+    const {t} = useTranslation();
     return (
         <Grid container spacing={2} >
 
@@ -14,7 +16,7 @@ export default function Dashboard() {
                 <Card sx={{ padding: "0px 10px", borderRadius: '20px', height: "230px" }}>
                     <CardContent>
                         <Box display={"flex"} justifyContent={"space-between"}>
-                            <Typography variant="subtitle1" color="text.secondary">Total Orders</Typography>
+                            <Typography variant="subtitle1" color="text.secondary">{t("totalOrders")}</Typography>
                             <span class="icon-shopping-bag" style={{ color: "#D8E0E0", fontSize: "25px" }}></span>
                         </Box >
                         <Typography variant="body2" sx={{ color: "#ef7d00", fontSize: "20px" }}>5.564</Typography>
@@ -29,7 +31,7 @@ export default function Dashboard() {
                 <Card sx={{ padding: "0px 10px", borderRadius: '20px', height: "230px" }}>
                     <CardContent>
                         <Box display={"flex"} justifyContent={"space-between"}>
-                            <Typography variant="subtitle1" color="text.secondary">Customers Visits</Typography>
+                            <Typography variant="subtitle1" color="text.secondary">{t("customersVisit")}</Typography>
                             <span class="icon-show" style={{ color: "#D8E0E0", fontSize: "25px" }}></span>
                         </Box >
                         <Typography variant="body2" sx={{ color: "#ef7d00", fontSize: "20px" }}>2.234</Typography>
@@ -45,7 +47,7 @@ export default function Dashboard() {
                 <Card sx={{ padding: "0px 10px", borderRadius: '20px', height: "230px" }}>
                     <CardContent>
                         <Box display={"flex"} justifyContent={"space-between"}>
-                            <Typography variant="subtitle1" color="text.secondary">Performance</Typography>
+                            <Typography variant="subtitle1" color="text.secondary">{t("performance")}</Typography>
                             <TrendingUpIcon sx={{ color: "#d4d0d0 ", padding: "3px", fontSize: '23px', border: "1px solid #d4d0d0", borderRadius: "6px" }} />
                         </Box>
                         <Cart4 />

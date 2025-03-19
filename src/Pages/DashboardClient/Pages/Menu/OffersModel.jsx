@@ -5,6 +5,7 @@ import { useBranch } from '../../../../context/BranchContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { ContentMenu } from '../../../../context/ContentMenuContext';
+import { useTranslation } from 'react-i18next';
 
 export const OffersModel = ({ open, handleClose }) => {
     const { selectedBranch } = useBranch();
@@ -14,7 +15,7 @@ export const OffersModel = ({ open, handleClose }) => {
     ]);
     const { contentForMenu } = useContext(ContentMenu);
     // console.log("contentForMenu", contentForMenu);
-
+    const {t} = useTranslation();
     const handleAdd = async () => {
         const newOffer = {
             discount: "0%", // قيمة ثابتة
@@ -33,12 +34,12 @@ export const OffersModel = ({ open, handleClose }) => {
             });
 
             if (response.data) {
-                toast.success('added successfully ');
+                toast.success(t("offer.addSucc"));
                 getOffers(); // إعادة جلب البيانات لتحديث الجدول
             }
         } catch (error) {
             console.error('Error adding offer:', error);
-            toast.error('Error adding offer');
+            toast.error(t("offer.addErr"));
         }
     };
     const handleDelete = async (id) => {
@@ -48,11 +49,11 @@ export const OffersModel = ({ open, handleClose }) => {
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
                 }
             });
-            toast.success('added successfully ');
+            toast.success(t("offer.deleteSucc"));
             getOffers(); // إعادة جلب البيانات بعد الحذف
         } catch (error) {
             console.error('Error deleting offer:', error);
-            toast.error('Error deleting offer');
+            toast.error(t("offer.deleteErr"));
         }
     };
 
@@ -86,12 +87,12 @@ export const OffersModel = ({ open, handleClose }) => {
                 );
 
                 if (response.data) {
-                    toast.success('added successfully ');
+                    toast.success(t("offer.updateSucc"));
                     getOffers(); // إعادة جلب البيانات لتحديث الجدول
                 }
             } catch (error) {
                 console.error('Error updating offer:', error);
-                toast.error('Error updating offer');
+                toast.error(t("updateErr"));
             }
         }
 
@@ -129,7 +130,7 @@ export const OffersModel = ({ open, handleClose }) => {
             }
         } catch (error) {
             console.error('Error fetching discounts:', error);
-            toast.error('Error fetching discounts');
+            toast.error(t("discount.fetchErr"));
         }
     };
     useEffect(() => {
@@ -154,7 +155,7 @@ export const OffersModel = ({ open, handleClose }) => {
                 }}>
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>
-                        Special Offers
+                        {t("specialOffers")}
                     </Typography>
                     <IconButton onClick={handleClose}>
                         <span class="icon-close-1" style={{ fontSize: "12px", color: "gray" }} />
@@ -171,11 +172,11 @@ export const OffersModel = ({ open, handleClose }) => {
                 <Table sx={{ mt: 3, mb: 5, width: '500px', marginLeft: '-32px', tableLayout: 'fixed' }}>
                     <TableHead>
                         <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
-                            <TableCell sx={{ fontSize: '10px', padding: '3px 0px', borderBottom: 'none', textAlign: 'center', color: '#575756' }}>Item</TableCell>
-                            <TableCell sx={{ fontSize: '10px', padding: '3px 0px', borderBottom: 'none', textAlign: 'center', color: '#575756' }}>Discount</TableCell>
-                            <TableCell sx={{ fontSize: '10px', padding: '3px 0px', borderBottom: 'none', textAlign: 'center', color: '#575756' }}>Price Before</TableCell>
-                            <TableCell sx={{ fontSize: '10px', padding: '3px 0px', borderBottom: 'none', textAlign: 'center', color: '#575756' }}>Price After</TableCell>
-                            <TableCell sx={{ fontSize: '10px', padding: '3px 0px', borderBottom: 'none', textAlign: 'center', color: '#575756' }}>Action</TableCell>
+                            <TableCell sx={{ fontSize: '10px', padding: '3px 0px', borderBottom: 'none', textAlign: 'center', color: '#575756' }}>{t("item.one")}</TableCell>
+                            <TableCell sx={{ fontSize: '10px', padding: '3px 0px', borderBottom: 'none', textAlign: 'center', color: '#575756' }}>{t("discount.one")}</TableCell>
+                            <TableCell sx={{ fontSize: '10px', padding: '3px 0px', borderBottom: 'none', textAlign: 'center', color: '#575756' }}>{t("price.before")}</TableCell>
+                            <TableCell sx={{ fontSize: '10px', padding: '3px 0px', borderBottom: 'none', textAlign: 'center', color: '#575756' }}>{t("price.after")}</TableCell>
+                            <TableCell sx={{ fontSize: '10px', padding: '3px 0px', borderBottom: 'none', textAlign: 'center', color: '#575756' }}>{t("action")}</TableCell>
                         </TableRow>
                     </TableHead>
 
@@ -288,7 +289,7 @@ export const OffersModel = ({ open, handleClose }) => {
                             },
                         }}
                     >
-                        + Add
+                        + {t("add")}
                     </Button>
                 </Box>
 

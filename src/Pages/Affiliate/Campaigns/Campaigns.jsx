@@ -64,11 +64,11 @@ const Campaigns = () => {
           },
         }
       );
-      toast.success("Campaign deleted successfully");
+      toast.success(t("campaignDeleted"));
       getCampaigns();
     } catch (error) {
       console.error("Error deleting campaign:", error);
-      toast.error("Error deleting campaign");
+      toast.error(t("errorDeleteCampaign"));
     }
   };
 
@@ -76,7 +76,7 @@ const Campaigns = () => {
     try {
       setLoading(true);
       if (!name || !commission || !limit) {
-        toast.error("Please fill in all fields");
+        toast.error(t("plFillAllField"));
         return;
       }
 
@@ -98,7 +98,7 @@ const Campaigns = () => {
       );
 
       if (response.data) {
-        toast.success("Campaign added successfully");
+        toast.success(t("campaignAddedSucc"));
         getCampaigns();
         setName("");
         setCommission("");
@@ -108,7 +108,7 @@ const Campaigns = () => {
     } catch (error) {
       console.error("Error adding campaign:", error);
       const errorMessage =
-        error.response?.data?.message || "Error adding campaign";
+        error.response?.data?.message || t("errorAddingCampign");
       toast.error(errorMessage);
     } finally {
       setLoading(false);
@@ -130,7 +130,7 @@ const Campaigns = () => {
           },
         }
       );
-      toast.success("Campaign updated successfully");
+      toast.success(t("campaignUpdateSucc"));
       getCampaigns();
       setEditingCampaign(null);
       setName("");
@@ -140,7 +140,7 @@ const Campaigns = () => {
     } catch (error) {
       console.error("Error editing campaign:", error);
       const errorMessage =
-        error.response?.data?.message || "Error editing campaign";
+        error.response?.data?.message || t("errorUpdateCampaign");
       toast.error(errorMessage);
     }
   };
@@ -198,7 +198,7 @@ const Campaigns = () => {
               gutterBottom
               sx={{ color: "#575756", fontSize: "11px", marginBottom: "10px" }}
             >
-              {editingCampaign ? "Edit Campaign" : "New Campaign"}
+              {editingCampaign ? t("editCampaign") : t("newCampaign")}
             </Typography>
             <Typography variant="body2" sx={{ fontSize: "9px", color: "gray" }}>
               {t("name")}
@@ -290,7 +290,7 @@ const Campaigns = () => {
                   "&:hover": { backgroundColor: "#ef7d10" },
                 }}
               >
-                {loading ? "Saving..." : "Save"}
+                {loading ? t("saving") : t("save")}
               </Button>
             </Box>
           </Paper>

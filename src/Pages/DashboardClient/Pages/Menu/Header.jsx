@@ -6,6 +6,7 @@ import SouthIcon from '@mui/icons-material/South';
 import CategoryForm from './AddCategory';
 import { DiscountModel } from './DiscountModel';
 import { OffersModel } from './OffersModel';
+import { useTranslation } from 'react-i18next';
 const StyledAppBar = styled(AppBar)({
     background: 'linear-gradient(to right, #b4650f, #222240)',
     padding: '8px 0px',
@@ -76,7 +77,7 @@ const Header = () => {
         setOpenDiscount(false);
         setOpenOffers(false);
     };
-
+    const {t} = useTranslation();
     return (
         <StyledAppBar position="static">
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -92,7 +93,7 @@ const Header = () => {
                         startIcon={<span class="icon-offer" style={{ color: "#ef7d00",fontSize:"15px" }}></span>}
                         onClick={handleOffersOpen}
                     >
-                        Special Offers
+                        {t("specialOffers")}
                     </StyledButton>
                     <OffersModel open={openOffers} handleClose={handleClose} />
 
@@ -103,7 +104,7 @@ const Header = () => {
                         sx={{fontSize:"10px"}}
                         startIcon={<img src="/assets/present.svg" alt="add icon" style={{width:"20px" ,height:"20px"}}/>}
                     >
-                        Discount Codes
+                        {t("discountCodes")}
                     </StyledButton>
                     <DiscountModel open={openDiscount} handleClose={handleClose} />
 
@@ -114,16 +115,16 @@ const Header = () => {
                         sx={{fontSize:"10px"}}
                         startIcon={<img src="/assets/add.svg" alt="add icon" style={{width:"12px" ,height:"12px"}}/>}
                     >
-                        Add Category
+                        {t("addCategory")}
                     </AddButton>
                     <CategoryForm open={openCategory} handleClose={handleClose} />
 
                     {/* زر تصدير واستيراد */}
                     <ExportText display={"flex"} alignItems={"center"} sx={{fontSize:"11px"}}>
-                        Export <KeyboardArrowRightIcon sx={{ fontSize: "18px", color: "#b4650f" }} />
+                        {t("export")} <KeyboardArrowRightIcon sx={{ fontSize: "18px", color: "#b4650f" }} />
                     </ExportText>
                     <ExportText display={"flex"} alignItems={"center"} sx={{fontSize:"11px"}}>
-                        Import<SouthIcon sx={{ fontSize: "14px", color: "#b4650f" }} />
+                        {t("import")}<SouthIcon sx={{ fontSize: "14px", color: "#b4650f" }} />
                     </ExportText>
                 </Box>
             </Toolbar>

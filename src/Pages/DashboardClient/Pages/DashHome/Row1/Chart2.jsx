@@ -2,6 +2,7 @@
 import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react'
+import { useTranslation } from 'react-i18next';
 import { PieChart, Pie, Cell } from 'recharts';
 
 const data01 = [{ name: 'Pro', value: 10 }, { name: 'Remaining', value: 90 }];
@@ -9,6 +10,7 @@ const data01 = [{ name: 'Pro', value: 10 }, { name: 'Remaining', value: 90 }];
 const COLORS = ['#30ADF8', "#D8E0E0"]
 
 export const Chart2 = () => {
+    const {t} = useTranslation();
     return (
         <Box display={"flex"} justifyContent="space-between" alignItems="center" 
         padding={"0px 15px"}  >
@@ -16,13 +18,13 @@ export const Chart2 = () => {
             <Box >
                 <Box display={"flex"} textAlign={"center"} alignItems={"center"} >
                     <Box component="span" sx={{ backgroundColor: COLORS[1], width: '15px', borderRadius: "20px", height: '6px', display: 'inline-block', marginRight: '8px' }} />
-                    <Typography variant="body2" color="text.secondary" sx={{ fontSize: "8px", color: "gray" }}>Orders</Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ fontSize: "8px", color: "gray" }}>{t("orders")}</Typography>
                 </Box>
 
 
                 <Box display={"flex"} textAlign={"center"} alignItems={"center"} marginTop={"5px"}>
                     <Box component="span" sx={{ backgroundColor: COLORS[0], width: '15px', borderRadius: "20px", height: '6px', display: 'inline-block', marginRight: '8px' }} />
-                    <Typography variant="body2" color="text.secondary" sx={{ fontSize: "8px", color: "gray" }}>Visits</Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ fontSize: "8px", color: "gray" }}>{t("visits")}</Typography>
                 </Box>
             </Box>
 

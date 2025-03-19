@@ -227,7 +227,7 @@ const Support = () => {
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={12} sx={{ display: "flex", alignItems: "center" }}>
             <Typography variant="body1" sx={{ fontSize: "12px", color: "#575756" }}>
-              {t("ticket")}
+              {t("ticket.one")}
             </Typography>
             <Grid item xs>
               <Box sx={{ textAlign: 'right' }}>

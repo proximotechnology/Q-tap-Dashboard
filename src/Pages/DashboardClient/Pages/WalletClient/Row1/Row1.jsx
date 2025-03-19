@@ -114,7 +114,7 @@ export const Row1 = () => {
             <Button
               onClick={() => navigate('/transaction')}
               sx={{ color: "white", textTransform: "capitalize" }}>
-              Transaction
+              {t("transactions")}
             </Button>
           </Box>
 
@@ -122,11 +122,11 @@ export const Row1 = () => {
 
             <Box display={"flex"} textAlign={"center"} alignItems={"center"}>
               <Box component="span" sx={{ backgroundColor: "#2DA0F6", width: '25px', borderRadius: "20px", height: '10px', display: 'inline-block', marginRight: '8px' }} />
-              <Typography variant="body2" color="text.secondary" sx={{ fontSize: "9px" }}>Sales Volume</Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ fontSize: "9px" }}>{t("salesVolume")}</Typography>
             </Box>
             <Box display={"flex"} textAlign={"center"} alignItems={"center"} marginTop="5px">
               <Box component="span" sx={{ backgroundColor: "#AD4081", width: '25px', borderRadius: "20px", height: '10px', display: 'inline-block', marginRight: '8px' }} />
-              <Typography variant="body2" color="text.secondary" sx={{ fontSize: "9px" }}>Orders</Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ fontSize: "9px" }}>{t("orders")}</Typography>
             </Box>
           </Box>
         </Box>

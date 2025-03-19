@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { useBranch } from '../../../../context/BranchContext';
 import DoneIcon from '@mui/icons-material/Done';
 import { Select, MenuItem } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 
 export const DiscountModel = ({ open, handleClose }) => {
@@ -13,13 +14,13 @@ export const DiscountModel = ({ open, handleClose }) => {
   const [code, setCode] = useState('');
   const [discount, setDiscount] = useState('');
   const { selectedBranch, discountContent, setDiscountContent } = useBranch();
-
+  const {t} = useTranslation();
   console.log("selectedBranch discount", selectedBranch, discountContent);
 
   const handleAdd = async () => {
     try {
       if (!code || !discount) {
-        toast.error('Please fill in all fields');
+        toast.error(t("plFillAllField"));
         return;
       }
 
@@ -41,7 +42,7 @@ export const DiscountModel = ({ open, handleClose }) => {
       });
 
       if (response.data) {
-        toast.success('Discount added successfully!');
+        toast.success(t("discount.addSucc"));
         const today = new Date().toLocaleDateString();
         const newDiscount = {
           code,
@@ -55,7 +56,7 @@ export const DiscountModel = ({ open, handleClose }) => {
       }
     } catch (error) {
       console.error('Error adding discount:', error);
-      const errorMessage = error.response?.data?.message || 'Error adding discount';
+      const errorMessage = error.response?.data?.message || t("discount.addErr");
       toast.error(errorMessage);
     }
   };
@@ -71,13 +72,13 @@ export const DiscountModel = ({ open, handleClose }) => {
       });
 
       if (response.data) {
-        toast.success('Discount deleted successfully!');
+        toast.success(t("discount.deleteSucc"));
         const updatedDiscounts = discounts.filter((_, i) => i !== index);
         setDiscounts(updatedDiscounts);
       }
     } catch (error) {
       console.error('Error deleting discount:', error);
-      toast.error('Error deleting discount');
+      toast.error(t("discount.deleteErr"));
     }
   };
 
@@ -100,7 +101,7 @@ export const DiscountModel = ({ open, handleClose }) => {
       }
     } catch (error) {
       console.error('Error fetching discounts:', error);
-      toast.error('Error fetching discounts');
+      toast.error(t("discount.fetchErr"));
     }
   };
 
@@ -135,13 +136,13 @@ export const DiscountModel = ({ open, handleClose }) => {
       );
 
       if (response.data) {
-        toast.success('updated successful');
+        toast.success(t("discount.updateSucc"));
         discountToUpdate.isEditing = false; // إيقاف وضع التعديل بعد الحفظ
         setDiscounts([...discounts]);
       }
     } catch (error) {
       console.error('Error updating discount:', error);
-      toast.error('Error updating discount');
+      toast.error(t("discount.updateErr"));
     }
   };
 
@@ -166,7 +167,7 @@ export const DiscountModel = ({ open, handleClose }) => {
         <Box sx={{ padding: "20px" }}>
           <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <Typography variant="body1" sx={{ fontSize: "12px", color: "#575756" }}>
-              Discount Codes
+              {t("discount.codes")}
             </Typography>
             <IconButton onClick={handleClose}>
               <span className="icon-close-1" style={{ fontSize: "12px" }}></span>
@@ -177,26 +178,26 @@ export const DiscountModel = ({ open, handleClose }) => {
           <Box sx={{ marginTop: "10px" }}>
             <Grid container spacing={2} sx={{ mb: 2, marginTop: "12px" }}>
               <Grid item xs={6}>
-                <Typography variant='body2' sx={{ fontSize: "10px", color: "#575756" }}>Code</Typography>
+                <Typography variant='body2' sx={{ fontSize: "10px", color: "#575756" }}>{t("code")}</Typography>
                 <TextField
                   fullWidth
                   type="number"
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
-                  placeholder="Please enter only digits"
+                  placeholder={t("plEnterOnlyDigits")}
                   InputProps={{
                     sx: { height: 33, lineHeight: "25px", borderRadius: "6px", fontSize: "10px" }
                   }}
                 />
               </Grid>
               <Grid item xs={6}>
-                <Typography variant='body2' sx={{ fontSize: "10px", color: "#575756" }}>Discount</Typography>
+                <Typography variant='body2' sx={{ fontSize: "10px", color: "#575756" }}>{t("discount.one")}</Typography>
                 <TextField
                   fullWidth
                   type="number"
                   value={discount}
                   onChange={(e) => setDiscount(e.target.value)}
-                  placeholder="Please enter only digits"
+                  placeholder={t("plEnterOnlyDigits")}
                   InputProps={{
                     endAdornment: <InputAdornment position="end">%</InputAdornment>,
                     sx: { height: 33, lineHeight: "25px", borderRadius: "6px", fontSize: "10px" }
@@ -222,7 +223,7 @@ export const DiscountModel = ({ open, handleClose }) => {
                   },
                 }}
               >
-                + Add
+                + {t("add")}
               </Button>
             </Box>
           </Box>
@@ -231,11 +232,11 @@ export const DiscountModel = ({ open, handleClose }) => {
         <Table sx={{ p: 0, mt: 2, mb: 5, width: '100%', tableLayout: 'fixed', overflowY: "auto", backgroundColor: "white", borderRadius: "10px" }}>
           <TableHead>
             <TableRow sx={{ backgroundColor: "#EBEDF3" }}>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>Code</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>Discount</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>Date</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>Status</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>Action</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>{t("code")}</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>{t("discount.one")}</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>{t("date")}</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>{t("status")}</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>{t("action")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody className="bg-green-500">
