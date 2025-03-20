@@ -9,11 +9,12 @@ import { userData } from './userData';
 import { AddUser } from './AddUser';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 export const UserTable = () => {
   const [visiblePasswords, setVisiblePasswords] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
-
+  const {t} = useTranslation();
   const handleToggleVisibility = (rowId) => {
     setVisiblePasswords((prev) => ({
       ...prev,
@@ -86,12 +87,12 @@ export const UserTable = () => {
       })
 
       if (response.data) {
-        toast.success("UserStaff deleted successfully!");
+        toast.success(t("userStaff.deleteSucc"));
         getUserStaff();
       }
     } catch (error) {
       console.log("error delete UserStaff ", error);
-      toast.error("Error deleting UserStaff");
+      toast.error(t("userStaff.deleteErr"));
 
     }
   }
@@ -101,7 +102,7 @@ export const UserTable = () => {
       <Box display="flex" justifyContent="space-between" alignItems="center" width="100%" padding="5px 0">
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <img src="/assets/Clients.svg" alt="icon" style={{ color: "#D8E0E0", width: "25px", height: "25px", marginRight: "10px" }} />
-          <Typography variant="body1" sx={{ fontSize: "16px", color: "#575756" }}>Users</Typography>
+          <Typography variant="body1" sx={{ fontSize: "16px", color: "#575756" }}>{t("users")}</Typography>
         </Box>
 
         <Box sx={{ display: "flex" }}>
@@ -109,13 +110,13 @@ export const UserTable = () => {
             <span className="icon-magnifier" style={{ fontSize: "16px" }} />
           </IconButton>
           <Button onClick={handleOpen} sx={{ fontSize: "12px", color: "#ef7d00", display: "flex", cursor: "pointer", textTransform: "capitalize" }}>
-            Add
+            {t("add")}
             <span style={{ fontSize: "15px", color: "#ef7d00", fontWeight: 700, paddingLeft: "6px" }}>+</span>
           </Button>
           <AddUser open={modalOpen} onClose={handleClose} />
 
           <Button onClick={handleExport} variant="text" sx={{ color: '#ef7d00', textTransform: "capitalize", fontSize: "12px" }}>
-            Export
+            {t("export")}
             <ArrowForwardIosIcon sx={{ fontSize: "10px", color: "#ef7d00" }} />
           </Button>
         </Box>
@@ -129,7 +130,7 @@ export const UserTable = () => {
         <Table sx={{ borderCollapse: 'separate', borderSpacing: '0 5px' }}>
           <TableHead>
             <TableRow sx={{ height: "20px", borderBottom: "2px solid #f0f0f0" }}>
-              {["User Name", "Created", "PIN", "Access", "Status", " "].map((header) => (
+              {[t("userName"), t("created"), t("pin"), t("access"), t("status"), " "].map((header) => (
                 <TableCell key={header} sx={{ fontSize: "12px", padding: "3px", width: `${100 / 6}%`, textAlign: "center", color: "#575756" }}>
                   {header}
                 </TableCell>

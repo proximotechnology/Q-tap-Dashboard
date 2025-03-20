@@ -11,6 +11,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { transactionsData } from './transactionsData';
 import MinimizeOutlinedIcon from '@mui/icons-material/MinimizeOutlined';
 import * as XLSX from 'xlsx';
+import { useTranslation } from 'react-i18next';
 
 export const TableTransaction = () => {
     const handleExport = () => {
@@ -23,6 +24,7 @@ export const TableTransaction = () => {
         XLSX.utils.book_append_sheet(workbook, worksheet, "Transactions");
         XLSX.writeFile(workbook, "transactions.xlsx");
     };
+    const {t} = useTranslation();
     return (
         <Card Card sx={{ borderRadius: 4, height: "100%" }}>
             <CardContent>
@@ -35,7 +37,7 @@ export const TableTransaction = () => {
                 >
                     <Box variant="body2" sx={{ fontSize: "13px", display: "flex" }}>
                         <span class="icon-transfer" style={{ fontSize: "22px", color: "#D8E0E0" }} ></span>
-                        Transactions
+                        {t("transactions")}
                     </Box>
                     <Box>
                         <span class="icon-magnifier" style={{ cursor: "pointer", color: "#575756", marginRight: "15px", fontSize: "13px" }}></span>
@@ -44,7 +46,7 @@ export const TableTransaction = () => {
                             variant="outlined"
                             type='number'
                             size="small"
-                            placeholder="From"
+                            placeholder={t("from")}
                             style={{ padding: "2px", marginRight: '5px', width: "85px" }}
                             InputProps={{
                                 startAdornment: <CalendarMonthOutlinedIcon sx={{ color: "gray", fontSize: "12px", marginRight: "10px" }} />,
@@ -60,7 +62,7 @@ export const TableTransaction = () => {
                             variant="outlined"
                             type='number'
                             size="small"
-                            placeholder="To"
+                            placeholder={t("to")}
                             style={{ padding: "2px", marginRight: '5px', width: "85px" }}
                             InputProps={{
                                 startAdornment: <CalendarMonthOutlinedIcon sx={{ color: "gray", fontSize: "12px", marginRight: "10px" }} />,
@@ -75,7 +77,7 @@ export const TableTransaction = () => {
                             onClick={handleExport}
                             variant="text"
                             style={{ fontSize: "12px", color: '#ef7d00', textTransform: "capitalize" }}>
-                            Export
+                            {t("export")}
                             <ArrowForwardIosIcon sx={{ fontSize: "10px", color: "black" }} />
                         </Button>
                     </Box>
@@ -104,28 +106,28 @@ export const TableTransaction = () => {
                                 textAlign: "center",
                                 padding: "0px",
                                 margin: "0px",
-                            }}>Date</TableCell>
+                            }}>{t("date")}</TableCell>
                             <TableCell sx={{
                                 borderBottom: "none",
                                 fontSize: "10px",
                                 textAlign: "center",
                                 padding: "0px",
                                 margin: "0px"
-                            }}>Time</TableCell>
+                            }}>{t("time")}</TableCell>
                             <TableCell sx={{
                                 borderBottom: "none",
                                 fontSize: "10px",
                                 textAlign: "center",
                                 padding: "0px",
                                 margin: "0px"
-                            }}>Amount</TableCell>
+                            }}>{t("amount")}</TableCell>
                             <TableCell sx={{
                                 borderBottom: "none",
                                 fontSize: "10px",
                                 textAlign: "center",
                                 padding: "0px",
                                 margin: "0px"
-                            }}>Status</TableCell>
+                            }}>{t("status")}</TableCell>
                         </TableRow>
                     </TableHead>
 
@@ -151,7 +153,7 @@ export const TableTransaction = () => {
                                             sx={{
                                                 padding: "3px 5px", backgroundColor: transaction.statusColor, borderRadius: "20px",
                                                 fontSize: "11px"
-                                            }}>{transaction.status} </Typography>
+                                            }}>{t(transaction.status)} </Typography>
                                     </TableCell>
                                 </TableRow>
                             </>

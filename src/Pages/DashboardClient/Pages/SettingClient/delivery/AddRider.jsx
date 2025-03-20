@@ -3,8 +3,10 @@ import { Box, Modal, Typography, IconButton, Divider, Button, TextField } from '
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
 import { FormControl, Select, MenuItem } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const AddRider = ({ open, onClose }) => {
+    const {t}=useTranslation();
     const [city, setCity] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('')
     const [countryCode, setCountryCode] = useState('+20')
@@ -28,7 +30,7 @@ const AddRider = ({ open, onClose }) => {
                 }}>
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <Typography 
-                    variant="body1" sx={{ fontSize: "13px", color: "#424242" }}> Delivery Rider</Typography>
+                    variant="body1" sx={{ fontSize: "13px", color: "#424242" }}> {t("deliveryRiders")}</Typography>
                     <IconButton onClick={onClose}>
                         <CloseIcon sx={{ fontSize: "20px", color: "gray" }} />
                     </IconButton>
@@ -44,7 +46,7 @@ const AddRider = ({ open, onClose }) => {
                 }}>
 
                     <Typography variant='body2' sx={{ width: "25%", textAlign: "center" }} color={"#424242"} fontSize={"12px"}>
-                        Name
+                        {t("name")}
                     </Typography>
                     <Box sx={{
                         display: "flex",
@@ -63,7 +65,7 @@ const AddRider = ({ open, onClose }) => {
                                 }
                             }}
                             fullWidth
-                            placeholder="Rider Full Name"
+                            placeholder={t("riderFullName")}
                         />
                     </Box>
                 </Box>
@@ -76,7 +78,7 @@ const AddRider = ({ open, onClose }) => {
                     alignItems: "flex-start",
                 }}>
                     <Typography variant='body2' sx={{ width: "25%", textAlign: "center" }} color={"#424242"} fontSize={"12px"}>
-                        City
+                        {t("city")}
                     </Typography>
                     <Box sx={{
                         display: "flex",
@@ -100,9 +102,9 @@ const AddRider = ({ open, onClose }) => {
                                 displayEmpty
                                 value={city}
                                 onChange={(e) => setCity(e.target.value)}
-                                placeholder="Select City"
+                                placeholder={t("selectCity")}
                             >
-                                <MenuItem value="" disabled sx={{ fontSize: "12PX", color: "gray" }}>Select City</MenuItem>
+                                <MenuItem value="" disabled sx={{ fontSize: "12PX", color: "gray" }}>{t("selectCity")}</MenuItem>
                                 <MenuItem value={"B"} sx={{ fontSize: "12PX", color: "gray" }}>Egypt</MenuItem>
                                 <MenuItem value={"C"} sx={{ fontSize: "12PX", color: "gray" }}>cairo</MenuItem>
                                 <MenuItem value={"C"} sx={{ fontSize: "12PX", color: "gray" }}>Tanta</MenuItem>
@@ -123,7 +125,7 @@ const AddRider = ({ open, onClose }) => {
                 >
                     <Typography variant='body2'  sx={{ width: "25%", textAlign: "center"}}
                         color={"#424242"} fontSize={"12px"}>
-                        Whatapp
+                        {t("whatapp")}
                     </Typography>
                     <Box
                         sx={{
@@ -208,7 +210,7 @@ const AddRider = ({ open, onClose }) => {
                             textTransform: "capitalize",
                         }}
                     >
-                        <DoneIcon sx={{ fontSize: "20px", mr: 1 }} /> Save
+                        <DoneIcon sx={{ fontSize: "20px", mr: 1 }} /> {t("save")}
                     </Button>
                 </Box> {/* Save button */}
             </Box>

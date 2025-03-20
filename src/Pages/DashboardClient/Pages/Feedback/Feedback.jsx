@@ -12,6 +12,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 export const Feedback = () => {
     const [star, setStar] = useState(0);
@@ -19,7 +20,7 @@ export const Feedback = () => {
     const [yourGoals, setYourGoals] = useState("");
     const [missingQtapMenus, setMissingQtapMenus] = useState("");
     const [comment, setComment] = useState("");
-
+    const {t} = useTranslation();
     const handleStarClick = (index) => {
         setStar(index + 1);
     };
@@ -60,9 +61,9 @@ export const Feedback = () => {
                 }
             });
 
-            toast.success("Feedback sent successfully!");
+            toast.success(t("feedbacks.sendSucc"));
         } catch (error) {
-            toast.error("Error in sending feedback");
+            toast.error(t("feedbacks.sendErr"));
             console.log("data error feedback ", error);
 
         }
@@ -80,7 +81,7 @@ export const Feedback = () => {
                 <Box sx={{ display: "flex" }}>
                     <StarIcon sx={{ fontSize: "25px", color: "gray", marginRight: "5px" }} />
                     <Typography variant='body1' sx={{ fontSize: "15px", color: "#575756" }}>
-                        Tell us about your experiment
+                        {t("tellUsAboutYourExperiment")}
                     </Typography>
                 </Box>
             </Box>
@@ -96,7 +97,7 @@ export const Feedback = () => {
                 {/* Left Section */}
                 <Grid item xs={12} md={6}>
                     <Typography variant="body1" gutterBottom sx={{ fontSize: "12px" }}>
-                        How much you satisfied with the product?
+                        {t("howMuchYouSatisfied")}
                     </Typography>
 
                     <Box sx={{ margin: "20px 0px", display: 'flex' }}>
@@ -112,44 +113,44 @@ export const Feedback = () => {
                     </Box>
 
                     <Typography variant="body1" gutterBottom sx={{ fontSize: "12px" }}>
-                        How happy are you with the product?
+                        {t("howHappyAreYou")}
                     </Typography>
 
                     <Box>
                         <RadioGroup row sx={{ margin: "20px 0px" }}>
                             <Box onClick={() => handleEmojiClick("said")}>
                                 <SentimentVeryDissatisfiedIcon sx={{ fontSize: "35px", color: emoji === "said" ? "red" : "gray" }} />
-                                <Typography variant="body2" gutterBottom sx={{ fontSize: "10px", color: "gray" }}>said</Typography>
+                                <Typography variant="body2" gutterBottom sx={{ fontSize: "10px", color: "gray" }}>{t("sad")}</Typography>
                             </Box>
                             <Box sx={{ marginLeft: "15px" }} onClick={() => handleEmojiClick("happy")}>
                                 <SentimentSatisfiedAltIcon sx={{ fontSize: "35px", color: emoji === "happy" ? "#ef7d00" : "gray" }} />
-                                <Typography variant="body2" gutterBottom sx={{ fontSize: "10px", color: "gray" }}>happy</Typography>
+                                <Typography variant="body2" gutterBottom sx={{ fontSize: "10px", color: "gray" }}>{t("happy")}</Typography>
                             </Box>
                             <Box sx={{ marginLeft: "15px" }} onClick={() => handleEmojiClick("very happy")}>
                                 <SentimentVerySatisfiedIcon sx={{ fontSize: "35px", color: emoji === "very happy" ? "green" : "gray" }} />
-                                <Typography variant="body2" gutterBottom sx={{ fontSize: "10px", color: "gray" }}>very happy</Typography>
+                                <Typography variant="body2" gutterBottom sx={{ fontSize: "10px", color: "gray" }}>{t("veryHappy")}</Typography>
                             </Box>
                         </RadioGroup>
                     </Box>
 
                     <Typography variant="body1" gutterBottom sx={{ fontSize: "12px" }}>
-                        Does the product help you achieve your goals?
+                        {t("doesProductHelpYou")}
                     </Typography>
                     <Box sx={{ margin: "20px 0px" }}>
                         <RadioGroup row>
                             <Box onClick={() => handleYourGoals("yes")}>
                                 <CheckIcon sx={{ padding: "5px", fontSize: "30px", backgroundColor: yourGoals === "yes" ? "green" : "gray", borderRadius: "50%", color: "white" }} />
-                                <Typography variant="body2" gutterBottom sx={{ fontSize: "10px", color: "gray" }}>Yes</Typography>
+                                <Typography variant="body2" gutterBottom sx={{ fontSize: "10px", color: "gray" }}>{t("yes")}</Typography>
                             </Box>
                             <Box sx={{ marginLeft: "15px" }} onClick={() => handleYourGoals("no")}>
                                 <ClearIcon sx={{ padding: "5px", fontSize: "30px", border: "1px solid ", borderRadius: "50%", color: yourGoals === "no" ? "red" : "gray" }} />
-                                <Typography variant="body2" gutterBottom sx={{ fontSize: "10px", color: "gray" }}>No</Typography>
+                                <Typography variant="body2" gutterBottom sx={{ fontSize: "10px", color: "gray" }}>{t("no")}</Typography>
                             </Box>
                         </RadioGroup>
                     </Box>
 
                     <Typography variant="body1" gutterBottom sx={{ fontSize: "12px" }}>
-                        What are the things missing in Q-tap Menus?
+                        {t("whatAreThingMissing")}
                     </Typography>
                     <TextField
                         fullWidth
@@ -159,7 +160,7 @@ export const Feedback = () => {
                             style: { fontSize: '10px' }
                         }}
                         rows={2}
-                        placeholder="Please give your opinion and thoughts so we can improve our services."
+                        placeholder={t("plGiveYourOpinion")}
                         value={missingQtapMenus}
                         onChange={handleMissingQtapMenus}
                     />
@@ -177,7 +178,7 @@ export const Feedback = () => {
                     </Box>
 
                     <Typography variant="body1" gutterBottom sx={{ fontSize: "12px" }}>
-                        Comment
+                        {t("comment")}
                     </Typography>
                     <TextField
                         fullWidth
@@ -187,7 +188,7 @@ export const Feedback = () => {
                             style: { fontSize: '12px' }
                         }}
                         rows={4}
-                        placeholder="Please write a brief about your experiment."
+                        placeholder={t("plWriteBriefAboutExper")}
                         value={comment}
                         onChange={handleCommentChange}
                     />
@@ -204,7 +205,7 @@ export const Feedback = () => {
                             backgroundImage: 'linear-gradient(to right , #FDB913, #E57C00 )'
                         }
                     }}>
-                    <CheckIcon sx={{ marginRight: "6px", fontSize: "15px" }} /> Submit👍
+                    <CheckIcon sx={{ marginRight: "6px", fontSize: "15px" }} /> {t("submit")}👍
                 </Button>
             </Box>
         </Paper>

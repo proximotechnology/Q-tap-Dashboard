@@ -18,8 +18,11 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { ClientLoginData } from '../../../../context/ClientLoginDataContext';
 import AddTableModal from './AddTable'; // Ensure this component is created
+import { useTranslation } from 'react-i18next';
 
-const TableCard = ({ table, onDeleteTable, onEditTable }) => (
+const TableCard = ({ table, onDeleteTable, onEditTable }) => {
+  const {t} = useTranslation();
+  return(
   <Card
     sx={{
       height: '270px',
@@ -33,7 +36,7 @@ const TableCard = ({ table, onDeleteTable, onEditTable }) => (
     <CardContent>
       <Box display={'flex'} justifyContent={'space-between'}>
         <Typography variant="subtitle2" sx={{ fontSize: '11px', color: '#E57C00' }}>
-          ID{' '}
+          {t("id")}{' '}
           <span style={{ fontSize: '10px', color: '#AAAAAA', borderBottom: '1px solid #AAAAAA' }}>
             {table.id}
           </span>
@@ -54,7 +57,7 @@ const TableCard = ({ table, onDeleteTable, onEditTable }) => (
       />
 
       <Typography sx={{ fontSize: '12px', display: 'flex', color: '#7b6a6a', marginTop: '9px' }}>
-        <TableBarOutlinedIcon sx={{ fontSize: '12px', mr: '5px' }} /> Name
+        <TableBarOutlinedIcon sx={{ fontSize: '12px', mr: '5px' }} /> {t("name")}
       </Typography>
       <Typography variant="body2" component="div" sx={{ fontSize: '9px', display: 'flex', color: '#9d9d9c', marginLeft: '5px' }}>
         {table.name}
@@ -64,7 +67,7 @@ const TableCard = ({ table, onDeleteTable, onEditTable }) => (
         <Box>
           <Typography variant="body2" sx={{ fontSize: '10px', display: 'flex', color: '#7b6a6a', marginTop: '10px' }}>
             <ChairAltOutlinedIcon sx={{ fontSize: '14px', mr: '5px' }} />
-            Chairs
+            {t("chairs")}
           </Typography>
           <Typography variant="body2" sx={{ fontSize: '10px', display: 'flex', color: '#9d9d9c', marginLeft: '5px' }}>
             {table.chairs} ch
@@ -73,7 +76,7 @@ const TableCard = ({ table, onDeleteTable, onEditTable }) => (
         <Box>
           <Typography variant="body2" sx={{ fontSize: '10px', display: 'flex', color: '#7b6a6a', marginTop: '10px' }}>
             <img src="/assets/location.svg" alt="location icon" style={{ width: '13px', height: '13px' }} />
-            Area
+            {t("area")}
           </Typography>
           <Typography variant="body2" sx={{ fontSize: '10px', display: 'flex', color: '#9d9d9c', marginLeft: '10px' }}>
             {table.area}
@@ -117,9 +120,10 @@ const TableCard = ({ table, onDeleteTable, onEditTable }) => (
       </Grid>
     </CardContent>
   </Card>
-);
+)};
 
 export const Tables = ({ openOldMenu }) => {
+  const {t} = useTranslation();
   const [modalOpen, setModalOpen] = useState(false);
   const [editingTable, setEditingTable] = useState(null);
   const { tableDataRes, getTableDataRes } = useContext(ClientLoginData);
@@ -151,13 +155,13 @@ export const Tables = ({ openOldMenu }) => {
       });
 
       if (response.data) {
-        toast.success(editingTable ? 'Table updated successfully!' : 'Table added successfully!');
+        toast.success(editingTable ? t("table.updateSucc") : t("table.addSucc"));
         getTableDataRes(); // Refresh table data
         handleCloseModal();
       }
     } catch (error) {
       console.error('Error saving table:', error);
-      toast.error('Error saving table');
+      toast.error(t("table.saveErr"));
     }
   };
 
@@ -176,12 +180,12 @@ export const Tables = ({ openOldMenu }) => {
       });
 
       if (response.data) {
-        toast.success('Table deleted successfully!');
+        toast.success(t("table.deleteSucc"));
         getTableDataRes(); // Refresh table data
       }
     } catch (error) {
       console.error('Error deleting table:', error);
-      toast.error('Error deleting table');
+      toast.error(t("table.deleteErr"));
     }
   };
 
@@ -189,7 +193,7 @@ export const Tables = ({ openOldMenu }) => {
     <Paper style={{ padding: '20px 30px', borderRadius: '10px', marginTop: '16px' }}>
       <Box sx={{ maxWidth: '100%', padding: '6px' }}>
         <Typography variant="body1" sx={{ textAlign: 'left', fontSize: '13px', color: '#4b4a4a' }}>
-          Add Tables
+          {t("table.add")}
         </Typography>
 
         <Divider sx={{ backgroundColor: '#E57C00', height: '1px', margin: '8px 0px' }} />
@@ -243,7 +247,7 @@ export const Tables = ({ openOldMenu }) => {
             }}
             startIcon={<CheckOutlinedIcon />}
           >
-            Save
+            {t("save")}
           </Button>
         </Box>
       </Box>

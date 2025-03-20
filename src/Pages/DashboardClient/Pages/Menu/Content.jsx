@@ -278,9 +278,9 @@ export const Content = () => {
 
             <Dialog open={openEditDialog} onClose={handleEditClose}>
                 <DialogContent>
-                    <Typography variant="h6">Edit Category</Typography>
+                    <Typography variant="h6">{t("category.edit")}</Typography>
                     <TextField
-                        label="Name"
+                        label={t("name")}
                         value={editName}
                         onChange={(e) => setEditName(e.target.value)}
                         fullWidth
@@ -295,7 +295,7 @@ export const Content = () => {
                                 backgroundColor: '#e17d33'
                             }
                         }}
-                    >Save</Button>
+                    >{t("save")}</Button>
                 </DialogContent>
             </Dialog>
         </>

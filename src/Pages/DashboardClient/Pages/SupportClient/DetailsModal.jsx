@@ -43,21 +43,21 @@ const DetailsModal = ({ open, onClose, rowData }) => {
                     color: "#575756", fontSize: "12px", marginTop: "10px",
                     marginBottom: "15px"
                 }}>
-                    Order ID:<span style={{ color: "#E57C00", marginLeft: "20px", }}> #{id}</span>
+                    {t("orderId")} :<span style={{ color: "#E57C00", marginLeft: "20px", }}> #{id}</span>
                 </Typography>
 
                 <Typography variant="body1" sx={{ color: "#575756", fontSize: "12px", marginBottom: "15px" }}>
-                    Name :<span style={{ color: "#949493", marginLeft: "20px", }}>{client.name}</span>
+                    {t("name")} :<span style={{ color: "#949493", marginLeft: "20px", }}>{client.name}</span>
                 </Typography>
 
                 <Typography variant="body1" sx={{ color: "#575756", fontSize: "12px", marginBottom: "15px" }}>
-                    Phone :<span style={{ color: "#949493", marginLeft: "20px", }}>{client.mobile}</span>
+                    {t("mobileNumber")} :<span style={{ color: "#949493", marginLeft: "20px", }}>{client.mobile}</span>
                 </Typography>
 
 
                 <Box sx={{ marginBottom: "15px" }}>
                     <Typography variant="body1" sx={{ color: "#575756", fontSize: "12px", }}>
-                        Rate
+                        {t("rate")}
                     </Typography>
                     <Box sx={{ display: 'flex', gap: 1 }}>
                         {Array.from({ length: 5 }).map((_, index) => (
@@ -74,7 +74,7 @@ const DetailsModal = ({ open, onClose, rowData }) => {
 
                 <Box sx={{ marginBottom: "15px" }}>
                     <Typography variant="body1" sx={{ color: "#575756", fontSize: "12px", }}>
-                        How much you satisfied with the product?
+                        {t("productSatisfiedQ")}
                     </Typography>
                     <Box sx={{ display: 'flex', }}>
                         {Array.from({ length: 10 }).map((_, index) => (

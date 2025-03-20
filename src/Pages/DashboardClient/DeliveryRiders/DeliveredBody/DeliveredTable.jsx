@@ -6,6 +6,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import { DeliveredDetails } from './DeliveredDetails'
 import { OrderContext } from './DeliveredContext';
+import { useTranslation } from 'react-i18next';
 export const DeliveredTable = ({ orders }) => {
   const handleExport = () => {
     const data = [
@@ -22,6 +23,7 @@ export const DeliveredTable = ({ orders }) => {
     XLSX.writeFile(workbook, "transactions.xlsx");
   };
   const { handleOpen } = useContext(OrderContext);
+  const {t} = useTranslation();
   return (
     <>
       <Box
@@ -48,7 +50,7 @@ export const DeliveredTable = ({ orders }) => {
 
         >
           <Typography variant="body1" sx={{ fontSize: "15px", color: "#575756" }}>
-            Done
+            {t("done")}
           </Typography>
 
           <Box>
@@ -58,7 +60,7 @@ export const DeliveredTable = ({ orders }) => {
               variant="outlined"
               type='number'
               size="small"
-              placeholder="From"
+              placeholder={t("from")}
               style={{ padding: "2px 0px", marginRight: '5px', width: "85px" }}
               InputProps={{
                 startAdornment: <CalendarMonthOutlinedIcon sx={{ color: "gray", fontSize: "12px", marginRight: "10px" }} />,
@@ -74,7 +76,7 @@ export const DeliveredTable = ({ orders }) => {
               variant="outlined"
               type='number'
               size="small"
-              placeholder="To"
+              placeholder={t("to")}
               style={{ padding: "2px 0px", marginRight: '5px', width: "85px" }}
               InputProps={{
                 startAdornment: <CalendarMonthOutlinedIcon sx={{ color: "gray", fontSize: "12px", marginRight: "10px" }} />,
@@ -89,7 +91,7 @@ export const DeliveredTable = ({ orders }) => {
               onClick={handleExport}
               variant="text"
               style={{ fontSize: "12px", color: '#ef7d00', textTransform: "capitalize" }}>
-              Export
+              {t("export")}
               <ArrowForwardIosIcon sx={{ fontSize: "10px", color: "black" }} />
             </Button>
           </Box>
@@ -112,11 +114,11 @@ export const DeliveredTable = ({ orders }) => {
           <TableHead>
             <TableRow>
               <TableCell sx={{ borderBottom: "none", backgroundColor: "#F1F2F2", height: "30px", padding: "5px 0px", color: "#343431", fontSize: "12px", textAlign: "center" }}>ID</TableCell>
-              <TableCell sx={{ borderBottom: "none", backgroundColor: "#F1F2F2", height: "30px", padding: "5px 0px", color: "#343431", fontSize: "12px", textAlign: "center" }}>Created</TableCell>
-              <TableCell sx={{ borderBottom: "none", backgroundColor: "#F1F2F2", height: "30px", padding: "5px 0px", color: "#343431", fontSize: "12px", textAlign: "center" }}>Method</TableCell>
-              <TableCell sx={{ borderBottom: "none", backgroundColor: "#F1F2F2", height: "30px", padding: "5px 0px", color: "#343431", fontSize: "12px", textAlign: "center" }}>Payment</TableCell>
-              <TableCell sx={{ borderBottom: "none", backgroundColor: "#F1F2F2", height: "30px", padding: "5px 0px", color: "#343431", fontSize: "12px", textAlign: "center" }}>Status</TableCell>
-              <TableCell sx={{ borderBottom: "none", backgroundColor: "#F1F2F2", height: "30px", padding: "5px 0px", color: "#343431", fontSize: "12px", textAlign: "center" }}>Details</TableCell>
+              <TableCell sx={{ borderBottom: "none", backgroundColor: "#F1F2F2", height: "30px", padding: "5px 0px", color: "#343431", fontSize: "12px", textAlign: "center" }}>{t("created")}</TableCell>
+              <TableCell sx={{ borderBottom: "none", backgroundColor: "#F1F2F2", height: "30px", padding: "5px 0px", color: "#343431", fontSize: "12px", textAlign: "center" }}>{t("dineMethod")}</TableCell>
+              <TableCell sx={{ borderBottom: "none", backgroundColor: "#F1F2F2", height: "30px", padding: "5px 0px", color: "#343431", fontSize: "12px", textAlign: "center" }}>{t("payment")}</TableCell>
+              <TableCell sx={{ borderBottom: "none", backgroundColor: "#F1F2F2", height: "30px", padding: "5px 0px", color: "#343431", fontSize: "12px", textAlign: "center" }}>{t("status")}</TableCell>
+              <TableCell sx={{ borderBottom: "none", backgroundColor: "#F1F2F2", height: "30px", padding: "5px 0px", color: "#343431", fontSize: "12px", textAlign: "center" }}>{t("details")}</TableCell>
             </TableRow>
           </TableHead>
 
@@ -126,12 +128,12 @@ export const DeliveredTable = ({ orders }) => {
                 <TableCell sx={{ borderBottom: "none", textAlign: "center" }}>
                   <span style={{ backgroundColor: "#50A778", color: "#343431", padding: "4px 20px", borderRadius: "20px" }}>ID #{order.id}</span></TableCell>
                 <TableCell sx={{ borderBottom: "none", fontSize: "12px", textAlign: "center", color: "gray" }}>{order.date}</TableCell>
-                <TableCell sx={{ borderBottom: "none", fontSize: "12px", textAlign: "center", color: "gray" }}>{order.method}</TableCell>
+                <TableCell sx={{ borderBottom: "none", fontSize: "12px", textAlign: "center", color: "gray" }}>{t(order.method)}</TableCell>
 
                 <TableCell sx={{ borderBottom: "none", fontSize: "12px", textAlign: "center", color: order.paymentColor }}>
                   <Box display="flex" alignItems="center" justifyContent="center">
                   <img src="/assets/balance.svg" alt="icon" style={{ width: "16px", height: "16px", marginRight:"5px" }} />
-                    <span>{order.payment}</span>
+                    <span>{t(order.payment)}</span>
                   </Box>
                 </TableCell>
 
@@ -139,13 +141,13 @@ export const DeliveredTable = ({ orders }) => {
 
                 <TableCell sx={{ display: "flex", borderBottom: "none", fontSize: "12px", textAlign: "center", color: "#222240" }}>
                   <span>{order.icon}</span>
-                  {order.status}</TableCell>
+                  {t(order.status)}</TableCell>
 
                 <TableCell sx={{ borderBottom: "none", textAlign: "center", cursor: "pointer" }}>
                   <Typography display={"flex"} onClick={() => handleOpen(order)}>
                     <span class="icon-file" style={{ fontSize: "17px", color: "#ef7d00" }}></span>
                     <Typography color="textSecondary" fontSize="11px">
-                      <span style={{ borderBottom: "1px solid gray" }}>View</span>
+                      <span style={{ borderBottom: "1px solid gray" }}>{t("view")}</span>
                     </Typography>
 
                   </Typography>

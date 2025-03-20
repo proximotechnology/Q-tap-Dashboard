@@ -2,15 +2,16 @@ import { Button, Divider, Paper, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useRef } from 'react'
 import { QRCodeSVG } from 'qrcode.react';
+import { useTranslation } from 'react-i18next';
 
 export const Share = () => {
     const qrCodeRef = useRef();
-
+    const {t} = useTranslation();
     const handleCopyLink = () => {
         const link = "https://www.menus.qutap.co/register/user";
         navigator.clipboard.writeText(link)
-            .then(() => alert("Link copied!"))
-            .catch((error) => alert("Failed to copy link: ", error));
+            .then(() => alert(t("linkCopied")))
+            .catch((error) => alert(t("faildToCopyLink"), error));
     };
 
     const handleDownloadQRCode = () => {
@@ -45,7 +46,7 @@ export const Share = () => {
                     }}
                 >
                     <span class="icon-send" style={{ fontSize: "23px", color: "#D8E0E0", marginRight: "6px" }}></span>
-                    Share Menu
+                    {t("shareMenu")}
                 </Typography>
 
                 <Divider
@@ -93,7 +94,7 @@ export const Share = () => {
                             }}
                         >
                             <span className="icon-link" style={{ marginRight: "6px", fontSize: "16px" }} />
-                            Copy Link
+                            {t("copyLink")}
                         </Button>
 
                         <Button
@@ -108,7 +109,7 @@ export const Share = () => {
                             }}
                         >
                             <span className="icon-qr-code" style={{ marginRight: "6px", fontSize: "16px" }} />
-                            Download
+                            {t("download")}
                         </Button>
                     </div>
                 </div>

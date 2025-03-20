@@ -272,12 +272,12 @@ const Support = () => {
 
       if (response.data) {
         setTickets([...tickets, response.data.ticket]);
-        toast.success('Ticket added successfully');
+        toast.success(t("ticket.addSucc"));
         handleClose();
       }
     } catch (error) {
       console.error('Error adding ticket:', error);
-      toast.error(error.response?.data?.message || 'Failed to add ticket');
+      toast.error(error.response?.data?.message || t("ticket.addErr"));
     }
   };
   const updateTicket = async () => {
@@ -312,12 +312,12 @@ const Support = () => {
         setTickets(tickets.map(ticket =>
           ticket.id === selectedTicket.id ? response.data.ticket : ticket
         ));
-        toast.success('Ticket updated successfully');
+        toast.success(t("ticket.updateSucc"));
         handleClose(); // Close the modal and reset form
       }
     } catch (error) {
       console.error('Error updating ticket:', error);
-      toast.error(error.response?.data?.message || 'Failed to update ticket');
+      toast.error(error.response?.data?.message || t("ticket.updateErr"));
     }
   };
   return (
@@ -326,7 +326,7 @@ const Support = () => {
         <Grid container spacing={2} alignItems="center">
           {/* the header */}
           <Grid item xs={12} sx={{ display: "flex" }}>
-            <Typography variant="body1" sx={{ fontSize: "12px", color: "#575756" }}>Tickets</Typography>
+            <Typography variant="body1" sx={{ fontSize: "12px", color: "#575756" }}>{t("ticket.many")}</Typography>
             <Grid item xs>
               <Box sx={{ textAlign: 'right' }}>
                 <IconButton>
@@ -372,14 +372,14 @@ const Support = () => {
 
         <Box sx={{ padding: "30px 30px 0px 30px ", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Typography variant="body1" sx={{ fontSize: "12px", color: "#575756" }}>
-            Feedback
+            {t("feedbacks.many")}
           </Typography>
 
           <Typography
             onClick={handleOpenModel}
             variant="body1" sx={{ fontSize: "10px", color: "#E57C00", cursor: "pointer" }}>
             <img src="/assets/add.svg" alt="add icon " style={{ width: "8px", height: "8px", marginRight: "5px" }} />
-            Add Question
+           {t("addQuestion")}
           </Typography>
 
           <AddQuestion open={openModal} handleCloseModel={handleCloseModel} onAddQuestion={addQuestion} />
@@ -423,13 +423,13 @@ const Support = () => {
         <Table sx={{ p: 0, mt: 2, mb: 5, width: '100%', tableLayout: 'fixed' }}>
           <TableHead>
             <TableRow sx={{ backgroundColor: "#EBEDF3" }}>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "30%" }}>Customer</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "30%" }}>Phone</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "30%" }}>Order Id</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "40%" }}>Rate</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "20%" }}>Status</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "16%" }}>Details</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "16%" }}>Action</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "30%" }}>{t("customer")}</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "30%" }}>{t("mobileNumber")}</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "30%" }}>{t("orderId")}</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "40%" }}>{t("rate")}</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "20%" }}>{t("status")}</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "16%" }}>{t("details")}</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "16%" }}>{t("action")}</TableCell>
             </TableRow>
           </TableHead>
 

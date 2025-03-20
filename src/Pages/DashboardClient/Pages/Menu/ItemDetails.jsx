@@ -490,8 +490,10 @@ import { toast } from 'react-toastify';
 import { useBranch } from '../../../../context/BranchContext';
 import { ContentMenu } from '../../../../context/ContentMenuContext';
 import { useLocation } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 export const ItemDetails = ({ categoryId }) => {
+    const {t} = useTranslation();
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const itemId = queryParams.get('itemId');
@@ -561,13 +563,13 @@ export const ItemDetails = ({ categoryId }) => {
 
             // Check if all fields are filled
             if (!name || !brief || !description || !ingredients || !calories || !time || !tax || !priceSmall || !priceMedium || !priceLarge || !price || !discount || !image) {
-                toast.error("Please fill in all fields");
+                toast.error(t("plFillAllField"));
                 return;
             }
 
             const discountId = discountContent?.find((item) => item.code === discount)?.id;
             if (!discountId) {
-                toast.error("Discount code not found");
+                toast.error(t("discount.notFound"));
                 return;
             }
 
@@ -618,7 +620,7 @@ export const ItemDetails = ({ categoryId }) => {
 
             // Check if request was successful
             if (response.status === 200 || response.status === 201) {
-                toast.success(isEditing ? "Item updated successfully" : "Item added successfully");
+                toast.success(isEditing ? t("item.updateSucc") : t("item.addSucc"));
                 window.location.reload();
             }
         } catch (error) {
@@ -627,7 +629,7 @@ export const ItemDetails = ({ categoryId }) => {
                     toast.error(err.join(', '));
                 });
             } else {
-                toast.error(error.response?.data?.message || "An error occurred");
+                toast.error(error.response?.data?.message || t("errorOccurred"));
             }
             console.log("Error:", error);
         } finally {
@@ -638,7 +640,7 @@ export const ItemDetails = ({ categoryId }) => {
     return (
         <Paper sx={{ marginTop: "-20px", marginBottom: "30px", borderRadius: "10px", padding: "20px 50px" }}>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <Typography variant="body1" fontSize={"15px"} color={"#575756"}>Item Details</Typography>
+                <Typography variant="body1" fontSize={"15px"} color={"#575756"}>{t("item.details")}</Typography>
             </Box>
 
             <Divider sx={{ backgroundColor: "#ef7d00" }} />
@@ -649,7 +651,7 @@ export const ItemDetails = ({ categoryId }) => {
                     <Grid item xs={12} md={7} marginTop={"15px"}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
-                                <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>Item name</Typography>
+                                <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>{t("item.name")}</Typography>
                                 <TextField
                                     variant="outlined"
                                     fullWidth
@@ -659,7 +661,7 @@ export const ItemDetails = ({ categoryId }) => {
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>Brief</Typography>
+                                <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>{t("brief")}</Typography>
                                 <TextField
                                     variant="outlined"
                                     fullWidth
@@ -669,7 +671,7 @@ export const ItemDetails = ({ categoryId }) => {
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}> Description</Typography>
+                                <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}> {t("discription")}</Typography>
                                 <TextField
                                     variant="outlined"
                                     multiline
@@ -681,7 +683,7 @@ export const ItemDetails = ({ categoryId }) => {
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>Ingredients</Typography>
+                                <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>{t("ingredients")}</Typography>
                                 <TextField
                                     variant="outlined"
                                     multiline
@@ -693,7 +695,7 @@ export const ItemDetails = ({ categoryId }) => {
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>Calories </Typography>
+                                <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>{t("calories")} </Typography>
                                 <TextField
                                     value={calories}
                                     onChange={(e) => setCalories(e.target.value)}
@@ -701,12 +703,12 @@ export const ItemDetails = ({ categoryId }) => {
                                     fullWidth
                                     InputProps={{
                                         sx: { height: '35px', fontSize: "10px" },
-                                        endAdornment: <Typography sx={{ fontSize: "10px", color: "gray" }}>Kcal</Typography>,
+                                        endAdornment: <Typography sx={{ fontSize: "10px", color: "gray" }}>{t("kcal")}</Typography>,
                                     }}
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>Time</Typography>
+                                <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>{t("time")}</Typography>
                                 <TextField
                                     value={time}
                                     onChange={(e) => setTime(e.target.value)}
@@ -714,12 +716,12 @@ export const ItemDetails = ({ categoryId }) => {
                                     fullWidth
                                     InputProps={{
                                         sx: { height: '35px', fontSize: "10px" },
-                                        endAdornment: <Typography sx={{ fontSize: "10px", color: "gray" }}>Min</Typography>,
+                                        endAdornment: <Typography sx={{ fontSize: "10px", color: "gray" }}>{t("min")}</Typography>,
                                     }}
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>Tax</Typography>
+                                <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>{t("tax")}</Typography>
                                 <TextField
                                     value={tax}
                                     onChange={(e) => setTax(e.target.value)}
@@ -778,7 +780,7 @@ export const ItemDetails = ({ categoryId }) => {
                             justifyContent="center"
                             alignItems="center"
                         >
-                            <Typography variant="body2" sx={{ fontSize: "8px", color: "gray", margin: "5px" }}>Item Image 200x200px</Typography>
+                            <Typography variant="body2" sx={{ fontSize: "8px", color: "gray", margin: "5px" }}>{t("item.image")}</Typography>
                             <Button
                                 onClick={handleImageUpload}
                                 variant="contained"
@@ -790,7 +792,7 @@ export const ItemDetails = ({ categoryId }) => {
                                     }
                                 }}
                             >
-                                Upload
+                                {t("upload")}
                             </Button>
                         </Box>
                     </Grid>
@@ -799,7 +801,7 @@ export const ItemDetails = ({ categoryId }) => {
                 <Grid item xs={12} alignItems="center" marginTop={"30px"} >
                     <Grid display="flex" alignItems="center">
                         <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>
-                            Sizes
+                            {t("size.many")}
                         </Typography>
 
                         {/* Input Fields */}
@@ -824,7 +826,7 @@ export const ItemDetails = ({ categoryId }) => {
                                 </Box>
                                 <Grid item xs={3}>
                                     <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>
-                                        Price
+                                        {t("price.one")}
                                     </Typography>
                                     <TextField
                                         value={priceSmall}
@@ -861,7 +863,7 @@ export const ItemDetails = ({ categoryId }) => {
 
                                 <Grid item xs={3} alignItems="center">
                                     <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>
-                                        Price
+                                    {t("price.one")}
                                     </Typography>
                                     <TextField
                                         value={priceMedium}
@@ -898,7 +900,7 @@ export const ItemDetails = ({ categoryId }) => {
 
                                 <Grid item xs={3} alignItems="center">
                                     <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>
-                                        Price
+                                    {t("price.one")}
                                     </Typography>
                                     <TextField
                                         value={priceLarge}
@@ -919,7 +921,7 @@ export const ItemDetails = ({ categoryId }) => {
                     </Grid>
 
                     <Grid item xs={6} marginTop={"20px"} marginBottom={"20px"}>
-                        <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>Price</Typography>
+                        <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>{t("price.one")}</Typography>
                         <TextField
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
@@ -933,7 +935,7 @@ export const ItemDetails = ({ categoryId }) => {
                         />
                     </Grid>
                     <Grid item xs={3}>
-                        <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>Discount</Typography>
+                        <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>{t("discount.one")}</Typography>
                         <TextField
                             value={discount}
                             onChange={(e) => setDiscount(e.target.value)}
@@ -968,7 +970,7 @@ export const ItemDetails = ({ categoryId }) => {
                         }}
                     >
                         <CheckIcon sx={{ fontSize: "18px", marginRight: "5px" }} />
-                        {loading ? "loading.." : isEditing ? "Update" : "Save"}
+                        {loading ? "loading.." : isEditing ? t("update") : t("save")}
                     </Button>
 
                     <span className="icon-delete" style={{ fontSize: "25px", cursor: "pointer" }} />

@@ -5,6 +5,7 @@ import { Box, styled } from "@mui/system";
 import ModeCommentIcon from '@mui/icons-material/ModeComment';
 import { useNavigate } from "react-router";
 import Language from "../../Pages/DashboardClient/ComponentDashClient/TopBar/Language";
+import { useTranslation } from "react-i18next";
 
 const ImageContainer = styled(Box)({
     backgroundImage: 'url(/images/logoClient.jpg)',
@@ -36,16 +37,16 @@ const TextOverlay = styled(Box)({
     marginTop: "100px",
     zIndex: 2,
 });
-const branches = ['Branch 1', 'Branch 2', 'Branch 3']
 
 export const LogoClient = () => {
+    const { t } = useTranslation();
+    const branches = [t("branch") + "1", t("branch") + "2", t("branch") + "3"]
     const navigate = useNavigate();
     const [selectedId, setSelectedId] = useState(null);
 
     const handleClick = (id) => {
         setSelectedId(id);
     };
-
     return (
         <Grid item xs={12} md={6} sx={{ width: "100%", overflow: "hidden", }}>
             <ImageContainer >
@@ -66,7 +67,7 @@ export const LogoClient = () => {
                             <span class="icon-fast-shipping" style={{ fontSize: "25px", marginRight: "4px", color: "#ef7d00" }}> </span>
 
                             <Typography style={{ fontSize: "13px", color: "white", }}>
-                                <span style={{ borderBottom: "1px solid white" }}>Delivery Riders</span></Typography>
+                                <span style={{ borderBottom: "1px solid white" }}>{t("deliveryRiders")}</span></Typography>
                         </Typography>
 
                         <Language />
@@ -76,7 +77,7 @@ export const LogoClient = () => {
 
                 <TextOverlay sx={{ width: "100%" }}>
                     <Typography variant="h4" style={{ fontSize: "22px", color: "white" }}>
-                        Business Logo
+                        {t("شعار الأعمال")}
                     </Typography>
 
                     {/* User Roles */}
@@ -91,7 +92,7 @@ export const LogoClient = () => {
                             }}>
                             <img src="/assets/admin.svg" alt="" style={{ width: "100px", height: "100px" }} />
                             <Typography sx={{ fontSize: { xs: "12px", sm: "14px" }, color: "white", marginTop: "16px" }}>
-                                Admin
+                                {t("admin")}
                             </Typography>
                         </Grid>
 
@@ -103,7 +104,7 @@ export const LogoClient = () => {
                             }}>
                             <img src="/assets/pos.svg" alt="" style={{ width: "100px", height: "100px" }} />
                             <Typography sx={{ fontSize: { xs: "12px", sm: "14px" }, color: "white", marginTop: "16px" }}>
-                                POS
+                                {t("pos")}
                             </Typography>
                         </Grid>
 
@@ -115,7 +116,7 @@ export const LogoClient = () => {
                             }}>
                             <img src="/assets/kitchen.svg" alt="" style={{ width: "100px", height: "100px" }} />
                             <Typography sx={{ fontSize: { xs: "12px", sm: "14px" }, color: "white", marginTop: "16px" }}>
-                                Kitchen
+                                {t("kitchen")}
                             </Typography>
                         </Grid>
                     </Grid>
@@ -140,8 +141,10 @@ export const LogoClient = () => {
                                 sx={{ color: selectedId === index ? '#f18035' : 'inherit', }}
                                 onClick={() => handleClick(index)}
                             >
-                                <Box sx={{ width: 60, height: 50, cursor: "pointer" ,
-                                marginTop: selectedId === index ?"-20px" : "0px" }}>
+                                <Box sx={{
+                                    width: 60, height: 50, cursor: "pointer",
+                                    marginTop: selectedId === index ? "-20px" : "0px"
+                                }}>
                                     <span class="icon-store"
                                         style={{
                                             fontSize: selectedId === index ? 46 : 35,
@@ -182,7 +185,7 @@ export const LogoClient = () => {
                                 color: "white",
                                 textTransform: "capitalize", fontSize: "11px",
                             }} >
-                            Help
+                            {t("help")}
                         </Button>
                     </Box>
                 </Box>

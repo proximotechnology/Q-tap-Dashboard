@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { IconButton, Modal, Typography, Divider, Grid, TextField, Button } from '@mui/material';
 import { Box } from '@mui/system';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
+import { useTranslation } from 'react-i18next';
 
 export const AddQuestion = ({ open, handleCloseModel, onAddQuestion }) => {
     const [inputValue, setInputValue] = useState("");
-
+    const {t} = useTranslation();
     const handleInputChange = (e) => {
         setInputValue(e.target.value);
     };
@@ -35,7 +36,7 @@ export const AddQuestion = ({ open, handleCloseModel, onAddQuestion }) => {
             >
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>
-                        Add Question
+                        {t("addQuestion")}
                     </Typography>
                     <IconButton onClick={handleCloseModel}>
                         <span className="icon-close-1" style={{ fontSize: "12px", color: "#AAAAAA" }} />
@@ -49,12 +50,12 @@ export const AddQuestion = ({ open, handleCloseModel, onAddQuestion }) => {
                 />
                 <Grid item xs={10} sx={{ margin: "20px 0px" }}>
                     <Typography variant="body2" sx={{ fontSize: "10px", color: "#575756", marginBottom: "3px" }}>
-                        Question
+                        {t("question")}
                     </Typography>
                     <TextField
                         variant="outlined"
                         fullWidth
-                        placeholder="Type Here"
+                        placeholder={t("typeHere")}
                         value={inputValue}
                         onChange={handleInputChange}
                         InputProps={{ sx: { height: '30px', fontSize: "10px" } }}
@@ -63,11 +64,11 @@ export const AddQuestion = ({ open, handleCloseModel, onAddQuestion }) => {
 
                 <Grid item xs={10} sx={{ margin: "20px 0px" }}>
                     <Typography variant="body2" sx={{ fontSize: "10px", color: "#575756", marginBottom: "6px" }}>
-                        Answer
+                        {t("answer")}
                     </Typography>
                     <Box sx={{ display: "flex", alignItems: "center" }} gap={1}>
                         <Typography variant="body2" sx={{ fontSize: "10px", color: "#AAAAAA" }}>
-                            From
+                            {t("from")}
                         </Typography>
                         <Box
                             sx={{
@@ -85,7 +86,7 @@ export const AddQuestion = ({ open, handleCloseModel, onAddQuestion }) => {
                             1
                         </Box>
                         <Typography variant="body2" sx={{ fontSize: "10px", color: "#AAAAAA" }}>
-                            To
+                            {t("to")}
                         </Typography>
                         <Box
                             sx={{
@@ -127,7 +128,7 @@ export const AddQuestion = ({ open, handleCloseModel, onAddQuestion }) => {
                             },
                         }}
                     >
-                        <CheckOutlinedIcon /> Save
+                        <CheckOutlinedIcon /> {t("save")}
                     </Button>
                 </Box>
             </Box>

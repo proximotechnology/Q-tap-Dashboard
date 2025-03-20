@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import { offersData } from './data/offersData';
 import "slick-carousel/slick/slick.css";  
 import "slick-carousel/slick/slick-theme.css";
+import { useTranslation } from 'react-i18next';
 
 const OfferCard = ({ offer }) => (
     <Card sx={{
@@ -139,13 +140,13 @@ const Offers = ({ isItemSelected }) => {
         
     };
 
-
+    const { t } = useTranslation();
     return (
         <Box sx={{ padding: '0px 15px', marginTop: "15px" ,width:isItemSelected ?"75%":"100%" , transition: 'width 0.1s ease',
         position:"relative" , left:"2%"}}>
             <Typography variant='h5'
                 sx={{ fontSize: "15px", fontWeight: "bold", marginBottom: "20px", color: "#575756" }}>
-                <span style={{ padding: "2px 0px", borderBottom: "2px solid #ef7d00", }}>Special</span> Offers
+                <span style={{ padding: "2px 0px", borderBottom: "2px solid #ef7d00", }}>{t("special")}</span> {t("offers")}
             </Typography>
 
             <Slider {...settings}>

@@ -592,8 +592,10 @@ import TableBarIcon from '@mui/icons-material/TableBar';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import { toast } from 'react-toastify';
 import { ClientLoginData } from '../../../../context/ClientLoginDataContext';
+import { useTranslation } from 'react-i18next';
 
 const ProfilePage = () => {
+    const {t} = useTranslation();
     // Personal Info State
     const [fullName, setFullName] = useState('');
     const [phone, setPhone] = useState('');
@@ -714,13 +716,13 @@ const ProfilePage = () => {
             });
 
             if (response.ok) {
-                toast.success('Profile updated successfully!');
+                toast.success(t("updateErr"));
             } else {
-                toast.error('Failed to update profile.');
+                toast.error(t("updateSucc"));
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('An error occurred while updating the profile.');
+            alert(t("occuredErr"));
         }
     };
     const handleLogoUpload = (event) => {
@@ -780,7 +782,7 @@ const ProfilePage = () => {
                         {/* Personal Info Column */}
                         <Grid item xs={12} sm={4} md={4} lg={4} justifyContent="center" alignItems="center">
                             <Typography variant="body2" sx={{ fontSize: "13px" }} color="#3b3a3a" gutterBottom>
-                                Personal Info
+                                {t("personalInfo")}
                             </Typography>
                             <Divider sx={{ width: "28%", borderRadius: "30px", borderBottom: "3px solid #ef7d00", marginBottom: "18px" }} />
 
@@ -795,7 +797,7 @@ const ProfilePage = () => {
                                     required
                                     value={fullName}
                                     onChange={(e) => setFullName(e.target.value)}
-                                    placeholder="Full Name"
+                                    placeholder={t("fullName")}
                                     sx={{ borderRadius: '6px', marginBottom: "18px", height: '33px', fontSize: "10px" }}
                                 />
                             </FormControl>
@@ -808,7 +810,7 @@ const ProfilePage = () => {
                                             <PhoneOutlinedIcon sx={{ fontSize: "18px" }} />
                                         </InputAdornment>
                                     }
-                                    placeholder="Mobile Number"
+                                    placeholder={t("mobileNumber")}
                                     required
                                     value={phone}
                                     onChange={(e) => setPhone(e.target.value)}
@@ -828,14 +830,14 @@ const ProfilePage = () => {
                                     required
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="Email"
+                                    placeholder={t("email")}
                                     sx={{ borderRadius: '6px', marginBottom: "18px", height: '33px', fontSize: "10px" }}
                                 />
                             </FormControl>
 
                             <FormControl variant="outlined" fullWidth>
                                 <OutlinedInput
-                                    placeholder='Website'
+                                    placeholder={t("websiteNoOptional")}
                                     startAdornment={
                                         <InputAdornment position="start">
                                             <LanguageOutlinedIcon sx={{ fontSize: "18px" }} />
@@ -857,7 +859,7 @@ const ProfilePage = () => {
                                 <Grid item xs={12} sm={12} md={12} lg={12}>
                                     <Grid container alignItems="center" sx={{ color: "grey", marginTop: "5px" }}>
                                         <CalendarMonthOutlinedIcon sx={{ marginRight: 1, fontSize: "15px" }} />
-                                        <Typography variant="body1" sx={{ fontSize: "12px" }}>Date of Birth:</Typography>
+                                        <Typography variant="body1" sx={{ fontSize: "12px" }}>{t("dateOfBirth")}</Typography>
                                     </Grid>
                                 </Grid>
                                 <Grid item xs={4}>
@@ -870,7 +872,7 @@ const ProfilePage = () => {
                                             sx={{ borderRadius: '6px', height: '33px', fontSize: "10px", color: "gray", marginRight: "5px" }}
                                         >
                                             <MenuItem value="" disabled sx={{ fontSize: "12px", color: "gray" }}>
-                                                Month
+                                                {t("month")}
                                             </MenuItem>
                                             <MenuItem value="01" sx={{ fontSize: "12px", color: "gray" }}>01</MenuItem>
                                             <MenuItem value="02" sx={{ fontSize: "12px", color: "gray" }}>02</MenuItem>
@@ -898,7 +900,7 @@ const ProfilePage = () => {
                                             sx={{ borderRadius: '6px', height: '33px', fontSize: "10px", color: "gray", marginRight: "5px" }}
                                         >
                                             <MenuItem value="" disabled>
-                                                Day
+                                                {t("day")}
                                             </MenuItem>
                                             {[...Array(31).keys()].map((i) => (
                                                 <MenuItem key={i + 1} value={i + 1} sx={{ fontSize: "12px", color: "gray" }}>
@@ -919,7 +921,7 @@ const ProfilePage = () => {
                                             sx={{ borderRadius: '6px', height: '33px', fontSize: "10px", color: "gray" }}
                                         >
                                             <MenuItem value="" disabled sx={{ fontSize: "12px", color: "gray" }}>
-                                                Year
+                                                {t("year")}
                                             </MenuItem>
                                             {Array.from({ length: 2025 - 1089 + 1 }, (_, i) => (
                                                 <MenuItem key={i + 1089} value={i + 1089} sx={{ fontSize: "12px", color: "gray" }}>
@@ -948,7 +950,7 @@ const ProfilePage = () => {
                                         disableScrollLock: true,
                                     }}
                                 >
-                                    <MenuItem value="" disabled sx={{ fontSize: "12px", color: "gray" }}>Country</MenuItem>
+                                    <MenuItem value="" disabled sx={{ fontSize: "12px", color: "gray" }}>{t("country")}</MenuItem>
                                     <MenuItem value="US" sx={{ fontSize: "12px", color: "gray" }}>United States</MenuItem>
                                     <MenuItem value="CA" sx={{ fontSize: "12px", color: "gray" }}>Canada</MenuItem>
                                     <MenuItem value="UK" sx={{ fontSize: "12px", color: "gray" }}>United Kingdom</MenuItem>
@@ -966,7 +968,7 @@ const ProfilePage = () => {
                                             <span className="icon-padlock" style={{ fontSize: "16px" }}></span>
                                         </InputAdornment>
                                     }
-                                    placeholder="Password"
+                                    placeholder={t("password")}
                                     sx={{ borderRadius: '6px', marginBottom: "18px", height: '33px', fontSize: "10px" }}
                                 />
                             </FormControl>
@@ -982,7 +984,7 @@ const ProfilePage = () => {
                                             <span className="icon-padlock" style={{ fontSize: "16px" }}></span>
                                         </InputAdornment>
                                     }
-                                    placeholder="Confirm Password"
+                                    placeholder={t("confirmPass")}
                                     sx={{ marginBottom: "18px", borderRadius: '10px', height: '33px', fontSize: "12px" }}
                                 />
                             </FormControl>
@@ -995,7 +997,7 @@ const ProfilePage = () => {
                         {/* Business Info Column */}
                         <Grid item xs={12} sm={4} md={5} lg={4} justifyContent="center" alignItems="center">
                             <Typography variant="body2" sx={{ fontSize: "13px" }} color="#3b3a3a" gutterBottom>
-                                Business Info
+                                {t("busnessInfo")}
                             </Typography>
                             <Divider sx={{ width: "28%", borderRadius: "30px", borderBottom: "3px solid #ef7d00", marginBottom: "18px" }} />
 
@@ -1010,7 +1012,7 @@ const ProfilePage = () => {
                                     required
                                     value={businessName}
                                     onChange={(e) => setBusinessName(e.target.value)}
-                                    placeholder="Business Name"
+                                    placeholder={t("businessName")}
                                     sx={{ borderRadius: '6px', marginBottom: "10px !important", height: '33px', fontSize: "10px" }}
                                 />
                             </FormControl>
@@ -1027,7 +1029,7 @@ const ProfilePage = () => {
                                         required
                                         value={businessPhone}
                                         onChange={(e) => setBusinessPhone(e.target.value)}
-                                        placeholder="Business Phone"
+                                        placeholder={t("businessPhone")}
                                         sx={{ borderRadius: '6px', height: '33px', fontSize: "10px" }}
                                     />
                                 </FormControl>
@@ -1047,7 +1049,7 @@ const ProfilePage = () => {
                                     required
                                     value={businessEmail}
                                     onChange={(e) => setBusinessEmail(e.target.value)}
-                                    placeholder="Business Email"
+                                    placeholder={t("businessEmailNotOptional")}
                                     type='email'
                                     sx={{ borderRadius: '6px', marginBottom: "10px", height: '33px', fontSize: "10px" }}
                                 />
@@ -1072,7 +1074,7 @@ const ProfilePage = () => {
                                         }}
                                     >
                                         <MenuItem value="" disabled sx={{ fontSize: "12px ", color: "gray" }}>
-                                            Country
+                                            {t("country")}
                                         </MenuItem>
                                         <MenuItem value="US" sx={{ fontSize: "12px ", color: "gray" }}>United States</MenuItem>
                                         <MenuItem value="CA" sx={{ fontSize: "12px ", color: "gray" }}>Canada</MenuItem>
@@ -1097,7 +1099,7 @@ const ProfilePage = () => {
                                             disableScrollLock: true,
                                         }}
                                     >
-                                        <MenuItem value="" disabled sx={{ fontSize: "12px ", color: "gray" }}>City</MenuItem>
+                                        <MenuItem value="" disabled sx={{ fontSize: "12px ", color: "gray" }}>{t("city")}</MenuItem>
                                         <MenuItem value="NY" sx={{ fontSize: "12px ", color: "gray" }}>New York</MenuItem>
                                         <MenuItem value="LA" sx={{ fontSize: "12px ", color: "gray" }}>Los Angeles</MenuItem>
                                         <MenuItem value="CHI" sx={{ fontSize: "12px ", color: "gray" }}>Chicago</MenuItem>
@@ -1115,7 +1117,7 @@ const ProfilePage = () => {
                                         }
                                     }}>
                                     <span className="icon-map-1" style={{ fontSize: "20px", marginRight: "10px" }}></span>
-                                    Pin Your Location
+                                    {t("pinYourLocation")}
                                 </Button>
                             </Box>
 
@@ -1136,7 +1138,7 @@ const ProfilePage = () => {
                                     }}
                                 >
                                     <MenuItem value="" disabled>
-                                        Currency
+                                        {t("currency")}
                                     </MenuItem>
                                     <MenuItem value="US" sx={{ fontSize: "12px", color: "gray" }}>United States</MenuItem>
                                     <MenuItem value="CA" sx={{ fontSize: "12px", color: "gray" }}>Canada</MenuItem>
@@ -1161,7 +1163,7 @@ const ProfilePage = () => {
                                     }}
                                 >
                                     <MenuItem value="" disabled>
-                                        Business Type
+                                        {t("businessType")}
                                     </MenuItem>
                                     <MenuItem value="restaurant" sx={{ fontSize: "12px", color: "gray" }}>Restaurant</MenuItem>
                                     <MenuItem value="cafe" sx={{ fontSize: "12px", color: "gray" }}>Cafe</MenuItem>
@@ -1192,7 +1194,7 @@ const ProfilePage = () => {
                                     }}
                                 >
                                     <MenuItem value="" disabled>
-                                        Menu Default Language
+                                        {t("menuDefLang")}
                                     </MenuItem>
                                     <MenuItem value="1" sx={{ fontSize: "12px", color: "gray" }}>1</MenuItem>
                                     <MenuItem value="2" sx={{ fontSize: "12px", color: "gray" }}>2</MenuItem>
@@ -1217,7 +1219,7 @@ const ProfilePage = () => {
                                     }}
                                 >
                                     <MenuItem value="" disabled sx={{ fontSize: "12px", color: "gray" }}>
-                                        How Many Tables Do You Have
+                                        {t("HowManyTablesDoYouHave")}
                                     </MenuItem>
                                     <MenuItem value="1" sx={{ fontSize: "12px", color: "gray" }}>1</MenuItem>
                                     <MenuItem value="2" sx={{ fontSize: "12px", color: "gray" }}>2</MenuItem>
@@ -1230,7 +1232,7 @@ const ProfilePage = () => {
                             <Divider sx={{ width: "100%", borderBottom: "1px solid #9d9d9c", marginBottom: "18px" }} />
 
                             <Typography variant='body2' sx={{ fontSize: "10px", color: "gray", display: "flex" }}>
-                                <span className="icon-price-tag" style={{ fontSize: "17px", marginRight: "6px" }} /> Bundle</Typography>
+                                <span className="icon-price-tag" style={{ fontSize: "17px", marginRight: "6px" }} /> {t("bundle")}</Typography>
 
                             <Box display="flex" alignItems="center" justifyContent="flex-start" mb={2}>
                                 <Button variant="outlined"
@@ -1239,7 +1241,7 @@ const ProfilePage = () => {
                                         borderRadius: "6px", fontSize: "11px",
                                     }}
                                 ><CheckOutlinedIcon sx={{ fontSize: '18px', marginRight: "6px", color: "#ef7d00" }} />
-                                    Pro</Button>
+                                    {t("pro")}</Button>
 
                                 <Button variant="contained"
                                     sx={{
@@ -1249,7 +1251,7 @@ const ProfilePage = () => {
                                             backgroundColor: "#322240",
                                         }
                                     }}
-                                >Change Bundle</Button>
+                                >{t("changeBundle")}</Button>
                             </Box>
                         </Grid>
                     </Box>
@@ -1269,7 +1271,7 @@ const ProfilePage = () => {
                             onClick={() => handleSave(user.id)} // Pass user.id to handleSave
                         >
                             <CheckOutlinedIcon sx={{ fontSize: '18px', marginRight: "6px", color: "white" }} />
-                            Save
+                            {t("save")}
                         </Button>
                     </Grid>
                 </Grid>

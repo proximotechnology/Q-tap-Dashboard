@@ -4,6 +4,7 @@ import React from 'react'
  
 import { TableTransaction } from '../../../DashboardClient/Pages/WalletClient/Transaction/TableTransaction';
 import {useNavigate } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 
 const marks = [
@@ -19,6 +20,7 @@ const marks = [
 ];
 
 export const WalletAffiliate = () => {
+    const {t} = useTranslation();
     const navigate = useNavigate();
     return (
         <Grid container spacing={2} sx={{ padding: "0px 50px" }}>
@@ -46,9 +48,9 @@ export const WalletAffiliate = () => {
                             <Box sx={{ marginTop: "40px" }}
                                 display={"flex"}
                                 flexDirection='column' zIndex={3}>
-                                <Typography variant="body2" sx={{ fontSize: "13px" }} color="#ebe5e5">Acc No.</Typography>
+                                <Typography variant="body2" sx={{ fontSize: "13px" }} color="#ebe5e5">{t("accountNo")}</Typography>
                                 <Typography variant="body2" sx={{ fontSize: "18px", marginTop: "5px" }} color="#ebe5e5">8935**** ****4456</Typography>
-                                <Typography variant="body2" sx={{ fontSize: "18px", margin: "10px 0px" }} color="#ebe5e5">Name</Typography>
+                                <Typography variant="body2" sx={{ fontSize: "18px", margin: "10px 0px" }} color="#ebe5e5">{t("name")}</Typography>
                             </Box>
 
                         </CardContent>
@@ -67,14 +69,14 @@ export const WalletAffiliate = () => {
                 >
                     <Typography sx={{ display: "flex", fontSize: "13px", color: "#4A4A49", marginBottom: "10px" }}>
                         <span style={{ color: "gray", fontSize: "22px", marginRight: "5px" }} class="icon-price-tag"></span> 
-                        Current Balance
+                        {t("currentBalance")}
                     </Typography>
 
                     <Typography variant='h1' sx={{ fontSize: "30px", color: "#E57C00", marginBottom: "8px" }}>
                         501,420 <span style={{ color: "#AAAAAA", fontSize: "18px" }}>EGP</span>
                     </Typography>
                     <Typography sx={{ fontSize: "13px", color: "gray", marginBottom: "10px" }}>
-                        Amount
+                        {t("amount")}
                     </Typography>
 
                     <Paper
@@ -142,7 +144,7 @@ export const WalletAffiliate = () => {
                             }
                         }}
                     >
-                        Withdrawal
+                        {t("withdrawal")}
                     </Button>
                 </Grid>
             </Grid>

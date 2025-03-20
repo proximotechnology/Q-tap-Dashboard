@@ -5,6 +5,7 @@ import { Box, styled } from "@mui/system";
 import ModeCommentIcon from '@mui/icons-material/ModeComment';
 import { useNavigate } from "react-router";
 import Language from "../../Pages/DashboardClient/ComponentDashClient/TopBar/Language";
+import { useTranslation } from "react-i18next";
 
 const ImageContainer = styled(Box)({
     backgroundImage: 'url(/images/logoClient.jpg)',
@@ -40,6 +41,7 @@ const TextOverlay = styled(Box)({
 });
 
 export const LoginAdmin = () => {
+    const {t} = useTranslation();
     const navigate = useNavigate();
     return (
         <Grid item xs={12} md={6} sx={{height:"100vh " ,msOverflow:"hidden !important "}}>
@@ -67,7 +69,7 @@ export const LoginAdmin = () => {
 
                 <TextOverlay sx={{ width: "90%",  }}>
                     <Typography variant="h4" style={{ fontSize: "22px", color: "white" }}>
-                        Business Logo
+                        {t("busnessLogo")}
                     </Typography>
 
                     <Grid container spacing={4} justifyContent="center" marginTop={"50px"}>
@@ -76,7 +78,7 @@ export const LoginAdmin = () => {
                             <Typography
                                 style={{ color: "white", textAlign: "center", marginTop: "20px" }}
                             >
-                                Admin
+                                {t("admin")}
                             </Typography>
                         </Grid>
                     </Grid>
@@ -108,7 +110,7 @@ export const LoginAdmin = () => {
                                     <span class="icon-padlock" style={{ fontSize: "18px", color: 'white', marginRight: '30px' }} />
                                     <TextField
                                         variant="outlined"
-                                        placeholder="Insert PIN"
+                                        placeholder={t("insertPin")}
                                         InputProps={{
                                             style: {
                                                 border: 'none',
@@ -142,7 +144,7 @@ export const LoginAdmin = () => {
                                     onClick={() => navigate('/dashboard-client')}
 
                                 >
-                                    Login
+                                    {t("logIn")}
                                 </Button>
 
                                 {/* Stay Logged In */}
@@ -157,7 +159,7 @@ export const LoginAdmin = () => {
                                             color: '#f47b2a',
                                         }}
                                     />
-                                    <Typography sx={{ fontSize: "12px" }} >Stay Logged In</Typography>
+                                    <Typography sx={{ fontSize: "12px" }} >{t("stayLogIn")}</Typography>
                                 </Box>
                             </Box>
                         </Grid>
@@ -176,7 +178,7 @@ export const LoginAdmin = () => {
                             textTransform: "capitalize",
                         }}
                     >
-                        Help
+                        {t("help")}
                     </Button>
                 </Box>
 

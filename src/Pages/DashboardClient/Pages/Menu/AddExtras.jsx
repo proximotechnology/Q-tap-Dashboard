@@ -5,6 +5,7 @@ import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import { ContentMenu } from '../../../../context/ContentMenuContext';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 export const AddExtras = ({ open, handleClose }) => {
 
@@ -14,7 +15,7 @@ export const AddExtras = ({ open, handleClose }) => {
     const [loading, setLoading] = useState(false)
     const selectedBranch = localStorage.getItem('selectedBranch')
     const { variantsContext } = useContext(ContentMenu);
-
+    const {t} = useTranslation();
     useEffect(() => {
         console.log("varianet page new", selectedBranch, variantsContext)
     }, [])
@@ -23,7 +24,7 @@ export const AddExtras = ({ open, handleClose }) => {
         try {
             setLoading(true);
             if (!name || !price) {
-                toast.error('Please fill in all fields');
+                toast.error(t("plFillAllField"));
                 setLoading(false);
                 return;
             }
@@ -46,7 +47,7 @@ export const AddExtras = ({ open, handleClose }) => {
             });
 
             if (response.data) {
-                toast.success('variants added successfully!');
+                toast.success(t("extra.addSucc"));
                 // reload page to get new variants whic added now
                 const today = new Date().toLocaleDateString();
                 setName('');
@@ -56,7 +57,7 @@ export const AddExtras = ({ open, handleClose }) => {
             }
         } catch (error) {
             console.error('Error adding variants:', error);
-            const errorMessage = error.response?.data?.message || 'Error adding variants';
+            const errorMessage = error.response?.data?.message || t("extra.addErr");
             if (error.response?.data?.errors) {
                 Object.values(error.response.data.errors).forEach(err => {
                     toast.error(err.join(', '));
@@ -85,7 +86,7 @@ export const AddExtras = ({ open, handleClose }) => {
                 }}>
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <Typography variant="body1" sx={{ fontSize: "12px", color: "#424242" }}>
-                        Add Extras
+                        {t("extra.add")}
                     </Typography>
                     <IconButton onClick={handleClose}>
                         <CloseIcon sx={{ fontSize: "20px", color: "gray" }} />
@@ -98,7 +99,7 @@ export const AddExtras = ({ open, handleClose }) => {
                     sx={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
 
                     <Grid item xs={10}>
-                        <Typography variant='body2' sx={{ fontSize: "10px" }}>Name</Typography>
+                        <Typography variant='body2' sx={{ fontSize: "10px" }}>{t("name")}</Typography>
                         <TextField
                             onChange={(e) => setName(e.target.value)}
                             value={name}
@@ -110,7 +111,7 @@ export const AddExtras = ({ open, handleClose }) => {
                     </Grid>
 
                     <Grid item xs={10}>
-                        <Typography variant='body2' sx={{ fontSize: "10px" }}>Price</Typography>
+                        <Typography variant='body2' sx={{ fontSize: "10px" }}>{t("price.one")}</Typography>
                         <TextField
                             onChange={(e) => setPrice(e.target.value)}
                             value={price}
@@ -177,7 +178,7 @@ export const AddExtras = ({ open, handleClose }) => {
                                 },
                             }}
                         >
-                            <CheckOutlinedIcon /> Save
+                            <CheckOutlinedIcon /> {t("save")}
                         </Button>
                     </Box>
                 </Grid>

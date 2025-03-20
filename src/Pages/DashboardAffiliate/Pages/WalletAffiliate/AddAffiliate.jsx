@@ -11,8 +11,10 @@ import { PersonalInfo } from './PersonalInfo';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
 import { PaymentInfo } from '../../../Affiliate/AddUser/PaymentInfo';
 import Language from '../../../DashboardClient/ComponentDashClient/TopBar/Language'
+import { useTranslation } from 'react-i18next';
 
 export const AddAffiliate = () => {
+    const {t} = useTranslation();
     const navigate = useNavigate();
 
     const [anchorElUser, setAnchorElUser] = useState(null);
@@ -184,7 +186,7 @@ export const AddAffiliate = () => {
                                 backgroundColor: "#ef7d10",
                             }
                         }}>
-                        <CheckOutlinedIcon sx={{ fontSize: "22px", mr: 1 }} /> Save
+                        <CheckOutlinedIcon sx={{ fontSize: "22px", mr: 1 }} /> {t("save")}
                     </Button>
                 </Grid>
             </Box>

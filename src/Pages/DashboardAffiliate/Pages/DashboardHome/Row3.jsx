@@ -2,25 +2,27 @@ import React from 'react';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 export const Row3 = () => {
     const invitationLink = "www.menus.qutap.co/register/user";
 
+    const {t} = useTranslation();
     const copyToClipboard = () => {
         navigator.clipboard.writeText(invitationLink)
             .then(() => {
-                alert('تم نسخ رابط الدعوة إلى الحافظة!');
+                alert(t("doneCopyInvetationLink"));
             })
             .catch((err) => {
-                console.error('حدث خطأ أثناء نسخ الرابط: ', err);
+                console.error('An error occurred while copying the link', err);
+                alert(t("errorCopyInvetationLink"));
             });
     };
-
     return (
         <Box item xs={12} sx={{ flexGrow: 1, padding: '0px 20px 20px 20px' }}>
             <Box sx={{ display: "flex", marginBottom: "10px", color: "#555" }}>
                 <span className="icon-link" style={{ marginRight: "6px", fontSize: "15px" }}></span>
-                <Typography variant='body2' sx={{ fontSize: "13px", color: "#575756" }}>Invitation Link</Typography>
+                <Typography variant='body2' sx={{ fontSize: "13px", color: "#575756" }}>{t("invitationLink")}</Typography>
             </Box>
 
             <Box display={"flex"}>

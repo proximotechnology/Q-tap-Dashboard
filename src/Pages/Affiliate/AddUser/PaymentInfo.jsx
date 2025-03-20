@@ -1,6 +1,7 @@
 import { Divider, MenuItem, TextField, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next';
 
 
 export const PaymentInfo = ({
@@ -13,7 +14,7 @@ export const PaymentInfo = ({
     accountName,
     setAccountName
 }) => {
-
+  const {t} = useTranslation();
   const handleSelect = (option) => {
     setSelectedOption(option);
   };
@@ -226,7 +227,7 @@ export const PaymentInfo = ({
   return (
     <Box padding={"0px 50px"}>
       <Typography variant="body2" sx={{ fontSize: "12px" }} color="#575756" gutterBottom>
-        Payment Info
+        {t("paymentInfo")}
       </Typography>
       <Divider sx={{ borderRadius:"30px",width: "18%", borderBottom: "4px solid #ef7d00", marginBottom: "18px" }} />
       <Box sx={{ display: "flex", justifyContent: "space-between", width: "50%", marginTop: "30px" }}>
@@ -264,7 +265,7 @@ export const PaymentInfo = ({
                 fontSize: "10px", color: "gray"
               }}
             >
-              {option.label}
+              {t(option.label)}
             </Typography>
           </Box>
         ))}

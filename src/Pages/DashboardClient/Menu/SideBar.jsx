@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, IconButton, List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 import { itemsData } from './data/itemsData';
+import { useTranslation } from 'react-i18next';
 
 const menuItems = [
     { text: "Popular", icon:<span class="icon-fire" style={{ fontSize: "20px" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
@@ -24,6 +25,7 @@ const menuItems = [
 ]
 
 const SideBar = ({ setFilteredItems }) => {
+    const {t} = useTranslation();
     const [activeIndex, setActiveIndex] = useState(0);
 
     const handleClick = (index, category) => {
@@ -55,7 +57,7 @@ const SideBar = ({ setFilteredItems }) => {
                 width: "100%", height: "30px", background: "linear-gradient(90deg, #E57C00 0%, #FE9E2F 100%)",
                 display: "flex", textAlign: "center", alignItems: "center", justifyContent: "center"
             }}>
-                <Typography variant='body2' sx={{ fontSize: "10px", color: "white" }}>CATEGORIES</Typography>
+                <Typography variant='body2' sx={{ fontSize: "10px", color: "white" }}>{t("categories")}</Typography>
             </Box>
 
             <List sx={{ padding: "10px 12px" }}>
@@ -92,7 +94,7 @@ const SideBar = ({ setFilteredItems }) => {
                             </ListItemIcon>
 
                             <ListItemText
-                                primary={item.text}
+                                primary={t(item.text)}
                                 primaryTypographyProps={{
                                     sx: {
                                         fontSize: '8px',

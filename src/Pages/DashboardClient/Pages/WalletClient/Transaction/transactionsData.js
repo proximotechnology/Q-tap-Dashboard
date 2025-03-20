@@ -4,7 +4,7 @@ export const transactionsData = [
         date: "20/05/2024",
         time: "03:30pm",
         amount: "20,657 £",
-        status: "Done ",
+        status: "Done",
         statusColor: "#8fe793"
     },
     {

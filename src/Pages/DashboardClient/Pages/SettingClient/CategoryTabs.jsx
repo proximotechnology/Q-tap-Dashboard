@@ -10,8 +10,10 @@ import  Menu  from './Menu';
 import { Tables } from './Tables';
 import { Delivery } from './delivery/Delivery';
 import RoomServiceOutlinedIcon from '@mui/icons-material/RoomServiceOutlined';
+import { useTranslation } from 'react-i18next';
 
 const CategoryTabs = () => {
+    const {t} = useTranslation();
     const [buttons, setButtons] = useState([
         { name: 'profile', label: 'Profile', 
             icon: <PersonOutlineOutlinedIcon />,
@@ -69,7 +71,7 @@ const CategoryTabs = () => {
                     {React.cloneElement(button.icon, {
                         style: { color: button.selected ? 'white' : '#AAAAAA', fontSize:"18px",marginRight: '5px' }
                     })}
-                    <Typography sx={{fontSize:"12px",}}>{button.label} </Typography> 
+                    <Typography sx={{fontSize:"12px",}}>{t(button.label)} </Typography> 
                 </Button>
             ))}
 

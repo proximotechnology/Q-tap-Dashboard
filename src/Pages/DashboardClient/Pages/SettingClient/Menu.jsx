@@ -636,6 +636,7 @@ import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import { ClientLoginData } from '../../../../context/ClientLoginDataContext'; // تأكد من المسار الصحيح
 import Days from '../Menu/Days';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 const StyledButton = styled(Button)(() => ({
     backgroundColor: '#222240',
@@ -688,7 +689,7 @@ const Menu = () => {
         startTime: '9:00 am',
         endTime: '5:00 pm',
     });
-
+    const {t} = useTranslation();
     // console.log("alll data you want existBranch 30 qtap_clients", existBranch, selectedBranch, qtap_clients)
     // console.log("workingsecheduel" , existBranch?.workschedule?.map(day => day.day))
 
@@ -724,16 +725,16 @@ const Menu = () => {
             console.log("response update menu data", response)
 
             if (response.ok) {
-                toast.success('Menu updated successfully!');
+                toast.success(t("menus.updateSucc"));
                 console.log(response);
                 getClientData();
 
             } else {
-                toast.error('Failed to update menu.');
+                toast.error(t("menus.updateErr"));
             }
         } catch (error) {
             console.error('Error:', error);
-            toast.error('An error occurred while updating the menu.');
+            toast.error(t("menus.occuredErr"));
         }
     };
     const handleLogoUpload = (event) => {
@@ -829,9 +830,9 @@ const Menu = () => {
                         <ImageBox imageUrl={logoImage}>
                             {!logoImage && <span className="icon-image-gallery" style={{ fontSize: "40px", color: "#AAAAAA" }}></span>}
                         </ImageBox>
-                        <Typography variant="subtitle1" sx={{ fontSize: "8px", color: "#AAAAAA", mb: 1, mt: 1 }}>Logo 500x500px</Typography>
+                        <Typography variant="subtitle1" sx={{ fontSize: "8px", color: "#AAAAAA", mb: 1, mt: 1 }}>{t("logo500")}</Typography>
                         <StyledButton variant="contained" component="label">
-                            <StraightIcon sx={{ color: "#ef7d00", fontSize: "16px" }} /> Upload
+                            <StraightIcon sx={{ color: "#ef7d00", fontSize: "16px" }} /> {t("upload")}
                             <input type="file" accept="image/*" hidden onChange={handleLogoUpload} />
                         </StyledButton>
                     </Box>
@@ -840,9 +841,9 @@ const Menu = () => {
                         <Box sx={{ width: "250px", height: "125px", borderRadius: "10px", display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: "center", backgroundImage: bannerImage ? `url(${bannerImage})` : "none", backgroundColor: bannerImage ? "transparent" : "#F1F2F2", backgroundSize: "cover", backgroundPosition: "center" }}>
                             {!bannerImage && <span className='icon-image-gallery' style={{ fontSize: "40px", color: "#AAAAAA" }}></span>}
                         </Box>
-                        <Typography variant="subtitle1" align='center' sx={{ fontSize: "8px", color: "#AAAAAA", mt: 1 }}>Banner 1000x500px</Typography>
+                        <Typography variant="subtitle1" align='center' sx={{ fontSize: "8px", color: "#AAAAAA", mt: 1 }}>{t("banner1000x500")}</Typography>
                         <StyledButton variant="contained" component="label" sx={{ mt: 1 }}>
-                            <StraightIcon sx={{ color: "#ef7d00", fontSize: "16px" }} /> Upload
+                            <StraightIcon sx={{ color: "#ef7d00", fontSize: "16px" }} /> {t("upload")}
                             <input type="file" accept="image/*" hidden onChange={handleBannerUpload} />
                         </StyledButton>
                     </Box>
@@ -873,7 +874,7 @@ const Menu = () => {
                                 <Typography variant="h3"
                                     sx={{ fontSize: "13px", width: "100%", fontWeight: "500", color: "gray" }}
                                 >
-                                    Default Mode
+                                    {t("defaultMode")}
                                 </Typography>
                                 <ToggleButtonGroup
                                     value={mode}
@@ -911,7 +912,7 @@ const Menu = () => {
                                 <Typography variant="h6"
                                     sx={{ fontSize: "13px", width: "100%", fontWeight: "500", color: "gray" }}
                                 >
-                                    Menu Design
+                                    {t("menus.design")}
                                 </Typography>
                                 <ToggleButtonGroup
                                     value={design}
@@ -946,7 +947,7 @@ const Menu = () => {
                         {/* Serving Ways */}
                         <Box >
                             <Typography variant="body1" sx={{ display: "flex", fontSize: "12px", color: "gray" }}  >
-                                <span class="icon-waiter" style={{ fontSize: "17px", marginRight: "10px" }}></span> Serving Ways</Typography>
+                                <span class="icon-waiter" style={{ fontSize: "17px", marginRight: "10px" }}></span> {t("servingWay")}</Typography>
                             <Box display="flex" justifyContent="space-around" >
                                 <FormControlLabel
                                     control={
@@ -962,7 +963,7 @@ const Menu = () => {
                                             }}
                                         />
                                     }
-                                    label="Dine In"
+                                    label={t("Dine In")}
                                     sx={{
                                         '& .MuiTypography-root': {
                                             fontSize: "11px", color: "gray"
@@ -983,7 +984,7 @@ const Menu = () => {
                                             }}
                                         />
                                     }
-                                    label="Takeaway"
+                                    label={t("Takeaway")}
                                     sx={{
                                         '& .MuiTypography-root': {
                                             fontSize: "11px", color: "gray"
@@ -1004,7 +1005,7 @@ const Menu = () => {
                                             }}
                                         />
                                     }
-                                    label="Delivery"
+                                    label={t("Delivery")}
                                     sx={{
                                         '& .MuiTypography-root': {
                                             fontSize: "11px", color: "gray"
@@ -1045,7 +1046,7 @@ const Menu = () => {
                                             style={{ fontSize: 16, color: '#222240', marginRight: "10px" }} ></span>
 
                                         <Typography sx={{ fontSize: "13px", color: "gray" }}>
-                                            Activate Call Waiter
+                                            {t("activeCallWaiter")}
                                         </Typography>
                                     </Box>
                                 }
@@ -1066,7 +1067,7 @@ const Menu = () => {
                         {/* Payment Method */}
                         <Box >
                             <Typography variant="body1" sx={{ display: "flex", fontSize: "11px", color: "gray" }}  >
-                                Payment Method</Typography>
+                                {t("paymentMethod")}</Typography>
                             <Box display="flex" justifyContent="center"  >
                                 <FormControlLabel
                                     control={
@@ -1085,7 +1086,7 @@ const Menu = () => {
                                     label={
                                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                             <img src='/assets/cash.svg' alt="cash icon" style={{ width: '12px', height: "12px", marginRight: '4px' }}></img>
-                                            <span>Cash</span>
+                                            <span>{t("cash")}</span>
                                         </Box>
                                     }
                                     sx={{
@@ -1111,7 +1112,7 @@ const Menu = () => {
                                     label={
                                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                             <span class="icon-wallet" style={{ fontSize: 15, marginRight: '4px' }}><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span></span>
-                                            <span>Digital Wallet</span>
+                                            <span>{t("digitalWaller")}</span>
                                         </Box>
                                     }
                                     sx={{
@@ -1138,7 +1139,7 @@ const Menu = () => {
                                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                             <img src='/assets/cardColor.svg' alt="card icon"
                                                 style={{ width: '12px', height: "12px", marginRight: '4px' }}></img>
-                                            <span>Card</span>
+                                            <span>{t("card")}</span>
                                         </Box>
                                     }
                                     sx={{
@@ -1155,7 +1156,7 @@ const Menu = () => {
                         {/* Payment Time */}
                         <Box >
                             <Typography variant="body1" sx={{ display: "flex", fontSize: "12px", color: "gray" }}  >
-                                Payment Time  </Typography>
+                                {t("paymentTime")} </Typography>
 
                             <Box display="flex" justifyContent="left"  >
                                 <FormControlLabel
@@ -1172,7 +1173,7 @@ const Menu = () => {
                                             }}
                                         />
                                     }
-                                    label="Before Serving"
+                                    label={t("beforeServing")}
                                     sx={{
                                         '& .MuiTypography-root': {
                                             fontSize: "13px", color: "gray"
@@ -1193,7 +1194,7 @@ const Menu = () => {
                                             }}
                                         />
                                     }
-                                    label="After Serving "
+                                    label={t("afterServing")}
                                     sx={{
                                         '& .MuiTypography-root': {
                                             fontSize: "13px", color: "gray"
@@ -1216,7 +1217,7 @@ const Menu = () => {
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1, padding: '10px 0px' }}>
                         <span className="icon-working-hour" style={{ fontSize: '18px', marginRight: '10px' }}></span>
                         <Typography variant="h6" sx={{ fontSize: '13px', color: 'gray' }}>
-                            Working Hours
+                            {t("workHours")}
                         </Typography>
                     </Box>
 
@@ -1243,7 +1244,7 @@ const Menu = () => {
                             {/* Time Selectors */}
                             <Box sx={{ marginLeft: 2, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                                 <Box sx={{ display: 'flex', alignItems: 'center', marginRight: 2 }}>
-                                    <Typography sx={{ fontSize: '11px', color: '#BDBDBD', marginRight: 1 }}>To:</Typography>
+                                    <Typography sx={{ fontSize: '11px', color: '#BDBDBD', marginRight: 1 }}>{t("to")}</Typography>
                                     <FormControl variant="outlined" size="small" sx={{ minWidth: 70 }}>
                                         <Select
                                             name="endTime"
@@ -1268,7 +1269,7 @@ const Menu = () => {
                                 </Box>
 
                                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                    <Typography sx={{ fontSize: '11px', color: '#BDBDBD', marginRight: 1 }}>From:</Typography>
+                                    <Typography sx={{ fontSize: '11px', color: '#BDBDBD', marginRight: 1 }}>{t("from")}</Typography>
                                     <FormControl variant="outlined" size="small" sx={{ minWidth: 70 }}>
                                         <Select
                                             name="startTime"
@@ -1315,7 +1316,7 @@ const Menu = () => {
                     startIcon={<CheckOutlinedIcon />}
                     onClick={() => handleSave(qtap_clients.id)}
                 >
-                    Save
+                    {t("save")}
                 </Button>
             </Box>
         </Paper>

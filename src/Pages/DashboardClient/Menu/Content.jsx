@@ -4,6 +4,7 @@ import Offers from './Offers';
 import Item from './Items'; 
 import ProductDetails from './ProductDetails/ProductDetails';
 import TopBar from './TopBar';
+import { useTranslation } from 'react-i18next';
 
 const Content = ({ items }) => {
     const [selectedItem, setSelectedItem] = useState(null);
@@ -62,7 +63,7 @@ const Content = ({ items }) => {
     const handleAddToCart = () => {
         setCartCount(cartCount + 1);  
     };
-    
+    const { t } = useTranslation();
     return (
         <Container>
             <TopBar isItemSelected={!!selectedItem}/>
@@ -72,7 +73,7 @@ const Content = ({ items }) => {
                 <Box sx={{width: selectedItem ? '96%' : '100%', transition: 'width 0.3s ease', position:"relative" , left:"3%"}}>
                 <Typography variant="h5" sx={{ fontSize: '15px',fontWeight: 'bold',marginBottom: '20px',color: '#575756', }} >
                     <span style={{ padding: '2px 0px', borderBottom: '2px solid #ef7d00' }}>
-                        Item
+                        {t("item.many")}
                     </span>
                 </Typography>
                     <Grid container spacing={1} sx={{ flexWrap: 'wrap' }}>

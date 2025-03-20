@@ -8,6 +8,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import RoomServiceOutlinedIcon from '@mui/icons-material/RoomServiceOutlined';
+import { useTranslation } from 'react-i18next';
 
 
 const ImageContainer = styled(Box)({
@@ -53,7 +54,7 @@ const Header = () => {
     const handleUserClose = () => {
         setAnchorElUser(null);
     };
-
+    const {t} = useTranslation();
     return (
         <ImageContainer>
             <AppBar position="static" style={{
@@ -77,7 +78,7 @@ const Header = () => {
                             }}
                         >
                             <RoomServiceOutlinedIcon sx={{ fontSize: "18px", color: "#222240" }} />
-                            Add Orders
+                            {t("addOrders")}
                         </Button>
                         
                         <IconButton
@@ -86,7 +87,7 @@ const Header = () => {
                             aria-label="Orders History"
                             sx={{ fontSize: "12px" }}>
                             <span class="icon-history" style={{ color: '#ef7d00', marginRight: "4px", fontSize: "16px" }} ></span>
-                            Orders History
+                            {t("ordersHistory")}
                         </IconButton>
 
 
@@ -96,14 +97,14 @@ const Header = () => {
                                 color="inherit" sx={{ fontSize: "12px" }}
                                 aria-label="send notification">
                                 <span class="icon-bell" style={{ color: '#ef7d00', marginRight: "4px", fontSize: "16px" }} />
-                                Send Notification
+                                {t("sendNotification")}
                             </IconButton>
                             <SendNotificationModel open={open} handleClose={handleClose} />
                         </>
 
                         <IconButton color="inherit" sx={{ fontSize: "12px" }} aria-label="expand">
                             <span class="icon-expand" style={{ fontSize: "10px", marginRight: "5px", color: "#ef7d00" }}></span>
-                            Expand
+                            {t("expand")}
                         </IconButton>
 
                         <Box

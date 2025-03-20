@@ -8,8 +8,9 @@ import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import BedtimeOutlinedIcon from '@mui/icons-material/BedtimeOutlined';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import Language from '../ComponentDashClient/TopBar/Language';
+import { useTranslation } from 'react-i18next';
 export const DeliveredHeader = () => {
-
+    const {t} = useTranslation();
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handlePopoverClick = (event) => {
@@ -70,7 +71,7 @@ export const DeliveredHeader = () => {
                             >
                                 <Typography variant="subtitle2" color='white'
                                     sx={{ borderBottom: '2px solid #ef7d00', alignItems: "center", paddingLeft: "10px", fontSize: "10px" }}>
-                                    Total Delivered Orders
+                                    {t("totalDeliveredOrders")}
                                 </Typography>
                                 <Typography variant="h3" sx={{ color: "#ef7d00", paddingLeft: "10px" }}>
                                     500
@@ -88,7 +89,7 @@ export const DeliveredHeader = () => {
                             >
                                 <Box sx={{ display: "flex", justifyContent: "space-between", borderBottom: '2px solid #ef7d00' }}>
                                     <Typography variant="subtitle2" sx={{ color: 'white', fontSize: "10px", }}>
-                                        Daily Delivered Orders
+                                        {t("dailyDeliveredOrders")}
                                     </Typography>
                                     <CalendarMonthIcon sx={{ fontSize: "15px" }} />
                                 </Box>
@@ -107,7 +108,7 @@ export const DeliveredHeader = () => {
                             >
                                 <Box sx={{ display: "flex", justifyContent: "space-between", borderBottom: '2px solid #ef7d00' }}>
                                     <Typography variant="subtitle2" sx={{ color: 'white', fontSize: "10px", }}>
-                                        Daily Cancaled Orders
+                                        {t("dailyCancaledOrders")}
                                     </Typography>
                                     <CalendarMonthIcon sx={{ fontSize: "15px" }} />
                                 </Box>
@@ -238,12 +239,12 @@ export const DeliveredHeader = () => {
                         {checkedAv ?
                             <Typography sx={{ display: "flex", textAlign: "center", alignItems: "center" }} >
                                 <Box sx={{ width: "6px", height: "6px", backgroundColor: "#2FD35E", borderRadius: "50%", marginRight: "5px" }}></Box>
-                                <Typography variant="subtitle2" sx={{ color: "#2FD35E", marginRight: "15px" }}> available</Typography>
+                                <Typography variant="subtitle2" sx={{ color: "#2FD35E", marginRight: "15px" }}> {t("Available")}</Typography>
                             </Typography>
                             :
                             <Typography sx={{ display: "flex", textAlign: "center", alignItems: "center" }}>
                                 <Box sx={{ width: "6px", height: "6px", backgroundColor: "#E02828", borderRadius: "50%", marginRight: "5px" }}></Box>
-                                <Typography variant="subtitle2" sx={{ color: "#E02828", marginRight: "15px" }}> unAvailable</Typography>
+                                <Typography variant="subtitle2" sx={{ color: "#E02828", marginRight: "15px" }}> {t("unAvailable")}</Typography>
                             </Typography>
                         }
                     </Box>
