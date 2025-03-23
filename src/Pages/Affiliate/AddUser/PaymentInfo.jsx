@@ -30,7 +30,7 @@ export const PaymentInfo = ({
       case "Bank":
         return (
           <>
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>Name</Typography>
+            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("name")}</Typography>
             <TextField
               fullWidth
               variant="outlined"
@@ -45,7 +45,7 @@ export const PaymentInfo = ({
               onChange={(e) => setBankName(e.target.value)}
             />
 
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>IBAN</Typography>
+            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("iban")}</Typography>
             <TextField
               fullWidth
               variant="outlined"
@@ -60,7 +60,7 @@ export const PaymentInfo = ({
               onChange={(e) => setAccountNumber(e.target.value)}
             />
 
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>Bank</Typography>
+            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("Bank")}</Typography>
             <TextField
               select
               fullWidth
@@ -80,7 +80,7 @@ export const PaymentInfo = ({
               <MenuItem value="fab" sx={{ fontSize: "11px", color: "gray", padding: "0px 20px" }}>FAB</MenuItem>
             </TextField>
 
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray", marginTop: "8px" }}>Address</Typography>
+            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray", marginTop: "8px" }}>{t("address")}</Typography>
             <TextField
               fullWidth
               variant="outlined"

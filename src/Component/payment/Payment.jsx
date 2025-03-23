@@ -43,31 +43,31 @@ export const Payment = () => {
       >
         <Grid item xs={12} sm={6} md={2}>
           <PricingCard
-            title="Free"
+            title={t("free")}
             pricePerMonth="0"
             pricePerYear="0"
             orders="30"
-            buttonText="Select"
+            buttonText={t("select")}
           />
         </Grid>
 
         <Grid item xs={12} sm={6} md={2} sx={{ margin: "0px 30px" }}>
           <PricingCard
-            title="Starter"
+            title={t("starter")}
             pricePerMonth="600"
             pricePerYear="6000"
             orders="900"
-            buttonText="Select"
+            buttonText={t("select")}
           />
         </Grid>
 
         <Grid item xs={12} sm={6} md={2}>
           <PricingCard
-            title="Pro"
+            title={t("pro")}
             pricePerMonth="999"
             pricePerYear="10,000"
-            orders="Unlimited"
-            buttonText="Select"
+            orders={t("Unlimited")}
+            buttonText={t("select")}
           />
         </Grid>
       </Grid>

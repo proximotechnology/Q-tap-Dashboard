@@ -11,13 +11,14 @@ import React, { forwardRef, useImperativeHandle, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import { toast } from "react-toastify";
 import { data } from './../DashboardClient/Pages/DashHome/Row2/BarChart';
+import { useTranslation } from "react-i18next";
 
 const initialData = [{ faq: "FAQ 1" }];
 
 export const FAQ = forwardRef((props, ref) => {
   const [data, setData] = useState(initialData);
   const [faqs, setFaqs] = useState([{ question: '', answer: '', questionAr: '', answerAr: '' }]);
-
+  const {t} = useTranslation()
   // دالة لإضافة كائن جديد عند الضغط على زر +
   const addFaq = () => {
     setFaqs([...faqs, { question: '', answer: '', questionAr: '', answerAr: '' }]);
@@ -38,7 +39,7 @@ export const FAQ = forwardRef((props, ref) => {
     );
 
     if (validFaqs.length === 0) {
-      toast.error("Please add at least one FAQ with question and answer!");
+      toast.error(t("plAtleastOneFAQ"));
       return;
     }
 
@@ -65,11 +66,11 @@ export const FAQ = forwardRef((props, ref) => {
       if (data.error) {
         throw new Error(data.error);
       }
-      toast.success("FAQs added successfully!");
+      toast.success(t("FAQAddSucc"));
     })
     .catch((error) => {
       console.error("Error saving faqs:", error);
-      toast.error("Failed to save FAQs!");
+      toast.error(t("FAQAddErr"));
     });
   };
 
@@ -91,7 +92,7 @@ export const FAQ = forwardRef((props, ref) => {
             <Grid container spacing={1}>
               <Grid item xs={12} md={12}>
                 <TextField
-                  placeholder="Questions "
+                  placeholder={t("questions")}
                   fullWidth
                   variant="outlined"
                   size="small"
@@ -112,7 +113,7 @@ export const FAQ = forwardRef((props, ref) => {
               </Grid>
               <Grid item xs={12} md={12}>
                 <TextField
-                  placeholder="Answer "
+                  placeholder={t("answer")}
                   fullWidth
                   variant="outlined"
                   size="small"
@@ -133,7 +134,7 @@ export const FAQ = forwardRef((props, ref) => {
               </Grid>
               <Grid item xs={12} md={12}>
                 <TextField
-                  placeholder="Questions (Ar)"
+                  placeholder={t("questionsAr")}
                   fullWidth
                   variant="outlined"
                   size="small"
@@ -155,7 +156,7 @@ export const FAQ = forwardRef((props, ref) => {
               </Grid>
               <Grid item xs={12} md={12}>
                 <TextField
-                  placeholder="Answer (Ar)"
+                  placeholder={t("answerAr")}
                   fullWidth
                   variant="outlined"
                   size="small"

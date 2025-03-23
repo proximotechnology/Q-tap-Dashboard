@@ -74,27 +74,27 @@ function App() {
     },
     {
       path: "/product",
-      element: <ProductsPage />,
+      element: <ProductsPage />, // تم الترجمه
     },
     {
       path: "/business-info",
-      element: <BusinessInfoPage />,
+      element: <BusinessInfoPage />, // تم الترحمه
     },
     {
       path: "/serving-ways",
-      element: <ServingWaysPage />,
+      element: <ServingWaysPage />, // تم الترجمه
     },
     {
       path: "/branches",
-      element: <BranchesPage />,
+      element: <BranchesPage />, // تم الترجمه
     },
     {
       path: "/payment",
-      element: <PaymentPage />,
+      element: <PaymentPage />, // تم الترجمه
     },
     {
       path: "/save",
-      element: <Save />,
+      element: <Save />, // تم الترجمه
     },
     {
       path: "/welcome",
@@ -126,11 +126,11 @@ function App() {
     },
     {
       path: "add-client",
-      element: <AddClient />,
+      element: <AddClient />, // تم الترجمه
     },
     {
       path: "add-user",
-      element: <AddUsers />,
+      element: <AddUsers />, // تم الترجمه
     },
     {
       path: "add-Affiliate",

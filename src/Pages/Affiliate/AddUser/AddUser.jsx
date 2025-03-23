@@ -11,10 +11,12 @@ import { PaymentInfo } from './PaymentInfo';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 
 export const AddUsers = () => {
     const navigate = useNavigate();
+    const {t} = useTranslation();
 
     // Personal Info States
     const [fullName, setFullName] = useState('');
@@ -77,34 +79,34 @@ export const AddUsers = () => {
         const newErrors = {};
 
         // Personal Info Validation
-        if (!fullName.trim()) newErrors.fullName = 'Full name is required';
-        if (!phone.trim()) newErrors.phone = 'Phone number is required';
+        if (!fullName.trim()) newErrors.fullName = t("fullNameRequired");
+        if (!phone.trim()) newErrors.phone = t("mobileRequired");
         if (!email.trim()) {
-            newErrors.email = 'Email is required';
+            newErrors.email = t("emailRequired");
         } else if (!/\S+@\S+\.\S+/.test(email)) {
-            newErrors.email = 'Email is invalid';
+            newErrors.email = t("emailIsInvalid");
         }
 
         // Date Validation
         if (!day || !month || !year) {
-            newErrors.birthDate = 'Birth date is required';
+            newErrors.birthDate = t("birthRequired");
         }
 
-        if (!country) newErrors.country = 'Country is required';
+        if (!country) newErrors.country = t("countryRequired");
 
         // Password Validation
         if (!password) {
-            newErrors.password = 'Password is required';
+            newErrors.password = t("passwordRequired");
         }
 
         if (password !== confirmPassword) {
-            newErrors.confirmPassword = 'Passwords do not match';
+            newErrors.confirmPassword = t("PasswordsDoNotMatch");
         }
 
         // Payment Info Validation
         if (!bankName.trim()) newErrors.bankName = 'Bank name is required';
-        if (!accountNumber.trim()) newErrors.accountNumber = 'Account number is required';
-        if (!accountName.trim()) newErrors.accountName = 'Account name is required';
+        if (!accountNumber.trim()) newErrors.accountNumber = t("AcountNameRequired");
+        if (!accountName.trim()) newErrors.accountName = t("AcountNameRequired");
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -118,7 +120,7 @@ export const AddUsers = () => {
 
     const handleSubmit = async () => {
         if (!validateForm()) {
-            showMessage('Please fill in all required fields correctly');
+            showMessage(t("plFillAllField"));
             return;
         }
 
@@ -175,18 +177,18 @@ export const AddUsers = () => {
             if (response.data.status === 'success') {
                 showMessage('User added successfully', 'success');
                 navigate('/affiliate');
-                toast.success(response.data.message);
+                toast.success(t("dataSavedSuccessfully"));
                 console.log("response data", response);
             } else {
                 showMessage(response.data.message || 'Error adding user');
-                toast.error(response.data.message);
+                toast.error(t("errorWhileSavingData"));
                 console.log("response data err", response);
 
             }
         } catch (error) {
             const errorMessage = error.response?.data?.message || 'Error adding user';
             showMessage(errorMessage);
-            toast.error("Error adding user", errorMessage);
+            toast.error(t("errorAddingUser"), errorMessage);
         } finally {
             setLoading(false);
         }
@@ -422,7 +424,7 @@ export const AddUsers = () => {
                         {loading ? (
                             <CircularProgress size={20} color="inherit" />
                         ) : (
-                            '✔ Save'
+                            '✔ '+ t("save")
                         )}
                     </Button>
                 </Grid>

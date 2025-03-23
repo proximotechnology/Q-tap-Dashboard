@@ -107,7 +107,7 @@ export const ServingWays = () => {
                                         justifyContent: "center"
                                     }}
                                 >
-                                    {option.name}
+                                    {t(option.name)}
                                 </Typography>
                                 <Divider2 />
 
@@ -143,7 +143,7 @@ export const ServingWays = () => {
                         value={businessData.tableCount}
                         onChange={(e) => updateBusinessData({ tableCount: e.target.value })}
                         variant="outlined"
-                        placeholder="How Many Tables Do You Have (optional)"
+                        placeholder= {t("HowManyTablesDoYouHave") +t("optional")}
                         fullWidth
                         InputProps={{
                             startAdornment: (

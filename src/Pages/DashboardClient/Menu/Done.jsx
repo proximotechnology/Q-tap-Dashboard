@@ -8,10 +8,11 @@ import Lottie  from 'lottie-react';
 import done from '../../../animation/done.json'; 
 import { Finsh } from './Finsh';
 import {Language} from '../ComponentDashClient/TopBar/Language'
+import { useTranslation } from 'react-i18next';
 
 export const Done = () => {
     const [isFinsh, setIsFinsh] = useState(false);
-
+    const {t} = useTranslation()
     const toggleFinsh = () => {
         setIsFinsh(!isFinsh);
     };
@@ -36,7 +37,7 @@ export const Done = () => {
                 <div style={{width:"250px" , height:"250px"}}>  
                     <Lottie animationData={done} loop={true} /> 
                     <Typography onClick={toggleFinsh}
-                    variant='body2' sx={{ cursor:"pointer",fontSize:"15px",fontWeight:"bold" , color:"gray"}}>Done</Typography>
+                    variant='body2' sx={{ cursor:"pointer",fontSize:"15px",fontWeight:"bold" , color:"gray"}}>{t("done")}</Typography>
                 </div>
             </Box>
 

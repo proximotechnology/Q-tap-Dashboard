@@ -86,7 +86,7 @@ export const Pricing = () => {
               color: '#fff',
             }}
           >
-            <Typography variant="h6">{title}</Typography>
+            <Typography variant="h6">{t(title)}</Typography>
           </Box>
         </Box>
 
@@ -94,14 +94,14 @@ export const Pricing = () => {
           <Typography variant="h4" color="textPrimary">
             <sup style={{ color: "#ef7d00", fontSize: "12px", marginRight: "10px" }}>EGP</sup>{priceMonthly}
             <Typography component="span" variant="body2" color="textSecondary">
-              /month
+              /{t("month")}
             </Typography>
           </Typography>
 
           <Typography variant="h6" color="textPrimary" sx={{ marginTop: "10px" }}>
             <sup style={{ color: "#ef7d00", fontSize: "12px", marginRight: "10px" }}>EGP</sup>{priceYearly}
             <Typography component="span" variant="body2" color="textSecondary">
-              /year
+              /{t("year")}
             </Typography>
           </Typography>
           <Divider sx={{ my: 2, backgroundColor: "#ef7d00", width: "100%" }} />

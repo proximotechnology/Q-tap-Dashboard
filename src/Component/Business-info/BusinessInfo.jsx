@@ -416,7 +416,7 @@ export const BusinessInfo = () => {
                         <Grid item xs={12} md={5} sx={{ marginTop: "10px" }}>
                             <TextField
                                 fullWidth
-                                placeholder="Business Phone"
+                                placeholder={t("businessPhone")}
                                 value={businessPhone}
                                 onChange={(e) => setBusinessPhone(e.target.value)}
                                 InputProps={{
@@ -450,7 +450,7 @@ export const BusinessInfo = () => {
                                                 }
                                             >
                                                 <MenuItem value="" disabled sx={{ fontSize: "12px", color: "gray" }}>
-                                                    Country
+                                                    {t("country")}
                                                 </MenuItem>
                                                 <MenuItem value="US" sx={{ fontSize: "12px", color: "gray" }}>United States </MenuItem>
                                                 <MenuItem value="CA" sx={{ fontSize: "12px", color: "gray" }}>Canada</MenuItem>
@@ -474,7 +474,7 @@ export const BusinessInfo = () => {
                                                 }
                                             >
                                                 <MenuItem value="" disabled sx={{ fontSize: "12px", color: "gray" }}>
-                                                    City
+                                                    {t("city")}
                                                 </MenuItem>
                                                 <MenuItem value="NY" sx={{ fontSize: "12px", color: "gray" }}>New York</MenuItem>
                                                 <MenuItem value="LA" sx={{ fontSize: "12px", color: "gray" }}>Los Angeles</MenuItem>
@@ -501,14 +501,14 @@ export const BusinessInfo = () => {
                                 <span className="icon-map-1" style={{ fontSize: "18px", marginRight: "5px" }}
                                 ><span className="path1"></span><span className="path2"></span><span className="path3"></span><span className="path4"></span><span className="path5"></span><span className="path6"></span><span className="path7"></span><span className="path8"></span><span className="path9"></span><span className="path10"></span><span className="path11"></span><span className="path12"></span><span className="path13"></span><span className="path14"></span><span className="path15"></span></span>
 
-                                Pin Your Location
+                                {t("pinYourLocation")}
                             </Button>
 
                             <Box sx={{ marginTop: "6px", display: 'flex', justifyContent: 'space-between', width: '100%' }} >
                                 <Grid container spacing={1}>
                                     <Typography variant="h3"
                                         sx={{ fontSize: "12px", fontWeight: "500", color: "gray" }}>
-                                        Default Mode
+                                        {t("defaultMode")}
                                     </Typography>
 
                                     <ToggleButtonGroup
@@ -546,7 +546,7 @@ export const BusinessInfo = () => {
                                 <Grid container spacing={1}>
                                     <Typography variant="h6"
                                         sx={{ fontSize: "12px", fontWeight: "500", color: "gray" }} >
-                                        Menu Design
+                                        {t("menus.design")}
                                     </Typography>
 
                                     <ToggleButtonGroup
@@ -611,7 +611,7 @@ export const BusinessInfo = () => {
                                             }}>
                                                 <span className="icon-hand-up" style={{ fontSize: "20px", color: 'gray', marginRight: "6px" }} ></span>
                                                 <Typography sx={{ fontSize: "14px", color: "gray" }}>
-                                                    Activate Call Waiter
+                                                    {t("activeCallWaiter")}
                                                 </Typography>
                                             </Box>
                                         }
@@ -628,7 +628,7 @@ export const BusinessInfo = () => {
 
                                 <Box sx={{ margin: "10px 0px" }}>
                                     <Typography variant="body1" sx={{ display: "flex", fontSize: "13px", color: "gray" }}  >
-                                        Payment Method</Typography>
+                                        {t("paymentMethod")}</Typography>
 
                                     <Box display="flex" justifyContent="left"  >
                                         <FormControlLabel
@@ -645,7 +645,7 @@ export const BusinessInfo = () => {
                                                     }}
                                                 />
                                             }
-                                            label="Cash"
+                                            label={t("cash")}
                                             sx={{
                                                 '& .MuiTypography-root': {
                                                     fontSize: "11px", color: "gray"
@@ -669,7 +669,7 @@ export const BusinessInfo = () => {
                                             label={
                                                 <span style={{ display: 'flex', fontSize: "11px", alignItems: 'center' }}>
                                                     <span className="icon-wallet" style={{ marginRight: '2px', fontSize: "15px" }} ><span className="path1"></span><span className="path2"></span><span className="path3"></span><span className="path4"></span><span className="path5"></span><span className="path6"></span><span className="path7"></span><span className="path8"></span><span className="path9"></span><span className="path10"></span><span className="path11"></span><span className="path12"></span></span>
-                                                    Digital Wallet
+                                                    {t("digitalWaller")}
                                                 </span>
                                             }
                                             sx={{
@@ -692,7 +692,7 @@ export const BusinessInfo = () => {
                                                     }}
                                                 />
                                             }
-                                            label="Card"
+                                            label={t("card")}
                                             sx={{
                                                 '& .MuiTypography-root': {
                                                     fontSize: "11px", color: "gray",
@@ -704,7 +704,7 @@ export const BusinessInfo = () => {
                                 </Box>
                                 <Box >
                                     <Typography variant="body1" sx={{ display: "flex", fontSize: "13px", color: "gray" }}  >
-                                        Payment Time  </Typography>
+                                        {t("paymentTime")}  </Typography>
 
                                     <Box display="flex" justifyContent="left"  >
                                         <FormControlLabel
@@ -721,7 +721,7 @@ export const BusinessInfo = () => {
                                                     }}
                                                 />
                                             }
-                                            label="Before Serving"
+                                            label={t("beforeServing")}
                                             sx={{
                                                 '& .MuiTypography-root': {
                                                     fontSize: "11px", color: "gray"
@@ -742,7 +742,7 @@ export const BusinessInfo = () => {
                                                     }}
                                                 />
                                             }
-                                            label="After Serving "
+                                            label={t("afterServing")}
                                             sx={{
                                                 '& .MuiTypography-root': {
                                                     fontSize: "11px", color: "gray"
@@ -779,7 +779,7 @@ export const BusinessInfo = () => {
                             }}
                             onClick={handleNextClick}
                         >
-                            Next
+                            {t("next")}
                             <TrendingFlatIcon sx={{ marginLeft: "8px", fontSize: "18px" }} />
                         </Button>
                     </Grid> {/* الزرار  */}

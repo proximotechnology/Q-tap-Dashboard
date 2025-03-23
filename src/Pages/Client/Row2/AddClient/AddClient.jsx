@@ -13,7 +13,9 @@ import { BusinessInfo } from './BusinessInfo';
 import axios from 'axios';
 import { useRegisterClient } from '../../../../context/RegisterClientContext';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 export const AddClient = () => {
+  const {t} = useTranslation()
 
   const navigate = useNavigate();
 
@@ -102,12 +104,12 @@ export const AddClient = () => {
 
       if (response.status === 201) {
 
-        toast.success('Client registered successfully');
+        toast.success(t("clients.registeredSucc"));
         
       }
     } catch (error) {
-      console.error('Error registering client:', error);
-      toast.error(` ${error.response.data.message}`);
+      console.error(t("registerErr"), error);
+      toast.error(` ${t("errorWhileSavingData")} `);
     }
   };
   const [anchorElLanguage, setAnchorElLanguage] = useState(null);
@@ -353,7 +355,7 @@ export const AddClient = () => {
               }
             }}
             onClick={handleSave}>
-            <CheckOutlinedIcon sx={{ fontSize: "22px", mr: 1 }} /> Saveg
+            <CheckOutlinedIcon sx={{ fontSize: "22px", mr: 1 }} /> {t("save")}
           </Button>
         </Grid>
       </Box>

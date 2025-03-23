@@ -4,6 +4,7 @@ import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useTranslation } from 'react-i18next';
 
 const AddBundle = ({ open, onClose, editData = null }) => {
     const [text, setText] = useState(''); 
@@ -14,6 +15,7 @@ const AddBundle = ({ open, onClose, editData = null }) => {
     const [description, setDescription] = useState('');
     const [orderLimit, setOrderLimit] = useState('unlimited');
 
+    const {t} = useTranslation()
     // Populate form when editing
     useEffect(() => {
         if (editData) {
@@ -67,13 +69,13 @@ const AddBundle = ({ open, onClose, editData = null }) => {
             return data;
         })
         .then(data => {
-            toast.success(editData ? 'Bundle updated successfully!' : 'Bundle created successfully!');
+            toast.success(editData ? t("bundleUpdateSucc") : t("bundleCreateSucc"));
             window.location.reload();
             onClose();
         })
         .catch(error => {
             console.error('Error saving bundle:', error);
-            toast.error("All fields are required!");
+            toast.error(t("plFillAllField"));
         });
     };
 
@@ -97,7 +99,7 @@ const AddBundle = ({ open, onClose, editData = null }) => {
                 >
                     <Box display={"flex"} justifyContent={"space-between"} textAlign={"center"} alignItems={"center"}>
                         <Typography variant="body2" sx={{ color: "#222240", fontSize: "14px" }}  >
-                            New Bundle
+                            {t("newBundle")}
                         </Typography>
                         <IconButton onClick={onClose} >
                             <span class="icon-close-1" style={{ fontSize: "15px" }}></span>
@@ -108,7 +110,7 @@ const AddBundle = ({ open, onClose, editData = null }) => {
                     <Box sx={{ display: 'flex', gap: '50px', p: "20px 50px" }}>
                         <Box sx={{ flex: 1 }}>
 
-                            <Typography variant='body2' sx={{ marginBottom: "4px", fontSize: "10px", color: "gray" }}>Name</Typography>
+                            <Typography variant='body2' sx={{ marginBottom: "4px", fontSize: "10px", color: "gray" }}>{t("name")}</Typography>
                             <TextField
                                 fullWidth
                                 variant="outlined"
@@ -123,7 +125,7 @@ const AddBundle = ({ open, onClose, editData = null }) => {
                                 }}
                             />
 
-                            <Typography variant='body2' sx={{ marginBottom: "4px", fontSize: "10px", color: "gray" }}>Price</Typography>
+                            <Typography variant='body2' sx={{ marginBottom: "4px", fontSize: "10px", color: "gray" }}>{t("price.one")}</Typography>
                             <Box sx={{ display: 'flex', gap: '5px', mb: 2, alignItems: 'center' }}>
                                 <TextField
                                     fullWidth
@@ -142,7 +144,7 @@ const AddBundle = ({ open, onClose, editData = null }) => {
                                     }}
                                 />
                                 <Typography variant='body2' sx={{ fontSize: "8px", color: "gray", whiteSpace: "nowrap" }}>
-                                    Per Month
+                                    {t("perMonth")}
                                 </Typography>
 
                                 <TextField
@@ -162,11 +164,11 @@ const AddBundle = ({ open, onClose, editData = null }) => {
                                     }}
                                 />
                                 <Typography variant='body2' sx={{ fontSize: "8px", color: "gray", whiteSpace: "nowrap" }}>
-                                    Per Year
+                                    {t("perYear")}
                                 </Typography>
                             </Box>
 
-                            <Typography variant='body2' sx={{ marginBottom: "4px", fontSize: "10px", color: "gray" }}>Description</Typography>
+                            <Typography variant='body2' sx={{ marginBottom: "4px", fontSize: "10px", color: "gray" }}>{t("discription")}</Typography>
                             <TextField
                                 fullWidth
                                 variant="outlined"
@@ -183,7 +185,7 @@ const AddBundle = ({ open, onClose, editData = null }) => {
                                     }
                                 }}
                             />
-                            <Typography variant='body2' sx={{ marginBottom: "4px", fontSize: "10px", color: "gray" }}>Orders Limit</Typography>
+                            <Typography variant='body2' sx={{ marginBottom: "4px", fontSize: "10px", color: "gray" }}>{t("ordersLimit")}</Typography>
 
                             <TextField
                                 select
@@ -199,14 +201,14 @@ const AddBundle = ({ open, onClose, editData = null }) => {
                                     }
                                 }}
                             >
-                                <MenuItem value="unlimited" sx={{ fontSize: "11px", color: "gray", padding: "3px 10px" }}>Unlimited</MenuItem>
+                                <MenuItem value="unlimited" sx={{ fontSize: "11px", color: "gray", padding: "3px 10px" }}>{t("Unlimited")}</MenuItem>
                                 <Divider sx={{ width: "90%", marginLeft: "10px" }} />
-                                <MenuItem value="specific" sx={{ fontSize: "11px", color: "gray", padding: "3px 10px" }}>Specific Number</MenuItem>
+                                <MenuItem value="specific" sx={{ fontSize: "11px", color: "gray", padding: "3px 10px" }}>{t("specificNumber")}</MenuItem>
                             </TextField>
                         </Box>
 
                         <Box sx={{ flex: 1 }}>
-                            <Typography variant='body2' sx={{ marginBottom: "4px", fontSize: "10px", color: "gray" }}>Features</Typography>
+                            <Typography variant='body2' sx={{ marginBottom: "4px", fontSize: "10px", color: "gray" }}>{t("features")}</Typography>
                             <Box sx={{ border: '1px solid gray', borderRadius: '15px', height: '270px', padding: "10px 12px" }}>
                                 
                                 <Box height={"50px"}>
@@ -279,7 +281,7 @@ const AddBundle = ({ open, onClose, editData = null }) => {
                                 }
                             }}
                         >
-                            <DoneOutlinedIcon sx={{ fontSize: "20px", mr: 1 }} /> Save
+                            <DoneOutlinedIcon sx={{ fontSize: "20px", mr: 1 }} /> {t("save")}
                         </Button>
                     </Box>
                 </Box>

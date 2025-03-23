@@ -16,8 +16,10 @@ import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined
 
 import { useNavigate } from 'react-router';
 import { usePersonalContext } from '../../../../context/PersonalContext';
+import { useTranslation } from 'react-i18next';
 
 export const PersonalInfo = () => {
+    const {t} = useTranslation()
     const navigate = useNavigate();
     const { personalData, updatePersonalData, clearPersonalData, setPersonalData } = usePersonalContext();
     const [fullName, setFullName] = useState(personalData.fullName || '');
@@ -49,7 +51,7 @@ export const PersonalInfo = () => {
             updatePersonalData({ ...personalData, img: file }); // Update context
             console.log('Image updated in context:', file); // Debugging
         } else {
-            alert('Please upload a valid image file.');
+            alert(t("PlUploadValidImageFile"));
         }
     };
 
@@ -103,7 +105,7 @@ export const PersonalInfo = () => {
             </Grid>
             <Grid item xs={12} md={6}>
                 <Typography variant="body2" sx={{ fontSize: "15px" }} color="#3b3a3a" gutterBottom>
-                    Personal Info
+                    {t("personalInfo")}
                 </Typography>
                 <Divider sx={{ width: "35%", borderBottom: "4px solid #ef7d00", marginBottom: "18px" }} />
 
@@ -122,7 +124,7 @@ export const PersonalInfo = () => {
                                 fullName: e.target.value
                             }));
                         }}
-                        placeholder="Full Name"
+                        placeholder={t("fullName")}
                         sx={{ borderRadius: '10px', marginBottom: "18px", height: '33px', fontSize: "12px" }}
                     />
                 </FormControl>
@@ -143,7 +145,7 @@ export const PersonalInfo = () => {
                                 phone: e.target.value
                             }));
                         }}
-                        placeholder="Mobile Number"
+                        placeholder={t("mobileNumber")}
                         sx={{ borderRadius: '10px', marginBottom: "18px", height: '33px', fontSize: "12px" }}
                     />
                 </FormControl>
@@ -162,7 +164,7 @@ export const PersonalInfo = () => {
                                 email: e.target.value
                             }));
                         }}
-                        placeholder="Email"
+                        placeholder={t("email")}
                         sx={{ borderRadius: '10px', marginBottom: "18px", height: '33px', fontSize: "12px" }}
                     />
                 </FormControl>
@@ -182,7 +184,7 @@ export const PersonalInfo = () => {
                                 website: e.target.value
                             }));
                         }}
-                        placeholder="Website"
+                        placeholder={t("websiteNoOptional")}
                         sx={{ borderRadius: '10px', height: "35px", fontSize: "12px", marginBottom: "18px" }}
                     />
                 </FormControl>
@@ -191,7 +193,7 @@ export const PersonalInfo = () => {
                     <Grid item xs={12}>
                         <Grid container alignItems="center" sx={{ color: "grey", marginTop: "5px" }}>
                             <CalendarMonthOutlinedIcon sx={{ marginRight: 1, fontSize: "18px" }} />
-                            <Typography variant="body1" sx={{ fontSize: "13px" }}>Date of Birth:</Typography>
+                            <Typography variant="body1" sx={{ fontSize: "13px" }}>{t("dateOfBirth")}</Typography>
                         </Grid>
                     </Grid>
                     <Grid item xs={4}>
@@ -209,7 +211,7 @@ export const PersonalInfo = () => {
                                 displayEmpty
                                 sx={{ borderRadius: '10px', height: '33px', fontSize: "12px", color: "gray", marginRight: "5px" }}
                             >
-                                <MenuItem value="" disabled>Month</MenuItem>
+                                <MenuItem value="" disabled>{t("month")}</MenuItem>
                                 {[...Array(12).keys()].map((i) => (
                                     <MenuItem key={i + 1} value={String(i + 1).padStart(2, '0')}>
                                         {String(i + 1).padStart(2, '0')}
@@ -233,7 +235,7 @@ export const PersonalInfo = () => {
                                 displayEmpty
                                 sx={{ borderRadius: '10px', height: '33px', fontSize: "12px", color: "gray", marginRight: "5px" }}
                             >
-                                <MenuItem value="" disabled>Day</MenuItem>
+                                <MenuItem value="" disabled>{t("day")}</MenuItem>
                                 {[...Array(31).keys()].map((i) => (
                                     <MenuItem key={i + 1} value={String(i + 1).padStart(2, '0')}>
                                         {String(i + 1).padStart(2, '0')}
@@ -257,7 +259,7 @@ export const PersonalInfo = () => {
                                 displayEmpty
                                 sx={{ borderRadius: '10px', height: '33px', fontSize: "12px", color: "gray" }}
                             >
-                                <MenuItem value="" disabled>Year</MenuItem>
+                                <MenuItem value="" disabled>{t("year")}</MenuItem>
                                 {Array.from({ length: 2025 - 1980 + 1 }, (_, i) => (
                                     <MenuItem key={i + 1980} value={i + 1980}>
                                         {i + 1980}
@@ -287,7 +289,7 @@ export const PersonalInfo = () => {
                             </InputAdornment>
                         }
                     >
-                        <MenuItem value="" disabled>Country</MenuItem>
+                        <MenuItem value="" disabled>{t("country")}</MenuItem>
                         <MenuItem value="US">United States</MenuItem>
                         <MenuItem value="CA">Canada</MenuItem>
                         <MenuItem value="UK">United Kingdom</MenuItem>
@@ -318,7 +320,7 @@ export const PersonalInfo = () => {
                                 </IconButton>
                             </InputAdornment>
                         }
-                        placeholder="Password"
+                        placeholder={t("password")}
                         sx={{ borderRadius: '10px', marginBottom: "18px", height: '33px', fontSize: "12px" }}
                     />
                 </FormControl>
@@ -347,7 +349,7 @@ export const PersonalInfo = () => {
                                 </IconButton>
                             </InputAdornment>
                         }
-                        placeholder="Confirm Password"
+                        placeholder={t("confirmPass")}
                         sx={{ marginBottom: "18px", borderRadius: '10px', height: '33px', fontSize: "12px" }}
                     />
                 </FormControl>

@@ -7,6 +7,7 @@ import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined
 import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import { Box } from '@mui/system';
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { useTranslation } from 'react-i18next';
 
 export const PersonalInfo = ({
     fullName,
@@ -32,7 +33,7 @@ export const PersonalInfo = ({
     selectedOption,
     setSelectedOption
 }) => {
-
+    const {t} = useTranslation()
     const handleImageChange = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -93,7 +94,7 @@ export const PersonalInfo = ({
 
             <Grid item xs={12} md={6}>
                 <Typography variant="body2" sx={{ fontSize: "12px" }} color="#575756" gutterBottom>
-                    Personal Info
+                    {t("personalInfo")}
                 </Typography>
                 <Divider sx={{ width: "30%", borderBottom: "4px solid #ef7d00", marginBottom: "18px" }} />
 
@@ -106,7 +107,7 @@ export const PersonalInfo = ({
                                 <PersonOutlinedIcon sx={{ fontSize: "20px" }} />
                             </InputAdornment>
                         }
-                        placeholder="Full Name"
+                        placeholder={t("fullName")}
                         required
                         sx={{ borderRadius: '6px', marginBottom: "18px", height: '33px', fontSize: "11px" }}
                     />
@@ -121,7 +122,7 @@ export const PersonalInfo = ({
                                 <PhoneOutlinedIcon sx={{ fontSize: "20px" }} />
                             </InputAdornment>
                         }
-                        placeholder="Mobile Number"
+                        placeholder={t("mobileNumber")}
                         required
                         sx={{ borderRadius: '6px', marginBottom: "18px", height: '33px', fontSize: "11px" }}
                     />
@@ -137,7 +138,7 @@ export const PersonalInfo = ({
                                 <MailOutlinedIcon sx={{ fontSize: "20px" }} />
                             </InputAdornment>
                         }
-                        placeholder="Email"
+                        placeholder={t("email")}
                         required
                         sx={{ borderRadius: '6px', marginBottom: "18px", height: '33px', fontSize: "11px" }}
                     />
@@ -147,7 +148,7 @@ export const PersonalInfo = ({
                     <Grid item xs={12} sm={12} md={12} lg={12}>
                         <Grid container alignItems="center" sx={{ color: "grey", marginTop: "5px" }} >
                             <CalendarMonthOutlinedIcon sx={{ marginRight: "6px", fontSize: "13px" }} />
-                            <Typography variant="body1" sx={{ fontSize: "12px" }}>Date of Birth:</Typography>
+                            <Typography variant="body1" sx={{ fontSize: "12px" }}>{t("dateOfBirth")}</Typography>
                         </Grid>
                     </Grid>
                     <Grid item xs={4}>
@@ -160,7 +161,7 @@ export const PersonalInfo = ({
                                 sx={{ borderRadius: '6px', height: '33px', fontSize: "10px", color: "gray", marginRight: "5px" }}
                             >
                                 <MenuItem value="" disabled >
-                                    Month
+                                    {t("month")}
                                 </MenuItem>
                                 <MenuItem value="01" sx={{ fontSize: "10px", color: "gray" }}>01</MenuItem>
                                 <MenuItem value="02" sx={{ fontSize: "10px", color: "gray" }}>02</MenuItem>
@@ -189,7 +190,7 @@ export const PersonalInfo = ({
                                 sx={{ borderRadius: '6px', height: '33px', fontSize: "10px", color: "gray", marginRight: "5px" }}
                             >
                                 <MenuItem value="" disabled >
-                                    Day
+                                    {t("day")}
                                 </MenuItem>
                                 {[...Array(31).keys()].map((i) => (
                                     <MenuItem key={i + 1} value={i + 1} sx={{ fontSize: "10px", color: "gray" }}>
@@ -210,7 +211,7 @@ export const PersonalInfo = ({
                                 sx={{ borderRadius: '6px', height: '33px', fontSize: "10px", color: "gray" }}
                             >
                                 <MenuItem value="" disabled>
-                                    Year
+                                    {t("year")}
                                 </MenuItem>
                                 {Array.from({ length: 2025 - 1994 + 1 }, (_, i) => (
                                     <MenuItem key={i + 1994} value={i + 1994} sx={{ fontSize: "10px", color: "gray" }}>
@@ -234,7 +235,7 @@ export const PersonalInfo = ({
                             </InputAdornment>
                         }
                     >
-                        <MenuItem value="" disabled>Country</MenuItem>
+                        <MenuItem value="" disabled>{t("country")}</MenuItem>
                         <MenuItem value="syria" sx={{ fontSize: "10px", color: "gray" }}>Syria</MenuItem>
                         <MenuItem value="US" sx={{ fontSize: "10px", color: "gray" }}>United States</MenuItem>
                         <MenuItem value="CA" sx={{ fontSize: "10px", color: "gray" }}>Canada</MenuItem>
@@ -251,7 +252,7 @@ export const PersonalInfo = ({
                                 <span className="icon-padlock" style={{ fontSize: "16px" }} />
                             </InputAdornment>
                         }
-                        placeholder="Password"
+                        placeholder={t("password")}
                         required
                         sx={{ borderRadius: '6px', marginBottom: "18px", height: '33px', fontSize: "10px" }}
                     />
@@ -267,7 +268,7 @@ export const PersonalInfo = ({
                                 <span className="icon-padlock" style={{ fontSize: "16px" }} />
                             </InputAdornment>
                         }
-                        placeholder="Confirm Password"
+                        placeholder={t("confirmPass")}
                         required
                         sx={{ marginBottom: "18px", borderRadius: '10px', height: '33px', fontSize: "12px" }}
                     />
@@ -275,7 +276,7 @@ export const PersonalInfo = ({
 
                 <FormControl fullWidth>
                     <Select
-                        value={selectedOption || "Winter Campaign"}
+                        value={selectedOption || t("winterCampaign")}
                         onChange={(e) => setSelectedOption(e.target.value)}
                         displayEmpty
                         IconComponent={ArrowDropDownIcon}
@@ -300,9 +301,9 @@ export const PersonalInfo = ({
                             },
                         }}
                     >
-                        <MenuItem value="Winter Campaign" sx={{ fontSize: "12px", color: "#3f3e3efa" }}>Winter Campaign</MenuItem>
-                        <MenuItem value="Spring Campaign" sx={{ fontSize: "12px", color: "#3f3e3efa" }}>Spring Campaign</MenuItem>
-                        <MenuItem value="Summer Campaign" sx={{ fontSize: "12px", color: "#3f3e3efa" }}>Summer Campaign</MenuItem>
+                        <MenuItem value="Winter Campaign" sx={{ fontSize: "12px", color: "#3f3e3efa" }}>{t("winterCampaign")}</MenuItem>
+                        <MenuItem value="Spring Campaign" sx={{ fontSize: "12px", color: "#3f3e3efa" }}>{t("springCampaign")}</MenuItem>
+                        <MenuItem value="Summer Campaign" sx={{ fontSize: "12px", color: "#3f3e3efa" }}>{t("summerCampaign")}</MenuItem>
                     </Select>
                 </FormControl>
             </Grid>
