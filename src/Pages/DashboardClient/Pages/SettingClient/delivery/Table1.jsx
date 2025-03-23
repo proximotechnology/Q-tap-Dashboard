@@ -26,8 +26,8 @@ export const Table1 = () => {
                 </Typography>
 
                 <Box display="flex">
-                <span class="icon-magnifier" style={{ fontSize: "16px", marginRight: "20px" }}></span>
-                    <Typography  
+                    <span class="icon-magnifier" style={{ fontSize: "16px", marginRight: "20px" }}></span>
+                    <Typography
                         onClick={handleOpen}
                         variant='body2' sx={{ fontSize: "13px", color: "#ef7d00", display: "flex", cursor: "Pointer" }} >Add
                         <span style={{ fontSize: "15px", color: "#424242", fontWeight: 700, paddingLeft: "6px" }}>+</span>
@@ -82,17 +82,17 @@ export const Table1 = () => {
                                     },
                                 }}
                             >
-                                <TableCell sx={{color:"#222240", fontSize: '11px', padding: "2px 20px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>
-                                <span sx={{alignItems:"center",display:"flex"}}>{row.icon} {row.country}</span>
+                                <TableCell sx={{ color: "#222240", fontSize: '11px', padding: "2px 20px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>
+                                    <span sx={{ alignItems: "center", display: "flex" }}>{row.icon} {row.country}</span>
                                 </TableCell>
-                                <TableCell sx={{color:"#222240", fontSize: '11px', padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.state}</TableCell>
-                                <TableCell sx={{color:"#222240", fontSize: '11px', padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.city}</TableCell>
-                                <TableCell sx={{color:"#222240", fontSize: '11px', padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.phone}</TableCell>
-                                <TableCell sx={{color:"#222240", fontSize: '11px', padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.cost}
+                                <TableCell sx={{ color: "#222240", fontSize: '11px', padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.state}</TableCell>
+                                <TableCell sx={{ color: "#222240", fontSize: '11px', padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.city}</TableCell>
+                                <TableCell sx={{ color: "#222240", fontSize: '11px', padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.phone}</TableCell>
+                                <TableCell sx={{ color: "#222240", fontSize: '11px', padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.cost}
                                     <span style={{ color: 'gray' }}> EGP</span>
                                 </TableCell>
 
-                                <TableCell sx={{color:"#222240", padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>
+                                <TableCell sx={{ color: "#222240", padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>
                                     <IconButton size="small"  >
                                         <span class="icon-edit" style={{ color: "black", fontSize: "18px" }} />
                                     </IconButton>

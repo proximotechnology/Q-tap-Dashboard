@@ -47,7 +47,7 @@ export const Feedback = () => {
                 star: star.toString(),
                 emoji: emoji,
                 your_goals: yourGoals,
-               "missing_Q-tap_Menus": missingQtapMenus,
+                "missing_Q-tap_Menus": missingQtapMenus,
                 comment: comment
             };
             console.log("data formate", dataFormat);
@@ -75,10 +75,10 @@ export const Feedback = () => {
                 justifyContent="space-between"
                 alignItems="center"
                 width="100%"
-                padding="5px 0"
+                padding="10px 0"
             >
                 <Box sx={{ display: "flex" }}>
-                    <StarIcon sx={{ fontSize: "25px", color: "gray", marginRight: "5px" }} />
+                    <StarIcon sx={{ fontSize: "25px", color: "rgb(214, 213, 213)", marginRight: "5px" }} />
                     <Typography variant='body1' sx={{ fontSize: "15px", color: "#575756" }}>
                         Tell us about your experiment
                     </Typography>
@@ -197,14 +197,14 @@ export const Feedback = () => {
                 <Button
                     onClick={handleSaveFeedback}
                     sx={{
-                        textTransform: "capitalize", color: "white", padding: "3px 45px",
+                        textTransform: "capitalize", color: "white", padding: "3px 30px",
                         backgroundImage: "linear-gradient(to right, #FDB913, #E57C00)",
                         fontSize: "12px", borderRadius: "20px",
                         '&:hover': {
                             backgroundImage: 'linear-gradient(to right , #FDB913, #E57C00 )'
                         }
                     }}>
-                    <CheckIcon sx={{ marginRight: "6px", fontSize: "15px" }} /> Submit👍
+                    <CheckIcon sx={{ marginRight: "6px", fontSize: "15px", strokeWidth: 1 , stroke:"white" }} /> Submit
                 </Button>
             </Box>
         </Paper>

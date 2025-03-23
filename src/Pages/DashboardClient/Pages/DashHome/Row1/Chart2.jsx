@@ -10,8 +10,8 @@ const COLORS = ['#30ADF8', "#D8E0E0"]
 
 export const Chart2 = () => {
     return (
-        <Box display={"flex"} justifyContent="space-between" alignItems="center" 
-        padding={"0px 15px"}  >
+        <Box display={"flex"} justifyContent="space-between" alignItems="center"
+            padding={"0px 15px"}  >
 
             <Box >
                 <Box display={"flex"} textAlign={"center"} alignItems={"center"} >
@@ -21,12 +21,18 @@ export const Chart2 = () => {
 
 
                 <Box display={"flex"} textAlign={"center"} alignItems={"center"} marginTop={"5px"}>
-                    <Box component="span" sx={{ backgroundColor: COLORS[0], width: '15px', borderRadius: "20px", height: '6px', display: 'inline-block', marginRight: '8px' }} />
+                    <Box component="span" sx={{ background: "linear-gradient(to right , #237DF3 , #43EDFF)", width: '15px', borderRadius: "20px", height: '6px', display: 'inline-block', marginRight: '8px' }} />
                     <Typography variant="body2" color="text.secondary" sx={{ fontSize: "8px", color: "gray" }}>Visits</Typography>
                 </Box>
             </Box>
 
             <PieChart width={110} height={110}>
+                <defs>
+                    <linearGradient id="gradientColor" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stopColor="#43EDFF" />
+                        <stop offset="100%" stopColor="#237DF3" />
+                    </linearGradient>
+                </defs>
                 <Pie
                     data={data01}
                     cx={55}
@@ -35,9 +41,10 @@ export const Chart2 = () => {
                     outerRadius={50}
                     fill="#D8E0E0"
                     paddingAngle={0}
+                    startAngle={0}
+                    endAngle={450}
                 >
-                    <Cell fill={COLORS[0]} />
-                    <Cell fill="#D8E0E0" />
+                    <Cell fill="url(#gradientColor)" />
                     <Cell fill="#d3d3d3" />
                 </Pie>
                 <text x={60} y={60} textAnchor="middle" dominantBaseline="middle" fill={COLORS[0]} fontSize="18">{data01[0].value}%</text>

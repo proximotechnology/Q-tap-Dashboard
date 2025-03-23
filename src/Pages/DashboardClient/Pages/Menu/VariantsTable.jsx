@@ -45,7 +45,7 @@ export const VariantsTable = () => {
             }
         } catch (error) {
             console.error('Error fetching variants:', error);
-            toast.error('Error fetching variants');
+            // toast.error('Error fetching variants');
         }
     };
 

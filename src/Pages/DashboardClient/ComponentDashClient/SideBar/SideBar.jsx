@@ -3,11 +3,15 @@ import React from "react";
 import { Box, List, ListItemButton, ListItemIcon, ListItemText, Tooltip, useTheme } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { grey } from "@mui/material/colors";
+import SettingsIcon from '@mui/icons-material/Settings';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import RoomServiceOutlinedIcon from '@mui/icons-material/RoomServiceOutlined';
+import GridViewIcon from '@mui/icons-material/GridView';
 
 const Arr1 = [
     {
         text: "Dashboard",
-        icon: <img src="/assets/dashboard.svg" alt="icon" style={{ width: "16px", height: "16px" }} />,
+        icon: <GridViewIcon style={{ fontSize: "18px", marginLeft: "-1px" }}></GridViewIcon>,
         path: "/dashboard-client"
     },
 
@@ -22,7 +26,7 @@ const Arr1 = [
     },
     {
         text: "Menu",
-        icon: <img src="/assets/menu.svg" alt="menu icon" style={{ width: "17px", height: "17px" }} />,
+        icon: <RoomServiceOutlinedIcon style={{ fontSize: "22px", marginLeft: "-3px" }}></RoomServiceOutlinedIcon>,
         path: "/menu",
     },
     {
@@ -32,7 +36,7 @@ const Arr1 = [
     },
     {
         text: "User | Staff",
-        icon: <img src="/assets/user.svg" alt="user icon" style={{ width: "17px", height: "17px" }} />,
+        icon: <PersonOutlineIcon style={{ fontSize: "22px", marginLeft: "-4px" }}></PersonOutlineIcon>,
         path: "/user",
     },
     {
@@ -42,7 +46,7 @@ const Arr1 = [
     },
     {
         text: "Setting",
-        icon: <img src="/assets/setting.svg" alt="icon" style={{ width: "16px", height: "16px" }} />,
+        icon: <SettingsIcon style={{ fontSize: "18px", marginLeft: "-1px" }}></SettingsIcon>,
         path: "/setting-client",
     },
 
@@ -52,8 +56,8 @@ const Arr2 = [
         text: "Feedback",
         icon: <span class="icon-star" style={{
             background: 'linear-gradient(to right, #FDB913, #F2672E)',
-            WebkitBackgroundClip: 'text' ,
-            WebkitTextFillColor:'transparent',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
         }}></span>,
         path: "/feedback"
     },
@@ -84,7 +88,7 @@ export default function SideBar() {
             height: '100vh',
             zIndex: 1000
         }}>
-            <Box sx={{ display: "felx", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
+            <Box sx={{ display: "felx", justifyContent: "center", textAlign: "center", alignItems: "center", marginTop: "18px" }}>
                 <img src="/images/logoDash.jpg" alt="Logo" style={{ width: '110px' }} />
             </Box>
 
@@ -95,16 +99,19 @@ export default function SideBar() {
                         key={index}
                         placement="left-start"
                     >
-                        <Box sx={{ display: "block" }}
+                        <Box sx={{ display: "block", marginTop: "10px" }}
                         >
                             <ListItemButton
                                 sx={{
+                                    position: "relative", // اجعل العنصر الأب نسبيًا
                                     justifyContent: "center",
                                     px: 2,
+                                    py: .55,
                                     height: item.path === "/order" ? "28px" : "inherit",
-                                    width: item.path === "/order" ? "80%" : "inherit",
+                                    width: item.path === "/order" ? "70%" : "inherit",
                                     marginTop: item.path === "/order" ? "8px" : "0px",
                                     marginBottom: item.path === "/order" ? "10px" : "0px",
+                                    marginLeft: item.path === "/order" ? "15px" : "0px",
                                     borderRadius: item.path === "/order" ? "20px 0px 20px 20px " : "0px",
                                     background: item.path === "/order"
                                         ? "linear-gradient(90deg, #FDB913, #F2682E)"
@@ -115,6 +122,7 @@ export default function SideBar() {
                                                 ? grey[600]
                                                 : "#ef7d00"
                                             : "gray",
+                                    // textAlign: item.path === "/order" ? "center" : "",
                                     '&:hover': {
                                         backgroundColor: item.path === "/order" ? "#ef7d00" : "inherit",
                                     },
@@ -123,18 +131,19 @@ export default function SideBar() {
                                     navigate(item.path);
                                 }}
                             >
+                                {/* الأيقونة */}
                                 <ListItemIcon
                                     sx={{
                                         minWidth: 0,
                                         justifyContent: "center",
-                                        // marginRight: "10px",
-                                        marginRight: item.path === "/order" ? "3px" : "10px", 
+                                        marginRight: item.path === "/order" ? "3px" : "10px",
                                         color: item.path === "/order" ? "white" :
                                             location.pathname === item.path
                                                 ? theme.palette.mode === "dark"
                                                     ? grey[50]
                                                     : "#ef7d00"
                                                 : "gray",
+                                        marginLeft: item.path === "/order" ? "10px" : ""
                                     }}
                                 >
                                     {React.cloneElement(item.icon, {
@@ -143,20 +152,34 @@ export default function SideBar() {
                                     })}
                                 </ListItemIcon>
 
+                                {/* النص */}
                                 <ListItemText
                                     primary={item.text}
                                     primaryTypographyProps={{ fontSize: "12px" }}
                                 />
 
+                                {/* النقطة الحمراء فقط عند مسار "/order" */}
+                                {item.path === "/order" && (
+                                    <Box
+                                        sx={{
+                                            position: "absolute",
+                                            top: 0,
+                                            left: -10,
+                                            width: 8,
+                                            height: 8,
+                                            background: "linear-gradient(to right , red, blue)",
+                                            borderRadius: "50%",
+
+                                        }}
+                                    />
+                                )}
                             </ListItemButton>
-
-
                         </Box>
                     </Tooltip>
                 ))}
             </List>
 
-            <List sx={{ marginTop: "9vh" }}>
+            <List sx={{ marginTop: "12vh" }}>
                 {Arr2.map((item, index) => (
                     <Tooltip
                         ListItem
@@ -167,7 +190,6 @@ export default function SideBar() {
                         >
                             <ListItemButton
                                 sx={{
-
                                     justifyContent: "center",
                                     px: 2,
                                     color:
@@ -179,6 +201,9 @@ export default function SideBar() {
 
                                 }}
                                 onClick={() => {
+                                    if (item.text === "Logout") {
+                                        localStorage.removeItem("clientToken");
+                                    }
                                     navigate(item.path);
                                 }}
                             >

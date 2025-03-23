@@ -11,18 +11,22 @@ import { AddQuestion } from './AddQuestion';
 import DetailsModal from './DetailsModal';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+
+import styles from './supportCard.module.css'
 const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onClick }) => {
   const statusStyles = {
     'in_progress': { backgroundColor: '#222240', color: '#f4f6fc' },
     'open': { backgroundColor: '#EBEDF3', color: '#575756' },
-    // "Done": { backgroundColor: '#00A343', color: '#f4f6fc' },
+    'Done': { backgroundColor: '#EBEDF3', color: '#575756' },
   };
 
   // Format the date
   const formattedDate = new Date(created_at).toLocaleDateString();
+  console.log(status, "askjflj ");
 
   return (
     <Paper
+      className={status == 'in_progress' ? styles.card : styles.card2}
       elevation={3}
       sx={{
         padding: "10px",
@@ -31,7 +35,7 @@ const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onC
         borderRadius: 6,
         position: 'relative',
         cursor: "pointer",
-        backgroundColor: statusStyles[status]?.backgroundColor || '#EBEDF3',
+        backgroundColor: statusStyles[status]?.backgroundColor || '#575756',
         color: statusStyles[status]?.color || '#575756',
       }}
       onClick={onClick}
@@ -57,7 +61,6 @@ const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onC
           alignItems: 'center',
         }}
       >
-
         {status === 'in_progress' ? (
           <>
             <span className="icon-processing-time" style={{ fontSize: "13px", color: "#ef7d00" }} />
@@ -65,26 +68,25 @@ const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onC
               In Progress
             </Typography>
           </>
-        ) : status === "Done" ? (
+        ) : status === 'Done' ? (
           <>
-            <span className="icon-check" style={{ fontSize: "12px", color: "black" }} />
-            <Typography variant="body1" sx={{ fontSize: "11px", color: "black", ml: 1 }}>
+            <span className="icon-check" style={{ fontSize: "13px", color: "#222240" }} />
+            <Typography variant="body1" sx={{ fontSize: "11px", color: "#222240", ml: 1 }}>
               Done
             </Typography>
           </>
         ) : (
           <>
-            <span className="icon-check" style={{ fontSize: "12px", color: "#222240" }} />
+            <span className="icon-share" style={{ fontSize: "12px", color: "#222240" }} />
             <Typography variant="body1" sx={{ fontSize: "11px", color: "#222240", ml: 1 }}>
               Open
             </Typography>
           </>
         )}
       </Box>
-    </Paper>
+    </Paper >
   );
 };
-
 const Support = () => {
 
   const [questions, setQuestions] = useState([
@@ -156,7 +158,7 @@ const Support = () => {
       if (response.data) {
         setFeedbackData(response.data);
       }
-      console.log("feedback data response ", response.data);
+      // console.log("feedback data response ", response.data);
 
     } catch (error) {
       console.log("error feedback data ", error);
@@ -213,7 +215,7 @@ const Support = () => {
 
     } catch (error) {
       console.error('Error fetching tickets:', error);
-      toast.error('Failed to fetch tickets');
+      // toast.error('Failed to fetch tickets');
     } finally {
       setLoading(false);
     }
@@ -319,6 +321,19 @@ const Support = () => {
       toast.error(error.response?.data?.message || 'Failed to update ticket');
     }
   };
+  // New states for search functionality
+  const [showSearch, setShowSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearchClick = () => {
+    setShowSearch(!showSearch);
+    setSearchQuery(''); // Reset search query when toggling
+  };
+
+  // Filter tickets based on search query
+  const filteredTickets = tickets.filter(ticket =>
+    ticket.Customer_Name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   return (
     <>
       <Paper sx={{ padding: 3, borderRadius: "10px" }}>
@@ -326,21 +341,48 @@ const Support = () => {
           {/* the header */}
           <Grid item xs={12} sx={{ display: "flex" }}>
             <Typography variant="body1" sx={{ fontSize: "12px", color: "#575756" }}>Tickets</Typography>
-            <Grid item xs>
-              <Box sx={{ textAlign: 'right' }}>
-                <IconButton>
-                  <span class="icon-magnifier" style={{ fontSize: "15px", color: "#575756" }} />
+            <Grid item xs sx={{ flexGrow: 1 }}>
+              <Box sx={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+                gap: 1
+              }}>
+                {showSearch && (
+                  <Box sx={{ width: '20%' }}>
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Search by name..."
+                      style={{
+                        width: '100%',
+                        padding: '6px 8px',
+                        borderRadius: '6px', // Matching Paper's borderRadius
+                        border: '1px solid rgba(0, 0, 0, 0.23)', // Default Material-UI border color
+                        fontSize: '12px',
+                        outline: 'none',
+                        backgroundColor: '#fff',
+                        '&:hover': {
+                          borderColor: 'rgba(0, 0, 0, 0.87)'
+                        }
+                      }}
+                    />
+                  </Box>
+                )}
+                <IconButton onClick={handleSearchClick}>
+                  <span className="icon-magnifier" style={{ fontSize: "15px", color: "#575756" }} />
                 </IconButton>
               </Box>
             </Grid>
           </Grid>
-
-          {/* the ticket */}
-          {tickets.map((ticket, index) => (
+          {/* the tickets */}
+          {filteredTickets.map((ticket, index) => (
             <Grid item key={index}>
               <TicketCard {...ticket} onClick={() => handleClickOpen(ticket)} />
             </Grid>
           ))}
+
           <Grid item>
             <Paper
               elevation={0}
@@ -370,14 +412,15 @@ const Support = () => {
       <Paper sx={{ borderRadius: "10px", marginTop: "25px", paddingBottom: "30px" }}>
 
         <Box sx={{ padding: "30px 30px 0px 30px ", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <Typography variant="body1" sx={{ fontSize: "12px", color: "#575756" }}>
+          <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>
             Feedback
           </Typography>
 
           <Typography
             onClick={handleOpenModel}
-            variant="body1" sx={{ fontSize: "10px", color: "#E57C00", cursor: "pointer" }}>
-            <img src="/assets/add.svg" alt="add icon " style={{ width: "8px", height: "8px", marginRight: "5px" }} />
+            variant="body1" sx={{ fontSize: "10px", color: "#E57C00", cursor: "pointer", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+
+            <AddIcon style={{ fontSize: "20px", fontWeight: "bold" }} />
             Add Question
           </Typography>
 
@@ -421,7 +464,7 @@ const Support = () => {
 
         <Table sx={{ p: 0, mt: 2, mb: 5, width: '100%', tableLayout: 'fixed' }}>
           <TableHead>
-            <TableRow sx={{ backgroundColor: "#EBEDF3" }}>
+            <TableRow sx={{ backgroundColor: "#D8E0E0" }}>
               <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "30%" }}>Customer</TableCell>
               <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "30%" }}>Phone</TableCell>
               <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "30%" }}>Order Id</TableCell>

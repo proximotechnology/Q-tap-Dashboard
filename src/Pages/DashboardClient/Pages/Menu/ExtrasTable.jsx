@@ -44,12 +44,12 @@ export const ExtrasTable = () => {
                     ...extra,
                     isEditing: false,
                 }));
-                console.log("extra data", response?.data)
+                // console.log("extra data", response?.data)
                 setAllExtras(updatedExtras);
             }
         } catch (error) {
             console.error('Error fetching extras:', error);
-            toast.error('Error fetching extras');
+            // toast.error('Error fetching extras');
         }
     };
 
@@ -127,11 +127,11 @@ export const ExtrasTable = () => {
 
             <Table sx={{ mt: 3, mb: 5, width: '100%', tableLayout: 'fixed' }}>
                 <TableHead>
-                    <TableRow sx={{ backgroundColor: "#EBEDF3"}}>
-                        <TableCell sx={{ fontSize: "10px", textAlign: "left", color: "#575756" , padding:"3px 10px"}}>Price</TableCell>
-                        <TableCell sx={{ fontSize: "10px", textAlign: "left", color: "#575756", padding:"3px 10px" }}>Name</TableCell>
-                        <TableCell sx={{ fontSize: "10px", textAlign: "center", color: "#575756", padding:"3px 10px" }}>Actions</TableCell>
-                        <TableCell sx={{ fontSize: "10px", textAlign: "center", color: "#575756", padding:"3px 10px" }}></TableCell>
+                    <TableRow sx={{ backgroundColor: "#EBEDF3" }}>
+                        <TableCell sx={{ fontSize: "10px", textAlign: "left", color: "#575756", padding: "3px 10px" }}>Price</TableCell>
+                        <TableCell sx={{ fontSize: "10px", textAlign: "left", color: "#575756", padding: "3px 10px" }}>Name</TableCell>
+                        <TableCell sx={{ fontSize: "10px", textAlign: "center", color: "#575756", padding: "3px 10px" }}>Actions</TableCell>
+                        <TableCell sx={{ fontSize: "10px", textAlign: "center", color: "#575756", padding: "3px 10px" }}></TableCell>
                     </TableRow>
                 </TableHead>
 
@@ -144,7 +144,9 @@ export const ExtrasTable = () => {
                                         value={extra.price}
                                         onChange={(e) => handleInputChange(index, "price", e.target.value)}
                                         variant="outlined"
-                                        size="small"
+                                        size='small'
+                                        sx={{ width: "90px", height: "30px", "& .MuiInputBase-root": { height: "30px", fontSize: "10px" } }}
+
                                     />
                                 ) : (
                                     extra.price
@@ -157,23 +159,26 @@ export const ExtrasTable = () => {
                                         value={extra.name}
                                         onChange={(e) => handleInputChange(index, "name", e.target.value)}
                                         variant="outlined"
-                                        size="small"
+                                        size='small'
+                                        sx={{ width: "90px", height: "30px", "& .MuiInputBase-root": { height: "30px", fontSize: "10px" } }}
+
                                     />
                                 ) : (
                                     extra.name
                                 )}
                             </TableCell>
                             <TableCell sx={{ textAlign: "center", fontSize: "10px", color: "gray", padding: '3px 10px', width: '25%' }}>
-                                <FormControl fullWidth size="small" sx={{ minWidth: 80 }}>
+                                <FormControl  size="small" sx={{ minWidth: 110 }}>
                                     <Select
+                                        value={extra.isEditing ? variantIdFromMenuUpdate : extra.variants_id}
+                                        onChange={(e) => setVariantIdFromMenuUpdate(e.target.value)}
                                         displayEmpty
-                                        placeholder='All'
                                         inputProps={{ 'aria-label': 'Without label' }}
                                         sx={{
-                                            fontSize: '10px',
-                                            height: '25px',
+                                            fontSize: '12px',
+                                            height: '32px',
                                             lineHeight: "30px",
-                                            borderRadius: "5px",
+                                            borderRadius: "10px",
                                             color: "gray",
                                             '& .MuiSelect-select': {
                                                 padding: '5px',
@@ -187,21 +192,35 @@ export const ExtrasTable = () => {
                                                 backgroundColor: 'transparent'
                                             }
                                         }}
-                                    >   
-                                        {
-                                            variantsContext?.map((variant) => (
-                                                <MenuItem
-                                                    key={variant.id}
-                                                    value={variant.id}
-                                                    selected={variant.id === variantIdFromMenuUpdate}
-                                                    onClick={() => setVariantIdFromMenuUpdate(variant.id)}
-                                                    sx={{ color: "gray", fontSize: "10px", textAlign: 'center' }}>
-                                                    {variant.name}
-                                                </MenuItem>
-                                            ))
-                                        }
+                                        MenuProps={{
+                                            PaperProps: {
+                                                sx: {
+                                                    borderRadius: "10px",
+                                                }
+                                            }
+                                        }}
+                                    >
+                                        <MenuItem
+                                            value=''
+                                            disabled
+                                            sx={{
+                                                color: "gray", fontSize: "12px", textAlign: 'center', display: 'flex',
+                                                justifyContent: 'center'
+                                            }}>
+                                            All
+                                        </MenuItem>
+                                        {variantsContext?.map((variant) => (
+                                            <MenuItem
+                                                key={variant.id}
+                                                value={variant.id}
+                                                sx={{
+                                                    color: "gray", fontSize: "12px", textAlign: 'center', display: 'flex',
+                                                    justifyContent: 'center'
+                                                }}>
+                                                {variant.name}
+                                            </MenuItem>
+                                        ))}
                                     </Select>
-
                                 </FormControl>
                             </TableCell>
                             <TableCell sx={{ textAlign: "center", fontSize: "12px" }}>
@@ -211,11 +230,11 @@ export const ExtrasTable = () => {
                                     </IconButton>
                                 ) : (
                                     <IconButton size="small" color='success' onClick={() => handleEditToggle(index)}>
-                                    <span class="icon-edit" style={{ fontSize: "18px" }} />
+                                        <span class="icon-edit" style={{ fontSize: "18px" }} />
                                     </IconButton>
                                 )}
                                 <IconButton size="small" color='error' onClick={() => handleDelete(extra.id)}>
-                                <span class="icon-delete" style={{ fontSize: "18px" }} />
+                                    <span class="icon-delete" style={{ fontSize: "18px" }} />
                                 </IconButton>
                             </TableCell>
                         </TableRow>

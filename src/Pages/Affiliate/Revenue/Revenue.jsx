@@ -40,6 +40,7 @@ export const Revenue = () => {
                 sx={{
                   height: "24px",
                   fontSize: "14px",
+                  marginRight: "-30px",
                   ".MuiOutlinedInput-notchedOutline": { border: 0 },
                   ".MuiSelect-icon": { fontSize: "20px" },
                 }}
@@ -84,7 +85,7 @@ export const Revenue = () => {
       </Grid>
 
       <Grid width={"25%"}>
-        <Box sx={{ position: "relative", top: "-40px", left: "60px" }}>
+        <Box sx={{ position: "relative", top: "-58px", left: "60px" }}>
           <span
             class="icon-social"
             style={{ fontSize: "30px", color: "#D8E0E0" }}

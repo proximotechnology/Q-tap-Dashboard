@@ -50,7 +50,7 @@ export const Cart3 = () => {
           <Box
             component="span"
             sx={{
-              backgroundColor: COLORS[0],
+              background:"linear-gradient(to right , #893e9c , #fd4845 )",
               width: "15px",
               borderRadius: "20px",
               height: "6px",
@@ -72,9 +72,6 @@ export const Cart3 = () => {
         <defs>
           <linearGradient id="colorGradient2" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0%" stopColor="#fd4845" />
-            <stop offset="29%" stopColor="#d64462" />
-            <stop offset="56%" stopColor="#b2417d" />
-            <stop offset="81%" stopColor="#983f91" />
             <stop offset="100%" stopColor="#893e9c" />
           </linearGradient>
         </defs>
@@ -86,16 +83,16 @@ export const Cart3 = () => {
           outerRadius={45}
           fill="#D8E0E0"
           paddingAngle={0}
-          startAngle={90}
-          endAngle={-270}
+          startAngle={0}
+          endAngle={450}
         >
           <Cell fill="url(#colorGradient2)" />
           <Cell fill="#D8E0E0" />
           <Cell fill="#d3d3d3" />
         </Pie>
         <text
-          x={60}
-          y={60}
+          x={65}
+          y={65}
           textAnchor="middle"
           dominantBaseline="middle"
           fill={COLORS[0]}

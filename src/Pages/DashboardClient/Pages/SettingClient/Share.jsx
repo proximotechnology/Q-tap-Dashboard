@@ -7,7 +7,7 @@ export const Share = () => {
     const qrCodeRef = useRef();
 
     const handleCopyLink = () => {
-        const link = "https://www.menus.qutap.co/register/user";
+        const link = "https://highleveltecknology.com/";
         navigator.clipboard.writeText(link)
             .then(() => alert("Link copied!"))
             .catch((error) => alert("Failed to copy link: ", error));
@@ -41,21 +41,22 @@ export const Share = () => {
                     sx={{
                         textAlign: "left",
                         fontSize: "18px",
-                        color: "#575756"
+                        color: "#575756",
+                        display: 'flex',
+                        alignItems: "center"
                     }}
                 >
                     <span class="icon-send" style={{ fontSize: "23px", color: "#D8E0E0", marginRight: "6px" }}></span>
                     Share Menu
                 </Typography>
-
                 <Divider
                     sx={{
-                        backgroundColor: '#FF6600',
-                        height: '1px',
-                        margin: '5px 0px',
+                        backgroundImage: 'linear-gradient(to right, #FDB913, #F2672E)',
+                        height: '2px',
+                        marginTop: '2px',
+                        border: 'none',
                     }}
                 />
-
 
                 <div style={{ textAlign: 'center', padding: "70px 0px" }}>
                     <Box
@@ -64,16 +65,16 @@ export const Share = () => {
                             padding: '10px',
                             borderRadius: '20px',
                             display: "flex",
-                            width: "20%",
+                            width: "18%",
                             justifyContent: "center",
                             alignItems: "center",
                             position: "relative",
-                            left: "40%"
+                            left: "40%",
                         }}
                     >
                         <QRCodeSVG
                             ref={qrCodeRef}
-                            value="https://www.menus.qutap.co/register/user"
+                            value="https://highleveltecknology.com/"
                             size={156}
                             fgColor="#000000"
                             bgColor="#FFFFFF"

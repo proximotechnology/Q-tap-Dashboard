@@ -145,7 +145,7 @@ export const TableTransaction = () => {
 
                                     <TableCell sx={{ fontSize: "11px", textAlign: "center", color: "gray", borderBottom: "none", height: "30px", padding: "10px 0px 0px 10px" }}>{transaction.date}</TableCell>
                                     <TableCell sx={{ fontSize: "11px", textAlign: "center", color: "gray", borderBottom: "none", height: "30px", padding: "10px 0px 0px 10px" }}>{transaction.time}</TableCell>
-                                    <TableCell sx={{ fontSize: "11px", textAlign: "center", color: "#575756", borderBottom: "none", height: "30px", padding: "10px 0px 0px 10px" }}>{transaction.amount}</TableCell>
+                                    <TableCell sx={{ fontSize: "12px", textAlign: "center", color: "#575756", borderBottom: "none", height: "30px", padding: "10px 0px 0px 10px" }}>{transaction.amount}</TableCell>
                                     <TableCell sx={{ fontSize: "11px", textAlign: "center", color: "black", borderBottom: "none", height: "30px", padding: "10px 0px 0px 10px" }}>
                                         <Typography
                                             sx={{

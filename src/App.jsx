@@ -56,6 +56,7 @@ import { BranchProvider } from './context/BranchContext';
 import { ContentMenuProvider } from './context/ContentMenuContext';
 import { RegisterClientProvider } from './context/RegisterClientContext';
 import { ClientLoginDataProvider } from './context/ClientLoginDataContext';
+import { ClientProvider } from './context/ClientContext';
 
 function App() {
   const routes = createBrowserRouter([
@@ -276,24 +277,26 @@ function App() {
 
 
   return (
-    <ClientLoginDataProvider>
-      <RegisterClientProvider>
-        <ContentMenuProvider>
-          <BranchProvider>
-            <PersonalProvider>
-              <BusinessProvider>
-                <div style={{ minHeight: "100vh" }}>
-                  <div className="w-100 ">
-                    <RouterProvider router={routes}></RouterProvider>
+    <ClientProvider>
+      <ClientLoginDataProvider>
+        <RegisterClientProvider>
+          <ContentMenuProvider>
+            <BranchProvider>
+              <PersonalProvider>
+                <BusinessProvider>
+                  <div style={{ minHeight: "100vh" }}>
+                    <div className="w-100 ">
+                      <RouterProvider router={routes}></RouterProvider>
+                    </div>
+                    <ToastContainer />
                   </div>
-                  <ToastContainer />
-                </div>
-              </BusinessProvider>
-            </PersonalProvider>
-          </BranchProvider>
-        </ContentMenuProvider>
-      </RegisterClientProvider>
-    </ClientLoginDataProvider>
+                </BusinessProvider>
+              </PersonalProvider>
+            </BranchProvider>
+          </ContentMenuProvider>
+        </RegisterClientProvider>
+      </ClientLoginDataProvider>
+    </ClientProvider>
 
   );
 }

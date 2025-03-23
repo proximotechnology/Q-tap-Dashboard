@@ -63,11 +63,11 @@ export default function TopBar() {
     useEffect(() => {
         const storedBranches = localStorage.getItem('branches');
         const storedSelectedBranch = localStorage.getItem('selectedBranch');
-        
+
         if (storedBranches) {
             const parsedBranches = JSON.parse(storedBranches);
             setBranches(parsedBranches);
-            
+
             // If no branch is selected, set the first one as default
             if (!storedSelectedBranch && parsedBranches.length > 0) {
                 setSelectedBranch(parsedBranches[0].id);
@@ -86,21 +86,22 @@ export default function TopBar() {
         setBranch(event.currentTarget);
     };
 
-    const BranchClose = (branchId) => {
+    const BranchClose = (branchId, index) => {
         if (branchId) {
             setSelectedBranch(branchId);
             localStorage.setItem('selectedBranch', branchId);
+            localStorage.setItem('branchNumber', index)
         }
         setBranch(null);
     };
 
-    // Helper function to get branch name
-    const getCurrentBranchName = () => {
-        if (!branches.length) return 'Branch 1';
-        const currentBranch = branches.find(b => b.id === selectedBranch);
-        const branchIndex = branches.findIndex(b => b.id === selectedBranch);
-        return currentBranch ? `Branch ${branchIndex + 1}` : 'Branch 1';
-    };
+    // // Helper function to get branch name
+    // const getCurrentBranchName = () => {
+    //     if (!branches.length) return 'Branch 1';
+    //     const currentBranch = branches.find(b => b.id === selectedBranch);
+    //     const branchIndex = branches.findIndex(b => b.id === selectedBranch);
+    //     return currentBranch ? `Branch ${branchIndex + 1}` : 'Branch 1';
+    // };
 
     const handleToggle = (event) => {
         setMode(event.target.checked ? 'light' : 'dark');
@@ -133,7 +134,7 @@ export default function TopBar() {
             padding: "30px 30px 0px 30px"
         }}>
             <Typography variant="body1" sx={{
-                fontSize: "15px", color: "#222240", width: "3%",
+                fontSize: "18px", color: "#222240", width: "3%",
                 borderBottom: "2px solid #E57C00"
             }}>
                 {pageTitles[location.pathname] || 'Dashboard'}
@@ -146,8 +147,11 @@ export default function TopBar() {
                         fontSize: "11px", borderRadius: "20px", color: "white",
                         textTransform: "capitalize", justifyContent: "center",
                     }}>
-                    <span className="icon-store" style={{ fontSize: "15px", marginRight: "3px" }}></span>
-                    {getCurrentBranchName()}
+                    <span className="icon-store" style={{ fontSize: "15px", marginRight: "10px" }}></span>
+                    {/* {getCurrentBranchName()} */}
+                    <span >
+                        {localStorage.getItem("branchNumber") ? `Branch ${parseInt(localStorage.getItem("branchNumber")) + 1}` : `Branch 1`}
+                    </span>
                     <KeyboardArrowDownIcon sx={{ color: "#ef7d00", fontSize: "16px" }} />
                 </Button>
 
@@ -174,9 +178,9 @@ export default function TopBar() {
                     {branches.map((branch, index) => (
                         <React.Fragment key={branch.id}>
                             <MenuItem
-                                onClick={() => BranchClose(branch.id)}
-                                sx={{ 
-                                    fontSize: "9px", 
+                                onClick={() => BranchClose(branch.id, index)}
+                                sx={{
+                                    fontSize: "9px",
                                     color: "#949493",
                                     backgroundColor: selectedBranch === branch.id ? 'rgba(239, 125, 0, 0.1)' : 'transparent'
                                 }}
@@ -191,7 +195,7 @@ export default function TopBar() {
                     ))}
                 </Menu>
 
-                <IconButton onClick={toggleIcon}>
+                <IconButton onClick={toggleIcon} sx={{ margin: "0 5px" }} >
                     {isLocked ? (
                         <img src="/assets/lock.svg" alt="lock icon" style={{ width: "22px", height: "22px" }} />
                     ) : (
@@ -200,7 +204,7 @@ export default function TopBar() {
                 </IconButton>
 
 
-                <Box sx={{ display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
+                <Box sx={{ display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center", margin: "0 5px" }}>
                     <LightModeOutlinedIcon onClick={handleToggleMode}
                         sx={{ fontSize: "20px", fill: mode === 'light' ? iconColor : '#575756' }} />
                     <Switch
@@ -235,7 +239,7 @@ export default function TopBar() {
                 </Box>
 
 
-                <IconButton>
+                <IconButton sx={{ margin: "0 5px" }}>
                     <span class="icon-bell" style={{ color: "#ef7d00" }}></span>
                 </IconButton>
 
@@ -246,6 +250,7 @@ export default function TopBar() {
                     onClick={handleUserClick}
                     sx={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "3px" }}>
                     <IconButton color="inherit" sx={{
+                        margin: "0 5px",
                         backgroundColor: '#ef7d00', borderRadius: '30%', padding: '5px',
                         '&:hover': {
                             backgroundColor: '#ef7d00',
@@ -253,7 +258,7 @@ export default function TopBar() {
                     }}>
                         <PersonOutlineOutlinedIcon sx={{ fontSize: "20px", color: "white" }} />
                     </IconButton>
-                    <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>Admin</Typography>
+                    <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>{localStorage.getItem("clientName")}</Typography>
                     <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: "#575756" }} />
                 </Box>
                 <Popover disableScrollLock
@@ -272,8 +277,8 @@ export default function TopBar() {
                                 <PersonOutlineOutlinedIcon sx={{ fontSize: "22px" }} />
                             </Avatar>
                             <Box>
-                                <Typography variant="h6" sx={{ fontSize: "14px" }}>User01</Typography>
-                                <Typography variant="body2" sx={{ fontSize: "12px" }} color="textSecondary">Mail@mail.com</Typography>
+                                <Typography variant="h6" sx={{ fontSize: "14px" }}>{localStorage.getItem("clientName")}</Typography>
+                                <Typography variant="body2" sx={{ fontSize: "12px" }} color="textSecondary">{localStorage.getItem("clientEmail")}</Typography>
                             </Box>
                         </Box>
                         <Divider />
@@ -332,11 +337,15 @@ export default function TopBar() {
                                     }} />
                             </ListItem>
 
-                            <ListItem sx={{ cursor: "pointer" }} onClick={handleUserClose}>
-                                <ListItemIcon>
+                            <ListItem sx={{ cursor: "pointer" }} onClick={() => {
+                                localStorage.removeItem("clientToken");
+                                navigate('/');
+                            }}>                                <ListItemIcon>
                                     <img src="/assets/logout.svg" alt="icon" style={{ width: "16px", height: "16px" }} />
                                 </ListItemIcon>
-                                <ListItemText primary="Logout"
+                                <ListItemText
+
+                                    primary="Logout"
                                     primaryTypographyProps={{
                                         sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: "-30px" }
                                     }} />

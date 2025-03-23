@@ -31,7 +31,7 @@ export const Row1 = () => {
                     <Card sx={{ borderRadius: '20px' }}>
                         <CardContent>
                             <Box display={"flex"} justifyContent={"space-between"}>
-                                <Typography variant="subtitle1" color="text.secondary">Total Orders</Typography>
+                                <Typography variant="subtitle1" color="text.secondary">Total Orderss</Typography>
                                 <span class="icon-shopping-bag" style={{color:"#D8E0E0",fontSize:"22px"}}></span>
                             </Box >
                             <Typography  variant="body2" sx={{ color:"#ef7d00" ,fontSize:"20px"}}>5.564</Typography>

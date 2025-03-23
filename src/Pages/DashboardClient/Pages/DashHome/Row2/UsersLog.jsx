@@ -1,17 +1,18 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Grid, Typography, Divider } from '@mui/material';
 import { Box } from '@mui/system';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import CircleIcon from '@mui/icons-material/Circle';
 export const UsersLog = () => {
     const rows = [
         { userName: 'Admin', time: '11:15 PM', date: '22.06.2024', status: 'Active now', statusColor: 'orange' },
         { userName: 'Kitchen', time: '11:15 PM', date: '22.06.2024', status: 'Active now', statusColor: 'orange' },
         { userName: 'Pos', time: '11:15 PM', date: '22.06.2024', status: 'Inactive', statusColor: 'gray' },
-        {}, {}, {}, {},{}, {}, {}, {}, {}
+        {}, {}, {}, {}
 
     ];
 
     return (
-        <TableContainer component={Paper} sx={{ borderRadius: "20px", boxShadow: 'none' }}>
+        <TableContainer component={Paper} sx={{ borderRadius: "20px", boxShadow: 'none' , minHeight:"50vh" , maxHeight:"62vh" , overflow:'auto'}}>
             <Grid container justifyContent="space-between" alignItems="center" sx={{ padding: "20px 20px 0px 20px" }}>
                 <Grid item>
                     <Typography variant="body1" component="div" sx={{ fontSize: '13px', color: "#575756" }}>
@@ -97,7 +98,7 @@ export const UsersLog = () => {
                                 {row.date}
                             </TableCell>
                             <TableCell sx={{ textAlign: 'center', border: 'none', fontSize: '11px', color: row.statusColor, padding: '0px' }}>
-                                {row.status}
+                                {row.status ? <CircleIcon sx={{ fontSize: "7px" }} /> : null} {row.status}
                             </TableCell>
                         </TableRow>
                     ))}

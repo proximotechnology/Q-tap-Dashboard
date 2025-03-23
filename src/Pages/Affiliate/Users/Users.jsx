@@ -33,7 +33,7 @@ export const Users = () => {
     setAnchorEl(event.currentTarget);
     setSelectedUser(user);
   };
-  console.log("sletected user", selectedUser);
+  // console.log("sletected user", selectedUser);
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -111,10 +111,22 @@ export const Users = () => {
   }, []);
 
   const allUsers = [...activeUsers, ...inactiveUsers];
+  // New states for search functionality
+  const [showSearch, setShowSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
+  const handleSearchClick = () => {
+    setShowSearch(!showSearch);
+    setSearchQuery(''); // Reset search query when toggling
+  };
+
+  // Filter tickets based on search query
+  const filteredUsers = allUsers.filter(user =>
+    user.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   return (
     <Box>
-      <Paper sx={{ padding: "15px", borderRadius: 5, minHeight: "80vh" }}>
+      <Paper sx={{ padding: "15px", borderRadius: 5, minHeight: "60vh", maxHeight: "82vh" }}>
         <Box
           display="flex"
           justifyContent="space-between"
@@ -142,14 +154,41 @@ export const Users = () => {
             </Box>
             Users
           </Typography>
-          <Box>
-            <IconButton>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+            }}
+          >
+            {showSearch && (
+              <Box sx={{ width: showSearch ? "60%" : "20%" }}>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search by name..."
+                  style={{
+                    width: "100%",
+                    padding: "6px 8px",
+                    borderRadius: "6px",
+                    border: "1px solid rgba(0, 0, 0, 0.23)",
+                    fontSize: "12px",
+                    outline: "none",
+                    backgroundColor: "#fff",
+                    "&:hover": {
+                      borderColor: "rgba(0, 0, 0, 0.87)",
+                    },
+                  }}
+                />
+              </Box>
+            )}
+            <IconButton onClick={handleSearchClick}>
               <span
                 className="icon-magnifier"
-                style={{ fontSize: "16px" }}
-              ></span>
+                style={{ fontSize: "15px", color: "#575756" }}
+              />
             </IconButton>
-
             <Button
               onClick={() => navigate("/add-user")}
               sx={{
@@ -159,9 +198,8 @@ export const Users = () => {
               }}
             >
               Add
-              <AddIcon sx={{ color: "#575756", fontSize: "10px" }} />
+              <AddIcon sx={{ color: "#575756", fontSize: "12px" }} />
             </Button>
-
             <Button
               onClick={exportToExcel}
               sx={{
@@ -178,7 +216,7 @@ export const Users = () => {
           </Box>
         </Box>
 
-        <TableContainer>
+        <TableContainer sx={{ maxHeight: "70vh", overflowY: "auto" }}>
           <Table sx={{ borderCollapse: "separate", borderSpacing: "0 5px" }}>
             <TableHead>
               <TableRow sx={{ height: "20px" }}>
@@ -189,7 +227,6 @@ export const Users = () => {
                       fontSize: "10px",
                       padding: "0px 10px",
                       borderBottom: "none",
-                      textAlign: "left",
                       color: "#575756",
                     }}
                   >
@@ -200,7 +237,7 @@ export const Users = () => {
             </TableHead>
 
             <TableBody>
-              {allUsers.map((user, index) => (
+              {filteredUsers.map((user, index) => (
                 <TableRow
                   key={user.id}
                   sx={{
@@ -221,6 +258,8 @@ export const Users = () => {
                       fontSize: "10px",
                       padding: "0px 8px",
                       borderBottom: "none",
+                      textAlign: "center",
+
                     }}
                   >
                     <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -235,6 +274,8 @@ export const Users = () => {
                           width: "22px",
                           height: "22px",
                           color: "#686666",
+                          textAlign: "center",
+
                         }}
                       >
                         {user.img ? (
@@ -295,6 +336,7 @@ export const Users = () => {
                         cursor: "pointer",
                         display: "flex",
                         alignItems: "center"
+
                       }}
                     >
                       <span style={{ color: user.status === "active" ? "#ef7d00" : "#575756", fontWeight: "bolder", fontSize: "20px", marginRight: "3px" }}>&#8226; </span>
@@ -328,7 +370,7 @@ export const Users = () => {
         >
           <Box
             onClick={() => {
-              // handleEditUser(selectedUser.id);
+              navigate("/add-user", { state: { user: selectedUser } });
               handleClose();
             }}
             sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}

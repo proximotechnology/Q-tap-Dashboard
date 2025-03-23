@@ -81,15 +81,15 @@ const Header = () => {
         <StyledAppBar position="static">
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <IconButton >
-                    <span class="icon-eye" style={{ color: "white", fontSize: "25x",marginLeft:"30px" }} />
+                    <span class="icon-eye" style={{ color: "white", fontSize: "25x", marginLeft: "30px" }} />
                 </IconButton>
 
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    
+
                     <StyledButton
                         variant="outlined"
-                        sx={{fontSize:"11px"}}
-                        startIcon={<span class="icon-offer" style={{ color: "#ef7d00",fontSize:"15px" }}></span>}
+                        sx={{ fontSize: "11px" }}
+                        startIcon={<span class="icon-offer" style={{ color: "#ef7d00", fontSize: "15px" }}></span>}
                         onClick={handleOffersOpen}
                     >
                         Special Offers
@@ -100,8 +100,8 @@ const Header = () => {
                     <StyledButton
                         onClick={handleDiscountOpen}
                         variant="outlined"
-                        sx={{fontSize:"10px"}}
-                        startIcon={<img src="/assets/present.svg" alt="add icon" style={{width:"20px" ,height:"20px"}}/>}
+                        sx={{ fontSize: "10px" }}
+                        startIcon={<img src="/assets/present.svg" alt="add icon" style={{ width: "20px", height: "20px" }} />}
                     >
                         Discount Codes
                     </StyledButton>
@@ -111,18 +111,19 @@ const Header = () => {
                     <AddButton
                         onClick={handleCategoryOpen}
                         variant="contained"
-                        sx={{fontSize:"10px"}}
-                        startIcon={<img src="/assets/add.svg" alt="add icon" style={{width:"12px" ,height:"12px"}}/>}
+                        sx={{ fontSize: "10px" }}
+                        startIcon={<img src="/assets/add.svg" alt="add icon" style={{ width: "12px", height: "12px" }} />}
                     >
                         Add Category
                     </AddButton>
+                    
                     <CategoryForm open={openCategory} handleClose={handleClose} />
 
                     {/* زر تصدير واستيراد */}
-                    <ExportText display={"flex"} alignItems={"center"} sx={{fontSize:"11px"}}>
+                    <ExportText display={"flex"} alignItems={"center"} sx={{ fontSize: "11px" }}>
                         Export <KeyboardArrowRightIcon sx={{ fontSize: "18px", color: "#b4650f" }} />
                     </ExportText>
-                    <ExportText display={"flex"} alignItems={"center"} sx={{fontSize:"11px"}}>
+                    <ExportText display={"flex"} alignItems={"center"} sx={{ fontSize: "11px" }}>
                         Import<SouthIcon sx={{ fontSize: "14px", color: "#b4650f" }} />
                     </ExportText>
                 </Box>

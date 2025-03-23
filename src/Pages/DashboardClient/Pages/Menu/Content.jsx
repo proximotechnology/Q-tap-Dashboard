@@ -89,7 +89,7 @@ export const Content = () => {
             }
         } catch (error) {
             console.error('Error fetching items:', error);
-            toast.error('Error fetching items');
+            // toast.error('Error fetching items');
         } finally {
             setLoading(false);
         }
@@ -114,7 +114,7 @@ export const Content = () => {
             }
         } catch (error) {
             console.error('Error fetching categories:', error);
-            toast.error('Error fetching categories');
+            // toast.error('Error fetching categories');
         }
         finally {
             setLoading(false);

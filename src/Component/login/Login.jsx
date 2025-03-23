@@ -70,15 +70,17 @@ export const Login = () => {
 
         if (loginUserType === 'qtap_admins') {
           localStorage.setItem('adminToken', response.data.token);
-          localStorage.setItem("userName" , response.data.user.name);
-          localStorage.setItem("userEmail" , response.data.user.email);
+          localStorage.setItem("userName", response.data.user.name);
+          localStorage.setItem("userEmail", response.data.user.email);
           navigate('/dashboard-home');
         } else if (loginUserType === 'qtap_affiliates') {
           localStorage.setItem('affiliateToken', response.data.token);
           navigate('/dashboard-affiliate');
         } else if (loginUserType === 'qtap_clients') {
           localStorage.setItem('clientToken', response.data.token);
-          localStorage.setItem('allClientData',JSON.stringify(response.data));
+          localStorage.setItem('allClientData', JSON.stringify(response.data));
+          localStorage.setItem("clientName", response.data.user.name);
+          localStorage.setItem("clientEmail", response.data.user.email);
 
           // Store branches in both context and localStorage
           if (response?.data?.brunches && response.data.brunches.length > 0) {

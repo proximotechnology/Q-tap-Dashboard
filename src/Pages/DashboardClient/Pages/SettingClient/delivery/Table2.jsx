@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Table, TableBody, TableCell, IconButton, TableContainer, TableHead, TableRow } from '@mui/material';
 import rows2 from './DeliveryData';
 import AddRider from './AddRider';
+import LoginIcon from '@mui/icons-material/Login';
 export const Table2 = () => {
     const [modalOpen, setModalOpen] = useState(false);
 
@@ -47,7 +48,7 @@ export const Table2 = () => {
                 <Table sx={{ borderCollapse: 'separate', borderSpacing: '0 5px' }}>
                     <TableHead>
                         <TableRow sx={{ height: "25px", borderBottom: "2px solid #f0f0f0" }}>
-                            {["Name", "City", "Mobile No.","Orders","Status", ""].map((header) => (
+                            {["Name", "City", "Mobile No.", "Orders", "Status", ""].map((header) => (
                                 <TableCell
                                     key={header}
                                     sx={{ fontSize: "11px", padding: "0px", width: `${100 / 6}%`, textAlign: "center" }}
@@ -81,12 +82,12 @@ export const Table2 = () => {
                                     },
                                 }}
                             >
-                                <TableCell sx={{color:"#222240",  fontSize: '11px', padding: "2px 20px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.name}</TableCell>
-                                <TableCell sx={{color:"#222240",  fontSize: '11px', padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.city}</TableCell>
-                                <TableCell sx={{color:"#222240",  fontSize: '11px', padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.whatsapp}</TableCell>
+                                <TableCell sx={{ color: "#222240", fontSize: '11px', padding: "2px 20px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.name}</TableCell>
+                                <TableCell sx={{ color: "#222240", fontSize: '11px', padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.city}</TableCell>
+                                <TableCell sx={{ color: "#222240", fontSize: '11px', padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.whatsapp}</TableCell>
 
-                                <TableCell sx={{color:"#E57C00",  fontSize: '13px', fontWeight:"900", padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>
-                                {row.order}</TableCell>
+                                <TableCell sx={{ color: "#E57C00", fontSize: '13px', fontWeight: "900", padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>
+                                    {row.order}</TableCell>
 
                                 <TableCell
                                     sx={{
@@ -98,7 +99,7 @@ export const Table2 = () => {
                                         color: row.status === 'Available' ? 'green' : row.status === 'Busy' ? 'red' : 'defaultColor'
                                     }}
                                 >
-                                    
+
                                     <span
                                         style={{
                                             display: 'inline-block',
@@ -119,9 +120,8 @@ export const Table2 = () => {
                                     <IconButton size="small" color='error'>
                                         <span class="icon-delete" style={{ fontSize: "18px" }} />
                                     </IconButton>
-                                    <IconButton size="small" sx={{marginLeft:"15px"}}>
-                                    <img src="/assets/logout.svg" alt="icon" style={{ width: "16px", height: "16px" }} />
-                                        
+                                    <IconButton size="small" sx={{ marginLeft: "15px" }}>
+                                        <LoginIcon sx={{ color:' #ef7d00' }} />
                                     </IconButton>
                                 </TableCell>
                             </TableRow>

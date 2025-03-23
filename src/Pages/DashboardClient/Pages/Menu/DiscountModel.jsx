@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { useBranch } from '../../../../context/BranchContext';
 import DoneIcon from '@mui/icons-material/Done';
 import { Select, MenuItem } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
 
 export const DiscountModel = ({ open, handleClose }) => {
@@ -14,7 +15,7 @@ export const DiscountModel = ({ open, handleClose }) => {
   const [discount, setDiscount] = useState('');
   const { selectedBranch, discountContent, setDiscountContent } = useBranch();
 
-  console.log("selectedBranch discount", selectedBranch, discountContent);
+  // console.log("selectedBranch discount", selectedBranch, discountContent);
 
   const handleAdd = async () => {
     try {
@@ -100,7 +101,7 @@ export const DiscountModel = ({ open, handleClose }) => {
       }
     } catch (error) {
       console.error('Error fetching discounts:', error);
-      toast.error('Error fetching discounts');
+      // toast.error('Error fetching discounts');
     }
   };
 
@@ -177,7 +178,7 @@ export const DiscountModel = ({ open, handleClose }) => {
           <Box sx={{ marginTop: "10px" }}>
             <Grid container spacing={2} sx={{ mb: 2, marginTop: "12px" }}>
               <Grid item xs={6}>
-                <Typography variant='body2' sx={{ fontSize: "10px", color: "#575756" }}>Code</Typography>
+                <Typography variant='body2' sx={{ fontSize: "11px", color: "#575756" }}>Code</Typography>
                 <TextField
                   fullWidth
                   type="number"
@@ -190,7 +191,7 @@ export const DiscountModel = ({ open, handleClose }) => {
                 />
               </Grid>
               <Grid item xs={6}>
-                <Typography variant='body2' sx={{ fontSize: "10px", color: "#575756" }}>Discount</Typography>
+                <Typography variant='body2' sx={{ fontSize: "11px", color: "#575756" }}>Discount</Typography>
                 <TextField
                   fullWidth
                   type="number"
@@ -222,7 +223,7 @@ export const DiscountModel = ({ open, handleClose }) => {
                   },
                 }}
               >
-                + Add
+                <AddIcon sx={{ margin: "0 2px 2px 0", fontSize: "11px", color: "white", "& path": { stroke: "white", strokeWidth: 3 } }} /> Add
               </Button>
             </Box>
           </Box>
@@ -247,7 +248,8 @@ export const DiscountModel = ({ open, handleClose }) => {
                       value={discount.code}
                       onChange={(e) => handleInputChange(index, "code", e.target.value)}
                       size="small"
-                      sx={{ fontSize: "10px" }}
+                      sx={{ width: "70px", height: "30px", "& .MuiInputBase-root": { height: "30px", fontSize: "10px" } }}
+                      type="number"
                     />
                   ) : (
                     discount.code
@@ -259,7 +261,9 @@ export const DiscountModel = ({ open, handleClose }) => {
                       value={discount.discount}
                       onChange={(e) => handleInputChange(index, "discount", e.target.value)}
                       size="small"
-                      sx={{ fontSize: "10px" }}
+                      sx={{ width: "70px", height: "30px", "& .MuiInputBase-root": { height: "30px", fontSize: "10px" } }}
+                      type="number"
+
                     />
                   ) : (
                     discount.discount
@@ -278,8 +282,8 @@ export const DiscountModel = ({ open, handleClose }) => {
                       size="small"
                       sx={{ fontSize: "10px", width: "80px" }}
                     >
-                      <MenuItem value="active">Active</MenuItem>
-                      <MenuItem value="inactive">Inactive</MenuItem>
+                      <MenuItem sx={{ fontSize: "10px" }} value="active">Active</MenuItem>
+                      <MenuItem sx={{ fontSize: "10px" }} value="inactive">Inactive</MenuItem>
                     </Select>
                   ) : (
                     <Box sx={{

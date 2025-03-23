@@ -49,13 +49,13 @@ export const Transaction = () => {
               <Typography variant="h6" sx={{ fontSize: "15px", color: "#575756" }}>
                 Total Withdrawals
               </Typography>
-              <Typography variant="h6" sx={{ fontSize: "33px", marginTop: "10px", color: "#ef7d00" }}>
+              <Typography variant="h6" sx={{ fontSize: "33px", marginTop: "30px", color: "#ef7d00" }}>
                 501,420
                 <span style={{ color: "gray", fontSize: "15px" }}> EGP</span>
               </Typography>
 
 
-              <Typography variant="body2" sx={{ margin: "15px 0px 30px 0px", color: "#D8E0E0" }} >
+              <Typography variant="body2" sx={{ margin: "0px 0px 30px 0px", color: "#D8E0E0" }} >
                 All Financial Year
               </Typography>
             </Box>

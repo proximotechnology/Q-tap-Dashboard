@@ -15,7 +15,7 @@ const Financial = ({
 }) => (
   <Paper
     sx={{
-      padding: "30px 25px",
+      padding: "32px 25px",
       borderRadius: "20px",
       display: "flex",
       flexDirection: "column",
@@ -55,9 +55,9 @@ const Financial = ({
         )}
       </Box>
     </Box>
-    <Typography variant="h6" sx={{ color: "black", fontSize: "25px" }}>
+    <Typography variant="h6" sx={{ color: "black", fontSize: "25px" , marginTop:"10px" }}>
       {direction === "up" ? (
-        <Box sx={{ marginTop: "20px" }}>
+        <Box sx={{ marginTop: "20px"}}>
           {amount}
           <span style={{ color: "gray", fontSize: "14px" }}> EGP</span>
         </Box>
@@ -74,7 +74,7 @@ const Financial = ({
       )}
     </Typography>
 
-    <Typography variant="body2" sx={{ margin: "15px 0px", color: "#D8E0E0" }}>
+    <Typography variant="body2" sx={{ margin: "0", color: "#D8E0E0" }}>
       {description}
     </Typography>
   </Paper>

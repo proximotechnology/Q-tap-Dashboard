@@ -26,12 +26,12 @@ const Cart2 = () => {
             <BarChart 
                 data={data}
                 layout="vertical"
-                margin={{ top:5, right:10, left:-30, bottom: -10}}
+                margin={{ top:5, right:10, left:-30, bottom: -15}}
             >
                 <XAxis type="number"  tickFormatter={(tick) => `${tick / 1000}k`} 
                   tick={{ fontSize: 9 }} axisLine={false} tickLine={false} />
 
-                <YAxis dataKey="name" type="category"  tick={{ fontSize: 10 }} 
+                <YAxis dataKey="name" type="category"  tick={{ fontSize: 8 }} 
                 interval={0} axisLine={false} tickLine={false} />
 
                 <Tooltip contentStyle={{ fontSize: '10px' }} 
@@ -39,8 +39,8 @@ const Cart2 = () => {
                   cursor={{ fill: 'transparent' }}/>
 
                 
-                <Bar dataKey="value" fill="#000000" background={{ fill: '#d3d3d3' }} barSize={7} 
-                radius={[10, 10, 10, 10]}   />
+                <Bar dataKey="value" fill="#000000" background={{ fill: '#d3d3d3' }} barSize={5} 
+                radius={[10, 10, 10, 10]}    />
             </BarChart>
         </ResponsiveContainer>
     );

@@ -39,9 +39,6 @@ export const Cart4 = () => {
             <defs>
               <linearGradient id="colorGradient" x1="0" y1="0" x2="1" y2="0">
                 <stop offset="0%" stopColor="#fdb913" />
-                <stop offset="29%" stopColor="#f8951e" />
-                <stop offset="56%" stopColor="#f47b27" />
-                <stop offset="81%" stopColor="#f26c2c" />
                 <stop offset="100%" stopColor="#f2672e" />
               </linearGradient>
             </defs>
@@ -65,7 +62,7 @@ export const Cart4 = () => {
               y={45}
               width={40}
               height={40}
-              fill={COLORS[0]}
+              fill="url(#colorGradient)"
               rx={50}
             />
             <text
@@ -84,9 +81,6 @@ export const Cart4 = () => {
             <defs>
               <linearGradient id="colorGradient2" x1="0" y1="0" x2="1" y2="0">
                 <stop offset="0%" stopColor="#fd4845" />
-                <stop offset="29%" stopColor="#d64462" />
-                <stop offset="56%" stopColor="#b2417d" />
-                <stop offset="81%" stopColor="#983f91" />
                 <stop offset="100%" stopColor="#893e9c" />
               </linearGradient>
             </defs>
@@ -108,7 +102,7 @@ export const Cart4 = () => {
               y={45}
               width={40}
               height={40}
-              fill={COLORS[1]}
+              fill="url(#colorGradient2)"
               rx={50}
             />
             <text
@@ -134,7 +128,7 @@ export const Cart4 = () => {
             <Box
               component="span"
               sx={{
-                backgroundColor: COLORS[0],
+                background:"linear-gradient(to right , #f2672e , #fdb913 )",
                 width: "15px",
                 borderRadius: "20px",
                 height: "6px",
@@ -155,7 +149,7 @@ export const Cart4 = () => {
             <Box
               component="span"
               sx={{
-                backgroundColor: COLORS[1],
+                background:"linear-gradient(to right , #893e9c , #fd4845 )",
                 width: "15px",
                 borderRadius: "20px",
                 height: "6px",

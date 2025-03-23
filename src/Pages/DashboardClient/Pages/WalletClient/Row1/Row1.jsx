@@ -96,7 +96,7 @@ export const Row1 = () => {
               zIndex: 1, 
             }}
           >
-            0.00 $
+            0.00 <span style={{ fontSize: "20px"  , opacity:'0.5'}}>£</span>
           </Typography>
 
 
@@ -108,6 +108,7 @@ export const Row1 = () => {
             padding: "1px 10px",
             display: "flex",
             alignItems: "center",
+            justifyContent:"center"
           }}>
             <StraightIcon sx={{ color: "#ef7d00", fontSize: "20px" }} />
             <Button
@@ -120,11 +121,11 @@ export const Row1 = () => {
           <Box marginTop="30px" justifyContent="left">
 
             <Box display={"flex"} textAlign={"center"} alignItems={"center"}>
-              <Box component="span" sx={{ backgroundColor: "#2DA0F6", width: '25px', borderRadius: "20px", height: '10px', display: 'inline-block', marginRight: '8px' }} />
+              <Box component="span" sx={{  background: "linear-gradient(to right,rgb(135, 195, 241), #1C7FCB)", width: '25px', borderRadius: "20px", height: '10px', display: 'inline-block', marginRight: '8px' }} />
               <Typography variant="body2" color="text.secondary" sx={{ fontSize: "9px" }}>Sales Volume</Typography>
             </Box>
             <Box display={"flex"} textAlign={"center"} alignItems={"center"} marginTop="5px">
-              <Box component="span" sx={{ backgroundColor: "#AD4081", width: '25px', borderRadius: "20px", height: '10px', display: 'inline-block', marginRight: '8px' }} />
+              <Box component="span" sx={{ background: "linear-gradient(to right,rgb(250, 160, 214), #8A2C5E)", width: '25px', borderRadius: "20px", height: '10px', display: 'inline-block', marginRight: '8px' }} />
               <Typography variant="body2" color="text.secondary" sx={{ fontSize: "9px" }}>Orders</Typography>
             </Box>
           </Box>

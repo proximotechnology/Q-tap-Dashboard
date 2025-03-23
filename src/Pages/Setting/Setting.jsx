@@ -7,7 +7,7 @@ import OurClients from "./OurClients";
 import { FAQ } from "./FAQ";
 import { Videos } from "./Videos";
 import Content from "./Content";
-import Payment from "../DashboardClient/Pages/SettingClient/Payment";
+import Payment from "./Payment";
 import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 
 export const Setting = () => {
@@ -17,6 +17,7 @@ export const Setting = () => {
   const faqRef = useRef();
   const contentRef = useRef();
   const ourClientsRef = useRef();
+  const paymentRef = useRef();
 
   const tabData = [
     {
@@ -60,7 +61,7 @@ export const Setting = () => {
     {
       label: "Payment",
       icon: <PaymentOutlinedIcon style={{ width: "18px", height: "18px" }} />,
-      content: <Payment />,
+      content: <Payment ref={paymentRef} />,
     },
   ];
 
@@ -84,6 +85,9 @@ export const Setting = () => {
     }
     if (selectedTab === 4 && contentRef.current) {
       contentRef.current.saveContent();
+    }
+    if (selectedTab === 5 && paymentRef.current) {
+      paymentRef.current.savePayment();
     }
   };
 

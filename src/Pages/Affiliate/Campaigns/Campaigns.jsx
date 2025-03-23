@@ -12,6 +12,7 @@ import {
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import axios from "axios";
 import { toast } from "react-toastify";
+import styles from './campaignsCard.module.css'
 
 const Campaigns = () => {
   const [openForm, setOpenForm] = useState(false);
@@ -303,12 +304,12 @@ const Campaigns = () => {
         }}
       >
         {campaigns.map((campaign) => (
-          <Card
+          <Card className={styles.card}
             key={campaign.id}
             sx={{
               width: "160px",
               height: "175px",
-              backgroundColor: "#222240",
+              // background: "linear-gradient(to top right,rgba(34, 34, 64, 0.86) 10%, #222240)",
               borderRadius: "20px",
               padding: "12px 15px",
               color: "white",

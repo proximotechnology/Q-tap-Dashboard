@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
@@ -36,7 +35,7 @@ export const Save = () => {
   const navigate = useNavigate();
 
   // Business Info State
-  const [selectedBranch, setSelectedBranch] = useState(0); // Default to the first branch
+  const [selectedBranch, setSelectedBranch] = useState(0);
   const [businessName, setBusinessName] = useState('');
   const [businessPhone, setBusinessPhone] = useState('');
   const [businessEmail, setBusinessEmail] = useState('');
@@ -101,17 +100,17 @@ export const Save = () => {
       setServingWays(businessData.servingWays || {
         dineIn: true,
         takeaway: true,
-        delivery: true,
+        delivery: false,
       });
       setSelectedServingWays(businessData.selectedServingWays || []);
       setPaymentMethods(businessData.paymentMethods || {
         cash: true,
         digitalWallet: true,
-        card: true,
+        card: false,
       });
       setPaymentTime(businessData.paymentTime || {
         beforeServing: true,
-        afterServing: true,
+        afterServing: false,
       });
     }
   }, [businessData]);
@@ -120,7 +119,6 @@ export const Save = () => {
   const handlePersonalChange = (field, value) => {
     const updatedData = { ...personalData, [field]: value };
     updatePersonalData(updatedData);
-    console.log('Updated Personal Data:', updatedData); // Debug log
   };
 
   // Handle Business Info Changes
@@ -149,8 +147,26 @@ export const Save = () => {
       return currencyMap[country] || 1;
     };
 
+    // Map serving ways to API format
+    const getServingWays = (serving) => {
+      const ways = [];
+      if (serving.dineIn) ways.push('dine_in');
+      if (serving.takeaway) ways.push('take_away');
+      if (serving.delivery) ways.push('delivery');
+      return ways;
+    };
+
+    // Map payment methods to API format
+    const getPaymentServices = (methods) => {
+      const services = [];
+      if (methods.cash) services.push('cash');
+      if (methods.digitalWallet) services.push('wallet');
+      if (methods.card) services.push('card');
+      return services;
+    };
+
     // Format branches for API
-    const apiData = branches.map((branch, index) => ({
+    const apiBranches = branches.map((branch, index) => ({
       brunch: `brunch${index + 1}`,
       contact_info: {
         business_phone: [branch.businessPhone?.trim() || ''],
@@ -171,18 +187,19 @@ export const Save = () => {
         Thursday: ['9am', '7pm'],
         Friday: ['9am', '7pm'],
       },
-      serving_ways: [],
+      serving_ways: getServingWays(branch.servingWays || servingWays),
       tables_number: parseInt(branch.tableCount) || 0,
-      pricing_id: 1,
-      payment_services: [],
-      discount_id: 1,
+      pricing_id: "1", // Default pricing ID per branch
+      pricing_way: "monthly_price", // Default pricing way per branch
+      payment_services: getPaymentServices(branch.paymentMethods || paymentMethods),
+      discount_id: "1", // Default discount ID
       business_name: branch.businessName?.trim() || '',
       business_country: branch.country || '',
       business_city: branch.city || '',
       latitude: '846.668848',
       longitude: '648.4684684',
       business_format: (branch.format || 'uk').toLowerCase(),
-      payment_method: 'cash',
+      payment_method: 'cash', // Default payment method per branch
       menu_design: branch.design || 'grid',
       default_mode: branch.mode === 'light' ? 'white' : 'dark',
       payment_time: branch.paymentTime?.beforeServing ? 'before' : 'after',
@@ -201,13 +218,17 @@ export const Save = () => {
       password: personalData.password || '1',
       user_type: 'qtap_clients',
       img: '',
-      ...apiData.reduce((acc, branch, index) => {
+      payment_method: 'cash', // Root-level payment method
+      pricing_id: "1", // Root-level pricing ID
+      pricing_way: "monthly_price", // Root-level pricing way
+      discount_id: "1", // Root-level discount ID
+      ...apiBranches.reduce((acc, branch, index) => {
         acc[`brunch${index + 1}`] = branch;
         return acc;
       }, {}),
     };
 
-    console.log('Full API Data:', fullApiData);
+    console.log('Full API Data:', JSON.stringify(fullApiData, null, 2));
 
     // Validate data
     const validateData = (data) => {
@@ -218,6 +239,8 @@ export const Save = () => {
       if (!data.birth_date) errors.push('Birth date is required');
       if (!data.country) errors.push('Country is required');
       if (!data.password) errors.push('Password is required');
+      if (!data.pricing_id) errors.push('Pricing ID is required');
+      if (!data.pricing_way) errors.push('Pricing way is required');
       return errors;
     };
 
@@ -234,20 +257,19 @@ export const Save = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Accept: 'application/json',
         },
         body: JSON.stringify(fullApiData),
       });
 
       const responseData = await response.json();
+      console.log('API Response:', responseData);
 
       if (response.ok) {
         toast.success('Data saved successfully!');
         navigate('/welcome');
-        console.log('API Response:', responseData);
       } else {
         console.error('API Error Response:', responseData);
-        toast.error(responseData.message || 'An error occurred while saving data.');
+        toast.error(responseData.error || 'An error occurred while saving data.');
       }
     } catch (error) {
       console.error('Network Error:', error);
@@ -300,7 +322,6 @@ export const Save = () => {
         </Box>
 
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          {/* Language Selector */}
           <Box
             sx={{ cursor: 'pointer', display: 'flex', marginRight: '20px', alignItems: 'center' }}
             onClick={handleLanguageClick}
@@ -314,10 +335,7 @@ export const Save = () => {
               sx={{ padding: '2px' }}
             >
               <MenuItem onClick={() => handleLanguageClose('ar')}>
-                <span
-                  className="icon-translation"
-                  style={{ color: '#575756', marginRight: '8px', fontSize: '20px' }}
-                />
+                <span className="icon-translation" style={{ color: '#575756', marginRight: '8px', fontSize: '20px' }} />
                 <span style={{ fontSize: '12px', color: '#575756' }}>Arabic</span>
               </MenuItem>
               <Divider />
@@ -328,7 +346,6 @@ export const Save = () => {
             </Menu>
           </Box>
 
-          {/* User Popover */}
           <Box
             aria-describedby={openUserPopover ? 'simple-popover' : undefined}
             onClick={handleUserClick}
@@ -340,9 +357,7 @@ export const Save = () => {
                 backgroundColor: '#ef7d00',
                 borderRadius: '30%',
                 padding: '5px',
-                '&:hover': {
-                  backgroundColor: '#ef7d00',
-                },
+                '&:hover': { backgroundColor: '#ef7d00' },
               }}
             >
               <PersonOutlineOutlined sx={{ fontSize: '20px', color: 'white' }} />
@@ -357,35 +372,23 @@ export const Save = () => {
             open={openUserPopover}
             anchorEl={anchorElUser}
             onClose={handleUserClose}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left',
-            }}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
           >
             <Box sx={{ width: 200, padding: '10px' }}>
               <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                  marginBottom: '20px',
-                  gap: '10px',
-                }}
+                sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row', marginBottom: '20px', gap: '10px' }}
               >
                 <Avatar sx={{ bgcolor: '#ef7d00', width: 40, height: 40 }}>
                   <PersonOutlineOutlined sx={{ fontSize: '22px' }} />
                 </Avatar>
                 <Box>
-                  <Typography variant="h6" sx={{ fontSize: '14px' }}>
-                    User01
-                  </Typography>
+                  <Typography variant="h6" sx={{ fontSize: '14px' }}>User01</Typography>
                   <Typography variant="body2" sx={{ fontSize: '12px' }} color="textSecondary">
                     Mail@mail.com
                   </Typography>
                 </Box>
               </Box>
               <Divider />
-
               <List>
                 <Box
                   onClick={() => navigate('/')}
@@ -404,60 +407,43 @@ export const Save = () => {
                     margin: '0 auto',
                   }}
                 >
-                  <span
-                    className="icon-home-icon-silhouette"
-                    style={{ color: '#ef7d00', marginRight: '5px', fontSize: '15px' }}
-                  />
-                  <span style={{ color: 'white', fontSize: '12px', textTransform: 'capitalize' }}>
-                    Home
-                  </span>
+                  <span className="icon-home-icon-silhouette" style={{ color: '#ef7d00', marginRight: '5px', fontSize: '15px' }} />
+                  <span style={{ color: 'white', fontSize: '12px', textTransform: 'capitalize' }}>Home</span>
                 </Box>
-
                 <ListItem sx={{ cursor: 'pointer' }} onClick={handleUserClose}>
                   <ListItemIcon>
                     <img src="/assets/setting.svg" alt="icon" style={{ width: '16px', height: '16px' }} />
                   </ListItemIcon>
                   <ListItemText
                     primary="Edit Profile"
-                    primaryTypographyProps={{
-                      sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: '-30px' },
-                    }}
+                    primaryTypographyProps={{ sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: '-30px' } }}
                   />
                 </ListItem>
-
                 <ListItem sx={{ cursor: 'pointer' }} onClick={handleUserClose}>
                   <ListItemIcon>
                     <span className="icon-price-tag" style={{ fontSize: '20px' }} />
                   </ListItemIcon>
                   <ListItemText
                     primary="My Subscription"
-                    primaryTypographyProps={{
-                      sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: '-30px' },
-                    }}
+                    primaryTypographyProps={{ sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: '-30px' } }}
                   />
                 </ListItem>
-
                 <ListItem sx={{ cursor: 'pointer' }} onClick={handleUserClose}>
                   <ListItemIcon>
                     <HelpOutlineOutlined sx={{ fontSize: '20px' }} />
                   </ListItemIcon>
                   <ListItemText
                     primary="FAQ"
-                    primaryTypographyProps={{
-                      sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: '-30px' },
-                    }}
+                    primaryTypographyProps={{ sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: '-30px' } }}
                   />
                 </ListItem>
-
                 <ListItem sx={{ cursor: 'pointer' }} onClick={handleUserClose}>
                   <ListItemIcon>
                     <img src="/assets/logout.svg" alt="icon" style={{ width: '16px', height: '16px' }} />
                   </ListItemIcon>
                   <ListItemText
                     primary="Logout"
-                    primaryTypographyProps={{
-                      sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: '-30px' },
-                    }}
+                    primaryTypographyProps={{ sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: '-30px' } }}
                   />
                 </ListItem>
               </List>
@@ -466,29 +452,21 @@ export const Save = () => {
         </Box>
       </Box>
 
-      {/* Divider */}
       <Divider sx={{ backgroundColor: '#ef7d00', borderBottom: 'none', width: '100%', height: '3px' }} />
 
-      {/* Main Content */}
       <Box>
         <Grid container spacing={1}>
           <Grid item xs={12} md={5}>
             <PersonalInfo personalData={personalData} onInputChange={handlePersonalChange} />
           </Grid>
-
           <Box item sx={{ display: { xs: 'none', sm: 'block' } }}>
-            <Divider
-              orientation="vertical"
-              sx={{ backgroundColor: '#f4f6fc', width: '1px', marginTop: '30px', height: '90%' }}
-            />
+            <Divider orientation="vertical" sx={{ backgroundColor: '#f4f6fc', width: '1px', marginTop: '30px', height: '90%' }} />
           </Box>
-
           <Grid item xs={12} md={6}>
             <BusinessInfo businessData={businessData} onInputChange={handleBusinessChange} />
           </Grid>
         </Grid>
 
-        {/* Save Button */}
         <Grid container justifyContent="center" sx={{ marginTop: 3 }}>
           <Button
             onClick={handleSave}
@@ -499,9 +477,7 @@ export const Save = () => {
               color: 'white',
               borderRadius: '20px',
               padding: '5px',
-              '&:hover': {
-                backgroundColor: '#ef7d10',
-              },
+              '&:hover': { backgroundColor: '#ef7d10' },
             }}
           >
             <CheckOutlined sx={{ fontSize: '22px', mr: 1 }} /> Saved

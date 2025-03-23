@@ -18,105 +18,128 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { ClientLoginData } from '../../../../context/ClientLoginDataContext';
 import AddTableModal from './AddTable'; // Ensure this component is created
-
+import styles from '../SupportClient/supportCard.module.css'
 const TableCard = ({ table, onDeleteTable, onEditTable }) => (
-  <Card
-    sx={{
-      height: '270px',
-      maxWidth: 180,
-      width: '140px',
-      borderRadius: '10px',
-      backgroundColor: '#EBEDF3',
-      position: 'relative',
-    }}
-  >
-    <CardContent>
-      <Box display={'flex'} justifyContent={'space-between'}>
-        <Typography variant="subtitle2" sx={{ fontSize: '11px', color: '#E57C00' }}>
-          ID{' '}
-          <span style={{ fontSize: '10px', color: '#AAAAAA', borderBottom: '1px solid #AAAAAA' }}>
-            {table.id}
-          </span>
-        </Typography>
-        <span
-          onClick={onDeleteTable}
-          className="icon-delete"
-          style={{ fontSize: '15px', color: 'red', cursor: 'pointer' }}
-        />
-      </Box>
-      <Divider
+<Card
+      className={styles.card3} // Apply the card3 class for the gradient background
+      sx={{
+        height: '270px',
+        maxWidth: 180,
+        width: '140px',
+        borderRadius: '10px',
+        backgroundColor: 'rgb(211, 221, 253)', // Base background color for the card
+        position: 'relative',
+      }}
+    >
+      <CardContent
         sx={{
-          backgroundImage: 'linear-gradient(to right, #FDB913, #F2672E)',
-          height: '2px',
-          marginTop: '2px',
-          border: 'none',
-        }}
-      />
-
-      <Typography sx={{ fontSize: '12px', display: 'flex', color: '#7b6a6a', marginTop: '9px' }}>
-        <TableBarOutlinedIcon sx={{ fontSize: '12px', mr: '5px' }} /> Name
-      </Typography>
-      <Typography variant="body2" component="div" sx={{ fontSize: '9px', display: 'flex', color: '#9d9d9c', marginLeft: '5px' }}>
-        {table.name}
-      </Typography>
-
-      <Box display={'flex'} justifyContent={'space-between'}>
-        <Box>
-          <Typography variant="body2" sx={{ fontSize: '10px', display: 'flex', color: '#7b6a6a', marginTop: '10px' }}>
-            <ChairAltOutlinedIcon sx={{ fontSize: '14px', mr: '5px' }} />
-            Chairs
-          </Typography>
-          <Typography variant="body2" sx={{ fontSize: '10px', display: 'flex', color: '#9d9d9c', marginLeft: '5px' }}>
-            {table.chairs} ch
-          </Typography>
-        </Box>
-        <Box>
-          <Typography variant="body2" sx={{ fontSize: '10px', display: 'flex', color: '#7b6a6a', marginTop: '10px' }}>
-            <img src="/assets/location.svg" alt="location icon" style={{ width: '13px', height: '13px' }} />
-            Area
-          </Typography>
-          <Typography variant="body2" sx={{ fontSize: '10px', display: 'flex', color: '#9d9d9c', marginLeft: '10px' }}>
-            {table.area}
-          </Typography>
-        </Box>
-      </Box>
-
-      <Box
-        sx={{
-          height: '100px',
-          textAlign: 'center',
-          borderRadius: '10px',
-          border: '3px solid #ef7d00',
-          margin: '10px auto',
-          display: 'flex',
-          width: '90%',
-          padding: '2px 5px',
-          justifyContent: 'center',
-          alignContent: 'center',
+          zIndex: 5, // Ensure content is above the ::before pseudo-element
+          height: '100%', // Ensure the background covers the entire content area
+          position: 'relative', // Ensure the content is positioned correctly
         }}
       >
-        <QRCodeSVG
-          value={`https://highleveltecknology.com/Qtap${table.link}`}
-          size={90}
-          fgColor="#000000"
-          bgColor="#FFFFFF"
-          level="Q"
+        <Box display={'flex'} justifyContent={'space-between'}>
+          <Typography variant="subtitle2" sx={{ fontSize: '11px', color: '#E57C00' }}>
+            ID{' '}
+            <span style={{ fontSize: '10px', color: '#AAAAAA', borderBottom: '1px solid #AAAAAA' }}>
+              {table.id}
+            </span>
+          </Typography>
+          <span
+            onClick={onDeleteTable}
+            className="icon-delete"
+            style={{ fontSize: '15px', color: 'red', cursor: 'pointer' }}
+          />
+        </Box>
+        <Divider
+          sx={{
+            backgroundImage: 'linear-gradient(to right, #FDB913, #F2672E)',
+            height: '2px',
+            marginTop: '2px',
+            border: 'none',
+          }}
         />
-      </Box>
 
-      <Grid container justifyContent="center" alignItems="center">
-        <IconButton>
-          <span className="icon-link" style={{ fontSize: '15px', color: 'black' }} />
-        </IconButton>
-        <IconButton>
-          <span className="icon-qr-code" style={{ fontSize: '15px', color: 'black' }} />
-        </IconButton>
-        <IconButton onClick={() => onEditTable(table)}>
-          <span className="icon-edit" style={{ fontSize: '18px', color: 'black' }} />
-        </IconButton>
-      </Grid>
-    </CardContent>
-  </Card>
+        <Typography sx={{ fontSize: '12px', display: 'flex', color: '#7b6a6a', marginTop: '9px' }}>
+          <TableBarOutlinedIcon sx={{ fontSize: '12px', mr: '5px' }} /> Name
+        </Typography>
+        <Typography
+          variant="body2"
+          component="div"
+          sx={{ fontSize: '9px', display: 'flex', color: '#9d9d9c', marginLeft: '5px' }}
+        >
+          {table.name}
+        </Typography>
+
+        <Box display={'flex'} justifyContent={'space-between'}>
+          <Box>
+            <Typography
+              variant="body2"
+              sx={{ fontSize: '10px', display: 'flex', color: '#7b6a6a', marginTop: '10px' }}
+            >
+              <ChairAltOutlinedIcon sx={{ fontSize: '14px', mr: '5px' }} />
+              Chairs
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{ fontSize: '10px', display: 'flex', color: '#9d9d9c', marginLeft: '5px' }}
+            >
+              {table.chairs} ch
+            </Typography>
+          </Box>
+          <Box>
+            <Typography
+              variant="body2"
+              sx={{ fontSize: '10px', display: 'flex', color: '#7b6a6a', marginTop: '10px' }}
+            >
+              <img src="/assets/location.svg" alt="location icon" style={{ width: '13px', height: '13px' }} />
+              Area
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{ fontSize: '10px', display: 'flex', color: '#9d9d9c', marginLeft: '10px' }}
+            >
+              {table.area}
+            </Typography>
+          </Box>
+        </Box>
+
+        <Box
+          sx={{
+            height: '100px',
+            textAlign: 'center',
+            borderRadius: '10px',
+            border: '3px solid #ef7d00',
+            margin: '10px auto',
+            display: 'flex',
+            width: '90%',
+            padding: '2px 5px',
+            justifyContent: 'center',
+            alignContent: 'center',
+          }}
+        >
+          <QRCodeSVG
+            value={`https://highleveltecknology.com/Qtap${table.link}`}
+            size={90}
+            fgColor="#000000"
+            bgColor="#FFFFFF"
+            level="Q"
+          />
+        </Box>
+
+        <Grid container justifyContent="center" alignItems="center">
+          <IconButton>
+            <span className="icon-link" style={{ fontSize: '15px', color: 'black' }} />
+          </IconButton>
+          <IconButton>
+            <span className="icon-qr-code" style={{ fontSize: '15px', color: 'black' }} />
+          </IconButton>
+          <IconButton onClick={() => onEditTable(table)}>
+            <span className="icon-edit" style={{ fontSize: '18px', color: 'black' }} />
+          </IconButton>
+        </Grid>
+      </CardContent>
+    </Card>
 );
 
 export const Tables = ({ openOldMenu }) => {
@@ -192,8 +215,14 @@ export const Tables = ({ openOldMenu }) => {
           Add Tables
         </Typography>
 
-        <Divider sx={{ backgroundColor: '#E57C00', height: '1px', margin: '8px 0px' }} />
-
+        <Divider
+        sx={{
+          backgroundImage: 'linear-gradient(to right, #FDB913, #F2672E)',
+          height: '2px',
+          marginTop: '2px',
+          border: 'none',
+        }}
+      />
         <Grid container spacing={2} sx={{ marginTop: '10px' }}>
           {tableDataRes.map((table, index) => (
             <Grid item key={index}>

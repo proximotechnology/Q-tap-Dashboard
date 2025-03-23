@@ -5,7 +5,7 @@ import { useBranch } from '../../../../context/BranchContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { ContentMenu } from '../../../../context/ContentMenuContext';
-
+import AddIcon from '@mui/icons-material/Add';
 export const OffersModel = ({ open, handleClose }) => {
     const { selectedBranch } = useBranch();
     const [discounts, setDiscounts] = useState([
@@ -68,15 +68,14 @@ export const OffersModel = ({ open, handleClose }) => {
 
         if (offer.isEditing) {
             try {
-                // إرسال البيانات الجديدة إلى الـ API
                 const response = await axios.put(
                     `https://highleveltecknology.com/Qtap/api/meals_special_offers/${offer.id}`,
                     {
-                        discount: offer.discount, // الخصم الجديد
-                        before_discount: offer.priceBefore, // السعر قبل الخصم الجديد
-                        after_discount: offer.priceAfter, // السعر بعد الخصم الجديد
-                        meals_id: offer.item, // معرف الوجبة
-                        brunch_id: selectedBranch // معرف الفرع
+                        discount: offer.discount, 
+                        before_discount: offer.priceBefore,
+                        after_discount: offer.priceAfter, 
+                        meals_id: offer.item, 
+                        brunch_id: selectedBranch 
                     },
                     {
                         headers: {
@@ -114,7 +113,7 @@ export const OffersModel = ({ open, handleClose }) => {
                     brunch_id: selectedBranch
                 }
             });
-            console.log("response offers", response?.data);
+            // console.log("response offers", response?.data);
 
             if (response.data) {
                 const formattedOffers = response.data.map(offer => ({
@@ -129,7 +128,7 @@ export const OffersModel = ({ open, handleClose }) => {
             }
         } catch (error) {
             console.error('Error fetching discounts:', error);
-            toast.error('Error fetching discounts');
+            // toast.error('Error fetching discounts');
         }
     };
     useEffect(() => {
@@ -185,7 +184,9 @@ export const OffersModel = ({ open, handleClose }) => {
                                 {/* Item Field */}
                                 <TableCell sx={{ textAlign: 'center', fontSize: '12px', color: 'gray', padding: '3px 0px', borderBottom: 'none' }}>
                                     {offer.isEditing ? (
-                                        <FormControl size="small" sx={{ width: '110px', height: "30px", padding: "0px 10px", textAlign: 'left' }}>
+                                        <FormControl
+                                            size="small"
+                                            sx={{ width: "70px", height: "30px", "& .MuiInputBase-root": { height: "30px", fontSize: "10px" } }}>
                                             <Select
                                                 value={offer.item}
                                                 onChange={(e) => handleInputChange(index, 'item', e.target.value)}
@@ -211,7 +212,7 @@ export const OffersModel = ({ open, handleClose }) => {
                                             onChange={(e) => handleInputChange(index, 'discount', e.target.value)}
                                             variant="outlined"
                                             size="small"
-                                            sx={{ width: '70px', fontSize: '12px', color: 'gray' }}
+                                            sx={{ width: "70px", height: "30px", "& .MuiInputBase-root": { height: "30px", fontSize: "10px" } }}
                                         />
                                     ) : (
                                         <span style={{ fontSize: '10px', color: 'gray' }}>{offer.discount}</span>
@@ -226,7 +227,7 @@ export const OffersModel = ({ open, handleClose }) => {
                                             onChange={(e) => handleInputChange(index, 'priceBefore', e.target.value)}
                                             variant="outlined"
                                             size="small"
-                                            sx={{ width: '70px', fontSize: '12px', color: 'gray' }}
+                                            sx={{ width: "70px", height: "30px", "& .MuiInputBase-root": { height: "30px", fontSize: "10px" } }}
                                         />
                                     ) : (
                                         <span style={{ fontSize: '10px', color: 'gray' }}>{offer.priceBefore}</span>
@@ -241,7 +242,7 @@ export const OffersModel = ({ open, handleClose }) => {
                                             onChange={(e) => handleInputChange(index, 'priceAfter', e.target.value)}
                                             variant="outlined"
                                             size="small"
-                                            sx={{ width: '70px', fontSize: '12px', color: 'gray' }}
+                                            sx={{ width: "70px", height: "30px", "& .MuiInputBase-root": { height: "30px", fontSize: "10px" } }}
                                         />
                                     ) : (
                                         <span style={{ fontSize: '10px', color: 'gray' }}>{offer.priceAfter}</span>
@@ -282,13 +283,15 @@ export const OffersModel = ({ open, handleClose }) => {
                             width: "30%",
                             textTransform: 'none',
                             padding: '3px 12px', fontSize: "12px",
-
+                            display: 'flex',
+                            justifyContent: "center",
+                            alignItems: "center",
                             '&:hover': {
                                 backgroundColor: '#f18101',
                             },
                         }}
                     >
-                        + Add
+                        <AddIcon sx={{ margin: "0 2px 2px 0", fontSize: "11px", color: "white", "& path": { stroke: "white", strokeWidth: 3 } }} /> Add
                     </Button>
                 </Box>
 

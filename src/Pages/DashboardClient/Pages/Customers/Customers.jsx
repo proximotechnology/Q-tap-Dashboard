@@ -33,14 +33,14 @@ export const Customers = () => {
         justifyContent="space-between"
         alignItems="center"
         width="100%"
-        padding="5px 0"
+        padding="10px 0"
       >
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <span class="icon-show" style={{ fontSize: "30px", color: "#D8E0E0", marginRight: "6px" }} ></span>
           <Typography variant='body1' sx={{ fontSize: "14px", color: "#575756" }}>Log</Typography>
         </Box>
 
-        <Box sx={{display:"flex",  alignItems:"center"}}>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
 
           <TextField
             variant="outlined"
@@ -50,7 +50,7 @@ export const Customers = () => {
             InputProps={{
               startAdornment: <CalendarMonthOutlinedIcon sx={{ fontSize: "15px", marginRight: "5px", color: "#c7c3c3" }} />,
               endAdornment: <ArrowDropDownIcon sx={{ color: "#615f5f", fontSize: "18px" }} />,
-              style: { fontSize: '10px',  padding: '1px 6px',height:"20px", borderRadius: "6px" },
+              style: { fontSize: '10px', padding: '1px 6px', height: "20px", borderRadius: "6px" },
             }}
             InputLabelProps={{
               style: { fontSize: '10px' },
@@ -64,7 +64,7 @@ export const Customers = () => {
             InputProps={{
               startAdornment: <CalendarMonthOutlinedIcon sx={{ fontSize: "15px", marginRight: "5px", color: "#c7c3c3" }} />,
               endAdornment: <ArrowDropDownIcon sx={{ color: "#615f5f", fontSize: "18px" }} />,
-              style: { fontSize: '10px', padding: '1px 6px',height:"20px", borderRadius: "6px" },
+              style: { fontSize: '10px', padding: '1px 6px', height: "20px", borderRadius: "6px" },
             }}
           />
           <Button
@@ -90,11 +90,11 @@ export const Customers = () => {
       <TableContainer>
         <Table sx={{ borderCollapse: 'separate', borderSpacing: '0 5px' }}>
           <TableHead>
-            <TableRow sx={{ height: "25px", borderBottom: "2px solid #f0f0f0" }}>
-              {["Dine Method", "Name", "Email", "Phone", "Note", "Visit Time"," "].map((header) => (
+            <TableRow sx={{ height: "25px", borderBottom: "2px solid #f0f0f0"}}>
+              {["Dine Method", "Name", "Email", "Phone", "Note", "Visit Time", " "].map((header) => (
                 <TableCell
                   key={header}
-                  sx={{ fontSize: "12px", padding: "4px", width: `${100 / 6}%`, textAlign: "left" }}
+                  sx={{ fontSize: "11px", padding: "4px", width: `${100 / 6}%`, textAlign: "left"  ,paddingTop:"10px" }}
                 >
                   {header}
                 </TableCell>
@@ -106,7 +106,7 @@ export const Customers = () => {
               <TableRow
                 key={index}
                 sx={{
-                  backgroundColor: index % 2 === 0 ? '#f5f5f5' : 'white',
+                  backgroundColor: index % 2 === 0 ? ' #EBEDF3' : 'white',
                   height: "30px",
                   borderRadius: '20px',
                   '&:nth-of-type(odd)': {
@@ -125,23 +125,21 @@ export const Customers = () => {
                   },
                 }}
               >
-                <TableCell sx={{ fontSize: '11px', padding: "3px 20px", width: `${100 / 7}%`, textAlign: "left", borderBottom: "none" }}>{row.dineMethod}</TableCell>
-                <TableCell sx={{ fontSize: '11px', padding: "3px", width: `${100 / 7}%`, textAlign: "left", borderBottom: "none" }}>{row.name}</TableCell>
-                <TableCell sx={{ fontSize: '11px', padding: "3px", width: `${100 / 7}%`, textAlign: "left", borderBottom: "none" }}>{row.email}</TableCell>
-                <TableCell sx={{ fontSize: '11px', padding: "3px", width: `${100 / 7}%`, textAlign: "left", borderBottom: "none" }}>{row.phone}</TableCell>
-                <TableCell sx={{ fontSize: '11px', padding: "3px", width: `${100 / 7}%`, textAlign: "left", borderBottom: "none" }}>
-                  <span>
-                    <RemoveRedEyeOutlinedIcon sx={{ fontSize: "16px", color: "#d3cfcf", marginRight: "5px" }} />
-                  </span>
+                <TableCell sx={{ fontSize: '10px', padding: "3px 20px", width: `${100 / 7}%`, textAlign: "left", borderBottom: "none" }}>{row.dineMethod}</TableCell>
+                <TableCell sx={{ fontSize: '10px', padding: "3px", width: `${100 / 7}%`, textAlign: "left", borderBottom: "none" }}>{row.name}</TableCell>
+                <TableCell sx={{ fontSize: '10px', padding: "3px", width: `${100 / 7}%`, textAlign: "left", borderBottom: "none" }}>{row.email}</TableCell>
+                <TableCell sx={{ fontSize: '10px', padding: "3px", width: `${100 / 7}%`, textAlign: "left", borderBottom: "none" }}>{row.phone}</TableCell>
+                <TableCell sx={{ fontSize: '10px', padding: "3px", width: `${100 / 7}%`, textAlign: "left", borderBottom: "none" , display:'flex', alignItems:"center" , justifyContent:"start"}}>
+                    <RemoveRedEyeOutlinedIcon sx={{ fontSize: "16px", color: "#d3cfcf", marginRight: "5px"   }} />
                   {row.note}
                 </TableCell>
-                <TableCell sx={{ fontSize: '11px', padding: "3px 20px 0px 0px", width: `${100 / 7}%`, textAlign: "left", borderBottom: "none" }}>{row.visitTime}</TableCell>
+                <TableCell sx={{ fontSize: '10px', padding: "3px 20px 0px 0px", width: `${100 / 7}%`, textAlign: "left", borderBottom: "none" }}>{row.visitTime}</TableCell>
                 <TableCell >
                 </TableCell>
 
                 <TableCell >
                 </TableCell>
- 
+
 
               </TableRow>
             ))}

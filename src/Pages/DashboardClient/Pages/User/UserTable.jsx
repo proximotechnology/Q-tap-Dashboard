@@ -5,14 +5,16 @@ import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import * as XLSX from 'xlsx';
-import { userData } from './userData';
 import { AddUser } from './AddUser';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useBranch } from '../../../../context/BranchContext';
 
 export const UserTable = () => {
   const [visiblePasswords, setVisiblePasswords] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
+  const [userStaff, setUserStaff] = useState([]);
+  const { selectedBranch } = useBranch(); // Use selectedBranch from context
 
   const handleToggleVisibility = (rowId) => {
     setVisiblePasswords((prev) => ({
@@ -25,28 +27,21 @@ export const UserTable = () => {
   const handleClose = () => setModalOpen(false);
 
   const handleExport = () => {
-    const dataToExport = userData.map((row) => ({
-      "User Name": row.userName,
-      "Created": row.created,
+    const dataToExport = userStaff.map((row) => ({
+      "User Name": row.name,
+      "Created": row.created_at,
       "PIN": visiblePasswords[row.id] ? row.pin : '******',
-      "Access": row.access,
-      "Status": row.status,
+      "Access": row.access || '',
+      "Status": row.status || '',
     }));
-
 
     const worksheet = XLSX.utils.json_to_sheet(dataToExport);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Users");
-
-
     XLSX.writeFile(workbook, "User_Data.xlsx");
   };
 
-  //========================================== get userStaff data 
-
-  const [userStaff, setUserStaff] = useState([]);
-  const selectedBranch = localStorage.getItem("selectedBranch")
-
+  // Fetch user staff data
   const getUserStaff = async () => {
     try {
       const response = await axios.get('https://highleveltecknology.com/Qtap/api/restaurant_users', {
@@ -55,27 +50,27 @@ export const UserTable = () => {
           "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
         },
         params: {
-          brunch_id: selectedBranch
+          brunch_id: selectedBranch // Use selectedBranch from context
         }
-
-      })
+      });
 
       if (response.data) {
-        setUserStaff(response.data.restaurant_users);
+        setUserStaff(response.data.restaurant_users || []);
       }
-      console.log("userStaff data response ", response.data);
-
+      // console.log("userStaff data response ", response.data);
     } catch (error) {
       console.log("error userStaff data ", error);
-
     }
+  };
 
-  }
+  // Fetch data when selectedBranch changes
   useEffect(() => {
-    getUserStaff();
-  }, [])
-  //========================================== handle delete userStaff
+    if (selectedBranch) {
+      getUserStaff();
+    }
+  }, [selectedBranch]); // Re-fetch data when selectedBranch changes
 
+  // Handle delete user staff
   const handleDeleteUserStaff = async (id) => {
     try {
       const response = await axios.delete(`https://highleveltecknology.com/Qtap/api/restaurant_users/${id}`, {
@@ -83,19 +78,30 @@ export const UserTable = () => {
           'Content-Type': 'application/json',
           "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
         }
-      })
+      });
 
       if (response.data) {
         toast.success("UserStaff deleted successfully!");
-        getUserStaff();
+        getUserStaff(); // Refresh data after deletion
       }
     } catch (error) {
       console.log("error delete UserStaff ", error);
       toast.error("Error deleting UserStaff");
-
     }
-  }
+  };
+  // New states for search functionality
+  const [showSearch, setShowSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
+  const handleSearchClick = () => {
+    setShowSearch(!showSearch);
+    setSearchQuery(''); // Reset search query when toggling
+  };
+
+  // Filter tickets based on search query
+  const filteredUserStaff = userStaff.filter(user =>
+    user.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   return (
     <Paper sx={{ padding: "15px 30px 50px 30px", borderRadius: "20px" }}>
       <Box display="flex" justifyContent="space-between" alignItems="center" width="100%" padding="5px 0">
@@ -105,9 +111,43 @@ export const UserTable = () => {
         </Box>
 
         <Box sx={{ display: "flex" }}>
-          <IconButton>
-            <span className="icon-magnifier" style={{ fontSize: "16px" }} />
-          </IconButton>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+            }}
+          >
+            {showSearch && (
+              <Box sx={{ width: showSearch ? "100%" : "20%" }}>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search by name..."
+                  style={{
+                    width: "100%",
+                    padding: "6px 8px",
+                    borderRadius: "6px",
+                    border: "1px solid rgba(0, 0, 0, 0.23)",
+                    fontSize: "12px",
+                    outline: "none",
+                    backgroundColor: "#fff",
+                    "&:hover": {
+                      borderColor: "rgba(0, 0, 0, 0.87)",
+                    },
+                  }}
+                />
+              </Box>
+            )}
+            <IconButton onClick={handleSearchClick}>
+              <span
+                className="icon-magnifier"
+                style={{ fontSize: "15px", color: "#575756" }}
+              />
+            </IconButton>
+
+          </Box>
           <Button onClick={handleOpen} sx={{ fontSize: "12px", color: "#ef7d00", display: "flex", cursor: "pointer", textTransform: "capitalize" }}>
             Add
             <span style={{ fontSize: "15px", color: "#ef7d00", fontWeight: 700, paddingLeft: "6px" }}>+</span>
@@ -138,7 +178,7 @@ export const UserTable = () => {
           </TableHead>
 
           <TableBody>
-            {userStaff.map((row) => (
+            {filteredUserStaff.map((row) => (
               <TableRow
                 key={row.id}
                 sx={{
@@ -165,7 +205,7 @@ export const UserTable = () => {
                   </IconButton>
                 </TableCell>
                 <TableCell sx={{ color: "#575756", fontSize: '11px', padding: "0px 2px", textAlign: "center", borderBottom: "none" }}>
-                  {/* {row.access} */}
+                  {row.access || ''}
                 </TableCell>
                 <TableCell sx={{ color: "#575756", fontSize: '11px', padding: "0px 2px", textAlign: "center", borderBottom: "none" }}>
                   <Button sx={{
@@ -174,10 +214,9 @@ export const UserTable = () => {
                     backgroundColor: row.status === "Active" ? "#8DE6B6" : "#f05e5e",
                     "&:hover": { backgroundColor: row.status === "Active" ? "#8DE6B6" : "#d04a4a" }
                   }}>
-                    {/* {row.status} */}
+                    {row.status || ''}
                   </Button>
                 </TableCell>
-
                 <TableCell sx={{ padding: "0px 2px", textAlign: "left", borderBottom: "none" }}>
                   <IconButton onClick={() => handleDeleteUserStaff(row.id)}>
                     <span className="icon-delete" style={{ fontSize: "16px", color: "black" }} />
