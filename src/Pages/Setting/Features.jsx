@@ -7,11 +7,12 @@ import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
 import AddIcon from "@mui/icons-material/Add";
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 const FeatureSection = ({ section, updateSection, index }) => {
     const [feature, setFeature] = useState('');
     const fileInputRef = useRef(null);
-
+    const {t} = useTranslation()
     const handleAddFeature = () => {
         if (feature.trim()) {
             updateSection(index, { ...section, features: [...section.features, feature.trim()] });
@@ -42,12 +43,12 @@ const FeatureSection = ({ section, updateSection, index }) => {
                     {section.imgFile ? (
                         <img src={section.imgFile} alt="Uploaded" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "10px" }} />
                     ) : (
-                        <Typography color="gray">No Image</Typography>
+                        <Typography color="gray">{t("noImage")}</Typography>
                     )}
                 </Box>
                 <Box sx={{ display: "flex", flexDirection: "column", alignItems: "start", justifyContent: "start" }}>
                     <Typography variant="subtitle1" sx={{ fontSize: "10px", color: "gray", margin: '5px 10px' }}>
-                        Image {index + 1}
+                       {t("image")} {index + 1}
                     </Typography>
                     <Button
                         variant="contained"
@@ -58,7 +59,7 @@ const FeatureSection = ({ section, updateSection, index }) => {
                         }}
                         onClick={handleFileInputClick}
                     >
-                        Upload
+                        {t("upload")}
                     </Button>
                 </Box>
                 <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleImageUpload} />
@@ -66,16 +67,16 @@ const FeatureSection = ({ section, updateSection, index }) => {
 
             <Grid item xs={12} md={10}>
                 <Grid container spacing={1}>
-                    <Grid item xs={12}><TextField placeholder="Title (En)" fullWidth variant="outlined" size="small" value={section.titleEn} onChange={(e) => updateSection(index, { ...section, titleEn: e.target.value })} sx={{ '& .MuiOutlinedInput-root': { fontSize: "10px", height: "25px", borderRadius: "10px", backgroundColor: "#EBEDF3", border: "none" }, '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }} /></Grid>
-                    <Grid item xs={12}><TextField placeholder="Description (En)" fullWidth variant="outlined" size="small" value={section.descriptionEn} onChange={(e) => updateSection(index, { ...section, descriptionEn: e.target.value })} sx={{ '& .MuiOutlinedInput-root': { fontSize: "10px", height: "40px", borderRadius: "10px", backgroundColor: "#EBEDF3", border: "none" }, '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }} /></Grid>
-                    <Grid item xs={12}><TextField placeholder="Title (Ar)" fullWidth variant="outlined" size="small" value={section.titleAr} onChange={(e) => updateSection(index, { ...section, titleAr: e.target.value })} sx={{ '& .MuiOutlinedInput-root': { fontSize: "10px", height: "25px", borderRadius: "10px", backgroundColor: "#EBEDF3", border: "none" }, '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }} /></Grid>
-                    <Grid item xs={12}><TextField placeholder="Description (Ar)" fullWidth variant="outlined" size="small" value={section.descriptionAr} onChange={(e) => updateSection(index, { ...section, descriptionAr: e.target.value })} sx={{ '& .MuiOutlinedInput-root': { fontSize: "10px", height: "40px", borderRadius: "10px", backgroundColor: "#EBEDF3", border: "none" }, '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }} /></Grid>
+                    <Grid item xs={12}><TextField placeholder={t("titleEn")} fullWidth variant="outlined" size="small" value={section.titleEn} onChange={(e) => updateSection(index, { ...section, titleEn: e.target.value })} sx={{ '& .MuiOutlinedInput-root': { fontSize: "10px", height: "25px", borderRadius: "10px", backgroundColor: "#EBEDF3", border: "none" }, '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }} /></Grid>
+                    <Grid item xs={12}><TextField placeholder={t("descriptionEn")} fullWidth variant="outlined" size="small" value={section.descriptionEn} onChange={(e) => updateSection(index, { ...section, descriptionEn: e.target.value })} sx={{ '& .MuiOutlinedInput-root': { fontSize: "10px", height: "40px", borderRadius: "10px", backgroundColor: "#EBEDF3", border: "none" }, '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }} /></Grid>
+                    <Grid item xs={12}><TextField placeholder={t("titleAr")} fullWidth variant="outlined" size="small" value={section.titleAr} onChange={(e) => updateSection(index, { ...section, titleAr: e.target.value })} sx={{ '& .MuiOutlinedInput-root': { fontSize: "10px", height: "25px", borderRadius: "10px", backgroundColor: "#EBEDF3", border: "none" }, '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }} /></Grid>
+                    <Grid item xs={12}><TextField placeholder={t("descriptionAr")} fullWidth variant="outlined" size="small" value={section.descriptionAr} onChange={(e) => updateSection(index, { ...section, descriptionAr: e.target.value })} sx={{ '& .MuiOutlinedInput-root': { fontSize: "10px", height: "40px", borderRadius: "10px", backgroundColor: "#EBEDF3", border: "none" }, '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }} /></Grid>
                     <Grid item xs={12} md={6}>
                         <Box sx={{ backgroundColor: "#EBEDF3", borderRadius: "8px", minHeight: "70px", padding: "0px 20px" }}>
                             <Box sx={{ height: "36px", display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                     <DoneOutlinedIcon sx={{ fontSize: "12px", color: "#ef7d00" }} />
-                                    <TextField variant="outlined" fullWidth placeholder="Add Feature" value={feature} onChange={(e) => setFeature(e.target.value)} InputProps={{ sx: { fontSize: '10px', border: 'none', color: "#575756" } }} sx={{ '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }} />
+                                    <TextField variant="outlined" fullWidth placeholder={t("addFeature")} value={feature} onChange={(e) => setFeature(e.target.value)} InputProps={{ sx: { fontSize: '10px', border: 'none', color: "#575756" } }} sx={{ '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }} />
                                 </Box>
                                 <IconButton onClick={handleAddFeature}><AddOutlinedIcon sx={{ fontSize: "15px", color: "#575756" }} /></IconButton>
                             </Box>
@@ -97,7 +98,7 @@ const FeatureSection = ({ section, updateSection, index }) => {
                             <Box sx={{ height: "36px", display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                     <DoneOutlinedIcon sx={{ fontSize: "12px", color: "#ef7d00" }} />
-                                    <TextField variant="outlined" fullWidth placeholder="Add Feature" value={feature} onChange={(e) => setFeature(e.target.value)} InputProps={{ sx: { fontSize: '10px', border: 'none', color: "#575756" } }} sx={{ '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }} />
+                                    <TextField variant="outlined" fullWidth placeholder={t("addFeature")} value={feature} onChange={(e) => setFeature(e.target.value)} InputProps={{ sx: { fontSize: '10px', border: 'none', color: "#575756" } }} sx={{ '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }} />
                                 </Box>
                                 <IconButton onClick={handleAddFeature}><AddOutlinedIcon sx={{ fontSize: "15px", color: "#575756" }} /></IconButton>
                             </Box>
@@ -141,7 +142,7 @@ export const Features = forwardRef((props, ref) => {
             imgFile: null
         }]);
     };
-
+    const {t} = useTranslation()
     const updateSection = (index, updatedSection) => {
         setSections(sections.map((section, i) => i === index ? updatedSection : section));
     };
@@ -149,17 +150,17 @@ export const Features = forwardRef((props, ref) => {
     const sendRequest = (section) => {
         // Validate required fields
         if (!section.titleEn || !section.titleAr) {
-            toast.error("Both English and Arabic titles are required!");
+            toast.error(t("bothEnArTitleReq"));
             setIsSaving(false);
             return;
         }
         if (!section.descriptionEn || !section.descriptionAr) {
-            toast.error("Both English and Arabic descriptions are required!");
+            toast.error(t("bothEnArDescReq"));
             setIsSaving(false);
             return;
         }
         if (section.features.length === 0) {
-            toast.error("At least one feature is required!");
+            toast.error(t("atleastOneFeatureReq"));
             setIsSaving(false);
             return;
         }
@@ -192,7 +193,7 @@ export const Features = forwardRef((props, ref) => {
         );
 
         if (hasInvalidSection) {
-            toast.error("Please fill all required fields in all sections!");
+            toast.error(t("plFillAllField"));
             return;
         }
 
@@ -212,7 +213,7 @@ export const Features = forwardRef((props, ref) => {
                     });
             }
 
-            toast.success("All features added successfully!");
+            toast.success(t("featureAddSucc"));
             setSections([{
                 features: [],
                 titleEn: '',
@@ -224,9 +225,9 @@ export const Features = forwardRef((props, ref) => {
         } catch (error) {
             console.error("Full error object:", error);
             if (error.response && error.response.data) {
-                toast.error(error.response.data.error || "Failed to save features!");
+                toast.error(error.response.data.error || t("featureAddErr"));
             } else {
-                toast.error(error.message || "Failed to save features!");
+                toast.error(error.message || t("featureAddErr"));
             }
         } finally {
             setIsSaving(false);
@@ -251,7 +252,7 @@ export const Features = forwardRef((props, ref) => {
                 <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.7)', zIndex: 1000, borderRadius: "20px" }}>
                     <Box sx={{ textAlign: 'center' }}>
                         <CircularProgress sx={{ color: "#ef7d00" }} />
-                        <Typography sx={{ mt: 2, color: '#222240' }}>Saving...</Typography>
+                        <Typography sx={{ mt: 2, color: '#222240' }}>{t("saving")}</Typography>
                     </Box>
                 </Box>
             )}

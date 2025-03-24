@@ -277,10 +277,11 @@
 //   );
 // };
 
+
 import { Divider, MenuItem, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
-
+import { useTranslation } from 'react-i18next';
 export const PaymentInfo = ({
   selectedOption,
   setSelectedOption,
@@ -292,6 +293,7 @@ export const PaymentInfo = ({
   setAccountName,
   errors
 }) => {
+  const {t} = useTranslation();
   const handleSelect = (option) => {
     setSelectedOption(option);
   };
@@ -307,7 +309,7 @@ export const PaymentInfo = ({
       case "Bank":
         return (
           <>
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>Name</Typography>
+            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("name")}</Typography>
             <TextField
               fullWidth
               variant="outlined"
@@ -317,7 +319,8 @@ export const PaymentInfo = ({
               onChange={(e) => setBankName(e.target.value)}
               error={!!errors.bankName}
             />
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>IBAN</Typography>
+
+            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("iban")}</Typography>
             <TextField
               fullWidth
               variant="outlined"
@@ -327,7 +330,8 @@ export const PaymentInfo = ({
               onChange={(e) => setAccountNumber(e.target.value)}
               error={!!errors.accountNumber}
             />
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>Bank</Typography>
+
+            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("Bank")}</Typography>
             <TextField
               select
               fullWidth
@@ -339,7 +343,8 @@ export const PaymentInfo = ({
               <Divider sx={{ width: "90%", marginLeft: "10px" }} />
               <MenuItem value="fab" sx={{ fontSize: "11px", color: "gray", padding: "0px 20px" }}>FAB</MenuItem>
             </TextField>
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray", marginTop: "8px" }}>Address</Typography>
+
+            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray", marginTop: "8px" }}>{t("address")}</Typography>
             <TextField
               fullWidth
               variant="outlined"
@@ -443,7 +448,7 @@ export const PaymentInfo = ({
   return (
     <Box padding={"0px 50px"}>
       <Typography variant="body2" sx={{ fontSize: "12px" }} color="#575756" gutterBottom>
-        Payment Info.......
+        {t("paymentInfo")}
       </Typography>
       <Divider sx={{ borderRadius: "30px", width: "18%", borderBottom: "4px solid #ef7d00", marginBottom: "18px" }} />
       <Box sx={{ display: "flex", justifyContent: "space-between", width: "50%", marginTop: "30px" }}>
@@ -469,8 +474,13 @@ export const PaymentInfo = ({
                 {option.icon}
               </Box>
             </Box>
-            <Typography sx={{ marginTop: "5px", fontSize: "10px", color: "gray" }}>
-              {option.label}
+            <Typography
+              sx={{
+                marginTop: "5px",
+                fontSize: "10px", color: "gray"
+              }}
+            >
+              {t(option.label)}
             </Typography>
           </Box>
         ))}

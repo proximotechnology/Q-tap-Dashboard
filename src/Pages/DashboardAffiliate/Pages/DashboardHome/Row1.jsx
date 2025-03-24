@@ -1,8 +1,10 @@
 import { Box, Card, CardContent, Divider, Grid, Typography } from '@mui/material'
 import React from 'react'
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import { useTranslation } from 'react-i18next';
 
 export const Row1 = () => {
+    const {t} = useTranslation()
     return (
         <Box sx={{ flexGrow: 1, padding: '0px 20px 20px 20px' }}>
             <Grid container spacing={3}>
@@ -14,7 +16,7 @@ export const Row1 = () => {
                         borderRadius: '20px',color:"white" }}>
                         <CardContent>
                             <Box display={"flex"} justifyContent={"space-between"}>
-                                <Typography variant="subtitle1" sx={{fontSize:"12px"}}>Sales</Typography>
+                                <Typography variant="subtitle1" sx={{fontSize:"12px"}}>{t("sales")}</Typography>
 
                                 <TrendingUpIcon sx={{ color: "#d4d0d0 ",padding: "3px", fontSize: '23px', border: "1px solid #d4d0d0", borderRadius: "6px" }} />
                             </Box>
@@ -27,7 +29,7 @@ export const Row1 = () => {
                             </Box>
                             <Divider sx={{ margin: "10px 0px",height:"1px" ,backgroundColor:"#a19c9c"}} />
 
-                            <Typography variant="subtitle2" color=" #d4d0d0" sx={{fontSize:"12px"}}>Daily</Typography>
+                            <Typography variant="subtitle2" color=" #d4d0d0" sx={{fontSize:"12px"}}>{t("daily")}</Typography>
                         </CardContent>
                     </Card>
                 </Grid>
@@ -40,7 +42,7 @@ export const Row1 = () => {
                     }}>
                         <CardContent>
                             <Box display={"flex"} justifyContent={"space-between"}>
-                                <Typography variant="subtitle1" sx={{fontSize:"12px"}}>Sales Amount</Typography>
+                                <Typography variant="subtitle1" sx={{fontSize:"12px"}}>{t("salesAmount")}</Typography>
                                 <span class="icon-price-tag" style={{fontSize:"25px",color:"#d4d0d0 "}}></span>
                             </Box>
                             <Typography variant="h4" marginTop="5px"sx={{fontSize:"28px"}}>5,564 
@@ -53,7 +55,7 @@ export const Row1 = () => {
                                 <img src='/assets/down.svg' alt="up icon"  style={{ width: '22px',height:"22px" }} />
                             </Box>
                             <Divider sx={{ margin: "10px 0px",height:"1px" ,backgroundColor:"#a19c9c"}} />
-                            <Typography variant="subtitle2" color="#d4d0d0" sx={{fontSize:"12px"}}>Daily</Typography>
+                            <Typography variant="subtitle2" color="#d4d0d0" sx={{fontSize:"12px"}}>{t("daily")}</Typography>
                         </CardContent>
                     </Card>
                 </Grid>
@@ -70,14 +72,14 @@ export const Row1 = () => {
                                 position: 'relative', 
                             }}>
 
-                            <Typography variant="subtitle1" color="white" sx={{fontSize:"13px"}} >Commission</Typography>
+                            <Typography variant="subtitle1" color="white" sx={{fontSize:"13px"}} >{t("commission")}</Typography>
                             <Box
                                 display={"flex"}
                                 flexDirection='column'
                                 justifyContent={"center"}
                                 alignItems={"center"}>
                                 <Typography variant="h4" sx={{ fontSize: "95px" }} color="#d4d0d0">10%</Typography>
-                                <Typography variant="subtitle2" color="#d4d0d0"  sx={{fontSize:"11px"}}>you Earn 10% of Each Sale you Do</Typography>
+                                <Typography variant="subtitle2" color="#d4d0d0"  sx={{fontSize:"11px"}}>{t("youEarn10OfEachSale")}</Typography>
 
                             </Box>
 

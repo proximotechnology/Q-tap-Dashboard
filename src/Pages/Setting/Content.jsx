@@ -2,6 +2,7 @@ import { Box, Grid, Paper, TextField, Typography, IconButton } from '@mui/materi
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import AddIcon from "@mui/icons-material/Add";
 import { toast } from "react-toastify";
+import { useTranslation } from 'react-i18next';
 
 const Content = forwardRef((props, ref) => {
 	const [homeContent, setHomeContent] = useState([{ titleEn: '', descriptionEn: '', titleAr: '', descriptionAr: '' }]);
@@ -26,7 +27,7 @@ const Content = forwardRef((props, ref) => {
 		newContent[index][field] = value;
 		setProductContent(newContent);
 	}
-
+	const {t} = useTranslation()
 	const handleSave = () => {
 		// Filter out empty content and validate
 		const validHomeContent = homeContent.filter(content => {
@@ -37,7 +38,7 @@ const Content = forwardRef((props, ref) => {
 		});
 
 		if (validHomeContent.length === 0) {
-			toast.error("Please add at least one complete section in either English or Arabic!");
+			toast.error(t("plAtleastCompOneSec"));
 			return;
 		}
 
@@ -49,12 +50,12 @@ const Content = forwardRef((props, ref) => {
 			const hasArabicDesc = content.descriptionAr.trim() !== '';
 
 			if ((hasEnglishTitle && !hasEnglishDesc) || (!hasEnglishTitle && hasEnglishDesc)) {
-				toast.error("Please complete both title and description in English!");
+				toast.error(t("plCompBothTitleDescription"));
 				return;
 			}
 
 			if ((hasArabicTitle && !hasArabicDesc) || (!hasArabicTitle && hasArabicDesc)) {
-				toast.error("Please complete both title and description in Arabic!");
+				toast.error(t("plCompBothTitleDescriptionAr"));
 				return;
 			}
 		}
@@ -94,11 +95,11 @@ const Content = forwardRef((props, ref) => {
 				if (data.error) {
 					throw new Error(data.error);
 				}
-				toast.success("Content saved successfully!");
+				toast.success(t("contentSavedSucc"));
 			})
 			.catch((error) => {
 				console.error("Error saving content:", error);
-				toast.error("Failed to save content!");
+				toast.error(t("contentSaveErr"));
 			});
 	};
 
@@ -109,7 +110,7 @@ const Content = forwardRef((props, ref) => {
 	return (
 		<Box>
 			<Typography variant="body1" sx={{ fontSize: "15px", marginLeft: "30px", color: "#575756", marginBottom: '10px' }}>
-				Home
+				{t("home")}
 			</Typography>
 
 			{homeContent.map((content, index) => (
@@ -118,7 +119,7 @@ const Content = forwardRef((props, ref) => {
 						<Grid container spacing={1}>
 							<Grid item xs={12} md={12}>
 								<TextField
-									placeholder="Title (En)"
+									placeholder={t("title")}
 									fullWidth
 									variant="outlined"
 									size="small"
@@ -139,7 +140,7 @@ const Content = forwardRef((props, ref) => {
 							</Grid>
 							<Grid item xs={12} md={12}>
 								<TextField
-									placeholder="Description (En)"
+									placeholder={t("descriptionEn")}
 									fullWidth
 									variant="outlined"
 									size="small"
@@ -160,7 +161,7 @@ const Content = forwardRef((props, ref) => {
 							</Grid>
 							<Grid item xs={12} md={12}>
 								<TextField
-									placeholder="Title (Ar)"
+									placeholder={t("titleAr")}
 									fullWidth
 									variant="outlined"
 									size="small"
@@ -181,7 +182,7 @@ const Content = forwardRef((props, ref) => {
 							</Grid>
 							<Grid item xs={12} md={12}>
 								<TextField
-									placeholder="Description (Ar)"
+									placeholder={t("descriptionAr")}
 									fullWidth
 									variant="outlined"
 									size="small"
@@ -212,7 +213,7 @@ const Content = forwardRef((props, ref) => {
 			</Box>
 
 			<Typography variant="body1" sx={{ fontSize: "15px", marginLeft: "30px", color: "#575756", marginBottom: '10px' }}>
-				Products
+				{t("product")}
 			</Typography>
 
 			{productContent.map((content, index) => (
@@ -221,7 +222,7 @@ const Content = forwardRef((props, ref) => {
 						<Grid container spacing={1}>
 							<Grid item xs={12} md={12}>
 								<TextField
-									placeholder="Title (En)"
+									placeholder={t("titleEn")}
 									fullWidth
 									variant="outlined"
 									size="small"
@@ -242,7 +243,7 @@ const Content = forwardRef((props, ref) => {
 							</Grid>
 							<Grid item xs={12} md={12}>
 								<TextField
-									placeholder="Description (En)"
+									placeholder={t("descriptionEn")}
 									fullWidth
 									variant="outlined"
 									size="small"
@@ -263,7 +264,7 @@ const Content = forwardRef((props, ref) => {
 							</Grid>
 							<Grid item xs={12} md={12}>
 								<TextField
-									placeholder="Title (Ar)"
+									placeholder={t("titleAr")}
 									fullWidth
 									variant="outlined"
 									size="small"
@@ -284,7 +285,7 @@ const Content = forwardRef((props, ref) => {
 							</Grid>
 							<Grid item xs={12} md={12}>
 								<TextField
-									placeholder="Description (Ar)"
+									placeholder={t("descriptionAr")}
 									fullWidth
 									variant="outlined"
 									size="small"

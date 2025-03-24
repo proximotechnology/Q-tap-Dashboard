@@ -7,7 +7,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import RoomServiceOutlinedIcon from '@mui/icons-material/RoomServiceOutlined';
 import GridViewIcon from '@mui/icons-material/GridView';
-
+import { useTranslation } from "react-i18next";
 const Arr1 = [
     {
         text: "Dashboard",
@@ -74,6 +74,8 @@ const Arr2 = [
 ];
 
 export default function SideBar() {
+    const { t } = useTranslation();
+    
     const location = useLocation();
     const navigate = useNavigate();
     const theme = useTheme();

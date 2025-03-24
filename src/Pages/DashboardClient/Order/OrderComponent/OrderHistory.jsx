@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router';
 import OrderTable from './OrderTable ';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
+import { useTranslation } from 'react-i18next';
 
 export const OrderHistory = () => {
     const navigate = useNavigate();
@@ -21,6 +22,7 @@ export const OrderHistory = () => {
     const handleUserClose = () => {
         setAnchorElUser(null);
     };
+    const {t} = useTranslation();
     return (
         <Box sx={{ backgroundColor: "#f4f6fc" }}>
 
@@ -139,7 +141,7 @@ export const OrderHistory = () => {
 
                 </Toolbar>
                 <Typography variant="h6" style={{ flexGrow: 1, fontSize: "20px", textAlign: 'left', color: 'white', marginLeft: "100px" }}>
-                    Orders  History
+                    {t("ordersHistory")}
                 </Typography>
             </AppBar>  {/*  top Bar  */}
 

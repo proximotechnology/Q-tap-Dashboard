@@ -12,6 +12,7 @@ import PhoneAndroidOutlinedIcon from '@mui/icons-material/PhoneAndroidOutlined';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { DeliveredFooter } from './DeliveredFooter'
 import Language from '../ComponentDashClient/TopBar/Language';
+import { useTranslation } from 'react-i18next';
 
 
 const styles = {
@@ -65,7 +66,7 @@ export const DeliveryLogin = () => {
     setChecked(!checked);
   };
 
-
+  const { t } = useTranslation();
   return (
     <Box sx={{ backgroundColor: "#EBEDF3", height: "100vh" }}>
 
@@ -140,7 +141,7 @@ export const DeliveryLogin = () => {
 
         <Typography variant="body2" style={{ flexGrow: 1, fontSize: "22px", textAlign: 'center', color: 'white' }}>
           <span class="icon-fast-shipping" style={{ fontSize: "32px", color: "#E57C00", marginRight: "6px" }}></span>
-          Delivery Riders
+          {t("deliveryRiders")}
         </Typography>
       </AppBar>   {/*  top Bar  */}
 
@@ -148,11 +149,11 @@ export const DeliveryLogin = () => {
 
       <div style={styles.outerContainer}>
         <div style={styles.container}>
-          <Typography style={styles.title}>Login</Typography>
+          <Typography style={styles.title}>{t("logIn")}</Typography>
 
           <TextField
             variant="outlined"
-            placeholder="Mobile Number"
+            placeholder={t("mobileNumber")}
             fullWidth
             InputProps={{
               startAdornment: (
@@ -177,7 +178,7 @@ export const DeliveryLogin = () => {
 
           <TextField
             variant="outlined"
-            placeholder="Insert Password"
+            placeholder={t("password")}
             fullWidth
             type="password"
             InputProps={{
@@ -206,7 +207,7 @@ export const DeliveryLogin = () => {
             fullWidth
             style={styles.loginButton}
           >
-            Login
+            {t("logIn")}
           </Button>
 
           <Box display={"flex"} justifyContent={"center"} textAlign={"center"} sx={{ marginTop: "20px" }}>
@@ -239,7 +240,7 @@ export const DeliveryLogin = () => {
                 },
               }}
             />
-            <Typography variant='body1' sx={{ color: "gray", fontSize: "12px", marginTop: "8px" }}>Stay Logged In</Typography>
+            <Typography variant='body1' sx={{ color: "gray", fontSize: "12px", marginTop: "8px" }}>{t("stayLogIn")}</Typography>
           </Box>
         </div>
       </div>

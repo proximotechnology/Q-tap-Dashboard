@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import { useBranch } from '../../../../context/BranchContext';
 import { ContentMenu } from '../../../../context/ContentMenuContext';
 import Slider from 'react-slick';
+import { useTranslation } from 'react-i18next';
 
 
 export const Content = () => {
@@ -22,6 +23,7 @@ export const Content = () => {
     const [editCategory, setEditCategory] = useState(null);
     const [editName, setEditName] = useState('');
     const [loading, setLoading] = useState(true);
+    const {t} = useTranslation();
     // const selectedBranch = localStorage.getItem('selectedBranch');
 
 
@@ -143,13 +145,13 @@ export const Content = () => {
             });
 
             if (response.data) {
-                toast.success('Category updated successfully!');
+                toast.success(t("CategoryUpdatedSuccessfully"));
                 setCategories(categories.map(cat => cat.id === editCategory.id ? { ...cat, name: editName } : cat));
                 handleEditClose();
             }
         } catch (error) {
             console.error('Error updating category:', error);
-            toast.error('Error updating category');
+            toast.error(t("errorUpdateCategory"));
         }
     };
 
@@ -164,12 +166,12 @@ export const Content = () => {
             });
 
             if (response.data) {
-                toast.success('Category deleted successfully!');
+                toast.success(t("categoryDeletedSucc"));
                 getCategories();
             }
         } catch (error) {
             console.error('Error deleting category:', error);
-            toast.error('Error deleting category');
+            toast.error(t("errorDeleteCategory"));
         }
     };
 
@@ -276,9 +278,9 @@ export const Content = () => {
 
             <Dialog open={openEditDialog} onClose={handleEditClose}>
                 <DialogContent>
-                    <Typography variant="h6">Edit Category</Typography>
+                    <Typography variant="h6">{t("category.edit")}</Typography>
                     <TextField
-                        label="Name"
+                        label={t("name")}
                         value={editName}
                         onChange={(e) => setEditName(e.target.value)}
                         fullWidth
@@ -293,7 +295,7 @@ export const Content = () => {
                                 backgroundColor: '#e17d33'
                             }
                         }}
-                    >Save</Button>
+                    >{t("save")}</Button>
                 </DialogContent>
             </Dialog>
         </>

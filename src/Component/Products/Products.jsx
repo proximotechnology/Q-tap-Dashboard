@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router';
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import DoneIcon from '@mui/icons-material/Done';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 const Divider = styled(Box)({
     width: '5%',
     height: '3px',
@@ -16,7 +17,7 @@ const Divider = styled(Box)({
 export const Products = () => {
     const navigate = useNavigate();
     const [isSelected, setIsSelected] = useState(false);
-
+    const {t} = useTranslation()
     const handleCardClick = () => {
         setIsSelected(!isSelected);
     };
@@ -25,13 +26,13 @@ export const Products = () => {
         if(isSelected){
             navigate('/business-info');
         }else{
-            toast.error("Please select a product");
+            toast.error(t("plSelectProduct"));
         }
     };
     return (
         <Box marginTop={"50px"} flexGrow={1}>
             <Typography variant="body1" sx={{ fontSize: "18px", color: "#222240" }}>
-                Select Products
+                {t("selectProduct")}
             </Typography>
             <Divider />
 
@@ -56,7 +57,7 @@ export const Products = () => {
                     />
                 )}
                 <span class="icon-waiter" style={{ color: "white", fontSize: "30px" }}></span>
-                <Typography sx={{ fontSize: "18px", color: "white" }}>Digital Menu</Typography>
+                <Typography sx={{ fontSize: "18px", color: "white" }}>{t("digitalMenu")}</Typography>
             </Box>
 
             <Grid item xs={12}>
@@ -78,7 +79,7 @@ export const Products = () => {
                     }}
                     onClick={handleNextClick}
                 >
-                    Next
+                    {t("next")}
                     <TrendingFlatIcon sx={{ marginLeft: "8px", fontSize: "18px" }} />
                 </Button>
             </Grid>

@@ -321,6 +321,7 @@ import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined
 import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import { Box } from '@mui/system';
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { useTranslation } from 'react-i18next';
 
 export const PersonalInfo = ({
   fullName,
@@ -353,7 +354,7 @@ export const PersonalInfo = ({
       setSelectedImage(file);
     }
   };
-
+  const {t} = useTranslation()
   return (
     <Grid container spacing={2} justifyContent="center">
       <Grid item xs={12} md={3} sx={{ marginRight: "40px" }}>
@@ -416,7 +417,7 @@ export const PersonalInfo = ({
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
             startAdornment={<InputAdornment position="start"><PersonOutlinedIcon sx={{ fontSize: "20px" }} /></InputAdornment>}
-            placeholder="Full Name"
+            placeholder={t("fullName")}
             required
             sx={{ borderRadius: '6px', marginBottom: "18px", height: '33px', fontSize: "11px" }}
             error={!!errors.fullName}
@@ -428,7 +429,7 @@ export const PersonalInfo = ({
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             startAdornment={<InputAdornment position="start"><PhoneOutlinedIcon sx={{ fontSize: "20px" }} /></InputAdornment>}
-            placeholder="Mobile Number"
+            placeholder={t("mobileNumber")}
             required
             sx={{ borderRadius: '6px', marginBottom: "18px", height: '33px', fontSize: "11px" }}
             error={!!errors.phone}
@@ -441,7 +442,7 @@ export const PersonalInfo = ({
             onChange={(e) => setEmail(e.target.value)}
             type="email"
             startAdornment={<InputAdornment position="start"><MailOutlinedIcon sx={{ fontSize: "20px" }} /></InputAdornment>}
-            placeholder="Email"
+            placeholder={t("email")}
             required
             sx={{ borderRadius: '6px', marginBottom: "18px", height: '33px', fontSize: "11px" }}
             error={!!errors.email}
@@ -452,7 +453,7 @@ export const PersonalInfo = ({
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <Grid container alignItems="center" sx={{ color: "grey", marginTop: "5px" }}>
               <CalendarMonthOutlinedIcon sx={{ marginRight: "6px", fontSize: "13px" }} />
-              <Typography variant="body1" sx={{ fontSize: "12px" }}>Date of Birth:</Typography>
+              <Typography variant="body1" sx={{ fontSize: "12px" }}>{t("dateOfBirth")}</Typography>
             </Grid>
           </Grid>
           <Grid item xs={4}>
@@ -464,7 +465,7 @@ export const PersonalInfo = ({
                 sx={{ borderRadius: '6px', height: '33px', fontSize: "10px", color: "gray", marginRight: "5px" }}
                 error={!!errors.birthDate}
               >
-                <MenuItem value="" disabled>Month</MenuItem>
+                <MenuItem value="" disabled>{t(month)}</MenuItem>
                 {["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"].map(m => (
                   <MenuItem key={m} value={m} sx={{ fontSize: "10px", color: "gray" }}>{m}</MenuItem>
                 ))}
@@ -480,7 +481,7 @@ export const PersonalInfo = ({
                 sx={{ borderRadius: '6px', height: '33px', fontSize: "10px", color: "gray", marginRight: "5px" }}
                 error={!!errors.birthDate}
               >
-                <MenuItem value="" disabled>Day</MenuItem>
+                <MenuItem value="" disabled>{t("day")}</MenuItem>
                 {[...Array(31).keys()].map(i => (
                   <MenuItem key={i + 1} value={String(i + 1).padStart(2, '0')} sx={{ fontSize: "10px", color: "gray" }}>
                     {String(i + 1).padStart(2, '0')}
@@ -498,7 +499,7 @@ export const PersonalInfo = ({
                 sx={{ borderRadius: '6px', height: '33px', fontSize: "10px", color: "gray" }}
                 error={!!errors.birthDate}
               >
-                <MenuItem value="" disabled>Year</MenuItem>
+                <MenuItem value="" disabled>{t("year")}</MenuItem>
                 {Array.from({ length: 2025 - 1994 + 1 }, (_, i) => 1994 + i).map(y => (
                   <MenuItem key={y} value={y} sx={{ fontSize: "10px", color: "gray" }}>{y}</MenuItem>
                 ))}
@@ -530,7 +531,7 @@ export const PersonalInfo = ({
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             startAdornment={<InputAdornment position="start"><span className="icon-padlock" style={{ fontSize: "16px" }} /></InputAdornment>}
-            placeholder="Password"
+            placeholder={t("pasword")}
             sx={{ borderRadius: '6px', marginBottom: "18px", height: '33px', fontSize: "10px" }}
             error={!!errors.password}
           />
@@ -542,7 +543,7 @@ export const PersonalInfo = ({
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             startAdornment={<InputAdornment position="start"><span className="icon-padlock" style={{ fontSize: "16px" }} /></InputAdornment>}
-            placeholder="Confirm Password"
+            placeholder={t("confirmPass")}
             sx={{ marginBottom: "18px", borderRadius: '10px', height: '33px', fontSize: "12px" }}
             error={!!errors.confirmPassword}
           />
@@ -567,9 +568,9 @@ export const PersonalInfo = ({
               "& .MuiSelect-icon": { color: "white" },
             }}
           >
-            <MenuItem value="Winter Campaign" sx={{ fontSize: "12px", color: "#3f3e3efa" }}>Winter Campaign</MenuItem>
-            <MenuItem value="Spring Campaign" sx={{ fontSize: "12px", color: "#3f3e3efa" }}>Spring Campaign</MenuItem>
-            <MenuItem value="Summer Campaign" sx={{ fontSize: "12px", color: "#3f3e3efa" }}>Summer Campaign</MenuItem>
+            <MenuItem value="Winter Campaign" sx={{ fontSize: "12px", color: "#3f3e3efa" }}>{t("winterCampaign")}</MenuItem>
+            <MenuItem value="Spring Campaign" sx={{ fontSize: "12px", color: "#3f3e3efa" }}>{t("springCampaign")}</MenuItem>
+            <MenuItem value="Summer Campaign" sx={{ fontSize: "12px", color: "#3f3e3efa" }}>{t("summerCampaign")}</MenuItem>
           </Select>
         </FormControl>
       </Grid>

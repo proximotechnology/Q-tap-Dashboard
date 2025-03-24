@@ -19,7 +19,11 @@ import { toast } from 'react-toastify';
 import { ClientLoginData } from '../../../../context/ClientLoginDataContext';
 import AddTableModal from './AddTable'; // Ensure this component is created
 import styles from '../SupportClient/supportCard.module.css'
-const TableCard = ({ table, onDeleteTable, onEditTable }) => (
+import { useTranslation } from 'react-i18next';
+
+const TableCard = ({ table, onDeleteTable, onEditTable }) => {
+  const {t} = useTranslation();
+  return(
 <Card
       className={styles.card3} // Apply the card3 class for the gradient background
       sx={{
@@ -40,7 +44,7 @@ const TableCard = ({ table, onDeleteTable, onEditTable }) => (
       >
         <Box display={'flex'} justifyContent={'space-between'}>
           <Typography variant="subtitle2" sx={{ fontSize: '11px', color: '#E57C00' }}>
-            ID{' '}
+            {t("id")}{' '}
             <span style={{ fontSize: '10px', color: '#AAAAAA', borderBottom: '1px solid #AAAAAA' }}>
               {table.id}
             </span>
@@ -143,6 +147,7 @@ const TableCard = ({ table, onDeleteTable, onEditTable }) => (
 );
 
 export const Tables = ({ openOldMenu }) => {
+  const {t} = useTranslation();
   const [modalOpen, setModalOpen] = useState(false);
   const [editingTable, setEditingTable] = useState(null);
   const { tableDataRes, getTableDataRes } = useContext(ClientLoginData);
@@ -174,13 +179,13 @@ export const Tables = ({ openOldMenu }) => {
       });
 
       if (response.data) {
-        toast.success(editingTable ? 'Table updated successfully!' : 'Table added successfully!');
+        toast.success(editingTable ? t("table.updateSucc") : t("table.addSucc"));
         getTableDataRes(); // Refresh table data
         handleCloseModal();
       }
     } catch (error) {
       console.error('Error saving table:', error);
-      toast.error('Error saving table');
+      toast.error(t("table.saveErr"));
     }
   };
 
@@ -199,12 +204,12 @@ export const Tables = ({ openOldMenu }) => {
       });
 
       if (response.data) {
-        toast.success('Table deleted successfully!');
+        toast.success(t("table.deleteSucc"));
         getTableDataRes(); // Refresh table data
       }
     } catch (error) {
       console.error('Error deleting table:', error);
-      toast.error('Error deleting table');
+      toast.error(t("table.deleteErr"));
     }
   };
 
@@ -212,7 +217,7 @@ export const Tables = ({ openOldMenu }) => {
     <Paper style={{ padding: '20px 30px', borderRadius: '10px', marginTop: '16px' }}>
       <Box sx={{ maxWidth: '100%', padding: '6px' }}>
         <Typography variant="body1" sx={{ textAlign: 'left', fontSize: '13px', color: '#4b4a4a' }}>
-          Add Tables
+          {t("table.add")}
         </Typography>
 
         <Divider
@@ -272,7 +277,7 @@ export const Tables = ({ openOldMenu }) => {
             }}
             startIcon={<CheckOutlinedIcon />}
           >
-            Save
+            {t("save")}
           </Button>
         </Box>
       </Box>

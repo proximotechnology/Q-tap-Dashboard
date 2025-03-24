@@ -10,6 +10,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { ContentMenu } from '../../../../context/ContentMenuContext';
+import { useTranslation } from 'react-i18next';
 
 export const ExtrasTable = () => {
     const [openVariant, setOpenOffers] = useState(false);
@@ -17,7 +18,7 @@ export const ExtrasTable = () => {
     const [variantIdFromMenuUpdate, setVariantIdFromMenuUpdate] = useState([])
     const selectedBranch = localStorage.getItem('selectedBranch');
     const { variantsContext } = useContext(ContentMenu);
-
+    const {t} = useTranslation();
 
     useEffect(() => {
         getExtras();
@@ -58,11 +59,11 @@ export const ExtrasTable = () => {
             await axios.delete(`https://highleveltecknology.com/Qtap/api/meals_extra/${id}`, {
                 headers: { 'Authorization': `Bearer ${localStorage.getItem('clientToken')}` }
             });
-            toast.success("Extra deleted");
+            toast.success(t("extra.deleteSucc"));
             getExtras();
         } catch (error) {
             console.error('Error deleting extra:', error);
-            toast.error('Error deleting extra');
+            toast.error(t("extra.deleteErr"));
         }
     };
 
@@ -97,13 +98,13 @@ export const ExtrasTable = () => {
             );
 
             if (response.data) {
-                toast.success('Updated successfully');
+                toast.success(t("extra.updateSucc"));
                 handleEditToggle(index);
                 getExtras();
             }
         } catch (error) {
             console.error('Error updating extra:', error);
-            toast.error('Error updating extra');
+            toast.error(t("extra.updateErr"));
         }
     };
 
@@ -111,13 +112,13 @@ export const ExtrasTable = () => {
         <Paper sx={{ borderRadius: "10px", padding: "20px 30px", marginTop: "-20px" }}>
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>
-                    Extras
+                    {t("extra.many")}
                 </Typography>
                 <Button>
                     <Typography
                         onClick={handleOffersOpen}
                         variant='body1' sx={{ fontSize: "13px", textTransform: "capitalize", color: "#ef7d00" }}>
-                        + Add One
+                        + {t("addOne")}
                     </Typography>
                 </Button>
                 <AddExtras open={openVariant} handleClose={handleClose} />
@@ -128,9 +129,9 @@ export const ExtrasTable = () => {
             <Table sx={{ mt: 3, mb: 5, width: '100%', tableLayout: 'fixed' }}>
                 <TableHead>
                     <TableRow sx={{ backgroundColor: "#EBEDF3" }}>
-                        <TableCell sx={{ fontSize: "10px", textAlign: "left", color: "#575756", padding: "3px 10px" }}>Price</TableCell>
-                        <TableCell sx={{ fontSize: "10px", textAlign: "left", color: "#575756", padding: "3px 10px" }}>Name</TableCell>
-                        <TableCell sx={{ fontSize: "10px", textAlign: "center", color: "#575756", padding: "3px 10px" }}>Actions</TableCell>
+                        <TableCell sx={{ fontSize: "10px", textAlign: "left", color: "#575756", padding: "3px 10px" }}>{t("price.one")}</TableCell>
+                        <TableCell sx={{ fontSize: "10px", textAlign: "left", color: "#575756", padding: "3px 10px" }}>{t("name")}</TableCell>
+                        <TableCell sx={{ fontSize: "10px", textAlign: "center", color: "#575756", padding: "3px 10px" }}>{t("action")}</TableCell>
                         <TableCell sx={{ fontSize: "10px", textAlign: "center", color: "#575756", padding: "3px 10px" }}></TableCell>
                     </TableRow>
                 </TableHead>

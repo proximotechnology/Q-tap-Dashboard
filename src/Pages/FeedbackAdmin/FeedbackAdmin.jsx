@@ -13,6 +13,7 @@ import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined
 import FeedbackDetailsModal from './FeedbackDetailsModal';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 
 export const FeedbackAdmin = () => {
@@ -20,6 +21,8 @@ export const FeedbackAdmin = () => {
     const [open, setOpen] = useState(false);
 
     const [feedbackData, setFeedbackData] = useState([]);
+
+    const { t } = useTranslation();
 
     const handleDelete = (id) => {
         setFeedbackData(feedbackData.filter(row => row.id !== id));
@@ -94,12 +97,12 @@ export const FeedbackAdmin = () => {
                     <Table sx={{ borderCollapse: 'separate', borderSpacing: '0 5px' }}>
                         <TableHead>
                             <TableRow sx={{ height: "20px" }}>
-                                <TableCell sx={{ fontSize: "12px", padding: "0px 10px", borderBottom: "1px solid gray", color: "#575756", textAlign: "left" }}>Client</TableCell>
-                                <TableCell sx={{ fontSize: "12px", padding: "0px 10px", borderBottom: "1px solid gray", color: "#575756", textAlign: "center" }}>Rate</TableCell>
-                                <TableCell sx={{ fontSize: "12px", padding: "0px 10px", borderBottom: "1px solid gray", color: "#575756", textAlign: "center" }}>Status</TableCell>
-                                <TableCell sx={{ fontSize: "12px", padding: "0px 10px", borderBottom: "1px solid gray", color: "#575756", textAlign: "center" }}>Goals</TableCell>
-                                <TableCell sx={{ fontSize: "12px", padding: "0px 10px", borderBottom: "1px solid gray", color: "#575756", textAlign: "center" }}>Details</TableCell>
-                                <TableCell sx={{ fontSize: "12px", padding: "0px 10px", borderBottom: "1px solid gray", color: "#575756", textAlign: "right" }}>Action</TableCell>
+                                <TableCell sx={{ fontSize: "12px", padding: "0px 10px", borderBottom: "1px solid gray", color: "#575756", textAlign: "left" }}>{t("client")}</TableCell>
+                                <TableCell sx={{ fontSize: "12px", padding: "0px 10px", borderBottom: "1px solid gray", color: "#575756", textAlign: "center" }}>{t("rate")}</TableCell>
+                                <TableCell sx={{ fontSize: "12px", padding: "0px 10px", borderBottom: "1px solid gray", color: "#575756", textAlign: "center" }}>{t("status")}</TableCell>
+                                <TableCell sx={{ fontSize: "12px", padding: "0px 10px", borderBottom: "1px solid gray", color: "#575756", textAlign: "center" }}>{t("goals")}</TableCell>
+                                <TableCell sx={{ fontSize: "12px", padding: "0px 10px", borderBottom: "1px solid gray", color: "#575756", textAlign: "center" }}>{t("details")}</TableCell>
+                                <TableCell sx={{ fontSize: "12px", padding: "0px 10px", borderBottom: "1px solid gray", color: "#575756", textAlign: "right" }}>{t("action")}</TableCell>
                             </TableRow>
                         </TableHead>
 

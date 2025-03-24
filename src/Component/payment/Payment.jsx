@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { PricingCard } from './PricingCard';
 import { useNavigate } from 'react-router';
 import DoneIcon from '@mui/icons-material/Done';
+import { useTranslation } from 'react-i18next';
 const Divider = styled(Box)({
   width: '5%',
   height: '3px',
@@ -21,7 +22,7 @@ const Divider2 = styled(Box)({
 });
 export const Payment = () => {
   const navigate = useNavigate();
-
+  const { t } = useTranslation()
   const [selectedValue, setSelectedValue] = useState('cash');
 
   const handleChange = (event) => {
@@ -31,7 +32,7 @@ export const Payment = () => {
   return (
     <Box marginTop={"50px"} flexGrow={1}>
       <Typography variant="body1" sx={{ fontSize: "18px", color: "#222240" }}>
-        Payment
+        {t("payment")}
       </Typography>
       <Divider />
 
@@ -42,62 +43,62 @@ export const Payment = () => {
       >
         <Grid item xs={12} sm={6} md={2}>
           <PricingCard
-            title="Free"
+            title={t("free")}
             pricePerMonth="0"
             pricePerYear="0"
             orders="30"
-            buttonText="Select"
+            buttonText={t("select")}
           />
         </Grid>
 
         <Grid item xs={12} sm={6} md={2} sx={{ margin: "0px 30px" }}>
           <PricingCard
-            title="Starter"
+            title={t("starter")}
             pricePerMonth="600"
             pricePerYear="6000"
             orders="900"
-            buttonText="Select"
+            buttonText={t("select")}
           />
         </Grid>
 
         <Grid item xs={12} sm={6} md={2}>
           <PricingCard
-            title="Pro"
+            title={t("pro")}
             pricePerMonth="999"
             pricePerYear="10,000"
-            orders="Unlimited"
-            buttonText="Select"
+            orders={t("Unlimited")}
+            buttonText={t("select")}
           />
         </Grid>
       </Grid>
 
       <Grid container spacing={2}  >
-    
+
         <Grid item xs={12} md={6}>
           <Box sx={{ textAlign: "center", justifyContent: "center", marginLeft: "100px", marginTop: "15px" }}>
             <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
-              Sub Total:
+              {t("subTotal")}
               <span variant="body1" style={{ fontSize: '17px', color: "#222240", marginLeft: "10px" }}>
                 1000.00 <sub style={{ fontSize: '8px' }}>EGP</sub>
               </span>
             </Typography>
 
             <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
-              Add Ons:
+              {t("addOns")}
               <span variant="body1" style={{ fontSize: '17px', color: "#222240", marginLeft: "10px" }}>
                 500.00 <sub style={{ fontSize: '8px' }}>EGP</sub>
               </span>
             </Typography>
 
             <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
-              Tax:
+              {t("tax")}
               <span variant="body1" style={{ fontSize: '17px', color: "#222240", marginLeft: "10px" }}>
                 60.00 <sub style={{ fontSize: '8px' }}>EGP</sub>
               </span>
             </Typography>
 
             <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
-              Discounts:
+              {t("discounts")}
               <span variant="body1" style={{ fontSize: '17px', color: "#222240", marginLeft: "10px" }}>
                 50.00 <sub style={{ fontSize: '8px' }}>EGP</sub>
               </span>
@@ -105,7 +106,7 @@ export const Payment = () => {
             <Divider2 sx={{ mt: 1, mb: 1 }} />
 
             <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
-              Total:
+              {t("total")}
               <span variant="body1" style={{ fontSize: '17px', color: "#E57C00", marginLeft: "10px" }}>
                 1390.00 <sub style={{ fontSize: '8px' }}>EGP</sub>
               </span>
@@ -113,7 +114,7 @@ export const Payment = () => {
           </Box>
         </Grid>
 
-    
+
         <Grid item xs={12} md={6} display="flex" flexDirection="column"
           alignItems="center" sx={{ marginTop: "30px" }}>
           <Box sx={{ width: '100%', maxWidth: '400px', textAlign: 'center' }}>
@@ -121,7 +122,7 @@ export const Payment = () => {
             <Box sx={{ width: { lg: '220px', md: "100%", xs: "100%" } }} >
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Box>
-                  <Typography sx={{ fontSize: '9px', color: "gray" }}>Discount Code</Typography>
+                  <Typography sx={{ fontSize: '9px', color: "gray" }}>{t("disCode")}</Typography>
                   <TextField variant="outlined" size="small" sx={{
                     width: "70px",
                     "& .MuiOutlinedInput-root": {
@@ -150,7 +151,7 @@ export const Payment = () => {
                   }}
                 />}
                 label={
-                  <Typography sx={{ fontSize: "12px", color: 'gray' }}>Cash / Card Terminal</Typography>
+                  <Typography sx={{ fontSize: "12px", color: 'gray' }}>{t("cashOrCard")}</Typography>
                 } />
 
               <FormControlLabel sx={{ color: 'gray', fontSize: "11px", mt: '-8px' }} value="card"
@@ -160,7 +161,7 @@ export const Payment = () => {
                     '&.Mui-checked': { color: '#E57C00' },
                   }} />}
                 label={
-                  <Typography sx={{ fontSize: "12px", color: 'gray' }}>Online Payment</Typography>
+                  <Typography sx={{ fontSize: "12px", color: 'gray' }}>{t("onlinePayment")}</Typography>
                 }
               />
             </RadioGroup>
@@ -188,7 +189,7 @@ export const Payment = () => {
           }}
           onClick={() => navigate('/save')}
         >
-          Pay
+          {t("pay")}
         </Button>
       </Grid>
     </Box>

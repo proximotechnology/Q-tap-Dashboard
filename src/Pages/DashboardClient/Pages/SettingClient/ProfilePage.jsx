@@ -25,6 +25,7 @@ import TableBarIcon from '@mui/icons-material/TableBar';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import { toast } from 'react-toastify';
 import { ClientLoginData } from '../../../../context/ClientLoginDataContext';
+import { useTranslation } from 'react-i18next';
 
 const ProfilePage = () => {
   // Personal Info State
@@ -38,6 +39,7 @@ const ProfilePage = () => {
   const [country, setCountry] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const {t} = useTranslation();
 
   // Business Info State
   const [businessName, setBusinessName] = useState('');
@@ -149,13 +151,13 @@ const ProfilePage = () => {
       });
 
       if (response.ok) {
-        toast.success('Profile updated successfully!');
+        toast.success(t("updateSucc"));
       } else {
-        toast.error('Failed to update profile.');
+        toast.error(t("updateErr"));
       }
     } catch (error) {
       console.error('Error:', error);
-      toast.error('An error occurred while updating the profile.');
+      toast.error(t("occuredErr"));
     }
   };
 
@@ -243,7 +245,7 @@ const ProfilePage = () => {
                   required
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  placeholder="Full Name"
+                  placeholder={t("fullName")}
                   sx={{ borderRadius: '6px', marginBottom: '18px', height: '33px', fontSize: '10px' }}
                 />
               </FormControl>
@@ -256,7 +258,7 @@ const ProfilePage = () => {
                       <PhoneOutlinedIcon sx={{ fontSize: '18px' }} />
                     </InputAdornment>
                   }
-                  placeholder="Mobile Number"
+                  placeholder={t("mobileNumber")}
                   required
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
@@ -276,14 +278,14 @@ const ProfilePage = () => {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Email"
+                  placeholder={t("email")}
                   sx={{ borderRadius: '6px', marginBottom: '18px', height: '33px', fontSize: '10px' }}
                 />
               </FormControl>
 
               <FormControl variant="outlined" fullWidth>
                 <OutlinedInput
-                  placeholder="Website"
+                  placeholder={t("website")}
                   startAdornment={
                     <InputAdornment position="start">
                       <LanguageOutlinedIcon sx={{ fontSize: '18px' }} />
@@ -811,7 +813,7 @@ const ProfilePage = () => {
               onClick={() => handleSave(user?.id)}
             >
               <CheckOutlinedIcon sx={{ fontSize: '18px', marginRight: '6px', color: 'white' }} />
-              Save
+              {t("save")}
             </Button>
           </Grid>
         </Grid>

@@ -195,22 +195,23 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 const OurClients = forwardRef((props, ref) => {
     const [clients, setClients] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-
+    const {t} = useTranslation()
     const validateImage = (file) => {
         const maxSize = 5 * 1024 * 1024; // 5MB
         const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
         if (!validTypes.includes(file.type)) {
-            toast.error('Please upload a valid image file (JPEG, PNG, or GIF)');
+            toast.error(t("plUploadVaildImage"));
             return false;
         }
 
         if (file.size > maxSize) {
-            toast.error('Image size should be less than 5MB');
+            toast.error(t("imageSizeLess5mb"));
             return false;
         }
 
@@ -236,7 +237,7 @@ const OurClients = forwardRef((props, ref) => {
 
     const handleSave = async () => {
         if (clients.length === 0) {
-            toast.error("Please add at least one client image!");
+            toast.error(t("plAtleastOneClientImage"));
             return;
         }
 
@@ -273,7 +274,7 @@ const OurClients = forwardRef((props, ref) => {
                 throw new Error(data.error || 'Something went wrong');
             }
 
-            toast.success("Clients Saved Successfully");
+            toast.success(t("clientSaveSucc"));
             setClients([]); // Clear after successful save
 
         } catch (error) {

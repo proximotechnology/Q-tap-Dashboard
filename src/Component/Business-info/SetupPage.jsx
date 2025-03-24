@@ -2,6 +2,7 @@ import { Box, Grid, styled, Typography, useTheme } from '@mui/material'
 import React from 'react'
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
 import { useNavigate } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 const ImageContainer = styled(Box)({
     backgroundImage: 'url(/images/setup.jpg)',
@@ -48,6 +49,7 @@ const Divider = styled(Box)({
 export const SetupPage = () => {
     const theme = useTheme()
     const navigate = useNavigate();
+    const {t} = useTranslation()
 
     return (
 
@@ -62,12 +64,11 @@ export const SetupPage = () => {
                         fontSize: "33px",
                         color: theme.palette.orangePrimary.main
                     }}>
-                        Setup
+                        {t("setup")}
                     </Typography>
                     <Divider />
                     <Typography sx={{ fontSize: "11px", color: '#F1F2F2', marginTop: 4 }}>
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci
-                        tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit
+                        {t("lorm")}
                     </Typography>
                 </TextOverlay>
 

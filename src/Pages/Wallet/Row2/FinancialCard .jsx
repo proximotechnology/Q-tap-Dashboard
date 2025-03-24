@@ -3,8 +3,10 @@ import { Card, CardContent, Typography, Box } from "@mui/material";
 import { financialData } from "./financialData";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { useTranslation } from 'react-i18next';
 
 const FinancialCard = () => {
+  const { t } = useTranslation();
   return (
     <Box display="flex" justifyContent="space-around" flexWrap="wrap">
       {financialData.map((data, index) => (
@@ -32,7 +34,7 @@ const FinancialCard = () => {
                       variant="h6"
                       sx={{ fontSize: "13px", color: "#575756" }}
                     >
-                      {data.title}
+                      {t(data.title)}
                     </Typography>
                   </Box>
 
@@ -92,7 +94,7 @@ const FinancialCard = () => {
                   color="#D8E0E0"
                   sx={{ marginTop: "5px" }}
                 >
-                  {data.description}
+                  {t(data.description)}
                 </Typography>
 
                 <Box
@@ -120,7 +122,7 @@ const FinancialCard = () => {
                       color="textSecondary"
                       sx={{ fontSize: "10px" }}
                     >
-                      {data.legend1}
+                      {t(data.legend1)}
                     </Typography>
                   </Box>
                   <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -138,7 +140,7 @@ const FinancialCard = () => {
                       color="textSecondary"
                       sx={{ fontSize: "10px" }}
                     >
-                      {data.legend2}
+                      {t(data.legend2)}
                     </Typography>
                   </Box>
                 </Box>

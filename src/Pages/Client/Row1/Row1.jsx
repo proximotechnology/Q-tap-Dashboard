@@ -2,6 +2,7 @@ import React from 'react';
 import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
 import { Paper, Typography, Box } from '@mui/material';
 import { PieChart, Pie, Cell } from 'recharts';
+import { useTranslation } from 'react-i18next';
 
 const data01 = [{ name: 'Free', value: 50 }, { name: 'Remaining', value: 50 }];
 const data02 = [{ name: 'Starter', value: 25 }, { name: 'Remaining', value: 75 }];
@@ -12,6 +13,8 @@ const COLORS = ['#ef7d00', '#AD4181', '#2EA6F7'];
 
 
 export const Row1 = () => {
+    const {t} = useTranslation()
+
     return (
         <Box sx={{ padding: "0 20px" }}>
             <Paper elevation={3} sx={{ padding: "20px 40px", borderRadius: 5 }}>
@@ -22,7 +25,7 @@ export const Row1 = () => {
                             <Box component="span">
                                 <PersonAddAltOutlinedIcon sx={{ marginRight: 1, fontSize: "35px", color: "#D8E0E0" }} />
                             </Box>
-                            Clients
+                            {t("client")}
                         </Typography>
 
                         <Typography variant="h3" sx={{ fontSize: "28px", color: "#E57C00", marginLeft: "40px" }}>
@@ -107,7 +110,7 @@ export const Row1 = () => {
                                 background: 'linear-gradient(to right, #ef7d00,rgb(248, 203, 158))',
                                 width: '22px', borderRadius: "20px", height: '10px', display: 'inline-block', marginRight: '8px'
                             }} />
-                            <Typography variant="body2" sx={{ fontSize: "10px", color: "gray" }}>Free</Typography>
+                            <Typography variant="body2" sx={{ fontSize: "10px", color: "gray" }}>{t("free")}</Typography>
                         </Box>
 
 
@@ -116,7 +119,7 @@ export const Row1 = () => {
                                 background: 'linear-gradient(to right, #AD4181,rgb(255, 174, 216))',
                                 width: '22px', borderRadius: "20px", height: '10px', display: 'inline-block', marginRight: '8px'
                             }} />
-                            <Typography variant="body2" sx={{ fontSize: "10px", color: "gray" }}>Starter</Typography>
+                            <Typography variant="body2" sx={{ fontSize: "10px", color: "gray" }}>{t("starter")}</Typography>
                         </Box>
 
                         <Box display={"flex"} textAlign={"center"} alignItems={"center"}>
@@ -124,7 +127,7 @@ export const Row1 = () => {
                                 background: 'linear-gradient(to right, #2EA6F7,rgb(170, 214, 243))',
                                 width: '22px', borderRadius: "20px", height: '10px', display: 'inline-block', marginRight: '8px'
                             }} />
-                            <Typography variant="body2" sx={{ fontSize: "10px", color: "gray" }}>Pro</Typography>
+                            <Typography variant="body2" sx={{ fontSize: "10px", color: "gray" }}>{t("pro")}</Typography>
                         </Box>
                     </Box>
                 </Box>

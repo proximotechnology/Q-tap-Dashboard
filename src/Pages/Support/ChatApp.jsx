@@ -828,6 +828,7 @@ import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import AddLocationAltOutlinedIcon from "@mui/icons-material/AddLocationAltOutlined";
 import "./chat.css";
+import { useTranslation } from "react-i18next";
 
 const ChatApp = () => {
   const [selectedChat, setSelectedChat] = useState(null);
@@ -840,8 +841,8 @@ const ChatApp = () => {
 
   const messageCache = useRef({}); // Cache chat history for each user
   const pollingInterval = useRef(null);
-
-  // Fetch users (customer_info) only once when the component mounts
+  const { t } = useTranslation();
+  // Fetch users (customer_info) only once when the component mounts 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -1135,7 +1136,7 @@ const ChatApp = () => {
         variant="body2"
         sx={{ fontSize: "12px", padding: "20px", color: "#363535fa" }}
       >
-        Live Chat
+        {t("liveChat")}
       </Typography>
 
       <Grid container>

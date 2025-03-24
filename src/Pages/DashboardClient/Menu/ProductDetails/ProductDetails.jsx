@@ -9,13 +9,14 @@ import RemoveCircleOutlinedIcon from '@mui/icons-material/RemoveCircleOutlined';
 import { ingrediants, itemsData, options } from '../data/itemsData';
 import Cart from './Cart';
 import Language from '../../ComponentDashClient/TopBar/Language';
+import { useTranslation } from 'react-i18next';
 
 
 const ProductDetails = ({ item, activeItemId, handleOptionClick, selectedItemOptions, selectedSize, handleSizeClick, isCartOpen, toggleCart,
     selectedItemExtra, handleExtraClick
 }) => {
 
-
+    const {t} = useTranslation()
     const sizes = ["S", "M", "L"];
     // ___________________________________________________________________
 
@@ -191,7 +192,7 @@ const ProductDetails = ({ item, activeItemId, handleOptionClick, selectedItemOpt
 
                     <Box display="flex" alignItems="center" gap={2} sx={{ padding: "20px 0px" }}>
                         <Typography variant="h6" sx={{ fontSize: '11px', fontWeight: "bold", color: '#3A3A38' }}>
-                            Size
+                            {t("size.one")}
                         </Typography>
                         {sizes.map((size) => {
                             return (
@@ -219,7 +220,7 @@ const ProductDetails = ({ item, activeItemId, handleOptionClick, selectedItemOpt
 
                     <Box>
                         <Typography variant="h6" sx={{ fontSize: "10px", fontWeight: 'bold', color: '#40403D' }}>
-                            Your Options <span style={{ fontSize: "8px", fontWeight: '300', color: "black" }}>(Required)</span>
+                            {t("yourOptions")} <span style={{ fontSize: "8px", fontWeight: '300', color: "black" }}>({t("required")})</span>
                         </Typography>
 
                         <Box>
@@ -252,7 +253,7 @@ const ProductDetails = ({ item, activeItemId, handleOptionClick, selectedItemOpt
                                                         {option.name}
                                                     </Typography>
                                                     <Typography variant="caption" sx={{ marginLeft: "auto", fontSize: "8px", textTransform: "capitalize", fontWeight: "bold" }}>
-                                                        {option.price === 0 ? <span style={{ fontWeight: 400 }}>Free</span>
+                                                        {option.price === 0 ? <span style={{ fontWeight: 400 }}>{t("free")}</span>
                                                             : `+${option.price} EGP`}
                                                     </Typography>
                                                 </Button>
@@ -266,7 +267,7 @@ const ProductDetails = ({ item, activeItemId, handleOptionClick, selectedItemOpt
 
                     <Box Box sx={{ marginTop: "15px" }}>
                         <Typography variant="h6" sx={{ fontSize: "10px", fontWeight: 'bold', color: '#40403D' }}>
-                            Extra
+                            {t("extra.one")}
                         </Typography>
 
                         <Box>
@@ -300,7 +301,7 @@ const ProductDetails = ({ item, activeItemId, handleOptionClick, selectedItemOpt
                                                     </Typography>
                                                     <Typography variant="caption" sx={{ marginLeft: "auto", fontSize: "8px", textTransform: "capitalize", fontWeight: "bold" }}>
 
-                                                        {extra.price === 0 ? <span style={{ fontWeight: 400 }}>Free</span>
+                                                        {extra.price === 0 ? <span style={{ fontWeight: 400 }}>{t("free")}</span>
                                                             : `+${extra.price} EGP`}
                                                     </Typography>
                                                 </Button>
@@ -315,7 +316,7 @@ const ProductDetails = ({ item, activeItemId, handleOptionClick, selectedItemOpt
 
                     <Box Box sx={{ marginTop: "15px" }}>
                         <Typography variant="h6" sx={{ fontSize: "10px", fontWeight: 'bold', color: '#40403D' }}>
-                            Ingrediants
+                            {t("ingrediants")}
                         </Typography>
                         <Box display="flex" flexWrap="wrap" gap={1}>
                             {ingrediants.map((option, index) => (
@@ -347,7 +348,7 @@ const ProductDetails = ({ item, activeItemId, handleOptionClick, selectedItemOpt
 
                     <Box sx={{ marginTop: "15px", marginBottom: "70px" }}>
                         <Typography variant="h6" sx={{ fontSize: "10px", fontWeight: 'bold', color: '#40403D' }}>
-                            Description
+                            {t("discription")}
                         </Typography>
                         <Typography variant="body2" sx={{ fontSize: "8px", color: 'gray', width: "70%" }}>
                             Lorem, ipsum dolor sit perspiciatis magnam pariatur neque repellat veritatis asperiores repellat veritatis asperiores !</Typography>
@@ -362,7 +363,7 @@ const ProductDetails = ({ item, activeItemId, handleOptionClick, selectedItemOpt
                     }}>
                     <Box>
                         <Typography variant="h6" sx={{ fontSize: '11px', fontWeight: "bold", color: '#3A3A38' }}>
-                            price
+                            {t("price.one")}
                         </Typography>
                         <Typography variant="h6" sx={{ fontSize: '18px', fontWeight: "bold", color: '#ef7d00' }}>
                             {item.newPrice} <span style={{ fontSize: "10px", fontWeight: "400", color: '#575756' }}>EGP</span>
@@ -377,7 +378,7 @@ const ProductDetails = ({ item, activeItemId, handleOptionClick, selectedItemOpt
                                 backgroundColor: "#ef7d10",
                             }
                         }}>
-                        Add to Cart
+                        {t("addToCart")}
                     </Button>
                 </Box>   {/* Footer */}
             </Box >

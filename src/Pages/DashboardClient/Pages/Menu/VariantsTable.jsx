@@ -7,11 +7,13 @@ import { useBranch } from '../../../../context/BranchContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { ContentMenu } from '../../../../context/ContentMenuContext';
+import { useTranslation } from 'react-i18next';
 export const VariantsTable = () => {
     const [openVariant, setOpenOffers] = useState(false);
     const [allVariants, setAllVariants] = useState([])
     const { setVariantsContext } = useContext(ContentMenu);
     const selectedBranch = localStorage.getItem('selectedBranch');
+    const {t} = useTranslation();
     // useEffect(() => {
     //     console.log("varianet page data  ", selectedBranch)
     // }, [])
@@ -54,11 +56,11 @@ export const VariantsTable = () => {
             await axios.delete(`https://highleveltecknology.com/Qtap/api/meals_variants/${id}`, {
                 headers: { 'Authorization': `Bearer ${localStorage.getItem('clientToken')}` }
             });
-            toast.success("Variant deleted");
+            toast.success(t("variant.deleteSucc"));
             getVariants();
         } catch (error) {
             console.error('Error deleting variant:', error);
-            toast.error('Error deleting variant');
+            toast.error(t("variant.deleteErr"));
         }
     };
 
@@ -91,13 +93,13 @@ export const VariantsTable = () => {
             );
 
             if (response.data) {
-                toast.success('Updated successfully');
+                toast.success(t("variant.updateSucc"));
                 handleEditToggle(index); // إغلاق وضع التعديل
                 getVariants(); // تحديث البيانات
             }
         } catch (error) {
             console.error('Error updating variant:', error);
-            toast.error('Error updating variant');
+            toast.error(t("variant.updateErr"));
         }
     };
 
@@ -109,11 +111,11 @@ export const VariantsTable = () => {
 
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>
-                    Variants
+                    {t("variant.one")}
                 </Typography>
                 <Box sx={{ display: "flex" }}>
                     <Box sx={{ display: "flex", alignItems: "center", marginRight: "15px" }}>
-                        <Typography sx={{ fontSize: "10px", color: "gray", marginRight: "5px" }}>Limit</Typography>
+                        <Typography sx={{ fontSize: "10px", color: "gray", marginRight: "5px" }}>{t("limit")}</Typography>
                         <TextField
                             placeholder='0.0'
                             variant="outlined"
@@ -129,7 +131,7 @@ export const VariantsTable = () => {
 
                     <Button onClick={handleOffersOpen} >
                         <Typography variant='body1' sx={{ fontSize: "13px", textTransform: "capitalize", color: "#ef7d00" }}>
-                            + Add One</Typography>
+                            + {t("addOne")}</Typography>
                     </Button>
                     <AddVariant open={openVariant} handleClose={handleClose} />
                 </Box>
@@ -141,8 +143,8 @@ export const VariantsTable = () => {
             <Table sx={{ mt: 3, mb: 5, width: '100%', tableLayout: 'fixed' }}>
                 <TableHead>
                     <TableRow sx={{ backgroundColor: "#EBEDF3" }}>
-                        <TableCell sx={{ fontSize: "10px", padding: '3px 10px', borderBottom: "none", textAlign: "left", color: "#575756" }}>Price</TableCell>
-                        <TableCell sx={{ fontSize: "10px", padding: '3px 10px', borderBottom: "none", textAlign: "left", color: "#575756" }}>Options</TableCell>
+                        <TableCell sx={{ fontSize: "10px", padding: '3px 10px', borderBottom: "none", textAlign: "left", color: "#575756" }}>{t("price.one")}</TableCell>
+                        <TableCell sx={{ fontSize: "10px", padding: '3px 10px', borderBottom: "none", textAlign: "left", color: "#575756" }}>{t("option")}</TableCell>
                         <TableCell sx={{ fontSize: "10px", padding: '3px 10px', borderBottom: "none", textAlign: "left", color: "#575756" }}></TableCell>
                     </TableRow>
                 </TableHead>

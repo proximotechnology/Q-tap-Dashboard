@@ -2,14 +2,16 @@ import React, { useState } from 'react'
 import { Box, Typography, useTheme, } from '@mui/material';
 import { SignUpPage } from './signup/SignUPage';
 import { LoginPage } from './login/LoginPage';
+import { useTranslation } from 'react-i18next';
 
 const QtapHome = () => {
     const [selectedTab, setSelectedTab] = useState('login');
     const theme = useTheme();
+    const { t } = useTranslation();
     return (
         <Box>
-        
-        
+
+
             <Box display="flex" justifyContent="center" >
                 <img src="/assets/qtap.svg" alt="logo Qtap" style={{ width: "250px", height: "40px" }} />
             </Box>
@@ -17,9 +19,9 @@ const QtapHome = () => {
             <Box
                 display="flex"
                 flexDirection="row"
-                justifyContent="space-between" 
-                sx={{margin :  selectedTab === 'login' ? "60px 0px 50px 0px"  :"10px 0px  60px 0px"}}
-                
+                justifyContent="space-between"
+                sx={{ margin: selectedTab === 'login' ? "60px 0px 50px 0px" : "10px 0px  60px 0px" }}
+
             >
                 <Box
                     component="div"
@@ -32,7 +34,7 @@ const QtapHome = () => {
                     <Typography
                         variant="body1"
                         sx={{
-                            borderBottom: selectedTab === 'login' ?`3px solid ${theme.palette.orangePrimary.main}`: "none",
+                            borderBottom: selectedTab === 'login' ? `3px solid ${theme.palette.orangePrimary.main}` : "none",
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
@@ -42,7 +44,7 @@ const QtapHome = () => {
                             cursor: "pointer",
                         }}
                     >
-                        Log In
+                        {t("logIn")}
                     </Typography>
                 </Box>
 
@@ -67,16 +69,17 @@ const QtapHome = () => {
                             cursor: "pointer",
                         }}
                     >
-                        Sign Up
+                        
+                        {t("signUp")}
                     </Typography>
                 </Box>
             </Box>
 
             <Box >
-                
+
                 {selectedTab === 'login' && <LoginPage />}
-                {selectedTab === 'signup' && <SignUpPage />} 
-            
+                {selectedTab === 'signup' && <SignUpPage />}
+
             </Box>
 
         </Box>

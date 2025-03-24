@@ -13,6 +13,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 import styles from './supportCard.module.css'
+import { useTranslation } from 'react-i18next';
 const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onClick }) => {
   const statusStyles = {
     'in_progress': { backgroundColor: '#222240', color: '#f4f6fc' },
@@ -24,6 +25,7 @@ const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onC
   const formattedDate = new Date(created_at).toLocaleDateString();
   console.log(status, "askjflj ");
 
+  const { t } = useTranslation();
   return (
     <Paper
       className={status == 'in_progress' ? styles.card : styles.card2}
@@ -41,16 +43,16 @@ const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onC
       onClick={onClick}
     >
       <Typography variant="body2" sx={{ fontSize: "11px", paddingBottom: "10px" }}>
-        Ticket No.#{id}
+        {t("ticketNo")}{id}
       </Typography>
       <Typography variant="body2" sx={{ fontSize: "9px", paddingBottom: "10px" }}>
-        Name: {Customer_Name}
+        {t("name")} {Customer_Name}
       </Typography>
       <Typography variant="body2" sx={{ fontSize: "9px", paddingBottom: "10px" }}>
-        Mail: {Customer_Email}
+        {t("mail")} {Customer_Email}
       </Typography>
       <Typography variant="body2" sx={{ fontSize: "9px", paddingBottom: "10px" }}>
-        Date: {formattedDate}
+        {t("date")} {formattedDate}
       </Typography>
       <Box
         sx={{
@@ -65,21 +67,21 @@ const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onC
           <>
             <span className="icon-processing-time" style={{ fontSize: "13px", color: "#ef7d00" }} />
             <Typography variant="body1" sx={{ fontSize: "11px", color: "#ef7d00", ml: 1 }}>
-              In Progress
+              {t("inProgress")}
             </Typography>
           </>
         ) : status === 'Done' ? (
           <>
             <span className="icon-check" style={{ fontSize: "13px", color: "#222240" }} />
             <Typography variant="body1" sx={{ fontSize: "11px", color: "#222240", ml: 1 }}>
-              Done
+            {t("done")}
             </Typography>
           </>
         ) : (
           <>
             <span className="icon-share" style={{ fontSize: "12px", color: "#222240" }} />
             <Typography variant="body1" sx={{ fontSize: "11px", color: "#222240", ml: 1 }}>
-              Open
+              {t("open")}
             </Typography>
           </>
         )}
@@ -94,7 +96,7 @@ const Support = () => {
     "How much you satisfied with the service?",
   ]);
 
-
+  const { t } = useTranslation();
   const addQuestion = (newQuestion) => {
     if (newQuestion.trim() !== "") {
       setQuestions([...questions, newQuestion]);
@@ -181,12 +183,12 @@ const Support = () => {
       })
 
       if (response.data) {
-        toast.success("Feedback deleted successfully!");
+        toast.success(t("feedbacks.deleteSucc"));
         getFeedbackData();
       }
     } catch (error) {
       console.log("error delete feedback ", error);
-      toast.error("Error deleting feedback");
+      toast.error(t("feedbacks.deleteErr"));
 
     }
   }
@@ -273,12 +275,12 @@ const Support = () => {
 
       if (response.data) {
         setTickets([...tickets, response.data.ticket]);
-        toast.success('Ticket added successfully');
+        toast.success(t("ticket.addSucc"));
         handleClose();
       }
     } catch (error) {
       console.error('Error adding ticket:', error);
-      toast.error(error.response?.data?.message || 'Failed to add ticket');
+      toast.error(error.response?.data?.message || t("ticket.addErr"));
     }
   };
   const updateTicket = async () => {
@@ -313,12 +315,12 @@ const Support = () => {
         setTickets(tickets.map(ticket =>
           ticket.id === selectedTicket.id ? response.data.ticket : ticket
         ));
-        toast.success('Ticket updated successfully');
+        toast.success(t("ticket.updateSucc"));
         handleClose(); // Close the modal and reset form
       }
     } catch (error) {
       console.error('Error updating ticket:', error);
-      toast.error(error.response?.data?.message || 'Failed to update ticket');
+      toast.error(error.response?.data?.message || t("ticket.updateErr"));
     }
   };
   // New states for search functionality
@@ -340,7 +342,7 @@ const Support = () => {
         <Grid container spacing={2} alignItems="center">
           {/* the header */}
           <Grid item xs={12} sx={{ display: "flex" }}>
-            <Typography variant="body1" sx={{ fontSize: "12px", color: "#575756" }}>Tickets</Typography>
+            <Typography variant="body1" sx={{ fontSize: "12px", color: "#575756" }}>{t("ticket.many")}</Typography>
             <Grid item xs sx={{ flexGrow: 1 }}>
               <Box sx={{
                 display: 'flex',
@@ -413,7 +415,7 @@ const Support = () => {
 
         <Box sx={{ padding: "30px 30px 0px 30px ", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>
-            Feedback
+          {t("feedbacks.many")}
           </Typography>
 
           <Typography
@@ -421,7 +423,7 @@ const Support = () => {
             variant="body1" sx={{ fontSize: "10px", color: "#E57C00", cursor: "pointer", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 
             <AddIcon style={{ fontSize: "20px", fontWeight: "bold" }} />
-            Add Question
+            {t("addQuestion")}
           </Typography>
 
           <AddQuestion open={openModal} handleCloseModel={handleCloseModel} onAddQuestion={addQuestion} />
@@ -465,13 +467,13 @@ const Support = () => {
         <Table sx={{ p: 0, mt: 2, mb: 5, width: '100%', tableLayout: 'fixed' }}>
           <TableHead>
             <TableRow sx={{ backgroundColor: "#D8E0E0" }}>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "30%" }}>Customer</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "30%" }}>Phone</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "30%" }}>Order Id</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "40%" }}>Rate</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "20%" }}>Status</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "16%" }}>Details</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "16%" }}>Action</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "30%" }}>{t("customer")}</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "30%" }}>{t("mobileNumber")}</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "30%" }}>{t("orderId")}</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "40%" }}>{t("rate")}</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "20%" }}>{t("status")}</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "16%" }}>{t("details")}</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "16%" }}>{t("action")}</TableCell>
             </TableRow>
           </TableHead>
 

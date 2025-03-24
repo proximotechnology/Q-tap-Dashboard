@@ -7,6 +7,7 @@ import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import OrderHistoryDetails from './OrderHistoryDetails/OrderHistoryDetails';
+import { useTranslation } from 'react-i18next';
 
 const orders = [
     {
@@ -60,6 +61,7 @@ const OrderTable = () => {
         link.click();
         URL.revokeObjectURL(url);
     };
+    const {t} = useTranslation();
     return (
         <Box
             display="flex"
@@ -85,7 +87,7 @@ const OrderTable = () => {
                     <TextField
                         variant="outlined"
                         size="small"
-                        placeholder="From"
+                        placeholder={t("from")}
                         style={{ marginRight: '8px', width: "90px" }}
                         InputProps={{
                             startAdornment: <CalendarMonthOutlinedIcon sx={{ fontSize: "15px", marginRight: "5px", color: "#c7c3c3" }} />,
@@ -99,7 +101,7 @@ const OrderTable = () => {
                     <TextField
                         variant="outlined"
                         size="small"
-                        placeholder="To"
+                        placeholder={t("to")}
                         style={{ marginRight: '8px', width: "90px" }}
                         InputProps={{
                             startAdornment: <CalendarMonthOutlinedIcon sx={{ fontSize: "15px", marginRight: "5px", color: "#c7c3c3" }} />,
@@ -112,7 +114,7 @@ const OrderTable = () => {
                         style={{ color: '#ef7d00', fontSize: "11px", textTransform: "capitalize" }}
                         onClick={handleExport}
                     >
-                        Export
+                        {t("export")}
                         <ArrowForwardIosIcon sx={{ fontSize: "11px", color: "black" }} />
                     </Button>
                 </Box>
@@ -120,13 +122,13 @@ const OrderTable = () => {
                 <Table>
                     <TableHead sx={{ borderBottom: "none", backgroundColor: "#f4f6fc", padding: "5px", marginTop: "20px" }}>
                         <TableRow sx={{ height: '40px' }}>
-                            <TableCell sx={{ padding: '5px 0px', fontSize: "12px", color: "#575756", textAlign: "center" }}>ID</TableCell>
-                            <TableCell sx={{ padding: '5px 0px', fontSize: "12px", color: "#575756", textAlign: "center" }}>Created</TableCell>
-                            <TableCell sx={{ padding: '5px 0px', fontSize: "12px", color: "#575756", textAlign: "center" }}>Method</TableCell>
-                            <TableCell sx={{ padding: '5px 0px', fontSize: "12px", color: "#575756", textAlign: "center" }}>Items</TableCell>
-                            <TableCell sx={{ padding: '5px 0px', fontSize: "12px", color: "#575756", textAlign: "center" }}>Price</TableCell>
-                            <TableCell sx={{ padding: '5px 0px', fontSize: "12px", color: "#575756", textAlign: "center" }}>Payment</TableCell>
-                            <TableCell sx={{ padding: '5px 0px', fontSize: "12px", color: "#575756", textAlign: "center" }}>Status</TableCell>
+                            <TableCell sx={{ padding: '5px 0px', fontSize: "12px", color: "#575756", textAlign: "center" }}>{t("id")}</TableCell>
+                            <TableCell sx={{ padding: '5px 0px', fontSize: "12px", color: "#575756", textAlign: "center" }}>{t("created")}</TableCell>
+                            <TableCell sx={{ padding: '5px 0px', fontSize: "12px", color: "#575756", textAlign: "center" }}>{t("dineMethod")}</TableCell>
+                            <TableCell sx={{ padding: '5px 0px', fontSize: "12px", color: "#575756", textAlign: "center" }}>{t("item.many")}</TableCell>
+                            <TableCell sx={{ padding: '5px 0px', fontSize: "12px", color: "#575756", textAlign: "center" }}>{t("price.one")}</TableCell>
+                            <TableCell sx={{ padding: '5px 0px', fontSize: "12px", color: "#575756", textAlign: "center" }}>{t("payment")}</TableCell>
+                            <TableCell sx={{ padding: '5px 0px', fontSize: "12px", color: "#575756", textAlign: "center" }}>{t("status")}</TableCell>
                         </TableRow>
                     </TableHead>
 
@@ -164,7 +166,7 @@ const OrderTable = () => {
                                 <TableCell style={{ color: order.payment === 'Paid' ? '#4CAF50' : '#f44336', textAlign: "center" }}>
                                     <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                                         <img src="/assets/balance.svg" alt="icon" style={{ width: "18px", marginRight: "6px", height: "18px" }} />
-                                        {order.payment}
+                                        {t(order.payment)}
                                     </Box>
                                 </TableCell>
 
@@ -174,14 +176,14 @@ const OrderTable = () => {
                                         <Box  sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                                         <span class="icon-double-check" style={{fontSize:"20px",marginRight:"5px"}}><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
                                             <Typography variant="body2" sx={{ fontSize: "12px" }}>
-                                            Done
+                                            {t("done")}
                                             </Typography>
                                         </Box>
                                         :
                                         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                                             <span class="icon-close" style={{ fontSize: "14px",marginRight:"5px" }}></span>
                                             <Typography variant="body2" sx={{ fontSize: "12px" }}>
-                                                Rejected
+                                                {t("rejected")}
                                             </Typography>
                                         </Box>
 

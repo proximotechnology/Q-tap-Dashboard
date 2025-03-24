@@ -3,6 +3,7 @@ import React from "react";
 import { Box, List, ListItemButton, ListItemIcon, ListItemText, Tooltip, useTheme } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { grey } from "@mui/material/colors";
+import { useTranslation } from "react-i18next";
 
 
 const Arr1 = [ 
@@ -20,6 +21,7 @@ export default function SideBar() {
     const location = useLocation();
     const navigate = useNavigate();
     const theme = useTheme();
+    const {t} = useTranslation();
     return (
         <Box 
         sx={{
@@ -79,7 +81,7 @@ export default function SideBar() {
                                 </ListItemIcon>
 
                                 <ListItemText
-                                    primary={item.text}
+                                    primary={t(item.text)}
                                     primaryTypographyProps={{ fontSize: "12px" }}
                                 />
 

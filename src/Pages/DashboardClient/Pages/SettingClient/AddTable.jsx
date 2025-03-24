@@ -19,8 +19,10 @@ import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import { ClientLoginData } from '../../../../context/ClientLoginDataContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 const AddTableModal = ({ open, onClose, onSave, tableData }) => {
+  const {t} = useTranslation();
   const selectedBranch = localStorage.getItem('selectedBranch');
   const { areaData, getAreaData, getTableDataRes } = useContext(ClientLoginData);
   const { areas } = areaData;
@@ -72,13 +74,13 @@ const AddTableModal = ({ open, onClose, onSave, tableData }) => {
       });
 
       if (response.data) {
-        toast.success(tableData ? 'Table updated successfully!' : 'Table added successfully!');
+        toast.success(tableData ? t("table.updateSucc") : t("table.addSucc"));
         getTableDataRes(); // Refresh table data
         onClose(); // Close the modal
       }
     } catch (error) {
       console.error('Error saving table:', error);
-      toast.error('Error saving table');
+      toast.error(t("table.saveErr"));
     }
   };
 
@@ -98,7 +100,7 @@ const AddTableModal = ({ open, onClose, onSave, tableData }) => {
       >
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Typography variant="body1" sx={{ fontSize: '13px', color: '#424242' }}>
-            {tableData ? 'Edit Table' : 'Add Table'}
+            {tableData ? t("table.edit") : t("table.add")}
           </Typography>
           <IconButton onClick={onClose}>
             <CloseIcon sx={{ fontSize: '20px', color: 'gray' }} />
@@ -109,7 +111,7 @@ const AddTableModal = ({ open, onClose, onSave, tableData }) => {
         {/* Name Field */}
         <Box sx={{ marginTop: '20px', display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'left' }}>
           <Typography variant="body2" sx={{ width: '25%', textAlign: 'center' }} color="#424242" fontSize="12px">
-            Name
+            {t("name")}
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
             <TextField
@@ -126,7 +128,7 @@ const AddTableModal = ({ open, onClose, onSave, tableData }) => {
                 },
               }}
               fullWidth
-              placeholder="Table Name"
+              placeholder={t("table.name")}
             />
           </Box>
         </Box>
@@ -134,7 +136,7 @@ const AddTableModal = ({ open, onClose, onSave, tableData }) => {
         {/* Size Field */}
         <Box sx={{ marginTop: '20px', display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'left' }}>
           <Typography variant="body2" sx={{ width: '25%', textAlign: 'center' }} color="#424242" fontSize="12px">
-            Size
+            {t("size.one")}
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
             <TextField
@@ -151,7 +153,7 @@ const AddTableModal = ({ open, onClose, onSave, tableData }) => {
                 },
               }}
               fullWidth
-              placeholder="Chairs"
+              placeholder={t("chairs")}
             />
           </Box>
         </Box>
@@ -159,7 +161,7 @@ const AddTableModal = ({ open, onClose, onSave, tableData }) => {
         {/* Area Field */}
         <Box sx={{ marginTop: '20px', display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'flex-start' }}>
           <Typography variant="body2" sx={{ width: '25%', textAlign: 'center' }} color="#424242" fontSize="12px">
-            Area
+            {t("area")}
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
             <FormControl sx={{ width: '90%' }}>
@@ -214,7 +216,7 @@ const AddTableModal = ({ open, onClose, onSave, tableData }) => {
               textTransform: 'capitalize',
             }}
           >
-            <CheckOutlinedIcon /> Save
+            <CheckOutlinedIcon /> {t("save")}
           </Button>
         </Box>
       </Box>

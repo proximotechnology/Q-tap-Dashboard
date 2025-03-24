@@ -7,6 +7,7 @@ import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import { Box } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 
 export const PersonalInfo = () => {
 
@@ -20,7 +21,7 @@ export const PersonalInfo = () => {
 
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-
+    const {t} = useTranslation();
     return (
         <Grid container spacing={2} justifyContent="center" >
             
@@ -59,7 +60,7 @@ export const PersonalInfo = () => {
             </Grid>
             <Grid item xs={12} md={6}>
                 <Typography variant="body2" sx={{ fontSize: "14px" }} color="#3b3a3a" gutterBottom>
-                    Personal Info
+                    {t("personalInfo")}
                 </Typography>
                 <Divider sx={{ borderRadius:"30px",width: "28%", borderBottom: "4px solid #ef7d00", marginBottom: "18px" }} />
 
@@ -74,7 +75,7 @@ export const PersonalInfo = () => {
                         required
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
-                        placeholder="Full Name"
+                        placeholder={t("fullName")}
                         sx={{ borderRadius: '6px',width:"85%",marginBottom: "18px", height: '30px', fontSize: "10px" }}
                     />
                 </FormControl>
@@ -87,7 +88,7 @@ export const PersonalInfo = () => {
                                 <PhoneOutlinedIcon sx={{ fontSize: "18px" }} />
                             </InputAdornment>
                         }
-                        placeholder="Mobile Number"
+                        placeholder={t("mobileNumber")}
                         required
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
@@ -107,7 +108,7 @@ export const PersonalInfo = () => {
                         required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Email"
+                        placeholder={t("email")}
                         sx={{ borderRadius: '6px',width:"85%",marginBottom: "18px", height: '30px', fontSize: "10px" }}
                     />
                 </FormControl>
@@ -116,7 +117,7 @@ export const PersonalInfo = () => {
                     <Grid item xs={12} sm={12} md={12} lg={12}>
                         <Grid container alignItems="center" sx={{ color: "grey" }} >
                             <CalendarMonthOutlinedIcon sx={{ marginRight: 1, fontSize: "15px" }} />
-                            <Typography variant="body1" sx={{ fontSize: "10px" }}>Date of Birth:</Typography>
+                            <Typography variant="body1" sx={{ fontSize: "10px" }}>{t("dateOfBirth")}</Typography>
                         </Grid>
                     </Grid>
                     <Grid item xs={4}>
@@ -129,7 +130,7 @@ export const PersonalInfo = () => {
                                 sx={{ borderRadius: '6px', height: '30px', fontSize: "10px", color: "gray", marginRight: "5px" }}
                             >
                                 <MenuItem value="" disabled >
-                                    Month
+                                    {t("month")}
                                 </MenuItem>
                                 <MenuItem value="01">01</MenuItem>
                                 <MenuItem value="02">02</MenuItem>
@@ -157,7 +158,7 @@ export const PersonalInfo = () => {
                                 sx={{ borderRadius: '6px', height: '30px', fontSize: "10px", color: "gray", marginRight: "5px" }}
                             >
                                 <MenuItem value="" disabled >
-                                    Day
+                                    {t("day")}
                                 </MenuItem>
                                 {[...Array(31).keys()].map((i) => (
                                     <MenuItem key={i + 1} value={i + 1}>
@@ -178,7 +179,7 @@ export const PersonalInfo = () => {
                                 sx={{ borderRadius: '6px', height: '30px', fontSize: "10px", color: "gray" }}
                             >
                                 <MenuItem value="" disabled >
-                                    Year
+                                    {t("year")}
                                 </MenuItem>
                                 {Array.from({ length: 2025 - 1089 + 1 }, (_, i) => (
                                     <MenuItem key={i + 1089} value={i + 1089}>
@@ -205,7 +206,7 @@ export const PersonalInfo = () => {
                         }
                     >
                         <MenuItem value="" disabled sx={{fontSize:"12px" , color:"gray"}} >
-                            Country
+                            {t("country")}
                         </MenuItem>
                         <MenuItem value="US" sx={{fontSize:"12px" , color:"gray"}}>United States</MenuItem>
                         <MenuItem value="CA" sx={{fontSize:"12px" , color:"gray"}}>Canada</MenuItem>
@@ -224,7 +225,7 @@ export const PersonalInfo = () => {
                                 <span class="icon-padlock" style={{ fontSize: "18px" }} />
                             </InputAdornment>
                         }
-                        placeholder="Password"
+                        placeholder={t("password")}
                         sx={{ borderRadius: '6px',width:"85%",marginBottom: "18px", height: '30px', fontSize: "10px"  }}
                     />
                 </FormControl>
@@ -241,7 +242,7 @@ export const PersonalInfo = () => {
                             </InputAdornment>
                         }
                     
-                        placeholder="Confirm Password"
+                        placeholder={t("confirmPass")}
                         sx={{ borderRadius: '6px',width:"85%",marginBottom: "18px", height: '30px', fontSize: "10px"  }}
 
                     />

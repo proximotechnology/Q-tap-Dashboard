@@ -6,8 +6,10 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 import MinimizeOutlinedIcon from '@mui/icons-material/MinimizeOutlined';
 import { transactionsData } from './transactionsData';
+import { useTranslation } from 'react-i18next';
 
 export const Row3 = () => {
+    const { t } = useTranslation();
     return (
         <Grid container spacing={2} sx={{ marginTop: "5px" }}>
             <Grid item xs={6}>
@@ -21,7 +23,7 @@ export const Row3 = () => {
                         >
                             <Box variant="body2" sx={{ fontSize: "13px", display: "flex", color: "#575756" }}>
                                 <span class="icon-transfer" style={{ fontSize: "22px", color: "#D8E0E0" }} ></span>
-                                Withdrawals
+                                {t("withdrawals")}
                             </Box>
                             <Box sx={{ display: "flex", textAlign: "center", alignItems: "center" }} gap={1}>
                                 <IconButton>
@@ -30,7 +32,7 @@ export const Row3 = () => {
                                 <TextField
                                     variant="outlined"
                                     size="small"
-                                    placeholder="From"
+                                    placeholder={t("from")}
                                     style={{ width: "80px" }}
                                     InputProps={{
 
@@ -45,7 +47,7 @@ export const Row3 = () => {
                                 <TextField
                                     variant="outlined"
                                     size="small"
-                                    placeholder="To"
+                                    placeholder={t("to")}
                                     style={{ width: "80px" }}
                                     InputProps={{
 
@@ -58,18 +60,18 @@ export const Row3 = () => {
                                     }}
                                 />
                                 <Button sx={{ color: "#ef7d00", fontSize: "11px", textTransform: "capitalize" }}>
-                                    Export <KeyboardArrowRightIcon sx={{ color: "#575756", fontSize: "12px", }} /> </Button>
+                                    {t("export")} <KeyboardArrowRightIcon sx={{ color: "#575756", fontSize: "12px", }} /> </Button>
                             </Box>
                         </Box>
 
                         <Table>
                             <TableHead sx={{ height: "20px", borderBottom: "1px solid #e7e3e3" }}>
                                 <TableRow>
-                                    <TableCell sx={{ color: "#575756", borderBottom: "none", fontSize: "10px", textAlign: "left", padding: "0px 30px" }}>ID</TableCell>
-                                    <TableCell sx={{ color: "#575756", borderBottom: "none", fontSize: "10px", textAlign: "center", padding: "0px" }}>Date</TableCell>
-                                    <TableCell sx={{ color: "#575756", borderBottom: "none", fontSize: "10px", textAlign: "center", padding: "0px" }}>Time</TableCell>
-                                    <TableCell sx={{ color: "#575756", borderBottom: "none", fontSize: "10px", textAlign: "center", padding: "0px" }}>Amount</TableCell>
-                                    <TableCell sx={{ color: "#575756", borderBottom: "none", fontSize: "10px", textAlign: "center", padding: "0px" }}>Status</TableCell>
+                                    <TableCell sx={{ color: "#575756", borderBottom: "none", fontSize: "10px", textAlign: "left", padding: "0px 30px" }}>{t("id")}</TableCell>
+                                    <TableCell sx={{ color: "#575756", borderBottom: "none", fontSize: "10px", textAlign: "center", padding: "0px" }}>{t("date")}</TableCell>
+                                    <TableCell sx={{ color: "#575756", borderBottom: "none", fontSize: "10px", textAlign: "center", padding: "0px" }}>{t("time")}</TableCell>
+                                    <TableCell sx={{ color: "#575756", borderBottom: "none", fontSize: "10px", textAlign: "center", padding: "0px" }}>{t("amount")}</TableCell>
+                                    <TableCell sx={{ color: "#575756", borderBottom: "none", fontSize: "10px", textAlign: "center", padding: "0px" }}>{t("status")}</TableCell>
 
                                 </TableRow>
                             </TableHead>
@@ -138,14 +140,14 @@ export const Row3 = () => {
 
                                         }}>
                                             <span style={{
-                                                backgroundColor:transaction.status === "Done" 
-                                                ? "#58DC95" : "#EB8084",
-                                                padding: "3px 15px",  
+                                                backgroundColor: transaction.status === "Done"
+                                                    ? "#58DC95" : "#EB8084",
+                                                padding: "3px 15px",
                                                 borderRadius: "20px",
                                             }}>
                                                 {transaction.status}
                                             </span>
-                                            
+
                                         </TableCell>
                                     </TableRow>
                                 ))}
@@ -167,7 +169,7 @@ export const Row3 = () => {
                         >
                             <Box variant="body2" sx={{ fontSize: "13px", display: "flex", color: "#575756" }}>
                                 <span class="icon-transfer" style={{ fontSize: "22px", color: "#D8E0E0" }} ></span>
-                                Deposits
+                                {t("deposits")}
                             </Box>
 
                             <Box sx={{ display: "flex", textAlign: "center", alignItems: "center" }} gap={1}>
@@ -177,7 +179,7 @@ export const Row3 = () => {
                                 <TextField
                                     variant="outlined"
                                     size="small"
-                                    placeholder="From"
+                                    placeholder={t("from")}
                                     style={{ width: "80px" }}
                                     InputProps={{
 
@@ -192,7 +194,7 @@ export const Row3 = () => {
                                 <TextField
                                     variant="outlined"
                                     size="small"
-                                    placeholder="To"
+                                    placeholder={t("to")}
                                     style={{ width: "80px" }}
                                     InputProps={{
 
@@ -205,18 +207,18 @@ export const Row3 = () => {
                                     }}
                                 />
                                 <Button sx={{ color: "#ef7d00", fontSize: "11px", textTransform: "capitalize" }}>
-                                    Export <KeyboardArrowRightIcon sx={{ color: "#575756", fontSize: "12px", }} /> </Button>
+                                    {t("export")} <KeyboardArrowRightIcon sx={{ color: "#575756", fontSize: "12px", }} /> </Button>
                             </Box>
                         </Box>
 
                         <Table>
                             <TableHead sx={{ height: "20px", borderBottom: "1px solid #e7e3e3" }}>
                                 <TableRow>
-                                    <TableCell sx={{ color: "#575756", borderBottom: "none", fontSize: "10px", textAlign: "left", padding: "0px 30px" }}>ID</TableCell>
-                                    <TableCell sx={{ color: "#575756", borderBottom: "none", fontSize: "10px", textAlign: "center", padding: "0px" }}>Date</TableCell>
-                                    <TableCell sx={{ color: "#575756", borderBottom: "none", fontSize: "10px", textAlign: "center", padding: "0px" }}>Time</TableCell>
-                                    <TableCell sx={{ color: "#575756", borderBottom: "none", fontSize: "10px", textAlign: "center", padding: "0px" }}>Amount</TableCell>
-                                    <TableCell sx={{ color: "#575756", borderBottom: "none", fontSize: "10px", textAlign: "center", padding: "0px" }}>Status</TableCell>
+                                    <TableCell sx={{ color: "#575756", borderBottom: "none", fontSize: "10px", textAlign: "left", padding: "0px 30px" }}>{t("id")}</TableCell>
+                                    <TableCell sx={{ color: "#575756", borderBottom: "none", fontSize: "10px", textAlign: "center", padding: "0px" }}>{t("date")}</TableCell>
+                                    <TableCell sx={{ color: "#575756", borderBottom: "none", fontSize: "10px", textAlign: "center", padding: "0px" }}>{t("time")}</TableCell>
+                                    <TableCell sx={{ color: "#575756", borderBottom: "none", fontSize: "10px", textAlign: "center", padding: "0px" }}>{t("amount")}</TableCell>
+                                    <TableCell sx={{ color: "#575756", borderBottom: "none", fontSize: "10px", textAlign: "center", padding: "0px" }}>{t("status")}</TableCell>
 
                                 </TableRow>
                             </TableHead>
@@ -285,14 +287,14 @@ export const Row3 = () => {
 
                                         }}>
                                             <span style={{
-                                                backgroundColor:transaction.status === "Done" 
-                                                ? "#58DC95" : "#EB8084",
-                                                padding: "3px 15px",  
+                                                backgroundColor: transaction.status === "Done"
+                                                    ? "#58DC95" : "#EB8084",
+                                                padding: "3px 15px",
                                                 borderRadius: "20px",
                                             }}>
                                                 {transaction.status}
                                             </span>
-                                            
+
                                         </TableCell>
                                     </TableRow>
                                 ))}

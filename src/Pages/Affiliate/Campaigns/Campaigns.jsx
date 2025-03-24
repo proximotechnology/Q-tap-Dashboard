@@ -13,6 +13,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import axios from "axios";
 import { toast } from "react-toastify";
 import styles from './campaignsCard.module.css'
+import { useTranslation } from "react-i18next";
 
 const Campaigns = () => {
   const [openForm, setOpenForm] = useState(false);
@@ -22,6 +23,7 @@ const Campaigns = () => {
   const [limit, setLimit] = useState("");
   const [loading, setLoading] = useState(false);
   const [editingCampaign, setEditingCampaign] = useState(null);
+  const {t} = useTranslation()
 
   const toggleForm = () => {
     setOpenForm(!openForm);
@@ -63,11 +65,11 @@ const Campaigns = () => {
           },
         }
       );
-      toast.success("Campaign deleted successfully");
+      toast.success(t("campaignDeleted"));
       getCampaigns();
     } catch (error) {
       console.error("Error deleting campaign:", error);
-      toast.error("Error deleting campaign");
+      toast.error(t("errorDeleteCampaign"));
     }
   };
 
@@ -75,7 +77,7 @@ const Campaigns = () => {
     try {
       setLoading(true);
       if (!name || !commission || !limit) {
-        toast.error("Please fill in all fields");
+        toast.error(t("plFillAllField"));
         return;
       }
 
@@ -97,7 +99,7 @@ const Campaigns = () => {
       );
 
       if (response.data) {
-        toast.success("Campaign added successfully");
+        toast.success(t("campaignAddedSucc"));
         getCampaigns();
         setName("");
         setCommission("");
@@ -107,7 +109,7 @@ const Campaigns = () => {
     } catch (error) {
       console.error("Error adding campaign:", error);
       const errorMessage =
-        error.response?.data?.message || "Error adding campaign";
+        error.response?.data?.message || t("errorAddingCampign");
       toast.error(errorMessage);
     } finally {
       setLoading(false);
@@ -129,7 +131,7 @@ const Campaigns = () => {
           },
         }
       );
-      toast.success("Campaign updated successfully");
+      toast.success(t("campaignUpdateSucc"));
       getCampaigns();
       setEditingCampaign(null);
       setName("");
@@ -139,7 +141,7 @@ const Campaigns = () => {
     } catch (error) {
       console.error("Error editing campaign:", error);
       const errorMessage =
-        error.response?.data?.message || "Error editing campaign";
+        error.response?.data?.message || t("errorUpdateCampaign");
       toast.error(errorMessage);
     }
   };
@@ -166,7 +168,7 @@ const Campaigns = () => {
             variant="body1"
             sx={{ fontSize: "14px", color: "#575756" }}
           >
-            Campaigns
+            {t("campaigns")}
           </Typography>
           <Box>
             <IconButton
@@ -197,10 +199,10 @@ const Campaigns = () => {
               gutterBottom
               sx={{ color: "#575756", fontSize: "11px", marginBottom: "10px" }}
             >
-              {editingCampaign ? "Edit Campaign" : "New Campaign"}
+              {editingCampaign ? t("editCampaign") : t("newCampaign")}
             </Typography>
             <Typography variant="body2" sx={{ fontSize: "9px", color: "gray" }}>
-              Name
+              {t("name")}
             </Typography>
             <TextField
               value={name}
@@ -217,7 +219,7 @@ const Campaigns = () => {
               }}
             />
             <Typography variant="body2" sx={{ fontSize: "9px", color: "gray" }}>
-              Commission
+              {t("commission")}
             </Typography>
             <TextField
               value={commission}
@@ -240,7 +242,7 @@ const Campaigns = () => {
               }}
             />
             <Typography variant="body2" sx={{ fontSize: "9px", color: "gray" }}>
-              Limit
+              {t("limit")}
             </Typography>
             <TextField
               value={limit}
@@ -289,7 +291,7 @@ const Campaigns = () => {
                   "&:hover": { backgroundColor: "#ef7d10" },
                 }}
               >
-                {loading ? "Saving..." : "Save"}
+                {loading ? t("saving") : t("save")}
               </Button>
             </Box>
           </Paper>
@@ -320,7 +322,7 @@ const Campaigns = () => {
               variant="body2"
               sx={{ fontSize: "8px", color: "white" }}
             >
-              Name
+              {t("name")}
             </Typography>
             <Typography
               variant="body2"
@@ -333,7 +335,7 @@ const Campaigns = () => {
               variant="body2"
               sx={{ fontSize: "8px", color: "white" }}
             >
-              Commission
+              {t("commission")}
             </Typography>
             <Typography
               variant="body2"
@@ -346,7 +348,7 @@ const Campaigns = () => {
               variant="body2"
               sx={{ fontSize: "8px", color: "white" }}
             >
-              Affiliate no.
+              {t("affiliateNo")}
             </Typography>
             <Typography
               variant="body2"

@@ -7,82 +7,89 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import GridViewIcon from '@mui/icons-material/GridView';
+import { useTranslation } from "react-i18next";
 
-const Arr1 = [
-    {
 
-        text: "Dashboard",
-        icon: <GridViewIcon style={{fontSize:"18px"  ,marginLeft:"-1px"}}></GridViewIcon>,
-        path: "/dashboard-home"
-    },
 
-    {
-        text: "Client ",
-        icon: <PeopleOutlineIcon style={{fontSize:"20px"  ,marginLeft:"-1px"}}></PeopleOutlineIcon>,
-        path: "/client"
-    },
-    {
-        text: "Wallet",
-        icon: <span class="icon-wallet1" style={{ width: "34.539", height: "34.544" }}></span>,
-        path: "/wallet",
-    },
 
-    {
-        text: "Product",
-        icon: <span class="icon-shopping-bag" style={{ width: "34.539", height: "34.544" }}></span>,
-        path: "/product-admin",
-    },
-    {
-        text: "Support",
-        icon: <span class="icon-messenger" style={{ width: "34.539", height: "34.544" }}></span>,
-        path: "/support",
-    },
-    {
-        text: "Pricing",
-        icon: <span class="icon-price-tag" style={{ width: "34.539", height: "34.544" }}></span>,
-        path: "/pricing",
-    },
-    {
-        text: "Affiliate",
-        icon: <span class="icon-social" style={{ width: "35", height: "35" }}></span>,
-        path: "/affiliate",
-    },
 
-    {
-        text: "Setting",
-        icon: <SettingsIcon style={{fontSize:"18px" ,marginLeft:"-1px"}}></SettingsIcon>,
-        path: "/setting",
-    },
-    {
-        text: "Notification ",
-        icon: <span class="icon-bell" style={{ width: "34.539", height: "34.544" }}></span>,
-        path: "/notification",
-    },
-    {
-        text: "Feedback",
-        icon: <StarBorderIcon style={{fontSize:"20px" ,marginLeft:"-1px"}}></StarBorderIcon>,
-        path: "/feedback-admin",
-    },
-];
-
-const Arr2 = [
-    {
-        text: "Logout",
-        icon: <img src="/assets/logout.svg" alt="icon" style={{ width: "16px", height: "16px" }} />,
-        path: "/"
-    },
-    {
-        text: "Help",
-        icon: <img src="/assets/help.svg" alt="icon" style={{ width: "17px", height: "17px" }} />,
-        path: "/help"
-    },
-];
 
 
 export default function SideBar() {
     const location = useLocation();
     const navigate = useNavigate();
     const theme = useTheme();
+    const {t} = useTranslation()
+
+    const Arr1 = [
+        {
+    
+            text: t("dashboard"),
+            icon: <GridViewIcon style={{fontSize:"18px"  ,marginLeft:"-1px"}}></GridViewIcon>,
+            path: "/dashboard-home"
+        },
+    
+        {
+            text: t("client"),
+            icon: <PeopleOutlineIcon style={{fontSize:"20px"  ,marginLeft:"-1px"}}></PeopleOutlineIcon>,
+            path: "/client"
+        },
+        {
+            text: t("wallet"),
+            icon: <span class="icon-wallet1" style={{ width: "34.539", height: "34.544" }}></span>,
+            path: "/wallet",
+        },
+    
+        {
+            text: t("product"),
+            icon: <span class="icon-shopping-bag" style={{ width: "34.539", height: "34.544" }}></span>,
+            path: "/product-admin",
+        },
+        {
+            text: t("support"),
+            icon: <span class="icon-messenger" style={{ width: "34.539", height: "34.544" }}></span>,
+            path: "/support",
+        },
+        {
+            text: t("pricing"),
+            icon: <span class="icon-price-tag" style={{ width: "34.539", height: "34.544" }}></span>,
+            path: "/pricing",
+        },
+        {
+            text: t("affiliate"),
+            icon: <span class="icon-social" style={{ width: "35", height: "35" }}></span>,
+            path: "/affiliate",
+        },
+    
+        {
+            text: t("setting"),
+            icon: <SettingsIcon style={{fontSize:"18px" ,marginLeft:"-1px"}}></SettingsIcon>,
+            path: "/setting",
+        },
+        {
+            text: t("notification"),
+            icon: <span class="icon-bell" style={{ width: "34.539", height: "34.544" }}></span>,
+            path: "/notification",
+        },
+        {
+            text: t("feedback"),
+            icon: <StarBorderIcon style={{fontSize:"20px" ,marginLeft:"-1px"}}></StarBorderIcon>,
+            path: "/feedback-admin",
+        },
+    ];
+    
+    const Arr2 = [
+        {
+            text: t("logout"),
+            icon: <img src="/assets/logout.svg" alt="icon" style={{ width: "16px", height: "16px" }} />,
+            path: "/"
+        },
+        {
+            text: t("help"),
+            icon: <img src="/assets/help.svg" alt="icon" style={{ width: "17px", height: "17px" }} />,
+            path: "/help"
+        },
+    ];
 
     return (
         <Box sx={{

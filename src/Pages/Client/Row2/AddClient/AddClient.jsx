@@ -395,8 +395,9 @@ import { toast } from "react-toastify";
 import { BusinessInfoAdmin } from "./BusinessInfoAdmin";
 import { PersonalInfoAdmin } from "./PersonalInfoAdmin";
 import { useClientContext } from "../../../../context/ClientContext";
-
+import { useTranslation } from 'react-i18next';
 export const AddClient = () => {
+  const {t} = useTranslation()
   const navigate = useNavigate();
   const location = useLocation();
   const { clientData, setClientData, clearClientData } = useClientContext();
@@ -550,12 +551,12 @@ export const AddClient = () => {
       console.log("Client response", response);
 
       if (response.status === 201 || response.status === 200) {
-        toast.success(isEditMode ? "Client updated successfully" : "Client registered successfully");
+        toast.success(isEditMode ? "Client updated successfully" : t("clients.registeredSucc"));
         navigate("/client");
       }
     } catch (error) {
       console.error("Error saving client:", error);
-      toast.error(`${error.response?.data?.message || "An error occurred"}`);
+      toast.error(`${error.response?.data?.message || t("errorWhileSavingData")}`);
     }
   };
 
@@ -787,7 +788,7 @@ export const AddClient = () => {
             onClick={handleSave}
           >
             <CheckOutlinedIcon sx={{ fontSize: "22px", mr: 1 }} />
-            {isEditMode ? "Update" : "Save"}
+            {isEditMode ? t("update") : t("save")}
           </Button>
         </Grid>
       </Box>

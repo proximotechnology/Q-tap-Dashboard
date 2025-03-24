@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router';
 import ControlPointOutlinedIcon from '@mui/icons-material/ControlPointOutlined';
 import PriorityHighOutlinedIcon from '@mui/icons-material/PriorityHighOutlined';
 import { useBusinessContext } from '../../context/BusinessContext';
+import { useTranslation } from 'react-i18next';
 
 const Divider = styled(Box)({
   width: '5%',
@@ -22,6 +23,8 @@ export const Branches = () => {
     setBranches((prevBranches) => prevBranches.filter((_, i) => i !== index));
   };
   
+  const {t} = useTranslation()
+
   const handleDoneClick = () => {
     // console.log('Branches:::::', branches);
     navigate('/payment'); 
@@ -30,7 +33,7 @@ export const Branches = () => {
   return (
     <Box marginTop={'50px'} flexGrow={1}>
       <Typography variant="body1" sx={{ fontSize: '18px', color: '#222240' }}>
-        Branches
+        {t("branches")}
       </Typography>
       <Divider />
 
@@ -105,8 +108,8 @@ export const Branches = () => {
           }}
         >
           <PriorityHighOutlinedIcon sx={{ verticalAlign: 'middle', marginRight: '2px' }} />
-          Please note that when adding a new branch,
-          <span style={{ color: '#E57C00' }}>50%</span> of the package value will be added.
+          {t("plNoteBranch")}
+          <span style={{ color: '#E57C00' }}>50%</span> {t("plNoteBranch2")}
         </Typography>
         <Grid item xs={12}>
           <Button
@@ -125,7 +128,7 @@ export const Branches = () => {
             }}
             onClick={handleDoneClick} // Call handleDoneClick
           >
-            Done
+            {t("done")}
           </Button>
         </Grid>
       </Box>

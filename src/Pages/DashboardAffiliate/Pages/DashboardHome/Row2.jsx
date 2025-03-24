@@ -2,6 +2,7 @@ import { Card, CardContent, Grid, MenuItem, Select, Typography } from '@mui/mate
 import { Box } from '@mui/system'
 import React from 'react'
 import LineChart1 from '../../../Wallet/Row1/LineChart1'
+import { useTranslation } from 'react-i18next'
  
 
 export const Row2 = () => {
@@ -10,6 +11,7 @@ export const Row2 = () => {
   const handleYearChange = (event) => {
     setYear(event.target.value);
   };
+  const {t} = useTranslation();
   return (
 
     <Grid item xs={12} sx={{ flexGrow: 1, padding: '0px 20px 20px 20px' }}>
@@ -18,7 +20,7 @@ export const Row2 = () => {
         <CardContent>
           <Grid container justifyContent="space-between" alignItems="center"  >
             <Grid item>
-              <Typography variant="body1" sx={{ fontSize: "13px", color: "#3a3939" }}>Clicks & Sales</Typography>
+              <Typography variant="body1" sx={{ fontSize: "13px", color: "#3a3939" }}>{t("clicks&sales")}</Typography>
             </Grid>
             <Grid item>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -57,12 +59,12 @@ export const Row2 = () => {
                 <Box display={"flex"} textAlign={"center"} alignItems={"center"}>
                   <Box component="span" sx={{ background:"linear-gradient(90deg, #45F7FF, #2278F3)" , width: '25px', 
                     borderRadius: "20px", height: '10px', display: 'inline-block', marginRight: '8px' }} />
-                  <Typography variant="body2" color="text.secondary" sx={{ fontSize: "9px" }}>Clicks</Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ fontSize: "9px" }}>{t("clicks")}</Typography>
                 </Box>
                 <Box display={"flex"} textAlign={"center"} alignItems={"center"} marginTop="5px">
                   <Box component="span" sx={{  background:"linear-gradient(90deg, #FD4845, #843EA1)" ,
                     width: '25px', borderRadius: "20px", height: '10px', display: 'inline-block', marginRight: '8px' }} />
-                  <Typography variant="body2" color="text.secondary" sx={{ fontSize: "9px" }}>Sales</Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ fontSize: "9px" }}>{t("sales")}</Typography>
                 </Box>
               </Box>
             </Box>

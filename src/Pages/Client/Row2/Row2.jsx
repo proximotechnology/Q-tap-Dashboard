@@ -431,6 +431,7 @@ import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutl
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { useNavigate } from "react-router";
 import * as XLSX from "xlsx";
+import { useTranslation } from "react-i18next";
 
 const exportToExcel = (clients) => {
   const worksheet = XLSX.utils.json_to_sheet(clients);
@@ -443,6 +444,7 @@ export const Row2 = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true); // Add loading state
   const navigate = useNavigate();
+  const { t } = useTranslation()
 
   const handleDashboardClick = () => {
     navigate("/dashboard-home");
@@ -542,7 +544,7 @@ export const Row2 = () => {
                 opacity: 0.5,
               }}
             />
-            Clients
+            {t("client")}
           </Typography>
 
           <Box sx={{ display: "flex" }}>
@@ -592,7 +594,7 @@ export const Row2 = () => {
                 fontSize: "12px",
               }}
             >
-              Add
+              {t("add")}
               <AddIcon sx={{ color: "#575756", fontSize: "12px" }} />
             </Button>
 
@@ -606,8 +608,10 @@ export const Row2 = () => {
                 gap: 1,
               }}
             >
-              Export
-              <ArrowForwardIosOutlinedIcon sx={{ color: "#575756", fontSize: "10px" }} />
+              {t("export")}
+              <ArrowForwardIosOutlinedIcon
+                sx={{ color: "#575756", fontSize: "10px" }}
+              />
             </Button>
           </Box>
         </Box>
@@ -647,23 +651,26 @@ export const Row2 = () => {
                     paddingLeft: "35px",
                   }}
                 >
-                  Business
+                  {t("business")}
                 </TableCell>
-                {["Data", "City", "Bundle", "Status", ""].map((header) => (
-                  <TableCell
-                    key={header}
-                    sx={{
-                      color: "#575756",
-                      fontSize: "12px",
-                      padding: "0px",
-                      borderBottom: "none",
-                      width: `${100 / 6}%`,
-                      textAlign: "center",
-                    }}
-                  >
-                    {header}
-                  </TableCell>
-                ))}
+
+                {[t("data"), t("city"), t("bundle"), t("status"), ""].map(
+                  (header) => (
+                    <TableCell
+                      key={header}
+                      sx={{
+                        color: "#575756",
+                        fontSize: "12px",
+                        padding: "0px",
+                        borderBottom: "none",
+                        width: `${100 / 6}%`,
+                        textAlign: "center",
+                      }}
+                    >
+                      {header}
+                    </TableCell>
+                  )
+                )}
               </TableRow>
             </TableHead>
 

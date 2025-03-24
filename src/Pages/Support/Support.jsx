@@ -7,6 +7,9 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import DetailsModal from '../DashboardClient/Pages/SupportClient/DetailsModal';
 import styles from '../DashboardClient/Pages/SupportClient/supportCard.module.css'
+import { useTranslation } from 'react-i18next';
+
+
 const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onClick }) => {
   const statusStyles = {
     'in_progress': { backgroundColor: '#222240', color: '#f4f6fc' },
@@ -17,6 +20,7 @@ const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onC
   // Format the date
   const formattedDate = new Date(created_at).toLocaleDateString();
   // console.log(status, "status ");
+  const { t } = useTranslation()
 
   return (
     <Paper
@@ -35,16 +39,16 @@ const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onC
       onClick={onClick}
     >
       <Typography variant="body2" sx={{ fontSize: "11px", paddingBottom: "10px" }}>
-        Ticket No.#{id}
+        {t("ticketNO")}{id}
       </Typography>
       <Typography variant="body2" sx={{ fontSize: "9px", paddingBottom: "10px" }}>
-        Name: {Customer_Name}
+        {t("name")} {Customer_Name}
       </Typography>
       <Typography variant="body2" sx={{ fontSize: "9px", paddingBottom: "10px" }}>
-        Mail: {Customer_Email}
+        {t("mail")} {Customer_Email}
       </Typography>
       <Typography variant="body2" sx={{ fontSize: "9px", paddingBottom: "10px" }}>
-        Date: {formattedDate}
+        {t("date")} {formattedDate}
       </Typography>
       <Box
         sx={{
@@ -59,7 +63,7 @@ const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onC
           <>
             <span className="icon-processing-time" style={{ fontSize: "13px", color: "#ef7d00" }} />
             <Typography variant="body1" sx={{ fontSize: "11px", color: "#ef7d00", ml: 1 }}>
-              In Progress
+              {t("inProgress")}
             </Typography>
           </>
         ) : status === 'Done' ? (
@@ -73,7 +77,7 @@ const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onC
           <>
             <span className="icon-share" style={{ fontSize: "12px", color: "#222240" }} />
             <Typography variant="body1" sx={{ fontSize: "11px", color: "#222240", ml: 1 }}>
-              Open
+              {t("open")}
             </Typography>
           </>
         )}
@@ -96,6 +100,8 @@ const Support = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [openModalRow, setOpenModalRow] = useState(false);
 
+  const { t } = useTranslation()
+
   const handleRowClick = (row) => {
     setSelectedRow(row);
     setOpenModalRow(true);
@@ -117,6 +123,7 @@ const Support = () => {
     } catch (error) {
       console.error('Error fetching tickets:', error);
       // toast.error('Failed to fetch tickets');
+      // toast.error(t("faildFetchTickets"));
     } finally {
       setLoading(false);
     }
@@ -176,12 +183,12 @@ const Support = () => {
         setTickets(tickets.map(ticket =>
           ticket.id === selectedTicket.id ? response.data.ticket : ticket
         ));
-        toast.success('Ticket updated successfully');
+        toast.success(t("ticketUpdatedSucc"));
         handleClose(); // Close the modal and reset form
       }
     } catch (error) {
       console.error('Error updating ticket:', error);
-      toast.error(error.response?.data?.message || 'Failed to update ticket');
+      toast.error(error.response?.data?.message || t("faildToUpdateTicket"));
     }
   };
 
@@ -213,12 +220,12 @@ const Support = () => {
 
       if (response.data) {
         setTickets([...tickets, response.data.ticket]);
-        toast.success('Ticket added successfully');
+        toast.success(t("ticketAddedSucc"));
         handleClose();
       }
     } catch (error) {
       console.error('Error adding ticket:', error);
-      toast.error(error.response?.data?.message || 'Failed to add ticket');
+      toast.error(error.response?.data?.message || t("faildToAddTicket"));
     }
   };
   // New states for search functionality
@@ -244,7 +251,7 @@ const Support = () => {
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={12} sx={{ display: "flex", alignItems: "center" }}>
             <Typography variant="body1" sx={{ fontSize: "12px", color: "#575756" }}>
-              Ticket
+              {t("ticket.one")}
             </Typography>
             <Grid item xs>
               <Box sx={{

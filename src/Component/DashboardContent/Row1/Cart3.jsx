@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { PieChart, Pie, Cell } from "recharts";
 
 const data01 = [
@@ -11,6 +12,7 @@ const data01 = [
 const COLORS = ["#AD4181", "#D8E0E0"];
 
 export const Cart3 = () => {
+  const {t} = useTranslation()
   return (
     <Box
       display={"flex"}
@@ -37,7 +39,7 @@ export const Cart3 = () => {
             color="text.secondary"
             sx={{ fontSize: "6px", color: "gray" }}
           >
-            Subscriptions
+            {t("subscriptions")}
           </Typography>
         </Box>
 
@@ -63,7 +65,7 @@ export const Cart3 = () => {
             color="text.secondary"
             sx={{ fontSize: "6px", color: "gray" }}
           >
-            Affiliated Sub.
+            {t("affiliatedSub")}
           </Typography>
         </Box>
       </Box>

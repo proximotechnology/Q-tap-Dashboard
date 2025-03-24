@@ -9,10 +9,11 @@ import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import RemoveCircleOutlinedIcon from '@mui/icons-material/RemoveCircleOutlined';
 import OrderTypeForm from './OrderTypeForm';
 import Language from '../../ComponentDashClient/TopBar/Language';
+import { useTranslation } from 'react-i18next';
 
 
 const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, selectedSize, handleMinusItem, handleAddItem, getItemCount }) => {
-
+    const {t} = useTranslation()
     const [isFormOpen, setIsFormOpen] = useState(false);
     const toggleTypeForm = () => {
         setIsFormOpen(!isFormOpen);
@@ -57,9 +58,9 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, selectedSize,
                     <Box sx={{ padding: 2 }}>
                         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center" }}>
                             <Typography variant="body1" sx={{ fontSize: "10px", display: "flex", letterSpacing: 1 }}>
-                                <ShoppingCartOutlinedIcon sx={{ color: "#ef7d00", marginRight: "5px", fontSize: "17px" }} /> YOUR CART
+                                <ShoppingCartOutlinedIcon sx={{ color: "#ef7d00", marginRight: "5px", fontSize: "17px" }} /> {t("yourCart")}
                             </Typography>
-                            <Typography variant="body2" sx={{ fontSize: "9px", color: "gray", letterSpacing: 1 }}>{cartItems.length} Items</Typography>
+                            <Typography variant="body2" sx={{ fontSize: "9px", color: "gray", letterSpacing: 1 }}>{cartItems.length} {t("item.many")}</Typography>
                         </Box>
                         {cartItems.map((item) => (
                             <Box
@@ -94,18 +95,18 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, selectedSize,
                                         </Typography>
 
                                         <Typography variant="body2" sx={{ marginTop: '2px', fontSize: '9px', color: "#575756" }}>
-                                            <span style={{ color: "#ef7d00" }}>Options | </span>
+                                            <span style={{ color: "#ef7d00" }}>{t("option")} | </span>
                                             {selectedItemOptions[item.id] && selectedItemOptions[item.id].length > 0
                                                 ? selectedItemOptions[item.id].map(option => option.name).join(', ')
-                                                : 'No options selected'}
+                                                : t("noOptionsSelected")}
 
                                         </Typography>
 
                                         <Typography variant="body2" sx={{ marginTop: '2px', fontSize: '9px', color: "#575756" }}>
-                                            <span style={{ color: "#ef7d00" }}>Extra |</span>
+                                            <span style={{ color: "#ef7d00" }}>{t("extra.one")} |</span>
                                             {selectedItemExtra[item.id] && selectedItemExtra[item.id].length > 0
                                                 ? selectedItemExtra[item.id].map(extra => extra.name).join(', ')
-                                                : 'No options selected'}
+                                                : t("noOptionsSelected")}
                                         </Typography>
                                     </Box>
                                 </Box>
@@ -140,7 +141,7 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, selectedSize,
                         }}>
                         <Box>
                             <Typography variant="h6" sx={{ fontSize: '11px', fontWeight: "bold", color: '#3A3A38' }}>
-                                Total price
+                                {t("totalPrice")}
                             </Typography>
                             <Typography variant="h6" sx={{ fontSize: '18px', fontWeight: "bold", color: '#ef7d00' }}>
                                 {isNaN(totalCart) ? 0 : totalCart}
@@ -156,7 +157,7 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, selectedSize,
                                     backgroundColor: "#ef7d10",
                                 }
                             }}>
-                            Checkout<TrendingFlatIcon sx={{ fontSize: "18px", mr: 1 }} />
+                            {t("checkout")}<TrendingFlatIcon sx={{ fontSize: "18px", mr: 1 }} />
                         </Button>
                     </Box> {/* footer */}
                 </Box>

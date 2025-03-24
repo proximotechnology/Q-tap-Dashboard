@@ -9,14 +9,15 @@ import { useLocation, useNavigate } from "react-router";
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Language from "../../../DashboardClient/ComponentDashClient/TopBar/Language";
+import { useTranslation } from "react-i18next";
 
 
 export default function TopBar() {
     const [mode, setMode] = useState('light');
     const navigate = useNavigate();
-
+    const { t } = useTranslation();
     const pageTitles = {
-        '/dashboard-affiliate': 'Dashboard',
+        '/dashboard-affiliate': t("Dashboard"),
         '/wallet-affiliate':
             <IconButton onClick={() => navigate('/dashboard-affiliate')} >
                 <ArrowBackIosIcon sx={{ fontSize: "23px", color: "black" }} />

@@ -62,93 +62,93 @@ function App() {
   const routes = createBrowserRouter([
     {
       path: "/",
-      element: <HomePage />,
+      element: <HomePage />, // تم الترجمه
     },
 
     {
       path: "/reset",
-      element: <ResetPage />,
+      element: <ResetPage />, // تم الترجمه
     },
     {
       path: "/reset-password",
-      element: <PasswordResetPage />,
+      element: <PasswordResetPage />,// تم الترجمه
     },
     {
       path: "/product",
-      element: <ProductsPage />,
+      element: <ProductsPage />, // تم الترجمه
     },
     {
       path: "/business-info",
-      element: <BusinessInfoPage />,
+      element: <BusinessInfoPage />, // تم الترحمه
     },
     {
       path: "/serving-ways",
-      element: <ServingWaysPage />,
+      element: <ServingWaysPage />, // تم الترجمه
     },
     {
       path: "/branches",
-      element: <BranchesPage />,
+      element: <BranchesPage />, // تم الترجمه
     },
     {
       path: "/payment",
-      element: <PaymentPage />,
+      element: <PaymentPage />, // تم الترجمه
     },
     {
       path: "/save",
-      element: <Save />,
+      element: <Save />, // تم الترجمه
     },
     {
       path: "/welcome",
-      element: <Welcome />,
+      element: <Welcome />, // تم الترجمه
     },
     {
       path: "/logo-cient",
-      element: <LogoClient />,
+      element: <LogoClient />, // تم الترجمه
     },
     {
       path: "/admin-login",
-      element: <LoginAdmin />,
+      element: <LoginAdmin />,// تم الترجمه
     },
     {
       path: "order-body",
-      element: <OrderBody />,
+      element: <OrderBody />, // تم الترجمه 
     },
     {
       path: "order-history",
-      element: <OrderHistory />,
+      element: <OrderHistory />, // تم الترجمه
     },
     {
       path: "order",
-      element: <Order />,
+      element: <Order />, // تم الترجمه
     },
     {
       path: "add-item",
-      element: <AddItem />,
+      element: <AddItem />, // تم الترجمه
     },
     {
       path: "add-client",
-      element: <AddClient />,
+      element: <AddClient />, // تم الترجمه
     },
     {
       path: "add-user",
-      element: <AddUsers />,
+      element: <AddUsers />, // تم الترجمه
     },
     {
       path: "add-Affiliate",
-      element: <AddAffiliate />,
+      element: <AddAffiliate />, // تم الترجمه
     },
     {
       path: "delivery-riders",
-      element: < DeliveryLogin />,
+      element: <DeliveryLogin />, // تم الترجمه
     },
     {
       path: "delivered",
-      element: <Delivered />,
+      element: <Delivered />, // تم الترجمه
     },
 
     {
       path: "menu-client",
-      element: <MenuClient />,
+      element: <MenuClient />,// تم الترجمه
     },
 
 
@@ -184,7 +184,7 @@ function App() {
         },
         {
           path: "transaction",
-          element: <Transaction />,
+          element: <Transaction />, // لم يتم الترجمه
         },
 
         {

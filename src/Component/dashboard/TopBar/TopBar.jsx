@@ -9,23 +9,26 @@ import { useLocation, useNavigate } from "react-router";
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import Language from "./Language";
+import { useTranslation } from "react-i18next";
 
-const pageTitles = {
-    '/dashboard-home': 'Dashboard',
-    '/client': 'Clients',
-    '/wallet': 'Wallet',
-    '/product-admin': 'Products',
-    "/support": "Support",
-    '/pricing': "Pricing",
-    '/affiliate': 'Affiliate Marketing',
-    "/setting": "Setting",
-    "/notification": "Notification",
-    "/feedback-admin": "Feedback",
-};
+
 export default function TopBar() {
     const [mode, setMode] = useState('light');
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
+    const pageTitles = {
+        '/dashboard-home': t("dashboard"),
+        '/client': t("client"),
+        '/wallet': t("wallet"),
+        '/product-admin': t("product"),
+        "/support": t("support"),
+        '/pricing': t("pricing"),
+        '/affiliate': t("affiliateMarketing"),
+        "/setting": t("setting"),
+        "/notification": t("notification"),
+        "/feedback-admin": t("feedback"),
+    };
     const handleToggle = (event) => {
         setMode(event.target.checked ? 'light' : 'dark');
     };
@@ -207,7 +210,7 @@ export default function TopBar() {
                                     }} />
                             </ListItem>
 
-                            <ListItem sx={{ cursor: "pointer"  }} onClick={() => {
+                            <ListItem sx={{ cursor: "pointer" }} onClick={() => {
                                 localStorage.removeItem("adminToken");
                                 navigate('/');
                             }}>

@@ -1,9 +1,12 @@
 import React from 'react'
 import { Box, Grid, MenuItem, Paper, Select, Typography } from '@mui/material'
 import SalesVolumeChart from './SalesVolumeChart';
+import { useTranslation } from 'react-i18next';
 
 const SalesVolumeCard = () => {
     const [year, setYear] = React.useState('30d');
+
+    const {t} = useTranslation()
 
     const handleYearChange = (event) => {
         setYear(event.target.value);
@@ -13,7 +16,7 @@ const SalesVolumeCard = () => {
             <Grid container justifyContent="space-between" alignItems="center" sx={{ padding: "10px 20px",}} >
                 <Grid item>
                     <Typography variant="body1" component="div" sx={{ color: "#575756", fontSize: '13px' }}>
-                        Sales Volume
+                        {t("salesVolume")}
                     </Typography>
                 </Grid>
                 <Grid item>

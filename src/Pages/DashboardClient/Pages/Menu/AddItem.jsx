@@ -12,7 +12,9 @@ import { VariantsTable } from './VariantsTable';
 import { ExtrasTable } from './ExtrasTable';
 import { DeliveredFooter } from "../../DeliveryRiders/DeliveredFooter";
 import { useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 export const AddItem = () => {
+    const {t} = useTranslation();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const categoryId = searchParams.get('categoryId');
@@ -148,7 +150,7 @@ export const AddItem = () => {
 
                 </Toolbar>
                 <Typography variant="h6" style={{ flexGrow: 1, fontSize: "20px", textAlign: 'left', color: 'white', marginLeft: "100px" }}>
-                    Add Item
+                    {t("item.add")}
                 </Typography>
             </AppBar>
 
@@ -156,7 +158,7 @@ export const AddItem = () => {
                 <Grid container spacing={6} justifyContent={"space-around"}>
 
                     <Grid item xs={12} md={6}>
-                        <ItemDetails categoryId={categoryId} />
+                        <ItemDetails categoryId={categoryId} />{/* first component */}
                     </Grid>
 
                     <Grid item xs={12} md={6}>

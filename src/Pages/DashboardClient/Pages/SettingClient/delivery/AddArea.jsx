@@ -3,8 +3,10 @@ import { Box, Modal, Typography, IconButton, Divider, Button, TextField } from '
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
 import { FormControl, Select, MenuItem } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const AddArea = ({ open, onClose }) => {
+    const {t} = useTranslation();
     const [country, setCountry] = useState('');
     const [state, setState] = useState('');
     const [city, setCity] = useState('');
@@ -29,7 +31,7 @@ const AddArea = ({ open, onClose }) => {
                     position: 'relative'
                 }}>
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <Typography variant="body1" sx={{ fontSize: "13px", color: "#424242" }}>Add Delivery Area</Typography>
+                    <Typography variant="body1" sx={{ fontSize: "13px", color: "#424242" }}>{t("addDeliveryArea")}</Typography>
                     <IconButton onClick={onClose}>
                         <CloseIcon sx={{ fontSize: "20px", color: "gray" }} />
                     </IconButton>
@@ -46,7 +48,7 @@ const AddArea = ({ open, onClose }) => {
                         alignItems: "flex-start",
                     }}>
                     <Typography variant='body2' sx={{ width: "25%", textAlign: "center" }} color={"#424242"} fontSize={"12px"}>
-                        Country
+                        {t("country")}
                     </Typography>
                     <Box sx={{
                         display: "flex",
@@ -69,9 +71,9 @@ const AddArea = ({ open, onClose }) => {
                                 displayEmpty
                                 value={country}
                                 onChange={(e) => setCountry(e.target.value)}
-                                placeholder="Select Country"
+                                placeholder={t("selectCountry")}
                             >
-                                <MenuItem value="" disabled sx={{ fontSize: "12PX", color: "gray" }}>Select Country</MenuItem>
+                                <MenuItem value="" disabled sx={{ fontSize: "12PX", color: "gray" }}>{t("selectCountry")}</MenuItem>
                                 <MenuItem value={"B"} sx={{ fontSize: "12PX", color: "gray" }}>Cairo </MenuItem>
                                 <MenuItem value={"C"} sx={{ fontSize: "12PX", color: "gray" }}>Alex </MenuItem>
                                 <MenuItem value={"C"} sx={{ fontSize: "12PX", color: "gray" }}>Tanta </MenuItem>
@@ -88,7 +90,7 @@ const AddArea = ({ open, onClose }) => {
                     alignItems: "flex-start",
                 }}>
                     <Typography variant='body2' sx={{ width: "25%", textAlign: "center" }} color={"#424242"} fontSize={"12px"}>
-                        State
+                        {t("state")}
                     </Typography>
                     <Box sx={{
                         display: "flex",
@@ -111,9 +113,9 @@ const AddArea = ({ open, onClose }) => {
                                 displayEmpty
                                 value={state}
                                 onChange={(e) => setState(e.target.value)}
-                                placeholder="Select State"
+                                placeholder={t("selectState")}
                             >
-                                <MenuItem value="" disabled sx={{ fontSize: "12PX", color: "gray" }}>Select State</MenuItem>
+                                <MenuItem value="" disabled sx={{ fontSize: "12PX", color: "gray" }}>{t("selectState")}</MenuItem>
                                 <MenuItem value={"B"} sx={{ fontSize: "12PX", color: "gray" }}>Available</MenuItem>
                                 <MenuItem value={"C"} sx={{ fontSize: "12PX", color: "gray" }}>Busy</MenuItem>
                             </Select>
@@ -129,7 +131,7 @@ const AddArea = ({ open, onClose }) => {
                     alignItems: "flex-start",
                 }}>
                     <Typography variant='body2' sx={{ width: "25%", textAlign: "center" }} color={"#424242"} fontSize={"12px"}>
-                        City
+                        {t("city")}
                     </Typography>
                     <Box sx={{
                         display: "flex",
@@ -155,7 +157,7 @@ const AddArea = ({ open, onClose }) => {
                                 onChange={(e) => setCity(e.target.value)}
                                 placeholder="Select City"
                             >
-                                <MenuItem value="" disabled sx={{ fontSize: "12PX", color: "gray" }}>Select City</MenuItem>
+                                <MenuItem value="" disabled sx={{ fontSize: "12PX", color: "gray" }}>{t("selectCity")}</MenuItem>
                                 <MenuItem value={"B"} sx={{ fontSize: "12PX", color: "gray" }}>Egypt</MenuItem>
                                 <MenuItem value={"C"} sx={{ fontSize: "12PX", color: "gray" }}>cairo</MenuItem>
                                 <MenuItem value={"C"} sx={{ fontSize: "12PX", color: "gray" }}>Tanta</MenuItem>
@@ -177,7 +179,7 @@ const AddArea = ({ open, onClose }) => {
                 >
                     <Typography variant='body2'  sx={{ width: "22%", textAlign: "center"}}
                         color={"#424242"} fontSize={"12px"}>
-                        Phone
+                        {t("mobileNumber")}
                     </Typography>
                     <Box
                         sx={{
@@ -256,7 +258,7 @@ const AddArea = ({ open, onClose }) => {
                 }}>
 
                     <Typography variant='body2' sx={{ width: "25%", textAlign: "center" }} color={"#424242"} fontSize={"12px"}>
-                        Cost
+                        {t("cost")}
                     </Typography>
                     <Box sx={{
                         display: "flex",
@@ -297,7 +299,7 @@ const AddArea = ({ open, onClose }) => {
                             textTransform: "capitalize",
                         }}
                     >
-                        <DoneIcon sx={{ fontSize: "20px", mr: 1 }} /> Save
+                        <DoneIcon sx={{ fontSize: "20px", mr: 1 }} /> {t("save")}
                     </Button>
                 </Box> {/* Save button */}
             </Box>

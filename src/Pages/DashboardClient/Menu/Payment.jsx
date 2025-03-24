@@ -8,6 +8,7 @@ import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDown
  
 import { Done } from './Done';
 import Language from '../ComponentDashClient/TopBar/Language';
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -15,7 +16,7 @@ import Language from '../ComponentDashClient/TopBar/Language';
 export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, phone,
     selectedName, selectedValue, totalCart, selectedItemOptions, selectedItemExtra, comment, address
 }) => {
-
+    const {t} = useTranslation()
     const [isDone, setIsDone] = useState(false);
     const toggleDone = () => {
         setIsDone(!isDone);
@@ -47,7 +48,7 @@ export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, p
 
                 <Box display="flex" flexDirection="column" sx={{ padding: "30px", }}>
                     <Typography variant="body1" sx={{ fontSize: "10px", display: "flex", letterSpacing: 1 }}>
-                        Items
+                        {t("item.many")}
                     </Typography>
                     {cartItems.map((item) => (
                         <Box display={"flex"} justifyContent={"space-between"}>
@@ -59,14 +60,14 @@ export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, p
                                 </Typography>
 
                                 <Typography variant="body2" sx={{ marginTop: '2px', fontSize: '9px', color: "gray" }}>
-                                    <span style={{ color: "#ef7d00" }}>Options | </span>
+                                    <span style={{ color: "#ef7d00" }}>{t("option")} | </span>
                                     {selectedItemOptions[item.id] && selectedItemOptions[item.id].length > 0
                                         ? selectedItemOptions[item.id].map(option => option.name).join(', ')
                                         : 'No options selected'}
 
                                 </Typography>
                                 <Typography variant="body2" sx={{ marginTop: '2px', fontSize: '9px', color: "gray" }} >
-                                    <span style={{ color: "#ef7d00" }}>Extra |</span>
+                                    <span style={{ color: "#ef7d00" }}>{t("extra.one")} |</span>
                                     {selectedItemExtra[item.id] && selectedItemExtra[item.id].length > 0
                                         ? selectedItemExtra[item.id].map(extra => extra.name).join(', ')
                                         : 'No extra selected'}
@@ -102,23 +103,23 @@ export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, p
                     <Divider sx={{ margin: "10px 0px" }} />
                     <Box>
                         <Box  >
-                            <Typography color="#262624" fontSize="12px"  >Dine Method</Typography>
-                            <Typography color="textSecondary" fontSize="11px" margin={"5px 10px"} display={"flex"}>{selectedType} ,
+                            <Typography color="#262624" fontSize="12px"  >{t("dineMethod")}</Typography>
+                            <Typography color="textSecondary" fontSize="11px" margin={"5px 10px"} display={"flex"}>{t(selectedType)} ,
                                 <span class="icon-scooter" style={{ fontSize: "18px", marginLeft: "7px", color: "#ef7d00" }}></span>
                             </Typography>
                         </Box>
                         <Typography color="textSecondary" fontSize="11px" >
-                            <span style={{ color: "#ef7d00", marginLeft: "10px" }}>Address : </span>
+                            <span style={{ color: "#ef7d00", marginLeft: "10px" }}>{t("address")} </span>
                             {address}</Typography>
 
                         <Typography color="textSecondary" fontSize="11px" >
-                            <span style={{ color: "#ef7d00", marginLeft: "10px" }}>Name : </span>
+                            <span style={{ color: "#ef7d00", marginLeft: "10px" }}>{t("name")} : </span>
                             {selectedName}</Typography>
 
                         <Box display={"flex"} textAlign={"center"} alignItems={"center"} justifyContent={"space-between"}>
                             <Box>
                                 <Typography color="textSecondary" fontSize="11px" >
-                                    <span style={{ color: "#ef7d00", marginLeft: "10px" }}>Phone : </span>
+                                    <span style={{ color: "#ef7d00", marginLeft: "10px" }}>{t("mobileNumber")} : </span>
                                     {phone}</Typography>
                             </Box>
                             <Button sx={{
@@ -131,7 +132,7 @@ export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, p
                             }}>
                                 <span class="icon-map-1" style={{ fontSize: "15px", marginRight: "5px" }}>
                                     <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span><span class="path14"></span><span class="path15"></span></span>
-                                Location
+                                {t("location")}
                             </Button>
                         </Box>
                     </Box>
@@ -139,19 +140,19 @@ export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, p
 
                     <Box>
                         <Box display={"flex"} textAlign={"center"} alignItems={"center"} justifyContent={"space-between"} >
-                            <Typography color="#262624" fontSize="12px"  >Payment Method</Typography>
+                            <Typography color="#262624" fontSize="12px"  >{t("paymentMethod")}</Typography>
                             <Typography>
-                                <span style={{ color: "#262624", fontSize: "10px", borderBottom: "1px solid #262624" }}>Change</span>
+                                <span style={{ color: "#262624", fontSize: "10px", borderBottom: "1px solid #262624" }}>{t("change")}</span>
                             </Typography>
                         </Box>
                         <Typography color="textSecondary" fontSize="11px" margin={"5px 10px"} display={"flex"} alignItems={"center"}>
                             <span class="icon-wallet" style={{ fontSize: "20px", marginRight: "6px" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span></span>
-                            {selectedValue}
+                            {t(selectedValue)}
                         </Typography>
                     </Box>
                     <Divider sx={{ margin: "10px 0px" }} />
                     <Box>
-                        <Typography color="#262624" fontSize="12px" >Comments</Typography>
+                        <Typography color="#262624" fontSize="12px" >{t("comments")}</Typography>
                         <Typography color="textSecondary" fontSize="11px" margin={"5px 10px"} display={"flex"} alignItems={"center"}>
                             - {comment}
                         </Typography>
@@ -161,20 +162,20 @@ export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, p
                     <Box display={"flex"} justifyContent={"space-between"} marginBottom={"50px"}>
                         <Box sx={{ width: "100%" }}>
                             <Typography variant="h6" sx={{ fontSize: '9px', color: 'gray' }}>
-                                Sub Total: <span style={{ color: '#3A3A38' }}>0:00 EGP</span>
+                                {t("subTotal")} <span style={{ color: '#3A3A38' }}>0:00 EGP</span>
                             </Typography>
 
                             <Typography variant="h6" sx={{ fontSize: '9px', color: 'gray' }}>
-                                Tax: <span style={{ color: '#3A3A38' }}>0:00 EGP</span>
+                                {t("tax")} <span style={{ color: '#3A3A38' }}>0:00 EGP</span>
                             </Typography>
 
                             <Typography variant="h6" sx={{ fontSize: '9px', color: 'gray' }}>
-                                DisCount: <span style={{ color: '#3A3A38' }}>0:00 EGP</span>
+                                {t("discounts")} <span style={{ color: '#3A3A38' }}>0:00 EGP</span>
                             </Typography>
                         </Box>
                         <Box sx={{ width: "100%", textAlign: "left", marginLeft: "70px" }}>
                             <Typography variant="h6" sx={{ fontSize: '10px', fontWeight: "bold", color: '#3A3A38' }}>
-                                Total price
+                               {t("totalPrice")}
                             </Typography>
                             <Typography variant="h6" sx={{ fontSize: '18px', fontWeight: "bold", color: '#ef7d00' }}>
                                 {totalCart} <span style={{ fontSize: "10px", fontWeight: "400", color: '#575756' }}>EGP</span>
@@ -196,11 +197,11 @@ export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, p
                     <Box sx={{ display: "flex", width: "100%" }}>
                         <Typography variant="body2" sx={{ cursor: "pointer", color: "#262624", fontSize: "12px", fontWeight: "bold" }}>
                             <span class="icon-close" style={{ fontSize: "12px", marginRight: "5px" }}></span>
-                            Cancel</Typography>
+                            {t("cancel")}</Typography>
 
                         <Typography variant="body2" sx={{ cursor: "pointer", marginLeft: "25px", color: "#262624", fontSize: "12px", fontWeight: "bold" }}>
                             <span class="icon-edit" style={{ fontSize: "15px", color: "#ef7d00", marginRight: "5px" }}></span>
-                            Edit</Typography>
+                            {t("edit")}</Typography>
                     </Box>
 
                     <Box width={"100%"} float={"right"} display={"flex"} alignItems={"center"} >
@@ -214,7 +215,7 @@ export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, p
                                 }
                             }}>
                             <img src="/assets/balance.svg" alt="icon" style={{ width: "16px", height: "16px", marginRight: "5px" }} />
-                            pay
+                            {t("pay")}
                         </Button>
                         <span class="icon-printer" style={{ width: "25px", height: "22px",marginLeft:"15px"}} ></span>
                     </Box>

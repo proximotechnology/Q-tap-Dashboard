@@ -2,12 +2,13 @@ import { Box, Button, FormControl, IconButton, InputAdornment, OutlinedInput, Ty
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+import { useTranslation } from 'react-i18next';
 
 
 export const PasswordReset = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+    const { t } = useTranslation();
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
     const navigate = useNavigate();
@@ -27,50 +28,50 @@ export const PasswordReset = () => {
                     fontSize: "13px", color: "#222240", margin: "50px 0px 8px 0px", letterSpacing: "12px",
                     fontFamily: "serif"
                 }}>
-                Password Reset
+                {t("resetPassword")}
             </Typography>
 
 
-            <Box 
-            sx={{ 
-                borderBottom: "3px solid #E57C00", 
-                width : {lg: "88%", md: "50%", xs: "50%"}, 
-                marginBottom: 5
-            }} 
-        />
+            <Box
+                sx={{
+                    borderBottom: "3px solid #E57C00",
+                    width: { lg: "88%", md: "50%", xs: "50%" },
+                    marginBottom: 5
+                }}
+            />
 
-            <Typography variant="body1" sx={{ color: "#AAAAAA", width:"58%",marginBottom: 4,fontSize:"12px" ,  textAlign: 'center' }}>
-            Enter New Password.
-        </Typography>
+            <Typography variant="body1" sx={{ color: "#AAAAAA", width: "58%", marginBottom: 4, fontSize: "12px", textAlign: 'center' }}>
+                {t("enterResetPass")}
+            </Typography>
 
 
             <Box display="flex" flexDirection="column" alignItems="center"
-                sx={{ justifyContent: 'center', width:"95%"}}>
+                sx={{ justifyContent: 'center', width: "95%" }}>
 
-                <FormControl sx={{width: '100%' }} variant="outlined">
+                <FormControl sx={{ width: '100%' }} variant="outlined">
                     <OutlinedInput
                         id="new-password"
                         type={showPassword ? 'text' : 'password'}
                         startAdornment={
                             <InputAdornment position="start">
-                            <span class="icon-padlock" style={{ fontSize: "18px" }} />
-                        </InputAdornment>
+                                <span class="icon-padlock" style={{ fontSize: "18px" }} />
+                            </InputAdornment>
                         }
                         endAdornment={
                             <InputAdornment position="end">
                                 <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowPassword}
-                                edge="end"
-                            >
-                                {showPassword ? <VisibilityOffOutlinedIcon sx={{ fontSize: "18px" }} /> 
-                                :
-                                <span class="icon-show" style={{ fontSize: "16px" }}></span>
-                                }
-                            </IconButton>
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    edge="end"
+                                >
+                                    {showPassword ? <VisibilityOffOutlinedIcon sx={{ fontSize: "18px" }} />
+                                        :
+                                        <span class="icon-show" style={{ fontSize: "16px" }}></span>
+                                    }
+                                </IconButton>
                             </InputAdornment>
                         }
-                        placeholder="New Password"
+                        placeholder={t("newPassword")}
                         sx={{ fontSize: "10px", borderRadius: '50px', paddingRight: 3, height: "35px", marginBottom: "10px" }}
                     />
                 </FormControl>
@@ -81,24 +82,24 @@ export const PasswordReset = () => {
                         type={showConfirmPassword ? 'text' : 'password'}
                         startAdornment={
                             <InputAdornment position="start">
-                            <span class="icon-padlock" style={{ fontSize: "18px" }} />
-                        </InputAdornment>
+                                <span class="icon-padlock" style={{ fontSize: "18px" }} />
+                            </InputAdornment>
                         }
                         endAdornment={
                             <InputAdornment position="end">
-                                    <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowConfirmPassword}
-                                edge="end"
-                            >
-                                {showPassword ? <VisibilityOffOutlinedIcon sx={{ fontSize: "18px" }} /> 
-                                :
-                                <span class="icon-show" style={{ fontSize: "16px" }}></span>
-                                }
-                            </IconButton>
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowConfirmPassword}
+                                    edge="end"
+                                >
+                                    {showPassword ? <VisibilityOffOutlinedIcon sx={{ fontSize: "18px" }} />
+                                        :
+                                        <span class="icon-show" style={{ fontSize: "16px" }}></span>
+                                    }
+                                </IconButton>
                             </InputAdornment>
                         }
-                        placeholder="Confirm Password"
+                        placeholder={t("confirmPass")}
                         sx={{ borderRadius: '50px', paddingRight: 3, height: "35px", fontSize: "10px" }}
                     />
                 </FormControl>
@@ -111,7 +112,7 @@ export const PasswordReset = () => {
                         maxWidth: 400,
                         borderRadius: '50px',
                         backgroundColor: theme.palette.bluePrimary.main,
-                        textTransform: 'none', fontSize:"12px", height: "35px",
+                        textTransform: 'none', fontSize: "12px", height: "35px",
 
                         '&:hover': {
                             backgroundColor: "#222240",
@@ -120,7 +121,7 @@ export const PasswordReset = () => {
                     }}
                     onClick={() => navigate('/')}
                 >
-                    Save
+                    {t("save")}
                 </Button>
             </Box>
         </Box>

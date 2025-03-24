@@ -20,6 +20,7 @@ import DragHandleIcon from "@mui/icons-material/DragHandle";
 import { useNavigate } from "react-router";
 import * as XLSX from "xlsx";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 export const Users = () => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ export const Users = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
   const open = Boolean(anchorEl);
+  const { t } = useTranslation()
 
   const handleClick = (event, user) => {
     setAnchorEl(event.currentTarget);
@@ -152,7 +154,7 @@ export const Users = () => {
                 }}
               />
             </Box>
-            Users
+            {t("users")}
           </Typography>
           <Box
             sx={{
@@ -197,7 +199,7 @@ export const Users = () => {
                 fontSize: "12px",
               }}
             >
-              Add
+              {t("add")}
               <AddIcon sx={{ color: "#575756", fontSize: "12px" }} />
             </Button>
             <Button
@@ -208,7 +210,7 @@ export const Users = () => {
                 fontSize: "11px",
               }}
             >
-              Export{" "}
+              {t("export")}{" "}
               <ArrowForwardIosOutlinedIcon
                 sx={{ color: "#575756", fontSize: "10px" }}
               />
@@ -220,7 +222,7 @@ export const Users = () => {
           <Table sx={{ borderCollapse: "separate", borderSpacing: "0 5px" }}>
             <TableHead>
               <TableRow sx={{ height: "20px" }}>
-                {["Name", "ID", "Email", "Status", ""].map((header) => (
+              {[t("name"), t("id"), t("email"), t("status"), ""].map((header) => (
                   <TableCell
                     key={header}
                     sx={{

@@ -3,6 +3,7 @@ import { Box, Grid, Paper, Typography } from "@mui/material";
 import StraightIcon from "@mui/icons-material/Straight";
 import SouthIcon from "@mui/icons-material/South";
 import financialData from "./FinancialData";
+import { useTranslation } from "react-i18next";
 
 const Financial = ({
   icon,
@@ -81,6 +82,7 @@ const Financial = ({
 );
 
 const FinancialCard = () => {
+  const { t } = useTranslation()
   return (
     <Grid container spacing={2} sx={{ marginTop: "5px" }}>
       {financialData.map((item, index) => (
@@ -89,9 +91,9 @@ const FinancialCard = () => {
             icon={item.icon}
             percentage={item.percentage}
             direction={item.direction}
-            label={item.label}
+            label={t(item.label)}
             amount={item.amount}
-            description={item.description}
+            description={t(item.description)}
             iconColor={item.iconColor}
           />
         </Grid>

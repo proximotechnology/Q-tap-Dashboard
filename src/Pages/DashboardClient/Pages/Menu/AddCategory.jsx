@@ -5,6 +5,7 @@ import StraightIcon from '@mui/icons-material/Straight';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useBranch } from '../../../../context/BranchContext';
+import { useTranslation } from 'react-i18next';
 
 const CategoryForm = ({ open, handleClose }) => {
   const [name, setName] = useState('');
@@ -14,7 +15,7 @@ const CategoryForm = ({ open, handleClose }) => {
   const [categories, setCategories] = useState([]);
   const { selectedBranch } = useBranch();
   const [isLoading, setIsLoading] = useState(false);
-
+  const { t } = useTranslation();
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -33,7 +34,7 @@ const CategoryForm = ({ open, handleClose }) => {
     try {
       setIsLoading(true);
       if (!name || !description) {
-        toast.error('Please fill in all fields');
+        toast.error(t("plFillAllField"));
         setIsLoading(false);
         return;
       }
@@ -56,7 +57,7 @@ const CategoryForm = ({ open, handleClose }) => {
       });
 
       if (response.data) {
-        toast.success('Category added successfully!');
+        toast.success(t("category.addSucc"));
         // reload page to get new category whic added now
         const today = new Date().toLocaleDateString();
         const newCategory = {
@@ -76,7 +77,7 @@ const CategoryForm = ({ open, handleClose }) => {
       }
     } catch (error) {
       console.error('Error adding category:', error);
-      const errorMessage = error.response?.data?.message || 'Error adding category';
+      const errorMessage = error.response?.data?.message || t("category.addErr");
       if (error.response?.data?.errors) {
         Object.values(error.response.data.errors).forEach(err => {
           toast.error(err.join(', '));
@@ -93,7 +94,7 @@ const CategoryForm = ({ open, handleClose }) => {
     <Dialog open={open} disableScrollLock>
       <DialogContent sx={{ width: "400px", backgroundColor: 'white', borderRadius: "20px" }}>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography variant="body1" fontSize={"13px"} color={"#575756"}>Add Category</Typography>
+          <Typography variant="body1" fontSize={"13px"} color={"#575756"}>{t("category.add")}</Typography>
           <IconButton onClick={handleClose}>
             <span className="icon-close-1" style={{ fontSize: "11px" }}></span>
           </IconButton>
@@ -102,7 +103,7 @@ const CategoryForm = ({ open, handleClose }) => {
         <Box display="flex" flexDirection="column" gap={2} sx={{ marginBottom: 2 }}>
           <Box display="flex" justifyContent="space-between" gap={2}>
             <Box flex={1}>
-              <Typography variant="body2" align="left" sx={{ marginBottom: '4px', color: "#575756", fontSize: "10px" }}>Name</Typography>
+              <Typography variant="body2" align="left" sx={{ marginBottom: '4px', color: "#575756", fontSize: "10px" }}>{t("name")}</Typography>
               <TextField
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -111,7 +112,7 @@ const CategoryForm = ({ open, handleClose }) => {
               />
             </Box>
             <Box flex={1}>
-              <Typography variant="body2" align="left" sx={{ marginBottom: '4px', color: "#575756", fontSize: "10px" }}>Description</Typography>
+              <Typography variant="body2" align="left" sx={{ marginBottom: '4px', color: "#575756", fontSize: "10px" }}>{t("discription")}</Typography>
               <TextField
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -161,13 +162,13 @@ const CategoryForm = ({ open, handleClose }) => {
                   />
                   <label htmlFor="image-upload" style={{ cursor: 'pointer' }}>
                     <StraightIcon sx={{ color: "#ef7d00", fontSize: '10px', marginRight: '4px' }} />
-                    Upload
+                    {t("upload")}
                   </label>
                 </Box>
               </>)}
             </Box>
             <Typography variant="body2" sx={{ fontSize: "8px", color: "#9d9d9c", marginTop: '4px', textAlign: 'center' }}>
-              (Grid Menu) Category Icon 200x200px
+              {t("category.iconSize")}
             </Typography>
           </Box>
           <Box sx={{ marginBottom: 1 }}>
@@ -211,13 +212,13 @@ const CategoryForm = ({ open, handleClose }) => {
                     fontSize: '8px',
                   }}>
                     <StraightIcon sx={{ color: "#ef7d00", fontSize: '10px', marginRight: '4px' }} />
-                    Upload
+                    {t("upload")}
                   </Box>
                 </>)}
               </label>
             </Box>
             <Typography variant="body2" sx={{ fontSize: "8px", color: "#9d9d9c", marginTop: '4px', textAlign: 'center' }}>
-              (Grid Menu) Category Icon 200x200px
+            {t("category.iconSize")}
             </Typography>
           </Box>
           <Button
@@ -225,7 +226,7 @@ const CategoryForm = ({ open, handleClose }) => {
             variant="contained" color="warning" fullWidth
             sx={{ width: "40%", fontSize: "11px", borderRadius: "20px", marginTop: 2, textTransform: "capitalize" }}>
             {/* <CheckIcon sx={{ fontSize: "16px", marginRight: "5px" }} /> */}
-            {isLoading ? "Loading..." : "Save"}
+            {isLoading ? t("loading") : t("add")}
           </Button>
         </Box>
       </DialogContent>

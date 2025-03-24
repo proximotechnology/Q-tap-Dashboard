@@ -459,10 +459,12 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { PersonalInfo } from './PersonalInfo';
 import { PaymentInfo } from './PaymentInfo';
+import { useTranslation } from 'react-i18next';
 
 export const AddUsers = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation();
   const user = location.state?.user; // Get user data from navigation state
 
   // Personal Info States
@@ -484,8 +486,8 @@ export const AddUsers = () => {
   const [accountName, setAccountName] = useState(user?.bank_account_name || '');
   const [paymentOption, setPaymentOption] = useState(user?.payment_way ? (
     user.payment_way === 'bank_account' ? 'Bank' :
-    user.payment_way === 'digital_wallet' ? 'D.Wallet' :
-    'Card'
+      user.payment_way === 'digital_wallet' ? 'D.Wallet' :
+        'Card'
   ) : 'Bank');
 
   // Language and User States
@@ -535,26 +537,26 @@ export const AddUsers = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!fullName.trim()) newErrors.fullName = 'Full name is required';
-    if (!phone.trim()) newErrors.phone = 'Phone number is required';
+    if (!fullName.trim()) newErrors.fullName = t("fullNameRequired");
+    if (!phone.trim()) newErrors.phone = t("mobileRequired");
     if (!email.trim()) {
-      newErrors.email = 'Email is required';
+      newErrors.email = t("emailRequired");
     } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = 'Email is invalid';
+      newErrors.email = t("emailIsInvalid");
     }
     if (!day || !month || !year) {
-      newErrors.birthDate = 'Birth date is required';
+      newErrors.birthDate = t("birthRequired");
     }
-    if (!country) newErrors.country = 'Country is required';
+    if (!country) newErrors.country = t("countryRequired");
     if (!user && !password) { // Only require password for new user
-      newErrors.password = 'Password is required';
+      newErrors.password = t("passwordRequired");
     }
     if (!user && password !== confirmPassword) { // Only check for new user
-      newErrors.confirmPassword = 'Passwords do not match';
+      newErrors.confirmPassword = t("PasswordsDoNotMatch");
     }
     if (!bankName.trim()) newErrors.bankName = 'Bank name is required';
-    if (!accountNumber.trim()) newErrors.accountNumber = 'Account number is required';
-    if (!accountName.trim()) newErrors.accountName = 'Account name is required';
+    if (!accountNumber.trim()) newErrors.accountNumber = t("AcountNameRequired");
+    if (!accountName.trim()) newErrors.accountName = t("AcountNameRequired");
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -566,9 +568,10 @@ export const AddUsers = () => {
     setOpenSnackbar(true);
   };
 
+
   const handleSubmit = async () => {
     if (!validateForm()) {
-      showMessage('Please fill in all required fields correctly');
+      showMessage(t("plFillAllField"));
       return;
     }
 
@@ -610,14 +613,7 @@ export const AddUsers = () => {
           }
         );
 
-        if (response.data.status === 'success') {
-          showMessage('User updated successfully', 'success');
-          navigate('/affiliate');
-          toast.success(response.data.message);
-        } else {
-          showMessage(response.data.message || 'Error updating user');
-          toast.error(response.data.message);
-        }
+
       } else {
         // Add new user
         const response = await axios.post(
@@ -664,192 +660,192 @@ export const AddUsers = () => {
       >
         <Box>
           <img src="/images/qtap.PNG" alt='logo' width={"140px"} />
+      </Box>
+      <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box sx={{ cursor: "pointer", display: "flex", marginRight: "20px", alignItems: "center" }} onClick={handleLanguageClick}>
+          {getLanguageIcon()}
+          <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: "#575756" }} />
+          <Menu
+            anchorEl={anchorElLanguage}
+            open={openLanguage}
+            onClose={() => setAnchorElLanguage(null)}
+            sx={{ padding: "2px" }}
+          >
+            <MenuItem onClick={() => handleLanguageClose('ar')}>
+              <span className="icon-translation" style={{ color: "#575756", marginRight: '8px', fontSize: "20px" }}></span>
+              <span style={{ fontSize: "12px", color: "#575756" }}>Arabic</span>
+            </MenuItem>
+            <Divider />
+            <MenuItem onClick={() => handleLanguageClose('en')}>
+              <LanguageOutlinedIcon sx={{ color: "#575756", marginRight: '8px', fontSize: "20px" }} />
+              <span style={{ fontSize: "12px", color: "#575756" }}>English</span>
+            </MenuItem>
+          </Menu>
         </Box>
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Box sx={{ cursor: "pointer", display: "flex", marginRight: "20px", alignItems: "center" }} onClick={handleLanguageClick}>
-            {getLanguageIcon()}
-            <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: "#575756" }} />
-            <Menu
-              anchorEl={anchorElLanguage}
-              open={openLanguage}
-              onClose={() => setAnchorElLanguage(null)}
-              sx={{ padding: "2px" }}
-            >
-              <MenuItem onClick={() => handleLanguageClose('ar')}>
-                <span className="icon-translation" style={{ color: "#575756", marginRight: '8px', fontSize: "20px" }}></span>
-                <span style={{ fontSize: "12px", color: "#575756" }}>Arabic</span>
-              </MenuItem>
-              <Divider />
-              <MenuItem onClick={() => handleLanguageClose('en')}>
-                <LanguageOutlinedIcon sx={{ color: "#575756", marginRight: '8px', fontSize: "20px" }} />
-                <span style={{ fontSize: "12px", color: "#575756" }}>English</span>
-              </MenuItem>
-            </Menu>
-          </Box>
-          <Box
-            aria-describedby={openUserPopover ? 'simple-popover' : undefined}
-            onClick={handleUserClick}
-            sx={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "3px" }}
-          >
-            <IconButton color="inherit" sx={{ backgroundColor: '#ef7d00', borderRadius: '30%', padding: '5px', '&:hover': { backgroundColor: '#ef7d00' } }}>
-              <PersonOutlineOutlinedIcon sx={{ fontSize: "20px", color: "white" }} />
-            </IconButton>
-            <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>User01</Typography>
-            <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: "#575756" }} />
-          </Box>
-          <Popover
-            id={openUserPopover ? 'simple-popover' : undefined}
-            open={openUserPopover}
-            anchorEl={anchorElUser}
-            onClose={handleUserClose}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-          >
-            <Box sx={{ width: 200, padding: '10px' }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row', marginBottom: '20px', gap: '10px' }}>
-                <Box sx={{ bgcolor: '#ef7d00', width: 40, height: 40, borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                  <PersonOutlineOutlinedIcon sx={{ fontSize: "22px", color: "white" }} />
-                </Box>
-                <Box>
-                  <Typography variant="h6" sx={{ fontSize: "14px" }}>User01</Typography>
-                  <Typography variant="body2" sx={{ fontSize: "12px" }} color="textSecondary">Mail@mail.com</Typography>
-                </Box>
+        <Box
+          aria-describedby={openUserPopover ? 'simple-popover' : undefined}
+          onClick={handleUserClick}
+          sx={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "3px" }}
+        >
+          <IconButton color="inherit" sx={{ backgroundColor: '#ef7d00', borderRadius: '30%', padding: '5px', '&:hover': { backgroundColor: '#ef7d00' } }}>
+            <PersonOutlineOutlinedIcon sx={{ fontSize: "20px", color: "white" }} />
+          </IconButton>
+          <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>User01</Typography>
+          <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: "#575756" }} />
+        </Box>
+        <Popover
+          id={openUserPopover ? 'simple-popover' : undefined}
+          open={openUserPopover}
+          anchorEl={anchorElUser}
+          onClose={handleUserClose}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        >
+          <Box sx={{ width: 200, padding: '10px' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row', marginBottom: '20px', gap: '10px' }}>
+              <Box sx={{ bgcolor: '#ef7d00', width: 40, height: 40, borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <PersonOutlineOutlinedIcon sx={{ fontSize: "22px", color: "white" }} />
               </Box>
-              <Divider />
-              <Box component="ul" sx={{ padding: 0, margin: 0 }}>
-                <Box
-                  onClick={() => navigate('/')}
-                  sx={{
-                    cursor: "pointer",
-                    backgroundColor: "#222240",
-                    color: "white",
-                    marginBottom: "10px",
-                    borderRadius: "30px",
-                    display: "flex",
-                    alignItems: "center",
-                    textAlign: "center",
-                    justifyContent: "center",
-                    width: "80%",
-                    padding: "5px 0px",
-                    margin: "0 auto",
-                  }}
-                >
-                  <span className="icon-home-icon-silhouette" style={{ color: "#ef7d00", marginRight: "5px", fontSize: "15px" }}></span>
-                  <span style={{ color: "white", fontSize: "12px", textTransform: "capitalize" }}>Home</span>
-                </Box>
-                <Box sx={{ cursor: "pointer", display: "flex", alignItems: "center", padding: "8px 16px" }} onClick={handleUserClose}>
-                  <img src="/assets/setting.svg" alt="icon" style={{ width: "16px", height: "16px", marginRight: "10px" }} />
-                  <Typography sx={{ color: '#5D5D5C', fontSize: '12px' }}>Edit Profile</Typography>
-                </Box>
-                <Box sx={{ cursor: "pointer", display: "flex", alignItems: "center", padding: "8px 16px" }} onClick={handleUserClose}>
-                  <span className="icon-price-tag" style={{ fontSize: "20px", marginRight: "10px" }}></span>
-                  <Typography sx={{ color: '#5D5D5C', fontSize: '12px' }}>My Subscription</Typography>
-                </Box>
-                <Box sx={{ cursor: "pointer", display: "flex", alignItems: "center", padding: "8px 16px" }} onClick={handleUserClose}>
-                  <HelpOutlineOutlinedIcon sx={{ fontSize: "20px", marginRight: "10px" }} />
-                  <Typography sx={{ color: '#5D5D5C', fontSize: '12px' }}>FAQ</Typography>
-                </Box>
-                <Box sx={{ cursor: "pointer", display: "flex", alignItems: "center", padding: "8px 16px" }} onClick={handleUserClose}>
-                  <img src="/assets/logout.svg" alt="icon" style={{ width: "16px", height: "16px", marginRight: "10px" }} />
-                  <Typography sx={{ color: '#5D5D5C', fontSize: '12px' }}>Logout</Typography>
-                </Box>
+              <Box>
+                <Typography variant="h6" sx={{ fontSize: "14px" }}>User01</Typography>
+                <Typography variant="body2" sx={{ fontSize: "12px" }} color="textSecondary">Mail@mail.com</Typography>
               </Box>
             </Box>
-          </Popover>
-        </Box>
-      </Box>
-      <Divider sx={{ backgroundColor: "#ef7d00", borderBottom: "none", width: "100%", height: "3px" }} />
-      <Box display={"flex"} justifyContent={"space-between"} padding={"20px 100px 0px 80px"}>
-        <ArrowBackIosOutlinedIcon onClick={() => navigate('/affiliate')} sx={{ color: "#4b4a4a", cursor: "pointer" }} />
-        <Box>
-          <IconButton><span className="icon-delete" style={{ fontSize: "23px" }}></span></IconButton>
-          <IconButton onClick={handlePrint}>
-            <img src="/assets/print.svg" alt="icon" style={{ width: "22px", height: "22px" }} />
-          </IconButton>
-        </Box>
-      </Box>
-      <Box>
-        <Grid container spacing={1}>
-          <Grid item xs={12} md={6}>
-            <PersonalInfo
-              fullName={fullName}
-              setFullName={setFullName}
-              phone={phone}
-              setPhone={setPhone}
-              email={email}
-              setEmail={setEmail}
-              month={month}
-              setMonth={setMonth}
-              day={day}
-              setDay={setDay}
-              year={year}
-              setYear={setYear}
-              country={country}
-              setCountry={setCountry}
-              password={password}
-              setPassword={setPassword}
-              confirmPassword={confirmPassword}
-              setConfirmPassword={setConfirmPassword}
-              selectedImage={selectedImage}
-              setSelectedImage={setSelectedImage}
-              selectedOption={selectedOption}
-              setSelectedOption={setSelectedOption}
-              errors={errors}
-            />
-          </Grid>
-          <Box item sx={{ display: { xs: 'none', sm: 'block' } }}>
-            <Divider orientation="vertical" sx={{ backgroundColor: '#f4f6fc', width: '1px', marginTop: "40px", height: "96%" }} />
+            <Divider />
+            <Box component="ul" sx={{ padding: 0, margin: 0 }}>
+              <Box
+                onClick={() => navigate('/')}
+                sx={{
+                  cursor: "pointer",
+                  backgroundColor: "#222240",
+                  color: "white",
+                  marginBottom: "10px",
+                  borderRadius: "30px",
+                  display: "flex",
+                  alignItems: "center",
+                  textAlign: "center",
+                  justifyContent: "center",
+                  width: "80%",
+                  padding: "5px 0px",
+                  margin: "0 auto",
+                }}
+              >
+                <span className="icon-home-icon-silhouette" style={{ color: "#ef7d00", marginRight: "5px", fontSize: "15px" }}></span>
+                <span style={{ color: "white", fontSize: "12px", textTransform: "capitalize" }}>Home</span>
+              </Box>
+              <Box sx={{ cursor: "pointer", display: "flex", alignItems: "center", padding: "8px 16px" }} onClick={handleUserClose}>
+                <img src="/assets/setting.svg" alt="icon" style={{ width: "16px", height: "16px", marginRight: "10px" }} />
+                <Typography sx={{ color: '#5D5D5C', fontSize: '12px' }}>Edit Profile</Typography>
+              </Box>
+              <Box sx={{ cursor: "pointer", display: "flex", alignItems: "center", padding: "8px 16px" }} onClick={handleUserClose}>
+                <span className="icon-price-tag" style={{ fontSize: "20px", marginRight: "10px" }}></span>
+                <Typography sx={{ color: '#5D5D5C', fontSize: '12px' }}>My Subscription</Typography>
+              </Box>
+              <Box sx={{ cursor: "pointer", display: "flex", alignItems: "center", padding: "8px 16px" }} onClick={handleUserClose}>
+                <HelpOutlineOutlinedIcon sx={{ fontSize: "20px", marginRight: "10px" }} />
+                <Typography sx={{ color: '#5D5D5C', fontSize: '12px' }}>FAQ</Typography>
+              </Box>
+              <Box sx={{ cursor: "pointer", display: "flex", alignItems: "center", padding: "8px 16px" }} onClick={handleUserClose}>
+                <img src="/assets/logout.svg" alt="icon" style={{ width: "16px", height: "16px", marginRight: "10px" }} />
+                <Typography sx={{ color: '#5D5D5C', fontSize: '12px' }}>Logout</Typography>
+              </Box>
+            </Box>
           </Box>
-          <Grid item xs={12} md={5}>
-            <PaymentInfo
-              selectedOption={paymentOption}
-              setSelectedOption={setPaymentOption}
-              bankName={bankName}
-              setBankName={setBankName}
-              accountNumber={accountNumber}
-              setAccountNumber={setAccountNumber}
-              accountName={accountName}
-              setAccountName={setAccountName}
-              errors={errors}
-            />
-          </Grid>
-        </Grid>
-        <Grid container justifyContent="center" sx={{ marginTop: 3 }}>
-          <Button
-            onClick={handleSubmit}
-            disabled={loading}
-            sx={{
-              width: '160px',
-              textTransform: "capitalize",
-              backgroundColor: "#ef7d00",
-              color: "white",
-              borderRadius: "20px",
-              padding: "5px",
-              '&:hover': { backgroundColor: "#ef7d10" },
-              '&.Mui-disabled': { backgroundColor: '#ffd0a1', color: 'white' }
-            }}
-          >
-            {loading ? (
-              <CircularProgress size={20} color="inherit" />
-            ) : (
-              user ? '✔ Update' : '✔ Save'
-            )}
-          </Button>
-        </Grid>
+        </Popover>
       </Box>
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={6000}
-        onClose={() => setOpenSnackbar(false)}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      >
-        <Alert
-          onClose={() => setOpenSnackbar(false)}
-          severity={snackbarSeverity}
-          sx={{ width: '100%' }}
-        >
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
     </Box>
+    <Divider sx={{ backgroundColor: "#ef7d00", borderBottom: "none", width: "100%", height: "3px" }} />
+    <Box display={"flex"} justifyContent={"space-between"} padding={"20px 100px 0px 80px"}>
+      <ArrowBackIosOutlinedIcon onClick={() => navigate('/affiliate')} sx={{ color: "#4b4a4a", cursor: "pointer" }} />
+      <Box>
+        <IconButton><span className="icon-delete" style={{ fontSize: "23px" }}></span></IconButton>
+        <IconButton onClick={handlePrint}>
+          <img src="/assets/print.svg" alt="icon" style={{ width: "22px", height: "22px" }} />
+        </IconButton>
+      </Box>
+    </Box>
+    <Box>
+      <Grid container spacing={1}>
+        <Grid item xs={12} md={6}>
+          <PersonalInfo
+            fullName={fullName}
+            setFullName={setFullName}
+            phone={phone}
+            setPhone={setPhone}
+            email={email}
+            setEmail={setEmail}
+            month={month}
+            setMonth={setMonth}
+            day={day}
+            setDay={setDay}
+            year={year}
+            setYear={setYear}
+            country={country}
+            setCountry={setCountry}
+            password={password}
+            setPassword={setPassword}
+            confirmPassword={confirmPassword}
+            setConfirmPassword={setConfirmPassword}
+            selectedImage={selectedImage}
+            setSelectedImage={setSelectedImage}
+            selectedOption={selectedOption}
+            setSelectedOption={setSelectedOption}
+            errors={errors}
+          />
+        </Grid>
+        <Box item sx={{ display: { xs: 'none', sm: 'block' } }}>
+          <Divider orientation="vertical" sx={{ backgroundColor: '#f4f6fc', width: '1px', marginTop: "40px", height: "96%" }} />
+        </Box>
+        <Grid item xs={12} md={5}>
+          <PaymentInfo
+            selectedOption={paymentOption}
+            setSelectedOption={setPaymentOption}
+            bankName={bankName}
+            setBankName={setBankName}
+            accountNumber={accountNumber}
+            setAccountNumber={setAccountNumber}
+            accountName={accountName}
+            setAccountName={setAccountName}
+            errors={errors}
+          />
+        </Grid>
+      </Grid>
+      <Grid container justifyContent="center" sx={{ marginTop: 3 }}>
+        <Button
+          onClick={handleSubmit}
+          disabled={loading}
+          sx={{
+            width: '160px',
+            textTransform: "capitalize",
+            backgroundColor: "#ef7d00",
+            color: "white",
+            borderRadius: "20px",
+            padding: "5px",
+            '&:hover': { backgroundColor: "#ef7d10" },
+            '&.Mui-disabled': { backgroundColor: '#ffd0a1', color: 'white' }
+          }}
+        >
+          {loading ? (
+            <CircularProgress size={20} color="inherit" />
+          ) : (
+            user ? '✔ Update' : '✔ Save'
+          )}
+        </Button>
+      </Grid>
+    </Box>
+    <Snackbar
+      open={openSnackbar}
+      autoHideDuration={6000}
+      onClose={() => setOpenSnackbar(false)}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+    >
+      <Alert
+        onClose={() => setOpenSnackbar(false)}
+        severity={snackbarSeverity}
+        sx={{ width: '100%' }}
+      >
+        {snackbarMessage}
+      </Alert>
+    </Snackbar>
+    </Box >
   );
 };

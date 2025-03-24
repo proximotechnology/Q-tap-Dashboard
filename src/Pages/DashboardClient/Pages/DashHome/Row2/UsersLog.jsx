@@ -2,6 +2,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import { Box } from '@mui/system';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import CircleIcon from '@mui/icons-material/Circle';
+import { useTranslation } from 'react-i18next';
 export const UsersLog = () => {
     const rows = [
         { userName: 'Admin', time: '11:15 PM', date: '22.06.2024', status: 'Active now', statusColor: 'orange' },
@@ -10,13 +11,13 @@ export const UsersLog = () => {
         {}, {}, {}, {}
 
     ];
-
+    const {t} = useTranslation();
     return (
         <TableContainer component={Paper} sx={{ borderRadius: "20px", boxShadow: 'none' , minHeight:"50vh" , maxHeight:"62vh" , overflow:'auto'}}>
             <Grid container justifyContent="space-between" alignItems="center" sx={{ padding: "20px 20px 0px 20px" }}>
                 <Grid item>
                     <Typography variant="body1" component="div" sx={{ fontSize: '13px', color: "#575756" }}>
-                        Users Log
+                        {t("usersLog")}
                     </Typography>
                 </Grid>
                 <Grid item>
@@ -39,10 +40,10 @@ export const UsersLog = () => {
             <Table sx={{ borderCollapse: 'separate', borderSpacing: '0px', padding: "10px" }}>
                 <TableHead>
                     <TableRow sx={{ height: "30px" }}>
-                        <TableCell sx={{ textAlign: "left", fontSize: "11px", border: 'none', padding: "0px 20px" }}>User Name</TableCell>
-                        <TableCell sx={{ textAlign: "center", fontSize: "11px", border: 'none', padding: "0px 0px" }}>Time</TableCell>
-                        <TableCell sx={{ textAlign: "center", fontSize: "11px", border: 'none', padding: "0px 0px" }}>Date</TableCell>
-                        <TableCell sx={{ textAlign: "center", fontSize: "11px", border: 'none', padding: "0px 0px" }}>Status</TableCell>
+                        <TableCell sx={{ textAlign: "left", fontSize: "11px", border: 'none', padding: "0px 20px" }}>{t("username")}</TableCell>
+                        <TableCell sx={{ textAlign: "center", fontSize: "11px", border: 'none', padding: "0px 0px" }}>{t("time")}</TableCell>
+                        <TableCell sx={{ textAlign: "center", fontSize: "11px", border: 'none', padding: "0px 0px" }}>{t("time")}</TableCell>
+                        <TableCell sx={{ textAlign: "center", fontSize: "11px", border: 'none', padding: "0px 0px" }}>{t("status")}</TableCell>
                     </TableRow>
                 </TableHead>
 
@@ -98,7 +99,7 @@ export const UsersLog = () => {
                                 {row.date}
                             </TableCell>
                             <TableCell sx={{ textAlign: 'center', border: 'none', fontSize: '11px', color: row.statusColor, padding: '0px' }}>
-                                {row.status ? <CircleIcon sx={{ fontSize: "7px" }} /> : null} {row.status}
+                                {row.status ? <CircleIcon sx={{ fontSize: "7px" }} /> : null} {t(row.status)}
                             </TableCell>
                         </TableRow>
                     ))}

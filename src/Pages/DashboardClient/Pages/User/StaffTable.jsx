@@ -8,8 +8,10 @@ import { AddStaff } from './AddStaff';
 import * as XLSX from 'xlsx';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 export const StaffTable = () => {
+    const {t} = useTranslation();
     const [modalOpen, setModalOpen] = useState(false);
 
     const handleOpen = () => setModalOpen(true);
@@ -77,12 +79,12 @@ export const StaffTable = () => {
             })
 
             if (response.data) {
-                toast.success("RestStaff deleted successfully!");
+                toast.success(t("userStaff.restStaffDeletedSucc"));
                 getRestStaff();
             }
         } catch (error) {
             console.log("error delete RestStaff ", error);
-            toast.error("Error deleting RestStaff");
+            toast.error(t("restStaffDeletedSucc"));
 
         }
     }
@@ -98,7 +100,7 @@ export const StaffTable = () => {
             >
                 <Box sx={{ display: "flex", alignItem: "center" }}>
                     <span class="icon-manager" style={{ fontSize: "25px", color: "#D8E0E0", marginRight: "10px" }}></span>
-                    <Typography variant='body1' sx={{ fontSize: "16px", color: "#575756" }}>Staff</Typography>
+                    <Typography variant='body1' sx={{ fontSize: "16px", color: "#575756" }}>{t("staff")}</Typography>
                 </Box>
 
 
@@ -108,7 +110,7 @@ export const StaffTable = () => {
                     </IconButton>
                     <Button
                         onClick={handleOpen}
-                        sx={{ fontSize: "12px", color: "#ef7d00", display: "flex", cursor: "pointer", textTransform: "capitalize" }} >Add
+                        sx={{ fontSize: "12px", color: "#ef7d00", display: "flex", cursor: "pointer", textTransform: "capitalize" }} >{t("add")}
                         <span style={{ fontSize: "15px", color: "#ef7d00", fontWeight: 700, paddingLeft: "6px" }}>+</span>
                     </Button>
                     <AddStaff open={modalOpen} onClose={handleClose} />
@@ -116,7 +118,7 @@ export const StaffTable = () => {
                     <Button onClick={handleExport}
                         variant="text"
                         sx={{ color: '#ef7d00', textTransform: "capitalize", fontSize: "12px" }}>
-                        Export
+                        {t("export")}
                         <ArrowForwardIosIcon sx={{ fontSize: "10px", color: "#ef7d00" }} />
                     </Button>
 
@@ -130,7 +132,7 @@ export const StaffTable = () => {
                 <Table sx={{ borderCollapse: 'separate', borderSpacing: '0 5px' }}>
                     <TableHead>
                         <TableRow sx={{ height: "20px", borderBottom: "2px solid #f0f0f0" }}>
-                            {["Name", "Role", "Order", "Status", " "].map((header) => (
+                            {[t("name"), t("role"), t("Orders"), t("status"), " "].map((header) => (
                                 <TableCell
                                     key={header}
                                     sx={{

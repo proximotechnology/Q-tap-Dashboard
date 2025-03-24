@@ -4,6 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recha
 import { data } from './BarChart';
 import { Box } from '@mui/system';
 import { Grid, Select, MenuItem } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
         return (
@@ -18,6 +19,7 @@ const CustomTooltip = ({ active, payload }) => {
 
 export const BarChart1 = () => {
     const [year, setYear] = React.useState('2024');
+    const { t } = useTranslation()
 
     const handleYearChange = (event) => {
         setYear(event.target.value);
@@ -27,12 +29,12 @@ export const BarChart1 = () => {
             <Grid container justifyContent="space-between" alignItems="center" sx={{ padding: "10px 20px", }} >
                 <Grid item>
                     <Typography variant="body1" component="div" sx={{ color: "#575756", fontSize: '13px' }}>
-                        Sales
+                        {t("sales")}
                     </Typography>
                 </Grid>
                 <Grid item>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Select  
+                        <Select
                             value={year}
                             onChange={handleYearChange}
                             sx={{
@@ -74,7 +76,7 @@ export const BarChart1 = () => {
                         content={<CustomTooltip />}
                         cursor={{ fill: 'transparent' }} />
                     <Bar dataKey="value" fill="#ef7d00" background={{ fill: '#D8E0E0' }} barSize={12} radius={[10, 10, 0, 0]} />
-                    
+
                 </BarChart>
             </ResponsiveContainer>
         </Paper>

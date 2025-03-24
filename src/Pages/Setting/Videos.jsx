@@ -2,8 +2,11 @@ import { forwardRef, useImperativeHandle, useState } from 'react';
 import { Box, TextField, IconButton, Paper, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
-const URLInput = ({ label, setVideoUrl, value }) => (
+const URLInput = ({ label, setVideoUrl, value }) => {
+    const {t} = useTranslation()
+    return (
     <Box
         display="flex"
         flexDirection="column"
@@ -16,7 +19,7 @@ const URLInput = ({ label, setVideoUrl, value }) => (
         </Typography>
         <TextField
             variant="outlined"
-            placeholder="Past Url Here"
+            placeholder={t("pastUrlHere")}
             value={value}
             onChange={(e) => setVideoUrl(e.target.value)}
             fullWidth
@@ -34,7 +37,7 @@ const URLInput = ({ label, setVideoUrl, value }) => (
             }}
         />
     </Box>
-);
+)};
 
 export const Videos = forwardRef((props, ref) => {
     const [urls, setUrls] = useState(["Main", "Vid01"]);  
@@ -51,14 +54,14 @@ export const Videos = forwardRef((props, ref) => {
             [label]: value
         }));
     };
-
+    const {t} = useTranslation()
     const handleSave = () => {
         const validUrls = Object.values(videoUrls)
             .filter(url => url.trim() !== '')
             .join(',');
         
         if (!validUrls) {
-            toast.error("Please add at least one video URL!");
+            toast.error(t("plAddAtleastOneVideo"));
             return;
         }
 
@@ -83,11 +86,11 @@ export const Videos = forwardRef((props, ref) => {
             return data;
         })
         .then(data => {
-            toast.success('Video added successfully!');
+            toast.success(t("videoAddSucc"));
         })
         .catch(error => {
             console.error('Error saving videos:', error);
-            toast.error(error.message || "Failed to save videos!");
+            toast.error(error.message || t("videoAddErr"));
         });
     };
     // send handleSave to parent component

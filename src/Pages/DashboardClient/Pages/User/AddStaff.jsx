@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Modal, Box, Typography, TextField, IconButton, Divider, MenuItem, FormControl, Select, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
+import { useTranslation } from 'react-i18next';
 
 export const AddStaff = ({ open, onClose, onSave }) => {
     const [role, setRole] = useState('');
+    const {t} = useTranslation();
     return (
         <Modal open={open} onClose={onClose}>
             <Box
@@ -19,7 +21,7 @@ export const AddStaff = ({ open, onClose, onSave }) => {
                     position: 'relative'
                 }}>
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <Typography variant="body1" sx={{ fontSize: "13px", color: "#424242" }}>Add Staff</Typography>
+                    <Typography variant="body1" sx={{ fontSize: "13px", color: "#424242" }}>{t("userStaff.add")}</Typography>
                     <IconButton onClick={onClose} >
                         <CloseIcon sx={{ fontSize: "20px", color: "gray" }} />
                     </IconButton>
@@ -39,7 +41,7 @@ export const AddStaff = ({ open, onClose, onSave }) => {
                 }}>
 
                     <Typography variant='body2' sx={{ width: "25%", textAlign: "center" }} color={"#424242"} fontSize={"12px"}>
-                        Name
+                        {t("name")}
                     </Typography>
                     <Box sx={{
                         display: "flex",
@@ -58,7 +60,7 @@ export const AddStaff = ({ open, onClose, onSave }) => {
                                 }
                             }}
                             fullWidth
-                            placeholder="Table Name"
+                            placeholder={t("tableName")}
                         />
                     </Box>
                 </Box>
@@ -71,7 +73,7 @@ export const AddStaff = ({ open, onClose, onSave }) => {
                     alignItems: "flex-start",
                 }}>
                     <Typography variant='body2' sx={{ width: "25%", textAlign: "center" }} color={"#424242"} fontSize={"12px"}>
-                        Role
+                        {t("role")}
                     </Typography>
                     <Box sx={{
                         display: "flex",
@@ -95,12 +97,12 @@ export const AddStaff = ({ open, onClose, onSave }) => {
                                 displayEmpty
                                 value={role}
                                 onChange={(e) => setRole(e.target.value)}
-                                placeholder="Select Role"
+                                placeholder={t("selectRole")}
                             >
-                                <MenuItem value="" disabled sx={{ fontSize: "12PX", color: "gray" }}>Select Role</MenuItem>
-                                <MenuItem value={"chef"} sx={{ fontSize: "12PX", color: "gray" }}>Chef</MenuItem>
-                                <MenuItem value={"cashier"} sx={{ fontSize: "12PX", color: "gray" }}>Cashier</MenuItem>
-                                <MenuItem value={"waiter"} sx={{ fontSize: "12PX", color: "gray" }}>Waiter</MenuItem>
+                                <MenuItem value="" disabled sx={{ fontSize: "12PX", color: "gray" }}>{t("selectRole")}</MenuItem>
+                                <MenuItem value={"chef"} sx={{ fontSize: "12PX", color: "gray" }}>{t("Chef")}</MenuItem>
+                                <MenuItem value={"cashier"} sx={{ fontSize: "12PX", color: "gray" }}>{t("Cashier")}</MenuItem>
+                                <MenuItem value={"waiter"} sx={{ fontSize: "12PX", color: "gray" }}>{t("Waiter")}</MenuItem>
 
                             </Select>
                         </FormControl>
@@ -126,7 +128,7 @@ export const AddStaff = ({ open, onClose, onSave }) => {
                         }}
                     >
                         <CheckOutlinedIcon />
-                        Save
+                        {t("save")}
                     </Button>
                 </Box>
 

@@ -9,6 +9,7 @@ import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { usePersonalContext } from '../../context/PersonalContext';
+import { useTranslation } from 'react-i18next';
 
 
 const SignUp = () => {
@@ -30,9 +31,11 @@ const SignUp = () => {
     const [apiError, setApiError] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [apiSuccess, setApiSuccess] = useState('');
-     const [clientDataFromRegist , setClientDataFromRegist] = useState()
+    const [clientDataFromRegist, setClientDataFromRegist] = useState()
 
     const { updatePersonalData } = usePersonalContext();
+
+    const { t } = useTranslation();
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
@@ -47,25 +50,25 @@ const SignUp = () => {
 
         // inputs validate 
         if (!fullName || !phone || !email || !password || !confirmPassword) {
-            setApiError('All fields are required!');
+            setApiError(t("fieldAreRequired"));
             return;
         }
 
         if (password !== confirmPassword) {
-            setApiError('Passwords do not match!');
+            setApiError(t("PasswordsDoNotMatch"));
             return;
         }
         if (!day || !month || !year) {
-            setApiError('The birth date field must be a valid date');
+            setApiError(t('BirthDateFieldMustBeValid'));
             return;
         }
         if (!country) {
-            setApiError('The country field is required');
+            setApiError(t("countryFieldIsRequired"));
             return;
         }
 
         if (!user_type) {
-            setApiError('The user type field is required');
+            setApiError(t("userTypeRequired"));
             return;
         }
 
@@ -79,7 +82,7 @@ const SignUp = () => {
             birth_date: `${year}-${month}-${day}`,
             country,
             user_type
-        };        
+        };
 
         // Store data in PersonalContext if user is affiliate
         if (user_type === "qtap_clients") {
@@ -106,7 +109,7 @@ const SignUp = () => {
             setIsLoading(true);
             const options = {
                 method: 'POST',
-                url: "https://highleveltecknology.com/Qtap/api/register" ,
+                url: "https://highleveltecknology.com/Qtap/api/register",
                 headers: { 'Content-Type': 'application/json' },
                 data
 
@@ -120,16 +123,16 @@ const SignUp = () => {
 
 
             if (response?.data?.status === "success") {
-                setApiSuccess('Registration successful!');
+                setApiSuccess(t("registrationSuccess"));
 
                 // dashboard-affiliate
 
             } else {
-                setApiError(response?.data?.message || 'check email or phone again may be dublicated!');
+                setApiError(response?.data?.message || t("checkEmailOrPhoneDublicated"));
             }
         } catch (error) {
             setIsLoading(false);
-            setApiError(error.response?.data?.message || 'Failed to register. Please try again.');
+            setApiError(error.response?.data?.message || t("registerFiald"));
         }
     };
 
@@ -147,7 +150,7 @@ const SignUp = () => {
                     required
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    placeholder="Full Name"
+                    placeholder={t("fullName")}
                     sx={{ borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
                 />
             </FormControl>
@@ -157,7 +160,7 @@ const SignUp = () => {
                     id="outlined-phone"
                     endAdornment={
                         <InputAdornment position="end">
-                            <Typography sx={{ fontSize: "10px", color: "black" }} >Verify</Typography>
+                            <Typography sx={{ fontSize: "10px", color: "black" }} >{t("verify")}</Typography>
                         </InputAdornment>
                     }
                     startAdornment={
@@ -165,7 +168,7 @@ const SignUp = () => {
                             <PhoneOutlinedIcon sx={{ fontSize: "16px" }} />
                         </InputAdornment>
                     }
-                    placeholder="Mobile Number"
+                    placeholder={t("mobileNumber")}
                     required
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
@@ -185,7 +188,7 @@ const SignUp = () => {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Email"
+                    placeholder={t("email")}
                     sx={{ borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
                 />
             </FormControl>
@@ -194,7 +197,7 @@ const SignUp = () => {
                 <Grid item xs={12} sm={12} md={12} lg={12}>
                     <Grid container alignItems="center" sx={{ color: "grey", marginTop: "5px" }} >
                         <CalendarMonthOutlinedIcon sx={{ marginRight: 1, fontSize: "15px" }} />
-                        <Typography variant="body1" sx={{ fontSize: "11px" }}>Date of Birth:</Typography>
+                        <Typography variant="body1" sx={{ fontSize: "11px" }}>{t("dateOfBirth")}</Typography>
                     </Grid>
                 </Grid>
 
@@ -208,7 +211,7 @@ const SignUp = () => {
                             sx={{ borderRadius: '50px', height: '33px', fontSize: "10px", color: "gray", marginRight: "5px" }}
                         >
                             <MenuItem value="" disabled sx={{ fontSize: "10px", color: "gray" }} >
-                                Month
+                                {t("month")}
                             </MenuItem>
                             <MenuItem value="01" sx={{ fontSize: "10px", color: "gray" }}>01</MenuItem>
                             <MenuItem value="02" sx={{ fontSize: "10px", color: "gray" }}>02</MenuItem>
@@ -236,7 +239,7 @@ const SignUp = () => {
                             sx={{ borderRadius: '50px', height: '33px', fontSize: "10px", color: "gray", marginRight: "5px" }}
                         >
                             <MenuItem value="" disabled sx={{ fontSize: "10px", color: "gray" }}>
-                                Day
+                                {t("day")}
                             </MenuItem>
                             {[...Array(31).keys()].map((i) => (
                                 <MenuItem key={i + 1} value={i + 1} sx={{ fontSize: "10px", color: "gray" }} >
@@ -257,7 +260,7 @@ const SignUp = () => {
                             sx={{ borderRadius: '50px', height: '33px', fontSize: "10px", color: "gray" }}
                         >
                             <MenuItem value="" disabled sx={{ fontSize: "10px", color: "gray" }}>
-                                Year
+                                {t("year")}
                             </MenuItem>
                             {Array.from({ length: 2025 - 2000 + 1 }, (_, i) => (
                                 <MenuItem key={i + 2000} value={i + 2000} sx={{ fontSize: "10px", color: "gray" }}>
@@ -284,7 +287,7 @@ const SignUp = () => {
                     }
                 >
                     <MenuItem value="" disabled >
-                        Country
+                        {t("country")}
                     </MenuItem>
                     <MenuItem value="US" sx={{ fontSize: "10px", color: "gray" }} >United States</MenuItem>
                     <MenuItem value="CA" sx={{ fontSize: "10px", color: "gray" }} >Canada</MenuItem>
@@ -305,11 +308,11 @@ const SignUp = () => {
                     }
                 >
                     <MenuItem value="" disabled >
-                        User Type
+                        {t("userType")}
                     </MenuItem>
-                    <MenuItem value="qtap_admins" sx={{ fontSize: "10px", color: "gray" }} >Admin</MenuItem>
-                    <MenuItem value="qtap_clients" sx={{ fontSize: "10px", color: "gray" }} >Client</MenuItem>
-                    <MenuItem value="qtap_affiliates" sx={{ fontSize: "10px", color: "gray" }} >Affiliate</MenuItem>
+                    <MenuItem value="qtap_admins" sx={{ fontSize: "10px", color: "gray" }} >{t("admin")}</MenuItem>
+                    <MenuItem value="qtap_clients" sx={{ fontSize: "10px", color: "gray" }} >{t("client")}</MenuItem>
+                    <MenuItem value="qtap_affiliates" sx={{ fontSize: "10px", color: "gray" }} >{t("affiliate")}</MenuItem>
                 </Select>
             </FormControl>
 
@@ -339,7 +342,7 @@ const SignUp = () => {
                             </IconButton>
                         </InputAdornment>
                     }
-                    placeholder="Password"
+                    placeholder={t("password")}
                     sx={{ borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
                 />
             </FormControl>
@@ -371,7 +374,7 @@ const SignUp = () => {
                             </IconButton>
                         </InputAdornment>
                     }
-                    placeholder="Confirm Password"
+                    placeholder={t("confirmPass")}
                     sx={{ borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
                 />
             </FormControl>
@@ -383,7 +386,7 @@ const SignUp = () => {
                         transform: "scale(0.7)"
                     }}
                 />}
-                label={<Typography sx={{ fontSize: "10px", color: "gray" }}> I agree to the terms and conditions and privacy policy. Learn More</Typography>}
+                label={<Typography sx={{ fontSize: "10px", color: "gray" }}> {t("registerAgree")}</Typography>}
             />
             {apiError && <Typography sx={{ color: 'red', fontSize: '13px', textAlign: "center" }}>{apiError}</Typography>}
             {apiSuccess && <Typography sx={{ color: 'green', fontSize: '13px', textAlign: "center" }}>{apiSuccess}</Typography>}
@@ -405,7 +408,7 @@ const SignUp = () => {
                 onClick={() => { handleSignUp() }}
             >
 
-                Sign Up
+                {t("signUp")}
             </Button>
         </Box>
     );

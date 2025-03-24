@@ -3,8 +3,10 @@ import { Box, Typography, Divider, TextField, Paper, Button } from '@mui/materia
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 const PaymentGatewayForm = () => {
+    const {t} = useTranslation();
     const [apiKey, setApiKey] = useState('');
     const [token1, setToken1] = useState('');
     const [token2, setToken2] = useState('');
@@ -12,7 +14,7 @@ const PaymentGatewayForm = () => {
 
     const handleSave = async () => {
         if (apiKey === '' || token1 === '' || token2 === '' || iframe === '') {
-            toast.error("Please fill all fields");
+            toast.error(t("plFillAllField"));
             return;
         }
         const formData = {
@@ -42,7 +44,7 @@ const PaymentGatewayForm = () => {
             }
 
             if (response.ok) {
-                toast.success("Payment Gateway Saved Successfully");
+                toast.success(t("paymentGatwaySavedSucc"));
                 setApiKey('');
                 setToken1('');
                 setToken2('');
@@ -74,7 +76,7 @@ const PaymentGatewayForm = () => {
                         margin:"10px 0px 15px 0px"
                     }}
                 >
-                    Payment Gateway
+                    {t("paymentGatway")}
                 </Typography>
 
                 <Divider
@@ -184,7 +186,7 @@ const PaymentGatewayForm = () => {
                             }
                         }}
                             onClick={handleSave}
-                            startIcon={<CheckOutlinedIcon />}>Save</Button>
+                            startIcon={<CheckOutlinedIcon />}>{t("save")}</Button>
                     </Box>
                 </Box>
 

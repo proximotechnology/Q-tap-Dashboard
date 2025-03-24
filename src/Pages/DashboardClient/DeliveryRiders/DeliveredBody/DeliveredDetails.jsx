@@ -1,6 +1,7 @@
 import React, { useContext, useRef } from 'react';
 import { Box, Typography, IconButton, Grid, Paper, Divider } from '@mui/material';
 import { OrderContext } from './DeliveredContext';
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -17,7 +18,7 @@ export const DeliveredDetails = ({ orders }) => {
       document.body.innerHTML = originalContents;
       window.location.reload();  
   };
-
+  const { t } = useTranslation();
   return (
     open && selectedOrder && (
       <Paper
@@ -62,8 +63,8 @@ export const DeliveredDetails = ({ orders }) => {
             <Grid item xs={5}>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                 <Box>
-                  <Typography color="#262624" fontSize="12px"  >Dine Method</Typography>
-                  <Typography color="textSecondary" fontSize="11px" marginLeft={"10px"} marginTop={"3px"}>{selectedOrder.method},</Typography>
+                  <Typography color="#262624" fontSize="12px"  >{t("dineMethod")}</Typography>
+                  <Typography color="textSecondary" fontSize="11px" marginLeft={"10px"} marginTop={"3px"}>{t(selectedOrder.method)},</Typography>
                 </Box>
 
                 <Box sx={{
@@ -77,24 +78,24 @@ export const DeliveredDetails = ({ orders }) => {
                 </Box>
               </Box>
               <Typography color="textSecondary" fontSize="11px" >
-                <span style={{ color: "#ef7d00", marginLeft: "10px" }}>Address : </span>
+                <span style={{ color: "#ef7d00", marginLeft: "10px" }}>{t("address")} </span>
                 {selectedOrder.address}</Typography>
 
               <Typography color="textSecondary" fontSize="11px" >
-                <span style={{ color: "#ef7d00", marginLeft: "10px" }}>Name : </span>
+                <span style={{ color: "#ef7d00", marginLeft: "10px" }}>{t("name")} : </span>
                 {selectedOrder.name}</Typography>
 
               <Typography color="textSecondary" fontSize="11px" >
-                <span style={{ color: "#ef7d00", marginLeft: "10px" }}>Phone : </span>
+                <span style={{ color: "#ef7d00", marginLeft: "10px" }}>{t("mobileNumber")} : </span>
                 {selectedOrder.phone}</Typography>
 
-              <Typography color="#262624" fontSize="12px" marginTop={"15px"}>Payment Method</Typography>
-              <Typography color="textSecondary" fontSize="11px" marginLeft={"10px"} marginTop={"3px"}> {selectedOrder.payIcon} {selectedOrder.paymentMethod}</Typography>
-              <Typography color="#262624" fontSize="12px" marginTop={"15px"}>Payment Status</Typography>
+              <Typography color="#262624" fontSize="12px" marginTop={"15px"}>{t("paymentMethod")}</Typography>
+              <Typography color="textSecondary" fontSize="11px" marginLeft={"10px"} marginTop={"3px"}> {selectedOrder.payIcon} {t(selectedOrder.paymentMethod)}</Typography>
+              <Typography color="#262624" fontSize="12px" marginTop={"15px"}>{t("paymentStatus")}</Typography>
               <Box display="flex" alignItems="center"  marginLeft={"10px"} marginTop={"6px"}>
               <img src="/assets/balance.svg" alt="icon" style={{ width: "16px", height: "16px", marginRight:"5px" }} />
                   <Typography sx={{ color: selectedOrder.paymentColor }} fontSize="11px"  >
-                    {selectedOrder.payment}</Typography> 
+                    {t(selectedOrder.payment)}</Typography> 
               </Box>
 
 
@@ -109,7 +110,7 @@ export const DeliveredDetails = ({ orders }) => {
             />
             <Grid item xs={6} sx={{ padding: "0px 15px" }} >
               <Box>
-                <Typography color="#262624" fontSize="12px" marginBottom={"10px"} >Order details</Typography>
+                <Typography color="#262624" fontSize="12px" marginBottom={"10px"} >{t("orderDetail")}</Typography>
                 {selectedOrder.items.map((item, index) => (
                   <Grid container alignItems="center" key={index}   >
                     <Grid item xs={8}>
@@ -139,7 +140,7 @@ export const DeliveredDetails = ({ orders }) => {
 
               <Typography variant="body1"  >
                 <Typography variant="body2" component="span" sx={{ color: '#ef7d00', fontSize: "12px" }}>
-                  <span style={{ color: "#262624", fontSize: "12px" }}>Total: </span>
+                  <span style={{ color: "#262624", fontSize: "12px" }}>{t("total")}: </span>
                   {selectedOrder.total} <span style={{ color: '#ef7d00', fontSize: "8px" }}>EGP</span>
                 </Typography>
               </Typography>
@@ -159,7 +160,7 @@ export const DeliveredDetails = ({ orders }) => {
           </Typography>
 
           <Typography variant="body2" sx={{ fontSize: "12px", display: "flex", alignItems: "center" }} >
-            {selectedOrder.icon} {selectedOrder.status}
+            {selectedOrder.icon} {t(selectedOrder.status)}
           </Typography>
         </Grid> {/* footer */}
 
