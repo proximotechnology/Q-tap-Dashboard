@@ -145,7 +145,7 @@ const TableCard = ({ table, onDeleteTable, onEditTable }) => {
       </CardContent>
     </Card>
 );
-
+}
 export const Tables = ({ openOldMenu }) => {
   const {t} = useTranslation();
   const [modalOpen, setModalOpen] = useState(false);
