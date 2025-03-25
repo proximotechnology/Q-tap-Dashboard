@@ -21,7 +21,7 @@ const PaymentGatewayForm = forwardRef((props, ref) => {
             INTEGRATION_ID: token2,
             HMAC: iframe,
         }
-        console.log("response ftr", formData);
+        // console.log("response ftr", formData);
 
         try {
             const options = {
@@ -33,7 +33,7 @@ const PaymentGatewayForm = forwardRef((props, ref) => {
                 body: JSON.stringify(formData)
             }
             const response = await fetch('https://highleveltecknology.com/Qtap/api/settings/payment', options);
-            console.log("response payment", response);
+            // console.log("response payment", response);
 
             const data = await response.json();
 

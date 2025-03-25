@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-
+import React, { useState, useCallback } from "react";
 import QtapLogo from "../Component/QtapLogo";
 import QtapHome from "../Component/QtapHome";
 import { Box, MenuItem, Grid, Menu, Divider } from "@mui/material";
@@ -11,24 +10,27 @@ export const HomePage = () => {
   const [selectedTab, setSelectedTab] = useState("login");
   const [anchorElLanguage, setAnchorElLanguage] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState("en");
-  const openLanguage = Boolean(anchorElLanguage);
-
   const { i18n } = useTranslation();
 
-  const handleLanguageClick = (event) => {
+  const handleLanguageClick = useCallback((event) => {
+    event.stopPropagation(); // Prevent bubbling
     setAnchorElLanguage(event.currentTarget);
-  };
+  }, []);
 
-  const handleLanguageClose = (language) => {
-    setAnchorElLanguage(null); // Close menu first
+  const handleLanguageSelect = useCallback((language) => {
     setSelectedLanguage(language);
     i18n.changeLanguage(language);
-  };
+    setAnchorElLanguage(null); // Close menu
+  }, [i18n]);
+
+  const handleMenuClose = useCallback(() => {
+    setAnchorElLanguage(null);
+  }, []);
 
   const getLanguageIcon = () => {
     return selectedLanguage === "ar" ? (
       <span
-        class="icon-translation"
+        className="icon-translation"
         style={{ color: "#ef7d00", fontSize: "22px" }}
       >
         {" "}
@@ -37,6 +39,7 @@ export const HomePage = () => {
       <LanguageOutlinedIcon sx={{ color: "#ef7d00", fontSize: "22px" }} />
     );
   };
+
   return (
     <Box
       sx={{
@@ -73,20 +76,39 @@ export const HomePage = () => {
                 alignItems: "center",
               }}
               onClick={handleLanguageClick}
+              id="language-button"
+              aria-controls={anchorElLanguage ? "language-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={anchorElLanguage ? "true" : undefined}
             >
               {getLanguageIcon()}
               <KeyboardArrowDownIcon
                 sx={{ fontSize: "18px", color: "#575756" }}
               />
               <Menu
+                id="language-menu"
                 anchorEl={anchorElLanguage}
-                open={openLanguage}
-                onClose={() => setAnchorElLanguage(null)}
-                sx={{ padding: "2px" }}
+                open={Boolean(anchorElLanguage)}
+                onClose={handleMenuClose}
+                MenuListProps={{
+                  "aria-labelledby": "language-button",
+                }}
+                PaperProps={{
+                  elevation: 1,
+                  sx: {
+                    mt: 1,
+                  },
+                }}
               >
-                <MenuItem onClick={(event) => { handleLanguageClose("ar") }}>
+                <MenuItem
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent bubbling
+                    handleLanguageSelect("ar");
+                  }}
+                  sx={{ minWidth: "120px" }}
+                >
                   <span
-                    class="icon-translation"
+                    className="icon-translation"
                     style={{
                       color: "#575756",
                       marginRight: "8px",
@@ -98,7 +120,13 @@ export const HomePage = () => {
                   </span>
                 </MenuItem>
                 <Divider />
-                <MenuItem onClick={() => handleLanguageClose("en")}>
+                <MenuItem
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent bubbling
+                    handleLanguageSelect("en");
+                  }}
+                  sx={{ minWidth: "120px" }}
+                >
                   <LanguageOutlinedIcon
                     sx={{
                       color: "#575756",

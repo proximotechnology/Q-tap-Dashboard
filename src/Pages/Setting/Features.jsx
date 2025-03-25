@@ -1,4 +1,3 @@
-
 import React, { useState, forwardRef, useImperativeHandle, useRef } from 'react';
 import { Box, Button, Grid, TextField, Paper, Typography, IconButton, Divider, CircularProgress } from '@mui/material';
 import StraightIcon from '@mui/icons-material/Straight';
@@ -12,7 +11,8 @@ import { useTranslation } from 'react-i18next';
 const FeatureSection = ({ section, updateSection, index }) => {
     const [feature, setFeature] = useState('');
     const fileInputRef = useRef(null);
-    const {t} = useTranslation()
+    const { t } = useTranslation();
+
     const handleAddFeature = () => {
         if (feature.trim()) {
             updateSection(index, { ...section, features: [...section.features, feature.trim()] });
@@ -23,11 +23,7 @@ const FeatureSection = ({ section, updateSection, index }) => {
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                updateSection(index, { ...section, imgFile: reader.result });
-            };
-            reader.readAsDataURL(file);
+            updateSection(index, { ...section, imgFile: file });
         }
     };
 
@@ -37,18 +33,17 @@ const FeatureSection = ({ section, updateSection, index }) => {
 
     return (
         <Grid container spacing={2} sx={{ padding: '10px 30px', marginBottom: '10px' }}>
-            {/* Same Grid layout as before */}
             <Grid item xs={12} md={2} textAlign="center">
                 <Box sx={{ width: '130px', height: '95px', backgroundColor: "#EBEDF3", borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     {section.imgFile ? (
-                        <img src={section.imgFile} alt="Uploaded" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "10px" }} />
+                        <img src={URL.createObjectURL(section.imgFile)} alt="Uploaded" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "10px" }} />
                     ) : (
                         <Typography color="gray">{t("noImage")}</Typography>
                     )}
                 </Box>
                 <Box sx={{ display: "flex", flexDirection: "column", alignItems: "start", justifyContent: "start" }}>
                     <Typography variant="subtitle1" sx={{ fontSize: "10px", color: "gray", margin: '5px 10px' }}>
-                       {t("image")} {index + 1}
+                        {t("image")} {index + 1}
                     </Typography>
                     <Button
                         variant="contained"
@@ -62,7 +57,7 @@ const FeatureSection = ({ section, updateSection, index }) => {
                         {t("upload")}
                     </Button>
                 </Box>
-                <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleImageUpload} />
+                <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleImageUpload} accept="image/*" />
             </Grid>
 
             <Grid item xs={12} md={10}>
@@ -142,20 +137,20 @@ export const Features = forwardRef((props, ref) => {
             imgFile: null
         }]);
     };
-    const {t} = useTranslation()
+    const { t } = useTranslation();
     const updateSection = (index, updatedSection) => {
         setSections(sections.map((section, i) => i === index ? updatedSection : section));
     };
 
     const sendRequest = (section) => {
         // Validate required fields
-        if (!section.titleEn || !section.titleAr) {
-            toast.error(t("bothEnArTitleReq"));
+        if (!section.titleEn) {
+            toast.error(t("titleEnReq")); // Adjust translation key as needed
             setIsSaving(false);
             return;
         }
-        if (!section.descriptionEn || !section.descriptionAr) {
-            toast.error(t("bothEnArDescReq"));
+        if (!section.descriptionEn) {
+            toast.error(t("descEnReq")); // Adjust translation key as needed
             setIsSaving(false);
             return;
         }
@@ -164,22 +159,34 @@ export const Features = forwardRef((props, ref) => {
             setIsSaving(false);
             return;
         }
+        if (!section.imgFile) {
+            toast.error(t("imageRequired"));
+            setIsSaving(false);
+            return;
+        }
 
-        const requestData = {
-            titles: [section.titleEn, section.titleAr],
-            descriptions: [section.descriptionEn, section.descriptionAr],
-            features: [section.features],
-            img: section.imgFile ? [section.imgFile] : []
-        };
+        // Create FormData object for multipart/form-data request
+        const formData = new FormData();
+
+        // Append only the first title (లవ్‌స్టైల్‌లు Append only the English title as a stringified array
+        formData.append('titles[]', JSON.stringify([section.titleEn]));
+
+        // Append only the English description as a stringified array
+        formData.append('descriptions[]', JSON.stringify([section.descriptionEn]));
+
+        // Append features as a stringified array
+        formData.append('features[]', JSON.stringify(section.features));
+
+        // Append the image file
+        formData.append('img[]', section.imgFile);
 
         return axios({
             method: 'post',
             url: 'https://highleveltecknology.com/Qtap/api/settings/features',
-            data: requestData,
+            data: formData,
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("adminToken")}`,
-                'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'application/json',
+                'Content-Type': 'multipart/form-data',
             },
         });
     };
@@ -200,7 +207,6 @@ export const Features = forwardRef((props, ref) => {
         setIsSaving(true);
 
         try {
-            // Send each section sequentially
             for (const section of sections) {
                 await sendRequest(section)
                     .then(response => {

@@ -78,7 +78,7 @@ export const FeedbackAdmin = () => {
     // toggle the publishing status of the feedback
     const publishFeedback = async (id, currentStatus) => {
         const newStatus = currentStatus === "yes" ? "no" : "yes";
-        console.log('newStatus:', newStatus, currentStatus);
+        // console.log('newStatus:', newStatus, currentStatus);
 
         await axios.put(`https://highleveltecknology.com/Qtap/api/feedback/${id}`, {
             publish: newStatus

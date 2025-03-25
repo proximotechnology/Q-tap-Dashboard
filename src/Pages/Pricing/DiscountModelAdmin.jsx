@@ -91,7 +91,7 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
             if (response.data) {
                 setDiscounts(response.data.discounts || []);
                 setDiscountContent(response.data.discounts || []);
-                console.log("response discount", response.data.discounts);
+                // console.log("response discount", response.data.discounts);
             }
         } catch (error) {
             console.error('Error fetching discounts:', error);

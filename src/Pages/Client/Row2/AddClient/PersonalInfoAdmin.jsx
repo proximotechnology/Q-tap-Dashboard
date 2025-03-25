@@ -8,6 +8,8 @@ import {
     OutlinedInput,
     Select,
     Typography,
+    Snackbar,
+    Alert,
 } from "@mui/material";
 import React, { useState } from "react";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
@@ -41,6 +43,8 @@ export const PersonalInfoAdmin = () => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [website, setWebsite] = useState(clientData.personalInfo.website || "");
     const [image, setImage] = useState(clientData.personalInfo.img || "");
+    const [successOpen, setSuccessOpen] = useState(false);
+    const [errorOpen, setErrorOpen] = useState(false);
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
@@ -55,9 +59,65 @@ export const PersonalInfoAdmin = () => {
         if (file && file.type.startsWith("image/")) {
             setImage(file);
             updatePersonalData({ img: file });
-            console.log("Image updated in context:", file);
+            setSuccessOpen(true);
         } else {
-            alert("Please upload a valid image file.");
+            setErrorOpen(true);
+        }
+    };
+
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSuccessOpen(false);
+        setErrorOpen(false);
+    };
+
+    const handleInputChange = (field, value) => {
+        try {
+            setFieldValue(field, value);
+            updatePersonalData({ [field]: value });
+            setSuccessOpen(true);
+        } catch (error) {
+            console.error("Error updating field:", error);
+            setErrorOpen(true);
+        }
+    };
+
+    const setFieldValue = (field, value) => {
+        switch (field) {
+            case 'fullName':
+                setFullName(value);
+                break;
+            case 'phone':
+                setPhone(value);
+                break;
+            case 'email':
+                setEmail(value);
+                break;
+            case 'month':
+                setMonth(value);
+                break;
+            case 'day':
+                setDay(value);
+                break;
+            case 'year':
+                setYear(value);
+                break;
+            case 'country':
+                setCountry(value);
+                break;
+            case 'password':
+                setPassword(value);
+                break;
+            case 'confirmPassword':
+                setConfirmPassword(value);
+                break;
+            case 'website':
+                setWebsite(value);
+                break;
+            default:
+                break;
         }
     };
 
@@ -132,10 +192,8 @@ export const PersonalInfoAdmin = () => {
                             </InputAdornment>
                         }
                         value={fullName}
-                        onChange={(e) => {
-                            setFullName(e.target.value);
-                            updatePersonalData({ fullName: e.target.value });
-                        }}
+                        onChange={(e) => handleInputChange('fullName', e.target.value)}
+                        onBlur={() => updatePersonalData({ fullName })}
                         placeholder="Full Name"
                         sx={{ borderRadius: "10px", marginBottom: "18px", height: "33px", fontSize: "12px" }}
                     />
@@ -149,10 +207,8 @@ export const PersonalInfoAdmin = () => {
                             </InputAdornment>
                         }
                         value={phone}
-                        onChange={(e) => {
-                            setPhone(e.target.value);
-                            updatePersonalData({ phone: e.target.value });
-                        }}
+                        onChange={(e) => handleInputChange('phone', e.target.value)}
+                        onBlur={() => updatePersonalData({ phone })}
                         placeholder="Mobile Number"
                         sx={{ borderRadius: "10px", marginBottom: "18px", height: "33px", fontSize: "12px" }}
                     />
@@ -165,10 +221,8 @@ export const PersonalInfoAdmin = () => {
                             </InputAdornment>
                         }
                         value={email}
-                        onChange={(e) => {
-                            setEmail(e.target.value);
-                            updatePersonalData({ email: e.target.value });
-                        }}
+                        onChange={(e) => handleInputChange('email', e.target.value)}
+                        onBlur={() => updatePersonalData({ email })}
                         placeholder="Email"
                         sx={{ borderRadius: "10px", marginBottom: "18px", height: "33px", fontSize: "12px" }}
                     />
@@ -182,10 +236,8 @@ export const PersonalInfoAdmin = () => {
                             </InputAdornment>
                         }
                         value={website}
-                        onChange={(e) => {
-                            setWebsite(e.target.value);
-                            updatePersonalData({ website: e.target.value });
-                        }}
+                        onChange={(e) => handleInputChange('website', e.target.value)}
+                        onBlur={() => updatePersonalData({ website })}
                         placeholder="Website"
                         sx={{ borderRadius: "10px", height: "35px", fontSize: "12px", marginBottom: "18px" }}
                     />
@@ -205,10 +257,8 @@ export const PersonalInfoAdmin = () => {
                             <Select
                                 id="outlined-month"
                                 value={month}
-                                onChange={(e) => {
-                                    setMonth(e.target.value);
-                                    updatePersonalData({ month: e.target.value });
-                                }}
+                                onChange={(e) => handleInputChange('month', e.target.value)}
+                                onBlur={() => updatePersonalData({ month })}
                                 displayEmpty
                                 sx={{ borderRadius: "10px", height: "33px", fontSize: "12px", color: "gray", marginRight: "5px" }}
                             >
@@ -228,10 +278,8 @@ export const PersonalInfoAdmin = () => {
                             <Select
                                 id="outlined-day"
                                 value={day}
-                                onChange={(e) => {
-                                    setDay(e.target.value);
-                                    updatePersonalData({ day: e.target.value });
-                                }}
+                                onChange={(e) => handleInputChange('day', e.target.value)}
+                                onBlur={() => updatePersonalData({ day })}
                                 displayEmpty
                                 sx={{ borderRadius: "10px", height: "33px", fontSize: "12px", color: "gray", marginRight: "5px" }}
                             >
@@ -251,10 +299,8 @@ export const PersonalInfoAdmin = () => {
                             <Select
                                 id="outlined-year"
                                 value={year}
-                                onChange={(e) => {
-                                    setYear(e.target.value);
-                                    updatePersonalData({ year: e.target.value });
-                                }}
+                                onChange={(e) => handleInputChange('year', e.target.value)}
+                                onBlur={() => updatePersonalData({ year })}
                                 displayEmpty
                                 sx={{ borderRadius: "10px", height: "33px", fontSize: "12px", color: "gray" }}
                             >
@@ -275,10 +321,8 @@ export const PersonalInfoAdmin = () => {
                     <Select
                         id="outlined-country"
                         value={country}
-                        onChange={(e) => {
-                            setCountry(e.target.value);
-                            updatePersonalData({ country: e.target.value });
-                        }}
+                        onChange={(e) => handleInputChange('country', e.target.value)}
+                        onBlur={() => updatePersonalData({ country })}
                         displayEmpty
                         sx={{ marginBottom: "18px", borderRadius: "10px", height: "33px", fontSize: "12px", color: "gray" }}
                         startAdornment={
@@ -301,10 +345,8 @@ export const PersonalInfoAdmin = () => {
                         id="outlined-password"
                         type={showPassword ? "text" : "password"}
                         value={password}
-                        onChange={(e) => {
-                            setPassword(e.target.value);
-                            updatePersonalData({ password: e.target.value });
-                        }}
+                        onChange={(e) => handleInputChange('password', e.target.value)}
+                        onBlur={() => updatePersonalData({ password })}
                         startAdornment={
                             <InputAdornment position="start">
                                 <LockOutlinedIcon sx={{ fontSize: "20px" }} />
@@ -327,10 +369,8 @@ export const PersonalInfoAdmin = () => {
                         id="outlined-confirm-password"
                         type={showConfirmPassword ? "text" : "password"}
                         value={confirmPassword}
-                        onChange={(e) => {
-                            setConfirmPassword(e.target.value);
-                            updatePersonalData({ confirmPassword: e.target.value });
-                        }}
+                        onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                        onBlur={() => updatePersonalData({ confirmPassword })}
                         startAdornment={
                             <InputAdornment position="start">
                                 <LockOutlinedIcon sx={{ fontSize: "20px" }} />
@@ -348,6 +388,28 @@ export const PersonalInfoAdmin = () => {
                     />
                 </FormControl>
             </Grid>
+
+            <Snackbar
+                open={successOpen}
+                autoHideDuration={3000}
+                onClose={handleCloseSnackbar}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
+                <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+                    Update successful!
+                </Alert>
+            </Snackbar>
+
+            <Snackbar
+                open={errorOpen}
+                autoHideDuration={3000}
+                onClose={handleCloseSnackbar}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
+                <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
+                    Update failed. Please try again.
+                </Alert>
+            </Snackbar>
         </Grid>
     );
 };

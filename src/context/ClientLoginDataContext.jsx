@@ -23,7 +23,7 @@ export const ClientLoginDataProvider = ({ children }) => {
                 // console.log('Fetched Area:', response.data);
             }
         } catch (error) {
-            console.error('Error fetching Area data:', error);
+            // console.error('Error fetching Area data:', error);
         }
     };
     const getClientData = async () => {
@@ -40,7 +40,7 @@ export const ClientLoginDataProvider = ({ children }) => {
                 // console.log('Fetched client:', response.data);
             }
         } catch (error) {
-            console.error('Error fetching client data:', error);
+            // console.error('Error fetching client data:', error);
         }
     };
     //========================================== get Table data 
@@ -60,7 +60,7 @@ export const ClientLoginDataProvider = ({ children }) => {
             }
 
         } catch (error) {
-            console.log("error Table data ", error);
+            // console.log("error Table data ", error);
 
         }
 

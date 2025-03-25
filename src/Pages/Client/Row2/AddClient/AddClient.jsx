@@ -397,7 +397,7 @@ import { PersonalInfoAdmin } from "./PersonalInfoAdmin";
 import { useClientContext } from "../../../../context/ClientContext";
 import { useTranslation } from 'react-i18next';
 export const AddClient = () => {
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const navigate = useNavigate();
   const location = useLocation();
   const { clientData, setClientData, clearClientData } = useClientContext();
@@ -653,7 +653,7 @@ export const AddClient = () => {
               <PersonOutlineOutlinedIcon sx={{ fontSize: "20px", color: "white" }} />
             </IconButton>
             <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>
-              User01
+              {localStorage.getItem("userName")}
             </Typography>
             <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: "#575756" }} />
           </Box>
@@ -675,9 +675,9 @@ export const AddClient = () => {
                   <PersonOutlineOutlinedIcon sx={{ fontSize: "22px" }} />
                 </Avatar>
                 <Box>
-                  <Typography variant="h6" sx={{ fontSize: "14px" }}>User01</Typography>
+                  <Typography variant="h6" sx={{ fontSize: "14px" }}>{localStorage.getItem("userName")}</Typography>
                   <Typography variant="body2" sx={{ fontSize: "12px" }} color="textSecondary">
-                    Mail@mail.com
+                    {localStorage.getItem("userEmail")}
                   </Typography>
                 </Box>
               </Box>

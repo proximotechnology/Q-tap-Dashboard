@@ -146,7 +146,7 @@ export const Pricing = () => {
       .then(response => response.json())
       .then(data => {
         setPricing(data.data);
-        console.log("price data", data);
+        // console.log("price data", data);
       })
       .catch(error => console.error('Error fetching pricing data:', error));
   }, []);

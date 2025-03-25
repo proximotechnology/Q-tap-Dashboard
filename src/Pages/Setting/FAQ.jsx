@@ -62,7 +62,7 @@ export const FAQ = forwardRef((props, ref) => {
     })
     .then(response => response.json())
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       if (data.error) {
         throw new Error(data.error);
       }
