@@ -5,6 +5,7 @@ import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -195,7 +196,7 @@ const SignUp = () => {
 
             <Grid container alignItems="center" sx={{ marginTop: "10px", }}>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
-                    <Grid container alignItems="center" sx={{ color: "grey", marginTop: "5px" }} >
+                    <Grid container alignItems="center" sx={{ color: "grey", marginTop: "5px", marginBottom:"2px" }} >
                         <CalendarMonthOutlinedIcon sx={{ marginRight: 1, fontSize: "15px" }} />
                         <Typography variant="body1" sx={{ fontSize: "11px" }}>{t("dateOfBirth")}</Typography>
                     </Grid>
@@ -303,7 +304,7 @@ const SignUp = () => {
                     sx={{ borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px", color: "gray" }}
                     startAdornment={
                         <InputAdornment position="start">
-                            <span class="icon-map" style={{ fontSize: "14px" }}></span>
+                            <PeopleOutlineIcon style={{fontSize:"18px" }}></PeopleOutlineIcon>
                         </InputAdornment>
                     }
                 >
@@ -379,7 +380,7 @@ const SignUp = () => {
                 />
             </FormControl>
 
-            <FormControlLabel sx={{ display: "flex", justifyContent: "center", width: "90%", marginTop: "10px" }}
+            <FormControlLabel sx={{ display: "flex", justifyContent: "center", width: "90%", marginTop: "20px", padding:"15px 25px 0 25px" }}
                 control={<Checkbox
                     sx={{
                         color: "#c2bbbb",

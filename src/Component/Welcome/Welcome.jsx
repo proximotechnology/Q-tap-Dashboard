@@ -51,7 +51,7 @@ export const Welcome = () => {
         backgroundImage: 'linear-gradient(to right, #E67D00, #222240), url(/images/Qtop1.jpg)',
         backgroundBlendMode: "overlay",
         backgroundSize: "cover",
-        backgroundPosition: "center center",
+        backgroundPosition: "center 38%",
         position: "relative",
         overflow: "hidden",
       }}

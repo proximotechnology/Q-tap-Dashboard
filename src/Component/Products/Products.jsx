@@ -17,15 +17,15 @@ const Divider = styled(Box)({
 export const Products = () => {
     const navigate = useNavigate();
     const [isSelected, setIsSelected] = useState(false);
-    const {t} = useTranslation()
+    const { t } = useTranslation()
     const handleCardClick = () => {
         setIsSelected(!isSelected);
     };
 
     const handleNextClick = () => {
-        if(isSelected){
+        if (isSelected) {
             navigate('/business-info');
-        }else{
+        } else {
             toast.error(t("plSelectProduct"));
         }
     };
@@ -38,26 +38,29 @@ export const Products = () => {
 
             <Box onClick={handleCardClick}
                 sx={{
+                    position: 'relative',
                     width: "110px", height: "200px",
                     backgroundImage: "url(/images/card.jpg)",
                     backgroundSize: "cover",
                     backgroundPosition: "center center",
-                    borderRadius: "10px", margin: "30px", padding: "20px"
+                    borderRadius: "10px", margin: "30px", padding: "20px",
+                    overflow: "hidden"
                 }}>
                 {isSelected && (
                     <DoneIcon
                         sx={{
                             color: "#E57C00",
                             fontSize: "26px",
-                            position:"relative",
+                            position: "relative",
                             top: "-10px",
                             right: "-15px",
-                            float:"right",
+                            float: "right",
                         }}
                     />
                 )}
                 <span class="icon-waiter" style={{ color: "white", fontSize: "30px" }}></span>
                 <Typography sx={{ fontSize: "18px", color: "white" }}>{t("digitalMenu")}</Typography>
+                <span class="icon-waiter" style={{ color: "white", fontSize: "140px", opacity: .1, position: "absolute", top: "58%", left: '38%' }}></span>
             </Box>
 
             <Grid item xs={12}>

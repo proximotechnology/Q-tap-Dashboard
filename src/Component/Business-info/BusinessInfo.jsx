@@ -12,6 +12,8 @@ import { ArrowForwardIos, ArrowBackIos } from '@mui/icons-material';
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import { useBusinessContext } from '../../context/BusinessContext';
 import { useTranslation } from 'react-i18next';
+import GridViewIcon from '@mui/icons-material/GridView';
+import ListIcon from '@mui/icons-material/List';
 
 const daysOfWeek = ['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr'];
 
@@ -199,13 +201,13 @@ export const BusinessInfo = () => {
                                         </InputAdornment>
                                     ),
                                     sx: {
-                                        height: "35px",
+                                        height: "40px",
                                         borderRadius: "10px",
                                         fontSize: "10px",
                                     }
                                 }}
                                 sx={{
-                                    marginBottom: "10px",
+                                    marginBottom: "15px",
                                     marginTop: "10px"
                                 }}
                             />
@@ -221,13 +223,14 @@ export const BusinessInfo = () => {
                                         </InputAdornment>
                                     ),
                                     sx: {
-                                        height: "35px",
+                                        height: "40px",
                                         borderRadius: "10px",
                                         fontSize: "10px",
                                     }
                                 }}
                                 sx={{
-                                    marginBottom: "10px",
+                                    marginBottom: "15px",
+                                    
                                 }}
                             />
                             <TextField
@@ -242,13 +245,13 @@ export const BusinessInfo = () => {
                                         </InputAdornment>
                                     ),
                                     sx: {
-                                        height: "35px",
+                                        height: "40px",
                                         borderRadius: "10px",
                                         fontSize: "10px",
                                     }
                                 }}
                                 sx={{
-                                    marginBottom: "10px",
+                                    marginBottom: "15px",
                                 }}
                             />
                             <FormControl variant="outlined" fullWidth sx={{ marginBottom: '10px' }} >
@@ -257,7 +260,7 @@ export const BusinessInfo = () => {
                                     value={currency}
                                     onChange={(e) => setCurrency(e.target.value)}
                                     displayEmpty
-                                    sx={{ borderRadius: '10px', height: '35px', fontSize: "10px", color: "gray" }}
+                                    sx={{ borderRadius: '10px', height: '40px',marginBottom:"10px", fontSize: "10px", color: "gray" }}
                                     startAdornment={
                                         <InputAdornment position="start">
                                             <img src="/assets/revenue.svg" alt="icon"
@@ -268,7 +271,7 @@ export const BusinessInfo = () => {
                                 >
                                     <MenuItem value="" disabled>
                                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                        {t("currency")}
+                                            {t("currency")}
                                         </Box>
                                     </MenuItem>
                                     <MenuItem value="US" sx={{ fontSize: "12px", color: "gray" }}>United States </MenuItem>
@@ -283,7 +286,7 @@ export const BusinessInfo = () => {
                                     value={format}
                                     onChange={(e) => setFormat(e.target.value)}
                                     displayEmpty
-                                    sx={{ borderRadius: '10px', height: '35px', fontSize: "10px", color: "gray" }}
+                                    sx={{ borderRadius: '10px', height: '40px',marginBottom:"10px", fontSize: "10px", color: "gray" }}
                                     startAdornment={
                                         <InputAdornment position="start">
                                             <span className="icon-briefcase" style={{ fontSize: "18px" }} ></span>
@@ -345,7 +348,7 @@ export const BusinessInfo = () => {
                                                         sx={{
                                                             backgroundColor: '#222240',
                                                             borderRadius: '20px', width: "100px", height: "30px",
-
+                                                            padding: "0 3px ",
                                                         }}>
                                                         <IconButton onClick={() => handleDayToggle('prev')} sx={{ color: '#ef7d00' }}>
                                                             <ArrowBackIos sx={{ fontSize: "11px" }} />
@@ -360,7 +363,7 @@ export const BusinessInfo = () => {
                                                     </Box>
                                                 </Grid> {/* اليوم الحالي */}
 
-                                                <Box display={"flex"}>
+                                                <Box display={"flex"} sx={{ margin: "3px 0 3px 10px" }}>
                                                     <Grid item>
                                                         <Typography variant='body1' sx={{ fontSize: '11px', color: "gray", mr: 1 }}>{t("from")}</Typography>
                                                     </Grid>
@@ -382,7 +385,7 @@ export const BusinessInfo = () => {
                                                     </Grid>
                                                 </Box>{/* from */}
 
-                                                <Box display={"flex"} marginTop={"3px"} marginLeft={"10px"}>
+                                                <Box display={"flex"} marginTop={"3px"} marginLeft={"22px"}>
                                                     <Grid item>
                                                         <Typography variant='body1' sx={{ fontSize: '11px', color: "gray", mr: 1 }}>{t("to")}</Typography>
                                                     </Grid>
@@ -426,14 +429,14 @@ export const BusinessInfo = () => {
                                         </InputAdornment>
                                     ),
                                     sx: {
-                                        height: "35px",
+                                        height: "40px",
                                         borderRadius: "10px",
                                         fontSize: "10px"
                                     }
                                 }}
                             />
 
-                            <Box sx={{ marginTop: "10px", marginBottom: "10px" }}>
+                            <Box sx={{ marginTop: "15px", marginBottom: "10px" }}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12} md={6}>
                                         <FormControl variant="outlined" fullWidth >
@@ -442,7 +445,7 @@ export const BusinessInfo = () => {
                                                 value={country}
                                                 onChange={(e) => setCountry(e.target.value)}
                                                 displayEmpty
-                                                sx={{ borderRadius: '10px', height: '35px', fontSize: "10px", color: "gray" }}
+                                                sx={{ borderRadius: '10px', height: '40px',marginBottom:"10px", fontSize: "10px", color: "gray" }}
                                                 startAdornment={
                                                     <InputAdornment position="start">
                                                         <PinDropOutlinedIcon sx={{ fontSize: "18px" }} />
@@ -466,7 +469,7 @@ export const BusinessInfo = () => {
                                                 value={city}
                                                 onChange={(e) => setCity(e.target.value)}
                                                 displayEmpty
-                                                sx={{ borderRadius: '10px', height: '35px', fontSize: "10px", color: "gray" }}
+                                                sx={{ borderRadius: '10px', height: '40px',marginBottom:"10px", fontSize: "10px", color: "gray" }}
                                                 startAdornment={
                                                     <InputAdornment position="start">
                                                         <PinDropOutlinedIcon sx={{ fontSize: "18px" }} />
@@ -504,82 +507,112 @@ export const BusinessInfo = () => {
                                 {t("pinYourLocation")}
                             </Button>
 
-                            <Box sx={{ marginTop: "6px", display: 'flex', justifyContent: 'space-between', width: '100%' }} >
-                                <Grid container spacing={1}>
-                                    <Typography variant="h3"
-                                        sx={{ fontSize: "12px", fontWeight: "500", color: "gray" }}>
+
+                            <Box sx={{ marginTop: "6px", display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                                {/* Default Mode Section */}
+                                <Grid container direction="column" spacing={1}>
+                                    <Typography
+                                        variant="body2"
+                                        sx={{ fontSize: "14px", fontWeight: "500", color: "#AAAAAA", textAlign: "start", margin: "0 0 5px 5px" }}
+                                    >
                                         {t("defaultMode")}
                                     </Typography>
-
                                     <ToggleButtonGroup
                                         value={mode}
                                         exclusive
                                         onChange={handleModeChange}
+                                        sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "space-around", marginLeft: "-14px" }}
                                     >
                                         <ToggleButton
                                             value="light"
                                             sx={{
-                                                padding: "4px 10px",
-                                                backgroundColor: mode === "light" ? "#E57C00" : "inherit",
-                                                color: mode === "light" ? "#FFFFFF" : "inherit"
+                                                padding: "10px",
+                                                backgroundColor: mode === "light" ? "#E57C00" : "transparent",
+                                                border: "1px solid #E57C00",
+                                                borderRadius: "6px",
+                                                marginRight: "8px",
                                             }}
                                         >
-                                            <WbSunnyIcon sx={{ fontSize: "30px", color: mode === "light" ? "#E57C00" : "#AAAAAA" }} />
+                                            <WbSunnyIcon
+                                                sx={{ fontSize: "35px", color: mode === "light" ? "#E57C00" : "#AAAAAA" }}
+                                            />
                                         </ToggleButton>
-
                                         <ToggleButton
                                             value="dark"
                                             sx={{
-                                                padding: "4px 10px",
-                                                backgroundColor: mode === "dark" ? "#E57C00" : "inherit",
-                                                color: mode === "dark" ? "#FFFFFF" : "inherit"
+                                                padding: "10px",
+                                                backgroundColor: mode === "dark" ? "#E57C00" : "transparent",
+                                                border: "1px solid #E57C00",
+                                                borderLeft: "3px solid red",
+                                                borderRadius: "6px",
                                             }}
                                         >
-                                            <NightlightIcon sx={{ fontSize: "30px", color: mode === "dark" ? "#E57C00" : "#AAAAAA" }} />
+                                            <NightlightIcon
+                                                sx={{ fontSize: "35px", color: mode === "dark" ? "#E57C00" : "#AAAAAA" }}
+                                            />
                                         </ToggleButton>
                                     </ToggleButtonGroup>
                                 </Grid>
 
-                                <Divider orientation="vertical" flexItem
-                                    sx={{ height: "56px", width: "2px", margin: "10px 50px 0px 0px" }} />
+                                {/* Divider */}
+                                <Divider
+                                    orientation="vertical"
+                                    flexItem
+                                    sx={{
+                                        height: "40px",
+                                        width: "2px",
+                                        backgroundColor: "#E57C00",
+                                        margin: "auto 20px",
+                                    }}
+                                />
 
-                                <Grid container spacing={1}>
-                                    <Typography variant="h6"
-                                        sx={{ fontSize: "12px", fontWeight: "500", color: "gray" }} >
+                                {/* Menu Design Section */}
+                                <Grid container direction="column" spacing={0.5}>
+                                    <Typography
+                                        variant="body2"
+                                        sx={{ fontSize: "14px", fontWeight: "500", color: "#AAAAAA", textAlign: "start", margin: "0 0 5px 5px" }}
+                                    >
                                         {t("menus.design")}
                                     </Typography>
-
                                     <ToggleButtonGroup
                                         value={design}
                                         exclusive
                                         onChange={handleDesignChange}
+                                        sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "space-around", marginLeft: "-14px" }}
                                     >
                                         <ToggleButton
                                             value="grid"
                                             sx={{
-                                                padding: "4px 10px",
-                                                backgroundColor: design === "grid" ? "#E57C00" : "inherit",
-                                                color: design === "grid" ? "#E57C00" : "inherit"
+                                                padding: "10px",
+                                                backgroundColor: design === "grid" ? "#E57C00" : "transparent",
+                                                border: "1px solid #E57C00",
+                                                borderRadius: "6px",
+                                                marginRight: "8px",
                                             }}
                                         >
-                                            <span className=" icon-grid"
-                                                style={{ fontSize: "25px", color: design === "grid" ? "#E57C00" : "#AAAAAA" }} />
+                                            <GridViewIcon
+                                                sx={{ fontSize: "35px", color: design === "grid" ? "#E57C00" : "#AAAAAA" }}
+                                            />
                                         </ToggleButton>
                                         <ToggleButton
                                             value="list"
                                             sx={{
-                                                padding: "4px 10px",
-                                                backgroundColor: design === "list" ? "#E57C00" : "inherit",
-                                                color: design === "list" ? "##E57C00" : "inherit"
+                                                padding: "10px",
+                                                backgroundColor: design === "list" ? "#E57C00" : "transparent",
+                                                border: "1px solid #E57C00",
+                                                borderRadius: "6px",
+                                                marginRight: "8px",
                                             }}
                                         >
-                                            <span className="icon-list"
-                                                style={{ fontSize: "25px", color: design === "list" ? "#E57C00" : "#AAAAAA" }} />
+                                            <ListIcon
+                                                sx={{ fontSize: "35px", color: design === "list" ? "#E57C00" : "#AAAAAA" }}
+                                            />
                                         </ToggleButton>
                                     </ToggleButtonGroup>
                                 </Grid>
+                            </Box>
 
-                            </Box>  {/*  Menu Design */}
+
 
                             <Box sx={{ marginTop: "20px" }}>
                                 <Box sx={{
@@ -595,7 +628,7 @@ export const BusinessInfo = () => {
                                                 defaultChecked={activeWaiter === 'active' ? true : false}
                                                 onChange={() => setActiveWaiter(activeWaiter === 'active' ? 'inactive' : 'active')}
                                                 sx={{
-                                                    '& .MuiSvgIcon-root': { fontSize: 20 },
+                                                    '& .MuiSvgIcon-root': { fontSize: 22 },
                                                     color: "gray",
                                                     '&.Mui-checked': {
                                                         color: "#ef7d00",
@@ -619,15 +652,15 @@ export const BusinessInfo = () => {
                                             display: 'flex',
                                             alignItems: "center",
                                             '& .MuiTypography-root': {
-                                                fontSize: "14px",
+                                                fontSize: "15px",
                                                 color: "gray"
                                             }
                                         }}
                                     />
                                 </Box>
 
-                                <Box sx={{ margin: "10px 0px" }}>
-                                    <Typography variant="body1" sx={{ display: "flex", fontSize: "13px", color: "gray" }}  >
+                                <Box sx={{ margin: "18px 0px" }}>
+                                    <Typography variant="body1" sx={{ display: "flex", fontSize: "14px", color: "gray" }}  >
                                         {t("paymentMethod")}</Typography>
 
                                     <Box display="flex" justifyContent="left"  >
@@ -637,7 +670,7 @@ export const BusinessInfo = () => {
                                                     onChange={() => setPaymentMethods(paymentMethods.includes("cash") ? paymentMethods.filter(method => method !== "cash") : [...paymentMethods, "cash"])}
                                                     defaultChecked={paymentMethods.includes("cash")}
                                                     sx={{
-                                                        '& .MuiSvgIcon-root': { fontSize: 18 },
+                                                        '& .MuiSvgIcon-root': { fontSize: 22 },
                                                         color: "gray",
                                                         '&.Mui-checked': {
                                                             color: "#ef7d00",
@@ -645,10 +678,19 @@ export const BusinessInfo = () => {
                                                     }}
                                                 />
                                             }
-                                            label={t("cash")}
+                                            label={
+                                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                                    <img
+                                                        src="/assets/cash.svg"
+                                                        alt="cash icon"
+                                                        style={{ width: '15px', height: '15px', marginRight: '4px', marginLeft: '-5px' }}
+                                                    />
+                                                    <span>{t("cash")}</span>
+                                                </Box>
+                                            }
                                             sx={{
                                                 '& .MuiTypography-root': {
-                                                    fontSize: "11px", color: "gray"
+                                                    fontSize: "13px", color: "gray"
                                                 }
                                             }}
                                         />
@@ -658,7 +700,7 @@ export const BusinessInfo = () => {
                                                     onChange={() => setPaymentMethods(paymentMethods.includes("wallet") ? paymentMethods.filter(method => method !== "wallet") : [...paymentMethods, "wallet"])}
                                                     defaultChecked={paymentMethods.includes("wallet")}
                                                     sx={{
-                                                        '& .MuiSvgIcon-root': { fontSize: 18 },
+                                                        '& .MuiSvgIcon-root': { fontSize: 22 },
                                                         color: "gray",
                                                         '&.Mui-checked': {
                                                             color: "#ef7d00",
@@ -667,8 +709,8 @@ export const BusinessInfo = () => {
                                                 />
                                             }
                                             label={
-                                                <span style={{ display: 'flex', fontSize: "11px", alignItems: 'center' }}>
-                                                    <span className="icon-wallet" style={{ marginRight: '2px', fontSize: "15px" }} ><span className="path1"></span><span className="path2"></span><span className="path3"></span><span className="path4"></span><span className="path5"></span><span className="path6"></span><span className="path7"></span><span className="path8"></span><span className="path9"></span><span className="path10"></span><span className="path11"></span><span className="path12"></span></span>
+                                                <span style={{ display: 'flex', fontSize: "13px", alignItems: 'center' }}>
+                                                    <span className="icon-wallet" style={{ marginRight: '2px', fontSize: "20px" }} ><span className="path1"></span><span className="path2"></span><span className="path3"></span><span className="path4"></span><span className="path5"></span><span className="path6"></span><span className="path7"></span><span className="path8"></span><span className="path9"></span><span className="path10"></span><span className="path11"></span><span className="path12"></span></span>
                                                     {t("digitalWaller")}
                                                 </span>
                                             }
@@ -684,7 +726,7 @@ export const BusinessInfo = () => {
                                                     onChange={() => setPaymentMethods(paymentMethods.includes("card") ? paymentMethods.filter(method => method !== "card") : [...paymentMethods, "card"])}
                                                     defaultChecked={paymentMethods.includes("card")}
                                                     sx={{
-                                                        '& .MuiSvgIcon-root': { fontSize: 18 },
+                                                        '& .MuiSvgIcon-root': { fontSize: 22 },
                                                         color: "gray",
                                                         '&.Mui-checked': {
                                                             color: "#ef7d00",
@@ -692,10 +734,19 @@ export const BusinessInfo = () => {
                                                     }}
                                                 />
                                             }
-                                            label={t("card")}
+                                            label={
+                                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                                    <img
+                                                        src="/assets/cardColor.svg"
+                                                        alt="card icon"
+                                                        style={{ width: '15px', height: '15px', marginRight: '4px', marginLeft: '-5px' }}
+                                                    />
+                                                    <span>{t("card")}</span>
+                                                </Box>
+                                            }
                                             sx={{
                                                 '& .MuiTypography-root': {
-                                                    fontSize: "11px", color: "gray",
+                                                    fontSize: "13px", color: "gray",
                                                 }
                                             }}
                                         />
@@ -703,7 +754,7 @@ export const BusinessInfo = () => {
 
                                 </Box>
                                 <Box >
-                                    <Typography variant="body1" sx={{ display: "flex", fontSize: "13px", color: "gray" }}  >
+                                    <Typography variant="body1" sx={{ display: "flex", fontSize: "14px", color: "gray" }}  >
                                         {t("paymentTime")}  </Typography>
 
                                     <Box display="flex" justifyContent="left"  >
@@ -724,7 +775,7 @@ export const BusinessInfo = () => {
                                             label={t("beforeServing")}
                                             sx={{
                                                 '& .MuiTypography-root': {
-                                                    fontSize: "11px", color: "gray"
+                                                    fontSize: "13px", color: "gray"
                                                 }
                                             }}
                                         />
@@ -745,7 +796,7 @@ export const BusinessInfo = () => {
                                             label={t("afterServing")}
                                             sx={{
                                                 '& .MuiTypography-root': {
-                                                    fontSize: "11px", color: "gray"
+                                                    fontSize: "13px", color: "gray"
                                                 }
                                             }}
                                         />
