@@ -1,9 +1,10 @@
 import React from 'react';
 import { Card, CardContent, Typography, Box } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 
 const OrderCard = ({ order, isSelected, onClick, isAccepted, isPayment, isServed, isDone, isClose }) => {
-
+    const {t} = useTranslation()
     if (!order || !order.id) {
         return null;
     }
@@ -35,7 +36,7 @@ const OrderCard = ({ order, isSelected, onClick, isAccepted, isPayment, isServed
                         color: "white",
                     }}
                 >
-                    ID #{order.id}
+                   {t("id")} #{order.id}
                 </Typography>
 
                 {isAccepted ? (
@@ -43,7 +44,7 @@ const OrderCard = ({ order, isSelected, onClick, isAccepted, isPayment, isServed
 
                         <Box display="flex" justifyContent="space-between">
                             <Typography color="textSecondary" fontSize="12px" padding="10px 20px 5px 20px">
-                                Chef: <span>{order.chef}</span>
+                                {t("chef")}: <span>{order.chef}</span>
                             </Typography>
 
                             <Typography color={isPayment ? "green" : "red"}
@@ -55,13 +56,13 @@ const OrderCard = ({ order, isSelected, onClick, isAccepted, isPayment, isServed
 
                         <Box display="flex" justifyContent="space-between">
                             <Typography color="textSecondary" fontSize="12px" padding="0px 0px 5px 20px">
-                                Pr Time: <span>{order.preparingTime}</span> mins
+                                {t("prTime")}: <span>{order.preparingTime}</span> {t("min")}
                             </Typography>
                             <Typography color="textSecondary" fontSize="12px" padding="0px 10px 5px 10px">
                                 {isClose ?
                                     <Box component="span" sx={{ display: "inline-flex", alignItems: "center", color: "black" }}>
                                         <span class="icon-double-check" style={{ fontSize: "20px", marginRight: "6px" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
-                                        Done
+                                        {t("done")}
                                     </Box>
                                     :
                                     isServed ? (
@@ -69,12 +70,12 @@ const OrderCard = ({ order, isSelected, onClick, isAccepted, isPayment, isServed
 
                                             <Box component="span" sx={{ display: "inline-flex", alignItems: "center", color: "black" }}>
                                                 <span class="icon-waiter" style={{ fontSize: "16px", color: "#E57C00", marginRight: "6px" }}></span>
-                                                Served
+                                                {t("served")}
                                             </Box>
                                             : (
                                                 <Box component="span" sx={{ display: "inline-flex", alignItems: "center", color: "black" }}>
                                                     <span className="icon-chef" style={{ fontSize: "16px", marginRight: "4px" }}><span className="path1"></span><span className="path2"></span><span className="path3"></span></span>
-                                                    Prepared
+                                                    {t("prepared")}
                                                 </Box>
                                             )
                                     ) : " "
@@ -83,11 +84,11 @@ const OrderCard = ({ order, isSelected, onClick, isAccepted, isPayment, isServed
                         </Box>
 
                         <Typography color="textSecondary" fontSize="12px" padding="0px 20px 5px 20px">
-                            Dine In: <span style={{ color: '#ef7d00' }}>{order.table}</span>
+                           {t("Dine In")}: <span style={{ color: '#ef7d00' }}>{order.table}</span>
                         </Typography>
                         <hr width="90%" />
                         <Typography variant="body2" fontSize="12px" padding="0px 20px">
-                            Total: <span style={{ color: '#ef7d00' }}>{order.total.toFixed(2)}</span>
+                            {t("total")} <span style={{ color: '#ef7d00' }}>{order.total.toFixed(2)}</span>
                             <span style={{ fontSize: "9px", color: "gray" }}>EGP</span>
                         </Typography>
                     </>
@@ -100,11 +101,11 @@ const OrderCard = ({ order, isSelected, onClick, isAccepted, isPayment, isServed
                             {order.date}
                         </Typography>
                         <Typography color="textSecondary" fontSize="12px" padding="0px 20px 10px 20px">
-                            Dine in, <span style={{ color: '#ef7d00' }}>{order.table}</span>
+                            {t("Dine In")}, <span style={{ color: '#ef7d00' }}>{order.table}</span>
                         </Typography>
                         <hr style={{ width: "80%" }} />
                         <Typography variant="body2" fontSize="12px" padding="0px 20px">
-                            Total: {order.total.toFixed(2)}
+                            {t("total")} {order.total.toFixed(2)}
                             <span style={{ fontSize: "9px", color: "gray" }}>EGP</span>
                         </Typography>
                     </>

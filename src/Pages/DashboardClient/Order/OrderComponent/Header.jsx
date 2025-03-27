@@ -216,7 +216,7 @@ const Header = () => {
                     flexGrow: 1, fontSize: "20px",
                     textAlign: 'left', color: 'white', marginLeft: "100px"
                 }}>
-                    Live Orders
+                   {t("liveOrders")}
                 </Typography>
             </AppBar>
         </ImageContainer>

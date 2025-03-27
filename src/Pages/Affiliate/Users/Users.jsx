@@ -342,7 +342,7 @@ export const Users = () => {
                       }}
                     >
                       <span style={{ color: user.status === "active" ? "#ef7d00" : "#575756", fontWeight: "bolder", fontSize: "20px", marginRight: "3px" }}>&#8226; </span>
-                      {user.status.charAt(0).toUpperCase() + user.status.slice(1)}
+                      {t(user.status.charAt(0).toUpperCase() + user.status.slice(1))}
                     </span>
                   </TableCell>
 

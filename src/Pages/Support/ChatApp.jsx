@@ -830,8 +830,10 @@ import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import AddLocationAltOutlinedIcon from "@mui/icons-material/AddLocationAltOutlined";
 import "./chat.css";
+import { useTranslation } from "react-i18next";
 
 const ChatApp = () => {
+  const {t} = useTranslation()
   const [selectedChat, setSelectedChat] = useState(null);
   const [messageInput, setMessageInput] = useState("");
   const [users, setUsers] = useState([]);
@@ -1219,7 +1221,7 @@ const ChatApp = () => {
         variant="body2"
         sx={{ fontSize: "12px", padding: "20px", color: "#363535fa" }}
       >
-        Live Chat
+        {t("liveChat")}
       </Typography>
 
       <Grid container>
@@ -1258,7 +1260,7 @@ const ChatApp = () => {
                   },
                 }}
               >
-                Loading chats...
+                {t("loadingChat")}
               </Typography>
             </Box>
           ) : (
@@ -1408,7 +1410,7 @@ const ChatApp = () => {
                   sx={{ color: "#E57C00" }}
                 />
                 <Typography sx={{ fontSize: "14px", color: "#666" }}>
-                  Loading chat...
+                  {t("loadingChat")}
                 </Typography>
               </Box>
             ) : (
@@ -1491,7 +1493,7 @@ const ChatApp = () => {
                     fullWidth
                     value={messageInput}
                     onChange={(e) => setMessageInput(e.target.value)}
-                    placeholder="Type your message"
+                    placeholder={t("typeYourMessage")}
                     InputProps={{
                       sx: {
                         height: "30px",
@@ -1533,7 +1535,7 @@ const ChatApp = () => {
                 variant="body1"
                 sx={{ fontSize: "16px", color: "gray" }}
               >
-                Select a chat to start messaging.
+                {t("selectChatToStartMessage")}
               </Typography>
             </Box>
           )}
@@ -1555,7 +1557,7 @@ const ChatApp = () => {
             />
             <Box>
               <Typography sx={{ fontSize: "10px", color: "#575756" }}>
-                Name:
+               {t("name")}:
               </Typography>
               <Typography sx={{ fontSize: "10px", color: "gray" }}>
                 {selectedChat ? selectedChat.name : "Name"}
@@ -1568,7 +1570,7 @@ const ChatApp = () => {
             />
             <Box>
               <Typography sx={{ fontSize: "10px", color: "#575756" }}>
-                Mobile:
+                {t("mobileNumber")}:
               </Typography>
               <Typography sx={{ fontSize: "10px", color: "gray" }}>
                 {selectedChat ? selectedChat.phone : "Mobile"}
@@ -1579,7 +1581,7 @@ const ChatApp = () => {
             <MailOutlineIcon sx={{ fontSize: 15, marginRight: "10px" }} />
             <Box>
               <Typography sx={{ fontSize: "10px", color: "#575756" }}>
-                Email:
+                {t("email")}:
               </Typography>
               <Typography sx={{ fontSize: "10px", color: "gray" }}>
                 {selectedChat ? selectedChat.email : "Email"}
@@ -1592,7 +1594,7 @@ const ChatApp = () => {
             />
             <Box>
               <Typography sx={{ fontSize: "10px", color: "#575756" }}>
-                Address:
+                {t("address")}:
               </Typography>
               <Typography sx={{ fontSize: "10px", color: "gray" }}>
                 {selectedChat ? selectedChat.address : "Address"}

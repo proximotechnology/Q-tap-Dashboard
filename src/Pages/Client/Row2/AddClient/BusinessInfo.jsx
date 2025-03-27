@@ -180,7 +180,7 @@ import { useTranslation } from "react-i18next";
                 }}
               >
                 <StorefrontOutlinedIcon sx={{ marginRight: "5px", fontSize: "20px" }} />
-                branch {i + 1}
+                {t("branch")} {i + 1}
               </Button>
             ))}
           </Box>

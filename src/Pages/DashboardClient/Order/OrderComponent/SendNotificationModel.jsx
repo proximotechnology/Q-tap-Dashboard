@@ -2,15 +2,16 @@ import { Button, Divider, Modal, TextField, Typography } from '@mui/material'
 import { Box } from '@mui/system';
 import React from 'react'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { useTranslation } from 'react-i18next';
 export const SendNotificationModel = ({ open, handleClose }) => {
-
+  const {t} = useTranslation()
   return (
     <Modal open={open} onClose={handleClose}>
 
       <Box style={{ width: 350, margin: 'auto', marginTop: 200, padding: 20, backgroundColor: 'white', borderRadius: "20px 0px 20px 20px" }}>
 
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography variant="h6" fontSize={"15px"} color={"black"}>Send Notification</Typography>
+          <Typography variant="h6" fontSize={"15px"} color={"black"}>{t("sendNoti")}</Typography>
           <Box
             sx={{ fontSize: "12px", cursor: "pointer" }}
             onClick={handleClose}
@@ -24,7 +25,7 @@ export const SendNotificationModel = ({ open, handleClose }) => {
 
         <TextField
           fullWidth
-          label="Title (En)"
+          label={t("titleEn")}
           variant="outlined"
           sx={{
             marginBottom: 2,
@@ -53,7 +54,7 @@ export const SendNotificationModel = ({ open, handleClose }) => {
           fullWidth
           multiline
           rows={6}
-          placeholder="Aa"
+          placeholder={t("aa")}
           variant="outlined"
           sx={{ borderRadius: "20px" }}
           InputProps={{
@@ -78,7 +79,7 @@ export const SendNotificationModel = ({ open, handleClose }) => {
             }}
             endIcon={<ArrowForwardIcon sx={{ color: "orange" }} />}
           >
-            Send
+            {t("send")}
           </Button>
         </Box>
       </Box>

@@ -3,6 +3,7 @@ import { Box, Typography, Divider, TextField, Paper, Button } from '@mui/materia
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 const PaymentGatewayForm = forwardRef((props, ref) => {
     const [apiKey, setApiKey] = useState('');
@@ -59,7 +60,7 @@ const PaymentGatewayForm = forwardRef((props, ref) => {
     useImperativeHandle(ref, () => ({
         savePayment: handleSave,
     }));
-
+    const {t} = useTranslation()
     return (
         <Paper elevation={3} style={{ padding: '20px 30px', borderRadius: "10px", marginTop: '16px' }}>
             <Box
@@ -77,7 +78,7 @@ const PaymentGatewayForm = forwardRef((props, ref) => {
                         margin: "10px 0px 15px 0px"
                     }}
                 >
-                    Payment Gateway
+                    {t("paymentGateway")}
                 </Typography>
 
                 <Divider

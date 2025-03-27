@@ -359,7 +359,7 @@ export const PaymentInfo = ({
       case "D.Wallet":
         return (
           <>
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>Name</Typography>
+            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("name")}</Typography>
             <TextField
               fullWidth
               variant="outlined"
@@ -369,7 +369,7 @@ export const PaymentInfo = ({
               onChange={(e) => setBankName(e.target.value)}
               error={!!errors.bankName}
             />
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>Wallet No.</Typography>
+            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("walletNo")}</Typography>
             <TextField
               fullWidth
               variant="outlined"
@@ -379,7 +379,7 @@ export const PaymentInfo = ({
               onChange={(e) => setAccountNumber(e.target.value)}
               error={!!errors.accountNumber}
             />
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>Courier</Typography>
+            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("courier")}</Typography>
             <TextField
               select
               fullWidth
@@ -396,7 +396,7 @@ export const PaymentInfo = ({
       case "Card":
         return (
           <>
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>Name</Typography>
+            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("name")}</Typography>
             <TextField
               fullWidth
               variant="outlined"
@@ -406,7 +406,7 @@ export const PaymentInfo = ({
               onChange={(e) => setBankName(e.target.value)}
               error={!!errors.bankName}
             />
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>Card No.</Typography>
+            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("cardNo")}</Typography>
             <TextField
               fullWidth
               variant="outlined"
@@ -416,7 +416,7 @@ export const PaymentInfo = ({
               onChange={(e) => setAccountNumber(e.target.value)}
               error={!!errors.accountNumber}
             />
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>Bank</Typography>
+            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("Bank")}</Typography>
             <TextField
               select
               fullWidth
@@ -428,7 +428,7 @@ export const PaymentInfo = ({
               <Divider sx={{ width: "90%", marginLeft: "10px" }} />
               <MenuItem value="fab" sx={{ fontSize: "11px", color: "gray", padding: "0px 20px" }}>FAB</MenuItem>
             </TextField>
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray", marginTop: "8px" }}>Address</Typography>
+            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray", marginTop: "8px" }}>{t("address")}</Typography>
             <TextField
               fullWidth
               variant="outlined"

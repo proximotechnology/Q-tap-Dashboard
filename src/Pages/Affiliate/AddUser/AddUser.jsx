@@ -465,7 +465,7 @@ import { useTranslation } from 'react-i18next';
 export const AddUsers = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { t } = useTranslation();
+  const { t , i18n} = useTranslation();
   const user = location.state?.user; // Get user data from navigation state
 
   // Personal Info States
@@ -511,6 +511,7 @@ export const AddUsers = () => {
   const handleLanguageClose = (language) => {
     setAnchorElLanguage(null);
     setSelectedLanguage(language);
+    i18n.changeLanguage(language)
   };
 
   const handlePrint = () => {
@@ -828,7 +829,7 @@ export const AddUsers = () => {
           {loading ? (
             <CircularProgress size={20} color="inherit" />
           ) : (
-            user ? '✔ Update' : '✔ Save'
+            user ? '✔ '+t("update") : '✔ '+t("save")
           )}
         </Button>
       </Grid>

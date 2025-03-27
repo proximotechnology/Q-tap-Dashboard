@@ -69,7 +69,7 @@ export const FeedbackAdmin = () => {
             }
         });
         getFeedbackData();
-        toast.success('Feedback deleted successfully');
+        toast.success(t("feedbackDeleteSucc"));
     };
 
 
@@ -215,7 +215,7 @@ export const FeedbackAdmin = () => {
                                                         backgroundColor: row.publish === "yes" || row.publish === "Yes" ? '#5A5A5A' : '#1A1A33',
                                                     }
                                                 }} >
-                                                {row.publish === "yes" || row.publish === "Yes" ? "Unpublish" : "Publish"}
+                                                {row.publish === "yes" || row.publish === "Yes" ? t("unpublish") : t("publish")}
 
                                                 <span>
                                                     {row.publish === "yes" || row.publish === "Yes" ? (

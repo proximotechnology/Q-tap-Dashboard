@@ -48,7 +48,7 @@ export const Save = () => {
   const [tableCount, setTableCount] = useState('');
   const [mode, setMode] = useState('light');
   const [design, setDesign] = useState('grid');
-  const {t} = useTranslation()
+  const {t,i18n} = useTranslation()
 
   const [workingHours, setWorkingHours] = useState({
     selectedDays: ['Sa', 'Su'],
@@ -272,7 +272,8 @@ export const Save = () => {
         navigate('/welcome');
       } else {
         console.error('API Error Response:', responseData);
-        toast.error(responseData.message || t("errorWhileSavingData"));
+        toast.error( t("errorWhileSavingData"));
+        // toast.error(responseData.message || t("errorWhileSavingData"));
       }
     } catch (error) {
       console.error('Network Error:', error);
@@ -286,6 +287,7 @@ export const Save = () => {
   };
 
   const handleLanguageClose = (language) => {
+    i18n.changeLanguage(language)
     setAnchorElLanguage(null);
     setSelectedLanguage(language);
   };

@@ -354,7 +354,7 @@ export const BusinessInfo = () => {
                                                             <ArrowBackIos sx={{ fontSize: "11px" }} />
                                                         </IconButton>
                                                         <Typography sx={{ width: "60px", textTransform: "capitalize", color: 'white', fontSize: "10px" }}>
-                                                            {currentDay}
+                                                            {t(currentDay)}
                                                         </Typography>
 
                                                         <IconButton onClick={() => handleDayToggle('next')} sx={{ color: '#ef7d00' }}>

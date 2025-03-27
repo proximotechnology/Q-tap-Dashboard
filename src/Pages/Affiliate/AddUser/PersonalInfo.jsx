@@ -408,7 +408,7 @@ export const PersonalInfo = ({
 
       <Grid item xs={12} md={6}>
         <Typography variant="body2" sx={{ fontSize: "12px" }} color="#575756" gutterBottom>
-          Personal Info...........
+          {t("personalInfo")}...........
         </Typography>
         <Divider sx={{ width: "30%", borderBottom: "4px solid #ef7d00", marginBottom: "18px" }} />
 
@@ -465,7 +465,7 @@ export const PersonalInfo = ({
                 sx={{ borderRadius: '6px', height: '33px', fontSize: "10px", color: "gray", marginRight: "5px" }}
                 error={!!errors.birthDate}
               >
-                <MenuItem value="" disabled>{t(month)}</MenuItem>
+                <MenuItem value="" disabled>{t("month")}</MenuItem>
                 {["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"].map(m => (
                   <MenuItem key={m} value={m} sx={{ fontSize: "10px", color: "gray" }}>{m}</MenuItem>
                 ))}
@@ -517,7 +517,7 @@ export const PersonalInfo = ({
             startAdornment={<InputAdornment position="start"><span className="icon-location-pin" style={{ fontSize: "16px" }} /></InputAdornment>}
             error={!!errors.country}
           >
-            <MenuItem value="" disabled>Country</MenuItem>
+            <MenuItem value="" disabled>{t("country")}</MenuItem>
             <MenuItem value="syria" sx={{ fontSize: "10px", color: "gray" }}>Syria</MenuItem>
             <MenuItem value="US" sx={{ fontSize: "10px", color: "gray" }}>United States</MenuItem>
             <MenuItem value="CA" sx={{ fontSize: "10px", color: "gray" }}>Canada</MenuItem>
@@ -531,7 +531,7 @@ export const PersonalInfo = ({
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             startAdornment={<InputAdornment position="start"><span className="icon-padlock" style={{ fontSize: "16px" }} /></InputAdornment>}
-            placeholder={t("pasword")}
+            placeholder={t("password")}
             sx={{ borderRadius: '6px', marginBottom: "18px", height: '33px', fontSize: "10px" }}
             error={!!errors.password}
           />

@@ -4,6 +4,7 @@ import { SetupPage } from './SetupPage'
 import { BusinessInfo } from './BusinessInfo'
 import { Box, MenuItem, Grid, Menu, Divider } from "@mui/material";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { useTranslation } from 'react-i18next';
 
 
 export const BusinessInfoPage = () => {
@@ -11,7 +12,7 @@ export const BusinessInfoPage = () => {
   const [anchorElLanguage, setAnchorElLanguage] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState('en');
   const openLanguage = Boolean(anchorElLanguage);
-
+  const {i18n} = useTranslation()
   const handleLanguageClick = (event) => {
     setAnchorElLanguage(event.currentTarget);
   };
@@ -19,6 +20,7 @@ export const BusinessInfoPage = () => {
   const handleLanguageClose = (language) => {
     setAnchorElLanguage(null);
     setSelectedLanguage(language);
+    i18n.changeLanguage(language)
   };
 
   const getLanguageIcon = () => {

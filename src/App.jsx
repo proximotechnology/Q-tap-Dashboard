@@ -62,88 +62,88 @@ function App() {
   const routes = createBrowserRouter([
     {
       path: "/",
-      element: <HomePage />, // تم الترجمه
+      element: <HomePage />, // done
     },
 
     {
       path: "/reset",
-      element: <ResetPage />, // تم الترجمه
+      element: <ResetPage />, // done
     },
     {
       path: "/reset-password",
-      element: <PasswordResetPage />,// تم الترجمه
+      element: <PasswordResetPage />,// done
     },
     {
       path: "/product",
-      element: <ProductsPage />, // تم الترجمه
+      element: <ProductsPage />, // done
     },
     {
       path: "/business-info",
-      element: <BusinessInfoPage />, // تم الترحمه
+      element: <BusinessInfoPage />, // done
     },
     {
       path: "/serving-ways",
-      element: <ServingWaysPage />, // تم الترجمه
+      element: <ServingWaysPage />, // done
     },
     {
       path: "/branches",
-      element: <BranchesPage />, // تم الترجمه
+      element: <BranchesPage />, // done
     },
     {
       path: "/payment",
-      element: <PaymentPage />, // تم الترجمه
+      element: <PaymentPage />, // done
     },
     {
       path: "/save",
-      element: <Save />, // تم الترجمه
+      element: <Save />, // DONE
     },
     {
       path: "/welcome",
-      element: <Welcome />, // تم الترجمه
+      element: <Welcome />, // done
     },
     {
       path: "/logo-cient",
-      element: <LogoClient />, // تم الترجمه
+      element: <LogoClient />, // done 
     },
     {
       path: "/admin-login",
-      element: <LoginAdmin />,// تم الترجمه
+      element: <LoginAdmin />,//  done
     },
     {
       path: "order-body",
-      element: <OrderBody />, // تم الترجمه 
+      element: <OrderBody />, // done
     },
     {
       path: "order-history",
-      element: <OrderHistory />, // تم الترجمه
+      element: <OrderHistory />, // done
     },
     {
       path: "order",
-      element: <Order />, // تم الترجمه
+      element: <Order />, // done
     },
     {
       path: "add-item",
-      element: <AddItem />, // تم الترجمه
+      element: <AddItem />, // done
     },
     {
       path: "add-client",
-      element: <AddClient />, // تم الترجمه
+      element: <AddClient />, // done
     },
     {
       path: "add-user",
-      element: <AddUsers />, // تم الترجمه
+      element: <AddUsers />, // done
     },
     {
       path: "add-Affiliate",
-      element: <AddAffiliate />, // تم الترجمه
+      element: <AddAffiliate />, // done
     },
     {
       path: "delivery-riders",
-      element: <DeliveryLogin />, // تم الترجمه
+      element: <DeliveryLogin />, // done
     },
     {
       path: "delivered",
-      element: <Delivered />, // تم الترجمه
+      element: <Delivered />, // done
     },
 
     {
@@ -169,7 +169,7 @@ function App() {
       ]
     },
     // dashboard-client 
-    {
+      {
       path: "/",
       element: <HomeClient />,// صفحات الداش بورد بتاعت ال client الأساسية 
       children: [

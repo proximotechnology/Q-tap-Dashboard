@@ -145,7 +145,7 @@ export const Row3 = () => {
                                                 padding: "3px 15px",
                                                 borderRadius: "20px",
                                             }}>
-                                                {transaction.status}
+                                                {t(transaction.status)}
                                             </span>
 
                                         </TableCell>
@@ -292,7 +292,7 @@ export const Row3 = () => {
                                                 padding: "3px 15px",
                                                 borderRadius: "20px",
                                             }}>
-                                                {transaction.status}
+                                                {t(transaction.status)}
                                             </span>
 
                                         </TableCell>

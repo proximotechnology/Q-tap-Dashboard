@@ -1,6 +1,8 @@
 import { Box, Divider, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const Footer = ({ selectedOrder ,isAccepted ,isServed ,isDone ,isClose}) => {
+    const {t} = useTranslation()
     return (
         <Box
             style={{
@@ -29,7 +31,7 @@ const Footer = ({ selectedOrder ,isAccepted ,isServed ,isDone ,isClose}) => {
                     
                     
                         <Box ml={1}  sx={{ display:"flex" , flexDirection:"column"}}>
-                            <Typography variant="body2" color="#FFA500" fontSize={"9px"}>Order Placed</Typography>
+                            <Typography variant="body2" color="#FFA500" fontSize={"9px"}>{t("orderPlaced")}</Typography>
                             <Typography variant="caption" color="#FFFFFF" fontSize={"8px"}>3:51 PM</Typography>
                             <Typography variant="caption" color="#FFFFFF" fontSize={"8px"}>04 August, 2024</Typography>
                         </Box>
@@ -58,7 +60,7 @@ const Footer = ({ selectedOrder ,isAccepted ,isServed ,isDone ,isClose}) => {
                         color:"black" , padding:"8px" , borderRadius:"25px"}} ></span>
                 
                     <Box ml={1} sx={{ display:"flex" , flexDirection:"column"}}>
-                        <Typography variant="body2" color="#FFA500" fontSize={"9px"}>Accepted</Typography>
+                        <Typography variant="body2" color="#FFA500" fontSize={"9px"}>{t("accepted")}</Typography>
                         <Typography variant="caption" color="#FFFFFF" fontSize={"8px"}>3:51 PM</Typography>
                         <Typography variant="caption" color="#FFFFFF" fontSize={"8px"}>04 August, 2024</Typography>
                     </Box>
@@ -89,7 +91,7 @@ const Footer = ({ selectedOrder ,isAccepted ,isServed ,isDone ,isClose}) => {
                     </Box>
                 
                     <Box ml={1} sx={{ display:"flex" , flexDirection:"column"}} >
-                        <Typography variant="body2" color="#FFA500" fontSize={"9px"}>Prepared</Typography>
+                        <Typography variant="body2" color="#FFA500" fontSize={"9px"}>{t("prepared")}</Typography>
                         <Typography variant="caption" color="#FFFFFF" fontSize={"8px"}>3:51 PM</Typography>
                         <Typography variant="caption" color="#FFFFFF" fontSize={"8px"}>04 August, 2024</Typography>
                     </Box>
@@ -119,7 +121,7 @@ const Footer = ({ selectedOrder ,isAccepted ,isServed ,isDone ,isClose}) => {
                         </Box>
                 
                     <Box ml={1} sx={{ display:"flex" , flexDirection:"column"}} >
-                        <Typography variant="body2" color="#FFA500" fontSize={"9px"}>served</Typography>
+                        <Typography variant="body2" color="#FFA500" fontSize={"9px"}>{t("served")}</Typography>
                         <Typography variant="caption" color="#FFFFFF" fontSize={"8px"}>3:51 PM</Typography>
                         <Typography variant="caption" color="#FFFFFF" fontSize={"8px"}>04 August, 2024</Typography>
                     </Box>
@@ -147,7 +149,7 @@ const Footer = ({ selectedOrder ,isAccepted ,isServed ,isDone ,isClose}) => {
                     <span class="icon-double-check" style={{fontSize:"16px"}}><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
                         </Box>
                     <Box ml={1} sx={{ display:"flex" , flexDirection:"column"}} >
-                        <Typography variant="body2" color="#FFA500" fontSize={"9px"}>Done</Typography>
+                        <Typography variant="body2" color="#FFA500" fontSize={"9px"}>{t("done")}</Typography>
                         <Typography variant="caption" color="#FFFFFF" fontSize={"8px"}>3:51 PM</Typography>
                         <Typography variant="caption" color="#FFFFFF" fontSize={"8px"}>04 August, 2024</Typography>
                     </Box>

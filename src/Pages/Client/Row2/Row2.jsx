@@ -806,7 +806,7 @@ export const Row2 = () => {
                             marginRight: "5px",
                           }}
                         ></span>
-                        {row.status}
+                        {t(row.status)}
                       </span>
                     </TableCell>
 

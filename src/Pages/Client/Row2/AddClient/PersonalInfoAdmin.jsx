@@ -26,8 +26,10 @@ import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import { useNavigate } from "react-router";
 import { useClientContext } from "../../../../context/ClientContext";
+import { useTranslation } from "react-i18next";
 
 export const PersonalInfoAdmin = () => {
+    const {t} = useTranslation()
     const navigate = useNavigate();
     const { clientData, updatePersonalData } = useClientContext();
     const [fullName, setFullName] = useState(clientData.personalInfo.fullName || "");
@@ -180,7 +182,7 @@ export const PersonalInfoAdmin = () => {
             </Grid>
             <Grid item xs={12} md={6}>
                 <Typography variant="body2" sx={{ fontSize: "15px" }} color="#3b3a3a" gutterBottom>
-                    Personal Info
+                    {t("personalInfo")}
                 </Typography>
                 <Divider sx={{ width: "35%", borderBottom: "4px solid #ef7d00", marginBottom: "18px" }} />
 
@@ -194,7 +196,7 @@ export const PersonalInfoAdmin = () => {
                         value={fullName}
                         onChange={(e) => handleInputChange('fullName', e.target.value)}
                         onBlur={() => updatePersonalData({ fullName })}
-                        placeholder="Full Name"
+                        placeholder={t("fullName")}
                         sx={{ borderRadius: "10px", marginBottom: "18px", height: "33px", fontSize: "12px" }}
                     />
                 </FormControl>
@@ -209,7 +211,7 @@ export const PersonalInfoAdmin = () => {
                         value={phone}
                         onChange={(e) => handleInputChange('phone', e.target.value)}
                         onBlur={() => updatePersonalData({ phone })}
-                        placeholder="Mobile Number"
+                        placeholder={t("mobileNumber")}
                         sx={{ borderRadius: "10px", marginBottom: "18px", height: "33px", fontSize: "12px" }}
                     />
                 </FormControl>
@@ -223,7 +225,7 @@ export const PersonalInfoAdmin = () => {
                         value={email}
                         onChange={(e) => handleInputChange('email', e.target.value)}
                         onBlur={() => updatePersonalData({ email })}
-                        placeholder="Email"
+                        placeholder={t("email")}
                         sx={{ borderRadius: "10px", marginBottom: "18px", height: "33px", fontSize: "12px" }}
                     />
                 </FormControl>
@@ -248,7 +250,7 @@ export const PersonalInfoAdmin = () => {
                         <Grid container alignItems="center" sx={{ color: "grey", marginTop: "5px" }}>
                             <CalendarMonthOutlinedIcon sx={{ marginRight: 1, fontSize: "18px" }} />
                             <Typography variant="body1" sx={{ fontSize: "13px" }}>
-                                Date of Birth:
+                                {t("dateOfBirth")}
                             </Typography>
                         </Grid>
                     </Grid>
@@ -263,7 +265,7 @@ export const PersonalInfoAdmin = () => {
                                 sx={{ borderRadius: "10px", height: "33px", fontSize: "12px", color: "gray", marginRight: "5px" }}
                             >
                                 <MenuItem value="" disabled>
-                                    Month
+                                    {t("month")}
                                 </MenuItem>
                                 {[...Array(12).keys()].map((i) => (
                                     <MenuItem key={i + 1} value={String(i + 1).padStart(2, "0")}>
@@ -284,7 +286,7 @@ export const PersonalInfoAdmin = () => {
                                 sx={{ borderRadius: "10px", height: "33px", fontSize: "12px", color: "gray", marginRight: "5px" }}
                             >
                                 <MenuItem value="" disabled>
-                                    Day
+                                    {t("day")}
                                 </MenuItem>
                                 {[...Array(31).keys()].map((i) => (
                                     <MenuItem key={i + 1} value={String(i + 1).padStart(2, "0")}>
@@ -305,7 +307,7 @@ export const PersonalInfoAdmin = () => {
                                 sx={{ borderRadius: "10px", height: "33px", fontSize: "12px", color: "gray" }}
                             >
                                 <MenuItem value="" disabled>
-                                    Year
+                                    {t("year")}
                                 </MenuItem>
                                 {Array.from({ length: 2025 - 1980 + 1 }, (_, i) => (
                                     <MenuItem key={i + 1980} value={i + 1980}>
@@ -332,7 +334,7 @@ export const PersonalInfoAdmin = () => {
                         }
                     >
                         <MenuItem value="" disabled>
-                            Country
+                            {t("country")}
                         </MenuItem>
                         <MenuItem value="US">United States</MenuItem>
                         <MenuItem value="CA">Canada</MenuItem>
@@ -359,7 +361,7 @@ export const PersonalInfoAdmin = () => {
                                 </IconButton>
                             </InputAdornment>
                         }
-                        placeholder="Password"
+                        placeholder={t("password")}
                         sx={{ borderRadius: "10px", marginBottom: "18px", height: "33px", fontSize: "12px" }}
                     />
                 </FormControl>
@@ -383,7 +385,7 @@ export const PersonalInfoAdmin = () => {
                                 </IconButton>
                             </InputAdornment>
                         }
-                        placeholder="Confirm Password"
+                        placeholder={t("confirmPass")}
                         sx={{ marginBottom: "18px", borderRadius: "10px", height: "33px", fontSize: "12px" }}
                     />
                 </FormControl>
@@ -396,7 +398,7 @@ export const PersonalInfoAdmin = () => {
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             >
                 <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
-                    Update successful!
+                    {t("updateSucc")}
                 </Alert>
             </Snackbar>
 
@@ -407,7 +409,7 @@ export const PersonalInfoAdmin = () => {
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             >
                 <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
-                    Update failed. Please try again.
+                    {t("updateFaildTryAgain")}
                 </Alert>
             </Snackbar>
         </Grid>

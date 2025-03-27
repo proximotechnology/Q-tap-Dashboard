@@ -228,7 +228,7 @@ const ProfilePage = () => {
             {/* Personal Info Column */}
             <Grid item xs={12} sm={12} md={3} lg={3} justifyContent="center" alignItems="center">
               <Typography variant="body2" sx={{ fontSize: '13px' }} color="#3b3a3a" gutterBottom>
-                Personal Info
+                {t("personalInfo")}
               </Typography>
               <Divider
                 sx={{ width: '28%', borderRadius: '30px', borderBottom: '3px solid #ef7d00', marginBottom: '18px' }}
@@ -311,7 +311,7 @@ const ProfilePage = () => {
                   <Grid container alignItems="center" sx={{ color: 'grey', marginTop: '5px' }}>
                     <CalendarMonthOutlinedIcon sx={{ marginRight: 1, fontSize: '15px' }} />
                     <Typography variant="body1" sx={{ fontSize: '12px' }}>
-                      Date of Birth:
+                      {t("dateOfBirth")}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -331,7 +331,7 @@ const ProfilePage = () => {
                       }}
                     >
                       <MenuItem value="" disabled sx={{ fontSize: '12px', color: 'gray' }}>
-                        Month
+                        {t("month")}
                       </MenuItem>
                       {['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'].map((m) => (
                         <MenuItem key={m} value={m} sx={{ fontSize: '12px', color: 'gray' }}>
@@ -357,7 +357,7 @@ const ProfilePage = () => {
                       }}
                     >
                       <MenuItem value="" disabled>
-                        Day
+                        {t("day")}
                       </MenuItem>
                       {[...Array(31).keys()].map((i) => (
                         <MenuItem
@@ -381,7 +381,7 @@ const ProfilePage = () => {
                       sx={{ borderRadius: '6px', height: '33px', fontSize: '10px', color: 'gray' }}
                     >
                       <MenuItem value="" disabled sx={{ fontSize: '12px', color: 'gray' }}>
-                        Year
+                        {t("year")}
                       </MenuItem>
                       {Array.from({ length: 2025 - 1900 + 1 }, (_, i) => 1900 + i).map((y) => (
                         <MenuItem key={y} value={y} sx={{ fontSize: '12px', color: 'gray' }}>
@@ -414,7 +414,7 @@ const ProfilePage = () => {
                   MenuProps={{ disableScrollLock: true }}
                 >
                   <MenuItem value="" disabled sx={{ fontSize: '12px', color: 'gray' }}>
-                    Country
+                    {t("country")}
                   </MenuItem>
                   <MenuItem value="US" sx={{ fontSize: '12px', color: 'gray' }}>
                     United States
@@ -439,7 +439,7 @@ const ProfilePage = () => {
                       <span className="icon-padlock" style={{ fontSize: '16px' }}></span>
                     </InputAdornment>
                   }
-                  placeholder="Password"
+                  placeholder={t("password")}
                   sx={{ borderRadius: '6px', marginBottom: '18px', height: '33px', fontSize: '10px' }}
                 />
               </FormControl>
@@ -455,7 +455,7 @@ const ProfilePage = () => {
                       <span className="icon-padlock" style={{ fontSize: '16px' }}></span>
                     </InputAdornment>
                   }
-                  placeholder="Confirm Password"
+                  placeholder={t("confirmPass")}
                   sx={{ marginBottom: '18px', borderRadius: '10px', height: '33px', fontSize: '12px' }}
                 />
               </FormControl>
@@ -468,7 +468,7 @@ const ProfilePage = () => {
             {/* Business Info Column */}
             <Grid item xs={12} sm={12} md={3} lg={3} justifyContent="center" alignItems="center">
               <Typography variant="body2" sx={{ fontSize: '13px' }} color="#3b3a3a" gutterBottom>
-                Business Info
+                {t("busnessInfo")}
               </Typography>
               <Divider
                 sx={{ width: '28%', borderRadius: '30px', borderBottom: '3px solid #ef7d00', marginBottom: '18px' }}
@@ -485,7 +485,7 @@ const ProfilePage = () => {
                   required
                   value={businessName}
                   onChange={(e) => setBusinessName(e.target.value)}
-                  placeholder="Business Name"
+                  placeholder={t("businessName")}
                   sx={{ borderRadius: '6px', marginBottom: '10px !important', height: '33px', fontSize: '10px' }}
                 />
               </FormControl>
@@ -502,7 +502,7 @@ const ProfilePage = () => {
                     required
                     value={businessPhone}
                     onChange={(e) => setBusinessPhone(e.target.value)}
-                    placeholder="Business Phone"
+                    placeholder={t("businessPhone")}
                     sx={{ borderRadius: '6px', height: '33px', fontSize: '10px' }}
                   />
                 </FormControl>
@@ -529,7 +529,7 @@ const ProfilePage = () => {
                   required
                   value={businessEmail}
                   onChange={(e) => setBusinessEmail(e.target.value)}
-                  placeholder="Business Email"
+                  placeholder={t("businessEmailNotOptional")}
                   type="email"
                   sx={{ borderRadius: '6px', marginBottom: '10px', height: '33px', fontSize: '10px' }}
                 />
@@ -551,7 +551,7 @@ const ProfilePage = () => {
                     MenuProps={{ disableScrollLock: true }}
                   >
                     <MenuItem value="" disabled sx={{ fontSize: '12px', color: 'gray' }}>
-                      Country
+                      {t("country")}
                     </MenuItem>
                     <MenuItem value="US" sx={{ fontSize: '12px', color: 'gray' }}>
                       United States
@@ -580,7 +580,7 @@ const ProfilePage = () => {
                     MenuProps={{ disableScrollLock: true }}
                   >
                     <MenuItem value="" disabled sx={{ fontSize: '12px', color: 'gray' }}>
-                      City
+                      {t("city")}
                     </MenuItem>
                     <MenuItem value="NY" sx={{ fontSize: '12px', color: 'gray' }}>
                       New York
@@ -610,7 +610,7 @@ const ProfilePage = () => {
                   }}
                 >
                   <span className="icon-map-1" style={{ fontSize: '20px', marginRight: '10px' }}></span>
-                  Pin Your Location
+                  {t("pinYourLocation")}
                 </Button>
               </Box>
 
@@ -629,7 +629,7 @@ const ProfilePage = () => {
                   MenuProps={{ disableScrollLock: true }}
                 >
                   <MenuItem value="" disabled>
-                    Currency
+                    {t("currency")}
                   </MenuItem>
                   <MenuItem value="US" sx={{ fontSize: '12px', color: 'gray' }}>
                     United States
@@ -658,34 +658,34 @@ const ProfilePage = () => {
                   MenuProps={{ disableScrollLock: true }}
                 >
                   <MenuItem value="" disabled>
-                    Business Type
+                    {t("businessType")}
                   </MenuItem>
                   <MenuItem value="restaurant" sx={{ fontSize: '12px', color: 'gray' }}>
-                    Restaurant
+                    {t("restaurant")}
                   </MenuItem>
                   <MenuItem value="cafe" sx={{ fontSize: '12px', color: 'gray' }}>
-                    Cafe
+                  {t("cafe")}
                   </MenuItem>
                   <MenuItem value="cloud" sx={{ fontSize: '12px', color: 'gray' }}>
-                    Cloud kitchens
+                  {t("cloudKitchens")} 
                   </MenuItem>
                   <MenuItem value="fast" sx={{ fontSize: '12px', color: 'gray' }}>
-                    Fast Food
+                  {t("fastFood")} 
                   </MenuItem>
                   <MenuItem value="truck" sx={{ fontSize: '12px', color: 'gray' }}>
-                    Food Truck
+                  {t("foodTruch")} 
                   </MenuItem>
                   <MenuItem value="Bakery" sx={{ fontSize: '12px', color: 'gray' }}>
-                    Bakery Store
+                  {t("bakeryStore")} 
                   </MenuItem>
                   <MenuItem value="Pastry" sx={{ fontSize: '12px', color: 'gray' }}>
-                    Pastry Store
+                  {t("pastryStore")} 
                   </MenuItem>
                   <MenuItem value="Fruits" sx={{ fontSize: '12px', color: 'gray' }}>
-                    Fruits Store
+                  {t("fruitsStore")} 
                   </MenuItem>
                   <MenuItem value="Retail" sx={{ fontSize: '12px', color: 'gray' }}>
-                    Retail Store
+                  {t("retailStore")} 
                   </MenuItem>
                 </Select>
               </FormControl>
@@ -705,7 +705,7 @@ const ProfilePage = () => {
                   MenuProps={{ disableScrollLock: true }}
                 >
                   <MenuItem value="" disabled>
-                    Menu Default Language
+                   {t("menuDefLang")}
                   </MenuItem>
                   <MenuItem value="1" sx={{ fontSize: '12px', color: 'gray' }}>
                     1
@@ -734,7 +734,7 @@ const ProfilePage = () => {
                   MenuProps={{ disableScrollLock: true }}
                 >
                   <MenuItem value="" disabled sx={{ fontSize: '12px', color: 'gray' }}>
-                    How Many Tables Do You Have
+                    {t("HowManyTablesDoYouHave")}
                   </MenuItem>
                   <MenuItem value="1" sx={{ fontSize: '12px', color: 'gray' }}>
                     1
@@ -757,7 +757,7 @@ const ProfilePage = () => {
               <Divider sx={{ width: '100%', borderBottom: '1px solid #9d9d9c', marginBottom: '18px' }} />
 
               <Typography variant="body2" sx={{ fontSize: '10px', color: 'gray', display: 'flex' }}>
-                <span className="icon-price-tag" style={{ fontSize: '17px', marginRight: '6px' }} /> Bundle
+                <span className="icon-price-tag" style={{ fontSize: '17px', marginRight: '6px' }} /> {t("bundle")}
               </Typography>
 
               <Box display="flex" alignItems="center" justifyContent="flex-start" mb={2}>
@@ -773,7 +773,7 @@ const ProfilePage = () => {
                   }}
                 >
                   <CheckOutlinedIcon sx={{ fontSize: '18px', marginRight: '6px', color: ' #ef7d00' }} />
-                  Pro
+                  {t("pro")}
                 </Button>
 
                 <Button
@@ -789,7 +789,7 @@ const ProfilePage = () => {
                     '&:hover': { backgroundColor: '#322240' },
                   }}
                 >
-                  Change Bundle
+                  {t("changeBundle")}
                 </Button>
               </Box>
             </Grid>

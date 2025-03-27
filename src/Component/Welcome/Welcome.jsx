@@ -23,7 +23,7 @@ export const Welcome = () => {
   const [selectedLanguage, setSelectedLanguage] = useState('en');
   const openLanguage = Boolean(anchorElLanguage);
 
-  const {t} = useTranslation()
+  const {t , i18n} = useTranslation()
 
   const handleLanguageClick = (event) => {
     setAnchorElLanguage(event.currentTarget);
@@ -32,6 +32,7 @@ export const Welcome = () => {
   const handleLanguageClose = (language) => {
     setAnchorElLanguage(null);
     setSelectedLanguage(language);
+    i18n.changeLanguage(language)
   };
 
   const getLanguageIcon = () => {

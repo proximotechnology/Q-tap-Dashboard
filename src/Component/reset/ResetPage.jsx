@@ -4,13 +4,14 @@ import QtapLogo from '../QtapLogo'
 import { Box, MenuItem, Grid, Menu, Divider } from "@mui/material";
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { useTranslation } from 'react-i18next';
 
 
 export const ResetPage = () => {
   const [anchorElLanguage, setAnchorElLanguage] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState('en');
   const openLanguage = Boolean(anchorElLanguage);
-
+  const {i18n} = useTranslation()
   const handleLanguageClick = (event) => {
       setAnchorElLanguage(event.currentTarget);
   };
@@ -18,6 +19,7 @@ export const ResetPage = () => {
   const handleLanguageClose = (language) => {
       setAnchorElLanguage(null);
       setSelectedLanguage(language);
+      i18n.changeLanguage(language)
   };
 
   const getLanguageIcon = () => {

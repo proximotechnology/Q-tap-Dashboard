@@ -112,7 +112,7 @@ export const Transactions = () => {
                                     <TableCell sx={{ textAlign: "center", border: "none", color: "gray" }}>
                                         <Box display="flex" alignItems="center">
                                             {row.icon}
-                                            <Box sx={{ ml: 1, color: '#AAAAAA', fontSize: "13px" }}>{row.status}</Box>
+                                            <Box sx={{ ml: 1, color: '#AAAAAA', fontSize: "13px" }}>{t(row.status)}</Box>
                                         </Box>
                                     </TableCell>
                                 </TableRow>

@@ -3,13 +3,14 @@ import React, { useState } from 'react';
 import { Box, Menu, MenuItem, Divider } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
+import { useTranslation } from 'react-i18next';
 
 
 export const Language = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [selectedLanguage, setSelectedLanguage] = useState(null);
     const open = Boolean(anchorEl);
-
+    const {i18n} = useTranslation()
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
         console.log("open")
@@ -18,6 +19,8 @@ export const Language = () => {
 
     const handleClose = (language) => {
         if (language) {
+            console.log("lang",language)
+            i18n.changeLanguage(language)
             setSelectedLanguage(language);
         }
         setAnchorEl(null);

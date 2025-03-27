@@ -4,13 +4,14 @@ import { Box, MenuItem, Grid, Menu, Divider } from "@mui/material";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { ServingWays } from './ServingWays'
 import { SetupPage } from '../Business-info/SetupPage';
+import { useTranslation } from 'react-i18next';
 
 
 export const ServingWaysPage = () => {
     const [anchorElLanguage, setAnchorElLanguage] = useState(null);
     const [selectedLanguage, setSelectedLanguage] = useState('en');
     const openLanguage = Boolean(anchorElLanguage);
-
+    const {i18n} = useTranslation()
     const handleLanguageClick = (event) => {
         setAnchorElLanguage(event.currentTarget);
     };
@@ -18,6 +19,7 @@ export const ServingWaysPage = () => {
     const handleLanguageClose = (language) => {
         setAnchorElLanguage(null);
         setSelectedLanguage(language);
+        i18n.changeLanguage(language)
     };
 
     const getLanguageIcon = () => {

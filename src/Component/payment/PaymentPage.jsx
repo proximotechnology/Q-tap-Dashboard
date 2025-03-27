@@ -5,11 +5,13 @@ import React, { useState } from 'react'
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import { Box, MenuItem, Grid, Menu, Divider } from "@mui/material";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { useTranslation } from 'react-i18next';
 
 export const PaymentPage = () => {
   const [anchorElLanguage, setAnchorElLanguage] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState('en');
   const openLanguage = Boolean(anchorElLanguage);
+  const {i18n} = useTranslation()
 
   const handleLanguageClick = (event) => {
     setAnchorElLanguage(event.currentTarget);
@@ -17,7 +19,8 @@ export const PaymentPage = () => {
 
   const handleLanguageClose = (language) => {
     setAnchorElLanguage(null);
-    setSelectedLanguage(language);
+        i18n.changeLanguage(language)
+        setSelectedLanguage(language);
   };
 
   const getLanguageIcon = () => {

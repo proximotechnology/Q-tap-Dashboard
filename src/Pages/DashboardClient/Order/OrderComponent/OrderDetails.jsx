@@ -4,6 +4,7 @@ import { Typography, Button, Divider, Card, CardContent, TextField, InputAdornme
 import CheckIcon from '@mui/icons-material/Check';
 import { useNavigate } from 'react-router';
 import { Alarm } from './Alarm';
+import { useTranslation } from 'react-i18next';
 
 const OrderDetails = ({ order, onReject, onAccept, isAccepted,
     onPayment, onServe, isPayment, isServed, onDone, isDone, isClose, onClose }) => {
@@ -31,7 +32,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
         setSelectedWaiter(e.target.value);
     };
 
-
+    const {t} = useTranslation()
     if (!order) {
         return <div>No order selected</div>;
     }
@@ -56,18 +57,18 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <Box sx={{ backgroundColor: '#73CB3C', padding: '3px 13px', borderRadius: '20px', }}>
                             <Typography variant="body2" sx={{ fontSize: "11px", color: "#222240" }}>
-                                ID #{order.id}</Typography>
+                               {t("id")} #{order.id}</Typography>
                         </Box>
 
                         <Typography color={isPayment ? "green" : "red"} fontSize="11px" display={"flex"} alignItems={"center"}>
                             <img src="/assets/balance.svg" alt="icon" style={{ width: "18px", marginRight: "6px", height: "18px" }} />
-                            {isPayment ? 'Paid' : order.pay}
+                            {isPayment ? t("paid") : t( order.pay)}
                         </Typography>
                     </Box>
 
                     <Divider sx={{ margin: '10px 0' }} />
 
-                    <Typography variant="subtitle1" sx={{ fontSize: "12px" }}>Order details
+                    <Typography variant="subtitle1" sx={{ fontSize: "12px" }}>{t("orderDetail")}
                         <span class="icon-edit" style={{ fontSize: "15px", marginLeft: "12px", color: "#E57C00" }}></span>
                     </Typography>
 
@@ -108,22 +109,22 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                     ))}
 
 
-                    <Typography variant="subtitle1" fontSize="12px" paddingTop="6px">Comment</Typography>
+                    <Typography variant="subtitle1" fontSize="12px" paddingTop="6px">{t("comment")}</Typography>
                     <Typography variant="body2" fontSize="11px" color="#AAAAAA" padding="0px 8px">{order.comment}</Typography>
 
-                    <Typography variant="subtitle1" fontSize="12px" paddingTop="6px">Payment Method</Typography>
-                    <Typography variant="body2" color="#AAAAAA" fontSize="11px" padding="0px 8px">{order.paymentMethod}</Typography>
+                    <Typography variant="subtitle1" fontSize="12px" paddingTop="6px">{t("paymentMethod")}</Typography>
+                    <Typography variant="body2" color="#AAAAAA" fontSize="11px" padding="0px 8px">{t(order.paymentMethod)}</Typography>
 
-                    <Typography variant="subtitle1" fontSize="12px" paddingTop="6px">Dine Method</Typography>
+                    <Typography variant="subtitle1" fontSize="12px" paddingTop="6px">{t("dineMethod")}</Typography>
                     {order.dineMethod.type === 'Dine in' ?
                         <Typography variant="body2" color="#AAAAAA" fontSize="11px" padding="0px 8px">
-                            {order.dineMethod.type}
+                            {t(order.dineMethod.type)}
                             <Typography sx={{ color: "#AAAAAA", fontSize: "10px" }}>
-                                <span style={{ color: '#E57C00', fontSize: "11px" }}>Table: </span>
+                                <span style={{ color: '#E57C00', fontSize: "11px" }}>{t("table.one")}: </span>
                                 {order.dineMethod.name}
                             </Typography>
                             <Typography sx={{ color: "#AAAAAA", fontSize: "10px" }}>
-                                <span style={{ color: '#E57C00', fontSize: "11px" }}> Area: </span>
+                                <span style={{ color: '#E57C00', fontSize: "11px" }}> {t("area")}: </span>
                                 {order.dineMethod.phone}
                             </Typography>
                         </Typography>
@@ -131,25 +132,25 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                             (
                                 <>
                                     <Typography variant="body2" color="textSecondary" fontSize="12px" padding="0px 8px">
-                                        {order.dineMethod.type}
+                                        {t(order.dineMethod.type)}
                                         <Typography sx={{ color: "gray", fontSize: "11px" }}>
-                                            <span style={{ color: '#E57C00', fontSize: "10px" }}>Name:</span>
+                                            <span style={{ color: '#E57C00', fontSize: "10px" }}>{t("name")}:</span>
                                             {order.dineMethod.name}
                                         </Typography>
                                         <Typography sx={{ color: "gray", fontSize: "11px" }}>
-                                            <span style={{ color: '#E57C00', fontSize: "10px" }}> Phone :</span>
+                                            <span style={{ color: '#E57C00', fontSize: "10px" }}> {t("mobileNumber")} :</span>
                                             {order.dineMethod.phone}
                                         </Typography>
                                         <Typography sx={{ color: "gray", fontSize: "11px" }}>
-                                            <span style={{ color: '#E57C00', fontSize: "10px" }}> Address :</span>
+                                            <span style={{ color: '#E57C00', fontSize: "10px" }}> {t("address")} :</span>
                                             {order.dineMethod.address}
                                         </Typography>
                                     </Typography>
-                                    <Typography variant="subtitle1" fontSize="12px" paddingTop="6px">Delivery Rider</Typography>
+                                    <Typography variant="subtitle1" fontSize="12px" paddingTop="6px">{t("deliveryRiders")}</Typography>
                                     <Box display="flex" alignItems="center"  >
                                         <TextField
                                             select
-                                            placeholder='Delivery Rider'
+                                            placeholder={t("deliveryRiders")}
                                             SelectProps={{
                                                 native: true,
                                             }}
@@ -195,7 +196,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
 
                                     <Typography variant="subtitle1" fontSize="11px" paddingTop="6px" >
                                         <span class="icon-chef" style={{ fontSize: "14px", marginRight: "6px" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
-                                        Chef
+                                        {t("Chef")}
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary" fontSize={"10px"} marginLeft={"10px"}>{selectedChef}</Typography>
                                 </Grid>
@@ -204,9 +205,9 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                 <Grid item xs={7}>
                                     <Typography variant="subtitle1" fontSize="11px" paddingTop="6px" >
                                         <span class="icon-circular-clock" style={{ fontSize: "14px", marginRight: "6px" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
-                                        Preparing Time</Typography>
+                                        {t("preparingTime")}</Typography>
                                     <Typography variant="body2" color="textSecondary" fontSize={"10px"} marginLeft={"10px"}>{preparingTime}
-                                        <span style={{ marginLeft: "5px" }}>Min</span>
+                                        <span style={{ marginLeft: "5px" }}>{t("min")}</span>
                                     </Typography>
 
                                 </Grid>
@@ -217,7 +218,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                             <Grid item xs={5} sx={{ marginTop: "-10px" }}>
                                                 <Typography variant="subtitle1" fontSize="11px" paddingTop="6px" >
                                                     <span class="icon-cashier" style={{ fontSize: "14px", marginRight: "6px" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
-                                                    Cashier
+                                                    {t("Cashier")}
                                                 </Typography>
                                                 <Typography variant="body2" color="textSecondary" fontSize={"10px"} marginLeft={"10px"}>{selectedCashier}</Typography>
                                             </Grid>
@@ -231,7 +232,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                                     <Grid item xs={7} sx={{ marginTop: "-10px" }}>
                                                                         <Typography variant="subtitle1" fontSize="11px" paddingTop="6px" >
                                                                             <span class="icon-waiter-1" style={{ fontSize: "14px", marginRight: "6px" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span></span>
-                                                                            Waiter
+                                                                            {t("Waiter")}
                                                                         </Typography>
                                                                         <Typography variant="body2" color="textSecondary" fontSize={"10px"} marginLeft={"10px"}>{selectedWaiter}</Typography>
                                                                     </Grid>
@@ -241,7 +242,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                                     <Grid item xs={12} sx={{ marginTop: "-10px" }} >
                                                                         <Typography variant="subtitle1" fontSize="11px" paddingTop="6px" >
                                                                             <span class="icon-waiter-1" style={{ fontSize: "14px", marginRight: "6px" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span></span>
-                                                                            Waiter
+                                                                            {t("Waiter")}
                                                                         </Typography>
                                                                         <Select
 
@@ -268,9 +269,9 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                                                     borderColor: 'gray',
                                                                                 },
                                                                             }}
-                                                                            renderValue={(value) => (value ? value : 'Waiter Name')}
+                                                                            renderValue={(value) => (value ? value : t("waiterName"))}
                                                                         >
-                                                                            <MenuItem value="" disabled sx={{ fontSize: '10px', color: "gray", }}> Select Waiter Name </MenuItem>
+                                                                            <MenuItem value="" disabled sx={{ fontSize: '10px', color: "gray", }}> {t("selectWaiterName")} </MenuItem>
                                                                             <MenuItem value="Waiter aya" sx={{ fontSize: '10px', color: "gray", }}>Waiter aya</MenuItem>
                                                                             <MenuItem value="Waiter afaf" sx={{ fontSize: '10px', color: "gray", }}>Waiter afaf</MenuItem>
                                                                             <MenuItem value="Waiter ahmed" sx={{ fontSize: '10px', color: "gray", }}>Waiter ahmed</MenuItem>
@@ -298,7 +299,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                 <Grid item xs={12} sx={{ marginTop: "-10px" }} >
                                                     <Typography variant="subtitle1" fontSize="11px" paddingTop="6px" >
                                                         <span class="icon-cashier" style={{ fontSize: "14px", marginRight: "6px" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
-                                                        Cashier
+                                                        {t("Cashier")}
                                                     </Typography>
                                                     <Select disableScrollLock
                                                         value={selectedCashier}
@@ -324,7 +325,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                                 borderColor: 'gray',
                                                             },
                                                         }}
-                                                        renderValue={(value) => (value ? value : 'Cashier Name')}
+                                                        renderValue={(value) => (value ? value : t("chefName"))}
                                                         MenuProps={{
                                                             PaperProps: {
                                                                 style: {
@@ -335,7 +336,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                             disableScrollLock: true,
                                                         }}
                                                     >
-                                                        <MenuItem value="" disabled sx={{ fontSize: '10px', color: "gray", }}> Select Cashier Name </MenuItem>
+                                                        <MenuItem value="" disabled sx={{ fontSize: '10px', color: "gray", }}> {t("selectCashierName")} </MenuItem>
                                                         <MenuItem value="Cashier aya" sx={{ fontSize: '10px', color: "gray", }}>Cashier aya</MenuItem>
                                                         <MenuItem value="Cashier afaf" sx={{ fontSize: '10px', color: "gray", }}>Cashier afaf</MenuItem>
                                                         <MenuItem value="Cashier ahmed" sx={{ fontSize: '10px', color: "gray", }}>Cashier ahmed</MenuItem>
@@ -352,7 +353,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
 
                             <Typography variant="subtitle1" fontSize="11px" paddingTop="6px" >
                                 <span class="icon-chef" style={{ fontSize: "14px", marginRight: "6px" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
-                                Chef
+                                {t("Chef")}
                             </Typography>
                             <Select
                                 value={selectedChef}
@@ -388,9 +389,9 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                         borderColor: 'gray',
                                     },
                                 }}
-                                renderValue={(value) => (value ? value : 'Chef Name')}
+                                renderValue={(value) => (value ? value : t("chefName"))}
                             >
-                                <MenuItem value="" disabled sx={{ fontSize: '10px', color: "gray", }}> Select Chef Name </MenuItem>
+                                <MenuItem value="" disabled sx={{ fontSize: '10px', color: "gray", }}> {t("selectChefName")} </MenuItem>
                                 <MenuItem value="Chef John" sx={{ fontSize: '10px', color: "gray", }}>Chef John</MenuItem>
                                 <MenuItem value="Chef Mary" sx={{ fontSize: '10px', color: "gray", }}>Chef Mary</MenuItem>
                                 <MenuItem value="Chef Alex" sx={{ fontSize: '10px', color: "gray", }}>Chef Alex</MenuItem>
@@ -398,7 +399,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                             </Select>
                             <Typography variant="subtitle1" fontSize="11px" paddingTop="6px" >
                                 <span class="icon-circular-clock" style={{ fontSize: "14px", marginRight: "6px" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
-                                Preparing Time</Typography>
+                               {t("preparingTime")}</Typography>
                             <TextField
                                 placeholder="0.0"
                                 type="number"
@@ -409,7 +410,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
-                                            <span style={{ fontSize: "8px" }}>minute</span>
+                                            <span style={{ fontSize: "8px" }}>{t("min")}</span>
                                         </InputAdornment>
                                     ),
                                 }}
@@ -432,16 +433,16 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                     <Grid container>
                         <Grid item xs={8}>
                             <Typography variant="body2" fontSize="10px" padding="0px 3px">
-                                <span style={{ color: '#9d9d9c' }}>Sub Total:</span> {order.subTotal.toFixed(2)} EGP
+                                <span style={{ color: '#9d9d9c' }}>{t("subTotal")}</span> {order.subTotal.toFixed(2)} EGP
                             </Typography>
                             <Typography variant="body2" fontSize="10px" padding="0px 3px">
-                                <span style={{ color: '#9d9d9c' }}>Tax:</span> {order.tax.toFixed(2)} EGP
+                                <span style={{ color: '#9d9d9c' }}>{t("tax")}</span> {order.tax.toFixed(2)} EGP
                             </Typography>
                             <Typography variant="body2" fontSize="10px" padding="0px 3px">
-                                <span style={{ color: '#9d9d9c' }}>Discount: -</span> {order.discount.toFixed(2)} EGP
+                                <span style={{ color: '#9d9d9c' }}>{t("discounts")} -</span> {order.discount.toFixed(2)} EGP
                             </Typography>
                             <Typography variant="h6" sx={{ marginTop: '8px', fontSize: "10px" }}>
-                                <span style={{ color: '#9d9d9c' }}>TOTAL:</span> {order.total.toFixed(2)} EGP
+                                <span style={{ color: '#9d9d9c' }}>{t("total")}</span> {order.total.toFixed(2)} EGP
                             </Typography>
                         </Grid>
                         <Grid item xs={4} sx={{ textAlign: 'right', width: "20%" }}>
@@ -482,7 +483,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                                                 >
                                                                                     <span class="icon-close-1"
                                                                                         style={{ color: "#E57C00", fontSize: "13px", marginRight: "6px" }}></span>
-                                                                                    Close
+                                                                                    {t("close")}
                                                                                 </Button>
                                                                             </Grid>
                                                                         </>
@@ -505,7 +506,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                                                 >
                                                                                     <span class="icon-double-check" style={{ fontSize: "22px", marginRight: "6px" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
 
-                                                                                    Done
+                                                                                    {t("done")}
                                                                                 </Button>
                                                                             </Grid>
                                                                         </>
@@ -531,7 +532,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                                         }}
                                                                     >
                                                                         <span class="icon-waiter" style={{ fontSize: "16px", color: "#E57C00", marginRight: "6px" }}></span>
-                                                                        served
+                                                                        {t("served")}
                                                                     </Button>
                                                                 </Grid>
                                                             </>
@@ -556,7 +557,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                             }}
                                                         >
                                                             <span class="icon-chef" style={{ fontSize: "18px", marginRight: "6px" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
-                                                            Prepared
+                                                            {t("prepared")}
                                                         </Button>
 
                                                         <Button  onClick={handlePrint}>
@@ -587,7 +588,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                 }}
                                             >
                                                 <img src="/assets/balance.svg" alt="icon" style={{ color: "#E57C00", width: "18px", marginRight: "6px", height: "18px" }} />
-                                                Payment Received
+                                                {t("paymentReceived")}
                                             </Button>
 
                                             <Button>
@@ -619,7 +620,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                         }}
                                     >
                                         <span class="icon-close" style={{ fontSize: "10px", marginRight: "6px" }}></span>
-                                        Reject
+                                        {t("reject")}
                                     </Button>
                                 </Grid>
                                 <Grid item xs={6}>
@@ -638,7 +639,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                         }}
                                     >
                                         <CheckIcon sx={{ color: "green", fontSize: "18px", marginRight: "3px" }} />
-                                        Accept
+                                        {t("accept")}
                                     </Button>
                                 </Grid>
                             </Grid>

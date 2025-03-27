@@ -93,7 +93,7 @@ export const ClientsLog = () => {
                                 {row.date}
                             </TableCell>
                             <TableCell sx={{ textAlign: 'center', border: 'none', fontSize: '11px', color: row.statusColor, padding: '0px' }}>
-                                {row.status ? <CircleIcon sx={{ fontSize: "7px" }} /> : null} {row.status}
+                                {row.status ? <CircleIcon sx={{ fontSize: "7px" }} /> : null} {t(row.status)}
                             </TableCell>
                         </TableRow>
                     ))}

@@ -156,7 +156,7 @@ export default function SideBar() {
 
                                 {/* النص */}
                                 <ListItemText
-                                    primary={item.text}
+                                    primary={t(item.text)}
                                     primaryTypographyProps={{ fontSize: "12px" }}
                                 />
 
@@ -226,7 +226,7 @@ export default function SideBar() {
                                 </ListItemIcon>
 
                                 <ListItemText
-                                    primary={item.text}
+                                    primary={t(item.text)}
                                     primaryTypographyProps={{
                                         fontSize: "12px",
                                         style: {

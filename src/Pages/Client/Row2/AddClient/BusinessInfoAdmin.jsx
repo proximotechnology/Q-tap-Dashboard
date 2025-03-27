@@ -33,10 +33,12 @@ import {
   import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
   import { ArrowForwardIos, ArrowBackIos } from "@mui/icons-material";
   import { useBusinessContext } from "../../../../context/BusinessContext";
+import { useTranslation } from "react-i18next";
   
   const daysOfWeek = ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"];
   
   export const BusinessInfoAdmin = () => {
+    const {t} = useTranslation()
     const { businessData, updateBusinessData, branches, selectedBranch, selectBranch } =
       useBusinessContext();
     const [branchIndex, setBranchIndex] = useState(0);
@@ -145,7 +147,7 @@ import {
           <Box display={"flex"} justifyContent={"space-between"}>
             <Box>
               <Typography variant="body2" sx={{ fontSize: "15px" }} color="#3b3a3a" gutterBottom>
-                Business Info
+                {t("busnessInfo")}
               </Typography>
               <Divider sx={{ width: "100%", borderBottom: "4px solid #ef7d00", marginBottom: "18px" }} />
             </Box>
@@ -178,7 +180,7 @@ import {
                 }}
               >
                 <StorefrontOutlinedIcon sx={{ marginRight: "5px", fontSize: "20px" }} />
-                branch {i + 1}
+                {t("branch")} {i + 1}
               </Button>
             ))}
           </Box>
@@ -197,7 +199,7 @@ import {
                   </InputAdornment>
                 }
                 required
-                placeholder="Business Name"
+                placeholder={t("businessName")}
                 sx={{ borderRadius: "10px", marginBottom: "10px !important", height: "33px", fontSize: "12px" }}
                 value={businessName}
                 onChange={(e) => handleInputChange("businessName", e.target.value)}
@@ -213,7 +215,7 @@ import {
                   </InputAdornment>
                 }
                 required
-                placeholder="Business Phone"
+                placeholder={t("businessPhone")}
                 sx={{ borderRadius: "10px", height: "33px", marginBottom: "10px", fontSize: "12px" }}
                 value={businessPhone}
                 onChange={(e) => handleInputChange("businessPhone", e.target.value)}
@@ -229,7 +231,7 @@ import {
                   </InputAdornment>
                 }
                 required
-                placeholder="Business Email"
+                placeholder={t("businessEmailNotOptional")}
                 type="email"
                 sx={{ borderRadius: "10px", marginBottom: "10px", height: "33px", fontSize: "12px" }}
                 value={businessEmail}
@@ -252,7 +254,7 @@ import {
                   }
                 >
                   <MenuItem value="" disabled>
-                    Country
+                    {t("country")}
                   </MenuItem>
                   <MenuItem value="US">United States</MenuItem>
                   <MenuItem value="CA">Canada</MenuItem>
@@ -274,7 +276,7 @@ import {
                   }
                 >
                   <MenuItem value="" disabled>
-                    City
+                    {t("city")}
                   </MenuItem>
                   <MenuItem value="NY">New York</MenuItem>
                   <MenuItem value="LA">Los Angeles</MenuItem>
@@ -300,7 +302,7 @@ import {
                 }}
               >
                 <span className="icon-map-1" style={{ fontSize: "18px", marginRight: "6px" }}></span>
-                Pin Your Location
+               {t("pinYourLocation")}
               </Button>
             </Box>
   
@@ -318,7 +320,7 @@ import {
                 }
               >
                 <MenuItem value="" disabled>
-                  Currency
+                  {t("currency")}
                 </MenuItem>
                 <MenuItem value="US">United States</MenuItem>
                 <MenuItem value="CA">Canada</MenuItem>
@@ -340,17 +342,17 @@ import {
                 }
               >
                 <MenuItem value="" disabled>
-                  Business Type
+                  {t("businessType")}
                 </MenuItem>
-                <MenuItem value="restaurant">Restaurant</MenuItem>
-                <MenuItem value="cafe">Cafe</MenuItem>
-                <MenuItem value="cloud">Cloud kitchens</MenuItem>
-                <MenuItem value="fast">Fast Food</MenuItem>
-                <MenuItem value="truck">Food Truck</MenuItem>
-                <MenuItem value="Bakery">Bakery Store</MenuItem>
-                <MenuItem value="Pastry">Pastry Store</MenuItem>
-                <MenuItem value="Fruits">Fruits Store</MenuItem>
-                <MenuItem value="Retail">Retail Store</MenuItem>
+                <MenuItem value="restaurant">{t("restaurant")}</MenuItem>
+                <MenuItem value="cafe">{t("cafe")}</MenuItem>
+                <MenuItem value="cloud">{t("cloudKitchens")}</MenuItem>
+                <MenuItem value="fast">{t("fastFood")}</MenuItem>
+                <MenuItem value="truck">{t("foodTruch")}</MenuItem>
+                <MenuItem value="Bakery">{t("bakeryStore")}</MenuItem>
+                <MenuItem value="Pastry">{t("pastryStore")}</MenuItem>
+                <MenuItem value="Fruits">{t("fruitsStore")}</MenuItem>
+                <MenuItem value="Retail">{t("retailStore")}</MenuItem>
               </Select>
             </FormControl>
   
@@ -368,7 +370,7 @@ import {
                 }
               >
                 <MenuItem value="" disabled>
-                  Menu Default Language
+                  {t("menuDefLang")}
                 </MenuItem>
                 <MenuItem value="US">United States</MenuItem>
                 <MenuItem value="CA">Canada</MenuItem>
@@ -390,7 +392,7 @@ import {
                 }
               >
                 <MenuItem value="" disabled>
-                  How Many Tables Do You Have
+                  {t("HowManyTablesDoYouHave")}
                 </MenuItem>
                 <MenuItem value="1">1</MenuItem>
                 <MenuItem value="2">2</MenuItem>
@@ -403,7 +405,7 @@ import {
             <Divider sx={{ width: "100%", borderBottom: "1px solid #9d9d9c", marginBottom: "18px" }} />
   
             <Typography variant="body2" sx={{ fontSize: "14px", color: "gray", display: "flex" }}>
-              <SellOutlinedIcon sx={{ color: "gray", fontSize: "20px", marginRight: "6px" }} /> Bundle
+              <SellOutlinedIcon sx={{ color: "gray", fontSize: "20px", marginRight: "6px" }} /> {t("bundle")}
             </Typography>
   
             <Box display="flex" alignItems="center" justifyContent="flex-start" mb={2}>
@@ -417,7 +419,7 @@ import {
                   borderRadius: "8px",
                 }}
               >
-                <CheckOutlinedIcon sx={{ fontSize: "20px", marginRight: "6px", color: "#ef7d00" }} /> Pro
+                <CheckOutlinedIcon sx={{ fontSize: "20px", marginRight: "6px", color: "#ef7d00" }} /> {t("pro")}
               </Button>
   
               <Button
@@ -434,7 +436,7 @@ import {
                   },
                 }}
               >
-                Change Bundle
+                {t("changeBundle")}
               </Button>
             </Box>
           </Grid>
@@ -457,7 +459,7 @@ import {
               >
                 <Grid container spacing={1}>
                   <Typography variant="h3" sx={{ fontSize: "13px", width: "100%", fontWeight: "500", color: "gray" }}>
-                    Default Mode
+                    {t("defaultMode")}
                   </Typography>
                   <ToggleButtonGroup value={mode} exclusive onChange={handleModeChange}>
                     <ToggleButton
@@ -492,7 +494,7 @@ import {
   
                 <Grid container spacing={1}>
                   <Typography variant="h6" sx={{ fontSize: "13px", width: "100%", fontWeight: "500", color: "gray" }}>
-                    Menu Design
+                    {t("menus.design")}
                   </Typography>
                   <ToggleButtonGroup value={design} exclusive onChange={handleDesignChange}>
                     <ToggleButton
@@ -527,7 +529,7 @@ import {
                   <Grid item xs={12} display={"flex"} justifyContent={"space-between"}>
                     <Typography variant="body1" display="flex" alignItems="center" sx={{ fontSize: "12px", color: "gray" }}>
                       <span className="icon-working-hour" style={{ marginRight: "10px", fontSize: "22px" }}></span>
-                      Working Hours
+                      {t("workHours")}
                     </Typography>
   
                     <Grid item xs={3}>
@@ -547,7 +549,7 @@ import {
                         <Typography
                           sx={{ width: "60px", textTransform: "capitalize", color: "white", fontSize: "10px" }}
                         >
-                          {workingHours.currentDay}
+                          {t(workingHours.currentDay)}
                         </Typography>
   
                         <IconButton onClick={() => handleDayToggle("next")} sx={{ color: "#ef7d00" }}>
@@ -586,7 +588,7 @@ import {
                       <Box display={"flex"}>
                         <Grid item>
                           <Typography variant="body1" sx={{ fontSize: "11px", color: "gray", mr: 1 }}>
-                            From:
+                            {t("from")}
                           </Typography>
                         </Grid>
                         <Grid item>
@@ -609,7 +611,7 @@ import {
                       <Box display={"flex"} marginTop={"3px"} marginLeft={"10px"}>
                         <Grid item>
                           <Typography variant="body1" sx={{ fontSize: "11px", color: "gray", mr: 1 }}>
-                            To:
+                            {t("to")}
                           </Typography>
                         </Grid>
                         <Grid item>
@@ -640,10 +642,10 @@ import {
               <Box>
                 <Typography variant="body1" sx={{ display: "flex", fontSize: "12px", color: "gray" }}>
                   <span className="icon-waiter" style={{ fontSize: "20px", marginRight: "6px" }}></span>
-                  Serving Ways
+                  {t("servingWay")}
                 </Typography>
                 <Box display="flex">
-                  {["dine_in", "take_away", "delivery"].map((way) => (
+                  {[t("Dine In"), t("Takeaway"), t("Delivery")].map((way) => (
                     <FormControlLabel
                       key={way}
                       control={
@@ -692,7 +694,7 @@ import {
                   label={
                     <Box sx={{ display: "flex", alignItems: "center" }}>
                       <span className="icon-hand-up" style={{ fontSize: "20px", color: "gray", marginRight: "6px" }}></span>
-                      <Typography sx={{ fontSize: "14px", color: "gray" }}>Activate Call Waiter</Typography>
+                      <Typography sx={{ fontSize: "14px", color: "gray" }}>{t("activeCallWaiter")}</Typography>
                     </Box>
                   }
                 />
@@ -703,10 +705,10 @@ import {
               {/* Payment Methods */}
               <Box>
                 <Typography variant="body1" sx={{ marginTop: "10px", display: "flex", fontSize: "12px", color: "gray" }}>
-                  Payment Method
+                  {t("paymentMethod")}
                 </Typography>
                 <Box display="flex" justifyContent="left">
-                  {["cash", "wallet", "card"].map((method) => (
+                  {[t("cash"), t("wallet"), t("card")].map((method) => (
                     <FormControlLabel
                       key={method}
                       control={
@@ -739,10 +741,10 @@ import {
               {/* Payment Time */}
               <Box>
                 <Typography variant="body1" sx={{ display: "flex", fontSize: "12px", color: "gray" }}>
-                  Payment Time
+                  {t("paymentTime")}
                 </Typography>
                 <Box display="flex" justifyContent="left">
-                  {["before", "after"].map((time) => (
+                  {[t("beforeServing"), t("afterServing")].map((time) => (
                     <FormControlLabel
                       key={time}
                       control={
@@ -758,7 +760,7 @@ import {
                           }}
                         />
                       }
-                      label={time.charAt(0).toUpperCase() + time.slice(1) + " Serving"}
+                      label={time.charAt(0).toUpperCase() + time.slice(1) }
                       sx={{
                         "& .MuiTypography-root": {
                           fontSize: "13px",
