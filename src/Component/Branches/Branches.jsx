@@ -6,6 +6,7 @@ import ControlPointOutlinedIcon from '@mui/icons-material/ControlPointOutlined';
 import PriorityHighOutlinedIcon from '@mui/icons-material/PriorityHighOutlined';
 import { useBusinessContext } from '../../context/BusinessContext';
 import { useTranslation } from 'react-i18next';
+import  styles  from '../../Pages/DashboardClient/Pages/SupportClient/supportCard.module.css';
 
 const Divider = styled(Box)({
   width: '5%',
@@ -22,12 +23,12 @@ export const Branches = () => {
   const deleteBranch = (index) => {
     setBranches((prevBranches) => prevBranches.filter((_, i) => i !== index));
   };
-  
-  const {t} = useTranslation()
+
+  const { t } = useTranslation()
 
   const handleDoneClick = () => {
     // console.log('Branches:::::', branches);
-    navigate('/payment'); 
+    navigate('/payment');
   };
 
   return (
@@ -41,6 +42,7 @@ export const Branches = () => {
         {/* Display existing branches */}
         {branches.map((branch, index) => (
           <Box
+            className={styles.card}
             key={index}
             sx={{
               width: { xs: '100%', sm: '45%', md: '140px' },
@@ -49,18 +51,25 @@ export const Branches = () => {
               borderRadius: '20px',
               backgroundColor: '#222240',
               marginBottom: '20px',
+              padding: "10px 10px 15px 10px ",
             }}
           >
-            <Typography variant="h6" sx={{ fontSize: '12px', color: '#E57C00', padding: '25px 0px 0px 16px' }}>
+            <Typography variant="h6" sx={{ fontSize: '15px', color: '#E57C00', padding: '9px 0px 0px 16px' }}>
               Branch {index + 1}
             </Typography>
-            <Typography variant="h6" sx={{ fontSize: '12px', color: '#E57C00', padding: '10px 0px 0px 16px' }}>
+            <Typography variant="h6" sx={{ fontSize: '8px', color: '#ffffff', padding: '7px 0px 0px 16px' }}>
+              {"Name"}
+            </Typography>
+            <Typography variant="h6" sx={{ fontSize: '15px', color: '#E57C00', padding: '0 0px 0px 16px' }}>
               {branch.businessName}
             </Typography>
-            <Typography variant="h6" sx={{ fontSize: '12px', color: '#E57C00', padding: '10px 0px 0px 16px' }}>
+            <Typography variant="h6" sx={{ fontSize: '8px', color: '#ffffff', padding: '7px 0px 0px 16px' }}>
+              {"City"}
+            </Typography>
+            <Typography variant="h6" sx={{ fontSize: '15px', color: '#E57C00', padding: '0 0px 0px 16px' }}>
               {branch.city}
             </Typography>
-            <Box sx={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
               <IconButton onClick={() => deleteBranch(index)}>
                 <span className="icon-delete" style={{ fontSize: '16px', color: 'white' }}></span>
               </IconButton>
@@ -83,6 +92,8 @@ export const Branches = () => {
             justifyContent: 'center',
             alignItems: 'center',
             cursor: 'pointer',
+            padding: "10px 10px 15px 10px ",
+
           }}
         >
           <ControlPointOutlinedIcon sx={{ color: '#E57C00', fontSize: '45px' }} />

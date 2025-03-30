@@ -304,6 +304,7 @@
     "pos": "POS",
     "kitchen": "kitchen",
     "branch": "Branch",
+    "info": "Info",
     "insertPin": "Insert PIN",
     "errorOccurred": "An error occurred",
     "brief": "Brief",
@@ -405,7 +406,7 @@
     },
     "logo500": "Logo 500x500px",
     "banner1000x500": "Banner 1000x500px",
-    "defaultMode": "Default Mode",
+    "defaultMode": "Menu Default Mode",
     "activeCallWaiter": "Activate Call Waiter",
     "paymentMethod": "Payment Method",
     "cash": "Cash",
@@ -628,7 +629,7 @@
     "accept": "Accept",
     "waiterName": "Waiter Name",
     "walletNo": "Wallet No.",
-    "courier":"Courier",
-    "cardNo":"Card No.",
-    "update":"update"
+    "courier": "Courier",
+    "cardNo": "Card No.",
+    "update": "update"
 }

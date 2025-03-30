@@ -11,7 +11,7 @@ export const PaymentPage = () => {
   const [anchorElLanguage, setAnchorElLanguage] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState('en');
   const openLanguage = Boolean(anchorElLanguage);
-  const {i18n} = useTranslation()
+  const { i18n } = useTranslation()
 
   const handleLanguageClick = (event) => {
     setAnchorElLanguage(event.currentTarget);
@@ -19,8 +19,8 @@ export const PaymentPage = () => {
 
   const handleLanguageClose = (language) => {
     setAnchorElLanguage(null);
-        i18n.changeLanguage(language)
-        setSelectedLanguage(language);
+    i18n.changeLanguage(language)
+    setSelectedLanguage(language);
   };
 
   const getLanguageIcon = () => {
@@ -30,43 +30,49 @@ export const PaymentPage = () => {
 
   return (
     <Grid container
-    sx={{ backgroundImage: "url(/images/Rectangle.png)", backgroundSize: "100% 100%", width: "100%", height: "100vh" }}>
-    <SetupPage />
+      sx={{ backgroundImage: "url(/images/Rectangle.png)", backgroundSize: "100% 100%", width: "100%", height: "100vh" }}>
+      <SetupPage />
 
-    <Grid item xs={12} md={8} >
-      <Box sx={{
-        position: "absolute", top: "30px", right: "80px",
-        cursor: "pointer", display: "flex", alignItems: "center"
-      }}>
-        <img src="/assets/helplogo.svg" alt="icon" style={{ width: "25px", height: "25px", marginRight: "30px" }} />
+      <Grid item xs={12} md={8} >
+        <Box sx={{
+          position: "absolute", top: "30px", right: "80px",
+          cursor: "pointer", display: "flex", alignItems: "center"
+        }}>
+          <img src="/assets/helplogo.svg" alt="icon" style={{ width: "25px", height: "25px", marginRight: "30px" }} />
 
-        <Box sx={{ cursor: "pointer", display: "flex", marginRight: "20px", alignItems: "center" }}
-          onClick={handleLanguageClick}>
-          {getLanguageIcon()}
-          <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: "#575756" }} />
-          <Menu
-            anchorEl={anchorElLanguage}
-            open={openLanguage}
-            onClose={() => setAnchorElLanguage(null)}
-            sx={{ padding: "2px" }}
-          >
-            <MenuItem onClick={() => handleLanguageClose('ar')}>
-              <span class="icon-translation" style={{ color: "#575756", marginRight: '8px', fontSize: "20px" }}></span>
-              <span style={{ fontSize: "12px", color: "#575756" }}>Arabic</span>
-            </MenuItem>
-            <Divider />
-            <MenuItem onClick={() => handleLanguageClose('en')}>
-              <LanguageOutlinedIcon sx={{ color: "#575756", marginRight: '8px', fontSize: "20px" }} />
-              <span style={{ fontSize: "12px", color: "#575756" }}>English</span>
-            </MenuItem>
-          </Menu>
+          <Box sx={{ cursor: "pointer", display: "flex", marginRight: "20px", alignItems: "center" }}
+            onClick={handleLanguageClick}>
+            {getLanguageIcon()}
+            <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: "#575756" }} />
+            <Menu
+              anchorEl={anchorElLanguage}
+              open={openLanguage}
+              onClose={() => setAnchorElLanguage(null)}
+              sx={{ padding: "2px" }}
+            >
+              <MenuItem onClick={(e) => {
+                e.stopPropagation()
+                handleLanguageClose('ar')
+              }}>
+                <span class="icon-translation" style={{ color: "#575756", marginRight: '8px', fontSize: "20px" }}></span>
+                <span style={{ fontSize: "12px", color: "#575756" }}>Arabic</span>
+              </MenuItem>
+              <Divider />
+              <MenuItem onClick={(e) => {
+                e.stopPropagation()
+                handleLanguageClose('en')
+              }}>
+                <LanguageOutlinedIcon sx={{ color: "#575756", marginRight: '8px', fontSize: "20px" }} />
+                <span style={{ fontSize: "12px", color: "#575756" }}>English</span>
+              </MenuItem>
+            </Menu>
+          </Box>
         </Box>
-      </Box>
-      
+
         <Payment />
+      </Grid>
+
+
     </Grid>
-
-
-</Grid>
   )
 }
