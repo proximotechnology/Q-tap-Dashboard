@@ -67,7 +67,7 @@ function App() {
 
     {
       path: "/reset",
-      element: <ResetPage />, // done
+      element: <ResetPage />, //  done
     },
     {
       path: "/reset-password",
