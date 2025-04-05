@@ -294,6 +294,7 @@
         "updateErr": "فشل تحديث التذكرة"
     },
     "addQuestion": "اضافه سؤال",
+    "addFeedback": "اضافه تعليق",
     "question": "سؤال",
     "answer": "اجابه",
     "orderId": "رقم الطلب",

@@ -294,6 +294,7 @@
         "updateErr": "failt to update ticket"
     },
     "addQuestion": "Add Question",
+    "addFeedback": "Add Feedback",
     "question": "Question",
     "answer": "Answer",
     "orderId": "Order Id",
