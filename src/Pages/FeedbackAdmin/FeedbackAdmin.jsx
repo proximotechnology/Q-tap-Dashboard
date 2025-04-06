@@ -123,7 +123,8 @@ export const FeedbackAdmin = () => {
                                             <span style={{
                                                 backgroundColor: "#EBEDF3",
                                                 borderRadius: "50%",
-                                                display: 'inline-flex',
+                                                display: 'flex',
+                                                flexWrap:'nowrap',
                                                 justifyContent: 'center',
                                                 alignItems: "center",
                                                 marginRight: '8px',

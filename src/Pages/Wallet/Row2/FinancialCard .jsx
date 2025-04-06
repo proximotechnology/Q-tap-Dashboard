@@ -13,7 +13,7 @@ const FinancialCard = () => {
         <Card
           key={index}
           sx={{
-            width: "24%",
+            width: {xs:'98%', md:'49%', lg:"24%"},
             padding: "0px 5px",
             marginTop: "20px",
             borderRadius: 4,

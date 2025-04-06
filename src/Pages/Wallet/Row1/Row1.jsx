@@ -26,6 +26,7 @@ export const Row1 = () => {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
+        overflowX: 'auto'
       }}
     >
       <Grid width={"80%"} >

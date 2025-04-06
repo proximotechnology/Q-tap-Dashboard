@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 export const Notification = () => {
   const [open, setOpen] = useState(false);
   const [notificationsData, setNotificationsData] = useState([]);
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -27,14 +27,14 @@ export const Notification = () => {
         'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
       }
     })
-    .then(response => response.json())
-    .then(data => {
-      if (data && data.notes) {
-        setNotificationsData(data.notes);
-        // console.log(data.notes);
-      }
-    })
-    .catch(error => console.error('Error fetching notifications:', error));
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.notes) {
+          setNotificationsData(data.notes);
+          // console.log(data.notes);
+        }
+      })
+      .catch(error => console.error('Error fetching notifications:', error));
   };
 
   const handleDelete = (id) => {
@@ -44,33 +44,33 @@ export const Notification = () => {
         'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
       }
     })
-    .then(response => response.json())
-    .then(data => {
-      if (data && data.success) {
-        // toast.success('Notification deleted successfully!');
-        getNotifications();
-      } else {
-        toast.error(t("faildDeleteNotification"));
-      }
-    })
-    .catch(error => console.error('Error deleting notification:', error));
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.success) {
+          // toast.success('Notification deleted successfully!');
+          getNotifications();
+        } else {
+          toast.error(t("faildDeleteNotification"));
+        }
+      })
+      .catch(error => console.error('Error deleting notification:', error));
   };
 
   return (
-    <Box sx={{padding:"0px 20px"}}> 
+    <Box sx={{ padding: "0px 20px" }}>
       <Paper sx={{ borderRadius: "20px", padding: "30px", height: "80vh" }}>
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Typography sx={{ color: "#575756", fontSize: "15px" }}>{t("history")}</Typography>
           <IconButton onClick={handleOpen}>
-            <AddIcon sx={{ fontSize: "35px",fontWeight:"bolder", color: "#ef7d00", cursor: "pointer" }} />
+            <AddIcon sx={{ fontSize: "35px", fontWeight: "bolder", color: "#ef7d00", cursor: "pointer" }} />
           </IconButton>
         </Box>
-        <AddNotification 
-          open={open} 
+        <AddNotification
+          open={open}
           handleClose={() => {
             handleClose();
             getNotifications(); // Refresh notifications after adding new one
-          }} 
+          }}
         />
 
         <Divider />
@@ -88,7 +88,10 @@ export const Notification = () => {
                   paddingLeft: "15px",
                   borderRadius: '20px',
                   backgroundColor: '#EBEDF3',
-                  boxShadow: "none"
+                  boxShadow: "none",
+                  overflow: 'hidden',
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
                 }}
               >
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -97,7 +100,7 @@ export const Notification = () => {
                     {notification.title}
                   </Typography>
                   <Divider orientation="vertical" flexItem sx={{ marginRight: '10px' }} />
-                  <Typography variant="body2" sx={{ color: "#AAAAAA", marginRight: '10px', fontSize: "12px" }}>
+                  <Typography variant="body2" sx={{ color: "#AAAAAA", marginRight: '10px', fontSize: "12px" ,width:"80%", whiteSpace: 'nowrap',overflow: 'hidden',textOverflow: 'ellipsis',maxWidth:'20vw'}}>
                     {notification.content}
                   </Typography>
                   {/* <Divider orientation="vertical" flexItem sx={{ marginRight: '10px' }} />

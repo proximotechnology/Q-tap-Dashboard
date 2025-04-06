@@ -14,13 +14,13 @@
     "admin": "مسؤل",
     "affiliate": "شريك",
     "client": "عميل",
-    "fieldAreRequired": "fieldAreRequired",
-    "PasswordsDoNotMatch": "Passwords do not match!",
-    "BirthDateFieldMustBeValid": "The birth date field must be a valid date",
-    "countryFieldIsRequired": "The country field is required",
-    "userTypeRequired": "The user type field is required",
-    "registrationSuccess": "Registration successful!",
-    "registerFiald": "Failed to register. Please try again.",
+    "fieldAreRequired": "الحقول مطلوبة",
+    "PasswordsDoNotMatch": "كلمات المرور غير متطابقة!",
+    "BirthDateFieldMustBeValid": "يجب أن يكون حقل تاريخ الميلاد تاريخًا صالحًا",
+    "countryFieldIsRequired": "حقل البلد مطلوب",
+    "userTypeRequired": "حقل نوع المستخدم مطلوب",
+    "registrationSuccess": "تم التسجيل بنجاح!",
+    "registerFiald": "فشل التسجيل. يُرجى المحاولة مرة أخرى.",
     "checkEmailOrPhoneDublicated": "تحقق من الايميل او رقم الهاتف مكررين",
     "logInSuccess": "تم تسجيل الدخول بنجاح",
     "invEmailOrPassword": "خطء بالحساب او كلمه السر",
@@ -226,14 +226,14 @@
     "categoryDeletedSucc": "تم حذف الفئة بنجاح!",
     "errorDeleteCategory": "خطأ في حذف الفئة",
     "offer": {
-        "one": "Offer",
-        "many": "Offers",
-        "addErr": "Error adding offer",
-        "addSucc": "added successfully ",
-        "deleteSucc": "Delete Successful",
-        "deleteErr": "Error deleting offer",
-        "updateErr": "Error updating offer",
-        "updateSucc": "updating offer Success"
+        "one": "يعرض",
+        "many": "العروض",
+        "addErr": "خطأ في إضافة العرض",
+        "addSucc": "تمت الإضافة بنجاح ",
+        "deleteSucc": "تم الحذف بنجاح",
+        "deleteErr": "خطأ في حذف العرض",
+        "updateErr": "خطأ في تحديث العرض",
+        "updateSucc": "تحديث العرض ناجح"
     },
     "discount": {
         "one": "تخفيض",
@@ -269,8 +269,8 @@
     "category": {
         "add": "إضافة فئة",
         "edit": "تعديل الفئة",
-        "addSucc": "Category added successfully",
-        "addErr": "Error adding category",
+        "addSucc": "تمت إضافة الفئة بنجاح",
+        "addErr": "خطأ في إضافة الفئة",
         "iconSize": "(قائمة الشبكة) أيقونة الفئة 200x200 بكسل"
     },
     "discription": "وصف",
@@ -305,7 +305,7 @@
     "kitchen": "المطبخ",
     "branch": "فرع",
     "insertPin": "أدخل رقم التعريف الشخصي",
-    "errorOccurred": "An error occurred",
+    "errorOccurred": "حدث خطأ",
     "brief": "مختصر",
     "ingredients": "مكونات",
     "calories": "سعرات حرارية",
@@ -377,9 +377,9 @@
     "tables": "الطاولات",
     "share": "مشاركه",
     "profile": {
-        "updateErr": "Failed to update profile.",
-        "updateSucc": "Profile updated successfully!",
-        "occuredErr": "An error occurred while updating the profile."
+        "updateErr": "فشل في تحديث الملف الشخصي.",
+        "updateSucc": "تم تحديث الملف الشخصي بنجاح!",
+        "occuredErr": "حدث خطأ أثناء تحديث الملف الشخصي."
     },
     "personalInfo": "المعلومات الشخصية",
     "websiteNoOptional": "موقع إلكتروني",
@@ -514,7 +514,7 @@
     "clients": {
         "registeredSucc": "تم تسجيل العميل بنجاح",
         "registerErr": "خطأ في تسجيل العميل:",
-        "clientUpdatedSucc": "Client updated successfully"
+        "clientUpdatedSucc": "تم تحديث العميل بنجاح"
     },
     "PlUploadValidImageFile": "يرجى تحميل ملف صورة صالح.",
     "restaurant": "مطعم",

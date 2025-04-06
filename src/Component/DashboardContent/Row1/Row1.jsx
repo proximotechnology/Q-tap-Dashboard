@@ -13,9 +13,9 @@ import { useTranslation } from 'react-i18next';
 export const Row1 = () => {
     const {t} = useTranslation();
     return (
-        <Box sx={{ flexGrow: 1, padding: '0px 20px 20px 20px' }}>
-            <Grid container spacing={3}>
-                <Grid item xs={12} sm={3}>
+        <Box  sx={{ flexGrow: 1, padding: '0px 20px 20px 20px' }}>
+            <Grid className="mainContainer" container spacing={3}>
+                <Grid item xs={12}  md={6} lg={3}>
                     <Card sx={{ borderRadius: '20px' }}>
                         <CardContent>
                             <Box display={"flex"} justifyContent={"space-between"}>
@@ -29,7 +29,7 @@ export const Row1 = () => {
                     </Card>
                 </Grid>
 
-                <Grid item xs={12} sm={3}>
+                <Grid item xs={12} md={6} lg={3}>
                     <Card sx={{ borderRadius: '20px' }}>
                         <CardContent>
                             <Box display={"flex"} justifyContent={"space-between"}>
@@ -44,7 +44,7 @@ export const Row1 = () => {
                     </Card>
                 </Grid>
 
-                <Grid item xs={12} sm={3}>
+                <Grid item xs={12}  md={6} lg={3}>
                     <Card sx={{ borderRadius: '20px' }}>
                         <CardContent>
                             <Box display={"flex"} justifyContent={"space-between"}>
@@ -59,7 +59,7 @@ export const Row1 = () => {
                 </Grid>
 
 
-                <Grid item xs={12} sm={3}>
+                <Grid item xs={12} md={6} lg={3}>
                     <Card sx={{ borderRadius: '20px' }}>
                         <CardContent>
                             <Box display={"flex"} justifyContent={"space-between"}>

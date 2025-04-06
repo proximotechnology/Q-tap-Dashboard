@@ -39,6 +39,7 @@ export default function TopBar() {
 
     const [anchorElLanguage, setAnchorElLanguage] = useState(null);
     const [selectedLanguage, setSelectedLanguage] = useState('en');
+    //TODO:delete unused functions and variable
     const openLanguage = Boolean(anchorElLanguage);
 
     const handleLanguageClick = (event) => {
@@ -80,7 +81,8 @@ export default function TopBar() {
             </Typography>
 
             <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
-
+            {/* TODO:lang / dark mode disappear in xs screen and go to the parson list item */}
+                {/* light dark mode */}
                 <Box sx={{ marginRight: "20px", display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
                     <LightModeOutlinedIcon onClick={handleToggleMode}
                         sx={{ fontSize: "20px", fill: mode === 'light' ? iconColor : '#575756' }} />
@@ -114,11 +116,10 @@ export default function TopBar() {
                     <DarkModeOutlinedIcon onClick={handleToggleMode}
                         sx={{ fontSize: "20px", fill: mode === 'dark' ? iconColor : '#575756' }} />
                 </Box>
-
-
+                {/* language */}
                 <Language />
 
-
+                {/* user option */}
                 <Box
                     aria-describedby={openUserPopover ? 'simple-popover' : undefined}
                     onClick={handleUserClick}

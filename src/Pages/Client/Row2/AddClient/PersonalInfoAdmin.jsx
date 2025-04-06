@@ -124,7 +124,7 @@ export const PersonalInfoAdmin = () => {
     };
 
     return (
-        <Grid container spacing={2} justifyContent="center" sx={{ marginTop: "10px" }}>
+        <Grid container spacing={2} justifyContent="center" sx={{ marginTop: "10px" , px: { xs: 2, md: 0 }  }}>
             <Box>
                 <ArrowBackIosOutlinedIcon
                     onClick={() => navigate("/client")}

@@ -73,6 +73,7 @@ export const Pricing = () => {
         backgroundColor: 'white',
         margin: '20px',
         marginTop: "70px",
+        minWidth:"200px",
       }}>
         <Box
           sx={{ display: 'flex', justifyContent: 'center', position: "relative", top: "-40px", }}>
@@ -188,7 +189,7 @@ export const Pricing = () => {
         background: 'linear-gradient(90deg, #FDB913 0%, #F2672E 100%)', height: "3px"
       }} />
 
-      <Box display="flex" justifyContent="center" flexWrap="wrap">
+      <Box display="flex" justifyContent="center" flexWrap="wrap" >
         {Array.isArray(pricing) ? pricing?.map((item) => (
           <PricingCard
             key={item.id}
