@@ -304,6 +304,7 @@
     "pos": "نقطة البيع",
     "kitchen": "المطبخ",
     "branch": "فرع",
+    "info": "معلومات",
     "insertPin": "أدخل رقم التعريف الشخصي",
     "errorOccurred": "حدث خطأ",
     "brief": "مختصر",
@@ -628,7 +629,7 @@
     "accept": "يقبل",
     "waiterName": "اسم النادل",
     "walletNo": "رقم المحفظة",
-    "courier":"ساعي",
-    "cardNo":"رقم البطاقة",
-    "update":"تحديث"
+    "courier": "ساعي",
+    "cardNo": "رقم البطاقة",
+    "update": "تحديث"
 }

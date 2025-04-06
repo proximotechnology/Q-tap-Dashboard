@@ -48,7 +48,7 @@ export const Save = () => {
   const [tableCount, setTableCount] = useState('');
   const [mode, setMode] = useState('light');
   const [design, setDesign] = useState('grid');
-  const {t,i18n} = useTranslation()
+  const { t, i18n } = useTranslation()
 
   const [workingHours, setWorkingHours] = useState({
     selectedDays: ['Sa', 'Su'],
@@ -272,7 +272,7 @@ export const Save = () => {
         navigate('/welcome');
       } else {
         console.error('API Error Response:', responseData);
-        toast.error( t("errorWhileSavingData"));
+        toast.error(t("errorWhileSavingData"));
         // toast.error(responseData.message || t("errorWhileSavingData"));
       }
     } catch (error) {
@@ -339,12 +339,18 @@ export const Save = () => {
               onClose={() => setAnchorElLanguage(null)}
               sx={{ padding: '2px' }}
             >
-              <MenuItem onClick={() => handleLanguageClose('ar')}>
+              <MenuItem onClick={(e) => {
+                e.stopPropagation()
+                handleLanguageClose('ar')
+              }} >
                 <span className="icon-translation" style={{ color: '#575756', marginRight: '8px', fontSize: '20px' }} />
                 <span style={{ fontSize: '12px', color: '#575756' }}>Arabic</span>
               </MenuItem>
               <Divider />
-              <MenuItem onClick={() => handleLanguageClose('en')}>
+              <MenuItem onClick={(e) => {
+                e.stopPropagation()
+                handleLanguageClose('en')
+              }}>
                 <LanguageOutlined sx={{ color: '#575756', marginRight: '8px', fontSize: '20px' }} />
                 <span style={{ fontSize: '12px', color: '#575756' }}>English</span>
               </MenuItem>
@@ -489,6 +495,6 @@ export const Save = () => {
           </Button>
         </Grid>
       </Box>
-    </Box>
+    </Box >
   );
 };

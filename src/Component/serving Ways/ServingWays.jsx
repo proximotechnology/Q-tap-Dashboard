@@ -1,5 +1,5 @@
 
-import { Box, Button, Grid, InputAdornment, styled, TextField, Typography } from '@mui/material';
+import { Box, Button, FormControl, Grid, InputAdornment, MenuItem, Select, styled, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import TableBarOutlinedIcon from '@mui/icons-material/TableBarOutlined';
@@ -8,6 +8,7 @@ import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import { toast } from 'react-toastify';
 import { useBusinessContext } from '../../context/BusinessContext';
 import { useTranslation } from 'react-i18next';
+import styles from '../../Pages/DashboardClient/Pages/SupportClient/supportCard.module.css';
 
 const Divider = styled(Box)({
     width: '5%',
@@ -36,7 +37,7 @@ export const ServingWays = () => {
         { name: "Delivery", value: "delivery", icon: <span className="icon-fast-shipping" style={{ fontSize: "80px" }}></span>, selected: false }
     ]);
 
-    const {t} = useTranslation()
+    const { t } = useTranslation()
 
     const handleBoxClick = (index) => {
         // Toggle the selected state of the clicked service
@@ -74,7 +75,7 @@ export const ServingWays = () => {
             </Typography>
             <Divider />
 
-            <Box>
+            <Box sx={{ marginTop: "70px", marginLeft: "50px" }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
                     <span className="icon-waiter" style={{ color: 'grey', marginRight: "6px" }}></span>
                     <Typography variant="h6" sx={{ fontSize: { xs: "12px", md: "12px" }, color: "gray" }}>
@@ -86,6 +87,7 @@ export const ServingWays = () => {
                     {serviceOptions.map((option, index) => {
                         return (
                             <Box
+                                className={styles.card4}
                                 key={index}
                                 onClick={() => handleBoxClick(index)}
                                 sx={{
@@ -95,6 +97,7 @@ export const ServingWays = () => {
                                     borderRadius: "20px",
                                     backgroundColor: "#222240",
                                     cursor: "pointer",
+                                    overflow: "hidden"
                                 }}
                             >
                                 <Typography
@@ -115,8 +118,9 @@ export const ServingWays = () => {
                                     sx={{
                                         color: "gray",
                                         display: "flex",
-                                        justifyContent: "center",
-                                        alignItems: "center"
+                                        justifyContent: "end",
+                                        alignItems: "end",
+                                        margin: "30px -10px 0 0"
                                     }}
                                 >
                                     {React.cloneElement(option.icon)}
@@ -139,28 +143,38 @@ export const ServingWays = () => {
                 </Box>
 
                 {servingWays.includes("dine_in") && (
-                    <TextField
-                        value={businessData.tableCount}
-                        onChange={(e) => updateBusinessData({ tableCount: e.target.value })}
+                    <FormControl
                         variant="outlined"
-                        placeholder= {t("HowManyTablesDoYouHave") +t("optional")}
                         fullWidth
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <TableBarOutlinedIcon sx={{ fontSize: "19px" }} />
-                                </InputAdornment>
-                            ),
-                            sx: {
+                        sx={{ marginTop: 4, maxWidth: { xs: "100%", sm: 330 } }}
+                    >
+                        <Select
+                            value={businessData.tableCount} // Default to "1" if undefined
+                            onChange={(e) => updateBusinessData({ tableCount: e.target.value })}
+                            displayEmpty
+                            sx={{
                                 border: "1px solid gray",
                                 height: "35px",
                                 fontSize: "11px",
-                                borderRadius: '10px',
-                                '& fieldset': { border: 'none' },
+                                borderRadius: "10px",
+                                "& fieldset": { border: "none" },
+                            }}
+                            startAdornment={
+                                <InputAdornment position="start">
+                                    <TableBarOutlinedIcon sx={{ fontSize: "19px" }} /> {/* Changed to TableBarIcon to match your import */}
+                                </InputAdornment>
                             }
-                        }}
-                        sx={{ marginTop: 4, maxWidth: { xs: "100%", sm: 330 } }}
-                    />
+                        >
+                            <MenuItem value="" disabled>
+                                {t("HowManyTablesDoYouHave") + t("optional")}
+                            </MenuItem>
+                            {[1, 2, 3, 4, 5, 6].map((number) => (
+                                <MenuItem key={number} value={number.toString()}>
+                                    {number}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                 )}
 
                 <Grid item xs={12}>

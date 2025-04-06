@@ -11,7 +11,7 @@ export const ServingWaysPage = () => {
     const [anchorElLanguage, setAnchorElLanguage] = useState(null);
     const [selectedLanguage, setSelectedLanguage] = useState('en');
     const openLanguage = Boolean(anchorElLanguage);
-    const {i18n} = useTranslation()
+    const { i18n } = useTranslation()
     const handleLanguageClick = (event) => {
         setAnchorElLanguage(event.currentTarget);
     };
@@ -48,12 +48,18 @@ export const ServingWaysPage = () => {
                             onClose={() => setAnchorElLanguage(null)}
                             sx={{ padding: "2px" }}
                         >
-                            <MenuItem onClick={() => handleLanguageClose('ar')}>
+                            <MenuItem onClick={(e) => {
+                                e.stopPropagation()
+                                handleLanguageClose('ar')
+                            }}>
                                 <span class="icon-translation" style={{ color: "#575756", marginRight: '8px', fontSize: "20px" }}></span>
                                 <span style={{ fontSize: "12px", color: "#575756" }}>Arabic</span>
                             </MenuItem>
                             <Divider />
-                            <MenuItem onClick={() => handleLanguageClose('en')}>
+                            <MenuItem onClick={(e) => {
+                                e.stopPropagation()
+                                handleLanguageClose('en')
+                            }}>
                                 <LanguageOutlinedIcon sx={{ color: "#575756", marginRight: '8px', fontSize: "20px" }} />
                                 <span style={{ fontSize: "12px", color: "#575756" }}>English</span>
                             </MenuItem>

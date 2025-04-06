@@ -528,8 +528,8 @@ export const BusinessInfo = () => {
                                             sx={{
                                                 padding: "10px",
                                                 backgroundColor: mode === "light" ? "#E57C00" : "transparent",
-                                                border: "1px solid #E57C00",
-                                                borderRadius: "6px",
+                                                border: `1px solid ${design === "light" ? "#E57C00" : "#AAAAAA"} !important`,
+                                                borderRadius: "8px !important",
                                                 marginRight: "8px",
                                             }}
                                         >
@@ -542,9 +542,8 @@ export const BusinessInfo = () => {
                                             sx={{
                                                 padding: "10px",
                                                 backgroundColor: mode === "dark" ? "#E57C00" : "transparent",
-                                                border: "1px solid #E57C00",
-                                                borderLeft: "3px solid red",
-                                                borderRadius: "6px",
+                                                border: `1px solid ${design === "dark" ? "#E57C00" : "#AAAAAA"} !important`,
+                                                borderRadius: "8px !important",
                                             }}
                                         >
                                             <NightlightIcon
@@ -585,8 +584,8 @@ export const BusinessInfo = () => {
                                             sx={{
                                                 padding: "10px",
                                                 backgroundColor: design === "grid" ? "#E57C00" : "transparent",
-                                                border: "1px solid #E57C00",
-                                                borderRadius: "6px",
+                                                border: `1px solid ${design === "grid" ? "#E57C00" : "#AAAAAA"} !important`,
+                                                borderRadius: "8px !important",
                                                 marginRight: "8px",
                                             }}
                                         >
@@ -599,8 +598,8 @@ export const BusinessInfo = () => {
                                             sx={{
                                                 padding: "10px",
                                                 backgroundColor: design === "list" ? "#E57C00" : "transparent",
-                                                border: "1px solid #E57C00",
-                                                borderRadius: "6px",
+                                                border: `1px solid ${design === "list" ? "#E57C00" : "#AAAAAA"} !important`,
+                                                borderRadius: "8px !important",
                                                 marginRight: "8px",
                                             }}
                                         >
