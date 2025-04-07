@@ -23,7 +23,7 @@ export const Content = () => {
     const [editCategory, setEditCategory] = useState(null);
     const [editName, setEditName] = useState('');
     const [loading, setLoading] = useState(true);
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     // const selectedBranch = localStorage.getItem('selectedBranch');
 
 
@@ -229,7 +229,7 @@ export const Content = () => {
                                             width: "100%", backgroundColor: "#F1F2F2", borderRadius: "30px", height: "45%",
                                             display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center"
                                         }}>
-                                            <img src={`https://highleveltecknology.com/Qtap/${item.img}`} alt="item" style={{ width: "100%", height: "100%" }} />
+                                            <img src={`https://highleveltecknology.com/Qtap/public/${item.img}`} alt="item" style={{ width: "100%", height: "100%" }} />
                                         </Box>
                                         <CardContent
                                             sx={{ padding: "5px" }}

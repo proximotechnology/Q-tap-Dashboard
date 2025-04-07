@@ -1,15 +1,17 @@
 import { Box, Button, FormControlLabel, Grid, IconButton, Radio, RadioGroup, styled, TextField, Typography } from '@mui/material';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
 import { PricingCard } from './PricingCard';
 import { useNavigate } from 'react-router';
 import DoneIcon from '@mui/icons-material/Done';
 import { useTranslation } from 'react-i18next';
+import { usePersonalContext } from '../../context/PersonalContext';
+
 const Divider = styled(Box)({
   width: '5%',
   height: '3px',
   backgroundColor: '#E57C00',
   borderRadius: "20px",
-  marginBottom: "20px"
+  marginBottom: "20px",
 });
 
 const Divider2 = styled(Box)({
@@ -20,14 +22,93 @@ const Divider2 = styled(Box)({
   display: "flex",
   margin: "0 auto",
 });
+
 export const Payment = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation()
+  const { t } = useTranslation();
+  const { personalData, updatePersonalData } = usePersonalContext();
   const [selectedValue, setSelectedValue] = useState('cash');
+  const [pricing, setPricing] = useState([]);
+  const [selectedPlans, setSelectedPlans] = useState([]); // Array of { plan, pricingWay }
+  const [discountCode, setDiscountCode] = useState('');
+
+  // Fetch pricing data from API
+  useEffect(() => {
+    fetch('https://highleveltecknology.com/Qtap/api/pricing', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        setPricing(data.data);
+        console.log("price data register", data);
+      })
+      .catch(error => console.error('Error fetching pricing data:', error));
+  }, []);
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
+    updatePersonalData({ payment_method: event.target.value });
   };
+
+  const handleDiscountChange = (event) => {
+    setDiscountCode(event.target.value);
+    updatePersonalData({ discount_id: event.target.value });
+  };
+
+  const handlePlanSelect = (plan) => {
+    const isSelected = selectedPlans.some(p => p.plan.id === plan.id);
+    let updatedPlans;
+    if (isSelected) {
+      updatedPlans = selectedPlans.filter(p => p.plan.id !== plan.id); // Deselect
+    } else {
+      updatedPlans = [...selectedPlans, { plan, pricingWay: '' }]; // Add without pricingWay initially
+    }
+    setSelectedPlans(updatedPlans);
+
+    // Update pricing_id with the first selected plan's ID as a string, or empty string if none
+    const firstPlanId = updatedPlans.length > 0 ? updatedPlans[0].plan.id : '';
+    updatePersonalData({ pricing_id: firstPlanId });
+  };
+
+  const handlePricingWayChange = (planId, pricingWay) => {
+    const updatedPlans = selectedPlans.map(p =>
+      p.plan.id === planId ? { ...p, pricingWay } : p
+    );
+    setSelectedPlans(updatedPlans);
+
+    // Update pricing_way in context if all selected plans have a consistent pricingWay
+    const allPricingWays = updatedPlans.map(p => p.pricingWay).filter(Boolean);
+    if (allPricingWays.length === updatedPlans.length && allPricingWays.every(pw => pw === allPricingWays[0])) {
+      updatePersonalData({ pricing_way: allPricingWays[0] }); // Set to 'monthly' or 'yearly'
+    } else {
+      updatePersonalData({ pricing_way: '' }); // Clear if not all match or some are unset
+    }
+  };
+
+  const calculateTotals = () => {
+    if (selectedPlans.length === 0) return { subTotal: 0, addOns: 0, tax: 0, discounts: 0, total: 0 };
+
+    // Check if all selected plans have pricingWay set
+    const allPricingWaysSet = selectedPlans.every(p => p.pricingWay);
+    if (!allPricingWaysSet) return { subTotal: 0, addOns: 0, tax: 0, discounts: 0, total: 0 };
+
+    const subTotal = selectedPlans.reduce((sum, { plan, pricingWay }) => {
+      const price = pricingWay === 'monthly' ? parseFloat(plan.monthly_price) : parseFloat(plan.yearly_price);
+      return sum + (price || 0);
+    }, 0);
+
+    const addOns = 0; // Adjust as needed
+    const tax = 0; // Adjust as needed
+    const discounts = discountCode ? parseFloat(discountCode) || 0 : 0;
+    const total = subTotal + addOns + tax - discounts;
+
+    return { subTotal, addOns, tax, discounts, total };
+  };
+
+  const totals = calculateTotals();
 
   return (
     <Box marginTop={"50px"} flexGrow={1}>
@@ -36,139 +117,106 @@ export const Payment = () => {
       </Typography>
       <Divider />
 
-      <Grid
-        container
-        spacing={1}
-        sx={{ width: "100%", height: "300px", justifyContent: "center" }}
-      >
-        <Grid item xs={12} sm={6} md={2}>
-          <PricingCard
-            title={t("free")}
-            pricePerMonth="0"
-            pricePerYear="0"
-            orders="30"
-            buttonText={t("select")}
-          />
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={2} sx={{ margin: "0px 30px" }}>
-          <PricingCard
-            title={t("starter")}
-            pricePerMonth="600"
-            pricePerYear="6000"
-            orders="900"
-            buttonText={t("select")}
-          />
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={2}>
-          <PricingCard
-            title={t("pro")}
-            pricePerMonth="999"
-            pricePerYear="10,000"
-            orders={t("Unlimited")}
-            buttonText={t("select")}
-          />
-        </Grid>
+      <Grid container spacing={1} sx={{ width: "100%", height: "300px", justifyContent: "center" }}>
+        {pricing.map((plan) => (
+          <Grid item xs={12} sm={6} md={2} key={plan.id}>
+            <PricingCard
+              title={plan.name}
+              pricePerMonth={plan.monthly_price}
+              pricePerYear={plan.yearly_price}
+              orders={plan.orders_limit}
+              buttonText={t("select")}
+              isSelected={selectedPlans.some(p => p.plan.id === plan.id)}
+              onSelect={() => handlePlanSelect(plan)}
+              onPricingWayChange={(pricingWay) => handlePricingWayChange(plan.id, pricingWay)}
+              pricingWay={selectedPlans.find(p => p.plan.id === plan.id)?.pricingWay || ''}
+            />
+          </Grid>
+        ))}
       </Grid>
 
-      <Grid container spacing={2}  >
-
+      <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <Box sx={{ textAlign: "center", justifyContent: "center", marginLeft: "100px", marginTop: "15px" }}>
             <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
               {t("subTotal")}
-              <span variant="body1" style={{ fontSize: '17px', color: "#222240", marginLeft: "10px" }}>
-                1000.00 <sub style={{ fontSize: '8px' }}>EGP</sub>
+              <span style={{ fontSize: '17px', color: "#222240", marginLeft: "10px" }}>
+                {totals.subTotal.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
               </span>
             </Typography>
-
             <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
               {t("addOns")}
-              <span variant="body1" style={{ fontSize: '17px', color: "#222240", marginLeft: "10px" }}>
-                500.00 <sub style={{ fontSize: '8px' }}>EGP</sub>
+              <span style={{ fontSize: '17px', color: "#222240", marginLeft: "10px" }}>
+                {totals.addOns.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
               </span>
             </Typography>
-
             <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
               {t("tax")}
-              <span variant="body1" style={{ fontSize: '17px', color: "#222240", marginLeft: "10px" }}>
-                60.00 <sub style={{ fontSize: '8px' }}>EGP</sub>
+              <span style={{ fontSize: '17px', color: "#222240", marginLeft: "10px" }}>
+                {totals.tax.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
               </span>
             </Typography>
-
             <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
               {t("discounts")}
-              <span variant="body1" style={{ fontSize: '17px', color: "#222240", marginLeft: "10px" }}>
-                50.00 <sub style={{ fontSize: '8px' }}>EGP</sub>
+              <span style={{ fontSize: '17px', color: "#222240", marginLeft: "10px" }}>
+                {totals.discounts.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
               </span>
             </Typography>
             <Divider2 sx={{ mt: 1, mb: 1 }} />
-
             <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
               {t("total")}
-              <span variant="body1" style={{ fontSize: '17px', color: "#E57C00", marginLeft: "10px" }}>
-                1390.00 <sub style={{ fontSize: '8px' }}>EGP</sub>
+              <span style={{ fontSize: '17px', color: "#E57C00", marginLeft: "10px" }}>
+                {totals.total.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
               </span>
             </Typography>
           </Box>
         </Grid>
 
-
-        <Grid item xs={12} md={6} display="flex" flexDirection="column"
-          alignItems="center" sx={{ marginTop: "30px" }}>
+        <Grid item xs={12} md={6} display="flex" flexDirection="column" alignItems="center" sx={{ marginTop: "30px" }}>
           <Box sx={{ width: '100%', maxWidth: '400px', textAlign: 'center' }}>
-
-            <Box sx={{ width: { lg: '220px', md: "100%", xs: "100%" } }} >
+            <Box sx={{ width: { lg: '220px', md: "100%", xs: "100%" } }}>
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Box>
                   <Typography sx={{ fontSize: '9px', color: "gray" }}>{t("disCode")}</Typography>
-                  <TextField variant="outlined" size="small" sx={{
-                    width: "70px",
-                    "& .MuiOutlinedInput-root": {
-                      height: "26px",
-                    },
-                  }} />
+                  <TextField
+                    variant="outlined"
+                    size="small"
+                    value={discountCode}
+                    onChange={handleDiscountChange}
+                    sx={{
+                      width: "70px",
+                      "& .MuiOutlinedInput-root": { height: "26px" },
+                    }}
+                  />
                 </Box>
-
                 <Box alignItems={"center"}>
                   <IconButton>
                     <DoneIcon sx={{ fontSize: "15px", color: "#E57C00" }} />
                   </IconButton>
                   <IconButton>
-                    <span class="icon-close-1" style={{ fontSize: "9px", color: "#222240" }}></span>
+                    <span className="icon-close-1" style={{ fontSize: "9px", color: "#222240" }}></span>
                   </IconButton>
                 </Box>
               </Box>
             </Box>
 
             <RadioGroup defaultValue="cash" sx={{ mt: 1 }} onChange={handleChange}>
-              <FormControlLabel sx={{ color: 'gray', fontSize: "11px", }} value="cash"
-                control={<Radio size="small"
-                  sx={{
-                    color: selectedValue === 'cash' ? '#E57C00' : 'gray',
-                    '&.Mui-checked': { color: '#E57C00' },
-                  }}
-                />}
-                label={
-                  <Typography sx={{ fontSize: "12px", color: 'gray' }}>{t("cashOrCard")}</Typography>
-                } />
-
-              <FormControlLabel sx={{ color: 'gray', fontSize: "11px", mt: '-8px' }} value="card"
-                control={<Radio size="small"
-                  sx={{
-                    color: selectedValue === 'card' ? '#E57C00' : 'gray',
-                    '&.Mui-checked': { color: '#E57C00' },
-                  }} />}
-                label={
-                  <Typography sx={{ fontSize: "12px", color: 'gray' }}>{t("onlinePayment")}</Typography>
-                }
+              <FormControlLabel
+                sx={{ color: 'gray', fontSize: "11px" }}
+                value="cash"
+                control={<Radio size="small" sx={{ color: selectedValue === 'cash' ? '#E57C00' : 'gray', '&.Mui-checked': { color: '#E57C00' } }} />}
+                label={<Typography sx={{ fontSize: "12px", color: 'gray' }}>{t("cashOrCard")}</Typography>}
+              />
+              <FormControlLabel
+                sx={{ color: 'gray', fontSize: "11px", mt: '-8px' }}
+                value="wallet"
+                control={<Radio size="small" sx={{ color: selectedValue === 'wallet' ? '#E57C00' : 'gray', '&.Mui-checked': { color: '#E57C00' } }} />}
+                label={<Typography sx={{ fontSize: "12px", color: 'gray' }}>{t("onlinePayment")}</Typography>}
               />
             </RadioGroup>
           </Box>
         </Grid>
       </Grid>
-
 
       <Grid item xs={12}>
         <Button
@@ -180,12 +228,11 @@ export const Payment = () => {
             backgroundColor: "#E57C00",
             textTransform: 'none',
             padding: "6px 0",
-            position: "fixed", bottom: "30px",
+            position: "fixed",
+            bottom: "30px",
             left: "55%",
-            '&:hover': {
-              backgroundColor: "#E57C00",
-            },
-            color: "#fff"
+            '&:hover': { backgroundColor: "#E57C00" },
+            color: "#fff",
           }}
           onClick={() => navigate('/save')}
         >
@@ -193,6 +240,5 @@ export const Payment = () => {
         </Button>
       </Grid>
     </Box>
-
-  )
-}
+  );
+};

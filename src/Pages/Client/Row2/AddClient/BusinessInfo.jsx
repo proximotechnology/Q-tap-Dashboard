@@ -35,6 +35,7 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import { ArrowForwardIos, ArrowBackIos } from "@mui/icons-material";
 import { useBusinessContext } from "../../../../context/BusinessContext";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 
 const daysOfWeek = ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"];
 
@@ -42,7 +43,7 @@ export const BusinessInfo = () => {
   const { t } = useTranslation();
   const { businessData, updateBusinessData, branches, selectedBranch, selectBranch } = useBusinessContext();
   const [branchIndex, setBranchIndex] = useState(0);
-
+  const navigate = useNavigate()
   const {
     businessName,
     businessPhone,
@@ -375,6 +376,9 @@ export const BusinessInfo = () => {
               <CheckOutlinedIcon sx={{ fontSize: "20px", marginRight: "6px", color: "#ef7d00" }} /> {t("pro")}
             </Button>
             <Button
+              onClick={() => {
+                navigate('/payment');
+              }}
               variant="contained"
               sx={{
                 backgroundColor: "#222240",

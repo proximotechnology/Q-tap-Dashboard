@@ -57,6 +57,10 @@ import { ContentMenuProvider } from './context/ContentMenuContext';
 import { RegisterClientProvider } from './context/RegisterClientContext';
 import { ClientLoginDataProvider } from './context/ClientLoginDataContext';
 import { ClientProvider } from './context/ClientContext';
+import { AffiliateClientProvider } from './context/AffiliateClient';
+import Pusher from "pusher-js";
+import { toast } from "react-toastify";
+import { useEffect } from 'react';
 
 function App() {
   const routes = createBrowserRouter([
@@ -169,7 +173,7 @@ function App() {
       ]
     },
     // dashboard-client 
-      {
+    {
       path: "/",
       element: <HomeClient />,// صفحات الداش بورد بتاعت ال client الأساسية 
       children: [
@@ -274,28 +278,49 @@ function App() {
     },
   ]);
 
+  // 🔔 Pusher Setup
+  useEffect(() => {
+    const pusher = new Pusher('63b495891d2c3cff9d36', {
+      cluster: 'eu',
+    });
 
+    const channel = pusher.subscribe('notify-channel');
+    channel.bind('form-submitted', function (data) {
+      // ✅ Show toast or handle state
+      // console.log("📢 Received from Pusher:", data);
+
+      toast.info(`📢 ${data?.message?.title}: ${data?.message?.content}`);
+      // You can also store in state if you want to display in Content
+    });
+
+    return () => {
+      channel.unbind_all();
+      channel.unsubscribe();
+    };
+  }, []);
 
   return (
     <ClientProvider>
-      <ClientLoginDataProvider>
-        <RegisterClientProvider>
-          <ContentMenuProvider>
-            <BranchProvider>
-              <PersonalProvider>
-                <BusinessProvider>
-                  <div style={{ minHeight: "100vh" }}>
-                    <div className="w-100 ">
-                      <RouterProvider router={routes}></RouterProvider>
+      <AffiliateClientProvider>
+        <ClientLoginDataProvider>
+          <RegisterClientProvider>
+            <ContentMenuProvider>
+              <BranchProvider>
+                <PersonalProvider>
+                  <BusinessProvider>
+                    <div style={{ minHeight: "100vh" }}>
+                      <div className="w-100 ">
+                        <RouterProvider router={routes}></RouterProvider>
+                      </div>
+                      <ToastContainer />
                     </div>
-                    <ToastContainer />
-                  </div>
-                </BusinessProvider>
-              </PersonalProvider>
-            </BranchProvider>
-          </ContentMenuProvider>
-        </RegisterClientProvider>
-      </ClientLoginDataProvider>
+                  </BusinessProvider>
+                </PersonalProvider>
+              </BranchProvider>
+            </ContentMenuProvider>
+          </RegisterClientProvider>
+        </ClientLoginDataProvider>
+      </AffiliateClientProvider>
     </ClientProvider>
 
   );

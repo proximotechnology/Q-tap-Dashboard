@@ -91,7 +91,7 @@ const Product = () => {
             <Box>
               {menu.img && (
                 <img 
-                  src={`https://highleveltecknology.com/Qtap/${menu.img}`} 
+                  src={`https://highleveltecknology.com/Qtap/public/${menu.img}`} 
                   alt={menu.name}
                   style={{ 
                     width: "70px", 
@@ -104,7 +104,7 @@ const Product = () => {
               )}
               {menu.img && (
                 <img 
-                  src={`https://highleveltecknology.com/Qtap/${menu.img}`} 
+                  src={`https://highleveltecknology.com/Qtap/public/${menu.img}`} 
                   alt={menu.name}
                   style={{ 
                     width: "120px", 
