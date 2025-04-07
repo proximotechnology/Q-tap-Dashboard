@@ -52,6 +52,7 @@ export const HomePage = () => {
         <QtapLogo />
 
         <Grid item xs={12} md={6}>
+          {/* language component */}
           <Box
             sx={{
               position: "absolute",
@@ -60,6 +61,7 @@ export const HomePage = () => {
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
+              zIndex:"2000",
             }}
           >
             <img
@@ -141,7 +143,7 @@ export const HomePage = () => {
               </Menu>
             </Box>
           </Box>
-
+          {/* login component */}
           <Box
             display="flex"
             flexDirection="column"

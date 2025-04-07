@@ -1,194 +1,196 @@
 import {
-    Box,
-    Button,
-    Checkbox,
-    Divider,
-    FormControl,
-    FormControlLabel,
-    Grid,
-    IconButton,
-    InputAdornment,
-    MenuItem,
-    OutlinedInput,
-    Select,
-    TextField,
-    ToggleButton,
-    ToggleButtonGroup,
-    Typography,
-  } from "@mui/material";
-  import React, { useState } from "react";
-  import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
-  import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
-  import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-  import CardTravelOutlinedIcon from "@mui/icons-material/CardTravelOutlined";
-  import TableBarIcon from "@mui/icons-material/TableBar";
-  import SellOutlinedIcon from "@mui/icons-material/SellOutlined";
-  import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
-  import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
-  import MailOutlinedIcon from "@mui/icons-material/MailOutlined";
-  import PinDropOutlinedIcon from "@mui/icons-material/PinDropOutlined";
-  import WbSunnyIcon from "@mui/icons-material/WbSunny";
-  import NightlightIcon from "@mui/icons-material/Nightlight";
-  import ViewQuiltIcon from "@mui/icons-material/ViewQuilt";
-  import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-  import { ArrowForwardIos, ArrowBackIos } from "@mui/icons-material";
-  import { useBusinessContext } from "../../../../context/BusinessContext";
+  Box,
+  Button,
+  Checkbox,
+  Divider,
+  FormControl,
+  FormControlLabel,
+  Grid,
+  IconButton,
+  InputAdornment,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  TextField,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+} from "@mui/material";
+import React, { useState } from "react";
+import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
+import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import CardTravelOutlinedIcon from "@mui/icons-material/CardTravelOutlined";
+import TableBarIcon from "@mui/icons-material/TableBar";
+import SellOutlinedIcon from "@mui/icons-material/SellOutlined";
+import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
+import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
+import MailOutlinedIcon from "@mui/icons-material/MailOutlined";
+import PinDropOutlinedIcon from "@mui/icons-material/PinDropOutlined";
+import WbSunnyIcon from "@mui/icons-material/WbSunny";
+import NightlightIcon from "@mui/icons-material/Nightlight";
+import ViewQuiltIcon from "@mui/icons-material/ViewQuilt";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import { ArrowForwardIos, ArrowBackIos } from "@mui/icons-material";
+import { useBusinessContext } from "../../../../context/BusinessContext";
 import { useTranslation } from "react-i18next";
-  
-  const daysOfWeek = ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"];
-  
-  export const BusinessInfoAdmin = () => {
-    const {t} = useTranslation()
-    const { businessData, updateBusinessData, branches, selectedBranch, selectBranch } =
-      useBusinessContext();
-    const [branchIndex, setBranchIndex] = useState(0);
-  
-    const {
-      businessName,
-      businessPhone,
-      businessEmail,
-      country,
-      city,
-      currency,
-      businessType,
-      menuLanguage,
-      tableCount,
-      mode,
-      design,
-      workingHours = { selectedDays: [], fromTime: "9:00 am", toTime: "5:00 pm", currentDay: "Sunday" },
-      servingWays = [],
-      paymentMethods = [],
-      paymentTime = "after",
-      callWaiter = "inactive",
-    } = branches[branchIndex] || businessData;
-  
-    const handleBranchClick = (index) => {
-      setBranchIndex(index);
-      selectBranch(index);
-    };
-  
-    const handleModeChange = (event, newMode) => {
-      if (newMode !== null) {
-        updateBusinessData({ mode: newMode });
-      }
-    };
-  
-    const handleDesignChange = (event, newDesign) => {
-      if (newDesign !== null) {
-        updateBusinessData({ design: newDesign });
-      }
-    };
-  
-    const handleInputChange = (field, value) => {
-      updateBusinessData({ [field]: value });
-    };
-  
-    const handleWorkingHoursChange = (updates) => {
-      updateBusinessData({
-        workingHours: {
-          ...workingHours,
-          ...updates,
-        },
-      });
-    };
-  
-    const handleDayClick = (day) => {
-      const newSelectedDays = workingHours.selectedDays.includes(day)
-        ? workingHours.selectedDays.filter((d) => d !== day)
-        : [...workingHours.selectedDays, day];
-      handleWorkingHoursChange({ selectedDays: newSelectedDays });
-    };
-  
-    const handleTimeChange = (event, type) => {
-      const newTime = event.target.value;
-      if (type === "from") {
-        handleWorkingHoursChange({ fromTime: newTime });
-      } else {
-        handleWorkingHoursChange({ toTime: newTime });
-      }
-    };
-  
-    const handleServingWayChange = (way) => {
-      const updatedServingWays = servingWays.includes(way)
-        ? servingWays.filter((w) => w !== way)
-        : [...servingWays, way];
-      updateBusinessData({ servingWays: updatedServingWays });
-    };
-  
-    const handlePaymentMethodChange = (method) => {
-      const updatedPaymentMethods = paymentMethods.includes(method)
-        ? paymentMethods.filter((m) => m !== method)
-        : [...paymentMethods, method];
-      updateBusinessData({ paymentMethods: updatedPaymentMethods });
-    };
-  
-    const handlePaymentTimeChange = (time) => {
-      updateBusinessData({ paymentTime: time });
-    };
-  
-    const handleCallWaiterChange = (event) => {
-      updateBusinessData({ callWaiter: event.target.checked ? "active" : "inactive" });
-    };
-  
-    const handleDayToggle = (direction) => {
-      const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-      const currentIndex = days.indexOf(workingHours.currentDay);
-      const newIndex = (currentIndex + (direction === "next" ? 1 : -1) + days.length) % days.length;
-      handleWorkingHoursChange({ currentDay: days[newIndex] });
-    };
-  
-    const handlePrint = () => {
-      window.print();
-    };
-  
-    return (
-      <Grid container sx={{ marginTop: "20px", paddingLeft: "20px" }}>
-        <Grid item xs={12}>
-          <Box display={"flex"} justifyContent={"space-between"}>
-            <Box>
-              <Typography variant="body2" sx={{ fontSize: "15px" }} color="#3b3a3a" gutterBottom>
-                {t("busnessInfo")}
-              </Typography>
-              <Divider sx={{ width: "100%", borderBottom: "4px solid #ef7d00", marginBottom: "18px" }} />
-            </Box>
-            <Box>
-              <IconButton>
-                <span className="icon-delete" style={{ fontSize: "23px" }}></span>
-              </IconButton>
-              <IconButton onClick={handlePrint}>
-                <img src="/assets/print.svg" alt="icon" style={{ width: "22px", height: "22px" }} />
-              </IconButton>
-            </Box>
+
+const daysOfWeek = ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"];
+
+export const BusinessInfoAdmin = () => {
+  const { t } = useTranslation()
+  const { businessData, updateBusinessData, branches, selectedBranch, selectBranch } =
+    useBusinessContext();
+  const [branchIndex, setBranchIndex] = useState(0);
+
+  const {
+    businessName,
+    businessPhone,
+    businessEmail,
+    country,
+    city,
+    currency,
+    businessType,
+    menuLanguage,
+    tableCount,
+    mode,
+    design,
+    workingHours = { selectedDays: [], fromTime: "9:00 am", toTime: "5:00 pm", currentDay: "Sunday" },
+    servingWays = [],
+    paymentMethods = [],
+    paymentTime = "after",
+    callWaiter = "inactive",
+  } = branches[branchIndex] || businessData;
+
+  const handleBranchClick = (index) => {
+    setBranchIndex(index);
+    selectBranch(index);
+  };
+
+  const handleModeChange = (event, newMode) => {
+    if (newMode !== null) {
+      updateBusinessData({ mode: newMode });
+    }
+  };
+
+  const handleDesignChange = (event, newDesign) => {
+    if (newDesign !== null) {
+      updateBusinessData({ design: newDesign });
+    }
+  };
+
+  const handleInputChange = (field, value) => {
+    updateBusinessData({ [field]: value });
+  };
+
+  const handleWorkingHoursChange = (updates) => {
+    updateBusinessData({
+      workingHours: {
+        ...workingHours,
+        ...updates,
+      },
+    });
+  };
+
+  const handleDayClick = (day) => {
+    const newSelectedDays = workingHours.selectedDays.includes(day)
+      ? workingHours.selectedDays.filter((d) => d !== day)
+      : [...workingHours.selectedDays, day];
+    handleWorkingHoursChange({ selectedDays: newSelectedDays });
+  };
+
+  const handleTimeChange = (event, type) => {
+    const newTime = event.target.value;
+    if (type === "from") {
+      handleWorkingHoursChange({ fromTime: newTime });
+    } else {
+      handleWorkingHoursChange({ toTime: newTime });
+    }
+  };
+
+  const handleServingWayChange = (way) => {
+    const updatedServingWays = servingWays.includes(way)
+      ? servingWays.filter((w) => w !== way)
+      : [...servingWays, way];
+    updateBusinessData({ servingWays: updatedServingWays });
+  };
+
+  const handlePaymentMethodChange = (method) => {
+    const updatedPaymentMethods = paymentMethods.includes(method)
+      ? paymentMethods.filter((m) => m !== method)
+      : [...paymentMethods, method];
+    updateBusinessData({ paymentMethods: updatedPaymentMethods });
+  };
+
+  const handlePaymentTimeChange = (time) => {
+    updateBusinessData({ paymentTime: time });
+  };
+
+  const handleCallWaiterChange = (event) => {
+    updateBusinessData({ callWaiter: event.target.checked ? "active" : "inactive" });
+  };
+
+  const handleDayToggle = (direction) => {
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const currentIndex = days.indexOf(workingHours.currentDay);
+    const newIndex = (currentIndex + (direction === "next" ? 1 : -1) + days.length) % days.length;
+    handleWorkingHoursChange({ currentDay: days[newIndex] });
+  };
+
+  const handlePrint = () => {
+    window.print();
+  };
+
+  return (
+    <Grid container sx={{ marginTop: "20px", paddingLeft: "20px" }}>
+      <Grid item xs={12}  sx={{ px: { xs: 2, md: 0 } }}>
+        <Box display={"flex"} justifyContent={"space-between"}>
+          <Box>
+            <Typography variant="body2" sx={{ fontSize: "15px" }} color="#3b3a3a" gutterBottom>
+              {t("busnessInfo")}
+            </Typography>
+            <Divider sx={{ width: "100%", borderBottom: "4px solid #ef7d00", marginBottom: "18px" }} />
           </Box>
-          <Box display="flex" gap={2}>
-            {branches.map((branch, i) => (
-              <Button
-                key={i}
-                variant="contained"
-                onClick={() => handleBranchClick(i)}
-                sx={{
+          <Box>
+            <IconButton>
+              <span className="icon-delete" style={{ fontSize: "23px" }}></span>
+            </IconButton>
+            <IconButton onClick={handlePrint}>
+              <img src="/assets/print.svg" alt="icon" style={{ width: "22px", height: "22px" }} />
+            </IconButton>
+          </Box>
+        </Box>
+        <Box display="flex" gap={2}>
+          {branches.map((branch, i) => (
+            <Button
+              key={i}
+              variant="contained"
+              onClick={() => handleBranchClick(i)}
+              sx={{
+                backgroundColor: selectedBranch === i ? "#ef7d00" : "#bdbdbd",
+                color: "white",
+                borderRadius: "10px",
+                padding: "3px 15px",
+                display: "flex",
+                alignItems: "center",
+                textTransform: "none",
+                "&:hover": {
                   backgroundColor: selectedBranch === i ? "#ef7d00" : "#bdbdbd",
-                  color: "white",
-                  borderRadius: "10px",
-                  padding: "3px 15px",
-                  display: "flex",
-                  alignItems: "center",
-                  textTransform: "none",
-                  "&:hover": {
-                    backgroundColor: selectedBranch === i ? "#ef7d00" : "#bdbdbd",
-                  },
-                }}
-              >
-                <StorefrontOutlinedIcon sx={{ marginRight: "5px", fontSize: "20px" }} />
-                {t("branch")} {i + 1}
-              </Button>
-            ))}
-          </Box>
-          <Divider sx={{ margin: "12px 0px" }} />
-        </Grid>
-  
-        <Grid item xs={12} md={12} display={"flex"} justifyContent={"space-between"}>
-          <Grid md={6} sx={{ marginRight: "40px" }}>
+                },
+              }}
+            >
+              <StorefrontOutlinedIcon sx={{ marginRight: "5px", fontSize: "20px" }} />
+              {t("branch")} {i + 1}
+            </Button>
+          ))}
+        </Box>
+        <Divider sx={{ margin: "12px 0px" }} />
+      </Grid>
+
+      <Grid item xs={12} md={12} display={"flex"} justifyContent={"space-between"}>
+        <Grid container spacing={2}>
+
+        <Grid item xs={12} md={6}  sx={{ px: { xs: 2, md: 0 } }}>
             {/* Business Info Fields */}
             <FormControl variant="outlined" fullWidth>
               <OutlinedInput
@@ -205,7 +207,7 @@ import { useTranslation } from "react-i18next";
                 onChange={(e) => handleInputChange("businessName", e.target.value)}
               />
             </FormControl>
-  
+
             <FormControl variant="outlined" fullWidth>
               <OutlinedInput
                 id="outlined-fullname"
@@ -221,7 +223,7 @@ import { useTranslation } from "react-i18next";
                 onChange={(e) => handleInputChange("businessPhone", e.target.value)}
               />
             </FormControl>
-  
+
             <FormControl variant="outlined" fullWidth>
               <OutlinedInput
                 id="outlined-fullname"
@@ -238,7 +240,7 @@ import { useTranslation } from "react-i18next";
                 onChange={(e) => handleInputChange("businessEmail", e.target.value)}
               />
             </FormControl>
-  
+
             <Box display="flex" justifyContent="space-between" width="100%" marginBottom="10px">
               <FormControl variant="outlined" sx={{ width: "48%" }}>
                 <Select
@@ -261,7 +263,7 @@ import { useTranslation } from "react-i18next";
                   <MenuItem value="UK">United Kingdom</MenuItem>
                 </Select>
               </FormControl>
-  
+
               <FormControl variant="outlined" sx={{ width: "48%" }}>
                 <Select
                   id="outlined-city"
@@ -284,7 +286,7 @@ import { useTranslation } from "react-i18next";
                 </Select>
               </FormControl>
             </Box>
-  
+
             <Box display="flex" alignItems="center" marginBottom="10px">
               <Button
                 variant="contained"
@@ -302,10 +304,10 @@ import { useTranslation } from "react-i18next";
                 }}
               >
                 <span className="icon-map-1" style={{ fontSize: "18px", marginRight: "6px" }}></span>
-               {t("pinYourLocation")}
+                {t("pinYourLocation")}
               </Button>
             </Box>
-  
+
             <FormControl variant="outlined" sx={{ width: "100%", marginBottom: "10px" }}>
               <Select
                 id="outlined-Currency"
@@ -327,7 +329,7 @@ import { useTranslation } from "react-i18next";
                 <MenuItem value="UK">United Kingdom</MenuItem>
               </Select>
             </FormControl>
-  
+
             <FormControl variant="outlined" sx={{ width: "100%", marginBottom: "10px" }}>
               <Select
                 id="outlined-BusinessType"
@@ -355,7 +357,7 @@ import { useTranslation } from "react-i18next";
                 <MenuItem value="Retail">{t("retailStore")}</MenuItem>
               </Select>
             </FormControl>
-  
+
             <FormControl variant="outlined" sx={{ width: "100%", marginBottom: "10px" }}>
               <Select
                 id="outlined-MenuDefaultLanguage"
@@ -377,7 +379,7 @@ import { useTranslation } from "react-i18next";
                 <MenuItem value="UK">United Kingdom</MenuItem>
               </Select>
             </FormControl>
-  
+
             <FormControl variant="outlined" sx={{ width: "100%", marginBottom: "10px" }}>
               <Select
                 id="outlined-TableCount"
@@ -401,13 +403,13 @@ import { useTranslation } from "react-i18next";
                 <MenuItem value="6">6</MenuItem>
               </Select>
             </FormControl>
-  
+
             <Divider sx={{ width: "100%", borderBottom: "1px solid #9d9d9c", marginBottom: "18px" }} />
-  
+
             <Typography variant="body2" sx={{ fontSize: "14px", color: "gray", display: "flex" }}>
               <SellOutlinedIcon sx={{ color: "gray", fontSize: "20px", marginRight: "6px" }} /> {t("bundle")}
             </Typography>
-  
+
             <Box display="flex" alignItems="center" justifyContent="flex-start" mb={2}>
               <Button
                 variant="outlined"
@@ -421,7 +423,7 @@ import { useTranslation } from "react-i18next";
               >
                 <CheckOutlinedIcon sx={{ fontSize: "20px", marginRight: "6px", color: "#ef7d00" }} /> {t("pro")}
               </Button>
-  
+
               <Button
                 variant="contained"
                 sx={{
@@ -440,8 +442,8 @@ import { useTranslation } from "react-i18next";
               </Button>
             </Box>
           </Grid>
-  
-          <Grid md={6}>
+
+          <Grid item xs={12} md={6}  sx={{ px: { xs: 2, md: 0 } }}>
             <Grid
               sx={{
                 display: "flex",
@@ -472,7 +474,7 @@ import { useTranslation } from "react-i18next";
                     >
                       <WbSunnyIcon sx={{ fontSize: "30px", color: mode === "light" ? "#E57C00" : "inherit" }} />
                     </ToggleButton>
-  
+
                     <ToggleButton
                       value="dark"
                       sx={{
@@ -485,13 +487,13 @@ import { useTranslation } from "react-i18next";
                     </ToggleButton>
                   </ToggleButtonGroup>
                 </Grid>
-  
+
                 <Divider
                   orientation="vertical"
                   flexItem
                   sx={{ height: "50px", marginRight: "25px", width: "1px", backgroundColor: "orange" }}
                 />
-  
+
                 <Grid container spacing={1}>
                   <Typography variant="h6" sx={{ fontSize: "13px", width: "100%", fontWeight: "500", color: "gray" }}>
                     {t("menus.design")}
@@ -520,9 +522,9 @@ import { useTranslation } from "react-i18next";
                   </ToggleButtonGroup>
                 </Grid>
               </Box>
-  
+
               <Divider sx={{ backgroundColor: "#f4f6fc", height: "2px", margin: "8px 0px" }} flexItem />
-  
+
               {/* Working Hours */}
               <Box>
                 <Grid container spacing={2} alignItems="center">
@@ -531,7 +533,7 @@ import { useTranslation } from "react-i18next";
                       <span className="icon-working-hour" style={{ marginRight: "10px", fontSize: "22px" }}></span>
                       {t("workHours")}
                     </Typography>
-  
+
                     <Grid item xs={3}>
                       <Box
                         display="flex"
@@ -551,14 +553,14 @@ import { useTranslation } from "react-i18next";
                         >
                           {t(workingHours.currentDay)}
                         </Typography>
-  
+
                         <IconButton onClick={() => handleDayToggle("next")} sx={{ color: "#ef7d00" }}>
                           <ArrowForwardIos sx={{ fontSize: "11px" }} />
                         </IconButton>
                       </Box>
                     </Grid>
                   </Grid>
-  
+
                   <Grid item xs={7}>
                     <Box display="flex" flexWrap="wrap">
                       {daysOfWeek.map((day) => (
@@ -582,7 +584,7 @@ import { useTranslation } from "react-i18next";
                       ))}
                     </Box>
                   </Grid>
-  
+
                   <Grid item xs={4} sx={{ marginLeft: "20px" }}>
                     <Grid container spacing={2} alignItems="center">
                       <Box display={"flex"}>
@@ -635,9 +637,9 @@ import { useTranslation } from "react-i18next";
                   </Grid>
                 </Grid>
               </Box>
-  
+
               <Divider sx={{ backgroundColor: "#f4f6fc", height: "2px", margin: "8px 0px" }} flexItem />
-  
+
               {/* Serving Ways */}
               <Box>
                 <Typography variant="body1" sx={{ display: "flex", fontSize: "12px", color: "gray" }}>
@@ -672,9 +674,9 @@ import { useTranslation } from "react-i18next";
                   ))}
                 </Box>
               </Box>
-  
+
               <Divider sx={{ backgroundColor: "#f4f6fc", height: "2px", margin: "8px 0px" }} flexItem />
-  
+
               {/* Call Waiter */}
               <Box>
                 <FormControlLabel
@@ -699,9 +701,9 @@ import { useTranslation } from "react-i18next";
                   }
                 />
               </Box>
-  
+
               <Divider sx={{ backgroundColor: "#f4f6fc", height: "2px", margin: "8px 0px" }} flexItem />
-  
+
               {/* Payment Methods */}
               <Box>
                 <Typography variant="body1" sx={{ marginTop: "10px", display: "flex", fontSize: "12px", color: "gray" }}>
@@ -735,9 +737,9 @@ import { useTranslation } from "react-i18next";
                   ))}
                 </Box>
               </Box>
-  
+
               <Divider sx={{ backgroundColor: "#f4f6fc", height: "2px", margin: "8px 0px" }} flexItem />
-  
+
               {/* Payment Time */}
               <Box>
                 <Typography variant="body1" sx={{ display: "flex", fontSize: "12px", color: "gray" }}>
@@ -760,7 +762,7 @@ import { useTranslation } from "react-i18next";
                           }}
                         />
                       }
-                      label={time.charAt(0).toUpperCase() + time.slice(1) }
+                      label={time.charAt(0).toUpperCase() + time.slice(1)}
                       sx={{
                         "& .MuiTypography-root": {
                           fontSize: "13px",
@@ -773,7 +775,9 @@ import { useTranslation } from "react-i18next";
               </Box>
             </Grid>
           </Grid>
+
         </Grid>
       </Grid>
-    );
-  };
+    </Grid>
+  );
+};

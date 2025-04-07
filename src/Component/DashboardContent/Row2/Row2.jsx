@@ -9,14 +9,14 @@ import { ClientsLog } from './ClientsLog';
 
 export const Row2 = () => {
   return (
-    <Box sx={{  padding: '5px 20px 20px 20px' }}>
+    <Box sx={{  padding: '5px 20px 20px 20px'  , width:"100%"}}>
     <Grid container spacing={3}>
-      <Grid item xs={12} md={7}>
+      <Grid item xs={12}  lg={7}>
         <BarChart1 />
         <SalesVolumeCard /> 
       </Grid>
 
-      <Grid item xs={12} md={5}>
+      <Grid item xs={12}  lg={5}>
         <ClientsLog/>
       </Grid>
     </Grid>

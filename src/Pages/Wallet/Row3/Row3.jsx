@@ -11,9 +11,9 @@ import { useTranslation } from 'react-i18next';
 export const Row3 = () => {
     const { t } = useTranslation();
     return (
-        <Grid container spacing={2} sx={{ marginTop: "5px" }}>
-            <Grid item xs={6}>
-                <Card sx={{ borderRadius: 4, height: "100%" }}>
+        <Grid container spacing={2} sx={{ marginTop: "5px"}}>
+            <Grid item xs={12}>
+                <Card sx={{ borderRadius: 4, height: "100%",overflow: 'auto' }}>
                     <CardContent>
                         <Box
                             display="flex"
@@ -158,8 +158,8 @@ export const Row3 = () => {
                 </Card>
             </Grid>
 
-            <Grid item xs={6}>
-                <Card sx={{ borderRadius: 4, height: "100%" }}>
+            <Grid item xs={12}>
+                <Card sx={{ borderRadius: 4, height: "100%",overflow: 'auto' }}>
                     <CardContent>
                         <Box
                             display="flex"

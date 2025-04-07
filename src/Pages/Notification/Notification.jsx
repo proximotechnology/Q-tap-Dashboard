@@ -88,7 +88,10 @@ export const Notification = () => {
                   paddingLeft: "15px",
                   borderRadius: '20px',
                   backgroundColor: '#EBEDF3',
-                  boxShadow: "none"
+                  boxShadow: "none",
+                  overflow: 'hidden',
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
                 }}
               >
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -97,7 +100,7 @@ export const Notification = () => {
                     {notification.title}
                   </Typography>
                   <Divider orientation="vertical" flexItem sx={{ marginRight: '10px' }} />
-                  <Typography variant="body2" sx={{ color: "#AAAAAA", marginRight: '10px', fontSize: "12px" }}>
+                  <Typography variant="body2" sx={{ color: "#AAAAAA", marginRight: '10px', fontSize: "12px" ,width:"80%", whiteSpace: 'nowrap',overflow: 'hidden',textOverflow: 'ellipsis',maxWidth:'20vw'}}>
                     {notification.content}
                   </Typography>
                   {/* <Divider orientation="vertical" flexItem sx={{ marginRight: '10px' }} />

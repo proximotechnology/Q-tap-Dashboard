@@ -19,7 +19,7 @@ export const Setting = () => {
   const contentRef = useRef();
   const ourClientsRef = useRef();
   const paymentRef = useRef();
-  const {t} = useTranslation()
+  const { t } = useTranslation()
 
   const tabData = [
     {
@@ -106,6 +106,14 @@ export const Setting = () => {
           TabIndicatorProps={{
             style: { backgroundColor: "#ef7d00", height: "3px" },
           }}
+          variant="scrollable"
+          scrollButtons
+          allowScrollButtonsMobile
+          sx={{
+            overflowX: 'auto', // Enable horizontal scroll
+            scrollSnapType: 'x mandatory', // Snap on horizontal scroll
+            scrollBehavior: 'smooth', // Smooth scrolling
+          }}
         >
           {tabData.map((tab, index) => (
             <Tab
@@ -119,6 +127,7 @@ export const Setting = () => {
                 </Box>
               }
               sx={{
+                scrollSnapAlign: 'start',
                 textTransform: "capitalize",
                 color: selectedTab === index ? "#ef7d00" : "#575756",
                 "&.Mui-selected": { color: "#575756" },
@@ -134,6 +143,7 @@ export const Setting = () => {
             backgroundColor: "#ef7d00",
             height: "25px",
             width: "12%",
+            minWidth: "85px",
             borderRadius: "20px",
             textTransform: "capitalize",
             color: "white",

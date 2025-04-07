@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next";
 
 
 
-export default function SideBar() {
+export default function SideBar({isOpen , setOpen}) {
     const location = useLocation();
     const navigate = useNavigate();
     const theme = useTheme();
@@ -93,7 +93,10 @@ export default function SideBar() {
 
     return (
         <Box sx={{
-            width: '200px',
+            width: {
+                xs:'60%',
+                md:'200px'
+            },
             backgroundColor: '#fff',
             padding: '25px 20px',
             position: 'fixed',
@@ -101,7 +104,10 @@ export default function SideBar() {
             left: 0,
             height: '100vh',
             // removed overflowY: 'auto'
-            display: 'flex',
+            display: {
+                xs:isOpen? "" :"none",
+                md:'flex'
+            },
             flexDirection: 'column',
             zIndex: 1000
         }}>

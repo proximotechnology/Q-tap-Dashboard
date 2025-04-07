@@ -31,7 +31,7 @@ export const ClientsLog = () => {
 
 
 
-            <Table sx={{ borderCollapse: 'separate', borderSpacing: '0px', padding: "10px" }}>
+            <Table sx={{ borderCollapse: 'separate', borderSpacing: '0px', padding: "10px"  , width:"100%"}}>
                 <TableHead>
                     <TableRow sx={{ height: "30px" }}>
                         <TableCell sx={{ textAlign: "left", fontSize: "11px", border: 'none', padding: "0px 20px" }}>{t("business")}</TableCell>
