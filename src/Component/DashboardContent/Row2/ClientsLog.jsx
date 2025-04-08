@@ -15,7 +15,7 @@ export const ClientsLog = () => {
     const {t} = useTranslation()
     
     return (
-        <TableContainer component={Paper} sx={{ borderRadius: "20px", boxShadow: 'none', minHeight:"50vh" , maxHeight:"62vh"  }}>
+        <TableContainer component={Paper} sx={{ borderRadius: "20px", boxShadow: 'none', minHeight:"50vh" , maxHeight:"62vh"  ,whiteSpace:"nowrap"}}>
             <Grid container justifyContent="space-between" alignItems="center" sx={{ padding: "20px 20px 0px 20px" }}>
                 <Grid item>
                     <Typography variant="body1" component="div" sx={{ fontSize: '13px', color: "#575756" }}>
@@ -63,7 +63,7 @@ export const ClientsLog = () => {
                             }}
 
                         >
-                            <TableCell sx={{ textAlign: 'center', border: 'none', padding: '0px', fontSize: '11px', color: '#222240' }}>
+                            <TableCell sx={{ textAlign: 'center', border: 'none', padding: '0px', fontSize: '11px', color: '#222240' ,paddingX:'1px'}}>
                                 <Box
                                     sx={{
                                         padding: '0px 8px',
@@ -86,13 +86,13 @@ export const ClientsLog = () => {
                                 </Box>
                             </TableCell>
 
-                            <TableCell sx={{ textAlign: 'center', border: 'none', fontSize: '11px', color: 'gray', padding: '0px' }}>
+                            <TableCell sx={{ textAlign: 'center', border: 'none', fontSize: '11px', color: 'gray', padding: '0px' ,paddingX:'1px'}}>
                                 {row.time}
                             </TableCell>
-                            <TableCell sx={{ textAlign: 'center', border: 'none', fontSize: '11px', color: 'gray', padding: '0px' }}>
+                            <TableCell sx={{ textAlign: 'center', border: 'none', fontSize: '11px', color: 'gray', padding: '0px',paddingX:'1px' }}>
                                 {row.date}
                             </TableCell>
-                            <TableCell sx={{ textAlign: 'center', border: 'none', fontSize: '11px', color: row.statusColor, padding: '0px' }}>
+                            <TableCell sx={{ textAlign: 'center', border: 'none', fontSize: '11px', color: row.statusColor, padding: '0px',paddingX:'1px' }}>
                                 {row.status ? <CircleIcon sx={{ fontSize: "7px" }} /> : null} {t(row.status)}
                             </TableCell>
                         </TableRow>

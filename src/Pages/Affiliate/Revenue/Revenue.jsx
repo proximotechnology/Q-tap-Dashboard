@@ -23,6 +23,7 @@ export const Revenue = () => {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
+        overflow:'auto'
       }}
     >
       <Grid width={"85%"} display={"flex"} flexDirection="column" >

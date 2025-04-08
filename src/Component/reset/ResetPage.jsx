@@ -34,7 +34,7 @@ export const ResetPage = () => {
         sx={{backgroundImage: "url(/images/Rectangle.png)",backgroundSize:"100% 100%", width: "100%"}}>
           <QtapLogo />
           <Grid item xs={12} md={6}>
-          <Box sx={{ position:"absolute", top: "30px", right: "80px",
+          <Box sx={{ position:"absolute", top: "30px", right: "80px",zIndex:2000,
                         cursor: "pointer",display:"flex",alignItems:"center" }}>
                         <img src="/assets/helplogo.svg" alt="icon" style={{ width: "25px", height: "25px",marginRight:"30px" }} />
 
@@ -62,7 +62,7 @@ export const ResetPage = () => {
                     </Box>
                     
             <Box display="flex" flexDirection="column" justifyContent="center"
-              alignItems="center" height="100%">
+              alignItems="center" height="100vh">
 
               <Box sx={{width : {lg: "50%", md: "70%", xs: "90%"}}} >
                 <Box display="flex" justifyContent="center" >

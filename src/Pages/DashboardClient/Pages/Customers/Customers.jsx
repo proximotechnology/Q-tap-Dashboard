@@ -29,7 +29,7 @@ export const Customers = () => {
     URL.revokeObjectURL(url);
   };
   return (
-    <Paper sx={{ padding: "15px 30px 50px 30px", borderRadius: "20px" }} >
+    <Paper sx={{ padding: "15px 30px 50px 30px", borderRadius: "20px",whiteSpace:'nowrap' ,overflowX:'auto'}} >
       <Box
         display="flex"
         justifyContent="space-between"

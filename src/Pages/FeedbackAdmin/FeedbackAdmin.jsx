@@ -145,6 +145,7 @@ export const FeedbackAdmin = () => {
                                         textAlign: "center",
                                         borderBottom: "none",
                                     }}>
+                                        <div style={{ display:'flex',flexWrap:'nowrap', justifyContent:'center' }}>
                                         {[...Array(5)].map((_, index) => (
                                             index < row.star ? (
                                                 <StarIcon key={index} sx={{ color: '#E57C00', fontSize: "23px", padding: "0px 2px" }} />
@@ -152,6 +153,7 @@ export const FeedbackAdmin = () => {
                                                 <StarBorderIcon key={index} sx={{ color: '#E57C00', fontSize: "23px", padding: "0px 2px" }} />
                                             )
                                         ))}
+                                        </div>
                                     </TableCell>
 
 
@@ -200,7 +202,7 @@ export const FeedbackAdmin = () => {
                                             textAlign: "right",
                                             borderBottom: "none",
                                         }}>
-                                        <Box>
+                                        <Box sx={{ display:'flex',flexWrap:'nowrap',justifyContent:'end' , alignItems:'center'}}>
                                             <Button
                                                 onClick={() => publishFeedback(row.id, row.publish)} style={{ marginLeft: "5px" }}
                                                 variant="contained"

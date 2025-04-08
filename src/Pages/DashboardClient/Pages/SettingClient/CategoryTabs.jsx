@@ -11,7 +11,7 @@ import { Tables } from './Tables';
 import { Delivery } from './delivery/Delivery';
 import RoomServiceOutlinedIcon from '@mui/icons-material/RoomServiceOutlined';
 import { useTranslation } from 'react-i18next';
-
+//TODO: navigate button styling
 const CategoryTabs = () => {
     const {t} = useTranslation();
     const [buttons, setButtons] = useState([

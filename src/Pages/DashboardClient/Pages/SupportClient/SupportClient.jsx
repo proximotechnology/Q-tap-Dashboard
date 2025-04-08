@@ -411,9 +411,9 @@ const Support = () => {
       </Paper>
 
 
-      <Paper sx={{ borderRadius: "10px", marginTop: "25px", paddingBottom: "30px" }}>
+      <Paper sx={{ borderRadius: "10px", marginTop: "25px", paddingBottom: "30px",overflowX:'auto' }}>
 
-        <Box sx={{ padding: "30px 30px 0px 30px ", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <Box sx={{ padding: "30px 30px 0px 30px ", display: "flex", justifyContent: "space-between", alignItems: "center"  }}>
           <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>
           {t("feedbacks.many")}
           </Typography>
@@ -464,23 +464,23 @@ const Support = () => {
           ))}
         </Box>
 
-        <Table sx={{ p: 0, mt: 2, mb: 5, width: '100%', tableLayout: 'fixed' }}>
+        <Table sx={{ p: 0, mt: 2, mb: 5, width: '100%',whiteSpace:'nowrap' }}>
           <TableHead>
             <TableRow sx={{ backgroundColor: "#D8E0E0" }}>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "30%" }}>{t("customer")}</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "30%" }}>{t("mobileNumber")}</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "30%" }}>{t("orderId")}</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "40%" }}>{t("rate")}</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "20%" }}>{t("status")}</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "16%" }}>{t("details")}</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756", width: "16%" }}>{t("action")}</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '2px', borderBottom: "none", textAlign: "center", color: "#575756", width: "30%" }}>{t("customer")}</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '2px', borderBottom: "none", textAlign: "center", color: "#575756", width: "30%" }}>{t("mobileNumber")}</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '2px', borderBottom: "none", textAlign: "center", color: "#575756", width: "30%" }}>{t("orderId")}</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '2px', borderBottom: "none", textAlign: "center", color: "#575756", width: "40%" }}>{t("rate")}</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '2px', borderBottom: "none", textAlign: "center", color: "#575756", width: "20%" }}>{t("status")}</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '2px', borderBottom: "none", textAlign: "center", color: "#575756", width: "16%" }}>{t("details")}</TableCell>
+              <TableCell sx={{ fontSize: "10px", padding: '2px', borderBottom: "none", textAlign: "center", color: "#575756", width: "16%" }}>{t("action")}</TableCell>
             </TableRow>
           </TableHead>
 
           <TableBody>
             {feedbackData.map((discount, rowIndex) => (
               <TableRow key={rowIndex}
-                sx={{ height: '36px', cursor: 'pointer' }}>
+                sx={{ height: '36px', cursor: 'pointer' ,whiteSpace:'nowrap'}}>
 
                 <TableCell sx={{ textAlign: "center", fontSize: "11px", color: "gray", padding: '5px 0px', borderBottom: "none" }}>{discount.client.name}</TableCell>
                 <TableCell sx={{ textAlign: "center", fontSize: "11px", color: "gray", padding: '5px 0px', borderBottom: "none" }}>{discount.client.mobile}</TableCell>
@@ -499,6 +499,7 @@ const Support = () => {
                     sx={{
                       display: 'flex',
                       justifyContent: 'center',
+                      flexWrap:'nowrap'
                     }}
                   >
                     {Array.from({ length: 5 }).map((_, index) => (

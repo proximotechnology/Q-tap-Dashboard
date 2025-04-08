@@ -18,7 +18,7 @@ export const Row1 = () => {
     return (
         <Box sx={{ padding: "0 20px" }}>
             <Paper elevation={3} sx={{ padding: "20px 40px", borderRadius: 5 }}>
-                <Box display="flex" justifyContent="space-between" alignItems="center">
+                <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ overflow:'clip',overflowX:"auto" ,flexDirection: {xs: 'column', sm: 'row',  } }}>
                     <Box>
                         <Typography variant="h6" color="#575756" fontSize="17px"
                             display={"flex"} textAlign={"center"} alignItems={"center"}>
@@ -35,7 +35,7 @@ export const Row1 = () => {
 
 
                     <Box display={"flex"} justifyContent="center" alignItems="center">
-                        <Box sx={{ display: "flex" }} gap={2}>
+                        <Box sx={{ display: "flex",flexDirection: {xs: 'column', sm: 'row',  }  }} gap={2}>
                             <PieChart width={110} height={110}>
                                 <defs>
                                     <linearGradient id="gradientFree" x1="0" y1="0" x2="100%" y2="0">
@@ -104,7 +104,7 @@ export const Row1 = () => {
                         </Box>
                     </Box>
 
-                    <Box sx={{ marginRight: "70px" }}>
+                    <Box sx={{ marginRight: {xs:"0px",sm:"70px"} }}>
                         <Box display={"flex"} textAlign={"center"} alignItems={"center"} >
                             <Box component="span" sx={{
                                 background: 'linear-gradient(to right, #ef7d00,rgb(248, 203, 158))',

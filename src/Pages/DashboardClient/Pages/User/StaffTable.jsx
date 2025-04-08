@@ -90,7 +90,7 @@ export const StaffTable = () => {
     }
 
     return (
-        <Paper sx={{ padding: "15px 30px 50px 30px", marginTop: "20px", borderRadius: "20px" }}>
+        <Paper sx={{ padding: "15px 30px 50px 30px", marginTop: "20px", borderRadius: "20px",overflowX:'auto' }}>
             <Box
                 display="flex"
                 justifyContent="space-between"
@@ -128,7 +128,7 @@ export const StaffTable = () => {
                 width: "100%", height: "2px", background: "linear-gradient(45deg, #FDB913, #F2672E)", borderRadius: "50px",
             }} />
 
-            <TableContainer>
+            
                 <Table sx={{ borderCollapse: 'separate', borderSpacing: '0 5px' }}>
                     <TableHead>
                         <TableRow sx={{ height: "20px", borderBottom: "2px solid #f0f0f0" }}>
@@ -200,7 +200,7 @@ export const StaffTable = () => {
                         ))}
                     </TableBody>
                 </Table>
-            </TableContainer>
+            
         </Paper>
     );
 };

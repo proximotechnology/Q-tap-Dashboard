@@ -10,8 +10,8 @@ import { useTranslation } from 'react-i18next';
 const StyledAppBar = styled(AppBar)({
     background: 'linear-gradient(to right, #b4650f, #222240)',
     padding: '8px 0px',
-    margin: "0px -55px",
-    width: '1150px',
+    overflowX:'auto',
+    whiteSpace:'nowrap'
 });
 
 const StyledButton = styled(Button)({

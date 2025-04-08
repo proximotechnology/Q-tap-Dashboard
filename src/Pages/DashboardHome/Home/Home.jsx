@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import SideBar from "../../../Component/dashboard/SideBar/SideBar";
-import { Box, Button, createTheme, CssBaseline } from "@mui/material";
+import { Box, createTheme, CssBaseline } from "@mui/material";
 import Content from "../../../Component/DashboardContent/Content";
 import TopBar from "../../../Component/dashboard/TopBar/TopBar";
 import { getDesignTokens } from "../../Themes/dark";
-import { Menu, Close } from '@mui/icons-material'
+import SidebarButton from "../../../Component/MobileSideBarButton/SidebarButton";
 
 
 export default function Home() {
@@ -29,19 +29,7 @@ export default function Home() {
                 transition: "all 0.3s ease-in-out",
             }}>
             {/* sidebar open close button for xs screen */}
-            <Button sx={{
-                position: "absolute",
-                top: openSidebar ? '25px' : '50px',
-                left: openSidebar ? '45%' : '0px',
-                display: {
-                    xs: "",
-                    md: 'none'
-                },
-                zIndex: "9999"
-            }}
-                onClick={handleToggleSideBar}
-            >{openSidebar ? <Close sx={{ color: "black" }} /> : <Menu sx={{ color: "black" }} />}
-            </Button>
+           <SidebarButton handleToggleSideBar={handleToggleSideBar} openSidebar={openSidebar}/>
 
             <CssBaseline />
             <SideBar isOpen={openSidebar} setOpen={setOpenSidebar} />
@@ -49,11 +37,11 @@ export default function Home() {
                 sx={{
                     flexGrow: 1,
                     width: {
-                        xs: "100%",
+                        sm: "100%",
                         md: 'calc(100% - 200px)'
                     },
                     marginLeft: {
-                        xs: "0",
+                        sm: "0",
                         md: '200px'
                     },
                     minHeight: "100vh",

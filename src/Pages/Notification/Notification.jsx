@@ -96,7 +96,7 @@ export const Notification = () => {
               >
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <NotificationsNoneOutlinedIcon sx={{ marginRight: '20px', color: "gray", fontSize: "20px" }} />
-                  <Typography variant="body2" sx={{ color: "#AAAAAA", marginRight: '10px', fontSize: "12px" }}>
+                  <Typography variant="body2" sx={{ color: "#AAAAAA", marginRight: '10px', fontSize: "12px", whiteSpace: 'nowrap',overflow: 'hidden',textOverflow: 'ellipsis',maxWidth:'30%' }}>
                     {notification.title}
                   </Typography>
                   <Divider orientation="vertical" flexItem sx={{ marginRight: '10px' }} />

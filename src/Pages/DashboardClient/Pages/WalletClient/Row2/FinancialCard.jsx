@@ -56,9 +56,9 @@ const Financial = ({
         )}
       </Box>
     </Box>
-    <Typography variant="h6" sx={{ color: "black", fontSize: "25px" , marginTop:"10px" }}>
+    <Typography variant="h6" sx={{ color: "black", fontSize: "25px", marginTop: "10px" }}>
       {direction === "up" ? (
-        <Box sx={{ marginTop: "20px"}}>
+        <Box sx={{ marginTop: "20px" }}>
           {amount}
           <span style={{ color: "gray", fontSize: "14px" }}> EGP</span>
         </Box>
@@ -86,7 +86,7 @@ const FinancialCard = () => {
   return (
     <Grid container spacing={2} sx={{ marginTop: "5px" }}>
       {financialData.map((item, index) => (
-        <Grid item xs={index < 2 ? 3 : 6} key={index}>
+        <Grid item xs={12} sm={index == 2 ? 12 : 6} lg={index < 2 ? 3 : 6} key={index}>
           <Financial
             icon={item.icon}
             percentage={item.percentage}

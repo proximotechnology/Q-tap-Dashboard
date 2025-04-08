@@ -155,7 +155,7 @@ const Campaigns = () => {
   };
 
   return (
-    <Paper sx={{ borderRadius: "20px", padding: "10px 20px", height: "250px" }}>
+    <Paper sx={{ borderRadius: "20px", padding: "10px 20px", height: "250px" ,overflow:'auto'}}>
       <Box>
         <Box
           sx={{
@@ -316,6 +316,7 @@ const Campaigns = () => {
               padding: "12px 15px",
               color: "white",
               position: "relative",
+              margin:{xs:'auto',sm:'0px'}
             }}
           >
             <Typography

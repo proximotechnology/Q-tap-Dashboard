@@ -57,7 +57,7 @@ export const Transactions = () => {
                 </Box>
 
 
-                <TableContainer sx={{ mt: 1 }}>
+                <TableContainer sx={{ mt: 1 , whiteSpace:'nowrap' }}>
                     <Table>
                         <TableHead>
                             <TableRow sx={{ height: "25px" }}>

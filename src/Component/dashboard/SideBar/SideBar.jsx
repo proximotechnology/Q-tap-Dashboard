@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next";
 
 
 
-export default function SideBar({isOpen , setOpen}) {
+export default function SideBar({isOpen}) {
     const location = useLocation();
     const navigate = useNavigate();
     const theme = useTheme();

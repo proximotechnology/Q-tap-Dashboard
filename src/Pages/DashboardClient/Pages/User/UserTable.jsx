@@ -106,7 +106,7 @@ export const UserTable = () => {
     user.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
   return (
-    <Paper sx={{ padding: "15px 30px 50px 30px", borderRadius: "20px" }}>
+    <Paper sx={{ padding: "15px 30px 50px 30px", borderRadius: "20px" ,overflow:'auto'}}>
       <Box display="flex" justifyContent="space-between" alignItems="center" width="100%" padding="5px 0">
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <img src="/assets/Clients.svg" alt="icon" style={{ color: "#D8E0E0", width: "25px", height: "25px", marginRight: "10px" }} />
@@ -168,8 +168,8 @@ export const UserTable = () => {
         width: "100%", height: "2px", background: "linear-gradient(45deg, #FDB913, #F2672E)", borderRadius: "50px",
       }} />
 
-      <TableContainer>
-        <Table sx={{ borderCollapse: 'separate', borderSpacing: '0 5px' }}>
+      
+        <Table sx={{whiteSpace:'nowrap' }}>
           <TableHead>
             <TableRow sx={{ height: "20px", borderBottom: "2px solid #f0f0f0" }}>
               {[t("userName"), t("created"), t("pin"), t("access"), t("status"), " "].map((header) => (
@@ -232,7 +232,6 @@ export const UserTable = () => {
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
     </Paper>
   );
 };

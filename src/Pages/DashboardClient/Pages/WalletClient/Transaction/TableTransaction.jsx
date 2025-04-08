@@ -26,7 +26,7 @@ export const TableTransaction = () => {
     };
     const {t} = useTranslation();
     return (
-        <Card Card sx={{ borderRadius: 4, height: "100%" }}>
+        <Card Card sx={{ borderRadius: 4, height: "100%",overflowX:'auto' }}>
             <CardContent>
                 <Box
                     display="flex"
@@ -34,6 +34,8 @@ export const TableTransaction = () => {
                     alignItems="center"
                     width="100%"
                     marginBottom={"10px"}
+                    flexWrap={'nowrap'}
+                    whiteSpace={'nowrap'}
                 >
                     <Box variant="body2" sx={{ fontSize: "13px", display: "flex" }}>
                         <span class="icon-transfer" style={{ fontSize: "22px", color: "#D8E0E0" }} ></span>

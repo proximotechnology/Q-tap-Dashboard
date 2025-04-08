@@ -178,7 +178,7 @@ export const Content = () => {
     return (
         <>
             {categories.map((category, index) => (
-                <Paper key={index} style={{ padding: '10px 0px', borderRadius: "20px", marginTop: "40px" }}>
+                <Paper key={index} style={{ padding: '10px 0px', borderRadius: "20px", marginTop: "40px" ,whiteSpace:"nowrap"}}>
                     <Grid container width={"100%"}>
                         <Grid container xs={12} sx={{
                             backgroundColor: '#20253c',
@@ -188,7 +188,8 @@ export const Content = () => {
                             justifyContent: "space-between",
                             position: "relative",
                             top: "-20px",
-                            padding: "0px 20px"
+                            padding: "0px 20px",
+                            flexWrap:'nowrap'
                         }}>
                             <Box>
                                 <AddButton variant="contained" sx={{ marginTop: "-20px", fontSize: "11px", padding: '5px 35px', }} >
@@ -214,7 +215,7 @@ export const Content = () => {
                             </Box>
                         </Grid>
 
-                        <Grid item xs={12} padding="10px" sx={{ display: "flex", alignItems: "center" }}>
+                        <Grid item xs={12} padding="10px" sx={{ display: "flex", flexDirection:{xs:'column' ,sm:'row'} ,alignItems: "center" }}>
                             {/* Slider for item cards */}
                             {/* <Box sx={{ width: '88%' }}>
                                 <Slider {...sliderSettings}> */}
@@ -261,6 +262,7 @@ export const Content = () => {
                                     display: "flex",
                                     justifyContent: "center",
                                     alignItems: "center",
+                                    minWidth:'100px'
                                 }}
                             >
                                 <CardContent

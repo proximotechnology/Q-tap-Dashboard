@@ -521,7 +521,7 @@ export const Row2 = () => {
   );
   return (
     <Box sx={{ padding: "0 20px", marginTop: "20px" }}>
-      <Paper sx={{ padding: "20px", borderRadius: 5, height: "360px" }}>
+      <Paper sx={{ padding: "20px", borderRadius: 5, height: "360px" , overflow:"auto" }}>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Typography
             variant="h5"
@@ -637,7 +637,7 @@ export const Row2 = () => {
             },
           }}
         >
-          <Table size="small" sx={{ borderCollapse: "separate", borderSpacing: "0 5px" }}>
+          <Table size="small" sx={{ borderCollapse: "separate", borderSpacing: "0 5px" ,whiteSpace:"nowrap"}}>
             <TableHead>
               <TableRow>
                 <TableCell
@@ -665,6 +665,7 @@ export const Row2 = () => {
                         borderBottom: "none",
                         width: `${100 / 6}%`,
                         textAlign: "center",
+                        paddingLeft:{xs:"2px"}
                       }}
                     >
                       {header}
@@ -792,7 +793,7 @@ export const Row2 = () => {
                               : row.status === "inactive"
                               ? "gray"
                               : "white",
-                          padding: row.status === "Confirm Payment" ? "5px 9px" : "0px",
+                          padding: row.status === "Confirm Payment" ? "5px 9px" : "12px",
                           fontSize: row.status === "Confirm Payment" ? "10px" : "11px",
                         }}
                       >

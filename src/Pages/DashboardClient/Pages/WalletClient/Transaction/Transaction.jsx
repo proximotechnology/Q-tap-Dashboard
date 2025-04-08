@@ -10,7 +10,7 @@ export const Transaction = () => {
   return (
     <Grid container spacing={3} padding={"0px 0px 60px 20px"}  >
 
-      <Grid item xs={12} sm={6} lg={5} >
+      <Grid item xs={12}  lg={6} >
 
         <Card
           sx={{
@@ -40,7 +40,7 @@ export const Transaction = () => {
         {/* Total Withdrawals Card */}
         <Paper sx={{
           padding: '30px 20px', marginTop: "6%", borderRadius: '20px',
-          display: 'flex', flexDirection: 'column', justifyContent: 'space-between'
+          display: 'flex', flexDirection: 'column', justifyContent: 'space-between',overflowX:'auto'
         }}>
 
           <Box display="flex"  justifyContent="space-between">
@@ -71,7 +71,7 @@ export const Transaction = () => {
       </Grid>
 
       {/* right Side */}
-      <Grid item xs={12} sm={6} lg={6}  >
+      <Grid item xs={12}  lg={6}  >
         <TableTransaction />
       </Grid>
 

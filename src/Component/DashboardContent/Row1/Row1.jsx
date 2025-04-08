@@ -16,8 +16,8 @@ export const Row1 = () => {
         <Box  sx={{ flexGrow: 1, padding: '0px 20px 20px 20px' }}>
             <Grid className="mainContainer" container spacing={3}>
                 <Grid item xs={12}  md={6} lg={3}>
-                    <Card sx={{ borderRadius: '20px' }}>
-                        <CardContent>
+                    <Card sx={{ borderRadius: '20px'  }}>
+                        <CardContent sx={{ overflowX:'auto' }}>
                             <Box display={"flex"} justifyContent={"space-between"}>
                                 <Typography variant="subtitle1" color="#575756">{t("client")}</Typography>
                                 <PersonAddAlt1OutlinedIcon sx={{ color: "#D8E0E0 ",fontSize: '27px' }} />

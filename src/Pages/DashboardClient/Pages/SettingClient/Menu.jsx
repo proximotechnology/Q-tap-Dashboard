@@ -242,7 +242,7 @@ const {t} = useTranslation();
         <Paper style={{ padding: '20px 30px', borderRadius: '10px', marginTop: '16px' }}>
             <Grid container spacing={2}>
                 {/* First Column */}
-                <Grid item xs={4} direction="column" sx={{ padding: '30px' }}>
+                <Grid item xs={12} lg={3} direction="column" sx={{ padding: '30px' }}>
                     <Box
                         mb={5}
                         sx={{
@@ -308,7 +308,7 @@ const {t} = useTranslation();
                 <Divider orientation="vertical" flexItem />
 
                 {/* Second Column */}
-                <Grid item xs={4}>
+                <Grid item xs={12} lg={4}>
                     <Box
                         sx={{
                             display: 'flex',
@@ -724,10 +724,7 @@ const {t} = useTranslation();
                 <Divider orientation="vertical" flexItem />
 
                 {/* Third Column */}
-                <Grid
-                    item
-                    xs={3}
-                    sx={{
+                <Grid item xs={12} lg={4} sx={{
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',

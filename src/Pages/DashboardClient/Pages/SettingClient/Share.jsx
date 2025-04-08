@@ -30,7 +30,7 @@ export const Share = () => {
         }
     };
     return (
-        <Paper style={{ padding: '20px 30px', borderRadius: "10px", marginTop: '16px' }}>
+        <Paper style={{ padding: '20px 30px', borderRadius: "10px", marginTop: '16px', overflowX:'auto',whiteSpace:'nowrap' }}>
             <Box
                 sx={{
                     maxWidth: '100%',
@@ -70,7 +70,8 @@ export const Share = () => {
                             justifyContent: "center",
                             alignItems: "center",
                             position: "relative",
-                            left: "40%",
+                             minWidth:'200px',
+                             marginX:'auto'
                         }}
                     >
                         <QRCodeSVG

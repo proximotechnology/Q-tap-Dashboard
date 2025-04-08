@@ -14,8 +14,8 @@ export const Cart1 = () => {
     const { t } = useTranslation();
     return (
         <>
-            <Box display="flex" justifyContent="center" alignItems="center">
-                <Box sx={{ display: "flex" }}>
+            <Box display="flex"  alignItems="center">
+                <Box sx={{ display: "flex" }} marginX='auto'>
                     {/* First Pie Chart - Free */}
                     <PieChart width={70} height={70}>
                         <defs>

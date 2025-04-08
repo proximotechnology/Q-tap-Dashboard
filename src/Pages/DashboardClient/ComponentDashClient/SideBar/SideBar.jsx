@@ -73,7 +73,7 @@ const Arr2 = [
     },
 ];
 
-export default function SideBar() {
+export default function SideBar({isOpen}) {
     const { t } = useTranslation();
     
     const location = useLocation();
@@ -81,14 +81,15 @@ export default function SideBar() {
     const theme = useTheme();
     return (
         <Box sx={{
-            width: '200px',
+            width: {xs:'60%',md:'200px'},
             backgroundColor: '#fff',
             padding: '25px 20px',
             position: 'fixed',
             top: 0,
             left: 0,
             height: '100vh',
-            zIndex: 1000
+            zIndex: 1000,
+            display:{xs:isOpen?'block':'none', md:'block'}
         }}>
             <Box sx={{ display: "felx", justifyContent: "center", textAlign: "center", alignItems: "center", marginTop: "18px" }}>
                 <img src="/images/logoDash.jpg" alt="Logo" style={{ width: '110px' }} />

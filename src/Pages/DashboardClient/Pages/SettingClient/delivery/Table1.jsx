@@ -46,7 +46,7 @@ export const Table1 = () => {
                 }}
             />
 
-            <TableContainer>
+            {/* <TableContainer> */}
                 <Table sx={{ borderCollapse: 'separate', borderSpacing: '0 5px' }}>
                     <TableHead>
                         <TableRow sx={{ height: "25px", borderBottom: "2px solid #f0f0f0" }}>
@@ -106,7 +106,7 @@ export const Table1 = () => {
                         ))}
                     </TableBody>
                 </Table>
-            </TableContainer>
+            {/* </TableContainer> */}
         </Box>
     )
 

@@ -43,7 +43,7 @@ export default function Dashboard() {
 
 
             {/* Card 3: Performance */}
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} md={3}>
                 <Card sx={{ padding: "0px 10px", borderRadius: '20px', height: "230px" }}>
                     <CardContent>
                         <Box display={"flex"} justifyContent={"space-between"}>
