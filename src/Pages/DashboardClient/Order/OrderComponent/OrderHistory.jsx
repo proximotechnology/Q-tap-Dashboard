@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { AppBar, Toolbar } from '@mui/material';
+import { AppBar, Toolbar, useTheme } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { Avatar, Box, Divider, IconButton, List, ListItem, ListItemIcon, ListItemText, Popover, Typography } from "@mui/material";
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 
 export const OrderHistory = () => {
     const navigate = useNavigate();
+    const theme = useTheme();
     const [anchorElUser, setAnchorElUser] = useState(null);
     const openUserPopover = Boolean(anchorElUser);
 
@@ -40,15 +41,15 @@ export const OrderHistory = () => {
                         onClick={handleUserClick}
                         sx={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "3px" }}>
                         <IconButton color="inherit" sx={{
-                            backgroundColor: '#ef7d00', borderRadius: '30%', padding: '5px',
+                            backgroundColor: theme.palette.orangePrimary.main, borderRadius: '30%', padding: '5px',
                             '&:hover': {
-                                backgroundColor: '#ef7d00',
+                                backgroundColor: theme.palette.orangePrimary.main,
                             }
                         }}>
                             <PersonOutlineOutlinedIcon sx={{ fontSize: "20px", color: "white" }} />
                         </IconButton>
                         <Typography variant="body1" sx={{ fontSize: "13px", color: "white" }}>Admin</Typography>
-                        <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: "#ef7d00" }} />
+                        <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: theme.palette.orangePrimary.main }} />
                     </Box>
                     <Popover
                         id={openUserPopover ? 'simple-popover' : undefined}
@@ -62,7 +63,7 @@ export const OrderHistory = () => {
                     >
                         <Box sx={{ width: 200, padding: '10px' }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row', marginBottom: '20px', gap: '10px' }}>
-                                <Avatar sx={{ bgcolor: '#ef7d00', width: 40, height: 40 }}>
+                                <Avatar sx={{ bgcolor: theme.palette.orangePrimary.main, width: 40, height: 40 }}>
                                     <PersonOutlineOutlinedIcon sx={{ fontSize: "22px" }} />
                                 </Avatar>
                                 <Box>
@@ -77,7 +78,7 @@ export const OrderHistory = () => {
                                     onClick={() => navigate('/')}
                                     sx={{
                                         cursor: "pointer",
-                                        backgroundColor: "#222240",
+                                        backgroundColor: theme.palette.secondaryColor.main,
                                         color: "white",
                                         marginBottom: "10px",
                                         borderRadius: "30px",
@@ -90,7 +91,7 @@ export const OrderHistory = () => {
                                         margin: "0 auto",
                                     }}>
 
-                                    <span class="icon-home-icon-silhouette" style={{ color: "#ef7d00", marginRight: "5px", fontSize: "15px" }} ></span>
+                                    <span class="icon-home-icon-silhouette" style={{ color: theme.palette.orangePrimary.main, marginRight: "5px", fontSize: "15px" }} ></span>
                                     <span style={{ color: "white", fontSize: "12px", textTransform: "capitalize" }}>
                                         Home
                                     </span>

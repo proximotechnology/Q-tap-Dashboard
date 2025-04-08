@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Grid, Typography, Divider, FormControl, OutlinedInput, InputAdornment, MenuItem, Select } from '@mui/material';
+import { Grid, Typography, Divider, FormControl, OutlinedInput, InputAdornment, MenuItem, Select, useTheme } from '@mui/material';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
@@ -35,6 +35,7 @@ export const PersonalInfo = ({
   setSelectedOption,
   errors
 }) => {
+  const theme = useTheme();
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -245,7 +246,7 @@ export const PersonalInfo = ({
             sx={{
               backgroundColor: "#1A1A3B",
               borderRadius: "25px",
-              color: "#ef7d00",
+              color: theme.palette.orangePrimary.main,
               fontSize: "12px",
               height: "32px",
               textAlign: "center",

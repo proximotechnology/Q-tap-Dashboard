@@ -1,4 +1,4 @@
-import { Box, Divider, Typography } from '@mui/material'
+import { Box, Divider, Typography, useTheme } from '@mui/material'
 import React, { useState } from 'react'
 import { Table, TableBody, TableCell, IconButton, TableContainer, TableHead, TableRow } from '@mui/material';
 import rows2 from './DeliveryData';
@@ -13,7 +13,7 @@ export const Table2 = () => {
     const handleClose = () => setModalOpen(false);
 
     const {t} = useTranslation();
-
+    const theme = useTheme();
     return (
 
         <Box
@@ -32,7 +32,7 @@ export const Table2 = () => {
                     <span class="icon-magnifier" style={{ fontSize: "16px", marginRight: "20px" }}></span>
                     <Typography
                         onClick={handleOpen}
-                        variant='body2' sx={{ fontSize: "13px", color: "#ef7d00", display: "flex", cursor: "Pointer" }} >{t("add")}
+                        variant='body2' sx={{ fontSize: "13px", color: theme.palette.orangePrimary.main, display: "flex", cursor: "Pointer" }} >{t("add")}
                         <span style={{ fontSize: "15px", color: "#424242", fontWeight: 700, paddingLeft: "6px" }}>+</span>
                     </Typography>
                     <AddRider open={modalOpen} onClose={handleClose} />
@@ -41,7 +41,7 @@ export const Table2 = () => {
 
             <Divider
                 sx={{
-                    backgroundColor: '#ef7d00',
+                    backgroundColor: theme.palette.orangePrimary.main,
                     height: '1px',
                     margin: '8px 0px',
                 }}
@@ -85,11 +85,11 @@ export const Table2 = () => {
                                     },
                                 }}
                             >
-                                <TableCell sx={{ color: "#222240", fontSize: '11px', padding: "2px 20px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.name}</TableCell>
-                                <TableCell sx={{ color: "#222240", fontSize: '11px', padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.city}</TableCell>
-                                <TableCell sx={{ color: "#222240", fontSize: '11px', padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.whatsapp}</TableCell>
+                                <TableCell sx={{ color: theme.palette.secondaryColor.main, fontSize: '11px', padding: "2px 20px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.name}</TableCell>
+                                <TableCell sx={{ color: theme.palette.secondaryColor.main, fontSize: '11px', padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.city}</TableCell>
+                                <TableCell sx={{ color: theme.palette.secondaryColor.main, fontSize: '11px', padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.whatsapp}</TableCell>
 
-                                <TableCell sx={{ color: "#E57C00", fontSize: '13px', fontWeight: "900", padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>
+                                <TableCell sx={{ color: theme.palette.orangePrimary.main, fontSize: '13px', fontWeight: "900", padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>
                                     {row.order}</TableCell>
 
                                 <TableCell

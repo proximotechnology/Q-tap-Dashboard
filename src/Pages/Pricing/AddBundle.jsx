@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, TextField, Typography, Modal, IconButton, Divider, MenuItem } from '@mui/material';
+import { Box, Button, TextField, Typography, Modal, IconButton, Divider, MenuItem, useTheme } from '@mui/material';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
 import { toast } from 'react-toastify';
@@ -14,6 +14,7 @@ const AddBundle = ({ open, onClose, editData = null }) => {
     const [yearlyPrice, setYearlyPrice] = useState('');
     const [description, setDescription] = useState('');
     const [orderLimit, setOrderLimit] = useState('unlimited');
+    const theme = useTheme();
 
     const {t} = useTranslation()
     // Populate form when editing
@@ -98,7 +99,7 @@ const AddBundle = ({ open, onClose, editData = null }) => {
                     }}
                 >
                     <Box display={"flex"} justifyContent={"space-between"} textAlign={"center"} alignItems={"center"}>
-                        <Typography variant="body2" sx={{ color: "#222240", fontSize: "14px" }}  >
+                        <Typography variant="body2" sx={{ color: theme.palette.secondaryColor.main, fontSize: "14px" }}  >
                             {t("newBundle")}
                         </Typography>
                         <IconButton onClick={onClose} >
@@ -214,7 +215,7 @@ const AddBundle = ({ open, onClose, editData = null }) => {
                                 <Box height={"50px"}>
                                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderRadius: '4px' }}>
                                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                            <DoneOutlinedIcon sx={{ fontSize: "12px", color: "#ef7d00" }} />
+                                            <DoneOutlinedIcon sx={{ fontSize: "12px", color: theme.palette.orangePrimary.main }} />
                                             <TextField
                                                 variant="outlined"
                                                 fullWidth
@@ -253,7 +254,7 @@ const AddBundle = ({ open, onClose, editData = null }) => {
                                                         alignItems: 'center',
                                                     }}
                                                 >
-                                                    <DoneOutlinedIcon sx={{ fontSize: "12px", color: "#ef7d00", mr: 0.5 }} />
+                                                    <DoneOutlinedIcon sx={{ fontSize: "12px", color: theme.palette.orangePrimary.main, mr: 0.5 }} />
                                                     {feature}
                                                 </Typography>
                                             </Box>

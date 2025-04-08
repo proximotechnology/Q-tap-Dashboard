@@ -1,6 +1,6 @@
 
 
-import { Button, Divider, FormControl, IconButton, MenuItem, Paper, Select, TextField, Typography } from '@mui/material';
+import { Button, Divider, FormControl, IconButton, MenuItem, Paper, Select, TextField, Typography, useTheme } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import { Box, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { AddExtras } from './AddExtras';
@@ -19,7 +19,7 @@ export const ExtrasTable = () => {
     const selectedBranch = localStorage.getItem('selectedBranch');
     const { variantsContext } = useContext(ContentMenu);
     const {t} = useTranslation();
-
+    const theme = useTheme();
     useEffect(() => {
         getExtras();
         // console.log("variantsContext extara table page ", variantsContext)
@@ -117,14 +117,14 @@ export const ExtrasTable = () => {
                 <Button>
                     <Typography
                         onClick={handleOffersOpen}
-                        variant='body1' sx={{ fontSize: "13px", textTransform: "capitalize", color: "#ef7d00" }}>
+                        variant='body1' sx={{ fontSize: "13px", textTransform: "capitalize", color: theme.palette.orangePrimary.main }}>
                         + {t("addOne")}
                     </Typography>
                 </Button>
                 <AddExtras open={openVariant} handleClose={handleClose} />
             </Box>
 
-            <Divider sx={{ backgroundColor: '#ef7d00' }} />
+            <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main }} />
 
             <Table sx={{ mt: 3, mb: 5, width: '100%', tableLayout: 'fixed' }}>
                 <TableHead>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Box, Grid, Typography, IconButton, TextField, Button } from '@mui/material';
+import { Modal, Box, Grid, Typography, IconButton, TextField, Button, useTheme } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 import { useTranslation } from 'react-i18next';
 
@@ -20,6 +20,7 @@ const TicketDetails = ({
   updateTicket,
   addTicket // Add this prop to handle adding a new ticket
 }) => {
+  const theme = useTheme();
   const [note, setNote] = useState(ticket?.note || '');
 
   const {t} = useTranslation()
@@ -196,8 +197,8 @@ const TicketDetails = ({
                   <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <IconButton
                       sx={{
-                        bgcolor: status === 'open' ? '#ef7d00' : '#9d9d9c',
-                        '&:hover': { bgcolor: status === 'open' ? '#ef7d00' : '#b0b0b0' }
+                        bgcolor: status === 'open' ? theme.palette.orangePrimary.main : '#9d9d9c',
+                        '&:hover': { bgcolor: status === 'open' ? theme.palette.orangePrimary.main : '#b0b0b0' }
                       }}
                       onClick={() => handleStatusChange('open')}
                     >
@@ -206,7 +207,7 @@ const TicketDetails = ({
                     <Typography
                       variant="caption"
                       sx={{
-                        color: status === 'open' ? '#ef7d00' : '#9d9d9c',
+                        color: status === 'open' ? theme.palette.orangePrimary.main : '#9d9d9c',
                         fontSize: '9px',
                         mt: 1
                       }}
@@ -224,8 +225,8 @@ const TicketDetails = ({
                   <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <IconButton
                       sx={{
-                        bgcolor: status === 'in_progress' ? '#ef7d00' : '#9d9d9c',
-                        '&:hover': { bgcolor: status === 'in_progress' ? '#ef7d00' : '#b0b0b0' }
+                        bgcolor: status === 'in_progress' ? theme.palette.orangePrimary.main : '#9d9d9c',
+                        '&:hover': { bgcolor: status === 'in_progress' ? theme.palette.orangePrimary.main : '#b0b0b0' }
                       }}
                       onClick={() => handleStatusChange('in_progress')}
                     >
@@ -234,7 +235,7 @@ const TicketDetails = ({
                     <Typography
                       variant="caption"
                       sx={{
-                        color: status === 'in_progress' ? '#ef7d00' : '#9d9d9c',
+                        color: status === 'in_progress' ? theme.palette.orangePrimary.main : '#9d9d9c',
                         fontSize: '9px',
                         mt: 1
                       }}
@@ -252,8 +253,8 @@ const TicketDetails = ({
                   <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <IconButton
                       sx={{
-                        bgcolor: status === 'Done' ? '#ef7d00' : '#9d9d9c',
-                        '&:hover': { bgcolor: status === 'Done' ? '#ef7d00' : '#b0b0b0' }
+                        bgcolor: status === 'Done' ? theme.palette.orangePrimary.main : '#9d9d9c',
+                        '&:hover': { bgcolor: status === 'Done' ? theme.palette.orangePrimary.main : '#b0b0b0' }
                       }}
                       onClick={() => handleStatusChange('Done')}
                     >
@@ -270,7 +271,7 @@ const TicketDetails = ({
                     <Typography
                       variant="caption"
                       sx={{
-                        color: status === 'Done' ? '#ef7d00' : '#9d9d9c',
+                        color: status === 'Done' ? theme.palette.orangePrimary.main : '#9d9d9c',
                         fontSize: '9px'
                       }}
                     >
@@ -310,7 +311,7 @@ const TicketDetails = ({
                 <Button
                   sx={{
                     border: '1px solid #9d9d9c',
-                    color: '#ef7d00',
+                    color: theme.palette.orangePrimary.main,
                     borderRadius: '20px',
                     textTransform: 'capitalize',
                     padding: '2px 22px',

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Grid, Paper, Typography, IconButton } from '@mui/material';
+import { Box, Grid, Paper, Typography, IconButton, useTheme } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import TicketDetails from '../DashboardClient/Pages/SupportClient/TicketDetails';
 import ChatApp from './ChatApp';
@@ -21,6 +21,7 @@ const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onC
   const formattedDate = new Date(created_at).toLocaleDateString();
   // console.log(status, "status ");
   const { t } = useTranslation()
+  const theme = useTheme();
 
   return (
     <Paper
@@ -61,22 +62,22 @@ const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onC
       >
         {status === 'in_progress' ? (
           <>
-            <span className="icon-processing-time" style={{ fontSize: "13px", color: "#ef7d00" }} />
-            <Typography variant="body1" sx={{ fontSize: "11px", color: "#ef7d00", ml: 1 }}>
+            <span className="icon-processing-time" style={{ fontSize: "13px", color: theme.palette.orangePrimary.main }} />
+            <Typography variant="body1" sx={{ fontSize: "11px", color: theme.palette.orangePrimary.main, ml: 1 }}>
               {t("inProgress")}
             </Typography>
           </>
         ) : status === 'Done' ? (
           <>
-            <span className="icon-check" style={{ fontSize: "13px", color: "#222240" }} />
-            <Typography variant="body1" sx={{ fontSize: "11px", color: "#222240", ml: 1 }}>
+            <span className="icon-check" style={{ fontSize: "13px", color: theme.palette.secondaryColor.main }} />
+            <Typography variant="body1" sx={{ fontSize: "11px", color: theme.palette.secondaryColor.main, ml: 1 }}>
               Done
             </Typography>
           </>
         ) : (
           <>
-            <span className="icon-share" style={{ fontSize: "12px", color: "#222240" }} />
-            <Typography variant="body1" sx={{ fontSize: "11px", color: "#222240", ml: 1 }}>
+            <span className="icon-share" style={{ fontSize: "12px", color: theme.palette.secondaryColor.main }} />
+            <Typography variant="body1" sx={{ fontSize: "11px", color: theme.palette.secondaryColor.main, ml: 1 }}>
               {t("open")}
             </Typography>
           </>

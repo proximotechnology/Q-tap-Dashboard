@@ -1,6 +1,6 @@
 
 import { Typography } from '@mui/material'
-import { Box, } from '@mui/system'
+import { Box, useTheme, } from '@mui/system'
 import Lottie from 'lottie-react'
 import React from 'react'
 
@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 
 export const Alarm = () => {
     const {t} = useTranslation()
+    const theme = useTheme();
     return (
         <>
             <Box
@@ -68,7 +69,7 @@ export const Alarm = () => {
                             <span style={{ fontSize: "15px" }}>
                                 T.<strong style={{ fontSize: "45px", marginLeft: "6px" }}>02</strong>
                             </span>
-                            <Typography sx={{ fontSize: "8px", color: '#E57C00' }}>{t("waiterNeeded")}</Typography>
+                            <Typography sx={{ fontSize: "8px", color: theme.palette.orangePrimary.main }}>{t("waiterNeeded")}</Typography>
                         </Typography>
                     </Box>
                 </Box>

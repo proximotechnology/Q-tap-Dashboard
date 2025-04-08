@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, IconButton, MenuItem, Typography, Popover, Button, Menu } from "@mui/material";
+import { Box, IconButton, MenuItem, Typography, Popover, Button, Menu, useTheme } from "@mui/material";
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
@@ -37,6 +37,7 @@ const useStyles = makeStyles({
 
 export default function TopBar() {
     const {t} = useTranslation();
+    const theme = useTheme();
     const pageTitles = {
         '/dashboard-client': t("dashboard"),
         '/order': t("order"),
@@ -135,7 +136,7 @@ export default function TopBar() {
             padding: "30px 30px 0px 30px"
         }}>
             <Typography variant="body1" sx={{
-                fontSize: "18px", color: "#222240", width: "3%",
+                fontSize: "18px", color: theme.palette.secondaryColor.main, width: "3%",
                 borderBottom: "2px solid #E57C00"
             }}>
                 {pageTitles[location.pathname] || 'Dashboard'}
@@ -153,7 +154,7 @@ export default function TopBar() {
                     <span >
                         {localStorage.getItem("branchNumber") ? `Branch ${parseInt(localStorage.getItem("branchNumber")) + 1}` : `Branch 1`}
                     </span>
-                    <KeyboardArrowDownIcon sx={{ color: "#ef7d00", fontSize: "16px" }} />
+                    <KeyboardArrowDownIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "16px" }} />
                 </Button>
 
                 <Menu disableScrollLock
@@ -220,7 +221,7 @@ export default function TopBar() {
                             '& .MuiSwitch-thumb': {
                                 width: 18, // تصغير النقطة
                                 height: 18,
-                                color: "#ef7d00",
+                                color: theme.palette.orangePrimary.main,
                             },
                             '& .MuiSwitch-track': {
                                 borderRadius: 12,
@@ -228,7 +229,7 @@ export default function TopBar() {
                                 width: 50, // تصغير المسار
                             },
                             '& .MuiSwitch-switchBase.Mui-checked': {
-                                color: "#ef7d00",
+                                color: theme.palette.orangePrimary.main,
                             },
                             '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
                                 backgroundColor: "#D8E0E0",
@@ -241,7 +242,7 @@ export default function TopBar() {
 
 
                 <IconButton sx={{ margin: "0 5px" }}>
-                    <span class="icon-bell" style={{ color: "#ef7d00" }}></span>
+                    <span class="icon-bell" style={{ color: theme.palette.orangePrimary.main }}></span>
                 </IconButton>
 
                 <Language />
@@ -252,9 +253,9 @@ export default function TopBar() {
                     sx={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "3px" }}>
                     <IconButton color="inherit" sx={{
                         margin: "0 5px",
-                        backgroundColor: '#ef7d00', borderRadius: '30%', padding: '5px',
+                        backgroundColor: theme.palette.orangePrimary.main, borderRadius: '30%', padding: '5px',
                         '&:hover': {
-                            backgroundColor: '#ef7d00',
+                            backgroundColor: theme.palette.orangePrimary.main,
                         }
                     }}>
                         <PersonOutlineOutlinedIcon sx={{ fontSize: "20px", color: "white" }} />
@@ -274,7 +275,7 @@ export default function TopBar() {
                 >
                     <Box sx={{ width: 200, padding: '10px' }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row', marginBottom: '20px', gap: '10px' }}>
-                            <Avatar sx={{ bgcolor: '#ef7d00', width: 40, height: 40 }}>
+                            <Avatar sx={{ bgcolor: theme.palette.orangePrimary.main, width: 40, height: 40 }}>
                                 <PersonOutlineOutlinedIcon sx={{ fontSize: "22px" }} />
                             </Avatar>
                             <Box>
@@ -289,7 +290,7 @@ export default function TopBar() {
                                 onClick={() => navigate('/')}
                                 sx={{
                                     cursor: "pointer",
-                                    backgroundColor: "#222240",
+                                    backgroundColor: theme.palette.secondaryColor.main,
                                     color: "white",
                                     marginBottom: "10px",
                                     borderRadius: "30px",
@@ -302,7 +303,7 @@ export default function TopBar() {
                                     margin: "0 auto",
                                 }}>
 
-                                <span class="icon-home-icon-silhouette" style={{ color: "#ef7d00", marginRight: "5px", fontSize: "15px" }} ></span>
+                                <span class="icon-home-icon-silhouette" style={{ color: theme.palette.orangePrimary.main, marginRight: "5px", fontSize: "15px" }} ></span>
                                 <span style={{ color: "white", fontSize: "12px", textTransform: "capitalize" }}>
                                     Home
                                 </span>

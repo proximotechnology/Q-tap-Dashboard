@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import QtapLogo from "../Component/QtapLogo";
 import QtapHome from "../Component/QtapHome";
-import { Box, MenuItem, Grid, Menu, Divider } from "@mui/material";
+import { Box, MenuItem, Grid, Menu, Divider, useTheme } from "@mui/material";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useTranslation } from "react-i18next";
@@ -11,7 +11,7 @@ export const HomePage = () => {
   const [anchorElLanguage, setAnchorElLanguage] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const { i18n } = useTranslation();
-
+  const theme = useTheme();
   const handleLanguageClick = useCallback((event) => {
     event.stopPropagation(); // Prevent bubbling
     setAnchorElLanguage(event.currentTarget);
@@ -31,12 +31,12 @@ export const HomePage = () => {
     return selectedLanguage === "ar" ? (
       <span
         className="icon-translation"
-        style={{ color: "#ef7d00", fontSize: "22px" }}
+        style={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }}
       >
         {" "}
       </span>
     ) : (
-      <LanguageOutlinedIcon sx={{ color: "#ef7d00", fontSize: "22px" }} />
+      <LanguageOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }} />
     );
   };
 

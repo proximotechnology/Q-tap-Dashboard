@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Divider, IconButton, Paper, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box, useTheme } from '@mui/system';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { staffData } from './userData';
@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
 export const StaffTable = () => {
+    const theme = useTheme();
     const {t} = useTranslation();
     const [modalOpen, setModalOpen] = useState(false);
 
@@ -110,16 +111,16 @@ export const StaffTable = () => {
                     </IconButton>
                     <Button
                         onClick={handleOpen}
-                        sx={{ fontSize: "12px", color: "#ef7d00", display: "flex", cursor: "pointer", textTransform: "capitalize" }} >{t("add")}
-                        <span style={{ fontSize: "15px", color: "#ef7d00", fontWeight: 700, paddingLeft: "6px" }}>+</span>
+                        sx={{ fontSize: "12px", color: theme.palette.orangePrimary.main, display: "flex", cursor: "pointer", textTransform: "capitalize" }} >{t("add")}
+                        <span style={{ fontSize: "15px", color: theme.palette.orangePrimary.main, fontWeight: 700, paddingLeft: "6px" }}>+</span>
                     </Button>
                     <AddStaff open={modalOpen} onClose={handleClose} />
 
                     <Button onClick={handleExport}
                         variant="text"
-                        sx={{ color: '#ef7d00', textTransform: "capitalize", fontSize: "12px" }}>
+                        sx={{ color: theme.palette.orangePrimary.main, textTransform: "capitalize", fontSize: "12px" }}>
                         {t("export")}
-                        <ArrowForwardIosIcon sx={{ fontSize: "10px", color: "#ef7d00" }} />
+                        <ArrowForwardIosIcon sx={{ fontSize: "10px", color: theme.palette.orangePrimary.main }} />
                     </Button>
 
                 </Box>
@@ -172,7 +173,7 @@ export const StaffTable = () => {
                                     {row.role}
                                 </TableCell>
 
-                                <TableCell sx={{ fontWeight: 900, color: "#ef7d00", fontSize: '11px', padding: "0px 2px", width: `${100 / 5}%`, textAlign: "Left", borderBottom: "none" }}>
+                                <TableCell sx={{ fontWeight: 900, color: theme.palette.orangePrimary.main, fontSize: '11px', padding: "0px 2px", width: `${100 / 5}%`, textAlign: "Left", borderBottom: "none" }}>
                                     {row.orders}
                                 </TableCell>
 
@@ -370,16 +371,16 @@ export default StaffTable;
 //                     </Box>
 //                     <Button
 //                         onClick={handleOpen}
-//                         sx={{ fontSize: "12px", color: "#ef7d00", display: "flex", cursor: "pointer", textTransform: "capitalize" }} >Add
-//                         <span style={{ fontSize: "15px", color: "#ef7d00", fontWeight: 700, paddingLeft: "6px" }}>+</span>
+//                         sx={{ fontSize: "12px", color: theme.palette.orangePrimary.main, display: "flex", cursor: "pointer", textTransform: "capitalize" }} >Add
+//                         <span style={{ fontSize: "15px", color: theme.palette.orangePrimary.main, fontWeight: 700, paddingLeft: "6px" }}>+</span>
 //                     </Button>
 //                     <AddStaff open={modalOpen} onClose={handleClose} />
 
 //                     <Button onClick={handleExport}
 //                         variant="text"
-//                         sx={{ color: '#ef7d00', textTransform: "capitalize", fontSize: "12px" }}>
+//                         sx={{ color: theme.palette.orangePrimary.main, textTransform: "capitalize", fontSize: "12px" }}>
 //                         Export
-//                         <ArrowForwardIosIcon sx={{ fontSize: "10px", color: "#ef7d00" }} />
+//                         <ArrowForwardIosIcon sx={{ fontSize: "10px", color: theme.palette.orangePrimary.main }} />
 //                     </Button>
 
 //                 </Box>
@@ -432,7 +433,7 @@ export default StaffTable;
 //                                     {row.role}
 //                                 </TableCell>
 
-//                                 <TableCell sx={{ fontWeight: 900, color: "#ef7d00", fontSize: '11px', padding: "0px 2px", width: `${100 / 5}%`, textAlign: "Left", borderBottom: "none" }}>
+//                                 <TableCell sx={{ fontWeight: 900, color: theme.palette.orangePrimary.main, fontSize: '11px', padding: "0px 2px", width: `${100 / 5}%`, textAlign: "Left", borderBottom: "none" }}>
 //                                     {row.orders}
 //                                 </TableCell>
 

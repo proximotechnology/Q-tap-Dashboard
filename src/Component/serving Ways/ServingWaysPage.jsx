@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import { Box, MenuItem, Grid, Menu, Divider } from "@mui/material";
+import { Box, MenuItem, Grid, Menu, Divider, useTheme } from "@mui/material";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { ServingWays } from './ServingWays'
 import { SetupPage } from '../Business-info/SetupPage';
@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 
 export const ServingWaysPage = () => {
+    const theme = useTheme();
     const [anchorElLanguage, setAnchorElLanguage] = useState(null);
     const [selectedLanguage, setSelectedLanguage] = useState('en');
     const openLanguage = Boolean(anchorElLanguage);
@@ -23,8 +24,8 @@ export const ServingWaysPage = () => {
     };
 
     const getLanguageIcon = () => {
-        return selectedLanguage === 'ar' ? <span class="icon-translation" style={{ color: "#ef7d00", fontSize: "22px" }}> </span>
-            : <LanguageOutlinedIcon sx={{ color: "#ef7d00", fontSize: "22px" }} />;
+        return selectedLanguage === 'ar' ? <span class="icon-translation" style={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }}> </span>
+            : <LanguageOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }} />;
     };
     return (
         <Grid container

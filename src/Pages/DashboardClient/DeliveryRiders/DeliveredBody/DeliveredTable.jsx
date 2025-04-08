@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Box, TextField, Typography } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Box, TextField, Typography, useTheme } from '@mui/material';
 import * as XLSX from 'xlsx';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -8,6 +8,7 @@ import { DeliveredDetails } from './DeliveredDetails'
 import { OrderContext } from './DeliveredContext';
 import { useTranslation } from 'react-i18next';
 export const DeliveredTable = ({ orders }) => {
+  const theme = useTheme();
   const handleExport = () => {
     const data = [
       {
@@ -90,7 +91,7 @@ export const DeliveredTable = ({ orders }) => {
             <Button
               onClick={handleExport}
               variant="text"
-              style={{ fontSize: "12px", color: '#ef7d00', textTransform: "capitalize" }}>
+              style={{ fontSize: "12px", color: theme.palette.orangePrimary.main, textTransform: "capitalize" }}>
               {t("export")}
               <ArrowForwardIosIcon sx={{ fontSize: "10px", color: "black" }} />
             </Button>
@@ -139,13 +140,13 @@ export const DeliveredTable = ({ orders }) => {
 
 
 
-                <TableCell sx={{ display: "flex", borderBottom: "none", fontSize: "12px", textAlign: "center", color: "#222240" }}>
+                <TableCell sx={{ display: "flex", borderBottom: "none", fontSize: "12px", textAlign: "center", color: theme.palette.secondaryColor.main }}>
                   <span>{order.icon}</span>
                   {t(order.status)}</TableCell>
 
                 <TableCell sx={{ borderBottom: "none", textAlign: "center", cursor: "pointer" }}>
                   <Typography display={"flex"} onClick={() => handleOpen(order)}>
-                    <span class="icon-file" style={{ fontSize: "17px", color: "#ef7d00" }}></span>
+                    <span class="icon-file" style={{ fontSize: "17px", color: theme.palette.orangePrimary.main }}></span>
                     <Typography color="textSecondary" fontSize="11px">
                       <span style={{ borderBottom: "1px solid gray" }}>{t("view")}</span>
                     </Typography>

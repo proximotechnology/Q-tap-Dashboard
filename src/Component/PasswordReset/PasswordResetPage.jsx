@@ -2,7 +2,7 @@
 import QtapLogo from '../QtapLogo'
 import { PasswordReset } from './PasswordReset'
 import React, { useState } from 'react'
-import { Box, MenuItem, Grid, Menu, Divider } from "@mui/material";
+import { Box, MenuItem, Grid, Menu, Divider, useTheme } from "@mui/material";
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 export const PasswordResetPage = () => {
     const [anchorElLanguage, setAnchorElLanguage] = useState(null);
     const [selectedLanguage, setSelectedLanguage] = useState('en');
+    const theme = useTheme();
     const openLanguage = Boolean(anchorElLanguage);
     const {i18n} = useTranslation()
     const handleLanguageClick = (event) => {
@@ -24,8 +25,8 @@ export const PasswordResetPage = () => {
     };
   
     const getLanguageIcon = () => {
-        return selectedLanguage === 'ar' ? <span class="icon-translation" style={{ color: "#ef7d00", fontSize: "22px" }}> </span>
-            : <LanguageOutlinedIcon sx={{ color: "#ef7d00", fontSize: "22px" }} />;
+        return selectedLanguage === 'ar' ? <span class="icon-translation" style={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }}> </span>
+            : <LanguageOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }} />;
     };
     return (
         <Box>

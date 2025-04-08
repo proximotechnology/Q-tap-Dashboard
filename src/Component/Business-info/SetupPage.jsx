@@ -54,11 +54,14 @@ export const SetupPage = () => {
     return (
 
         <Grid container item xs={12} md={4} >
-            <ImageContainer sx={{ width: '90%' }} >
+            <ImageContainer sx={{ width: '100%' , display:'flex' , flexDirection:'column',alignItems:'start', justifyContent:'space-between',padding:'1rem'}} className='here' >
                 <ChevronLeftOutlinedIcon onClick={() => navigate('/')}
-                    sx={{ position: "absolute", top: "40px", left: "10%", color: "white", fontSize: "33px", zIndex: "8" }} />
+                    // sx={{ position: "absolute", top: "40px", left: "10%", color: "white", fontSize: "33px", zIndex: "8" }}
+                    sx={{ zIndex:'100',fontSize: "33px" }}
+                     />
 
-                <TextOverlay sx={{ width: { xs: "90%", sm: "75%", md: "60%" }, margin: "0 auto" }}>
+                {/* <TextOverlay sx={{ width: { xs: "90%", sm: "75%", md: "60%" }, margin: "0 auto" }}> */}
+                <Box>
 
                     <Typography variant="body1" sx={{
                         fontSize: "33px",
@@ -70,9 +73,11 @@ export const SetupPage = () => {
                     <Typography sx={{ fontSize: "11px", color: '#F1F2F2', marginTop: 4 }}>
                         {t("lorm")}
                     </Typography>
-                </TextOverlay>
+                </Box>
+                {/* </TextOverlay> */}
 
-                <Box sx={{position: "absolute", bottom: "30px", left: "10%", zIndex: "8"}}>
+                {/* <Box sx={{position: "absolute", bottom: "30px", left: "10%", zIndex: "8"}}> */}
+                <Box>
                     <img src="/assets/qtapwhite.svg" alt="logo setup" style={{width:"90px" ,height:"25px"}} />
                 </Box>
             </ImageContainer>

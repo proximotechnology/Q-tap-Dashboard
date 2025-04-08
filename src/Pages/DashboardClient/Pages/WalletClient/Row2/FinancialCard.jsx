@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid, Paper, Typography, useTheme } from "@mui/material";
 import StraightIcon from "@mui/icons-material/Straight";
 import SouthIcon from "@mui/icons-material/South";
 import financialData from "./FinancialData";
@@ -13,7 +13,9 @@ const Financial = ({
   amount,
   description,
   iconColor,
-}) => (
+}) => {
+  const theme = useTheme();
+  return (
   <Paper
     sx={{
       padding: "32px 25px",
@@ -49,7 +51,7 @@ const Financial = ({
             />
             <span
               class="icon-share"
-              style={{ fontSize: "23px", color: "#ef7d00" }}
+              style={{ fontSize: "23px", color: theme.palette.orangePrimary.main }}
             ></span>
             <Box></Box>
           </Box>
@@ -68,7 +70,7 @@ const Financial = ({
           <span style={{ color: "gray", fontSize: "14px" }}> EGP</span>
         </Box>
       ) : (
-        <Box sx={{ fontSize: "35px", marginTop: "8px", color: "#ef7d00" }}>
+        <Box sx={{ fontSize: "35px", marginTop: "8px", color: theme.palette.orangePrimary.main }}>
           {amount}
           <span style={{ color: "gray", fontSize: "14px" }}> EGP</span>
         </Box>
@@ -79,7 +81,7 @@ const Financial = ({
       {description}
     </Typography>
   </Paper>
-);
+)};
 
 const FinancialCard = () => {
   const { t } = useTranslation()

@@ -1,5 +1,5 @@
 import { AppBar, Toolbar, Typography } from '@mui/material'
-import { Box } from '@mui/system'
+import { Box, useTheme } from '@mui/system'
 import React from 'react'
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
@@ -9,6 +9,7 @@ import ghostAnimation from '../../../animation/ghost.json';
 import Language from '../ComponentDashClient/TopBar/Language';
 
 export const Finsh = () => {
+    const theme = useTheme();
 
     return (
         
@@ -21,7 +22,7 @@ export const Finsh = () => {
 
                     <Box sx={{ display: "flex", textAlign: "center", alignItems: "center", cursor: "pointer" }}  >
                         <PersonOutlineOutlinedIcon
-                            sx={{ color: "white", fontSize: "18px", borderRadius: "10px", padding: "5px", backgroundColor: "#ef7d00" }} />
+                            sx={{ color: "white", fontSize: "18px", borderRadius: "10px", padding: "5px", backgroundColor: theme.palette.orangePrimary.main }} />
                         <Typography variant='body2' sx={{ color: "#575756", fontSize: "10px", padding: "0px 5px" }}>Admin</Typography>
                         <KeyboardArrowDownOutlinedIcon sx={{ color: "#575756", fontSize: "13px" }} />
                     </Box>

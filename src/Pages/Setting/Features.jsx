@@ -1,5 +1,5 @@
 import React, { useState, forwardRef, useImperativeHandle, useRef } from 'react';
-import { Box, Button, Grid, TextField, Paper, Typography, IconButton, Divider, CircularProgress } from '@mui/material';
+import { Box, Button, Grid, TextField, Paper, Typography, IconButton, Divider, CircularProgress, useTheme } from '@mui/material';
 import StraightIcon from '@mui/icons-material/Straight';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
@@ -12,7 +12,7 @@ const FeatureSection = ({ section, updateSection, index }) => {
     const [feature, setFeature] = useState('');
     const fileInputRef = useRef(null);
     const { t } = useTranslation();
-
+    const theme = useTheme();
     const handleAddFeature = () => {
         if (feature.trim()) {
             updateSection(index, { ...section, features: [...section.features, feature.trim()] });
@@ -47,7 +47,7 @@ const FeatureSection = ({ section, updateSection, index }) => {
                     </Typography>
                     <Button
                         variant="contained"
-                        startIcon={<StraightIcon sx={{ fontSize: "8px", color: "#ef7d00" }} />}
+                        startIcon={<StraightIcon sx={{ fontSize: "8px", color: theme.palette.orangePrimary.main }} />}
                         sx={{
                             backgroundColor: '#222240', fontSize: "11px", padding: "1px 20px", borderRadius: "20px", textTransform: "capitalize",
                             color: 'white', '&:hover': { backgroundColor: '#222244d3' }
@@ -70,7 +70,7 @@ const FeatureSection = ({ section, updateSection, index }) => {
                         <Box sx={{ backgroundColor: "#EBEDF3", borderRadius: "8px", minHeight: "70px", padding: "0px 20px" }}>
                             <Box sx={{ height: "36px", display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                    <DoneOutlinedIcon sx={{ fontSize: "12px", color: "#ef7d00" }} />
+                                    <DoneOutlinedIcon sx={{ fontSize: "12px", color: theme.palette.orangePrimary.main }} />
                                     <TextField variant="outlined" fullWidth placeholder={t("addFeature")} value={feature} onChange={(e) => setFeature(e.target.value)} InputProps={{ sx: { fontSize: '10px', border: 'none', color: "#575756" } }} sx={{ '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }} />
                                 </Box>
                                 <IconButton onClick={handleAddFeature}><AddOutlinedIcon sx={{ fontSize: "15px", color: "#575756" }} /></IconButton>
@@ -80,7 +80,7 @@ const FeatureSection = ({ section, updateSection, index }) => {
                                 {section.features.map((feat, idx) => (
                                     <React.Fragment key={idx}>
                                         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                                            <Typography><DoneOutlinedIcon sx={{ fontSize: "12px", color: "#ef7d00", mr: 0.5 }} />{feat}</Typography>
+                                            <Typography><DoneOutlinedIcon sx={{ fontSize: "12px", color: theme.palette.orangePrimary.main, mr: 0.5 }} />{feat}</Typography>
                                         </Box>
                                         <Divider sx={{ margin: "3px" }} />
                                     </React.Fragment>
@@ -92,7 +92,7 @@ const FeatureSection = ({ section, updateSection, index }) => {
                         <Box sx={{ backgroundColor: "#EBEDF3", borderRadius: "8px", minHeight: "70px", padding: "0px 20px" }}>
                             <Box sx={{ height: "36px", display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                    <DoneOutlinedIcon sx={{ fontSize: "12px", color: "#ef7d00" }} />
+                                    <DoneOutlinedIcon sx={{ fontSize: "12px", color: theme.palette.orangePrimary.main }} />
                                     <TextField variant="outlined" fullWidth placeholder={t("addFeature")} value={feature} onChange={(e) => setFeature(e.target.value)} InputProps={{ sx: { fontSize: '10px', border: 'none', color: "#575756" } }} sx={{ '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }} />
                                 </Box>
                                 <IconButton onClick={handleAddFeature}><AddOutlinedIcon sx={{ fontSize: "15px", color: "#575756" }} /></IconButton>
@@ -102,7 +102,7 @@ const FeatureSection = ({ section, updateSection, index }) => {
                                 {section.features.map((feat, idx) => (
                                     <React.Fragment key={idx}>
                                         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                                            <Typography><DoneOutlinedIcon sx={{ fontSize: "12px", color: "#ef7d00", mr: 0.5 }} />{feat}</Typography>
+                                            <Typography><DoneOutlinedIcon sx={{ fontSize: "12px", color: theme.palette.orangePrimary.main, mr: 0.5 }} />{feat}</Typography>
                                         </Box>
                                         <Divider sx={{ margin: "3px" }} />
                                     </React.Fragment>
@@ -117,6 +117,7 @@ const FeatureSection = ({ section, updateSection, index }) => {
 };
 
 export const Features = forwardRef((props, ref) => {
+    const theme = useTheme();
     const [sections, setSections] = useState([{
         features: [],
         titleEn: '',
@@ -192,6 +193,7 @@ export const Features = forwardRef((props, ref) => {
     };
 
     const handleSave = async () => {
+        
         const hasInvalidSection = sections.some(section =>
             !section.titleEn || !section.titleAr ||
             !section.descriptionEn || !section.descriptionAr ||
@@ -257,7 +259,7 @@ export const Features = forwardRef((props, ref) => {
             {isSaving && (
                 <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.7)', zIndex: 1000, borderRadius: "20px" }}>
                     <Box sx={{ textAlign: 'center' }}>
-                        <CircularProgress sx={{ color: "#ef7d00" }} />
+                        <CircularProgress sx={{ color: theme.palette.orangePrimary.main }} />
                         <Typography sx={{ mt: 2, color: '#222240' }}>{t("saving")}</Typography>
                     </Box>
                 </Box>

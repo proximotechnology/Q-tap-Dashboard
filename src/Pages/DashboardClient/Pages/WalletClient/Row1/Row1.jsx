@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, Grid, MenuItem, Paper, Select, Typography } from '@mui/material'
+import { Box, Button, Grid, MenuItem, Paper, Select, Typography, useTheme } from '@mui/material'
 import StraightIcon from '@mui/icons-material/Straight';
 import { useNavigate } from 'react-router';
 import LineChart1 from '../../../../Wallet/Row1/LineChart1';
@@ -8,12 +8,13 @@ export const Row1 = () => {
   const [year, setYear] = React.useState('2024');
   const navigate = useNavigate();
   const { t } = useTranslation()
+  const theme = useTheme();
   const handleYearChange = (event) => {
     setYear(event.target.value);
   };
   return (
 
-    <Paper sx={{ height: "270px", borderRadius: "20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+    <Paper sx={{ height: "270px", borderRadius: "20px", display: "flex", alignItems: "center",overflow:'auto' }}>
       <Grid width={"80%"} >
         <Grid container justifyContent="space-between" alignItems="center"  >
           <Grid item sx={{
@@ -102,7 +103,7 @@ export const Row1 = () => {
 
 
           <Box sx={{
-            backgroundColor: "#222240",
+            backgroundColor: theme.palette.secondaryColor.main,
             color: "white",
             marginTop: "10px",
             borderRadius: "30px",
@@ -111,7 +112,7 @@ export const Row1 = () => {
             alignItems: "center",
             justifyContent:"center"
           }}>
-            <StraightIcon sx={{ color: "#ef7d00", fontSize: "20px" }} />
+            <StraightIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "20px" }} />
             <Button
               onClick={() => navigate('/transaction')}
               sx={{ color: "white", textTransform: "capitalize" }}>

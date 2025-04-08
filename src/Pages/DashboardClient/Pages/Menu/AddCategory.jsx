@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Divider, DialogContent, Dialog, TextField, Button, IconButton } from '@mui/material';
+import { Box, Typography, Divider, DialogContent, Dialog, TextField, Button, IconButton, useTheme } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import StraightIcon from '@mui/icons-material/Straight';
 import axios from 'axios';
@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 
 const CategoryForm = ({ open, handleClose }) => {
   const [name, setName] = useState('');
+  const theme = useTheme();
   const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);
   const [cover, setCover] = useState(null);
@@ -161,7 +162,7 @@ const CategoryForm = ({ open, handleClose }) => {
                     onChange={handleImageChange}
                   />
                   <label htmlFor="image-upload" style={{ cursor: 'pointer' }}>
-                    <StraightIcon sx={{ color: "#ef7d00", fontSize: '10px', marginRight: '4px' }} />
+                    <StraightIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: '10px', marginRight: '4px' }} />
                     {t("upload")}
                   </label>
                 </Box>
@@ -211,7 +212,7 @@ const CategoryForm = ({ open, handleClose }) => {
                     color: 'white',
                     fontSize: '8px',
                   }}>
-                    <StraightIcon sx={{ color: "#ef7d00", fontSize: '10px', marginRight: '4px' }} />
+                    <StraightIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: '10px', marginRight: '4px' }} />
                     {t("upload")}
                   </Box>
                 </>)}

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Grid, Typography, Chip, Box, IconButton, Divider } from '@mui/material';
+import { Grid, Typography, Chip, Box, IconButton, Divider, useTheme } from '@mui/material';
 
 const Header = ({ order, onClick  }) => {
-
+  const theme = useTheme();
 
   if (!order) {
     return <Typography variant="body1" color="error">Order data is missing</Typography>;
@@ -60,7 +60,7 @@ const Header = ({ order, onClick  }) => {
       </Grid>
 
       {/* Divider Line */}
-      <Divider style={{ backgroundColor: "#E57C00", borderBottom: "none", height: '2px', marginBottom: "20px" }} />
+      <Divider style={{ backgroundColor: theme.palette.orangePrimary.main, borderBottom: "none", height: '2px', marginBottom: "20px" }} />
     </>
 
   );

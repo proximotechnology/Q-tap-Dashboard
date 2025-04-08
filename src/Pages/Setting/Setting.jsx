@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Box, Tab, Tabs, Button } from "@mui/material";
+import { Box, Tab, Tabs, Button, useTheme } from "@mui/material";
 import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
 import PaymentOutlinedIcon from "@mui/icons-material/PaymentOutlined";
 import { Features } from "./Features";
@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 
 export const Setting = () => {
   const [selectedTab, setSelectedTab] = useState(0);
+  const theme = useTheme();
   const featuresRef = useRef();
   const videosRef = useRef();
   const faqRef = useRef();
@@ -104,7 +105,7 @@ export const Setting = () => {
           value={selectedTab}
           onChange={handleTabChange}
           TabIndicatorProps={{
-            style: { backgroundColor: "#ef7d00", height: "3px" },
+            style: { backgroundColor: theme.palette.orangePrimary.main, height: "3px" },
           }}
           variant="scrollable"
           scrollButtons
@@ -129,7 +130,7 @@ export const Setting = () => {
               sx={{
                 scrollSnapAlign: 'start',
                 textTransform: "capitalize",
-                color: selectedTab === index ? "#ef7d00" : "#575756",
+                color: selectedTab === index ? theme.palette.orangePrimary.main : "#575756",
                 "&.Mui-selected": { color: "#575756" },
               }}
             />
@@ -140,7 +141,7 @@ export const Setting = () => {
           onClick={handleSave}
           variant="contained"
           sx={{
-            backgroundColor: "#ef7d00",
+            backgroundColor: theme.palette.orangePrimary.main,
             height: "25px",
             width: "12%",
             minWidth: "85px",

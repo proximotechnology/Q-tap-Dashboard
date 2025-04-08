@@ -130,7 +130,7 @@ export default function SideBar({isOpen}) {
                                     py: 1.2, // reduced padding
                                     color:
                                         location.pathname === item.path
-                                            ? "#ef7d00"
+                                            ? theme.palette.orangePrimary.main
                                             : "gray",
                                 }}
                                 onClick={() => { navigate(item.path); }}>
@@ -142,14 +142,14 @@ export default function SideBar({isOpen}) {
                                         marginRight: "10px",
                                         color:
                                             location.pathname === item.path
-                                                ? "#ef7d00"
+                                                ? theme.palette.orangePrimary.main
                                                 : "gray",
 
                                     }}
                                 >
                                     {React.cloneElement(item.icon, {
                                         fontSize: "small",
-                                        color: location.pathname === item.path ? "#ef7d00" : "gray",
+                                        color: location.pathname === item.path ? theme.palette.orangePrimary.main : "gray",
                                     })}
                                 </ListItemIcon>
 
@@ -182,7 +182,7 @@ export default function SideBar({isOpen}) {
                                         location.pathname === item.path
                                             ? theme.palette.mode === "dark"
                                                 ? grey[600]
-                                                : "#ef7d00"
+                                                : theme.palette.orangePrimary.main
                                             : "gray",
                                 }}
                                 onClick={() => {
@@ -199,7 +199,7 @@ export default function SideBar({isOpen}) {
                                             location.pathname === item.path
                                                 ? theme.palette.mode === "dark"
                                                     ? grey[50]
-                                                    : "#ef7d00"
+                                                    : theme.palette.orangePrimary.main
                                                 : "gray",
                                     }}
                                 >

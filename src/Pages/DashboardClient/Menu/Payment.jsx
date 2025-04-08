@@ -1,5 +1,5 @@
 import { AppBar, Button, Divider, IconButton, Toolbar, Typography } from '@mui/material'
-import { Box } from '@mui/system'
+import { Box, useTheme } from '@mui/system'
 import React, { useState } from 'react'
  
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
@@ -17,6 +17,7 @@ export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, p
     selectedName, selectedValue, totalCart, selectedItemOptions, selectedItemExtra, comment, address
 }) => {
     const {t} = useTranslation()
+    const theme = useTheme();
     const [isDone, setIsDone] = useState(false);
     const toggleDone = () => {
         setIsDone(!isDone);
@@ -27,10 +28,10 @@ export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, p
                 <AppBar position="sticky" color="inherit">
                     <Toolbar>
                         <IconButton edge="start" color="inherit" aria-label="cart">
-                            <ShoppingCartOutlinedIcon sx={{ color: "#ef7d00", fontSize: "25px" }} />
+                            <ShoppingCartOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "25px" }} />
                             <Typography sx={{
                                 position: "relative", top: "-10px", left: "-10px", fontSize: "8px", padding: "0px 3px", borderRadius: "50%",
-                                backgroundColor: "#ef7d00", color: "white"
+                                backgroundColor: theme.palette.orangePrimary.main, color: "white"
                             }}>{cartItems.length}</Typography>
                         </IconButton>
 
@@ -39,7 +40,7 @@ export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, p
 
                         <Box sx={{ display: "flex", textAlign: "center", alignItems: "center", cursor: "pointer" }}  >
                             <PersonOutlineOutlinedIcon
-                                sx={{ color: "white", fontSize: "18px", borderRadius: "10px", padding: "5px", backgroundColor: "#ef7d00" }} />
+                                sx={{ color: "white", fontSize: "18px", borderRadius: "10px", padding: "5px", backgroundColor: theme.palette.orangePrimary.main }} />
                             <Typography variant='body2' sx={{ color: "#575756", fontSize: "10px", padding: "0px 5px" }}>Admin</Typography>
                             <KeyboardArrowDownOutlinedIcon sx={{ color: "#575756", fontSize: "13px" }} />
                         </Box>
@@ -60,14 +61,14 @@ export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, p
                                 </Typography>
 
                                 <Typography variant="body2" sx={{ marginTop: '2px', fontSize: '9px', color: "gray" }}>
-                                    <span style={{ color: "#ef7d00" }}>{t("option")} | </span>
+                                    <span style={{ color: theme.palette.orangePrimary.main }}>{t("option")} | </span>
                                     {selectedItemOptions[item.id] && selectedItemOptions[item.id].length > 0
                                         ? selectedItemOptions[item.id].map(option => option.name).join(', ')
                                         : 'No options selected'}
 
                                 </Typography>
                                 <Typography variant="body2" sx={{ marginTop: '2px', fontSize: '9px', color: "gray" }} >
-                                    <span style={{ color: "#ef7d00" }}>{t("extra.one")} |</span>
+                                    <span style={{ color: theme.palette.orangePrimary.main }}>{t("extra.one")} |</span>
                                     {selectedItemExtra[item.id] && selectedItemExtra[item.id].length > 0
                                         ? selectedItemExtra[item.id].map(extra => extra.name).join(', ')
                                         : 'No extra selected'}
@@ -82,7 +83,7 @@ export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, p
                                             minWidth: "15px",
                                             fontSize: "7px",
                                             borderRadius: "50%",
-                                            backgroundColor: "#ef7d00",
+                                            backgroundColor: theme.palette.orangePrimary.main,
                                             color: "white",
                                             "&:hover": {
                                                 backgroundColor: "#D47A1C"
@@ -91,9 +92,9 @@ export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, p
                                     >
                                         {selectedSize[item.id]}
                                     </Button>
-                                    <span style={{ fontSize: "10px", color: "#575756", marginLeft: "10px" }}> <span style={{ color: "#ef7d00" }}>x</span> {getItemCount(item.id)}</span>
+                                    <span style={{ fontSize: "10px", color: "#575756", marginLeft: "10px" }}> <span style={{ color: theme.palette.orangePrimary.main }}>x</span> {getItemCount(item.id)}</span>
                                 </Box>
-                                <Typography variant="h6" sx={{ marginTop: "5px", fontSize: '13px', fontWeight: "bold", color: '#ef7d00' }}>
+                                <Typography variant="h6" sx={{ marginTop: "5px", fontSize: '13px', fontWeight: "bold", color: theme.palette.orangePrimary.main }}>
                                     {item.newPrice} <span style={{ fontSize: "8px", fontWeight: "400", color: '#575756' }}>EGP</span>
                                 </Typography>
                             </Box>
@@ -105,25 +106,25 @@ export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, p
                         <Box  >
                             <Typography color="#262624" fontSize="12px"  >{t("dineMethod")}</Typography>
                             <Typography color="textSecondary" fontSize="11px" margin={"5px 10px"} display={"flex"}>{t(selectedType)} ,
-                                <span class="icon-scooter" style={{ fontSize: "18px", marginLeft: "7px", color: "#ef7d00" }}></span>
+                                <span class="icon-scooter" style={{ fontSize: "18px", marginLeft: "7px", color: theme.palette.orangePrimary.main }}></span>
                             </Typography>
                         </Box>
                         <Typography color="textSecondary" fontSize="11px" >
-                            <span style={{ color: "#ef7d00", marginLeft: "10px" }}>{t("address")} </span>
+                            <span style={{ color: theme.palette.orangePrimary.main, marginLeft: "10px" }}>{t("address")} </span>
                             {address}</Typography>
 
                         <Typography color="textSecondary" fontSize="11px" >
-                            <span style={{ color: "#ef7d00", marginLeft: "10px" }}>{t("name")} : </span>
+                            <span style={{ color: theme.palette.orangePrimary.main, marginLeft: "10px" }}>{t("name")} : </span>
                             {selectedName}</Typography>
 
                         <Box display={"flex"} textAlign={"center"} alignItems={"center"} justifyContent={"space-between"}>
                             <Box>
                                 <Typography color="textSecondary" fontSize="11px" >
-                                    <span style={{ color: "#ef7d00", marginLeft: "10px" }}>{t("mobileNumber")} : </span>
+                                    <span style={{ color: theme.palette.orangePrimary.main, marginLeft: "10px" }}>{t("mobileNumber")} : </span>
                                     {phone}</Typography>
                             </Box>
                             <Button sx={{
-                                backgroundColor: "#222240", borderRadius: "5px", display: "flex",
+                                backgroundColor: theme.palette.secondaryColor.main, borderRadius: "5px", display: "flex",
                                 justifyContent: "center", padding: "5px 15px",
                                 alignItems: "center", color: "white", textTransform: "capitalize", fontSize: "9px",
                                 "&:hover": {
@@ -177,7 +178,7 @@ export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, p
                             <Typography variant="h6" sx={{ fontSize: '10px', fontWeight: "bold", color: '#3A3A38' }}>
                                {t("totalPrice")}
                             </Typography>
-                            <Typography variant="h6" sx={{ fontSize: '18px', fontWeight: "bold", color: '#ef7d00' }}>
+                            <Typography variant="h6" sx={{ fontSize: '18px', fontWeight: "bold", color: theme.palette.orangePrimary.main }}>
                                 {totalCart} <span style={{ fontSize: "10px", fontWeight: "400", color: '#575756' }}>EGP</span>
                             </Typography>
                         </Box>
@@ -200,7 +201,7 @@ export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, p
                             {t("cancel")}</Typography>
 
                         <Typography variant="body2" sx={{ cursor: "pointer", marginLeft: "25px", color: "#262624", fontSize: "12px", fontWeight: "bold" }}>
-                            <span class="icon-edit" style={{ fontSize: "15px", color: "#ef7d00", marginRight: "5px" }}></span>
+                            <span class="icon-edit" style={{ fontSize: "15px", color: theme.palette.orangePrimary.main, marginRight: "5px" }}></span>
                             {t("edit")}</Typography>
                     </Box>
 
@@ -208,7 +209,7 @@ export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, p
                         <Button
                             onClick={toggleDone}
                             sx={{
-                                backgroundColor: "#222240", color: "white", textTransform: "capitalize", fontSize: "10px",
+                                backgroundColor: theme.palette.secondaryColor.main, color: "white", textTransform: "capitalize", fontSize: "10px",
                                 borderRadius: "20px", width: "65%", height: "30px",
                                 "&:hover": {
                                     backgroundColor: "#222245",

@@ -10,7 +10,13 @@ const theme = createTheme({
   palette: {
     mode: 'light', 
     orangePrimary: {
-      main: '#E57C00', 
+      // main: "#E57C00", 
+      main: "#000", 
+      // icon:"#ff9800"
+      icon:"#000"
+    },
+    secondaryColor:{
+      main:'#222240'
     },
     bluePrimary: {
       main: '#222240',  

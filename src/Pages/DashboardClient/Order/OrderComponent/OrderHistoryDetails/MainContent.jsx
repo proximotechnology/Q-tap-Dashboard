@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { Grid, Typography, Button, Divider } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box, useTheme } from '@mui/system';
 
 
 export const orders = [
@@ -84,8 +84,10 @@ const MainContent =forwardRef(( ) => {
 );
 });
 
-const OrderDetails = ({ order }) => (
-    <div>
+const OrderDetails = ({ order }) => {
+    const theme = useTheme();
+    return (
+        <div>
         <Typography variant="h6" sx={{ fontSize: "12px" }}>Order details</Typography>
         <Box display={"flex"} justifyContent={"center"}>
             <Box width={"70%"}>
@@ -113,8 +115,11 @@ const OrderDetails = ({ order }) => (
         </Box>
     </div>
 );
+}
 
-const CommentSection = ({ order }) => (
+const CommentSection = ({ order }) => {
+    const theme = useTheme();
+     return (
     <div>
         <Box sx={{ marginBottom: "6px" }}>
             <Typography variant="h6" sx={{ fontSize: "12px" }}>Comment</Typography>
@@ -132,21 +137,21 @@ const CommentSection = ({ order }) => (
         </Box>
 
         <Typography variant="body2" sx={{ fontSize: "11px", color: "gray", padding: "3px" }}>
-            <span style={{ color: "#E57C00" }}>Address :</span>{order.address}
+            <span style={{ color: theme.palette.orangePrimary.main }}>Address :</span>{order.address}
         </Typography>
 
         <Typography variant="body2" sx={{ fontSize: "11px", color: "gray", padding: "3px" }}>
-            <Box component="span" sx={{ color: "#E57C00" }}>Name: </Box>{order.names}
+            <Box component="span" sx={{ color: theme.palette.orangePrimary.main }}>Name: </Box>{order.names}
         </Typography>
 
         <Typography variant="body2" sx={{ fontSize: "11px", color: "gray", padding: "3px" }}>
-            <Box component="span" sx={{ color: "#E57C00" }}>Phone: </Box>{order.phone}
+            <Box component="span" sx={{ color: theme.palette.orangePrimary.main }}>Phone: </Box>{order.phone}
         </Typography>
 
 
         <Button variant="contained"
             sx={{
-                fontSize: "11px", backgroundColor: "#222240", borderRadius: "10px",
+                fontSize: "11px", backgroundColor: theme.palette.secondaryColor.main, borderRadius: "10px",
                 textTransform: "capitalize", marginRight: "10px", marginTop: "20px",
                 '&:hover': {
                     backgroundColor: '#222240',
@@ -160,17 +165,17 @@ const CommentSection = ({ order }) => (
 
         <Button variant="contained"
             sx={{
-                fontSize: "12px", backgroundColor: "#ef7d00", borderRadius: "10px",
+                fontSize: "12px", backgroundColor: theme.palette.orangePrimary.main, borderRadius: "10px",
                 textTransform: "capitalize", marginTop: "20px",
                 '&:hover': {
-                    backgroundColor: '#ef7d00',
+                    backgroundColor: theme.palette.orangePrimary.main,
                 }
             }} startIcon={
                 <span class="icon-send"  ></span>
             }>
         </Button>
     </div>
-);
+)};
 
 const ChefSection = ({ order,}) => (
     <Grid container spacing={2}  >

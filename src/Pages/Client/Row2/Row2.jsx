@@ -31,7 +31,7 @@
 //     city: "Cairo",
 //     bundle: "Starter",
 //     status: "active",
-//     statusColor: "#ef7d00",
+//     statusColor: theme.palette.orangePrimary.main,
 //   },
 //   {
 //     name: "Name",
@@ -148,7 +148,7 @@
 //             <Button
 //               onClick={() => navigate("/add-client")}
 //               sx={{
-//                 color: "#E57C00",
+//                 color: theme.palette.orangePrimary.main,
 //                 textTransform: "capitalize",
 //                 fontSize: "12px",
 //               }}
@@ -161,7 +161,7 @@
 //             <Button
 //               onClick={exportToExcel}
 //               sx={{
-//                 color: "#E57C00",
+//                 color: theme.palette.orangePrimary.main,
 //                 textTransform: "capitalize",
 //                 fontSize: "12px",
 //                 display: "flex",
@@ -187,11 +187,11 @@
 //             borderRadius: "4px",
 //           },
 //           "&::-webkit-scrollbar-thumb": {
-//             background: "#E57C00",
+//             background: theme.palette.orangePrimary.main,
 //             borderRadius: "4px",
 //             width: '2px',
 //             "&:hover": {
-//               background: "#ef7d00",
+//               background: theme.palette.orangePrimary.main,
 //             },
 //           },
 //         }}>
@@ -344,7 +344,7 @@
 //                           row.status === "Confirm Payment" ? "20px" : "0px",
 //                         color:
 //                           row.status === "active"
-//                             ? "#ef7d00"
+//                             ? theme.palette.orangePrimary.main
 //                             : row.status === "inactive"
 //                               ? "gray"
 //                               : "defaultColor",
@@ -360,7 +360,7 @@
 //                           width: "6px",
 //                           height: "6px",
 //                           backgroundColor:
-//                             row.status === "active" ? "#ef7d00" : "black",
+//                             row.status === "active" ? theme.palette.orangePrimary.main : "black",
 //                           borderRadius: "50%",
 //                           marginRight: "5px",
 //                         }}
@@ -425,6 +425,7 @@ import {
   Button,
   IconButton,
   CircularProgress,
+  useTheme,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
@@ -441,6 +442,7 @@ const exportToExcel = (clients) => {
 };
 
 export const Row2 = () => {
+  const theme = useTheme();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true); // Add loading state
   const navigate = useNavigate();
@@ -589,7 +591,7 @@ export const Row2 = () => {
             <Button
               onClick={handleAddClient} // Updated to handleAddClient
               sx={{
-                color: "#E57C00",
+                color: theme.palette.orangePrimary.main,
                 textTransform: "capitalize",
                 fontSize: "12px",
               }}
@@ -601,7 +603,7 @@ export const Row2 = () => {
             <Button
               onClick={() => exportToExcel(data?.qtap_clients || [])}
               sx={{
-                color: "#E57C00",
+                color: theme.palette.orangePrimary.main,
                 textTransform: "capitalize",
                 fontSize: "12px",
                 display: "flex",
@@ -628,11 +630,11 @@ export const Row2 = () => {
               borderRadius: "4px",
             },
             "&::-webkit-scrollbar-thumb": {
-              background: "#E57C00",
+              background: theme.palette.orangePrimary.main,
               borderRadius: "4px",
               width: "2px",
               "&:hover": {
-                background: "#ef7d00",
+                background: theme.palette.orangePrimary.main,
               },
             },
           }}
@@ -679,7 +681,7 @@ export const Row2 = () => {
               {loading ? (
                 <TableRow>
                   <TableCell colSpan={6} sx={{ textAlign: "center", padding: "100px 20px"}}>
-                    <CircularProgress sx={{ color: "#E57C00" }} />
+                    <CircularProgress sx={{ color: theme.palette.orangePrimary.main }} />
                   </TableCell>
                 </TableRow>
               ) : data?.qtap_clients?.length > 0 ? (
@@ -702,7 +704,7 @@ export const Row2 = () => {
                   >
                     <TableCell
                       sx={{
-                        color: "#222240",
+                        color: theme.palette.secondaryColor.main,
                         fontSize: "11px",
                         padding: "0px",
                         width: `${100 / 6}%`,
@@ -735,7 +737,7 @@ export const Row2 = () => {
                     <TableCell
                       sx={{
                         lineHeight: "1",
-                        color: "#222240",
+                        color: theme.palette.secondaryColor.main,
                         fontSize: "11px",
                         padding: "0px",
                         width: `${100 / 6}%`,
@@ -748,7 +750,7 @@ export const Row2 = () => {
                     <TableCell
                       sx={{
                         lineHeight: "1",
-                        color: "#222240",
+                        color: theme.palette.secondaryColor.main,
                         fontSize: "11px",
                         padding: "0px",
                         width: `${100 / 6}%`,
@@ -761,7 +763,7 @@ export const Row2 = () => {
                     <TableCell
                       sx={{
                         lineHeight: "1",
-                        color: "#222240",
+                        color: theme.palette.secondaryColor.main,
                         fontSize: "11px",
                         padding: "0px",
                         width: `${100 / 6}%`,
@@ -785,11 +787,11 @@ export const Row2 = () => {
                     >
                       <span
                         style={{
-                          backgroundColor: row.status === "Confirm Payment" ? "#222240" : null,
+                          backgroundColor: row.status === "Confirm Payment" ? theme.palette.secondaryColor.main : null,
                           borderRadius: row.status === "Confirm Payment" ? "20px" : "0px",
                           color:
                             row.status === "active"
-                              ? "#ef7d00"
+                              ? theme.palette.orangePrimary.main
                               : row.status === "inactive"
                               ? "gray"
                               : "white",
@@ -802,7 +804,7 @@ export const Row2 = () => {
                             display: "inline-block",
                             width: "6px",
                             height: "6px",
-                            backgroundColor: row.status === "active" ? "#ef7d00" : "black",
+                            backgroundColor: row.status === "active" ? theme.palette.orangePrimary.main : "black",
                             borderRadius: "50%",
                             marginRight: "5px",
                           }}

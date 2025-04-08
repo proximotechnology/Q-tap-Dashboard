@@ -1,6 +1,6 @@
 
 import { Divider, MenuItem, TextField, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box, useTheme } from '@mui/system';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 export const PaymentInfo = ({
@@ -15,6 +15,7 @@ export const PaymentInfo = ({
   errors
 }) => {
   const {t} = useTranslation();
+  const theme = useTheme();
   const handleSelect = (option) => {
     setSelectedOption(option);
     console.log(option);
@@ -190,11 +191,11 @@ export const PaymentInfo = ({
                 borderRadius: "8px",
                 border: "1px solid #c9c6c6fa",
                 cursor: "pointer",
-                borderColor: selectedOption === option.label ? "#ef7d00" : "#D3D3D3",
-                '&:hover': { borderColor: "#ef7d00" }
+                borderColor: selectedOption === option.label ? theme.palette.orangePrimary.main : "#D3D3D3",
+                '&:hover': { borderColor: theme.palette.orangePrimary.main }
               }}
             >
-              <Box sx={{ color: selectedOption === option.label ? "#ef7d00" : "grey" }}>
+              <Box sx={{ color: selectedOption === option.label ? theme.palette.orangePrimary.main : "grey" }}>
                 {option.icon}
               </Box>
             </Box>

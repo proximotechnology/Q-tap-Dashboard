@@ -1,5 +1,5 @@
 import { AppBar, Avatar, Divider, Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, Popover, Switch, Toolbar, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box, useTheme } from '@mui/system';
 import React, { useState } from 'react'
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
@@ -11,6 +11,7 @@ import Language from '../ComponentDashClient/TopBar/Language';
 import { useTranslation } from 'react-i18next';
 export const DeliveredHeader = () => {
     const {t} = useTranslation();
+    const theme = useTheme();
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handlePopoverClick = (event) => {
@@ -50,7 +51,7 @@ export const DeliveredHeader = () => {
                         top: '50%',
                         transform: 'translateY(-50%)',
                         fontSize: '300px',
-                        color: '#ef7d00',
+                        color: theme.palette.orangePrimary.main,
                         opacity: 0.2,
                         zIndex: 1,
                     }}
@@ -73,7 +74,7 @@ export const DeliveredHeader = () => {
                                     sx={{ borderBottom: '2px solid #ef7d00', alignItems: "center", paddingLeft: "10px", fontSize: "10px" }}>
                                     {t("totalDeliveredOrders")}
                                 </Typography>
-                                <Typography variant="h3" sx={{ color: "#ef7d00", paddingLeft: "10px" }}>
+                                <Typography variant="h3" sx={{ color: theme.palette.orangePrimary.main, paddingLeft: "10px" }}>
                                     500
                                 </Typography>
                             </Box>
@@ -125,17 +126,17 @@ export const DeliveredHeader = () => {
                         sx={{ display: "flex", alignItems: "center", gap: "3px", marginLeft: "10px", cursor: "pointer" }}
                     >
                         <IconButton color="inherit" sx={{
-                            backgroundColor: '#ef7d00',
+                            backgroundColor: theme.palette.orangePrimary.main,
                             borderRadius: '38%',
                             padding: '5px',
                             '&:hover': {
-                                backgroundColor: '#ef7d00',
+                                backgroundColor: theme.palette.orangePrimary.main,
                             }
                         }}>
                             <PersonOutlinedIcon sx={{ color: "white" }} />
                         </IconButton>
 
-                        <KeyboardArrowDownOutlinedIcon sx={{ fontSize: "20px", color: "#ef7d00" }} />
+                        <KeyboardArrowDownOutlinedIcon sx={{ fontSize: "20px", color: theme.palette.orangePrimary.main }} />
                     </Box>
                     <Popover disableScrollLock
                         id={id}
@@ -149,7 +150,7 @@ export const DeliveredHeader = () => {
                     >
                         <Box sx={{ width: 200 }}>
                             <Box sx={{ padding: '20px 0px 0px 20px', display: 'flex', alignItems: 'center', flexDirection: 'row', marginBottom: '20px', gap: '10px' }}>
-                                <Avatar sx={{ bgcolor: '#ef7d00', width: 40, height: 40 }}>
+                                <Avatar sx={{ bgcolor: theme.palette.orangePrimary.main, width: 40, height: 40 }}>
                                     <PersonOutlinedIcon sx={{ color: "white" }} />
                                 </Avatar>
                                 <Box>
@@ -188,7 +189,7 @@ export const DeliveredHeader = () => {
                                                         width: 15, // عرض الدائرة
                                                         height: 15, // ارتفاع الدائرة
                                                         boxShadow: 'none',
-                                                        color: '#ef7d00',
+                                                        color: theme.palette.orangePrimary.main,
                                                     },
                                                     '& .MuiSwitch-track': {
                                                         borderRadius: 16 / 2,
@@ -210,7 +211,7 @@ export const DeliveredHeader = () => {
 
                                 <ListItem sx={{ cursor: "pointer" }} onClick={handlePopoverClose}>
                                     <ListItemIcon>
-                                        <span class="icon-messenger" style={{ fontSize: "18px", color: '#ef7d00', }} ></span>
+                                        <span class="icon-messenger" style={{ fontSize: "18px", color: theme.palette.orangePrimary.main, }} ></span>
                                     </ListItemIcon>
                                     <ListItemText primary="Support"
                                         primaryTypographyProps={{
@@ -271,7 +272,7 @@ export const DeliveredHeader = () => {
                                 width: 15,
                                 height: 15,
                                 boxShadow: 'none',
-                                color: '#ef7d00',
+                                color: theme.palette.orangePrimary.main,
                             },
                             '& .MuiSwitch-track': {
                                 borderRadius: 16 / 2,

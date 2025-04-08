@@ -2,7 +2,7 @@ import { Paper, Typography } from '@mui/material'
 import React from 'react'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { data } from './BarChart';
-import { Box } from '@mui/system';
+import { Box, useTheme } from '@mui/system';
 import { Grid, Select, MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 const CustomTooltip = ({ active, payload }) => {
@@ -20,7 +20,7 @@ const CustomTooltip = ({ active, payload }) => {
 export const BarChart1 = () => {
     const [year, setYear] = React.useState('2024');
     const { t } = useTranslation()
-
+    const theme = useTheme();
     const handleYearChange = (event) => {
         setYear(event.target.value);
     };
@@ -75,7 +75,7 @@ export const BarChart1 = () => {
                     <Tooltip contentStyle={{ fontSize: '10px' }}
                         content={<CustomTooltip />}
                         cursor={{ fill: 'transparent' }} />
-                    <Bar dataKey="value" fill="#ef7d00" background={{ fill: '#D8E0E0' }} barSize={12} radius={[10, 10, 0, 0]} />
+                    <Bar dataKey="value" fill={theme.palette.orangePrimary.main} background={{ fill: '#D8E0E0' }} barSize={12} radius={[10, 10, 0, 0]} />
 
                 </BarChart>
             </ResponsiveContainer>

@@ -12,6 +12,7 @@ import {
   Button,
   Menu,
   IconButton,
+  useTheme,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
@@ -30,7 +31,7 @@ export const Users = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const open = Boolean(anchorEl);
   const { t } = useTranslation()
-
+  const theme = useTheme();
   const handleClick = (event, user) => {
     setAnchorEl(event.currentTarget);
     setSelectedUser(user);
@@ -196,7 +197,7 @@ export const Users = () => {
             <Button
               onClick={() => navigate("/add-user")}
               sx={{
-                color: "#E57C00",
+                color: theme.palette.orangePrimary.main,
                 textTransform: "capitalize",
                 fontSize: "12px",
               }}
@@ -207,7 +208,7 @@ export const Users = () => {
             <Button
               onClick={exportToExcel}
               sx={{
-                color: "#E57C00",
+                color: theme.palette.orangePrimary.main,
                 textTransform: "capitalize",
                 fontSize: "11px",
               }}
@@ -334,7 +335,7 @@ export const Users = () => {
                       onClick={() => handleActiveUsers(user.id, user.status)}
                       style={{
                         color:
-                          user.status === "active" ? "#ef7d00" : "#575756",
+                          user.status === "active" ? theme.palette.orangePrimary.main : "#575756",
                         borderRadius: "30px",
                         padding: "3px 10px 10px 10px",
                         cursor: "pointer",
@@ -343,7 +344,7 @@ export const Users = () => {
 
                       }}
                     >
-                      <span style={{ color: user.status === "active" ? "#ef7d00" : "#575756", fontWeight: "bolder", fontSize: "20px", marginRight: "3px" }}>&#8226; </span>
+                      <span style={{ color: user.status === "active" ? theme.palette.orangePrimary.main : "#575756", fontWeight: "bolder", fontSize: "20px", marginRight: "3px" }}>&#8226; </span>
                       {t(user.status.charAt(0).toUpperCase() + user.status.slice(1))}
                     </span>
                   </TableCell>

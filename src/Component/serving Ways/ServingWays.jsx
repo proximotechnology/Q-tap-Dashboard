@@ -1,5 +1,5 @@
 
-import { Box, Button, FormControl, Grid, InputAdornment, MenuItem, Select, styled, TextField, Typography } from '@mui/material';
+import { Box, Button, FormControl, Grid, InputAdornment, MenuItem, Select, styled, TextField, Typography, useTheme } from '@mui/material';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import TableBarOutlinedIcon from '@mui/icons-material/TableBarOutlined';
@@ -10,23 +10,25 @@ import { useBusinessContext } from '../../context/BusinessContext';
 import { useTranslation } from 'react-i18next';
 import styles from '../../Pages/DashboardClient/Pages/SupportClient/supportCard.module.css';
 
-const Divider = styled(Box)({
-    width: '5%',
-    height: '3px',
-    backgroundColor: '#E57C00',
-    borderRadius: "20px",
-    marginBottom: "20px"
-});
 
-const Divider2 = styled(Box)({
-    width: '60%',
-    height: '1px',
-    backgroundColor: '#E57C00',
-    borderRadius: "20px",
-    marginBottom: "20px"
-});
 
 export const ServingWays = () => {
+    const theme = useTheme();
+    const Divider = styled(Box)({
+        width: '5%',
+        height: '3px',
+        backgroundColor: theme.palette.orangePrimary.main,
+        borderRadius: "20px",
+        marginBottom: "20px"
+    });
+    
+    const Divider2 = styled(Box)({
+        width: '60%',
+        height: '1px',
+        backgroundColor: theme.palette.orangePrimary.main,
+        borderRadius: "20px",
+        marginBottom: "20px"
+    });
     const navigate = useNavigate();
     const { updateBusinessData, businessData } = useBusinessContext();
     const [servingWays, setServingWays] = useState(businessData.servingWays || []);
@@ -70,7 +72,7 @@ export const ServingWays = () => {
 
     return (
         <Box marginTop={"50px"} flexGrow={1}>
-            <Typography variant="body1" sx={{ fontSize: "18px", color: "#222240" }}>
+            <Typography variant="body1" sx={{ fontSize: "18px", color: theme.palette.secondaryColor.main }}>
                 {t("busnessInfo")}
             </Typography>
             <Divider />
@@ -95,7 +97,7 @@ export const ServingWays = () => {
                                     marginRight: "20px",
                                     height: "160px",
                                     borderRadius: "20px",
-                                    backgroundColor: "#222240",
+                                    backgroundColor: theme.palette.secondaryColor.main,
                                     cursor: "pointer",
                                     overflow: "hidden"
                                 }}
@@ -104,7 +106,7 @@ export const ServingWays = () => {
                                     variant="h6"
                                     sx={{
                                         fontSize: "13px",
-                                        color: "#E57C00",
+                                        color: theme.palette.orangePrimary.main,
                                         padding: "20px 0px 2px 0px",
                                         display: "flex",
                                         justifyContent: "center"
@@ -184,14 +186,14 @@ export const ServingWays = () => {
                             width: '20%',
                             fontSize: "13px",
                             borderRadius: '50px',
-                            backgroundColor: "#E57C00",
+                            backgroundColor: theme.palette.orangePrimary.main,
                             textTransform: 'none',
-                            padding: "6px 0",
-                            position: "fixed",
-                            bottom: "30px",
-                            left: "55%",
+                            padding: "6px ",
+                            // position: "fixed",
+                            // bottom: "30px",
+                            // left: "55%",
                             '&:hover': {
-                                backgroundColor: "#E57C00",
+                                backgroundColor: theme.palette.orangePrimary.main,
                             },
                             color: "#fff"
                         }}

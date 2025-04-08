@@ -1,6 +1,6 @@
 // components/FeedbackDetailsModal.js
 import React, { useEffect, useState } from 'react';
-import { Box, Button, IconButton, Modal, Typography, Divider } from '@mui/material';
+import { Box, Button, IconButton, Modal, Typography, Divider, useTheme } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
@@ -11,6 +11,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import axios from 'axios';
 
 const FeedbackDetailsModal = ({ open, handleClose, pageId }) => {
+    const theme = useTheme();
 
     const [feedbackData, setFeedbackData] = useState([]);
 
@@ -69,7 +70,7 @@ const FeedbackDetailsModal = ({ open, handleClose, pageId }) => {
                         </IconButton>
                     </Box>
                 </Box>
-                <Divider sx={{ backgroundColor: "#E57C00", marginBottom: "10px" }} />
+                <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main, marginBottom: "10px" }} />
 
                 <Typography variant="body1" sx={{ color: '#575756', fontSize: "12px" }}>
                     How much you satisfied with the product?
@@ -78,7 +79,7 @@ const FeedbackDetailsModal = ({ open, handleClose, pageId }) => {
                 <Box sx={{ display: 'flex', marginTop: "0px", p: 0 }}>
                     {[1, 2, 3, 4, 5].map((index) => (
                         <IconButton key={index}>
-                            {index <= feedbackData[pageId]?.star ? <StarIcon sx={{ color: '#ef7d00', fontSize: "20px" }} />
+                            {index <= feedbackData[pageId]?.star ? <StarIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "20px" }} />
                                 : <StarBorderIcon sx={{ color: '#AAAAAA', fontSize: "20px" }} />}
                         </IconButton>
                     ))}
@@ -161,10 +162,10 @@ const FeedbackDetailsModal = ({ open, handleClose, pageId }) => {
                     <Button
                         variant="contained"
                         sx={{
-                            margin: "30px 0px", backgroundColor: "#E57C00", width: "30%", height: "28px", fontSize: "12px",
+                            margin: "30px 0px", backgroundColor: theme.palette.orangePrimary.main, width: "30%", height: "28px", fontSize: "12px",
                             color: "white", borderRadius: 20,
                             '&:hover': {
-                                backgroundColor: "#E57C00",
+                                backgroundColor: theme.palette.orangePrimary.main,
                             }
                         }}
                         onClick={handleClose}

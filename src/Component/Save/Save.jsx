@@ -16,6 +16,7 @@ import {
   Popover,
   Typography,
   Box,
+  useTheme,
 } from '@mui/material';
 import {
   HelpOutlineOutlined,
@@ -49,6 +50,7 @@ export const Save = () => {
   const [mode, setMode] = useState('light');
   const [design, setDesign] = useState('grid');
   const { t, i18n } = useTranslation()
+  const theme = useTheme();
 
   const [workingHours, setWorkingHours] = useState({
     selectedDays: ['Sa', 'Su'],
@@ -302,9 +304,9 @@ export const Save = () => {
 
   const getLanguageIcon = () => {
     return selectedLanguage === 'ar' ? (
-      <span className="icon-translation" style={{ color: '#ef7d00', fontSize: '22px' }} />
+      <span className="icon-translation" style={{ color: theme.palette.orangePrimary.main, fontSize: '22px' }} />
     ) : (
-      <LanguageOutlined sx={{ color: '#ef7d00', fontSize: '22px' }} />
+      <LanguageOutlined sx={{ color: theme.palette.orangePrimary.main, fontSize: '22px' }} />
     );
   };
 
@@ -365,10 +367,10 @@ export const Save = () => {
             <IconButton
               color="inherit"
               sx={{
-                backgroundColor: '#ef7d00',
+                backgroundColor: theme.palette.orangePrimary.main,
                 borderRadius: '30%',
                 padding: '5px',
-                '&:hover': { backgroundColor: '#ef7d00' },
+                '&:hover': { backgroundColor: theme.palette.orangePrimary.main },
               }}
             >
               <PersonOutlineOutlined sx={{ fontSize: '20px', color: 'white' }} />
@@ -389,7 +391,7 @@ export const Save = () => {
               <Box
                 sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row', marginBottom: '20px', gap: '10px' }}
               >
-                <Avatar sx={{ bgcolor: '#ef7d00', width: 40, height: 40 }}>
+                <Avatar sx={{ bgcolor: theme.palette.orangePrimary.main, width: 40, height: 40 }}>
                   <PersonOutlineOutlined sx={{ fontSize: '22px' }} />
                 </Avatar>
                 <Box>
@@ -418,7 +420,7 @@ export const Save = () => {
                     margin: '0 auto',
                   }}
                 >
-                  <span className="icon-home-icon-silhouette" style={{ color: '#ef7d00', marginRight: '5px', fontSize: '15px' }} />
+                  <span className="icon-home-icon-silhouette" style={{ color: theme.palette.orangePrimary.main, marginRight: '5px', fontSize: '15px' }} />
                   <span style={{ color: 'white', fontSize: '12px', textTransform: 'capitalize' }}>{t("home")}</span>
                 </Box>
                 <ListItem sx={{ cursor: 'pointer' }} onClick={handleUserClose}>
@@ -463,7 +465,7 @@ export const Save = () => {
         </Box>
       </Box>
 
-      <Divider sx={{ backgroundColor: '#ef7d00', borderBottom: 'none', width: '100%', height: '3px' }} />
+      <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main, borderBottom: 'none', width: '100%', height: '3px' }} />
 
       <Box>
         <Grid container spacing={1}>
@@ -484,7 +486,7 @@ export const Save = () => {
             sx={{
               width: '160px',
               textTransform: 'capitalize',
-              backgroundColor: '#ef7d00',
+              backgroundColor: theme.palette.orangePrimary.main,
               color: 'white',
               borderRadius: '20px',
               padding: '5px',

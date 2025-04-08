@@ -1,53 +1,56 @@
 import React from 'react'
 
 import { Grid, Typography, Box } from '@mui/material';
-import { styled } from '@mui/system';
+import { styled, useTheme } from '@mui/system';
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
 import { useTranslation } from 'react-i18next';
 
 
-const ImageContainer = styled(Box)({
-    backgroundImage: 'url(/images/Qtop1.jpg)',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    display: 'flex',
-    justifyContent: 'center',
-    height: "100vh",
-    alignItems: 'center',
-    position: 'relative',
-    borderRadius: "0% 8% 8% 0% ",
-    '::before': {
-        content: '""',
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        zIndex: 1,
-        borderRadius: "0% 8% 8% 0% ",
-    },
-});
-const TextOverlay = styled(Box)({
-    position: 'absolute',
-    zIndex: 2,
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    textAlign: 'left',
-    color: 'white',
-    padding: '20px',
-});
-const Divider = styled(Box)({
-    width: '18%',
-    height: '4px',
-    backgroundColor: '#ef7d00',
-    margin: '40px 0px 20px 0px',
-    borderRadius: "20px"
 
-});
 const QtapLogo = () => {
     const { t } = useTranslation();
+    const theme = useTheme();
+    const ImageContainer = styled(Box)({
+        backgroundImage: 'url(/images/Qtop1.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        height: "100vh",
+        alignItems: 'center',
+        position: 'relative',
+        borderRadius: "0% 8% 8% 0% ",
+        '::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            zIndex: 1,
+            borderRadius: "0% 8% 8% 0% ",
+        },
+    });
+    const TextOverlay = styled(Box)({
+        position: 'absolute',
+        zIndex: 2,
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        textAlign: 'left',
+        color: 'white',
+        padding: '20px',
+    });
+    const Divider = styled(Box)({
+        width: '18%',
+        height: '4px',
+        backgroundColor: theme.palette.orangePrimary.main,
+        margin: '40px 0px 20px 0px',
+        borderRadius: "20px"
+    
+    });
+
     return (
 
         <Grid item xs={12} md={6} sx={{ position: 'relative' }}>

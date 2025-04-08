@@ -15,6 +15,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Typography,
+  useTheme,
 } from "@mui/material";
 import React, { useState } from "react";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
@@ -42,7 +43,7 @@ export const BusinessInfoAdmin = () => {
   const { businessData, updateBusinessData, branches, selectedBranch, selectBranch } =
     useBusinessContext();
   const [branchIndex, setBranchIndex] = useState(0);
-
+  const theme = useTheme();
   const {
     businessName,
     businessPhone,
@@ -167,7 +168,7 @@ export const BusinessInfoAdmin = () => {
               variant="contained"
               onClick={() => handleBranchClick(i)}
               sx={{
-                backgroundColor: selectedBranch === i ? "#ef7d00" : "#bdbdbd",
+                backgroundColor: selectedBranch === i ? theme.palette.orangePrimary.main : "#bdbdbd",
                 color: "white",
                 borderRadius: "10px",
                 padding: "3px 15px",
@@ -175,7 +176,7 @@ export const BusinessInfoAdmin = () => {
                 alignItems: "center",
                 textTransform: "none",
                 "&:hover": {
-                  backgroundColor: selectedBranch === i ? "#ef7d00" : "#bdbdbd",
+                  backgroundColor: selectedBranch === i ? theme.palette.orangePrimary.main : "#bdbdbd",
                 },
               }}
             >
@@ -293,13 +294,13 @@ export const BusinessInfoAdmin = () => {
                 fullWidth
                 sx={{
                   textTransform: "capitalize",
-                  backgroundColor: "#222240",
+                  backgroundColor: theme.palette.secondaryColor.main,
                   color: "white",
                   borderRadius: "10px",
                   fontSize: "11px",
                   height: "30px",
                   "&:hover": {
-                    backgroundColor: "#222240",
+                    backgroundColor: theme.palette.secondaryColor.main,
                   },
                 }}
               >
@@ -421,13 +422,13 @@ export const BusinessInfoAdmin = () => {
                   borderRadius: "8px",
                 }}
               >
-                <CheckOutlinedIcon sx={{ fontSize: "20px", marginRight: "6px", color: "#ef7d00" }} /> {t("pro")}
+                <CheckOutlinedIcon sx={{ fontSize: "20px", marginRight: "6px", color: theme.palette.orangePrimary.main }} /> {t("pro")}
               </Button>
 
               <Button
                 variant="contained"
                 sx={{
-                  backgroundColor: "#222240",
+                  backgroundColor: theme.palette.secondaryColor.main,
                   textTransform: "capitalize",
                   color: "white",
                   padding: "3px 30px",
@@ -468,22 +469,22 @@ export const BusinessInfoAdmin = () => {
                       value="light"
                       sx={{
                         padding: "5px 8px",
-                        backgroundColor: mode === "light" ? "#E57C00" : "inherit",
+                        backgroundColor: mode === "light" ? theme.palette.orangePrimary.main : "inherit",
                         color: mode === "light" ? "#FFFFFF" : "gray",
                       }}
                     >
-                      <WbSunnyIcon sx={{ fontSize: "30px", color: mode === "light" ? "#E57C00" : "inherit" }} />
+                      <WbSunnyIcon sx={{ fontSize: "30px", color: mode === "light" ? theme.palette.orangePrimary.main : "inherit" }} />
                     </ToggleButton>
 
                     <ToggleButton
                       value="dark"
                       sx={{
                         padding: "5px 8px",
-                        backgroundColor: mode === "dark" ? "#E57C00" : "inherit",
+                        backgroundColor: mode === "dark" ? theme.palette.orangePrimary.main : "inherit",
                         color: mode === "dark" ? "#FFFFFF" : "gray",
                       }}
                     >
-                      <NightlightIcon sx={{ fontSize: "30px", color: mode === "dark" ? "#E57C00" : "inherit" }} />
+                      <NightlightIcon sx={{ fontSize: "30px", color: mode === "dark" ? theme.palette.orangePrimary.main : "inherit" }} />
                     </ToggleButton>
                   </ToggleButtonGroup>
                 </Grid>
@@ -503,21 +504,21 @@ export const BusinessInfoAdmin = () => {
                       value="grid"
                       sx={{
                         padding: "5px 8px",
-                        backgroundColor: design === "grid" ? "#E57C00" : "inherit",
-                        color: design === "grid" ? "#E57C00" : "inherit",
+                        backgroundColor: design === "grid" ? theme.palette.orangePrimary.main : "inherit",
+                        color: design === "grid" ? theme.palette.orangePrimary.main : "inherit",
                       }}
                     >
-                      <ViewQuiltIcon sx={{ fontSize: "30px", color: design === "grid" ? "#E57C00" : "gray" }} />
+                      <ViewQuiltIcon sx={{ fontSize: "30px", color: design === "grid" ? theme.palette.orangePrimary.main : "gray" }} />
                     </ToggleButton>
                     <ToggleButton
                       value="list"
                       sx={{
                         padding: "5px 8px",
-                        backgroundColor: design === "list" ? "#E57C00" : "inherit",
-                        color: design === "list" ? "#E57C00" : "inherit",
+                        backgroundColor: design === "list" ? theme.palette.orangePrimary.main : "inherit",
+                        color: design === "list" ? theme.palette.orangePrimary.main : "inherit",
                       }}
                     >
-                      <FormatListBulletedIcon sx={{ fontSize: "30px", color: design === "list" ? "#E57C00" : "gray" }} />
+                      <FormatListBulletedIcon sx={{ fontSize: "30px", color: design === "list" ? theme.palette.orangePrimary.main : "gray" }} />
                     </ToggleButton>
                   </ToggleButtonGroup>
                 </Grid>
@@ -539,13 +540,13 @@ export const BusinessInfoAdmin = () => {
                         display="flex"
                         alignItems="center"
                         sx={{
-                          backgroundColor: "#222240",
+                          backgroundColor: theme.palette.secondaryColor.main,
                           borderRadius: "20px",
                           width: "90px",
                           height: "30px",
                         }}
                       >
-                        <IconButton onClick={() => handleDayToggle("prev")} sx={{ color: "#ef7d00" }}>
+                        <IconButton onClick={() => handleDayToggle("prev")} sx={{ color: theme.palette.orangePrimary.main }}>
                           <ArrowBackIos sx={{ fontSize: "11px" }} />
                         </IconButton>
                         <Typography
@@ -554,7 +555,7 @@ export const BusinessInfoAdmin = () => {
                           {t(workingHours.currentDay)}
                         </Typography>
 
-                        <IconButton onClick={() => handleDayToggle("next")} sx={{ color: "#ef7d00" }}>
+                        <IconButton onClick={() => handleDayToggle("next")} sx={{ color: theme.palette.orangePrimary.main }}>
                           <ArrowForwardIos sx={{ fontSize: "11px" }} />
                         </IconButton>
                       </Box>
@@ -576,7 +577,7 @@ export const BusinessInfoAdmin = () => {
                             textTransform: "capitalize",
                             fontSize: "12px",
                             border: workingHours.selectedDays.includes(day) ? "1px solid #ef7d00" : "1px solid gray",
-                            color: workingHours.selectedDays.includes(day) ? "#ef7d00" : "gray",
+                            color: workingHours.selectedDays.includes(day) ? theme.palette.orangePrimary.main : "gray",
                           }}
                         >
                           {day}
@@ -658,7 +659,7 @@ export const BusinessInfoAdmin = () => {
                             "& .MuiSvgIcon-root": { fontSize: 20 },
                             color: "gray",
                             "&.Mui-checked": {
-                              color: "#ef7d00",
+                              color: theme.palette.orangePrimary.main,
                             },
                           }}
                         />
@@ -688,7 +689,7 @@ export const BusinessInfoAdmin = () => {
                         "& .MuiSvgIcon-root": { fontSize: 20 },
                         color: "gray",
                         "&.Mui-checked": {
-                          color: "#ef7d00",
+                          color: theme.palette.orangePrimary.main,
                         },
                       }}
                     />
@@ -721,7 +722,7 @@ export const BusinessInfoAdmin = () => {
                             "& .MuiSvgIcon-root": { fontSize: 18 },
                             color: "gray",
                             "&.Mui-checked": {
-                              color: "#ef7d00",
+                              color: theme.palette.orangePrimary.main,
                             },
                           }}
                         />
@@ -757,7 +758,7 @@ export const BusinessInfoAdmin = () => {
                             "& .MuiSvgIcon-root": { fontSize: 22 },
                             color: "gray",
                             "&.Mui-checked": {
-                              color: "#ef7d00",
+                              color: theme.palette.orangePrimary.main,
                             },
                           }}
                         />

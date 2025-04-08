@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, IconButton, Divider } from '@mui/material';
+import { Box, Typography, IconButton, Divider, useTheme } from '@mui/material';
 import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import AddBundle from './AddBundle';
@@ -11,7 +11,7 @@ export const Pricing = () => {
   const [selectedBundle, setSelectedBundle] = useState(null);
   const [openDiscount, setOpenDiscount] = useState(false);
   const { t } = useTranslation()
-
+  const theme = useTheme();
   const handleOpen = () => {
     setSelectedBundle(null);
     setOpen(true);
@@ -79,7 +79,7 @@ export const Pricing = () => {
           sx={{ display: 'flex', justifyContent: 'center', position: "relative", top: "-40px", }}>
           <Box
             sx={{
-              backgroundColor: '#ef7d00',
+              backgroundColor: theme.palette.orangePrimary.main,
               textAlign: 'center',
               padding: '5px 20px',
               width: "170px",
@@ -93,19 +93,19 @@ export const Pricing = () => {
 
         <Box sx={{ textAlign: 'center', marginTop: "-20px" }}>
           <Typography variant="h4" color="textPrimary">
-            <sup style={{ color: "#ef7d00", fontSize: "12px", marginRight: "10px" }}>EGP</sup>{priceMonthly}
+            <sup style={{ color: theme.palette.orangePrimary.main, fontSize: "12px", marginRight: "10px" }}>EGP</sup>{priceMonthly}
             <Typography component="span" variant="body2" color="textSecondary">
               /{t("month")}
             </Typography>
           </Typography>
 
           <Typography variant="h6" color="textPrimary" sx={{ marginTop: "10px" }}>
-            <sup style={{ color: "#ef7d00", fontSize: "12px", marginRight: "10px" }}>EGP</sup>{priceYearly}
+            <sup style={{ color: theme.palette.orangePrimary.main, fontSize: "12px", marginRight: "10px" }}>EGP</sup>{priceYearly}
             <Typography component="span" variant="body2" color="textSecondary">
               /{t("year")}
             </Typography>
           </Typography>
-          <Divider sx={{ my: 2, backgroundColor: "#ef7d00", width: "100%" }} />
+          <Divider sx={{ my: 2, backgroundColor: theme.palette.orangePrimary.main, width: "100%" }} />
         </Box>
 
         <Typography variant="body2" color="textSecondary" sx={{ marginBottom: '40px', fontSize: "11px" }}>
@@ -160,10 +160,10 @@ export const Pricing = () => {
         <Box sx={{ display: "flex" }}>
           <Typography onClick={handleDiscountOpen}
             sx={{
-              color: "#222240", cursor: "pointer", border: "1px solid gray",
+              color: theme.palette.secondaryColor.main, cursor: "pointer", border: "1px solid gray",
               padding: "3px 15px", borderRadius: "30px", fontSize: "12px"
             }}>
-            <span style={{ color: "#ef7d00", fontSize: "17px", marginRight: "5px" }}>%</span>
+            <span style={{ color: theme.palette.orangePrimary.main, fontSize: "17px", marginRight: "5px" }}>%</span>
             {t("disCode")}
           </Typography>
           <DiscountModelAdmin open={openDiscount} handleClose={handleDiscountClose} />
@@ -171,7 +171,7 @@ export const Pricing = () => {
           <AddOutlinedIcon
             onClick={handleOpen}
             sx={{
-              color: '#ef7d00',
+              color: theme.palette.orangePrimary.main,
               border: "3px solid #ef7d00", borderRadius: "50%",
               fontSize: '32px', marginLeft: "15px", cursor: "pointer",
             }}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, useTheme } from '@mui/material';
 import Header from './Header';
 import OrderCard from './OrderCard';
 import Footer from './Footer';
@@ -16,6 +16,7 @@ export const OrderBody = () => {
     const [doneOrders, setDoneOrders] = useState([]);
     const [closeOrders, setCloseOrders] = useState([]);
     const {t} = useTranslation()
+    const theme = useTheme();
     const [orders, setOrders] = useState([
         {
             id: '3208',
@@ -164,7 +165,7 @@ export const OrderBody = () => {
                                 alignItems: "center", fontSize:"14px",
                                 fontFamily:"sans-serif",
                                 "&.Mui-selected": {
-                                    color: "#ef7d00",
+                                    color: theme.palette.orangePrimary.main,
                                 },
                                 marginRight: "60px",
                                 borderRadius: "5px",
@@ -203,7 +204,7 @@ export const OrderBody = () => {
                                 alignItems: "center", fontSize:"14px",
                                 fontFamily:"sans-serif",
                                 "&.Mui-selected": {
-                                    color: "#ef7d00",
+                                    color: theme.palette.orangePrimary.main,
                                 },
                                 marginRight: "60px",
                                 borderRadius: "5px",
@@ -242,7 +243,7 @@ export const OrderBody = () => {
                                 alignItems: "center", fontSize:"14px",
                                 fontFamily:"sans-serif",
                                 "&.Mui-selected": {
-                                    color: "#ef7d00",
+                                    color: theme.palette.orangePrimary.main,
                                 },
                                 marginRight: "60px",
                                 borderRadius: "5px",

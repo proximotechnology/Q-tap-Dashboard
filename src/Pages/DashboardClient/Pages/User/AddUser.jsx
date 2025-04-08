@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Box, Typography, TextField, IconButton, Divider, MenuItem, FormControl, Select, Button, Grid, Checkbox, FormControlLabel } from '@mui/material';
+import { Modal, Box, Typography, TextField, IconButton, Divider, MenuItem, FormControl, Select, Button, Grid, Checkbox, FormControlLabel, useTheme } from '@mui/material';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +18,7 @@ const iconsArray = [
     { name: 'Setting', icon: <img src="/assets/setting.svg" alt="icon" style={{ width: "16px", height: "16px" }} /> },
 ];
 export const AddUser = ({ open, onClose, onSave }) => {
+    const theme = useTheme();
     const { t } = useTranslation();
     const [role, setRole] = useState('');
     const [checkedItems, setCheckedItems] = useState({
@@ -57,7 +58,7 @@ export const AddUser = ({ open, onClose, onSave }) => {
                         <span class="icon-close-1" style={{ fontSize: "15px", color: "gray" }} />
                     </IconButton>
                 </Box>
-                <Divider sx={{ backgroundColor: '#ef7d00', }} />
+                <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main, }} />
 
                 <Box sx={{
                     marginTop: "20px",
@@ -169,7 +170,7 @@ export const AddUser = ({ open, onClose, onSave }) => {
                                         checked={checkedItems[item.name]}
                                         onChange={() => handleCheck(item.name)}
                                         icon={<Box sx={{ border: '1px solid gray', width: '16px', height: '16px', borderRadius: '4px' }} />}
-                                        checkedIcon={<Box sx={{ border: '1px solid #ef7d00', backgroundColor: '#ef7d00', color: 'white', width: '16px', height: '16px', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        checkedIcon={<Box sx={{ border: '1px solid #ef7d00', backgroundColor: theme.palette.orangePrimary.main, color: 'white', width: '16px', height: '16px', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                             <Typography variant="caption" sx={{ color: 'white' }}>✔</Typography>
                                         </Box>}
                                         sx={{

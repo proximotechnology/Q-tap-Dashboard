@@ -1,4 +1,4 @@
-import { Button, Box, Divider, IconButton, Modal, Typography, Grid, TextField } from '@mui/material';
+import { Button, Box, Divider, IconButton, Modal, Typography, Grid, TextField, useTheme } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import React, { useContext, useEffect, useState } from 'react';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 
 export const AddVariant = ({ open, handleClose }) => {
     const {t} = useTranslation();
+    const theme = useTheme();
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
     const [loading, setLoading] = useState(false)
@@ -132,7 +133,7 @@ export const AddVariant = ({ open, handleClose }) => {
                             onClick={handleAdd}
                             variant="contained"
                             sx={{
-                                backgroundColor: '#ef7d00',
+                                backgroundColor: theme.palette.orangePrimary.main,
                                 borderRadius: '25px',
                                 color: 'white',
                                 textTransform: 'none',

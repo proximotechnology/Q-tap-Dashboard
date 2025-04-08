@@ -1,5 +1,5 @@
 import { Button, Card, CardContent, Grid, Slider, Typography, Paper } from '@mui/material'
-import { Box } from '@mui/system'
+import { Box, useTheme } from '@mui/system'
 import React from 'react'
  
 import { TableTransaction } from '../../../DashboardClient/Pages/WalletClient/Transaction/TableTransaction';
@@ -22,6 +22,7 @@ const marks = [
 export const WalletAffiliate = () => {
     const {t} = useTranslation();
     const navigate = useNavigate();
+    const theme = useTheme();
     return (
         <Grid container spacing={2} sx={{ padding: "0px 50px" }}>
             <Grid item xs={12} md={5} spacing={4}>
@@ -91,7 +92,7 @@ export const WalletAffiliate = () => {
                             padding: "0 20px",boxShadow:"none",
                         }}
                     >
-                        <Typography variant='body1' sx={{ color:"#222240", fontSize: "18px", flexGrow: 1, textAlign: "center" }}>
+                        <Typography variant='body1' sx={{ color:theme.palette.secondaryColor.main, fontSize: "18px", flexGrow: 1, textAlign: "center" }}>
                             400,000
                         </Typography>
                         <span style={{ color: 'gray', fontSize: "14px", whiteSpace: "nowrap" }}>
@@ -109,13 +110,13 @@ export const WalletAffiliate = () => {
                         track="normal"
                         sx={{
                             marginTop: "20px",
-                            color: "#ef7d00",
+                            color: theme.palette.orangePrimary.main,
                             width: "90%",
                             height: 5,
                             "& .MuiSlider-thumb": {
                                 width: 12,
                                 height: 12,
-                                backgroundColor: "#ef7d00",
+                                backgroundColor: theme.palette.orangePrimary.main,
                             },
                             "& .MuiSlider-mark": {
                                 backgroundColor: "gray",
@@ -124,7 +125,7 @@ export const WalletAffiliate = () => {
                                 borderRadius: "50%",
                             },
                             "& .MuiSlider-markActive": {
-                                backgroundColor: "#ef7d00",
+                                backgroundColor: theme.palette.orangePrimary.main,
                             },
                         }}
                     />
@@ -135,7 +136,7 @@ export const WalletAffiliate = () => {
                             fontSize: "14px",
                             width: "60%",
                             color: "white",
-                            backgroundColor: "#222240",
+                            backgroundColor: theme.palette.secondaryColor.main,
                             borderRadius: "20px",
                             textTransform: "capitalize",
                             marginTop: "30px",

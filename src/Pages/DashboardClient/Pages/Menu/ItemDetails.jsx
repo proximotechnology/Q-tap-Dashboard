@@ -2,7 +2,7 @@
 
 import CheckIcon from '@mui/icons-material/Check';
 import React, { useState, useEffect, useContext } from 'react';
-import { Typography, Box, Paper, Divider, Grid, TextField, Button } from '@mui/material';
+import { Typography, Box, Paper, Divider, Grid, TextField, Button, useTheme } from '@mui/material';
 import StraightOutlinedIcon from '@mui/icons-material/StraightOutlined';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 
 export const ItemDetails = ({ categoryId }) => {
     const {t} = useTranslation();
+    const theme = useTheme();
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const itemId = queryParams.get('itemId');
@@ -162,7 +163,7 @@ export const ItemDetails = ({ categoryId }) => {
                 <Typography variant="body1" fontSize={"15px"} color={"#575756"}>{t("item.details")}</Typography>
             </Box>
 
-            <Divider sx={{ backgroundColor: "#ef7d00" }} />
+            <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main }} />
 
             <Box >
                 <Grid container spacing={5}>
@@ -303,7 +304,7 @@ export const ItemDetails = ({ categoryId }) => {
                             <Button
                                 onClick={handleImageUpload}
                                 variant="contained"
-                                startIcon={<StraightOutlinedIcon sx={{ fontSize: '10px', color: '#ef7d00' }} />}
+                                startIcon={<StraightOutlinedIcon sx={{ fontSize: '10px', color: theme.palette.orangePrimary.main }} />}
                                 sx={{
                                     minWidth: 'auto', backgroundColor: '#222240', fontSize: "10px", padding: "2px 20px", color: '#fff', textTransform: 'none', borderRadius: "20px",
                                     "&:hover": {
@@ -336,7 +337,7 @@ export const ItemDetails = ({ categoryId }) => {
                                         alignItems: "center",
                                         marginRight: "5px",
                                         marginTop: "10px",
-                                        backgroundColor: "#ef7d00",
+                                        backgroundColor: theme.palette.orangePrimary.main,
                                         color: "white",
                                         fontSize: "10px",
                                     }}
@@ -371,7 +372,7 @@ export const ItemDetails = ({ categoryId }) => {
                                         display: "flex",
                                         justifyContent: "center",
                                         alignItems: "center",
-                                        backgroundColor: "#ef7d00",
+                                        backgroundColor: theme.palette.orangePrimary.main,
                                         color: "white",
                                         fontSize: "10px", marginRight: "5px",
                                         marginTop: "10px",
@@ -481,10 +482,10 @@ export const ItemDetails = ({ categoryId }) => {
                         onClick={handleSaveOrUpdate}
                         variant="contained"
                         sx={{
-                            width: "33%", backgroundColor: "#ef7d00", padding: "4px", borderRadius: "20px", textTransform: "capitalize",
+                            width: "33%", backgroundColor: theme.palette.orangePrimary.main, padding: "4px", borderRadius: "20px", textTransform: "capitalize",
 
                             '&:hover': {
-                                backgroundColor: "#ef7d00",
+                                backgroundColor: theme.palette.orangePrimary.main,
                             },
                         }}
                     >

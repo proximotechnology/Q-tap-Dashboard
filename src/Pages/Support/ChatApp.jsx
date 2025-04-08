@@ -396,7 +396,7 @@
 // //           >
 // //             <Box
 // //               sx={{
-// //                 bgcolor: msg.sender === "me" ? "#E57C00" : "#F1F1F1",
+// //                 bgcolor: msg.sender === "me" ? theme.palette.orangePrimary.main : "#F1F1F1",
 // //                 color: msg.sender === "me" ? "white" : "black",
 // //                 padding: "6px 20px",
 // //                 width: "50%",
@@ -442,7 +442,7 @@
 // //                 size={40}
 // //                 thickness={4}
 // //                 sx={{
-// //                   color: "#E57C00",
+// //                   color: theme.palette.orangePrimary.main,
 // //                   "& .MuiCircularProgress-circle": {
 // //                     strokeLinecap: "round",
 // //                   },
@@ -478,11 +478,11 @@
 // //                   borderRadius: "4px",
 // //                 },
 // //                 "&::-webkit-scrollbar-thumb": {
-// //                   background: "#E57C00",
+// //                   background: theme.palette.orangePrimary.main,
 // //                   borderRadius: "4px",
 // //                   width: "2px",
 // //                   "&:hover": {
-// //                     background: "#ef7d00",
+// //                     background: theme.palette.orangePrimary.main,
 // //                   },
 // //                 },
 // //               }}
@@ -509,7 +509,7 @@
 // //                         sx={{
 // //                           backgroundColor:
 // //                             selectedChat?.id === user.id
-// //                               ? "#ef7d00"
+// //                               ? theme.palette.orangePrimary.main
 // //                               : "#AAAAAA",
 // //                           width: 35,
 // //                           height: 35,
@@ -645,7 +645,7 @@
 // //                       height: "100%",
 // //                     }}
 // //                   >
-// //                     <CircularProgress sx={{ color: "#E57C00" }} />
+// //                     <CircularProgress sx={{ color: theme.palette.orangePrimary.main }} />
 // //                   </Box>
 // //                 ) : (
 // //                   <MessageList messages={selectedChat.messages} />
@@ -664,10 +664,10 @@
 // //                   margin: "0 auto",
 // //                 }}
 // //               >
-// //                 <IconButton edge="start" sx={{ color: "#ef7d00" }}>
+// //                 <IconButton edge="start" sx={{ color: theme.palette.orangePrimary.main }}>
 // //                   <span
 // //                     class="icon-plus"
-// //                     style={{ fontSize: "22px", WebkitTextFillColor: "#ef7d00" }}
+// //                     style={{ fontSize: "22px", WebkitTextFillColor: theme.palette.orangePrimary.main }}
 // //                   >
 // //                     <span class="path1"></span>
 // //                     <span
@@ -677,7 +677,7 @@
 // //                   </span>
 // //                 </IconButton>
 
-// //                 <IconButton edge="start" sx={{ color: "#ef7d00" }}>
+// //                 <IconButton edge="start" sx={{ color: theme.palette.orangePrimary.main }}>
 // //                   <span class="icon-image" style={{ fontSize: "22px" }}></span>
 // //                 </IconButton>
 
@@ -703,11 +703,11 @@
 
 // //                 <IconButton
 // //                   onClick={handleSendMessage}
-// //                   sx={{ color: "#ef7d00" }}
+// //                   sx={{ color: theme.palette.orangePrimary.main }}
 // //                 >
 // //                   <span
 // //                     class="icon-send-message"
-// //                     style={{ fontSize: "18px", WebkitTextFillColor: "#ef7d00" }}
+// //                     style={{ fontSize: "18px", WebkitTextFillColor: theme.palette.orangePrimary.main }}
 // //                   ></span>
 // //                 </IconButton>
 // //               </Box>
@@ -1191,7 +1191,7 @@
 //           >
 //             <Box
 //               sx={{
-//                 bgcolor: msg.sender === "me" ? "#E57C00" : "#F1F1F1",
+//                 bgcolor: msg.sender === "me" ? theme.palette.orangePrimary.main : "#F1F1F1",
 //                 color: msg.sender === "me" ? "white" : "black",
 //                 padding: "6px 20px",
 //                 width: "50%",
@@ -1241,7 +1241,7 @@
 //                 size={40}
 //                 thickness={4}
 //                 sx={{
-//                   color: "#E57C00",
+//                   color: theme.palette.orangePrimary.main,
 //                   "& .MuiCircularProgress-circle": {
 //                     strokeLinecap: "round",
 //                   },
@@ -1277,11 +1277,11 @@
 //                   borderRadius: "4px",
 //                 },
 //                 "&::-webkit-scrollbar-thumb": {
-//                   background: "#E57C00",
+//                   background: theme.palette.orangePrimary.main,
 //                   borderRadius: "4px",
 //                   width: "2px",
 //                   "&:hover": {
-//                     background: "#ef7d00",
+//                     background: theme.palette.orangePrimary.main,
 //                   },
 //                 },
 //               }}
@@ -1309,7 +1309,7 @@
 //                         sx={{
 //                           backgroundColor:
 //                             selectedChat?.id === user.id
-//                               ? "#ef7d00"
+//                               ? theme.palette.orangePrimary.main
 //                               : "#AAAAAA",
 //                           width: 35,
 //                           height: 35,
@@ -1407,7 +1407,7 @@
 //                 <CircularProgress
 //                   size={40}
 //                   thickness={4}
-//                   sx={{ color: "#E57C00" }}
+//                   sx={{ color: theme.palette.orangePrimary.main }}
 //                 />
 //                 <Typography sx={{ fontSize: "14px", color: "#666" }}>
 //                   {t("loadingChat")}
@@ -1472,10 +1472,10 @@
 //                     margin: "0 auto",
 //                   }}
 //                 >
-//                   <IconButton edge="start" sx={{ color: "#ef7d00" }}>
+//                   <IconButton edge="start" sx={{ color: theme.palette.orangePrimary.main }}>
 //                     <span
 //                       className="icon-plus"
-//                       style={{ fontSize: "22px", WebkitTextFillColor: "#ef7d00" }}
+//                       style={{ fontSize: "22px", WebkitTextFillColor: theme.palette.orangePrimary.main }}
 //                     >
 //                       <span className="path1"></span>
 //                       <span
@@ -1485,7 +1485,7 @@
 //                     </span>
 //                   </IconButton>
 
-//                   <IconButton edge="start" sx={{ color: "#ef7d00" }}>
+//                   <IconButton edge="start" sx={{ color: theme.palette.orangePrimary.main }}>
 //                     <span className="icon-image" style={{ fontSize: "22px" }}></span>
 //                   </IconButton>
 
@@ -1509,10 +1509,10 @@
 //                     }}
 //                   />
 
-//                   <IconButton onClick={handleSendMessage} sx={{ color: "#ef7d00" }}>
+//                   <IconButton onClick={handleSendMessage} sx={{ color: theme.palette.orangePrimary.main }}>
 //                     <span
 //                       className="icon-send-message"
-//                       style={{ fontSize: "18px", WebkitTextFillColor: "#ef7d00" }}
+//                       style={{ fontSize: "18px", WebkitTextFillColor: theme.palette.orangePrimary.main }}
 //                     ></span>
 //                   </IconButton>
 //                 </Box>
@@ -1624,6 +1624,7 @@ import {
   Typography,
   Divider,
   CircularProgress,
+  useTheme,
 } from "@mui/material";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
@@ -1811,11 +1812,10 @@ const ChatApp = () => {
       }
     };
   }, [selectedChat]);
-
+  const theme = useTheme();
   // Memoized MessageList component with overflowY
   const MessageList = React.memo(({ messages }) => {
     const listRef = useRef(null);
-
     useEffect(() => {
       if (listRef.current) {
         listRef.current.scrollTop = listRef.current.scrollHeight; // Auto-scroll to bottom
@@ -1846,7 +1846,7 @@ const ChatApp = () => {
           >
             <Box
               sx={{
-                bgcolor: msg.sender === "me" ? "#E57C00" : "#F1F1F1",
+                bgcolor: msg.sender === "me" ? theme.palette.orangePrimary.main : "#F1F1F1",
                 color: msg.sender === "me" ? "white" : "black",
                 padding: "6px 20px",
                 width: "50%",
@@ -1889,7 +1889,7 @@ const ChatApp = () => {
                 size={40}
                 thickness={4}
                 sx={{
-                  color: "#E57C00",
+                  color: theme.palette.orangePrimary.main,
                   "& .MuiCircularProgress-circle": { strokeLinecap: "round" },
                 }}
               />
@@ -1917,9 +1917,9 @@ const ChatApp = () => {
                 "&::-webkit-scrollbar": { width: "8px", height: "8px" },
                 "&::-webkit-scrollbar-track": { background: "#f1f1f1", borderRadius: "4px" },
                 "&::-webkit-scrollbar-thumb": {
-                  background: "#E57C00",
+                  background: theme.palette.orangePrimary.main,
                   borderRadius: "4px",
-                  "&:hover": { background: "#ef7d00" },
+                  "&:hover": { background: theme.palette.orangePrimary.main },
                 },
               }}
             >
@@ -1940,7 +1940,7 @@ const ChatApp = () => {
                     <ListItemAvatar>
                       <Avatar
                         sx={{
-                          backgroundColor: selectedChat?.id === user.id ? "#ef7d00" : "#AAAAAA",
+                          backgroundColor: selectedChat?.id === user.id ? theme.palette.orangePrimary.main : "#AAAAAA",
                           width: 35,
                           height: 35,
                         }}
@@ -2008,7 +2008,7 @@ const ChatApp = () => {
                   gap: 2,
                 }}
               >
-                <CircularProgress size={40} thickness={4} sx={{ color: "#E57C00" }} />
+                <CircularProgress size={40} thickness={4} sx={{ color: theme.palette.orangePrimary.main }} />
                 <Typography sx={{ fontSize: "14px", color: "#666" }}>
                   {t("loadingChat")}
                 </Typography>
@@ -2040,10 +2040,10 @@ const ChatApp = () => {
                     gap: 1,
                   }}
                 >
-                  <IconButton sx={{ color: "#ef7d00" }}>
+                  <IconButton sx={{ color: theme.palette.orangePrimary.main }}>
                     <span className="icon-plus" style={{ fontSize: "22px" }} />
                   </IconButton>
-                  <IconButton sx={{ color: "#ef7d00" }}>
+                  <IconButton sx={{ color: theme.palette.orangePrimary.main }}>
                     <span className="icon-image" style={{ fontSize: "22px" }} />
                   </IconButton>
                   <TextField
@@ -2061,8 +2061,8 @@ const ChatApp = () => {
                       },
                     }}
                   />
-                  <IconButton onClick={handleSendMessage} sx={{ color: "#ef7d00" }}>
-                    <span className="icon-send-message" style={{ fontSize: "18px", WebkitTextFillColor: "#ef7d00" }} />
+                  <IconButton onClick={handleSendMessage} sx={{ color: theme.palette.orangePrimary.main }}>
+                    <span className="icon-send-message" style={{ fontSize: "18px", WebkitTextFillColor: theme.palette.orangePrimary.main }} />
                   </IconButton>
                 </Box>
               </Box>

@@ -1,9 +1,10 @@
 import React from 'react';
-import { Box, Typography, Card, CardMedia, Grid } from '@mui/material';
+import { Box, Typography, Card, CardMedia, Grid, useTheme } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 
 const Item = ({ item, onItemSelect ,addItemToCart }) => {
+    const theme = useTheme();
     return (
         <Box sx={{ display: 'flex', padding: '15px'  }}>
             <Box>
@@ -85,7 +86,7 @@ const Item = ({ item, onItemSelect ,addItemToCart }) => {
                                             sx={{
                                                 fontSize: '12px',
                                                 fontWeight: 'bold',
-                                                color: '#ef7d00',
+                                                color: theme.palette.orangePrimary.main,
                                             }}
                                         >
                                             {item.newPrice}{' '}
@@ -97,7 +98,7 @@ const Item = ({ item, onItemSelect ,addItemToCart }) => {
                                         sx={{
                                             width: '10px',
                                             height: '10px',
-                                            backgroundColor: '#ef7d00',
+                                            backgroundColor: theme.palette.orangePrimary.main,
                                             color: 'white',
                                             borderRadius: '50%',
                                             padding: '6px',

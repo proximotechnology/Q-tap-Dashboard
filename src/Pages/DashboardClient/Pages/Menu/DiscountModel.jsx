@@ -1,4 +1,4 @@
-import { Divider, IconButton, InputAdornment, Modal, Typography } from '@mui/material';
+import { Divider, IconButton, InputAdornment, Modal, Typography, useTheme } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { Box, Grid, TextField, Button, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import axios from 'axios';
@@ -16,6 +16,7 @@ export const DiscountModel = ({ open, handleClose }) => {
   const [discount, setDiscount] = useState('');
   const { selectedBranch, discountContent, setDiscountContent } = useBranch();
   const {t} = useTranslation();
+  const theme = useTheme();
   // console.log("selectedBranch discount", selectedBranch, discountContent);
 
   const handleAdd = async () => {
@@ -212,7 +213,7 @@ export const DiscountModel = ({ open, handleClose }) => {
                 onClick={handleAdd}
                 variant="contained"
                 sx={{
-                  backgroundColor: '#E57C00',
+                  backgroundColor: theme.palette.orangePrimary.main,
                   borderRadius: '25px',
                   color: 'white',
                   width: "30%",
@@ -220,7 +221,7 @@ export const DiscountModel = ({ open, handleClose }) => {
                   fontSize: "12px",
                   padding: '2px 10px',
                   '&:hover': {
-                    backgroundColor: '#E57C00',
+                    backgroundColor: theme.palette.orangePrimary.main,
                   },
                 }}
               >

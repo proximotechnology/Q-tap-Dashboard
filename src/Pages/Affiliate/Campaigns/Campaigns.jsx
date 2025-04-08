@@ -8,6 +8,7 @@ import {
   TextField,
   Button,
   Paper,
+  useTheme,
 } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import axios from "axios";
@@ -17,6 +18,7 @@ import { useTranslation } from "react-i18next";
 
 const Campaigns = () => {
   const [openForm, setOpenForm] = useState(false);
+  const theme = useTheme();
   const [campaigns, setCampaigns] = useState([]);
   const [name, setName] = useState("");
   const [commission, setCommission] = useState("");
@@ -174,7 +176,7 @@ const Campaigns = () => {
             <IconButton
               onClick={toggleForm}
               sx={{
-                color: "#ef7d00",
+                color: theme.palette.orangePrimary.main,
                 "&:hover": { color: "darkorange" },
               }}
             >
@@ -286,7 +288,7 @@ const Campaigns = () => {
                   borderRadius: "20px",
                   padding: "1px 30px",
                   fontSize: "11px",
-                  backgroundColor: "#ef7d00",
+                  backgroundColor: theme.palette.orangePrimary.main,
                   textTransform: "capitalize",
                   "&:hover": { backgroundColor: "#ef7d10" },
                 }}
@@ -327,7 +329,7 @@ const Campaigns = () => {
             </Typography>
             <Typography
               variant="body2"
-              sx={{ marginBottom: "8px", fontSize: "18px", color: "#ef7d00" }}
+              sx={{ marginBottom: "8px", fontSize: "18px", color: theme.palette.orangePrimary.main }}
             >
               {campaign.name}
             </Typography>
@@ -340,7 +342,7 @@ const Campaigns = () => {
             </Typography>
             <Typography
               variant="body2"
-              sx={{ marginBottom: "8px", fontSize: "18px", color: "#ef7d00" }}
+              sx={{ marginBottom: "8px", fontSize: "18px", color: theme.palette.orangePrimary.main }}
             >
               {campaign.commission}%
             </Typography>
@@ -353,7 +355,7 @@ const Campaigns = () => {
             </Typography>
             <Typography
               variant="body2"
-              sx={{ fontSize: "18px", color: "#ef7d00" }}
+              sx={{ fontSize: "18px", color: theme.palette.orangePrimary.main }}
             >
               {campaign.limit}
             </Typography>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
-    Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, IconButton, TextField, Button
+    Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, IconButton, TextField, Button,
+    useTheme
 } from '@mui/material';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 
@@ -32,6 +33,7 @@ const orders = [
 ];
 
 const OrderTable = () => {
+    const theme = useTheme();
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
@@ -111,7 +113,7 @@ const OrderTable = () => {
                     />
                     <Button
                         variant="text"
-                        style={{ color: '#ef7d00', fontSize: "11px", textTransform: "capitalize" }}
+                        style={{ color: theme.palette.orangePrimary.main, fontSize: "11px", textTransform: "capitalize" }}
                         onClick={handleExport}
                     >
                         {t("export")}

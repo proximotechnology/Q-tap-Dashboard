@@ -1,5 +1,5 @@
 import React, { useContext, useRef } from 'react';
-import { Box, Typography, IconButton, Grid, Paper, Divider } from '@mui/material';
+import { Box, Typography, IconButton, Grid, Paper, Divider, useTheme } from '@mui/material';
 import { OrderContext } from './DeliveredContext';
 import { useTranslation } from 'react-i18next';
 
@@ -19,6 +19,7 @@ export const DeliveredDetails = ({ orders }) => {
       window.location.reload();  
   };
   const { t } = useTranslation();
+  const theme = useTheme();
   return (
     open && selectedOrder && (
       <Paper
@@ -68,7 +69,7 @@ export const DeliveredDetails = ({ orders }) => {
                 </Box>
 
                 <Box sx={{
-                  backgroundColor: "#222240", width: "40px", height: "25px", borderRadius: "30px", display: "flex",
+                  backgroundColor: theme.palette.secondaryColor.main, width: "40px", height: "25px", borderRadius: "30px", display: "flex",
                   justifyContent: "center",
                   alignItems: "center"
                 }}>
@@ -78,15 +79,15 @@ export const DeliveredDetails = ({ orders }) => {
                 </Box>
               </Box>
               <Typography color="textSecondary" fontSize="11px" >
-                <span style={{ color: "#ef7d00", marginLeft: "10px" }}>{t("address")} </span>
+                <span style={{ color: theme.palette.orangePrimary.main, marginLeft: "10px" }}>{t("address")} </span>
                 {selectedOrder.address}</Typography>
 
               <Typography color="textSecondary" fontSize="11px" >
-                <span style={{ color: "#ef7d00", marginLeft: "10px" }}>{t("name")} : </span>
+                <span style={{ color: theme.palette.orangePrimary.main, marginLeft: "10px" }}>{t("name")} : </span>
                 {selectedOrder.name}</Typography>
 
               <Typography color="textSecondary" fontSize="11px" >
-                <span style={{ color: "#ef7d00", marginLeft: "10px" }}>{t("mobileNumber")} : </span>
+                <span style={{ color: theme.palette.orangePrimary.main, marginLeft: "10px" }}>{t("mobileNumber")} : </span>
                 {selectedOrder.phone}</Typography>
 
               <Typography color="#262624" fontSize="12px" marginTop={"15px"}>{t("paymentMethod")}</Typography>
@@ -115,7 +116,7 @@ export const DeliveredDetails = ({ orders }) => {
                   <Grid container alignItems="center" key={index}   >
                     <Grid item xs={8}>
                       <Typography variant="body2" sx={{ color: 'gray', fontSize: "11px", marginBottom: "7px" }}>
-                        <span style={{ color: "#ef7d00" }}> {item.quantity}x</span>
+                        <span style={{ color: theme.palette.orangePrimary.main }}> {item.quantity}x</span>
                         <span style={{ color: "black" }}> {item.name}</span> (Size:{item.size}), Variants + Extra
                       </Typography>
                     </Grid>
@@ -139,9 +140,9 @@ export const DeliveredDetails = ({ orders }) => {
               <Divider style={{ color: "#D8E0E0", marginTop: "15px", marginBottom: "10px" }} />
 
               <Typography variant="body1"  >
-                <Typography variant="body2" component="span" sx={{ color: '#ef7d00', fontSize: "12px" }}>
+                <Typography variant="body2" component="span" sx={{ color: theme.palette.orangePrimary.main, fontSize: "12px" }}>
                   <span style={{ color: "#262624", fontSize: "12px" }}>{t("total")}: </span>
-                  {selectedOrder.total} <span style={{ color: '#ef7d00', fontSize: "8px" }}>EGP</span>
+                  {selectedOrder.total} <span style={{ color: theme.palette.orangePrimary.main, fontSize: "8px" }}>EGP</span>
                 </Typography>
               </Typography>
             </Grid>
@@ -151,11 +152,11 @@ export const DeliveredDetails = ({ orders }) => {
 
         <Grid container sx={{
           marginTop: '10px', padding: "5px 30px", color: "white", justifyContent: "space-between",
-          borderRadius: "0px 0px 8px 8px", backgroundColor: "#222240"
+          borderRadius: "0px 0px 8px 8px", backgroundColor: theme.palette.secondaryColor.main
         }}>
 
           <Typography variant="body2" sx={{ fontSize: "14px", display: "flex", alignItems: "center" }}  >
-            <Box sx={{ width: "10px", height: "10px", backgroundColor: "#ef7d00", borderRadius: "50%", marginRight: "6px" }}></Box>
+            <Box sx={{ width: "10px", height: "10px", backgroundColor: theme.palette.orangePrimary.main, borderRadius: "50%", marginRight: "6px" }}></Box>
             ID #{selectedOrder.id}
           </Typography>
 

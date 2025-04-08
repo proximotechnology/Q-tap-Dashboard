@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Card, Box, Typography, Button, Divider } from '@mui/material';
+import { Card, Box, Typography, Button, Divider, useTheme } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { OrderContext } from './DeliveredContext';
 import { useTranslation } from 'react-i18next';
@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 export const DeliveredCard = ({ orders }) => {
   const { handleOpen } = useContext(OrderContext);
   const { t } = useTranslation();
+  const theme = useTheme();
   return (
     <>
       <Box
@@ -43,7 +44,7 @@ export const DeliveredCard = ({ orders }) => {
       {orders.map((order) => (
         <Card sx={{ marginTop: "15px",marginBottom:"30px", borderRadius: "8px" }} >
           <Box display="flex" justifyContent="space-between"
-            sx={{ backgroundColor: "#222240", padding: "7px 15px", }}>
+            sx={{ backgroundColor: theme.palette.secondaryColor.main, padding: "7px 15px", }}>
             <Typography
               variant="body1"
               sx={{
@@ -52,7 +53,7 @@ export const DeliveredCard = ({ orders }) => {
                 display: "flex", alignItems: "center"
               }}
             >
-              <Box sx={{ width: "10px", height: "10px", borderRadius: "50%", marginRight: "10px", backgroundColor: "#ef7d00" }}></Box>
+              <Box sx={{ width: "10px", height: "10px", borderRadius: "50%", marginRight: "10px", backgroundColor: theme.palette.orangePrimary.main }}></Box>
               ID #{order.id}
             </Typography>
             <Typography sx={{ fontSize: "13px", color: order.paymentColor }}>
@@ -76,7 +77,7 @@ export const DeliveredCard = ({ orders }) => {
               </Box>
 
               <Box sx={{
-                backgroundColor: "#222240", width: "40px", height: "25px", borderRadius: "30px", display: "flex",
+                backgroundColor: theme.palette.secondaryColor.main, width: "40px", height: "25px", borderRadius: "30px", display: "flex",
                 justifyContent: "center",
                 alignItems: "center"
               }}>
@@ -86,15 +87,15 @@ export const DeliveredCard = ({ orders }) => {
               </Box>
             </Box>
             <Typography color="textSecondary" fontSize="11px" >
-              <span style={{ color: "#ef7d00", marginLeft: "10px" }}>{t("address")} : </span>
+              <span style={{ color: theme.palette.orangePrimary.main, marginLeft: "10px" }}>{t("address")} : </span>
               {order.address}</Typography>
 
             <Typography color="textSecondary" fontSize="11px" >
-              <span style={{ color: "#ef7d00", marginLeft: "10px" }}>{t("name")} : </span>
+              <span style={{ color: theme.palette.orangePrimary.main, marginLeft: "10px" }}>{t("name")} : </span>
               {order.name}</Typography>
 
             <Typography color="textSecondary" fontSize="11px" >
-              <span style={{ color: "#ef7d00", marginLeft: "10px" }}>{t("mobileNumber")} : </span>
+              <span style={{ color: theme.palette.orangePrimary.main, marginLeft: "10px" }}>{t("mobileNumber")} : </span>
               {order.phone}</Typography>
 
             <Typography color="#262624" fontSize="12px" marginTop={"7px"}>{t("paymentMethod")}</Typography>
@@ -107,11 +108,11 @@ export const DeliveredCard = ({ orders }) => {
               <Typography display={"flex"} sx={{ cursor: "pointer" }}
                 onClick={() => handleOpen(order)}>
 
-                <span class="icon-file" style={{ fontSize: "16px", color: "#ef7d00" }}></span>
+                <span class="icon-file" style={{ fontSize: "16px", color: theme.palette.orangePrimary.main }}></span>
                 <Typography color="textSecondary" fontSize="10px">
                   <span style={{ borderBottom: "1px solid gray" }}>{t("view")}</span>
                 </Typography>
-                <KeyboardArrowRightIcon sx={{ color: "#ef7d00", fontSize: "16px" }} />
+                <KeyboardArrowRightIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "16px" }} />
               </Typography>
             </Box>
             <Divider sx={{ margin: "10px 0px" }} />
@@ -119,8 +120,8 @@ export const DeliveredCard = ({ orders }) => {
 
           <Box sx={{ padding: "0px 15px", }}>
             <Typography color="#2A2A28" fontSize="12px" >{t("total")}
-              <span style={{ color: "#ef7d00" }}>{order.total}</span>
-              <span style={{ color: "#ef7d00", fontSize: "8px" }}> EGP</span></Typography>
+              <span style={{ color: theme.palette.orangePrimary.main }}>{order.total}</span>
+              <span style={{ color: theme.palette.orangePrimary.main, fontSize: "8px" }}> EGP</span></Typography>
 
             <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} margin={"20px 0px 15px 0px"}>
               <Typography color="black" fontSize="12px" marginLeft={"15px"} ><span class="icon-close"></span> {t("cancel")}</Typography>

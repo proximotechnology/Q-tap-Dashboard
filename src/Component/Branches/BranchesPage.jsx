@@ -3,12 +3,13 @@ import { SetupPage } from '../Business-info/SetupPage';
 import { Branches } from './Branches';
 import React, { useEffect, useState } from 'react';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import { Box, MenuItem, Grid, Menu, Divider } from '@mui/material';
+import { Box, MenuItem, Grid, Menu, Divider, useTheme } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useBusinessContext } from '../../context/BusinessContext';
 import { useTranslation } from 'react-i18next';
 
 export const BranchesPage = () => {
+    const theme = useTheme();
     const [anchorElLanguage, setAnchorElLanguage] = useState(null);
     const [selectedLanguage, setSelectedLanguage] = useState('en');
     const openLanguage = Boolean(anchorElLanguage);
@@ -25,9 +26,9 @@ export const BranchesPage = () => {
 
     const getLanguageIcon = () => {
         return selectedLanguage === 'ar' ? (
-            <span className="icon-translation" style={{ color: '#ef7d00', fontSize: '22px' }}> </span>
+            <span className="icon-translation" style={{ color: theme.palette.orangePrimary.main, fontSize: '22px' }}> </span>
         ) : (
-            <LanguageOutlinedIcon sx={{ color: '#ef7d00', fontSize: '22px' }} />
+            <LanguageOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: '22px' }} />
         );
     };
 
@@ -55,8 +56,8 @@ export const BranchesPage = () => {
                 <Box
                     sx={{
                         position: 'absolute',
-                        top: '30px',
-                        right: '80px',
+                        top: "calc(1rem + 7px)",
+                        right: '1rem',
                         cursor: 'pointer',
                         display: 'flex',
                         alignItems: 'center',

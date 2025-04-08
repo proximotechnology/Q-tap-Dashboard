@@ -123,11 +123,11 @@ export default function SideBar({isOpen}) {
                                         location.pathname === item.path
                                             ? theme.palette.mode === "dark"
                                                 ? grey[600]
-                                                : "#ef7d00"
+                                                : theme.palette.orangePrimary.main
                                             : "gray",
                                     // textAlign: item.path === "/order" ? "center" : "",
                                     '&:hover': {
-                                        backgroundColor: item.path === "/order" ? "#ef7d00" : "inherit",
+                                        backgroundColor: item.path === "/order" ? theme.palette.orangePrimary.main : "inherit",
                                     },
                                 }}
                                 onClick={() => {
@@ -144,14 +144,14 @@ export default function SideBar({isOpen}) {
                                             location.pathname === item.path
                                                 ? theme.palette.mode === "dark"
                                                     ? grey[50]
-                                                    : "#ef7d00"
+                                                    : theme.palette.orangePrimary.main
                                                 : "gray",
                                         marginLeft: item.path === "/order" ? "10px" : ""
                                     }}
                                 >
                                     {React.cloneElement(item.icon, {
                                         fontSize: "small",
-                                        color: location.pathname === item.path ? "#ef7d00" : "#AAAAAA",
+                                        color: location.pathname === item.path ? theme.palette.orangePrimary.main : "#AAAAAA",
                                     })}
                                 </ListItemIcon>
 
@@ -199,7 +199,7 @@ export default function SideBar({isOpen}) {
                                         location.pathname === item.path
                                             ? theme.palette.mode === "dark"
                                                 ? grey[600]
-                                                : "#ef7d00"
+                                                : theme.palette.orangePrimary.main
                                             : "gray",
 
                                 }}

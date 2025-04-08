@@ -1,6 +1,6 @@
 
 import { Button, Divider, Paper, TextField, Typography } from '@mui/material'
-import { Box } from '@mui/system'
+import { Box, useTheme } from '@mui/system'
 import React from 'react'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -11,6 +11,7 @@ import { logData } from './CustomersData';
 import { useTranslation } from 'react-i18next';
 export const Customers = () => {
   const {t} = useTranslation();
+  const theme = useTheme();
   const handleExport = () => {
     const headers = ["Dine Method", "Name", "Email", "Phone", "Note", "Visit Time"];
     const csvRows = [
@@ -71,7 +72,7 @@ export const Customers = () => {
           />
           <Button
             variant="text"
-            style={{ color: '#ef7d00', fontSize: "11px", textTransform: "capitalize" }}
+            style={{ color: theme.palette.orangePrimary.main, fontSize: "11px", textTransform: "capitalize" }}
             onClick={handleExport}
           >
             {t("export")}

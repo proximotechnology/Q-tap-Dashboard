@@ -1,11 +1,12 @@
 import { Button, Divider, Paper, Typography } from '@mui/material'
-import { Box } from '@mui/system'
+import { Box, useTheme } from '@mui/system'
 import React, { useRef } from 'react'
 import { QRCodeSVG } from 'qrcode.react';
 import { useTranslation } from 'react-i18next';
 
 export const Share = () => {
     const qrCodeRef = useRef();
+    const theme = useTheme();
     const {t} = useTranslation();
     const handleCopyLink = () => {
         const link = "https://highleveltecknology.com/";
@@ -87,7 +88,7 @@ export const Share = () => {
                         <Button
                             onClick={handleCopyLink}
                             style={{
-                                backgroundColor: '#ef7d00',
+                                backgroundColor: theme.palette.orangePrimary.main,
                                 textTransform: "capitalize",
                                 borderRadius: "20px",
                                 color: 'white',

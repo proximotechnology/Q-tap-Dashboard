@@ -15,7 +15,7 @@ import {
     Paper,
     Radio,
 } from '@mui/material';
-import { styled } from '@mui/system';
+import { styled, useTheme } from '@mui/system';
 import StraightIcon from '@mui/icons-material/Straight';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import NightlightIcon from '@mui/icons-material/Nightlight';
@@ -55,6 +55,7 @@ const ImageBox = styled(Box)(({ imageUrl }) => ({
 const Menu = () => {
     const { clientData, getClientData } = useContext(ClientLoginData);
     const { qtap_clients } = clientData;
+    const theme = useTheme();
     const selectedBranch = localStorage.getItem('selectedBranch');
 
     const existBranch = qtap_clients?.brunchs?.find((branch) => branch?.id == selectedBranch) || {};
@@ -262,7 +263,7 @@ const {t} = useTranslation();
                         {t("logo500")}
                         </Typography>
                         <StyledButton variant="contained" component="label">
-                            <StraightIcon sx={{ color: '#ef7d00', fontSize: '16px' }} /> {t("upload")}
+                            <StraightIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: '16px' }} /> {t("upload")}
                             <input type="file" accept="image/*" hidden onChange={handleLogoUpload} />
                         </StyledButton>
                     </Box>
@@ -299,7 +300,7 @@ const {t} = useTranslation();
                         {t("banner1000x500")}
                         </Typography>
                         <StyledButton variant="contained" component="label" sx={{ mt: 1 }}>
-                            <StraightIcon sx={{ color: '#ef7d00', fontSize: '16px' }} /> {t("upload")}
+                            <StraightIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: '16px' }} /> {t("upload")}
                             <input type="file" accept="image/*" hidden onChange={handleBannerUpload} />
                         </StyledButton>
                     </Box>
@@ -342,12 +343,12 @@ const {t} = useTranslation();
                                         value="white"
                                         sx={{
                                             padding: '5px 8px',
-                                            backgroundColor: mode === 'white' ? '#E57C00' : 'AAAAAA',
+                                            backgroundColor: mode === 'white' ? theme.palette.orangePrimary.main : 'AAAAAA',
                                             color: mode === 'white' ? '#FFFFFF' : 'gray',
                                         }}
                                     >
                                         <WbSunnyIcon
-                                            sx={{ fontSize: '30px', color: mode === 'white' ? '#E57C00' : '#AAAAAA' }}
+                                            sx={{ fontSize: '30px', color: mode === 'white' ? theme.palette.orangePrimary.main : '#AAAAAA' }}
                                         />
                                     </ToggleButton>
 
@@ -355,12 +356,12 @@ const {t} = useTranslation();
                                         value="dark"
                                         sx={{
                                             padding: '5px 8px',
-                                            backgroundColor: mode === 'dark' ? '#E57C00' : 'inherit',
+                                            backgroundColor: mode === 'dark' ? theme.palette.orangePrimary.main : 'inherit',
                                             color: mode === 'dark' ? '#FFFFFF' : 'gray',
                                         }}
                                     >
                                         <NightlightIcon
-                                            sx={{ fontSize: '30px', color: mode === 'dark' ? '#E57C00' : '#AAAAAA' }}
+                                            sx={{ fontSize: '30px', color: mode === 'dark' ? theme.palette.orangePrimary.main : '#AAAAAA' }}
                                         />
                                     </ToggleButton>
                                 </ToggleButtonGroup>
@@ -369,7 +370,7 @@ const {t} = useTranslation();
                             <Divider
                                 orientation="vertical"
                                 flexItem
-                                sx={{ height: '50px', marginRight: '25px', width: '1px', backgroundColor: 'orange' }}
+                                sx={{ height: '50px', marginRight: '25px', width: '1px', backgroundColor: theme.palette.orangePrimary.main }}
                             />
 
                             <Grid container spacing={1}>
@@ -384,26 +385,26 @@ const {t} = useTranslation();
                                         value="grid"
                                         sx={{
                                             padding: '5px 8px',
-                                            backgroundColor: design === 'grid' ? '#E57C00' : 'inherit',
-                                            color: design === 'grid' ? '#E57C00' : 'inherit',
+                                            backgroundColor: design === 'grid' ? theme.palette.orangePrimary.main : 'inherit',
+                                            color: design === 'grid' ? theme.palette.orangePrimary.main : 'inherit',
                                         }}
                                     >
                                         <span
                                             className="icon-grid"
-                                            style={{ fontSize: '30px', color: design === 'grid' ? '#E57C00' : '#AAAAAA' }}
+                                            style={{ fontSize: '30px', color: design === 'grid' ? theme.palette.orangePrimary.main : '#AAAAAA' }}
                                         />
                                     </ToggleButton>
                                     <ToggleButton
                                         value="list"
                                         sx={{
                                             padding: '5px 8px',
-                                            backgroundColor: design === 'list' ? '#E57C00' : 'inherit',
-                                            color: design === 'list' ? '#E57C00' : 'inherit',
+                                            backgroundColor: design === 'list' ? theme.palette.orangePrimary.main : 'inherit',
+                                            color: design === 'list' ? theme.palette.orangePrimary.main : 'inherit',
                                         }}
                                     >
                                         <span
                                             className="icon-list"
-                                            style={{ fontSize: '30px', color: design === 'list' ? '#E57C00' : '#AAAAAA' }}
+                                            style={{ fontSize: '30px', color: design === 'list' ? theme.palette.orangePrimary.main : '#AAAAAA' }}
                                         />
                                     </ToggleButton>
                                 </ToggleButtonGroup>
@@ -433,7 +434,7 @@ const {t} = useTranslation();
                                                 '& .MuiSvgIcon-root': { fontSize: 22 },
                                                 color: 'gray',
                                                 '&.Mui-checked': {
-                                                    color: '#ef7d00',
+                                                    color: theme.palette.orangePrimary.main,
                                                 },
                                             }}
                                         />
@@ -455,7 +456,7 @@ const {t} = useTranslation();
                                                 '& .MuiSvgIcon-root': { fontSize: 22 },
                                                 color: 'gray',
                                                 '&.Mui-checked': {
-                                                    color: '#ef7d00',
+                                                    color: theme.palette.orangePrimary.main,
                                                 },
                                             }}
                                         />
@@ -477,7 +478,7 @@ const {t} = useTranslation();
                                                 '& .MuiSvgIcon-root': { fontSize: 22 },
                                                 color: 'gray',
                                                 '&.Mui-checked': {
-                                                    color: '#ef7d00',
+                                                    color: theme.palette.orangePrimary.main,
                                                 },
                                             }}
                                         />
@@ -515,7 +516,7 @@ const {t} = useTranslation();
                                             '& .MuiSvgIcon-root': { fontSize: 22 },
                                             color: 'gray',
                                             '&.Mui-checked': {
-                                                color: '#ef7d00',
+                                                color: theme.palette.orangePrimary.main,
                                             },
                                         }}
                                     />
@@ -562,7 +563,7 @@ const {t} = useTranslation();
                                                 '& .MuiSvgIcon-root': { fontSize: 22, borderRadius: '10px' },
                                                 color: 'gray',
                                                 '&.Mui-checked': {
-                                                    color: '#ef7d00',
+                                                    color: theme.palette.orangePrimary.main,
                                                 },
                                             }}
                                         />
@@ -593,7 +594,7 @@ const {t} = useTranslation();
                                                 '& .MuiSvgIcon-root': { fontSize: 22 },
                                                 color: 'gray',
                                                 '&.Mui-checked': {
-                                                    color: '#ef7d00',
+                                                    color: theme.palette.orangePrimary.main,
                                                 },
                                             }}
                                         />
@@ -636,7 +637,7 @@ const {t} = useTranslation();
                                                 '& .MuiSvgIcon-root': { fontSize: 22 },
                                                 color: 'gray',
                                                 '&.Mui-checked': {
-                                                    color: '#ef7d00',
+                                                    color: theme.palette.orangePrimary.main,
                                                 },
                                             }}
                                         />
@@ -681,7 +682,7 @@ const {t} = useTranslation();
                                                 '& .MuiSvgIcon-root': { fontSize: 22 },
                                                 color: 'gray',
                                                 '&.Mui-checked': {
-                                                    color: '#ef7d00',
+                                                    color: theme.palette.orangePrimary.main,
                                                 },
                                             }}
                                         />
@@ -703,7 +704,7 @@ const {t} = useTranslation();
                                                 '& .MuiSvgIcon-root': { fontSize: 22 },
                                                 color: 'gray',
                                                 '&.Mui-checked': {
-                                                    color: '#ef7d00',
+                                                    color: theme.palette.orangePrimary.main,
                                                 },
                                             }}
                                         />
@@ -786,7 +787,7 @@ const {t} = useTranslation();
                                         height: 30,
                                         borderRadius: 2,
                                         fontSize: '13px',
-                                        border: `1px solid ${selectedButtons.includes(item.day) ? '#ef7d00' : '#9d9d9c'}`,
+                                        border: `1px solid ${selectedButtons.includes(item.day) ? theme.palette.orangePrimary.main : '#9d9d9c'}`,
                                         display: 'flex',
                                         justifyContent: 'center',
                                         alignItems: 'center',
@@ -869,11 +870,11 @@ const {t} = useTranslation();
                         fontSize: '13px',
                         padding: '3px 50px',
                         borderRadius: '20px',
-                        backgroundColor: '#ef7d00',
+                        backgroundColor: theme.palette.orangePrimary.main,
                         color: 'white',
                         textTransform: 'capitalize',
                         '&:hover': {
-                            backgroundColor: '#ef7d00',
+                            backgroundColor: theme.palette.orangePrimary.main,
                         },
                     }}
                     startIcon={<CheckOutlinedIcon />}

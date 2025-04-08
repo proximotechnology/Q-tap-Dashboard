@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box, useTheme } from '@mui/system';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { PieChart, Pie, Cell } from 'recharts';
@@ -8,10 +8,11 @@ const data01 = [{ name: 'Free', value: 50 }, { name: 'Remaining', value: 50 }];
 const data02 = [{ name: 'Starter', value: 25 }, { name: 'Remaining', value: 75 }];
 const data03 = [{ name: 'Pro', value: 10 }, { name: 'Remaining', value: 90 }];
 
-const COLORS = ['#ef7d00', '#AD4181', '#2EA6F7'];
 
 export const Cart1 = () => {
     const { t } = useTranslation();
+    const theme = useTheme();
+    const COLORS = [theme.palette.orangePrimary.main, '#AD4181', '#2EA6F7'];
     return (
         <>
             <Box display="flex"  alignItems="center">
@@ -21,7 +22,7 @@ export const Cart1 = () => {
                         <defs>
                             <linearGradient id="gradientFree" x1="0" y1="0" x2="100%" y2="0">
                                 <stop offset="0%" stopColor="rgb(255, 194, 133)" />
-                                <stop offset="100%" stopColor="#ef7d00" /> {/* Lighter shade of orange */}
+                                <stop offset="100%" stopColor={theme.palette.orangePrimary.main} /> {/* Lighter shade of orange */}
                             </linearGradient>
                         </defs>
                         <Pie
@@ -41,7 +42,7 @@ export const Cart1 = () => {
                             y={42}
                             textAnchor="middle"
                             dominantBaseline="middle"
-                            fill="#ef7d00"
+                            fill={theme.palette.orangePrimary.main}
                             fontSize="13"
                         >
                             {data01[0].value}%

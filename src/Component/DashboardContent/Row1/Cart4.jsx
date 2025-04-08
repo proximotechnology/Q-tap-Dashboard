@@ -1,5 +1,5 @@
 import { Menu, MenuItem, Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box, useTheme } from "@mui/system";
 import React, { useState } from "react";
 import { PieChart, Pie, Cell } from "recharts";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
@@ -14,13 +14,13 @@ const data02 = [
   { name: "Remaining", value: 90 },
 ];
 
-const COLORS = ["#ef7d00", "#AD4181"];
 
 export const Cart4 = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedYear, setSelectedYear] = useState("2023-2024");
   const {t} = useTranslation()
-
+  const theme = useTheme();
+  const COLORS = [theme.palette.orangePrimary.main, "#AD4181"];
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };

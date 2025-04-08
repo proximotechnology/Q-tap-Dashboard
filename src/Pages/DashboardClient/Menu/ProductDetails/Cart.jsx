@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Typography, IconButton, AppBar, Toolbar, Button, } from '@mui/material';
+import { Box, Typography, IconButton, AppBar, Toolbar, Button, useTheme, } from '@mui/material';
 
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 
 const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, selectedSize, handleMinusItem, handleAddItem, getItemCount }) => {
     const {t} = useTranslation()
+    const theme = useTheme();
     const [isFormOpen, setIsFormOpen] = useState(false);
     const toggleTypeForm = () => {
         setIsFormOpen(!isFormOpen);
@@ -36,10 +37,10 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, selectedSize,
                     <AppBar position="static" color="inherit">
                         <Toolbar>
                             <IconButton edge="start" color="inherit" aria-label="cart">
-                                <ShoppingCartOutlinedIcon sx={{ color: "#ef7d00", fontSize: "25px" }} />
+                                <ShoppingCartOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "25px" }} />
                                 <Typography sx={{
                                     position: "relative", top: "-10px", left: "-10px", fontSize: "8px", padding: "0px 3px", borderRadius: "50%",
-                                    backgroundColor: "#ef7d00", color: "white"
+                                    backgroundColor: theme.palette.orangePrimary.main, color: "white"
                                 }}>{cartItems.length}</Typography>
                             </IconButton>
 
@@ -48,7 +49,7 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, selectedSize,
 
                             <Box sx={{ display: "flex", textAlign: "center", alignItems: "center", cursor: "pointer" }}  >
                                 <PersonOutlineOutlinedIcon
-                                    sx={{ color: "white", fontSize: "18px", borderRadius: "10px", padding: "5px", backgroundColor: "#ef7d00" }} />
+                                    sx={{ color: "white", fontSize: "18px", borderRadius: "10px", padding: "5px", backgroundColor: theme.palette.orangePrimary.main }} />
                                 <Typography variant='body2' sx={{ color: "#575756", fontSize: "10px", padding: "0px 5px" }}>Admin</Typography>
                                 <KeyboardArrowDownOutlinedIcon sx={{ color: "#575756", fontSize: "13px" }} />
                             </Box>
@@ -58,7 +59,7 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, selectedSize,
                     <Box sx={{ padding: 2 }}>
                         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center" }}>
                             <Typography variant="body1" sx={{ fontSize: "10px", display: "flex", letterSpacing: 1 }}>
-                                <ShoppingCartOutlinedIcon sx={{ color: "#ef7d00", marginRight: "5px", fontSize: "17px" }} /> {t("yourCart")}
+                                <ShoppingCartOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, marginRight: "5px", fontSize: "17px" }} /> {t("yourCart")}
                             </Typography>
                             <Typography variant="body2" sx={{ fontSize: "9px", color: "gray", letterSpacing: 1 }}>{cartItems.length} {t("item.many")}</Typography>
                         </Box>
@@ -95,7 +96,7 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, selectedSize,
                                         </Typography>
 
                                         <Typography variant="body2" sx={{ marginTop: '2px', fontSize: '9px', color: "#575756" }}>
-                                            <span style={{ color: "#ef7d00" }}>{t("option")} | </span>
+                                            <span style={{ color: theme.palette.orangePrimary.main }}>{t("option")} | </span>
                                             {selectedItemOptions[item.id] && selectedItemOptions[item.id].length > 0
                                                 ? selectedItemOptions[item.id].map(option => option.name).join(', ')
                                                 : t("noOptionsSelected")}
@@ -103,7 +104,7 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, selectedSize,
                                         </Typography>
 
                                         <Typography variant="body2" sx={{ marginTop: '2px', fontSize: '9px', color: "#575756" }}>
-                                            <span style={{ color: "#ef7d00" }}>{t("extra.one")} |</span>
+                                            <span style={{ color: theme.palette.orangePrimary.main }}>{t("extra.one")} |</span>
                                             {selectedItemExtra[item.id] && selectedItemExtra[item.id].length > 0
                                                 ? selectedItemExtra[item.id].map(extra => extra.name).join(', ')
                                                 : t("noOptionsSelected")}
@@ -124,7 +125,7 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, selectedSize,
                                         />
                                     </Box>
                                     <Box>
-                                        <Typography variant="h6" sx={{ marginTop: "5px", fontSize: '15px', fontWeight: "bold", color: '#ef7d00' }}>
+                                        <Typography variant="h6" sx={{ marginTop: "5px", fontSize: '15px', fontWeight: "bold", color: theme.palette.orangePrimary.main }}>
                                             {item.newPrice} <span style={{ fontSize: "9px", fontWeight: "400", color: '#575756' }}>EGP</span>
                                         </Typography>
                                     </Box>
@@ -143,7 +144,7 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, selectedSize,
                             <Typography variant="h6" sx={{ fontSize: '11px', fontWeight: "bold", color: '#3A3A38' }}>
                                 {t("totalPrice")}
                             </Typography>
-                            <Typography variant="h6" sx={{ fontSize: '18px', fontWeight: "bold", color: '#ef7d00' }}>
+                            <Typography variant="h6" sx={{ fontSize: '18px', fontWeight: "bold", color: theme.palette.orangePrimary.main }}>
                                 {isNaN(totalCart) ? 0 : totalCart}
                                 <span style={{ fontSize: "10px", fontWeight: "400", color: '#575756' }}>EGP</span>
                             </Typography>
@@ -151,7 +152,7 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, selectedSize,
                         <Button
                             onClick={toggleTypeForm}
                             sx={{
-                                backgroundColor: "#ef7d00", color: "white", textTransform: "capitalize", fontSize: "10px",
+                                backgroundColor: theme.palette.orangePrimary.main, color: "white", textTransform: "capitalize", fontSize: "10px",
                                 float: "right", borderRadius: "20px", width: "55%", height: "30px",
                                 "&:hover": {
                                     backgroundColor: "#ef7d10",

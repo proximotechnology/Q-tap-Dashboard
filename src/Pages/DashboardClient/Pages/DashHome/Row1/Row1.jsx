@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardContent, Typography, Grid, Box } from "@mui/material";
+import { Card, CardContent, Typography, Grid, Box, useTheme } from "@mui/material";
 
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import Chart1 from './Chart1';
@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 
 export default function Dashboard() {
     const {t} = useTranslation();
+    const theme = useTheme();
     return (
         <Grid container spacing={2} >
 
@@ -19,7 +20,7 @@ export default function Dashboard() {
                             <Typography variant="subtitle1" color="text.secondary">{t("totalOrders")}</Typography>
                             <span class="icon-shopping-bag" style={{ color: "#D8E0E0", fontSize: "25px" }}></span>
                         </Box >
-                        <Typography variant="body2" sx={{ color: "#ef7d00", fontSize: "20px" }}>5.564</Typography>
+                        <Typography variant="body2" sx={{ color: theme.palette.orangePrimary.main, fontSize: "20px" }}>5.564</Typography>
 
                         <Chart1 />
                     </CardContent>
@@ -34,7 +35,7 @@ export default function Dashboard() {
                             <Typography variant="subtitle1" color="text.secondary">{t("customersVisit")}</Typography>
                             <span class="icon-show" style={{ color: "#D8E0E0", fontSize: "25px" }}></span>
                         </Box >
-                        <Typography variant="body2" sx={{ color: "#ef7d00", fontSize: "20px" }}>2.234</Typography>
+                        <Typography variant="body2" sx={{ color: theme.palette.orangePrimary.main, fontSize: "20px" }}>2.234</Typography>
                         <Chart2 />
 
                     </CardContent>

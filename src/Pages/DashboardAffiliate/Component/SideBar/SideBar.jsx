@@ -17,7 +17,7 @@ const Arr1 = [
 ];
 
 
-export default function SideBar() {
+export default function SideBar({isOpen}) {
     const location = useLocation();
     const navigate = useNavigate();
     const theme = useTheme();
@@ -25,14 +25,14 @@ export default function SideBar() {
     return (
         <Box 
         sx={{
-            width: '200px', 
+            width: {xs:'60%',md:'200px'}, 
             backgroundColor: '#fff', 
             padding: '25px 20px', 
             position: 'fixed',  
             top: 0,   
             left: 0,   
             height: '100vh',   
-             
+             display:{xs:isOpen?'block':'none',md:"block"},
             zIndex: 1000 }}>
             <Box sx={{ display: "felx", justifyContent: "center", textAlign: "center", alignItems: "center"}}>
                 <img src="/images/logoDash.jpg" alt="Logo" style={{ width: '110px' }} />
@@ -56,7 +56,7 @@ export default function SideBar() {
                                         location.pathname === item.path
                                             ? theme.palette.mode === "dark"
                                                 ? grey[600]
-                                                : "#ef7d00"
+                                                : theme.palette.orangePrimary.main
                                             : "gray",
                                     
                                 }}
@@ -69,14 +69,14 @@ export default function SideBar() {
                                         marginRight: "10px",
                                         color:
                                             location.pathname === item.path
-                                                ? "#ef7d00"
+                                                ? theme.palette.orangePrimary.main
                                                 : "gray",
 
                                     }}
                                 >
                                     {React.cloneElement(item.icon, {
                                         fontSize: "small",
-                                        color: location.pathname === item.path ? "#ef7d00" : "gray",
+                                        color: location.pathname === item.path ? theme.palette.orangePrimary.main : "gray",
                                     })}
                                 </ListItemIcon>
 

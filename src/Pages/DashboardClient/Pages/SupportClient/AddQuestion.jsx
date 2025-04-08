@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { IconButton, Modal, Typography, Divider, Grid, TextField, Button } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box, useTheme } from '@mui/system';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import { useTranslation } from 'react-i18next';
 
 export const AddQuestion = ({ open, handleCloseModel, onAddQuestion }) => {
     const [inputValue, setInputValue] = useState("");
+    const theme = useTheme();
     const {t} = useTranslation();
     const handleInputChange = (e) => {
         setInputValue(e.target.value);
@@ -118,7 +119,7 @@ export const AddQuestion = ({ open, handleCloseModel, onAddQuestion }) => {
                         onClick={handleSave}
                         variant="contained"
                         sx={{
-                            backgroundColor: '#ef7d00',
+                            backgroundColor: theme.palette.orangePrimary.main,
                             borderRadius: '25px',
                             color: 'white',
                             textTransform: 'none',

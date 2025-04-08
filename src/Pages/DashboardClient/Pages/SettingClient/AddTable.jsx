@@ -11,6 +11,7 @@ import {
   FormControl,
   Select,
   MenuItem,
+  useTheme,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
@@ -22,6 +23,7 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
 const AddTableModal = ({ open, onClose, onSave, tableData }) => {
+  const theme = useTheme();
   const {t} = useTranslation();
   const selectedBranch = localStorage.getItem('selectedBranch');
   const { areaData, getAreaData, getTableDataRes } = useContext(ClientLoginData);
@@ -198,7 +200,7 @@ const AddTableModal = ({ open, onClose, onSave, tableData }) => {
           onClick={handleOpen}
           sx={{ float: 'right', position: 'relative', top: '-30px', left: '20px', cursor: 'pointer' }}
         >
-          <AddOutlinedIcon sx={{ fontSize: '32px', color: '#ef7d00' }} />
+          <AddOutlinedIcon sx={{ fontSize: '32px', color: theme.palette.orangePrimary.main }} />
         </Box>
         <AddAreaModal open={modalOpen} onClose={handleCloseAreaModal} />
 

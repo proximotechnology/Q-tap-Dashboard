@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Modal, TextField, Button, IconButton, Typography, Divider } from '@mui/material';
+import { Box, Modal, TextField, Button, IconButton, Typography, Divider, useTheme } from '@mui/material';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +8,7 @@ export const AddNotification = ({ open, handleClose, addNotification }) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const {t} = useTranslation();
-
+    const theme = useTheme();
     // add notification to api
     const handleSend = () => {
         // Validate inputs
@@ -124,7 +124,7 @@ export const AddNotification = ({ open, handleClose, addNotification }) => {
                                 fontSize: '13px',
                                 "&:hover": { backgroundColor: '#222240' },
                             }}
-                            endIcon={<ArrowRightAltIcon sx={{ color: '#E57C00' }} />}
+                            endIcon={<ArrowRightAltIcon sx={{ color: theme.palette.orangePrimary.main }} />}
                         >
                             {t("send")}
                         </Button>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AppBar, IconButton, Typography, Box, ListItem, ListItemIcon, ListItemText, List, Divider, Avatar, Popover, Button } from '@mui/material';
-import { styled } from '@mui/system';
+import { styled, useTheme } from '@mui/system';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useNavigate } from 'react-router';
 import { SendNotificationModel } from './SendNotificationModel';
@@ -33,6 +33,7 @@ const ImageContainer = styled(Box)({
 });
 
 const Header = () => {
+    const theme = useTheme();
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -77,7 +78,7 @@ const Header = () => {
                                 borderRadius: "0px 10px 10px 10px ", padding: "3px 16px", textTransform: "none", color: "white", fontSize: "12px"
                             }}
                         >
-                            <RoomServiceOutlinedIcon sx={{ fontSize: "18px", color: "#222240" }} />
+                            <RoomServiceOutlinedIcon sx={{ fontSize: "18px", color: theme.palette.secondaryColor.main }} />
                             {t("addOrders")}
                         </Button>
                         
@@ -86,7 +87,7 @@ const Header = () => {
                             color="inherit"
                             aria-label="Orders History"
                             sx={{ fontSize: "12px" }}>
-                            <span class="icon-history" style={{ color: '#ef7d00', marginRight: "4px", fontSize: "16px" }} ></span>
+                            <span class="icon-history" style={{ color: theme.palette.orangePrimary.main, marginRight: "4px", fontSize: "16px" }} ></span>
                             {t("ordersHistory")}
                         </IconButton>
 
@@ -96,14 +97,14 @@ const Header = () => {
                                 onClick={handleClickOpen}
                                 color="inherit" sx={{ fontSize: "12px" }}
                                 aria-label="send notification">
-                                <span class="icon-bell" style={{ color: '#ef7d00', marginRight: "4px", fontSize: "16px" }} />
+                                <span class="icon-bell" style={{ color: theme.palette.orangePrimary.main, marginRight: "4px", fontSize: "16px" }} />
                                 {t("sendNotification")}
                             </IconButton>
                             <SendNotificationModel open={open} handleClose={handleClose} />
                         </>
 
                         <IconButton color="inherit" sx={{ fontSize: "12px" }} aria-label="expand">
-                            <span class="icon-expand" style={{ fontSize: "10px", marginRight: "5px", color: "#ef7d00" }}></span>
+                            <span class="icon-expand" style={{ fontSize: "10px", marginRight: "5px", color: theme.palette.orangePrimary.main }}></span>
                             {t("expand")}
                         </IconButton>
 
@@ -112,14 +113,14 @@ const Header = () => {
                             onClick={handleUserClick}
                             sx={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "3px" }}>
                             <IconButton color="inherit" sx={{
-                                backgroundColor: '#ef7d00', borderRadius: '30%', padding: '5px',
+                                backgroundColor: theme.palette.orangePrimary.main, borderRadius: '30%', padding: '5px',
                                 '&:hover': {
-                                    backgroundColor: '#ef7d00',
+                                    backgroundColor: theme.palette.orangePrimary.main,
                                 }
                             }}>
                                 <PersonOutlineOutlinedIcon sx={{ fontSize: "20px", color: "white" }} />
                             </IconButton>
-                            <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: "#ef7d00" }} />
+                            <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: theme.palette.orangePrimary.main }} />
                         </Box>
                         <Popover
                             id={openUserPopover ? 'simple-popover' : undefined}
@@ -133,7 +134,7 @@ const Header = () => {
                         >
                             <Box sx={{ width: 200, padding: '10px' }}>
                                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row', marginBottom: '20px', gap: '10px' }}>
-                                    <Avatar sx={{ bgcolor: '#ef7d00', width: 40, height: 40 }}>
+                                    <Avatar sx={{ bgcolor: theme.palette.orangePrimary.main, width: 40, height: 40 }}>
                                         <PersonOutlineOutlinedIcon sx={{ fontSize: "22px" }} />
                                     </Avatar>
                                     <Box>
@@ -148,7 +149,7 @@ const Header = () => {
                                         onClick={() => navigate('/')}
                                         sx={{
                                             cursor: "pointer",
-                                            backgroundColor: "#222240",
+                                            backgroundColor: theme.palette.secondaryColor.main,
                                             color: "white",
                                             marginBottom: "10px",
                                             borderRadius: "30px",
@@ -161,7 +162,7 @@ const Header = () => {
                                             margin: "0 auto",
                                         }}>
 
-                                        <span class="icon-home-icon-silhouette" style={{ color: "#ef7d00", marginRight: "5px", fontSize: "15px" }} ></span>
+                                        <span class="icon-home-icon-silhouette" style={{ color: theme.palette.orangePrimary.main, marginRight: "5px", fontSize: "15px" }} ></span>
                                         <span style={{ color: "white", fontSize: "12px", textTransform: "capitalize" }}>
                                             Home
                                         </span>

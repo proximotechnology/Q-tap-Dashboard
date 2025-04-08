@@ -2,12 +2,13 @@
 import { SetupPage } from '../Business-info/SetupPage'
 import React, { useState } from 'react'
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import { Box, MenuItem, Grid, Menu, Divider } from "@mui/material";
+import { Box, MenuItem, Grid, Menu, Divider, useTheme } from "@mui/material";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Products } from './Products';
 import { useTranslation } from 'react-i18next';
 
 export const ProductsPage = () => {
+    const theme = useTheme();
     const [anchorElLanguage, setAnchorElLanguage] = useState(null);
     const [selectedLanguage, setSelectedLanguage] = useState('en');
     const openLanguage = Boolean(anchorElLanguage);
@@ -23,8 +24,8 @@ export const ProductsPage = () => {
     };
 
     const getLanguageIcon = () => {
-        return selectedLanguage === 'ar' ? <span class="icon-translation" style={{ color: "#ef7d00", fontSize: "22px" }}> </span>
-            : <LanguageOutlinedIcon sx={{ color: "#ef7d00", fontSize: "22px" }} />;
+        return selectedLanguage === 'ar' ? <span class="icon-translation" style={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }}> </span>
+            : <LanguageOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }} />;
     };
 
     return (
@@ -34,8 +35,8 @@ export const ProductsPage = () => {
 
             <Grid item xs={12} md={8} >
                 <Box sx={{
-                    position: "absolute", top: "30px", right: "80px",
-                    cursor: "pointer", display: "flex", alignItems: "center"
+                    position: "absolute", top: "30px", right: "1rem",
+                    cursor: "pointer", display: "flex", alignItems: "center",zIndex:'10000'
                 }}>
                     <img src="/assets/helplogo.svg" alt="icon" style={{ width: "25px", height: "25px", marginRight: "30px" }} />
 

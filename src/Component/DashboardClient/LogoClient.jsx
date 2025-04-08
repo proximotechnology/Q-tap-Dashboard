@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Grid, Typography, Button, IconButton, Divider, } from "@mui/material";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import { Box, styled } from "@mui/system";
+import { Box, styled, useTheme } from "@mui/system";
 import ModeCommentIcon from '@mui/icons-material/ModeComment';
 import { useNavigate } from "react-router";
 import Language from "../../Pages/DashboardClient/ComponentDashClient/TopBar/Language";
@@ -40,6 +40,7 @@ const TextOverlay = styled(Box)({
 
 export const LogoClient = () => {
     const { t } = useTranslation();
+    const theme = useTheme();
     const branches = [t("branch") + "1", t("branch") + "2", t("branch") + "3"]
     const navigate = useNavigate();
     const [selectedId, setSelectedId] = useState(null);
@@ -64,7 +65,7 @@ export const LogoClient = () => {
                         <Typography onClick={() => navigate('/delivery-riders')}
                             variant="body1" sx={{ display: "flex", alignItems: "center", flexDirection: "row", marginRight: { xs: "10px", md: "50px" }, cursor: "pointer" }}>
 
-                            <span class="icon-fast-shipping" style={{ fontSize: "25px", marginRight: "4px", color: "#ef7d00" }}> </span>
+                            <span class="icon-fast-shipping" style={{ fontSize: "25px", marginRight: "4px", color: theme.palette.orangePrimary.main }}> </span>
 
                             <Typography style={{ fontSize: "13px", color: "white", }}>
                                 <span style={{ borderBottom: "1px solid white" }}>{t("deliveryRiders")}</span></Typography>

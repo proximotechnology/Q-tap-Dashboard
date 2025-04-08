@@ -1,4 +1,4 @@
-import { Box, Divider, IconButton, Paper, Typography } from '@mui/material';
+import { Box, Divider, IconButton, Paper, Typography, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
@@ -10,6 +10,7 @@ export const Notification = () => {
   const [open, setOpen] = useState(false);
   const [notificationsData, setNotificationsData] = useState([]);
   const { t } = useTranslation();
+  const theme = useTheme();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -62,7 +63,7 @@ export const Notification = () => {
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Typography sx={{ color: "#575756", fontSize: "15px" }}>{t("history")}</Typography>
           <IconButton onClick={handleOpen}>
-            <AddIcon sx={{ fontSize: "35px", fontWeight: "bolder", color: "#ef7d00", cursor: "pointer" }} />
+            <AddIcon sx={{ fontSize: "35px", fontWeight: "bolder", color: theme.palette.orangePrimary.main, cursor: "pointer" }} />
           </IconButton>
         </Box>
         <AddNotification

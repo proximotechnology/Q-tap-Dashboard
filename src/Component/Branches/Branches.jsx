@@ -1,5 +1,5 @@
 
-import { Box, Button, styled, Typography, IconButton, Grid } from '@mui/material';
+import { Box, Button, styled, Typography, IconButton, Grid, useTheme } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router';
 import ControlPointOutlinedIcon from '@mui/icons-material/ControlPointOutlined';
@@ -8,15 +8,18 @@ import { useBusinessContext } from '../../context/BusinessContext';
 import { useTranslation } from 'react-i18next';
 import  styles  from '../../Pages/DashboardClient/Pages/SupportClient/supportCard.module.css';
 
-const Divider = styled(Box)({
-  width: '5%',
-  height: '3px',
-  backgroundColor: '#E57C00',
-  borderRadius: '20px',
-  marginBottom: '20px',
-});
+
 
 export const Branches = () => {
+  const theme = useTheme();
+  const Divider = styled(Box)({
+    width: '5%',
+    height: '3px',
+    backgroundColor: theme.palette.orangePrimary.main,
+    borderRadius: '20px',
+    marginBottom: '20px',
+  });
+  
   const { branches, setBranches } = useBusinessContext(); // Access branches from context
   const navigate = useNavigate();
 
@@ -54,19 +57,19 @@ export const Branches = () => {
               padding: "10px 10px 15px 10px ",
             }}
           >
-            <Typography variant="h6" sx={{ fontSize: '15px', color: '#E57C00', padding: '9px 0px 0px 16px' }}>
+            <Typography variant="h6" sx={{ fontSize: '15px', color: theme.palette.orangePrimary.main, padding: '9px 0px 0px 16px' }}>
               Branch {index + 1}
             </Typography>
             <Typography variant="h6" sx={{ fontSize: '8px', color: '#ffffff', padding: '7px 0px 0px 16px' }}>
               {"Name"}
             </Typography>
-            <Typography variant="h6" sx={{ fontSize: '15px', color: '#E57C00', padding: '0 0px 0px 16px' }}>
+            <Typography variant="h6" sx={{ fontSize: '15px', color: theme.palette.orangePrimary.main, padding: '0 0px 0px 16px' }}>
               {branch.businessName}
             </Typography>
             <Typography variant="h6" sx={{ fontSize: '8px', color: '#ffffff', padding: '7px 0px 0px 16px' }}>
               {"City"}
             </Typography>
-            <Typography variant="h6" sx={{ fontSize: '15px', color: '#E57C00', padding: '0 0px 0px 16px' }}>
+            <Typography variant="h6" sx={{ fontSize: '15px', color: theme.palette.orangePrimary.main, padding: '0 0px 0px 16px' }}>
               {branch.city}
             </Typography>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -96,15 +99,17 @@ export const Branches = () => {
 
           }}
         >
-          <ControlPointOutlinedIcon sx={{ color: '#E57C00', fontSize: '45px' }} />
+          <ControlPointOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: '45px' }} />
         </Box>
       </Box>
 
       <Box
         sx={{
-          position: 'fixed',
-          bottom: '30px',
-          left: '55%',
+          display: 'flex',
+          flexDirection:'column',
+          alignItems:'center'
+          // bottom: '30px',
+          // left: '55%',
         }}
       >
         <Typography
@@ -120,20 +125,20 @@ export const Branches = () => {
         >
           <PriorityHighOutlinedIcon sx={{ verticalAlign: 'middle', marginRight: '2px' }} />
           {t("plNoteBranch")}
-          <span style={{ color: '#E57C00' }}>50%</span> {t("plNoteBranch2")}
+          <span style={{ color: theme.palette.orangePrimary.main }}>50%</span> {t("plNoteBranch2")}
         </Typography>
-        <Grid item xs={12}>
+       
           <Button
             variant="contained"
             sx={{
               width: '60%',
               fontSize: '13px',
               borderRadius: '50px',
-              backgroundColor: '#E57C00',
+              backgroundColor: theme.palette.orangePrimary.main,
               textTransform: 'none',
               padding: '6px 0',
               '&:hover': {
-                backgroundColor: '#E57C00',
+                backgroundColor: theme.palette.orangePrimary.main,
               },
               color: '#fff',
             }}
@@ -141,7 +146,7 @@ export const Branches = () => {
           >
             {t("done")}
           </Button>
-        </Grid>
+        
       </Box>
     </Box>
   );

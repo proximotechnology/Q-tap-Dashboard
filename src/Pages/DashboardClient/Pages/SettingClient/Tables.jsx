@@ -9,7 +9,7 @@ import {
   Paper,
   Typography,
 } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box, useTheme } from '@mui/system';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import TableBarOutlinedIcon from '@mui/icons-material/TableBarOutlined';
 import ChairAltOutlinedIcon from '@mui/icons-material/ChairAltOutlined';
@@ -23,6 +23,7 @@ import { useTranslation } from 'react-i18next';
 
 const TableCard = ({ table, onDeleteTable, onEditTable }) => {
   const {t} = useTranslation();
+  const theme = useTheme();
   return(
 <Card
       className={styles.card3} // Apply the card3 class for the gradient background
@@ -43,7 +44,7 @@ const TableCard = ({ table, onDeleteTable, onEditTable }) => {
         }}
       >
         <Box display={'flex'} justifyContent={'space-between'}>
-          <Typography variant="subtitle2" sx={{ fontSize: '11px', color: '#E57C00' }}>
+          <Typography variant="subtitle2" sx={{ fontSize: '11px', color: theme.palette.orangePrimary.main }}>
             {t("id")}{' '}
             <span style={{ fontSize: '10px', color: '#AAAAAA', borderBottom: '1px solid #AAAAAA' }}>
               {table.id}
@@ -147,6 +148,7 @@ const TableCard = ({ table, onDeleteTable, onEditTable }) => {
 );
 }
 export const Tables = ({ openOldMenu }) => {
+  const theme = useTheme();
   const {t} = useTranslation();
   const [modalOpen, setModalOpen] = useState(false);
   const [editingTable, setEditingTable] = useState(null);
@@ -268,11 +270,11 @@ export const Tables = ({ openOldMenu }) => {
               padding: '3px 50px',
               margin: '20px 0px',
               borderRadius: '20px',
-              backgroundColor: '#ef7d00',
+              backgroundColor: theme.palette.orangePrimary.main,
               color: 'white',
               textTransform: 'capitalize',
               '&:hover': {
-                backgroundColor: '#ef7d00',
+                backgroundColor: theme.palette.orangePrimary.main,
               },
             }}
             startIcon={<CheckOutlinedIcon />}

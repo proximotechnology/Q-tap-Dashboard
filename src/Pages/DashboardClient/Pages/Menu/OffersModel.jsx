@@ -1,4 +1,4 @@
-import { Button, Divider, FormControl, IconButton, MenuItem, Modal, Select, TextField, Typography } from '@mui/material';
+import { Button, Divider, FormControl, IconButton, MenuItem, Modal, Select, TextField, Typography, useTheme } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import { Box, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { useBranch } from '../../../../context/BranchContext';
@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 
 export const OffersModel = ({ open, handleClose }) => {
     const { selectedBranch } = useBranch();
+    const theme = useTheme();
     const [discounts, setDiscounts] = useState([
         { code: '123456', discount: '10%', date: '8/10/2024', status: 'Active' },
         { code: '123457', discount: '10%', date: '8/10/2024', status: 'Inactive' }
@@ -279,7 +280,7 @@ export const OffersModel = ({ open, handleClose }) => {
                         onClick={handleAdd}
                         variant="contained"
                         sx={{
-                            backgroundColor: '#ef7d00',
+                            backgroundColor: theme.palette.orangePrimary.main,
                             borderRadius: '25px',
                             color: 'white',
                             width: "30%",

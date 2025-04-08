@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IconButton, Modal, Typography, Divider, Grid, TextField, Button, MenuItem, Select, Box } from '@mui/material';
+import { IconButton, Modal, Typography, Divider, Grid, TextField, Button, MenuItem, Select, Box, useTheme } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
@@ -17,6 +17,7 @@ export const AddFeedback = ({ open, handleCloseModel, onAddFeedback }) => {
     const [missingQTapMenus, setMissingQTapMenus] = useState("");
     const [comment, setComment] = useState("");
     const { t } = useTranslation();
+    const theme = useTheme();
 
     const handleStarClick = (newRate) => {
         setStar(newRate);
@@ -117,9 +118,9 @@ export const AddFeedback = ({ open, handleCloseModel, onAddFeedback }) => {
                                     sx={{ padding: '3px' }}
                                 >
                                     {index < star ? (
-                                        <StarIcon sx={{ fontSize: '20px', color: '#E57C00' }} />
+                                        <StarIcon sx={{ fontSize: '20px', color: theme.palette.orangePrimary.main }} />
                                     ) : (
-                                        <StarOutlineIcon sx={{ fontSize: '20px', color: '#E57C00' }} />
+                                        <StarOutlineIcon sx={{ fontSize: '20px', color: theme.palette.orangePrimary.main }} />
                                     )}
                                 </IconButton>
                             ))}
@@ -201,7 +202,7 @@ export const AddFeedback = ({ open, handleCloseModel, onAddFeedback }) => {
                         onClick={handleSave}
                         variant="contained"
                         sx={{
-                            backgroundColor: '#ef7d00',
+                            backgroundColor: theme.palette.orangePrimary.main,
                             borderRadius: '25px',
                             color: 'white',
                             textTransform: 'none',

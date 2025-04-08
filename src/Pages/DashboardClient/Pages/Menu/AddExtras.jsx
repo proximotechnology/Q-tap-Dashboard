@@ -1,4 +1,4 @@
-import { Button, Box, Divider, IconButton, Modal, Typography, TextField, Grid, MenuItem, Select, FormControl } from '@mui/material';
+import { Button, Box, Divider, IconButton, Modal, Typography, TextField, Grid, MenuItem, Select, FormControl, useTheme } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import React, { useContext, useEffect, useState } from 'react';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
@@ -70,7 +70,7 @@ export const AddExtras = ({ open, handleClose }) => {
         }
     };
 
-
+    const theme = useTheme();
     return (
         <Modal open={open} onClose={handleClose}>
             <Box
@@ -167,7 +167,7 @@ export const AddExtras = ({ open, handleClose }) => {
                             onClick={handleAdd}
                             variant="contained"
                             sx={{
-                                backgroundColor: '#ef7d00',
+                                backgroundColor: theme.palette.orangePrimary.main,
                                 borderRadius: '25px',
                                 color: 'white',
                                 textTransform: 'none',

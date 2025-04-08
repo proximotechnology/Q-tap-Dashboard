@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Button, IconButton, AppBar, Toolbar, CardMedia, Divider, } from '@mui/material';
+import { Box, Typography, Button, IconButton, AppBar, Toolbar, CardMedia, Divider, useTheme, } from '@mui/material';
  
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
@@ -17,6 +17,7 @@ const ProductDetails = ({ item, activeItemId, handleOptionClick, selectedItemOpt
 }) => {
 
     const {t} = useTranslation()
+    const theme = useTheme();
     const sizes = ["S", "M", "L"];
     // ___________________________________________________________________
 
@@ -102,10 +103,10 @@ const ProductDetails = ({ item, activeItemId, handleOptionClick, selectedItemOpt
                     <AppBar position="static" color="inherit" sx={{ boxShadow: "none" }}>
                         <Toolbar>
                             <IconButton onClick={toggleCart} edge="start" color="inherit" aria-label="cart">
-                                <ShoppingCartOutlinedIcon sx={{ color: "#ef7d00", fontSize: "25px" }} />
+                                <ShoppingCartOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "25px" }} />
                                 <Typography sx={{
                                     position: "relative", top: "-10px", left: "-10px", fontSize: "8px", padding: "0px 3px", borderRadius: "50%",
-                                    backgroundColor: "#ef7d00", color: "white"
+                                    backgroundColor: theme.palette.orangePrimary.main, color: "white"
                                 }}>{cartCount}</Typography>
                             </IconButton>
 
@@ -114,7 +115,7 @@ const ProductDetails = ({ item, activeItemId, handleOptionClick, selectedItemOpt
 
                             <Box sx={{ display: "flex", textAlign: "center", alignItems: "center", cursor: "pointer" }}  >
                                 <PersonOutlineOutlinedIcon
-                                    sx={{ color: "white", fontSize: "18px", borderRadius: "10px", padding: "5px", backgroundColor: "#ef7d00" }} />
+                                    sx={{ color: "white", fontSize: "18px", borderRadius: "10px", padding: "5px", backgroundColor: theme.palette.orangePrimary.main }} />
                                 <Typography variant='body2' sx={{ color: "#575756", fontSize: "10px", padding: "0px 5px" }}>Admin</Typography>
                                 <KeyboardArrowDownOutlinedIcon sx={{ color: "#575756", fontSize: "13px" }} />
                             </Box>
@@ -139,14 +140,14 @@ const ProductDetails = ({ item, activeItemId, handleOptionClick, selectedItemOpt
                                             }}>
                                                 <AddCircleOutlinedIcon
                                                     onClick={() => handleAddItem(item.id)}
-                                                    sx={{ fontSize: "18px", color: "#ef7d00", cursor: "pointer" }}
+                                                    sx={{ fontSize: "18px", color: theme.palette.orangePrimary.main, cursor: "pointer" }}
                                                 />
                                                 <Typography sx={{ fontSize: "11px", padding: "4px 0px", color: "#272725" }}>
                                                     {getItemCount(item.id)}
                                                 </Typography>
                                                 <RemoveCircleOutlinedIcon
                                                     onClick={() => handleMinusItem(item.id)}
-                                                    sx={{ fontSize: "18px", color: "#ef7d00", cursor: "pointer" }}
+                                                    sx={{ fontSize: "18px", color: theme.palette.orangePrimary.main, cursor: "pointer" }}
                                                 />
                                             </Box>
                                         )}
@@ -162,7 +163,7 @@ const ProductDetails = ({ item, activeItemId, handleOptionClick, selectedItemOpt
                                     <Divider sx={{ width: "100%", height: "1px", color: "gray" }} />
                                     <Box sx={{ display: "flex", alignItems: "center", textAlign: "center", padding: "5px 0px", justifyContent: "space-around" }}>
                                         <Box display="flex" alignItems="center">
-                                            <span class="icon-star" style={{ color: "#ef7d00", fontSize: "15px" }}></span>
+                                            <span class="icon-star" style={{ color: theme.palette.orangePrimary.main, fontSize: "15px" }}></span>
                                             <Typography variant="body2" color="black" sx={{ fontSize: '11px', marginLeft: "3px" }}  >
                                                 {item.rating}
                                             </Typography>
@@ -171,13 +172,13 @@ const ProductDetails = ({ item, activeItemId, handleOptionClick, selectedItemOpt
                                         <Box display="flex" alignItems="center">
                                         <span class="icon-calories-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
                                             <Typography variant="body2" color="black" sx={{ fontSize: '11px', marginLeft: "3px" }} >
-                                                {item.calories} <span style={{ fontSize: '10px', color: "#ef7d00" }}>Kcal</span></Typography>
+                                                {item.calories} <span style={{ fontSize: '10px', color: theme.palette.orangePrimary.main }}>Kcal</span></Typography>
                                         </Box>
 
                                         <Box display="flex" alignItems="center">
                                             <span class="icon-chronometer" ><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span></span>
                                             <Typography variant="body2" color="black" sx={{ fontSize: '11px', marginLeft: "3px" }} >
-                                                {item.prepTime} <span style={{ fontSize: '10px', color: "#ef7d00" }}>Min</span></Typography>
+                                                {item.prepTime} <span style={{ fontSize: '10px', color: theme.palette.orangePrimary.main }}>Min</span></Typography>
                                         </Box>
                                     </Box>
                                     <Divider sx={{ width: "100%", height: "1px", color: "gray" }} />
@@ -205,7 +206,7 @@ const ProductDetails = ({ item, activeItemId, handleOptionClick, selectedItemOpt
                                         fontSize: "8px",
                                         borderRadius: "50%",
                                         minWidth: "20px",
-                                        backgroundColor: selectedSize[item.id] === size ? "#ef7d00" : "#E0E0E0",
+                                        backgroundColor: selectedSize[item.id] === size ? theme.palette.orangePrimary.main : "#E0E0E0",
                                         color: selectedSize[item.id] === size ? "white" : "black",
                                         "&:hover": {
                                             backgroundColor: selectedSize[item.id] === size ? "#D47A1C" : "#D0D0D0",
@@ -286,13 +287,13 @@ const ProductDetails = ({ item, activeItemId, handleOptionClick, selectedItemOpt
                                                         // minWidth: "100px",
                                                         width: "47%",
                                                         height: "20px",
-                                                        backgroundColor: selectedItemExtra[item.id]?.includes(extra) ? "#222240" : "#FFFFFF",
+                                                        backgroundColor: selectedItemExtra[item.id]?.includes(extra) ? theme.palette.secondaryColor.main : "#FFFFFF",
                                                         color:  selectedItemExtra[item.id]?.includes(extra) ? "white" : "#575756",
                                                         border:  selectedItemExtra[item.id]?.includes(extra) ? "none" :"1px solid #E0E0E0",
                                                         borderRadius: "8px",
                                                         padding: "0 10px",
                                                         "&:hover": {
-                                                            backgroundColor:  selectedItemExtra[item.id]?.includes(extra) ? "#222240" : "#F5F5F5",
+                                                            backgroundColor:  selectedItemExtra[item.id]?.includes(extra) ? theme.palette.secondaryColor.main : "#F5F5F5",
                                                         },
                                                     }}
                                                 >
@@ -365,14 +366,14 @@ const ProductDetails = ({ item, activeItemId, handleOptionClick, selectedItemOpt
                         <Typography variant="h6" sx={{ fontSize: '11px', fontWeight: "bold", color: '#3A3A38' }}>
                             {t("price.one")}
                         </Typography>
-                        <Typography variant="h6" sx={{ fontSize: '18px', fontWeight: "bold", color: '#ef7d00' }}>
+                        <Typography variant="h6" sx={{ fontSize: '18px', fontWeight: "bold", color: theme.palette.orangePrimary.main }}>
                             {item.newPrice} <span style={{ fontSize: "10px", fontWeight: "400", color: '#575756' }}>EGP</span>
                         </Typography>
                     </Box>
                     <Button
                         onClick={() => addItemToCart(item)}
                         sx={{
-                            backgroundColor: "#ef7d00", color: "white", textTransform: "capitalize", fontSize: "10px",
+                            backgroundColor: theme.palette.orangePrimary.main, color: "white", textTransform: "capitalize", fontSize: "10px",
                             float: "right", borderRadius: "20px", width: "55%", height: "30px",
                             "&:hover": {
                                 backgroundColor: "#ef7d10",

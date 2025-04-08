@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, useTheme } from '@mui/material'
 import React from 'react'
 
 
@@ -14,7 +14,7 @@ const data = [
 ];
 
 const SalesVolumeChart = () => {
-
+    const theme = useTheme();
 
     return (
         <Box sx={{ height: "150px", width: '100%' }}>
@@ -37,7 +37,7 @@ const SalesVolumeChart = () => {
                     <Line
                         type="linear"
                         dataKey="value"
-                        stroke="#ef7d00"
+                        stroke={theme.palette.orangePrimary.main}
                         strokeWidth={2}
                         dot={false}
                         connectNulls={true}

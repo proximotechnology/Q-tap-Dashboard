@@ -7,7 +7,8 @@ import {
     Button,
     IconButton,
     Divider,
-    CircularProgress
+    CircularProgress,
+    useTheme
 } from '@mui/material';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
@@ -17,6 +18,7 @@ const AddMenuModal = ({ open, handleClose, onSuccess }) => {
         name: '',
         img: null
     });
+    const theme = useTheme();
     const [previewUrl, setPreviewUrl] = useState(null);
     const [loading, setLoading] = useState(false);
 
@@ -81,7 +83,7 @@ const AddMenuModal = ({ open, handleClose, onSuccess }) => {
                         <span className="icon-close-1" style={{ fontSize: "15px" }}></span>
                     </IconButton>
                 </Box>
-                <Divider sx={{ backgroundColor: "#E57C00", mb: 3 }} />
+                <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main, mb: 3 }} />
 
                 <form onSubmit={handleSubmit}>
                     <TextField
@@ -109,10 +111,10 @@ const AddMenuModal = ({ open, handleClose, onSuccess }) => {
                                     mr: 2,
                                     borderRadius: '10px',
                                     textTransform: 'capitalize',
-                                    borderColor: '#ef7d00',
-                                    color: '#ef7d00',
+                                    borderColor: theme.palette.orangePrimary.main,
+                                    color: theme.palette.orangePrimary.main,
                                     '&:hover': {
-                                        borderColor: '#ef7d00',
+                                        borderColor: theme.palette.orangePrimary.main,
                                         backgroundColor: 'rgba(239, 125, 0, 0.1)'
                                     }
                                 }}
@@ -141,11 +143,11 @@ const AddMenuModal = ({ open, handleClose, onSuccess }) => {
                             type="submit"
                             variant="contained"
                             sx={{
-                                backgroundColor: "#ef7d00",
+                                backgroundColor: theme.palette.orangePrimary.main,
                                 borderRadius: '10px',
                                 textTransform: 'capitalize',
                                 '&:hover': {
-                                    backgroundColor: "#ef7d00",
+                                    backgroundColor: theme.palette.orangePrimary.main,
                                 }
                             }}
                         >

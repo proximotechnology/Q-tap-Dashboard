@@ -403,7 +403,7 @@ const SignUp = () => {
                     height: '35px',
                     textTransform: "capitalize",
                     '&:hover': {
-                        backgroundColor: '#E57C00',
+                        backgroundColor: theme.palette.orangePrimary.main,
                     }
                 }}
                 onClick={() => { handleSignUp() }}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, Button } from '@mui/material';
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, Button, useTheme } from '@mui/material';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 
 import StarIcon from '@mui/icons-material/Star';
@@ -23,7 +23,7 @@ export const FeedbackAdmin = () => {
     const [feedbackData, setFeedbackData] = useState([]);
 
     const { t } = useTranslation();
-
+    const theme = useTheme();
     const handleDelete = (id) => {
         setFeedbackData(feedbackData.filter(row => row.id !== id));
     };
@@ -148,9 +148,9 @@ export const FeedbackAdmin = () => {
                                         <div style={{ display:'flex',flexWrap:'nowrap', justifyContent:'center' }}>
                                         {[...Array(5)].map((_, index) => (
                                             index < row.star ? (
-                                                <StarIcon key={index} sx={{ color: '#E57C00', fontSize: "23px", padding: "0px 2px" }} />
+                                                <StarIcon key={index} sx={{ color: theme.palette.orangePrimary.main, fontSize: "23px", padding: "0px 2px" }} />
                                             ) : (
-                                                <StarBorderIcon key={index} sx={{ color: '#E57C00', fontSize: "23px", padding: "0px 2px" }} />
+                                                <StarBorderIcon key={index} sx={{ color: theme.palette.orangePrimary.main, fontSize: "23px", padding: "0px 2px" }} />
                                             )
                                         ))}
                                         </div>
@@ -190,7 +190,7 @@ export const FeedbackAdmin = () => {
                                             borderBottom: "none",
                                         }}>
                                         <IconButton onClick={() => handleOpen(index)}>
-                                            <span class="icon-information" style={{ fontSize: '22px', color: "#E57C00" }} />
+                                            <span class="icon-information" style={{ fontSize: '22px', color: theme.palette.orangePrimary.main }} />
                                         </IconButton>
                                         <FeedbackDetailsModal open={open} handleClose={handleClose} pageId={selectedIndex} />
                                     </TableCell>
@@ -222,9 +222,9 @@ export const FeedbackAdmin = () => {
 
                                                 <span>
                                                     {row.publish === "yes" || row.publish === "Yes" ? (
-                                                        <KeyboardBackspaceOutlinedIcon sx={{ color: '#E57C00', fontSize: "15px", margin: "4px 0 0 3px" }} />
+                                                        <KeyboardBackspaceOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "15px", margin: "4px 0 0 3px" }} />
                                                     ) : (
-                                                        <ArrowRightAltOutlinedIcon sx={{ color: '#E57C00', fontSize: "14px", margin: "4px 0 0 3px" }} />
+                                                        <ArrowRightAltOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "14px", margin: "4px 0 0 3px" }} />
                                                     )}
                                                 </span>
                                             </Button>

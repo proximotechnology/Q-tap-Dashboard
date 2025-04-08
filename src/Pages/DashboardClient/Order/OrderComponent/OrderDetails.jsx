@@ -1,4 +1,4 @@
-import { Box } from '@mui/system';
+import { Box, useTheme } from '@mui/system';
 import React, { useRef, useState } from 'react';
 import { Typography, Button, Divider, Card, CardContent, TextField, InputAdornment, Grid, IconButton, Select, MenuItem } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
@@ -11,7 +11,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
     const navigate = useNavigate();
     const printRef = useRef();
     const [selectedChef, setSelectedChef] = useState('');
-
+    const theme = useTheme();
     const handleChefChange = (e) => {
         setSelectedChef(e.target.value);
     };
@@ -56,7 +56,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                 <Box sx={{ padding: '5px 10px' }} ref={printRef}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <Box sx={{ backgroundColor: '#73CB3C', padding: '3px 13px', borderRadius: '20px', }}>
-                            <Typography variant="body2" sx={{ fontSize: "11px", color: "#222240" }}>
+                            <Typography variant="body2" sx={{ fontSize: "11px", color: theme.palette.secondaryColor.main }}>
                                {t("id")} #{order.id}</Typography>
                         </Box>
 
@@ -69,7 +69,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                     <Divider sx={{ margin: '10px 0' }} />
 
                     <Typography variant="subtitle1" sx={{ fontSize: "12px" }}>{t("orderDetail")}
-                        <span class="icon-edit" style={{ fontSize: "15px", marginLeft: "12px", color: "#E57C00" }}></span>
+                        <span class="icon-edit" style={{ fontSize: "15px", marginLeft: "12px", color: theme.palette.orangePrimary.main }}></span>
                     </Typography>
 
                     {order.orderDetails.map((item, index) => (
@@ -120,11 +120,11 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                         <Typography variant="body2" color="#AAAAAA" fontSize="11px" padding="0px 8px">
                             {t(order.dineMethod.type)}
                             <Typography sx={{ color: "#AAAAAA", fontSize: "10px" }}>
-                                <span style={{ color: '#E57C00', fontSize: "11px" }}>{t("table.one")}: </span>
+                                <span style={{ color: theme.palette.orangePrimary.main, fontSize: "11px" }}>{t("table.one")}: </span>
                                 {order.dineMethod.name}
                             </Typography>
                             <Typography sx={{ color: "#AAAAAA", fontSize: "10px" }}>
-                                <span style={{ color: '#E57C00', fontSize: "11px" }}> {t("area")}: </span>
+                                <span style={{ color: theme.palette.orangePrimary.main, fontSize: "11px" }}> {t("area")}: </span>
                                 {order.dineMethod.phone}
                             </Typography>
                         </Typography>
@@ -134,15 +134,15 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                     <Typography variant="body2" color="textSecondary" fontSize="12px" padding="0px 8px">
                                         {t(order.dineMethod.type)}
                                         <Typography sx={{ color: "gray", fontSize: "11px" }}>
-                                            <span style={{ color: '#E57C00', fontSize: "10px" }}>{t("name")}:</span>
+                                            <span style={{ color: theme.palette.orangePrimary.main, fontSize: "10px" }}>{t("name")}:</span>
                                             {order.dineMethod.name}
                                         </Typography>
                                         <Typography sx={{ color: "gray", fontSize: "11px" }}>
-                                            <span style={{ color: '#E57C00', fontSize: "10px" }}> {t("mobileNumber")} :</span>
+                                            <span style={{ color: theme.palette.orangePrimary.main, fontSize: "10px" }}> {t("mobileNumber")} :</span>
                                             {order.dineMethod.phone}
                                         </Typography>
                                         <Typography sx={{ color: "gray", fontSize: "11px" }}>
-                                            <span style={{ color: '#E57C00', fontSize: "10px" }}> {t("address")} :</span>
+                                            <span style={{ color: theme.palette.orangePrimary.main, fontSize: "10px" }}> {t("address")} :</span>
                                             {order.dineMethod.address}
                                         </Typography>
                                     </Typography>
@@ -174,7 +174,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                             <option value="Rider3" sx={{ fontSize: '12px', color: "gray" }}>Rider 3</option>
                                         </TextField>
 
-                                        <IconButton sx={{ backgroundColor: '#E57C00', color: 'white', marginRight: '5px', borderRadius: "8px" }}>
+                                        <IconButton sx={{ backgroundColor: theme.palette.orangePrimary.main, color: 'white', marginRight: '5px', borderRadius: "8px" }}>
                                             <span class="icon-send" style={{ fontSize: "16px", color: "white" }} />
                                         </IconButton>
 
@@ -472,7 +472,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                                                     variant="contained"
                                                                                     sx={{
                                                                                         textTransform: "capitalize",
-                                                                                        backgroundColor: "#222240",
+                                                                                        backgroundColor: theme.palette.secondaryColor.main,
                                                                                         fontSize: "12px",
                                                                                         width: "60%",
                                                                                         borderRadius: "20px",
@@ -482,7 +482,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                                                     }}
                                                                                 >
                                                                                     <span class="icon-close-1"
-                                                                                        style={{ color: "#E57C00", fontSize: "13px", marginRight: "6px" }}></span>
+                                                                                        style={{ color: theme.palette.orangePrimary.main, fontSize: "13px", marginRight: "6px" }}></span>
                                                                                     {t("close")}
                                                                                 </Button>
                                                                             </Grid>
@@ -495,7 +495,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                                                     variant="contained"
                                                                                     sx={{
                                                                                         textTransform: "capitalize",
-                                                                                        backgroundColor: "#222240",
+                                                                                        backgroundColor: theme.palette.secondaryColor.main,
                                                                                         fontSize: "13px",
                                                                                         width: "70%",
                                                                                         borderRadius: "20px",
@@ -522,7 +522,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                                         variant="contained"
                                                                         sx={{
                                                                             textTransform: "capitalize",
-                                                                            backgroundColor: "#222240",
+                                                                            backgroundColor: theme.palette.secondaryColor.main,
                                                                             fontSize: "13px",
                                                                             width: "70%",
                                                                             borderRadius: "20px",
@@ -531,7 +531,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                                             }
                                                                         }}
                                                                     >
-                                                                        <span class="icon-waiter" style={{ fontSize: "16px", color: "#E57C00", marginRight: "6px" }}></span>
+                                                                        <span class="icon-waiter" style={{ fontSize: "16px", color: theme.palette.orangePrimary.main, marginRight: "6px" }}></span>
                                                                         {t("served")}
                                                                     </Button>
                                                                 </Grid>
@@ -547,7 +547,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                             variant="contained"
                                                             sx={{
                                                                 textTransform: "capitalize",
-                                                                backgroundColor: "#222240",
+                                                                backgroundColor: theme.palette.secondaryColor.main,
                                                                 fontSize: "11px",
                                                                 width: "90%",
                                                                 borderRadius: "20px",
@@ -577,7 +577,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                 variant="contained"
                                                 sx={{
                                                     textTransform: "capitalize",
-                                                    backgroundColor: "#222240",
+                                                    backgroundColor: theme.palette.secondaryColor.main,
                                                     fontSize: "11px",
                                                     width: "90%",
                                                     padding: 0,
@@ -587,7 +587,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                     }
                                                 }}
                                             >
-                                                <img src="/assets/balance.svg" alt="icon" style={{ color: "#E57C00", width: "18px", marginRight: "6px", height: "18px" }} />
+                                                <img src="/assets/balance.svg" alt="icon" style={{ color: theme.palette.orangePrimary.main, width: "18px", marginRight: "6px", height: "18px" }} />
                                                 {t("paymentReceived")}
                                             </Button>
 
@@ -610,7 +610,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                         onClick={onReject}
                                         sx={{
                                             textTransform: "capitalize",
-                                            backgroundColor: "#222240",
+                                            backgroundColor: theme.palette.secondaryColor.main,
                                             fontSize: "11px",
                                             width: "100%",
                                             borderRadius: "20px",
@@ -629,7 +629,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                         onClick={onAccept}
                                         sx={{
                                             textTransform: "capitalize",
-                                            backgroundColor: "#ef7d00",
+                                            backgroundColor: theme.palette.orangePrimary.main,
                                             fontSize: "11px",
                                             width: "100%",
                                             borderRadius: "20px",

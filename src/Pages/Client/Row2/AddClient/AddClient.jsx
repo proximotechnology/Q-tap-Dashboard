@@ -125,8 +125,8 @@
 // //   };
 
 // //   const getLanguageIcon = () => {
-// //     return selectedLanguage === 'ar' ? <span class="icon-translation" style={{ color: "#ef7d00", fontSize: "22px" }}> </span>
-// //       : <LanguageOutlinedIcon sx={{ color: "#ef7d00", fontSize: "22px" }} />;
+// //     return selectedLanguage === 'ar' ? <span class="icon-translation" style={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }}> </span>
+// //       : <LanguageOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }} />;
 // //   };
 // //   const [anchorElUser, setAnchorElUser] = useState(null);
 // //   const openUserPopover = Boolean(anchorElUser);
@@ -225,9 +225,9 @@
 // //             onClick={handleUserClick}
 // //             sx={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "3px" }}>
 // //             <IconButton color="inherit" sx={{
-// //               backgroundColor: '#ef7d00', borderRadius: '30%', padding: '5px',
+// //               backgroundColor: theme.palette.orangePrimary.main, borderRadius: '30%', padding: '5px',
 // //               '&:hover': {
-// //                 backgroundColor: '#ef7d00',
+// //                 backgroundColor: theme.palette.orangePrimary.main,
 // //               }
 // //             }}>
 // //               <PersonOutlineOutlinedIcon sx={{ fontSize: "20px", color: "white" }} />
@@ -247,7 +247,7 @@
 // //           >
 // //             <Box sx={{ width: 200, padding: '10px' }}>
 // //               <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row', marginBottom: '20px', gap: '10px' }}>
-// //                 <Avatar sx={{ bgcolor: '#ef7d00', width: 40, height: 40 }}>
+// //                 <Avatar sx={{ bgcolor: theme.palette.orangePrimary.main, width: 40, height: 40 }}>
 // //                   <PersonOutlineOutlinedIcon sx={{ fontSize: "22px" }} />
 // //                 </Avatar>
 // //                 <Box>
@@ -275,7 +275,7 @@
 // //                     margin: "0 auto",
 // //                   }}>
 
-// //                   <span class="icon-home-icon-silhouette" style={{ color: "#ef7d00", marginRight: "5px", fontSize: "15px" }} ></span>
+// //                   <span class="icon-home-icon-silhouette" style={{ color: theme.palette.orangePrimary.main, marginRight: "5px", fontSize: "15px" }} ></span>
 // //                   <span style={{ color: "white", fontSize: "12px", textTransform: "capitalize" }}>
 // //                     Home
 // //                   </span>
@@ -326,7 +326,7 @@
 // //         </Box>
 // //       </Box>  {/* header */}
 
-// //       <Divider sx={{ backgroundColor: "#ef7d00", borderBottom: "none", width: "100%", height: "3px" }} />
+// //       <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main, borderBottom: "none", width: "100%", height: "3px" }} />
 
 
 // //       <Box >
@@ -348,7 +348,7 @@
 // //         <Grid container justifyContent="center" sx={{ marginTop: 3 }}>
 // //           <Button
 // //             sx={{
-// //               width: '160px', textTransform: "capitalize", backgroundColor: "#ef7d00",
+// //               width: '160px', textTransform: "capitalize", backgroundColor: theme.palette.orangePrimary.main,
 // //               color: "white", borderRadius: "20px", padding: "5px",
 // //               '&:hover': {
 // //                 backgroundColor: "#ef7d10",
@@ -382,7 +382,7 @@ import {
   Popover,
   Typography,
 } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box, useTheme } from "@mui/system";
 import React, { useState, useEffect } from "react";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -398,6 +398,7 @@ import { useClientContext } from "../../../../context/ClientContext";
 import { useTranslation } from 'react-i18next';
 export const AddClient = () => {
   const { t , i18n} = useTranslation() // translation and change language  functions
+  const theme = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
   const { clientData, setClientData, clearClientData } = useClientContext();
@@ -580,9 +581,9 @@ export const AddClient = () => {
 
   const getLanguageIcon = () => {
     return selectedLanguage === "ar" ? (
-      <span className="icon-translation" style={{ color: "#ef7d00", fontSize: "22px" }}></span>
+      <span className="icon-translation" style={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }}></span>
     ) : (
-      <LanguageOutlinedIcon sx={{ color: "#ef7d00", fontSize: "22px" }} />
+      <LanguageOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }} />
     );
   };
 
@@ -647,11 +648,11 @@ export const AddClient = () => {
             <IconButton
               color="inherit"
               sx={{
-                backgroundColor: "#ef7d00",
+                backgroundColor: theme.palette.orangePrimary.main,
                 borderRadius: "30%",
                 padding: "5px",
                 "&:hover": {
-                  backgroundColor: "#ef7d00",
+                  backgroundColor: theme.palette.orangePrimary.main,
                 },
               }}
             >
@@ -676,7 +677,7 @@ export const AddClient = () => {
               <Box
                 sx={{ display: "flex", alignItems: "center", flexDirection: "row", marginBottom: "20px", gap: "10px" }}
               >
-                <Avatar sx={{ bgcolor: "#ef7d00", width: 40, height: 40 }}>
+                <Avatar sx={{ bgcolor: theme.palette.orangePrimary.main, width: 40, height: 40 }}>
                   <PersonOutlineOutlinedIcon sx={{ fontSize: "22px" }} />
                 </Avatar>
                 <Box>
@@ -693,7 +694,7 @@ export const AddClient = () => {
                   onClick={() => navigate("/")}
                   sx={{
                     cursor: "pointer",
-                    backgroundColor: "#222240",
+                    backgroundColor: theme.palette.secondaryColor.main,
                     color: "white",
                     marginBottom: "10px",
                     borderRadius: "30px",
@@ -706,7 +707,7 @@ export const AddClient = () => {
                     margin: "0 auto",
                   }}
                 >
-                  <span className="icon-home-icon-silhouette" style={{ color: "#ef7d00", marginRight: "5px", fontSize: "15px" }}></span>
+                  <span className="icon-home-icon-silhouette" style={{ color: theme.palette.orangePrimary.main, marginRight: "5px", fontSize: "15px" }}></span>
                   <span style={{ color: "white", fontSize: "12px", textTransform: "capitalize" }}>
                     Home
                   </span>
@@ -757,7 +758,7 @@ export const AddClient = () => {
         </Box>
       </Box>
 
-      <Divider sx={{ backgroundColor: "#ef7d00", borderBottom: "none", width: "100%", height: "3px" }} />
+      <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main, borderBottom: "none", width: "100%", height: "3px" }} />
 
       <Box>
         <Grid container spacing={1}>
@@ -782,7 +783,7 @@ export const AddClient = () => {
             sx={{
               width: "160px",
               textTransform: "capitalize",
-              backgroundColor: "#ef7d00",
+              backgroundColor: theme.palette.orangePrimary.main,
               color: "white",
               borderRadius: "20px",
               padding: "5px",

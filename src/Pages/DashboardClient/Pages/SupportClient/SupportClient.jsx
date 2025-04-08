@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Grid, Paper, Typography, IconButton, Divider, TableCell, TableRow, TableBody, Table, TableHead } from '@mui/material';
+import { Box, Grid, Paper, Typography, IconButton, Divider, TableCell, TableRow, TableBody, Table, TableHead, useTheme } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ticketData from './ticketData';
 import TicketDetails from './TicketDetails';
@@ -16,6 +16,7 @@ import styles from './supportCard.module.css'
 import { useTranslation } from 'react-i18next';
 import { AddFeedback } from './AddFeedback';
 const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onClick }) => {
+  const theme = useTheme();
   const statusStyles = {
     'in_progress': { backgroundColor: '#222240', color: '#f4f6fc' },
     'open': { backgroundColor: '#EBEDF3', color: '#575756' },
@@ -66,22 +67,22 @@ const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onC
       >
         {status === 'in_progress' ? (
           <>
-            <span className="icon-processing-time" style={{ fontSize: "13px", color: "#ef7d00" }} />
-            <Typography variant="body1" sx={{ fontSize: "11px", color: "#ef7d00", ml: 1 }}>
+            <span className="icon-processing-time" style={{ fontSize: "13px", color: theme.palette.orangePrimary.main }} />
+            <Typography variant="body1" sx={{ fontSize: "11px", color: theme.palette.orangePrimary.main, ml: 1 }}>
               {t("inProgress")}
             </Typography>
           </>
         ) : status === 'Done' ? (
           <>
-            <span className="icon-check" style={{ fontSize: "13px", color: "#222240" }} />
-            <Typography variant="body1" sx={{ fontSize: "11px", color: "#222240", ml: 1 }}>
+            <span className="icon-check" style={{ fontSize: "13px", color: theme.palette.secondaryColor.main }} />
+            <Typography variant="body1" sx={{ fontSize: "11px", color: theme.palette.secondaryColor.main, ml: 1 }}>
               {t("done")}
             </Typography>
           </>
         ) : (
           <>
-            <span className="icon-share" style={{ fontSize: "12px", color: "#222240" }} />
-            <Typography variant="body1" sx={{ fontSize: "11px", color: "#222240", ml: 1 }}>
+            <span className="icon-share" style={{ fontSize: "12px", color: theme.palette.secondaryColor.main }} />
+            <Typography variant="body1" sx={{ fontSize: "11px", color: theme.palette.secondaryColor.main, ml: 1 }}>
               {t("open")}
             </Typography>
           </>
@@ -96,7 +97,7 @@ const Support = () => {
     "How much you satisfied with the product?",
     "How much you satisfied with the service?",
   ]);
-
+  const theme = useTheme();
   const { t } = useTranslation();
   // State for AddQuestion modal
   const [openQuestionModal, setOpenQuestionModal] = useState(false);
@@ -443,7 +444,7 @@ const Support = () => {
             <Typography
               onClick={handleOpenQuestionModal}
               variant="body1"
-              sx={{ fontSize: "10px", color: "#E57C00", cursor: "pointer", display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+              sx={{ fontSize: "10px", color: theme.palette.orangePrimary.main, cursor: "pointer", display: 'flex', justifyContent: 'center', alignItems: 'center' }}
             >
               <AddIcon style={{ fontSize: "20px", fontWeight: "bold" }} />
               {t("addQuestion")}
@@ -451,7 +452,7 @@ const Support = () => {
             <Typography
               onClick={handleOpenFeedbackModal}
               variant="body1"
-              sx={{ fontSize: "10px", color: "#E57C00", cursor: "pointer", display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+              sx={{ fontSize: "10px", color: theme.palette.orangePrimary.main, cursor: "pointer", display: 'flex', justifyContent: 'center', alignItems: 'center' }}
             >
               <AddIcon style={{ fontSize: "20px", fontWeight: "bold" }} />
               {t("addFeedback")}
@@ -515,7 +516,7 @@ const Support = () => {
 
                 <TableCell sx={{ textAlign: "center", fontSize: "11px", color: "gray", padding: '5px 0px', borderBottom: "none" }}>{discount.client.name}</TableCell>
                 <TableCell sx={{ textAlign: "center", fontSize: "11px", color: "gray", padding: '5px 0px', borderBottom: "none" }}>{discount.client.mobile}</TableCell>
-                <TableCell sx={{ textAlign: "center", fontSize: "11px", color: "#E57C00", padding: '5px 0px', borderBottom: "none" }}>#{discount.id}</TableCell>
+                <TableCell sx={{ textAlign: "center", fontSize: "11px", color: theme.palette.orangePrimary.main, padding: '5px 0px', borderBottom: "none" }}>#{discount.id}</TableCell>
 
                 <TableCell
                   sx={{
@@ -551,14 +552,14 @@ const Support = () => {
                             <StarIcon
                               sx={{
                                 fontSize: '20px',
-                                color: '#E57C00',
+                                color: theme.palette.orangePrimary.main,
                               }}
                             />
                           ) : (
                             <StarOutlineIcon
                               sx={{
                                 fontSize: '20px',
-                                color: '#E57C00',
+                                color: theme.palette.orangePrimary.main,
                               }}
                             />
                           )}
@@ -571,7 +572,7 @@ const Support = () => {
 
                 <TableCell sx={{ textAlign: "center", fontSize: "20px", color: "gray", padding: '5px 0px', borderBottom: "none" }}>
                   {discount.emoji === "said" ? <SentimentVeryDissatisfiedIcon sx={{ fontSize: "35px", color: "red" }} /> :
-                    discount.emoji === "happy" ? <SentimentSatisfiedAltIcon sx={{ fontSize: "35px", color: "rgb(229, 124, 0)" }} /> :
+                    discount.emoji === "happy" ? <SentimentSatisfiedAltIcon sx={{ fontSize: "35px", color: theme.palette.orangePrimary.main }} /> :
                       discount.emoji === "very happy" ? <SentimentSatisfiedAltIcon sx={{ fontSize: "35px", color: "green" }} /> :
                         ""}
                 </TableCell>
@@ -580,7 +581,7 @@ const Support = () => {
                   onClick={() => handleRowClick(discount)}
                   sx={{ textAlign: "center", padding: '5px 0px', borderBottom: "none" }}>
                   <IconButton size="small" >
-                    <span class="icon-information" style={{ fontSize: "25px", color: "#E57C00" }}></span>
+                    <span class="icon-information" style={{ fontSize: "25px", color: theme.palette.orangePrimary.main }}></span>
                   </IconButton>
                 </TableCell>
 

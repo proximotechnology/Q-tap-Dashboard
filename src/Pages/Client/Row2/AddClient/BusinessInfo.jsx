@@ -16,6 +16,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Typography,
+  useTheme,
 } from "@mui/material";
 import React, { useState } from "react";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
@@ -40,6 +41,7 @@ import { useNavigate } from "react-router";
 const daysOfWeek = ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"];
 
 export const BusinessInfo = () => {
+  const theme = useTheme();
   const { t } = useTranslation();
   const { businessData, updateBusinessData, branches, selectedBranch, selectBranch } = useBusinessContext();
   const [branchIndex, setBranchIndex] = useState(0);
@@ -154,7 +156,7 @@ export const BusinessInfo = () => {
 
   return (
     <Grid container sx={{ marginTop: "20px", paddingLeft: "20px" }}>
-      <Grid item xs={12}>
+      <Grid item xs={12} spacing={4}>
         <Box display={"flex"} justifyContent={"space-between"}>
           <Box>
             <Typography variant="body2" sx={{ fontSize: "15px" }} color="#3b3a3a" gutterBottom>
@@ -178,7 +180,7 @@ export const BusinessInfo = () => {
               variant="contained"
               onClick={() => handleBranchClick(i)}
               sx={{
-                backgroundColor: selectedBranch === i ? "#ef7d00" : "#bdbdbd",
+                backgroundColor: selectedBranch === i ? theme.palette.orangePrimary.main : "#bdbdbd",
                 color: "white",
                 borderRadius: "10px",
                 padding: "3px 15px",
@@ -186,7 +188,7 @@ export const BusinessInfo = () => {
                 alignItems: "center",
                 textTransform: "none",
                 "&:hover": {
-                  backgroundColor: selectedBranch === i ? "#ef7d00" : "#bdbdbd",
+                  backgroundColor: selectedBranch === i ? theme.palette.orangePrimary.main : "#bdbdbd",
                 },
               }}
             >
@@ -198,8 +200,8 @@ export const BusinessInfo = () => {
         <Divider sx={{ margin: "12px 0px" }} />
       </Grid>
 
-      <Grid item xs={12} md={12} display={"flex"} justifyContent={"space-between"}>
-        <Grid md={6} sx={{ marginRight: "40px" }}>
+      
+        <Grid xs={12} md={6} paddingX='8px' overflow='hidden'>
           <FormControl variant="outlined" fullWidth>
             <OutlinedInput
               id="outlined-fullname"
@@ -277,12 +279,12 @@ export const BusinessInfo = () => {
               fullWidth
               sx={{
                 textTransform: "capitalize",
-                backgroundColor: "#222240",
+                backgroundColor: theme.palette.secondaryColor.main,
                 color: "white",
                 borderRadius: "10px",
                 fontSize: "11px",
                 height: "30px",
-                "&:hover": { backgroundColor: "#222240" },
+                "&:hover": { backgroundColor: theme.palette.secondaryColor.main },
               }}
             >
               <span className="icon-map-1" style={{ fontSize: "18px", marginRight: "6px" }}></span>
@@ -373,7 +375,7 @@ export const BusinessInfo = () => {
               variant="outlined"
               sx={{ border: "1px solid gray", textTransform: "capitalize", color: "gray", padding: "1px 25px", borderRadius: "8px" }}
             >
-              <CheckOutlinedIcon sx={{ fontSize: "20px", marginRight: "6px", color: "#ef7d00" }} /> {t("pro")}
+              <CheckOutlinedIcon sx={{ fontSize: "20px", marginRight: "6px", color: theme.palette.orangePrimary.main }} /> {t("pro")}
             </Button>
             <Button
               onClick={() => {
@@ -381,7 +383,7 @@ export const BusinessInfo = () => {
               }}
               variant="contained"
               sx={{
-                backgroundColor: "#222240",
+                backgroundColor: theme.palette.secondaryColor.main,
                 textTransform: "capitalize",
                 color: "white",
                 padding: "3px 30px",
@@ -395,7 +397,7 @@ export const BusinessInfo = () => {
           </Box>
         </Grid>
 
-        <Grid md={6}>
+        <Grid xs={12} md={6} paddingX='8px' >
           <Grid sx={{ display: "flex", flexDirection: "column", marginTop: "10px", width: "100%" }}>
             <Box sx={{ marginTop: "6px", display: 'flex', justifyContent: 'space-between', width: '100%' }}>
               {/* Default Mode Section */}
@@ -416,27 +418,27 @@ export const BusinessInfo = () => {
                     value="light"
                     sx={{
                       padding: "8px",
-                      backgroundColor: mode === "light" ? "#E57C00" : "transparent",
-                      border: `1px solid ${mode === "light" ? "#E57C00" : "#AAAAAA"} !important`,
+                      backgroundColor: mode === "light" ? theme.palette.orangePrimary.main : "transparent",
+                      border: `1px solid ${mode === "light" ? theme.palette.orangePrimary.main : "#AAAAAA"} !important`,
                       borderRadius: "8px !important",
                       marginRight: "8px",
                     }}
                   >
                     <WbSunnyIcon
-                      sx={{ fontSize: "35px", color: mode === "light" ? "#E57C00" : "#AAAAAA" }}
+                      sx={{ fontSize: "30px", color: mode === "light" ? theme.palette.orangePrimary.main : "#AAAAAA" }}
                     />
                   </ToggleButton>
                   <ToggleButton
                     value="dark"
                     sx={{
                       padding: "8px",
-                      backgroundColor: mode === "dark" ? "#E57C00" : "transparent",
-                      border: `1px solid ${mode === "dark" ? "#E57C00" : "#AAAAAA"} !important`,
+                      backgroundColor: mode === "dark" ? theme.palette.orangePrimary.main : "transparent",
+                      border: `1px solid ${mode === "dark" ? theme.palette.orangePrimary.main : "#AAAAAA"} !important`,
                       borderRadius: "8px !important",
                     }}
                   >
                     <NightlightIcon
-                      sx={{ fontSize: "35px", color: mode === "dark" ? "#E57C00" : "#AAAAAA" }}
+                      sx={{ fontSize: "30px", color: mode === "dark" ? theme.palette.orangePrimary.main : "#AAAAAA" }}
                     />
                   </ToggleButton>
                 </ToggleButtonGroup>
@@ -449,7 +451,7 @@ export const BusinessInfo = () => {
                 sx={{
                   height: "40px",
                   width: "2px",
-                  backgroundColor: "#E57C00",
+                  backgroundColor: theme.palette.orangePrimary.main,
                   margin: "auto 20px",
                 }}
               />
@@ -472,27 +474,27 @@ export const BusinessInfo = () => {
                     value="grid"
                     sx={{
                       padding: "8px",
-                      backgroundColor: design === "grid" ? "#E57C00" : "transparent",
-                      border: `1px solid ${design === "grid" ? "#E57C00" : "#AAAAAA"} !important`,
+                      backgroundColor: design === "grid" ? theme.palette.orangePrimary.main : "transparent",
+                      border: `1px solid ${design === "grid" ? theme.palette.orangePrimary.main : "#AAAAAA"} !important`,
                       borderRadius: "8px !important",
                       marginRight: "8px",
                     }}
                   >
                     <ViewQuiltIcon
-                      sx={{ fontSize: "35px", color: design === "grid" ? "#E57C00" : "#AAAAAA" }}
+                      sx={{ fontSize: "30px", color: design === "grid" ? theme.palette.orangePrimary.main : "#AAAAAA" }}
                     />
                   </ToggleButton>
                   <ToggleButton
                     value="list"
                     sx={{
                       padding: "8px",
-                      backgroundColor: design === "list" ? "#E57C00" : "transparent",
-                      border: `1px solid ${design === "list" ? "#E57C00" : "#AAAAAA"} !important`,
+                      backgroundColor: design === "list" ? theme.palette.orangePrimary.main : "transparent",
+                      border: `1px solid ${design === "list" ? theme.palette.orangePrimary.main : "#AAAAAA"} !important`,
                       borderRadius: "8px !important",
                     }}
                   >
                     <FormatListBulletedIcon
-                      sx={{ fontSize: "35px", color: design === "list" ? "#E57C00" : "#AAAAAA" }}
+                      sx={{ fontSize: "30px", color: design === "list" ? theme.palette.orangePrimary.main : "#AAAAAA" }}
                     />
                   </ToggleButton>
                 </ToggleButtonGroup>
@@ -509,14 +511,14 @@ export const BusinessInfo = () => {
                     {t("workHours")}
                   </Typography>
                   <Grid item xs={3}>
-                    <Box display="flex" alignItems="center" sx={{ backgroundColor: "#222240", borderRadius: "20px", width: "90px", height: "30px" }}>
-                      <IconButton onClick={() => handleDayToggle("prev")} sx={{ color: "#ef7d00" }}>
+                    <Box display="flex" alignItems="center" sx={{ backgroundColor: theme.palette.secondaryColor.main, borderRadius: "20px", width: "90px", height: "30px" }}>
+                      <IconButton onClick={() => handleDayToggle("prev")} sx={{ color: theme.palette.orangePrimary.main }}>
                         <ArrowBackIos sx={{ fontSize: "11px" }} />
                       </IconButton>
                       <Typography sx={{ width: "60px", textTransform: "capitalize", color: "white", fontSize: "10px" }}>
                         {workingHours.currentDay}
                       </Typography>
-                      <IconButton onClick={() => handleDayToggle("next")} sx={{ color: "#ef7d00" }}>
+                      <IconButton onClick={() => handleDayToggle("next")} sx={{ color: theme.palette.orangePrimary.main }}>
                         <ArrowForwardIos sx={{ fontSize: "11px" }} />
                       </IconButton>
                     </Box>
@@ -538,7 +540,7 @@ export const BusinessInfo = () => {
                           textTransform: "capitalize",
                           fontSize: "12px",
                           border: workingHours.selectedDays.includes(day) ? "1px solid #ef7d00" : "1px solid gray",
-                          color: workingHours.selectedDays.includes(day) ? "#ef7d00" : "gray",
+                          color: workingHours.selectedDays.includes(day) ? theme.palette.orangePrimary.main : "gray",
                         }}
                       >
                         {day}
@@ -611,7 +613,7 @@ export const BusinessInfo = () => {
                       <Checkbox
                         checked={servingWays.includes(value)}
                         onChange={() => handleServingWayChange(value)}
-                        sx={{ "& .MuiSvgIcon-root": { fontSize: 20 }, color: "gray", "&.Mui-checked": { color: "#ef7d00" } }}
+                        sx={{ "& .MuiSvgIcon-root": { fontSize: 20 }, color: "gray", "&.Mui-checked": { color: theme.palette.orangePrimary.main } }}
                       />
                     }
                     label={servingWayLabels[index]}
@@ -629,7 +631,7 @@ export const BusinessInfo = () => {
                   <Checkbox
                     checked={callWaiter === "active"}
                     onChange={handleCallWaiterChange}
-                    sx={{ "& .MuiSvgIcon-root": { fontSize: 20 }, color: "gray", "&.Mui-checked": { color: "#ef7d00" } }}
+                    sx={{ "& .MuiSvgIcon-root": { fontSize: 20 }, color: "gray", "&.Mui-checked": { color: theme.palette.orangePrimary.main } }}
                   />
                 }
                 label={
@@ -655,7 +657,7 @@ export const BusinessInfo = () => {
                       <Checkbox
                         checked={paymentMethods.includes(value)}
                         onChange={() => handlePaymentMethodChange(value)}
-                        sx={{ "& .MuiSvgIcon-root": { fontSize: 20 }, color: "gray", "&.Mui-checked": { color: "#ef7d00" } }}
+                        sx={{ "& .MuiSvgIcon-root": { fontSize: 20 }, color: "gray", "&.Mui-checked": { color: theme.palette.orangePrimary.main } }}
                       />
                     }
                     label={
@@ -689,7 +691,7 @@ export const BusinessInfo = () => {
                       <Radio
                         checked={paymentTime === value}
                         onChange={() => handlePaymentTimeChange(value)}
-                        sx={{ "& .MuiSvgIcon-root": { fontSize: 20 }, color: "gray", "&.Mui-checked": { color: "#ef7d00" } }}
+                        sx={{ "& .MuiSvgIcon-root": { fontSize: 20 }, color: "gray", "&.Mui-checked": { color: theme.palette.orangePrimary.main } }}
                       />
                     }
                     label={paymentTimeLabels[index]}
@@ -700,7 +702,7 @@ export const BusinessInfo = () => {
             </Box>
           </Grid>
         </Grid>
-      </Grid>
+      
     </Grid>
   );
 };

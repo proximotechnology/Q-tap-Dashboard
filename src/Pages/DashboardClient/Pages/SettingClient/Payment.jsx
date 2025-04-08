@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, Divider, TextField, Paper, Button } from '@mui/material';
+import { Box, Typography, Divider, TextField, Paper, Button, useTheme } from '@mui/material';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 const PaymentGatewayForm = () => {
     const {t} = useTranslation();
+    const theme = useTheme();
     const [apiKey, setApiKey] = useState('');
     const [token1, setToken1] = useState('');
     const [token2, setToken2] = useState('');
@@ -180,7 +181,7 @@ const PaymentGatewayForm = () => {
                     <Box textAlign="center" mt={2}>
                         <Button sx={{
                             fontSize: "13px", padding: "3px 50px",
-                            borderRadius: "20px", backgroundColor: "#ef7d00", color: "white", textTransform: "capitalize",
+                            borderRadius: "20px", backgroundColor: theme.palette.orangePrimary.main, color: "white", textTransform: "capitalize",
                             '&:hover': {
                                 backgroundColor: "#ef7d16",
                             }

@@ -1,12 +1,13 @@
 import React from 'react';
 import { Card, CardContent, Grid, Paper, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box, useTheme } from '@mui/system';
 import  {ChartPie}  from './ChartPie';
 import { TableTransaction } from './TableTransaction';
 
 
 
 export const Transaction = () => {
+  const theme = useTheme();
   return (
     <Grid container spacing={3} padding={"0px 0px 60px 20px"}  >
 
@@ -49,7 +50,7 @@ export const Transaction = () => {
               <Typography variant="h6" sx={{ fontSize: "15px", color: "#575756" }}>
                 Total Withdrawals
               </Typography>
-              <Typography variant="h6" sx={{ fontSize: "33px", marginTop: "30px", color: "#ef7d00" }}>
+              <Typography variant="h6" sx={{ fontSize: "33px", marginTop: "30px", color: theme.palette.orangePrimary.main }}>
                 501,420
                 <span style={{ color: "gray", fontSize: "15px" }}> EGP</span>
               </Typography>

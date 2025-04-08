@@ -1,5 +1,5 @@
 import { Avatar, Button, Divider, Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, Popover, Typography } from '@mui/material'
-import { Box } from '@mui/system'
+import { Box, useTheme } from '@mui/system'
 import React, { useState } from 'react'
 
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
@@ -14,6 +14,7 @@ import Language from '../../../DashboardClient/ComponentDashClient/TopBar/Langua
 import { useTranslation } from 'react-i18next';
 
 export const AddAffiliate = () => {
+    const theme = useTheme();
     const {t} = useTranslation();
     const navigate = useNavigate();
 
@@ -52,9 +53,9 @@ export const AddAffiliate = () => {
                         onClick={handleUserClick}
                         sx={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "3px" }}>
                         <IconButton color="inherit" sx={{
-                            backgroundColor: '#ef7d00', borderRadius: '30%', padding: '5px',
+                            backgroundColor: theme.palette.orangePrimary.main, borderRadius: '30%', padding: '5px',
                             '&:hover': {
-                                backgroundColor: '#ef7d00',
+                                backgroundColor: theme.palette.orangePrimary.main,
                             }
                         }}>
                             <PersonOutlineOutlinedIcon sx={{ fontSize: "20px", color: "white" }} />
@@ -74,7 +75,7 @@ export const AddAffiliate = () => {
                     >
                         <Box sx={{ width: 200, padding: '10px' }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row', marginBottom: '20px', gap: '10px' }}>
-                                <Avatar sx={{ bgcolor: '#ef7d00', width: 40, height: 40 }}>
+                                <Avatar sx={{ bgcolor: theme.palette.orangePrimary.main, width: 40, height: 40 }}>
                                     <PersonOutlineOutlinedIcon sx={{ fontSize: "22px" }} />
                                 </Avatar>
                                 <Box>
@@ -89,7 +90,7 @@ export const AddAffiliate = () => {
                                     onClick={() => navigate('/')}
                                     sx={{
                                         cursor: "pointer",
-                                        backgroundColor: "#222240",
+                                        backgroundColor: theme.palette.secondaryColor.main,
                                         color: "white",
                                         marginBottom: "10px",
                                         borderRadius: "30px",
@@ -102,7 +103,7 @@ export const AddAffiliate = () => {
                                         margin: "0 auto",
                                     }}>
 
-                                    <span class="icon-home-icon-silhouette" style={{ color: "#ef7d00", marginRight: "5px", fontSize: "15px" }} ></span>
+                                    <span class="icon-home-icon-silhouette" style={{ color: theme.palette.orangePrimary.main, marginRight: "5px", fontSize: "15px" }} ></span>
                                     <Typography sx={{ color: "white", fontSize: "11px", textTransform: "capitalize" }}>
                                         Home
                                     </Typography>
@@ -153,7 +154,7 @@ export const AddAffiliate = () => {
                 </Box>
             </Box>
 
-            <Divider sx={{ backgroundColor: "#E57C00", border: "none", width: "100%", height: "2px" }} />
+            <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main, border: "none", width: "100%", height: "2px" }} />
 
             <Box padding={"20px 100px 10px 60px"}>
                 <ArrowBackIosOutlinedIcon
@@ -180,7 +181,7 @@ export const AddAffiliate = () => {
                 <Grid container justifyContent="center" sx={{ marginTop: 3 }}>
                     <Button
                         sx={{
-                            width: '180px', textTransform: "capitalize", backgroundColor: "#ef7d00",
+                            width: '180px', textTransform: "capitalize", backgroundColor: theme.palette.orangePrimary.main,
                             color: "white", borderRadius: "20px", padding: "4px",
                             '&:hover': {
                                 backgroundColor: "#ef7d10",

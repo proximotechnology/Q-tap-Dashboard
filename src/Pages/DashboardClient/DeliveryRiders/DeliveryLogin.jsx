@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { AppBar, Toolbar, IconButton, Typography, Box, Switch, Button,  } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Typography, Box, Switch, Button, useTheme,  } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 
@@ -15,50 +15,51 @@ import Language from '../ComponentDashClient/TopBar/Language';
 import { useTranslation } from 'react-i18next';
 
 
-const styles = {
-  outerContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '80vh',
-    backgroundColor: '#f0f0f0',
-  },
-  container: {
-    width: '300px',
-    height: "350px",
-    padding: '30px',
-    borderRadius: '20px 0px 20px 20px',
-    backgroundColor: '#fff',
-    boxShadow: '0 0 15px rgba(0, 0, 0, 0.1)',
-    margin: '30px 0px',
-    textAlign: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    textAlign: 'left',
-    marginBottom: '20px',
-    fontSize: "14px",
-    borderBottom: '2px solid #ef7d00',
-    display: 'inline-block',
-    width: '100%',
-    color: "#575756"
-  },
 
-  loginButton: {
-    margin: '10px 0',
-    padding: '10px',
-    borderRadius: '25px',
-    background: 'linear-gradient(to right, #f7931e, #f15a24)',
-    color: '#fff',
-    fontSize: '16px',
-    width: "60%",
-    textTransform: "capitalize", height: "40px"
-  },
-};
 
 
 export const DeliveryLogin = () => {
-
+  const theme = useTheme();
+  const styles = {
+    outerContainer: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: '80vh',
+      backgroundColor: '#f0f0f0',
+    },
+    container: {
+      width: '300px',
+      height: "350px",
+      padding: '30px',
+      borderRadius: '20px 0px 20px 20px',
+      backgroundColor: '#fff',
+      boxShadow: '0 0 15px rgba(0, 0, 0, 0.1)',
+      margin: '30px 0px',
+      textAlign: 'center',
+      justifyContent: 'center',
+    },
+    title: {
+      textAlign: 'left',
+      marginBottom: '20px',
+      fontSize: "14px",
+      borderBottom: `2px solid ${theme.palette.orangePrimary.main}`,
+      display: 'inline-block',
+      width: '100%',
+      color: "#575756"
+    },
+  
+    loginButton: {
+      margin: '10px 0',
+      padding: '10px',
+      borderRadius: '25px',
+      background: `linear-gradient(to right, #f7931e, #f15a24)`,
+      color: '#fff',
+      fontSize: '16px',
+      width: "60%",
+      textTransform: "capitalize", height: "40px"
+    },
+  };
   const navigate = useNavigate();
   const [checked, setChecked] = useState(false);
 
@@ -81,7 +82,7 @@ export const DeliveryLogin = () => {
             top: '50%',
             transform: 'translateY(-50%)',
             fontSize: '300px',
-            color: '#ef7d00',
+            color: theme.palette.orangePrimary.main,
             opacity: 0.2,
             zIndex: 1,
           }}
@@ -110,7 +111,7 @@ export const DeliveryLogin = () => {
                     height: 16,
                     width: 16,
                     boxShadow: 'none',
-                    color: '#ef7d00',
+                    color: theme.palette.orangePrimary.main,
                   },
                   '& .MuiSwitch-track': {
                     opacity: 1,
@@ -140,7 +141,7 @@ export const DeliveryLogin = () => {
         </Toolbar>
 
         <Typography variant="body2" style={{ flexGrow: 1, fontSize: "22px", textAlign: 'center', color: 'white' }}>
-          <span class="icon-fast-shipping" style={{ fontSize: "32px", color: "#E57C00", marginRight: "6px" }}></span>
+          <span class="icon-fast-shipping" style={{ fontSize: "32px", color: theme.palette.orangePrimary.main, marginRight: "6px" }}></span>
           {t("deliveryRiders")}
         </Typography>
       </AppBar>   {/*  top Bar  */}
@@ -220,7 +221,7 @@ export const DeliveryLogin = () => {
                   height: 16,
                   width: 16,
                   boxShadow: 'none',
-                  color: '#ef7d00',
+                  color: theme.palette.orangePrimary.main,
                 },
                 '& .MuiSwitch-track': {
                   opacity: 1,

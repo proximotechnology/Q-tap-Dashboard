@@ -1,11 +1,12 @@
 import React from 'react';
-import { Modal, Box, Typography, Divider, IconButton } from '@mui/material';
+import { Modal, Box, Typography, Divider, IconButton, useTheme } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import { useTranslation } from 'react-i18next';
 
 const DetailsModal = ({ open, onClose, rowData }) => {
     const {t} = useTranslation()
+    const theme = useTheme();
     if (!rowData) return null;
     
     const { id, client, star, satisfied } = rowData;
@@ -43,7 +44,7 @@ const DetailsModal = ({ open, onClose, rowData }) => {
                     color: "#575756", fontSize: "12px", marginTop: "10px",
                     marginBottom: "15px"
                 }}>
-                    {t("orderId")} :<span style={{ color: "#E57C00", marginLeft: "20px", }}> #{id}</span>
+                    {t("orderId")} :<span style={{ color: theme.palette.orangePrimary.main, marginLeft: "20px", }}> #{id}</span>
                 </Typography>
 
                 <Typography variant="body1" sx={{ color: "#575756", fontSize: "12px", marginBottom: "15px" }}>
@@ -63,9 +64,9 @@ const DetailsModal = ({ open, onClose, rowData }) => {
                         {Array.from({ length: 5 }).map((_, index) => (
                             <IconButton key={index} disableRipple sx={{ padding:"0px"}}>
                                 {index < star ? (
-                                    <StarIcon sx={{ fontSize: "22px", color: "#E57C00" }} />
+                                    <StarIcon sx={{ fontSize: "22px", color: theme.palette.orangePrimary.main }} />
                                 ) : (
-                                    <StarOutlineIcon sx={{ fontSize: "22px", color: "#E57C00" }} />
+                                    <StarOutlineIcon sx={{ fontSize: "22px", color: theme.palette.orangePrimary.main }} />
                                 )}
                             </IconButton>
                         ))}

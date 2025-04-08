@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Box, Grid, MenuItem, Paper, Select, Typography } from "@mui/material";
+import { Box, Grid, MenuItem, Paper, Select, Typography, useTheme } from "@mui/material";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import LineChart2 from "../LineChart2";
 import { useTranslation } from "react-i18next";
@@ -9,6 +9,7 @@ export const Revenue = () => {
   const [revenueData, setRevenueData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const { t } = useTranslation()
+  const theme = useTheme();
   const handleYearChange = (event) => {
     setYear(event.target.value);
   };
@@ -94,7 +95,7 @@ export const Revenue = () => {
 
           <Typography
             variant="body1"
-            sx={{ fontSize: "28px", marginTop: "15px", color: "#ef7d00" }}
+            sx={{ fontSize: "28px", marginTop: "15px", color: theme.palette.orangePrimary.main }}
           >
             200.234 <span style={{ fontSize: "15px", color: "gray" }}>EGP</span>
           </Typography>

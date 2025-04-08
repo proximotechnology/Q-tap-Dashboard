@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, Grid, Typography } from '@mui/material'
+import { Box, Card, CardContent, Grid, Typography, useTheme } from '@mui/material'
 import React from 'react'
 import PersonAddAlt1OutlinedIcon from '@mui/icons-material/PersonAddAlt1Outlined';
 
@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 
 export const Row1 = () => {
     const {t} = useTranslation();
+    const theme = useTheme();
     return (
         <Box  sx={{ flexGrow: 1, padding: '0px 20px 20px 20px' }}>
             <Grid className="mainContainer" container spacing={3}>
@@ -22,7 +23,7 @@ export const Row1 = () => {
                                 <Typography variant="subtitle1" color="#575756">{t("client")}</Typography>
                                 <PersonAddAlt1OutlinedIcon sx={{ color: "#D8E0E0 ",fontSize: '27px' }} />
                             </Box>
-                            <Typography variant="body2" sx={{ color:"#ef7d00" ,fontSize:"20px"}}>1.234</Typography>
+                            <Typography variant="body2" sx={{ color:theme.palette.orangePrimary.main ,fontSize:"20px"}}>1.234</Typography>
 
                             <Cart1 /> 
                         </CardContent>
@@ -36,7 +37,7 @@ export const Row1 = () => {
                                 <Typography variant="subtitle1" color="text.secondary">{t("totalOrders")}</Typography>
                                 <span class="icon-shopping-bag" style={{color:"#D8E0E0",fontSize:"22px"}}></span>
                             </Box >
-                            <Typography  variant="body2" sx={{ color:"#ef7d00" ,fontSize:"20px"}}>5.564</Typography>
+                            <Typography  variant="body2" sx={{ color:theme.palette.orangePrimary.main ,fontSize:"20px"}}>5.564</Typography>
 
                             <Cart2 />
                             
@@ -51,7 +52,7 @@ export const Row1 = () => {
                                 <Typography variant="subtitle1" color="text.secondary">{t("affiliateUsers")}</Typography>
                                 <span class="icon-social" style={{color:"#D8E0E0",fontSize:"22px"}}></span>
                             </Box >
-                            <Typography  variant="body2" sx={{ color:"#ef7d00" ,fontSize:"20px"}}>5.564</Typography>
+                            <Typography  variant="body2" sx={{ color:theme.palette.orangePrimary.main ,fontSize:"20px"}}>5.564</Typography>
                             <Cart3 />
 
                         </CardContent>

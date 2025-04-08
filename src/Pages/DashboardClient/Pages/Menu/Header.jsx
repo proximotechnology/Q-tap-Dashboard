@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, Button, IconButton, Box } from '@mui/material';
-import { styled } from '@mui/system';
+import { styled, useTheme } from '@mui/system';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import SouthIcon from '@mui/icons-material/South';
 import CategoryForm from './AddCategory';
@@ -14,17 +14,7 @@ const StyledAppBar = styled(AppBar)({
     whiteSpace:'nowrap'
 });
 
-const StyledButton = styled(Button)({
-    borderRadius: '25px',
-    borderColor: 'white',
-    color: 'white',
-    marginLeft: '10px',
-    textTransform: 'none',
-    fontSize: "12px",
-    '&:hover': {
-        borderColor: '#ef7d00',
-    },
-});
+
 
 export const AddButton = styled(Button)({
     background: 'linear-gradient(45deg, #FDB913, #F2672E)',
@@ -48,7 +38,18 @@ const ExportText = styled(Box)({
 });
 
 const Header = () => {
-
+    const theme = useTheme();
+    const StyledButton = styled(Button)({
+        borderRadius: '25px',
+        borderColor: 'white',
+        color: 'white',
+        marginLeft: '10px',
+        textTransform: 'none',
+        fontSize: "12px",
+        '&:hover': {
+            borderColor: theme.palette.orangePrimary.main,
+        },
+    });
     const [openCategory, setOpenCategory] = useState(false);
     const [openDiscount, setOpenDiscount] = useState(false);
     const [openOffers, setOpenOffers] = useState(false);
@@ -90,7 +91,7 @@ const Header = () => {
                     <StyledButton
                         variant="outlined"
                         sx={{ fontSize: "11px" }}
-                        startIcon={<span class="icon-offer" style={{ color: "#ef7d00", fontSize: "15px" }}></span>}
+                        startIcon={<span class="icon-offer" style={{ color: theme.palette.orangePrimary.main, fontSize: "15px" }}></span>}
                         onClick={handleOffersOpen}
                     >
                         {t("specialOffers")}

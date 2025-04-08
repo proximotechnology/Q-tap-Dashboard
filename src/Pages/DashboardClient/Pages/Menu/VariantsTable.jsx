@@ -1,4 +1,4 @@
-import { Button, Divider, IconButton, Paper, TextField, Typography } from '@mui/material';
+import { Button, Divider, IconButton, Paper, TextField, Typography, useTheme } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import { Box, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { AddVariant } from './AddVariant';
@@ -14,6 +14,7 @@ export const VariantsTable = () => {
     const { setVariantsContext } = useContext(ContentMenu);
     const selectedBranch = localStorage.getItem('selectedBranch');
     const {t} = useTranslation();
+    const theme = useTheme();
     // useEffect(() => {
     //     console.log("varianet page data  ", selectedBranch)
     // }, [])
@@ -126,11 +127,11 @@ export const VariantsTable = () => {
                                     { height: '20px', fontSize: "9px", width: "55px" },
                             }}
                         />
-                        <DoneIcon sx={{ color: "#ef7d00", fontSize: "16px" }} />
+                        <DoneIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "16px" }} />
                     </Box>
 
                     <Button onClick={handleOffersOpen} >
-                        <Typography variant='body1' sx={{ fontSize: "13px", textTransform: "capitalize", color: "#ef7d00" }}>
+                        <Typography variant='body1' sx={{ fontSize: "13px", textTransform: "capitalize", color: theme.palette.orangePrimary.main }}>
                             + {t("addOne")}</Typography>
                     </Button>
                     <AddVariant open={openVariant} handleClose={handleClose} />
@@ -138,7 +139,7 @@ export const VariantsTable = () => {
             </Box>
 
 
-            <Divider sx={{ backgroundColor: '#ef7d00' }} />
+            <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main }} />
 
             <Table sx={{ mt: 3, mb: 5, width: '100%', tableLayout: 'fixed' }}>
                 <TableHead>

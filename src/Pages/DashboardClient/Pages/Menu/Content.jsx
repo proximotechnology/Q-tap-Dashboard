@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Button, Grid, Card, CardContent, IconButton, Paper, Typography, TextField, Dialog, DialogContent } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { AddButton } from './Header';
-import { Box } from '@mui/system';
+import { Box, useTheme } from '@mui/system';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 
 
 export const Content = () => {
+    const theme = useTheme();
     const navigate = useNavigate();
     const [items, setItems] = useState([]);
     const [categories, setCategories] = useState([]);
@@ -236,13 +237,13 @@ export const Content = () => {
                                             sx={{ padding: "5px" }}
                                             onClick={() => { navigate(`/add-item?categoryId=${category.id}&itemId=${item.id}`); }}
                                         >
-                                            <Typography variant='body1' sx={{ fontSize: "10px", color: "#ef7d00" }}>{item.name}</Typography>
+                                            <Typography variant='body1' sx={{ fontSize: "10px", color: theme.palette.orangePrimary.main }}>{item.name}</Typography>
                                             <Typography variant='body2' sx={{ fontSize: "9px", color: "gray" }}>{item.Description}</Typography>
                                             <Button
                                                 sx={{ backgroundColor: "#46B479", color: "white", padding: "1px 0px", fontSize: "8px", borderRadius: "20px" }} >
                                                 {item.price}
                                             </Button>
-                                            <Typography variant='body2' sx={{ fontSize: "7px", marginTop: "5px", color: "#222240", textAlign: "center", alignItems: "center" }}>
+                                            <Typography variant='body2' sx={{ fontSize: "7px", marginTop: "5px", color: theme.palette.secondaryColor.main, textAlign: "center", alignItems: "center" }}>
                                                 {item.icon} {item.status}
                                             </Typography>
                                         </CardContent>
@@ -269,7 +270,7 @@ export const Content = () => {
                                     onClick={() => { navigate(`/add-item?categoryId=${category.id}`); }}
                                 >
                                     <IconButton>
-                                        <AddCircleOutlineOutlinedIcon sx={{ color: "#ef7d00", fontSize: "26px" }} />
+                                        <AddCircleOutlineOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "26px" }} />
                                     </IconButton>
                                 </CardContent>
                             </Card>
@@ -292,7 +293,7 @@ export const Content = () => {
                         onClick={handleEditSave}
                         variant="contained"
                         sx={{
-                            backgroundColor: '#ef7d00',
+                            backgroundColor: theme.palette.orangePrimary.main,
                             ':hover': {
                                 backgroundColor: '#e17d33'
                             }

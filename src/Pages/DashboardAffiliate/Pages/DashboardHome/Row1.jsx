@@ -8,7 +8,7 @@ export const Row1 = () => {
     return (
         <Box sx={{ flexGrow: 1, padding: '0px 20px 20px 20px' }}>
             <Grid container spacing={3}>
-                <Grid item xs={12} sm={3}>
+                <Grid item xs={12} sm={6} lg={3}>
                     <Card sx={{ 
                         backgroundImage: "url('/images/card3.jpg')", 
                         backgroundSize: "cover",   
@@ -34,7 +34,7 @@ export const Row1 = () => {
                     </Card>
                 </Grid>
 
-                <Grid item xs={12} sm={3}>
+                <Grid item xs={12} sm={6} lg={3}>
                     <Card sx={{ borderRadius: '20px' ,
                         backgroundImage: "url('/images/card2.jpg')", 
                         backgroundSize: "cover",   
@@ -60,7 +60,7 @@ export const Row1 = () => {
                     </Card>
                 </Grid>
 
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={12} lg={6}>
                     <Card sx={{ borderRadius: '20px' }}>
                         <CardContent
                             sx={{

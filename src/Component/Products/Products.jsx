@@ -1,27 +1,28 @@
 import { Button, Grid, Typography } from '@mui/material';
-import { Box, styled } from '@mui/system';
+import { Box, styled, useTheme } from '@mui/system';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import DoneIcon from '@mui/icons-material/Done';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-const Divider = styled(Box)({
-    width: '5%',
-    height: '3px',
-    backgroundColor: '#E57C00',
-    borderRadius: "20px",
-    marginBottom: "20px"
-});
+
 
 export const Products = () => {
+    const theme = useTheme();
     const navigate = useNavigate();
     const [isSelected, setIsSelected] = useState(false);
     const { t } = useTranslation()
     const handleCardClick = () => {
         setIsSelected(!isSelected);
     };
-
+    const Divider = styled(Box)({
+        width: '5%',
+        height: '3px',
+        backgroundColor: theme.palette.orangePrimary.main,
+        borderRadius: "20px",
+        marginBottom: "20px"
+    });
     const handleNextClick = () => {
         if (isSelected) {
             navigate('/business-info');
@@ -31,7 +32,7 @@ export const Products = () => {
     };
     return (
         <Box marginTop={"50px"} flexGrow={1}>
-            <Typography variant="body1" sx={{ fontSize: "18px", color: "#222240" }}>
+            <Typography variant="body1" sx={{ fontSize: "18px", color: theme.palette.secondaryColor.main }}>
                 {t("selectProduct")}
             </Typography>
             <Divider />
@@ -49,7 +50,7 @@ export const Products = () => {
                 {isSelected && (
                     <DoneIcon
                         sx={{
-                            color: "#E57C00",
+                            color: theme.palette.orangePrimary.main,
                             fontSize: "26px",
                             position: "relative",
                             top: "-10px",
@@ -70,13 +71,13 @@ export const Products = () => {
                         width: '20%',
                         fontSize: "13px",
                         borderRadius: '50px',
-                        backgroundColor: "#E57C00",
+                        backgroundColor: theme.palette.orangePrimary.main,
                         textTransform: 'none',
                         padding: "6px 0",
                         position: "fixed", bottom: "30px",
                         left: "55%",
                         '&:hover': {
-                            backgroundColor: "#E57C00",
+                            backgroundColor: theme.palette.orangePrimary.main,
                         },
                         color: "#fff"
                     }}

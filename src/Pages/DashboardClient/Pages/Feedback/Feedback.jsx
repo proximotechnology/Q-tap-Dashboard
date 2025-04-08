@@ -1,7 +1,7 @@
 
 
 import { Button, Divider, Grid, Paper, RadioGroup, TextField, Typography, IconButton } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box, useTheme } from '@mui/system';
 import React, { useState } from 'react';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -15,6 +15,7 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
 export const Feedback = () => {
+    const theme = useTheme();
     const [star, setStar] = useState(0);
     const [emoji, setEmoji] = useState("");
     const [yourGoals, setYourGoals] = useState("");
@@ -104,9 +105,9 @@ export const Feedback = () => {
                         {[...Array(5)].map((_, index) => (
                             <IconButton key={index} onClick={() => handleStarClick(index)} sx={{ padding: 0 }}>
                                 {index < star ? (
-                                    <StarIcon sx={{ color: "#ef7d00", marginLeft: index !== 0 ? "8px" : 0 }} />
+                                    <StarIcon sx={{ color: theme.palette.orangePrimary.main, marginLeft: index !== 0 ? "8px" : 0 }} />
                                 ) : (
-                                    <StarBorderIcon sx={{ color: "#ef7d00", marginLeft: index !== 0 ? "8px" : 0 }} />
+                                    <StarBorderIcon sx={{ color: theme.palette.orangePrimary.main, marginLeft: index !== 0 ? "8px" : 0 }} />
                                 )}
                             </IconButton>
                         ))}
@@ -123,7 +124,7 @@ export const Feedback = () => {
                                 <Typography variant="body2" gutterBottom sx={{ fontSize: "10px", color: "gray" }}>{t("sad")}</Typography>
                             </Box>
                             <Box sx={{ marginLeft: "15px" }} onClick={() => handleEmojiClick("happy")}>
-                                <SentimentSatisfiedAltIcon sx={{ fontSize: "35px", color: emoji === "happy" ? "#ef7d00" : "gray" }} />
+                                <SentimentSatisfiedAltIcon sx={{ fontSize: "35px", color: emoji === "happy" ? theme.palette.orangePrimary.main : "gray" }} />
                                 <Typography variant="body2" gutterBottom sx={{ fontSize: "10px", color: "gray" }}>{t("happy")}</Typography>
                             </Box>
                             <Box sx={{ marginLeft: "15px" }} onClick={() => handleEmojiClick("very happy")}>

@@ -5,6 +5,7 @@ import {
     Card,
     CardContent,
     Typography,
+    useTheme,
 } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -25,6 +26,7 @@ export const TableTransaction = () => {
         XLSX.writeFile(workbook, "transactions.xlsx");
     };
     const {t} = useTranslation();
+    const theme = useTheme();
     return (
         <Card Card sx={{ borderRadius: 4, height: "100%",overflowX:'auto' }}>
             <CardContent>
@@ -78,7 +80,7 @@ export const TableTransaction = () => {
                         <Button
                             onClick={handleExport}
                             variant="text"
-                            style={{ fontSize: "12px", color: '#ef7d00', textTransform: "capitalize" }}>
+                            style={{ fontSize: "12px", color: theme.palette.orangePrimary.main, textTransform: "capitalize" }}>
                             {t("export")}
                             <ArrowForwardIosIcon sx={{ fontSize: "10px", color: "black" }} />
                         </Button>
@@ -143,7 +145,7 @@ export const TableTransaction = () => {
                                         display: "flex", textAlign: "center", justifyContent: "left", color: "gray",
                                         borderBottom: "none", height: "30px", padding: "15px 0px 0px 10px"
                                     }}>
-                                        <MinimizeOutlinedIcon sx={{ color: "#ef7d00", fontSize: "15px" }} />
+                                        <MinimizeOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "15px" }} />
                                         <Typography sx={{ fontSize: "11px", borderBottom: "1px solid #9d9d9c" }}> {transaction.id}</Typography>
                                     </TableCell>
 

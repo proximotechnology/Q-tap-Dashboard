@@ -1,6 +1,6 @@
 import React from 'react';
 import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
-import { Paper, Typography, Box } from '@mui/material';
+import { Paper, Typography, Box, useTheme } from '@mui/material';
 import { PieChart, Pie, Cell } from 'recharts';
 import { useTranslation } from 'react-i18next';
 
@@ -8,13 +8,14 @@ const data01 = [{ name: 'Free', value: 50 }, { name: 'Remaining', value: 50 }];
 const data02 = [{ name: 'Starter', value: 25 }, { name: 'Remaining', value: 75 }];
 const data03 = [{ name: 'Pro', value: 10 }, { name: 'Remaining', value: 90 }];
 
-const COLORS = ['#ef7d00', '#AD4181', '#2EA6F7'];
+
 
 
 
 export const Row1 = () => {
     const {t} = useTranslation()
-
+    const theme = useTheme();
+    const COLORS = [theme.palette.orangePrimary.main, '#AD4181', '#2EA6F7'];
     return (
         <Box sx={{ padding: "0 20px" }}>
             <Paper elevation={3} sx={{ padding: "20px 40px", borderRadius: 5 }}>
@@ -28,7 +29,7 @@ export const Row1 = () => {
                             {t("client")}
                         </Typography>
 
-                        <Typography variant="h3" sx={{ fontSize: "28px", color: "#E57C00", marginLeft: "40px" }}>
+                        <Typography variant="h3" sx={{ fontSize: "28px", color: theme.palette.orangePrimary.main, marginLeft: "40px" }}>
                             1.234
                         </Typography>
                     </Box>
@@ -40,7 +41,7 @@ export const Row1 = () => {
                                 <defs>
                                     <linearGradient id="gradientFree" x1="0" y1="0" x2="100%" y2="0">
                                         <stop offset="0%" stopColor="rgb(255, 194, 133)" />
-                                        <stop offset="100%" stopColor="#ef7d00" /> {/* Lighter shade of orange */}
+                                        <stop offset="100%" stopColor={theme.palette.orangePrimary.main} /> {/* Lighter shade of orange */}
                                     </linearGradient>
                                 </defs>
                                 <Pie
@@ -107,7 +108,7 @@ export const Row1 = () => {
                     <Box sx={{ marginRight: {xs:"0px",sm:"70px"} }}>
                         <Box display={"flex"} textAlign={"center"} alignItems={"center"} >
                             <Box component="span" sx={{
-                                background: 'linear-gradient(to right, #ef7d00,rgb(248, 203, 158))',
+                                background: `linear-gradient(to right,${theme.palette.orangePrimary.main},rgb(248, 203, 158))`,
                                 width: '22px', borderRadius: "20px", height: '10px', display: 'inline-block', marginRight: '8px'
                             }} />
                             <Typography variant="body2" sx={{ fontSize: "10px", color: "gray" }}>{t("free")}</Typography>

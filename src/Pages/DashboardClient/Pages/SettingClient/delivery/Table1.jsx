@@ -1,4 +1,4 @@
-import { Box, Divider, Typography } from '@mui/material'
+import { Box, Divider, Typography, useTheme } from '@mui/material'
 import React, { useState } from 'react'
 import { Table, TableBody, TableCell, IconButton, TableContainer, TableHead, TableRow } from '@mui/material';
 import { rows1 } from './DeliveryData';
@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 export const Table1 = () => {
     const {t} = useTranslation();
+    const theme = useTheme();
     const [modalOpen, setModalOpen] = useState(false);
 
     const handleOpen = () => setModalOpen(true);
@@ -31,7 +32,7 @@ export const Table1 = () => {
                     <span class="icon-magnifier" style={{ fontSize: "16px", marginRight: "20px" }}></span>
                     <Typography
                         onClick={handleOpen}
-                        variant='body2' sx={{ fontSize: "13px", color: "#ef7d00", display: "flex", cursor: "Pointer" }} >{t("add")}
+                        variant='body2' sx={{ fontSize: "13px", color: theme.palette.orangePrimary.main, display: "flex", cursor: "Pointer" }} >{t("add")}
                         <span style={{ fontSize: "15px", color: "#424242", fontWeight: 700, paddingLeft: "6px" }}>+</span>
                     </Typography>
                     <AddArea open={modalOpen} onClose={handleClose} />
@@ -40,7 +41,7 @@ export const Table1 = () => {
 
             <Divider
                 sx={{
-                    backgroundColor: '#ef7d00',
+                    backgroundColor: theme.palette.orangePrimary.main,
                     height: '1px',
                     margin: '8px 0px',
                 }}
@@ -84,17 +85,17 @@ export const Table1 = () => {
                                     },
                                 }}
                             >
-                                <TableCell sx={{ color: "#222240", fontSize: '11px', padding: "2px 20px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>
+                                <TableCell sx={{ color: theme.palette.secondaryColor.main, fontSize: '11px', padding: "2px 20px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>
                                     <span sx={{ alignItems: "center", display: "flex" }}>{row.icon} {row.country}</span>
                                 </TableCell>
-                                <TableCell sx={{ color: "#222240", fontSize: '11px', padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.state}</TableCell>
-                                <TableCell sx={{ color: "#222240", fontSize: '11px', padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.city}</TableCell>
-                                <TableCell sx={{ color: "#222240", fontSize: '11px', padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.phone}</TableCell>
-                                <TableCell sx={{ color: "#222240", fontSize: '11px', padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.cost}
+                                <TableCell sx={{ color: theme.palette.secondaryColor.main, fontSize: '11px', padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.state}</TableCell>
+                                <TableCell sx={{ color: theme.palette.secondaryColor.main, fontSize: '11px', padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.city}</TableCell>
+                                <TableCell sx={{ color: theme.palette.secondaryColor.main, fontSize: '11px', padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.phone}</TableCell>
+                                <TableCell sx={{ color: theme.palette.secondaryColor.main, fontSize: '11px', padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>{row.cost}
                                     <span style={{ color: 'gray' }}> EGP</span>
                                 </TableCell>
 
-                                <TableCell sx={{ color: "#222240", padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>
+                                <TableCell sx={{ color: theme.palette.secondaryColor.main, padding: "2px", width: `${100 / 6}%`, textAlign: "center", borderBottom: "none" }}>
                                     <IconButton size="small"  >
                                         <span class="icon-edit" style={{ color: "black", fontSize: "18px" }} />
                                     </IconButton>

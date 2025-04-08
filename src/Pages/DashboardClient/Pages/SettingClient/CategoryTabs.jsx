@@ -3,7 +3,7 @@ import { Button, Typography } from '@mui/material';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import CreditCardOutlinedIcon from '@mui/icons-material/CreditCardOutlined';
 import ProfilePage from './ProfilePage';
-import { Box } from '@mui/system';
+import { Box, useTheme } from '@mui/system';
 import Payment from './Payment';
 import { Share } from './Share';
 import  Menu  from './Menu';
@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 //TODO: navigate button styling
 const CategoryTabs = () => {
     const {t} = useTranslation();
+    const theme = useTheme();
     const [buttons, setButtons] = useState([
         { name: 'profile', label: 'Profile', 
             icon: <PersonOutlineOutlinedIcon />,
@@ -54,12 +55,13 @@ const CategoryTabs = () => {
 
     return (
         <Box>
+            <Box display='grid' gridTemplateColumns='repeat(auto-fit, minmax(100px, 1fr))'>
             {buttons.map((button) => (
                 <Button
                     key={button.name}
                     onClick={() => handleButtonClick(button.name)}
                     style={{
-                        backgroundColor: button.selected ? '#ef7d00' : 'transparent',
+                        backgroundColor: button.selected ? theme.palette.orangePrimary.main : 'transparent',
                         color: button.selected ? 'white' : '#575756',
                         marginRight: '8px',
                         textTransform: "capitalize",
@@ -74,6 +76,7 @@ const CategoryTabs = () => {
                     <Typography sx={{fontSize:"12px",}}>{t(button.label)} </Typography> 
                 </Button>
             ))}
+            </Box>
 
             <Box  >
                 {activeContent}

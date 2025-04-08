@@ -1,5 +1,5 @@
 // AddUsers.jsx
-import { Button, Divider, Grid, IconButton, Menu, MenuItem, Popover, Typography, Alert, Snackbar, CircularProgress } from '@mui/material';
+import { Button, Divider, Grid, IconButton, Menu, MenuItem, Popover, Typography, Alert, Snackbar, CircularProgress, useTheme } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useState, useEffect, useContext } from 'react';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
@@ -17,6 +17,7 @@ import { AffiliateClientContext } from '../../../context/AffiliateClient';
 
 export const AddUsers = () => {
     const navigate = useNavigate();
+    const theme = useTheme();
     const location = useLocation();
     const { t, i18n } = useTranslation();
     const user = location.state?.user; // Get user data from navigation state
@@ -109,9 +110,9 @@ export const AddUsers = () => {
 
     const getLanguageIcon = () => {
         return selectedLanguage === 'ar' ? (
-            <span className="icon-translation" style={{ color: "#ef7d00", fontSize: "22px" }}></span>
+            <span className="icon-translation" style={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }}></span>
         ) : (
-            <LanguageOutlinedIcon sx={{ color: "#ef7d00", fontSize: "22px" }} />
+            <LanguageOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }} />
         );
     };
 
@@ -284,7 +285,7 @@ export const AddUsers = () => {
                         onClick={handleUserClick}
                         sx={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "3px" }}
                     >
-                        <IconButton color="inherit" sx={{ backgroundColor: '#ef7d00', borderRadius: '30%', padding: '5px', '&:hover': { backgroundColor: '#ef7d00' } }}>
+                        <IconButton color="inherit" sx={{ backgroundColor: theme.palette.orangePrimary.main, borderRadius: '30%', padding: '5px', '&:hover': { backgroundColor: theme.palette.orangePrimary.main } }}>
                             <PersonOutlineOutlinedIcon sx={{ fontSize: "20px", color: "white" }} />
                         </IconButton>
                         <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>User01</Typography>
@@ -299,7 +300,7 @@ export const AddUsers = () => {
                     >
                         <Box sx={{ width: 200, padding: '10px' }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row', marginBottom: '20px', gap: '10px' }}>
-                                <Box sx={{ bgcolor: '#ef7d00', width: 40, height: 40, borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <Box sx={{ bgcolor: theme.palette.orangePrimary.main, width: 40, height: 40, borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                     <PersonOutlineOutlinedIcon sx={{ fontSize: "22px", color: "white" }} />
                                 </Box>
                                 <Box>
@@ -313,7 +314,7 @@ export const AddUsers = () => {
                                     onClick={() => navigate('/')}
                                     sx={{
                                         cursor: "pointer",
-                                        backgroundColor: "#222240",
+                                        backgroundColor: theme.palette.secondaryColor.main,
                                         color: "white",
                                         marginBottom: "10px",
                                         borderRadius: "30px",
@@ -326,7 +327,7 @@ export const AddUsers = () => {
                                         margin: "0 auto",
                                     }}
                                 >
-                                    <span className="icon-home-icon-silhouette" style={{ color: "#ef7d00", marginRight: "5px", fontSize: "15px" }}></span>
+                                    <span className="icon-home-icon-silhouette" style={{ color: theme.palette.orangePrimary.main, marginRight: "5px", fontSize: "15px" }}></span>
                                     <span style={{ color: "white", fontSize: "12px", textTransform: "capitalize" }}>Home</span>
                                 </Box>
                                 <Box sx={{ cursor: "pointer", display: "flex", alignItems: "center", padding: "8px 16px" }} onClick={handleUserClose}>
@@ -350,7 +351,7 @@ export const AddUsers = () => {
                     </Popover>
                 </Box>
             </Box>
-            <Divider sx={{ backgroundColor: "#ef7d00", borderBottom: "none", width: "100%", height: "3px" }} />
+            <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main, borderBottom: "none", width: "100%", height: "3px" }} />
             <Box display={"flex"} justifyContent={"space-between"} padding={"20px 100px 0px 80px"}>
                 <ArrowBackIosOutlinedIcon onClick={() => navigate('/affiliate')} sx={{ color: "#4b4a4a", cursor: "pointer" }} />
                 <Box>
@@ -413,7 +414,7 @@ export const AddUsers = () => {
                         sx={{
                             width: '160px',
                             textTransform: "capitalize",
-                            backgroundColor: "#ef7d00",
+                            backgroundColor: theme.palette.orangePrimary.main,
                             color: "white",
                             borderRadius: "20px",
                             padding: "5px",

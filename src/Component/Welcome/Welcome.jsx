@@ -3,7 +3,7 @@ import { Box, Button, IconButton, Typography } from "@mui/material";
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import { MenuItem, Menu, Divider } from "@mui/material";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { styled, width } from '@mui/system';
+import { styled, useTheme, width } from '@mui/system';
 import { useNavigate } from 'react-router';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram, faFacebookF, faXTwitter, faTiktok } from "@fortawesome/free-brands-svg-icons";
@@ -11,19 +11,20 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 
-const Divider2 = styled(Box)({
-  width: '20%',
-  height: '5px',
-  backgroundColor: '#E57C00',
-  borderRadius: "20px",
-  display: "flex",
-  margin: "0 auto",
-});
+
 export const Welcome = () => {
+  const theme = useTheme();
   const [anchorElLanguage, setAnchorElLanguage] = useState(null);
   const [selectedLanguage, setSelectedLanguage] = useState('en');
   const openLanguage = Boolean(anchorElLanguage);
-
+  const Divider2 = styled(Box)({
+    width: '20%',
+    height: '5px',
+    backgroundColor: theme.palette.orangePrimary.main,
+    borderRadius: "20px",
+    display: "flex",
+    margin: "0 auto",
+  });
   const { t, i18n } = useTranslation()
 
   const handleLanguageClick = (event) => {
@@ -37,8 +38,8 @@ export const Welcome = () => {
   };
 
   const getLanguageIcon = () => {
-    return selectedLanguage === 'ar' ? <span class="icon-translation" style={{ color: "#ef7d00", fontSize: "22px" }}> </span>
-      : <LanguageOutlinedIcon sx={{ color: "#ef7d00", fontSize: "22px" }} />;
+    return selectedLanguage === 'ar' ? <span class="icon-translation" style={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }}> </span>
+      : <LanguageOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }} />;
   };
   const navigate = useNavigate();
 
@@ -137,7 +138,7 @@ export const Welcome = () => {
               width: { lg: "300px", md: "200px", xs: "150px" },
               padding: "5px 20px",
               borderRadius: "50px",
-              backgroundColor: "#E57C00",
+              backgroundColor: theme.palette.orangePrimary.main,
               animation: "bounce 2s infinite",
               "@keyframes bounce": {
                 "0%, 100%": { transform: "translateY(0)" },
@@ -173,17 +174,17 @@ export const Welcome = () => {
         </Typography>
 
         <Box sx={{ display: "flex", textAlign: "center", justifyContent: "center", gap: "6px" }}>
-          <IconButton sx={{ color: "#FFFFFF", fontSize: "16px", "&:hover": { color: "#E57C00" }, }}>
+          <IconButton sx={{ color: "#FFFFFF", fontSize: "16px", "&:hover": { color: theme.palette.orangePrimary.main }, }}>
             <FontAwesomeIcon icon={faInstagram} />
           </IconButton>
 
-          <IconButton sx={{ color: "#FFFFFF", fontSize: "16px", "&:hover": { color: "#E57C00" }, }}>
+          <IconButton sx={{ color: "#FFFFFF", fontSize: "16px", "&:hover": { color: theme.palette.orangePrimary.main }, }}>
             <FontAwesomeIcon icon={faFacebookF} />
           </IconButton>
-          <IconButton sx={{ color: "#FFFFFF", fontSize: "16px", "&:hover": { color: "#E57C00" }, }}>
+          <IconButton sx={{ color: "#FFFFFF", fontSize: "16px", "&:hover": { color: theme.palette.orangePrimary.main }, }}>
             <FontAwesomeIcon icon={faXTwitter} />
           </IconButton>
-          <IconButton sx={{ color: "#FFFFFF", fontSize: "16px", "&:hover": { color: "#E57C00" }, }}>
+          <IconButton sx={{ color: "#FFFFFF", fontSize: "16px", "&:hover": { color: theme.palette.orangePrimary.main }, }}>
             <FontAwesomeIcon icon={faTiktok} />
           </IconButton>
 

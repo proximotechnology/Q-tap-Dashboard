@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, IconButton, AppBar, Toolbar, Typography, TextField, Divider, MenuItem, InputAdornment, OutlinedInput, FormControl, Select, FormControlLabel, Radio, RadioGroup } from '@mui/material';
+import { Box, Button, IconButton, AppBar, Toolbar, Typography, TextField, Divider, MenuItem, InputAdornment, OutlinedInput, FormControl, Select, FormControlLabel, Radio, RadioGroup, useTheme } from '@mui/material';
  
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getItemCount, totalCart, selectedSize }) => {
 
     const [selectedType, setSelectedType] = useState('Dine In');
+    const theme = useTheme();
 
     const handleSelectType = (type) => {
         setSelectedType(type);
@@ -44,10 +45,10 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getI
                 <AppBar position="sticky" color="inherit">
                     <Toolbar>
                         <IconButton edge="start" color="inherit" aria-label="cart">
-                            <ShoppingCartOutlinedIcon sx={{ color: "#ef7d00", fontSize: "25px" }} />
+                            <ShoppingCartOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "25px" }} />
                             <Typography sx={{
                                 position: "relative", top: "-10px", left: "-10px", fontSize: "8px", padding: "0px 3px", borderRadius: "50%",
-                                backgroundColor: "#ef7d00", color: "white"
+                                backgroundColor: theme.palette.orangePrimary.main, color: "white"
                             }}>{cartItems.length}</Typography>
                         </IconButton>
 
@@ -56,7 +57,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getI
 
                         <Box sx={{ display: "flex", textAlign: "center", alignItems: "center", cursor: "pointer" }}  >
                             <PersonOutlineOutlinedIcon
-                                sx={{ color: "white", fontSize: "18px", borderRadius: "10px", padding: "5px", backgroundColor: "#ef7d00" }} />
+                                sx={{ color: "white", fontSize: "18px", borderRadius: "10px", padding: "5px", backgroundColor: theme.palette.orangePrimary.main }} />
                             <Typography variant='body2' sx={{ color: "#575756", fontSize: "10px", padding: "0px 5px" }}>Admin</Typography>
                             <KeyboardArrowDownOutlinedIcon sx={{ color: "#575756", fontSize: "13px" }} />
                         </Box>
@@ -73,7 +74,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getI
                                     onClick={() => handleSelectType(type.type)}
                                     sx={{
                                         backgroundColor: selectedType === type.type ? '#222240' : '#949493',
-                                        color: selectedType === type.type ? '#ef7d00' : '#3A3A38',
+                                        color: selectedType === type.type ? theme.palette.orangePrimary.main : '#3A3A38',
                                         '&:hover': {
                                             backgroundColor: selectedType === type.type ? '#222250' : '#B2B2AD'
                                         },
@@ -86,7 +87,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getI
                                 >
                                     <Box
                                         sx={{
-                                            color: selectedType === type.type ? '#ef7d00' : 'white',
+                                            color: selectedType === type.type ? theme.palette.orangePrimary.main : 'white',
                                             display: 'flex', alignItems: "center", textAlign: "center"
                                         }} >
                                         {type.icon}
@@ -230,7 +231,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getI
                                     />
                                     <Box sx={{ display: "flex", marginBottom: "20px", textAlign: "center", alignItems: "center", justifyContent: "center" }}>
                                         <Button sx={{
-                                            backgroundColor: "#222240", color: "white", height: "32px", width: "100%", borderRadius: "20px", fontSize: "10px", textTransform: "capitalize",
+                                            backgroundColor: theme.palette.secondaryColor.main, color: "white", height: "32px", width: "100%", borderRadius: "20px", fontSize: "10px", textTransform: "capitalize",
                                             "&:hover": {
                                                 backgroundColor: "#222243",
                                             }
@@ -287,7 +288,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getI
                         <Typography variant="h6" sx={{ fontSize: '10px', fontWeight: "bold", color: '#3A3A38' }}>
                             {t("totalPrice")}
                         </Typography>
-                        <Typography variant="h6" sx={{ fontSize: '18px', fontWeight: "bold", color: '#ef7d00' }}>
+                        <Typography variant="h6" sx={{ fontSize: '18px', fontWeight: "bold", color: theme.palette.orangePrimary.main }}>
                             {totalCart}<span style={{ fontSize: "10px", fontWeight: "400", color: '#575756' }}>EGP</span>
                         </Typography>
                     </Box>
@@ -297,9 +298,9 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getI
                                 control={
                                     <Radio size="small"
                                         sx={{
-                                            color: selectedValue === 'cash' ? '#ef7d00' : 'gray',
+                                            color: selectedValue === 'cash' ? theme.palette.orangePrimary.main : 'gray',
                                             fontSize: "8px",
-                                            '&.Mui-checked': { color: '#ef7d00' },
+                                            '&.Mui-checked': { color: theme.palette.orangePrimary.main },
                                             '& .MuiSvgIcon-root': { fontSize: 13 },
                                         }}
                                     />
@@ -315,9 +316,9 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getI
                                     <Radio size="small"
                                         sx={{
                                             marginTop: "-10px",
-                                            color: selectedValue === 'wallet' ? '#ef7d00' : 'gray',
+                                            color: selectedValue === 'wallet' ? theme.palette.orangePrimary.main : 'gray',
                                             fontSize: "8px",
-                                            '&.Mui-checked': { color: '#ef7d00' },
+                                            '&.Mui-checked': { color: theme.palette.orangePrimary.main },
                                             '& .MuiSvgIcon-root': { fontSize: 13 },
                                         }}
                                     />
@@ -334,7 +335,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getI
                             onClick={toggleTypeForm}
                             sx={{
                                 width: "100%", marginTop: "15px",
-                                backgroundColor: "#ef7d00", color: "white", textTransform: "capitalize", fontSize: "10px",
+                                backgroundColor: theme.palette.orangePrimary.main, color: "white", textTransform: "capitalize", fontSize: "10px",
                                 float: "right", borderRadius: "20px", height: "30px",
                                 "&:hover": {
                                     backgroundColor: "#ef7d10",

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardContent, Typography, Box } from "@mui/material";
+import { Card, CardContent, Typography, Box, useTheme } from "@mui/material";
 import { financialData } from "./financialData";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 const FinancialCard = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   return (
     <Box display="flex" justifyContent="space-around" flexWrap="wrap">
       {financialData.map((data, index) => (
@@ -69,7 +70,7 @@ const FinancialCard = () => {
                   variant="bady1"
                   sx={{
                     fontSize: "25px",
-                    color: "#222240",
+                    color: theme.palette.secondaryColor.main,
                     fontWeight: "bold",
                     display: "flex",
                     alignItems: "center",

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Avatar, Paper, IconButton } from '@mui/material';
+import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Avatar, Paper, IconButton, useTheme } from '@mui/material';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
@@ -7,6 +7,7 @@ import axios from 'axios';
 
 
 export const Transactions = () => {
+    const theme = useTheme();
     const tableData = [
         {
             user: 'First Name', reverence: '#1234567', date: '20/05/2024', time: '5:00 Am', amount: '100', status: 'Done',
@@ -135,7 +136,7 @@ export const Transactions = () => {
 
                                     {/* Amount */}
                                     <TableCell sx={{
-                                        textAlign: "left", fontSize: "22px", color: "#ef7d00",
+                                        textAlign: "left", fontSize: "22px", color: theme.palette.orangePrimary.main,
                                         border: "none"
                                     }} >
                                         {row.amount}

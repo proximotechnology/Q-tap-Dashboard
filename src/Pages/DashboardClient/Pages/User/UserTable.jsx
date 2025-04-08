@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Divider, IconButton, Paper, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Box } from '@mui/material';
+import { Button, Divider, IconButton, Paper, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Box, useTheme } from '@mui/material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
@@ -12,6 +12,7 @@ import { useBranch } from '../../../../context/BranchContext';
 import { useTranslation } from 'react-i18next';
 
 export const UserTable = () => {
+  const theme = useTheme();
   const [visiblePasswords, setVisiblePasswords] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
   const [userStaff, setUserStaff] = useState([]);
@@ -151,15 +152,15 @@ export const UserTable = () => {
             </IconButton>
 
           </Box>
-          <Button onClick={handleOpen} sx={{ fontSize: "12px", color: "#ef7d00", display: "flex", cursor: "pointer", textTransform: "capitalize" }}>
+          <Button onClick={handleOpen} sx={{ fontSize: "12px", color: theme.palette.orangePrimary.main, display: "flex", cursor: "pointer", textTransform: "capitalize" }}>
             {t("add")}
-            <span style={{ fontSize: "15px", color: "#ef7d00", fontWeight: 700, paddingLeft: "6px" }}>+</span>
+            <span style={{ fontSize: "15px", color: theme.palette.orangePrimary.main, fontWeight: 700, paddingLeft: "6px" }}>+</span>
           </Button>
           <AddUser open={modalOpen} onClose={handleClose} />
 
-          <Button onClick={handleExport} variant="text" sx={{ color: '#ef7d00', textTransform: "capitalize", fontSize: "12px" }}>
+          <Button onClick={handleExport} variant="text" sx={{ color: theme.palette.orangePrimary.main, textTransform: "capitalize", fontSize: "12px" }}>
             {t("export")}
-            <ArrowForwardIosIcon sx={{ fontSize: "10px", color: "#ef7d00" }} />
+            <ArrowForwardIosIcon sx={{ fontSize: "10px", color: theme.palette.orangePrimary.main }} />
           </Button>
         </Box>
       </Box>

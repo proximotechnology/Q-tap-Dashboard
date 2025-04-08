@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Typography, Card, CardMedia } from '@mui/material';
+import { Box, Typography, Card, CardMedia, useTheme } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import Slider from "react-slick"; 
 import { offersData } from './data/offersData';
@@ -7,7 +7,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useTranslation } from 'react-i18next';
 
-const OfferCard = ({ offer }) => (
+const OfferCard = ({ offer }) => {
+    const theme = useTheme();
+    return (
     <Card sx={{
         cursor: "pointer",
         display: 'flex',
@@ -50,7 +52,7 @@ const OfferCard = ({ offer }) => (
                 }}
             >
                 <Typography sx={{ fontSize: '12px', fontWeight: 'bold' }}>{offer.discount}
-                    <span style={{ color: '#ef7d00' }}>%</span>
+                    <span style={{ color: theme.palette.orangePrimary.main }}>%</span>
                 </Typography>
             </Box>
             <Typography variant="h1" sx={{ fontSize: "12px", fontWeight: "900", color: "#575756" }}>
@@ -62,17 +64,17 @@ const OfferCard = ({ offer }) => (
             <Box sx={{ marginTop: "15px", display: "flex", justifyContent: "space-between" }}>
                 <Box>
                     <Typography variant="h6" sx={{ color: "gray", padding: "0", fontSize: "9px", textDecoration: 'line-through' }}>
-                        <span style={{ color: "#ef7d00", fontWeight: "bold", fontSize: "10px" }}>{offer.oldPrice} </span>
+                        <span style={{ color: theme.palette.orangePrimary.main, fontWeight: "bold", fontSize: "10px" }}>{offer.oldPrice} </span>
                         <span>EGP</span>
                     </Typography>
-                    <Typography variant="h6" sx={{ fontSize: "12px", fontWeight: 'bold', color: '#ef7d00' }}>
+                    <Typography variant="h6" sx={{ fontSize: "12px", fontWeight: 'bold', color: theme.palette.orangePrimary.main }}>
                         {offer.newPrice} <span style={{ color: "gray", fontSize: "8px" }}>EGP</span>
                     </Typography>
                 </Box>
                 <Box
                     sx={{
                         width: "10px", height: "10px",
-                        backgroundColor: '#ef7d00',
+                        backgroundColor: theme.palette.orangePrimary.main,
                         color: 'white',
                         borderRadius: '50%',
                         padding: "6px",
@@ -86,9 +88,10 @@ const OfferCard = ({ offer }) => (
             </Box>
         </Box>
     </Card>
-);
+)};
 
 const Offers = ({ isItemSelected }) => {
+    const theme = useTheme();
     const [activeSlide, setActiveSlide] = useState(0); 
 
     const settings = {
@@ -131,7 +134,7 @@ const Offers = ({ isItemSelected }) => {
                     width: "9px",
                     height:"9px",
                     borderRadius: "50%",
-                    backgroundColor: i === activeSlide ? "#ef7d00" : "#d3d3d3",   
+                    backgroundColor: i === activeSlide ? theme.palette.orangePrimary.main : "#d3d3d3",   
                     margin: "15px 0px",
                     cursor: "pointer",
                 }}

@@ -25,7 +25,7 @@ export const PasswordReset = () => {
             }}  >
             <Typography variant="body2"
                 sx={{
-                    fontSize: "13px", color: "#222240", margin: "50px 0px 8px 0px", letterSpacing: "12px",
+                    fontSize: "13px", color: theme.palette.secondaryColor.main, margin: "50px 0px 8px 0px", letterSpacing: "12px",
                     fontFamily: "serif"
                 }}>
                 {t("resetPassword")}
@@ -115,7 +115,7 @@ export const PasswordReset = () => {
                         textTransform: 'none', fontSize: "12px", height: "35px",
 
                         '&:hover': {
-                            backgroundColor: "#222240",
+                            backgroundColor: theme.palette.secondaryColor.main,
                         },
                         color: "#fff"
                     }}

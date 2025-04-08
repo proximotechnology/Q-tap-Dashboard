@@ -1,10 +1,11 @@
 import React from 'react';
-import { Card, CardContent, Typography, Box } from '@mui/material';
+import { Card, CardContent, Typography, Box, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 
 const OrderCard = ({ order, isSelected, onClick, isAccepted, isPayment, isServed, isDone, isClose }) => {
     const {t} = useTranslation()
+    const theme = useTheme();
     if (!order || !order.id) {
         return null;
     }
@@ -28,7 +29,7 @@ const OrderCard = ({ order, isSelected, onClick, isAccepted, isPayment, isServed
                 <Typography
                     variant="body1"
                     sx={{
-                        backgroundColor: isAccepted || isSelected ? "#222240" : "#9d9d9c",
+                        backgroundColor: isAccepted || isSelected ? theme.palette.secondaryColor.main : "#9d9d9c",
                         padding: "7px",
                         fontSize: "15px",
                         textAlign: "center",
@@ -69,7 +70,7 @@ const OrderCard = ({ order, isSelected, onClick, isAccepted, isPayment, isServed
                                         isDone ?
 
                                             <Box component="span" sx={{ display: "inline-flex", alignItems: "center", color: "black" }}>
-                                                <span class="icon-waiter" style={{ fontSize: "16px", color: "#E57C00", marginRight: "6px" }}></span>
+                                                <span class="icon-waiter" style={{ fontSize: "16px", color: theme.palette.orangePrimary.main, marginRight: "6px" }}></span>
                                                 {t("served")}
                                             </Box>
                                             : (
@@ -84,11 +85,11 @@ const OrderCard = ({ order, isSelected, onClick, isAccepted, isPayment, isServed
                         </Box>
 
                         <Typography color="textSecondary" fontSize="12px" padding="0px 20px 5px 20px">
-                           {t("Dine In")}: <span style={{ color: '#ef7d00' }}>{order.table}</span>
+                           {t("Dine In")}: <span style={{ color: theme.palette.orangePrimary.main }}>{order.table}</span>
                         </Typography>
                         <hr width="90%" />
                         <Typography variant="body2" fontSize="12px" padding="0px 20px">
-                            {t("total")} <span style={{ color: '#ef7d00' }}>{order.total.toFixed(2)}</span>
+                            {t("total")} <span style={{ color: theme.palette.orangePrimary.main }}>{order.total.toFixed(2)}</span>
                             <span style={{ fontSize: "9px", color: "gray" }}>EGP</span>
                         </Typography>
                     </>
@@ -101,7 +102,7 @@ const OrderCard = ({ order, isSelected, onClick, isAccepted, isPayment, isServed
                             {order.date}
                         </Typography>
                         <Typography color="textSecondary" fontSize="12px" padding="0px 20px 10px 20px">
-                            {t("Dine In")}, <span style={{ color: '#ef7d00' }}>{order.table}</span>
+                            {t("Dine In")}, <span style={{ color: theme.palette.orangePrimary.main }}>{order.table}</span>
                         </Typography>
                         <hr style={{ width: "80%" }} />
                         <Typography variant="body2" fontSize="12px" padding="0px 20px">

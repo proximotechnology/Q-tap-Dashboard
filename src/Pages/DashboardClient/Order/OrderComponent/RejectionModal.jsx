@@ -1,9 +1,9 @@
-import { Modal, Box, Typography, TextField, Button, Chip } from '@mui/material';
+import { Modal, Box, Typography, TextField, Button, Chip, useTheme } from '@mui/material';
 import React, { useState } from "react";
 
 const RejectionModal = ({ open, onClose }) => {
     const [textFieldValue, setTextFieldValue] = useState("");
-
+    const theme = useTheme();
     const handleChipClick = (value) => {
         setTextFieldValue(value);
     };
@@ -12,7 +12,7 @@ const RejectionModal = ({ open, onClose }) => {
         <Modal open={open} onClose={onClose}>
             <Box style={{ width: 350, margin: 'auto', marginTop: 100, padding: 20, backgroundColor: 'white', borderRadius: 8 }}>
                 <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                    <Typography variant="h6" sx={{ color: "#222240", fontSize: "12px" }}>Rejection Reason</Typography>
+                    <Typography variant="h6" sx={{ color: theme.palette.secondaryColor.main, fontSize: "12px" }}>Rejection Reason</Typography>
                     <span className="icon-close-1" style={{ fontSize: "12px", cursor: "pointer", color: "gray" }} onClick={onClose}></span>
                 </Box>
                 <hr style={{ width: "100%" }} />
@@ -60,7 +60,7 @@ const RejectionModal = ({ open, onClose }) => {
                             marginTop: 1,
                             borderRadius: '20px',
                             textAlign: 'center',
-                            backgroundColor: "#222240",
+                            backgroundColor: theme.palette.secondaryColor.main,
                             color: 'white',
                             fontSize: "11px",
                             textTransform: "capitalize",

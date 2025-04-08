@@ -12,6 +12,7 @@ import {
   MenuItem,
   Select,
   Paper,
+  useTheme,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
@@ -28,6 +29,7 @@ import { ClientLoginData } from '../../../../context/ClientLoginDataContext';
 import { useTranslation } from 'react-i18next';
 
 const ProfilePage = () => {
+  const theme = useTheme();
   // Personal Info State
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
@@ -511,9 +513,9 @@ const ProfilePage = () => {
                     position: 'absolute',
                     top: '3px',
                     left: '100%',
-                    color: '#ef7d00',
+                    color: theme.palette.orangePrimary.main,
                     fontSize: '24px',
-                    "& path": { stroke: "#ef7d00", strokeWidth: 2 }
+                    "& path": { stroke: theme.palette.orangePrimary.main, strokeWidth: 2 }
                   }}
                 />
               </Box>
@@ -806,8 +808,8 @@ const ProfilePage = () => {
                 borderRadius: '20px',
                 marginLeft: '15%',
                 marginBottom: '20px',
-                backgroundColor: '#E57C00',
-                '&:hover': { backgroundColor: '#E57C00' },
+                backgroundColor: theme.palette.orangePrimary.main,
+                '&:hover': { backgroundColor: theme.palette.orangePrimary.main },
               }}
               size="large"
               onClick={() => handleSave(user?.id)}

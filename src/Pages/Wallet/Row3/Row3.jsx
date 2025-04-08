@@ -1,4 +1,4 @@
-import { Button, Grid, IconButton } from '@mui/material'
+import { Button, Grid, IconButton, useTheme } from '@mui/material'
 import React from 'react'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { Table, TableBody, TableCell, TableHead, TableRow, Box, TextField, Card, CardContent, } from '@mui/material';
@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 
 export const Row3 = () => {
     const { t } = useTranslation();
+    const theme = useTheme();
     return (
         <Grid container spacing={2} sx={{ marginTop: "5px"}}>
             <Grid item xs={12}>
@@ -59,7 +60,7 @@ export const Row3 = () => {
                                         style: { padding: '3px 0' },
                                     }}
                                 />
-                                <Button sx={{ color: "#ef7d00", fontSize: "11px", textTransform: "capitalize" }}>
+                                <Button sx={{ color: theme.palette.orangePrimary.main, fontSize: "11px", textTransform: "capitalize" }}>
                                     {t("export")} <KeyboardArrowRightIcon sx={{ color: "#575756", fontSize: "12px", }} /> </Button>
                             </Box>
                         </Box>
@@ -90,7 +91,7 @@ export const Row3 = () => {
                                             height: "35px",
                                             width: "25%",
                                         }}>
-                                            <MinimizeOutlinedIcon sx={{ color: "#ef7d00", fontSize: "14px" }} />
+                                            <MinimizeOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "14px" }} />
                                             <span style={{ borderBottom: "1px solid #9d9d9c" }}>{transaction.id}</span>
                                         </TableCell>
 
@@ -206,7 +207,7 @@ export const Row3 = () => {
                                         style: { padding: '3px 0' },
                                     }}
                                 />
-                                <Button sx={{ color: "#ef7d00", fontSize: "11px", textTransform: "capitalize" }}>
+                                <Button sx={{ color: theme.palette.orangePrimary.main, fontSize: "11px", textTransform: "capitalize" }}>
                                     {t("export")} <KeyboardArrowRightIcon sx={{ color: "#575756", fontSize: "12px", }} /> </Button>
                             </Box>
                         </Box>
@@ -237,7 +238,7 @@ export const Row3 = () => {
                                             height: "35px",
                                             width: "25%",
                                         }}>
-                                            <MinimizeOutlinedIcon sx={{ color: "#ef7d00", fontSize: "14px" }} />
+                                            <MinimizeOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "14px" }} />
                                             <span style={{ borderBottom: "1px solid #9d9d9c" }}>{transaction.id}</span>
                                         </TableCell>
 

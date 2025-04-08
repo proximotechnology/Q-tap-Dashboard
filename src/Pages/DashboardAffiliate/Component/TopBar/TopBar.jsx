@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Avatar, Box, Divider, IconButton, List, ListItem, ListItemIcon, ListItemText, Popover, Typography } from "@mui/material";
+import { Avatar, Box, Divider, IconButton, List, ListItem, ListItemIcon, ListItemText, Popover, Typography, useTheme } from "@mui/material";
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
@@ -16,6 +16,7 @@ export default function TopBar() {
     const [mode, setMode] = useState('light');
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const theme = useTheme();
     const pageTitles = {
         '/dashboard-affiliate': t("Dashboard"),
         '/wallet-affiliate':
@@ -43,14 +44,14 @@ export default function TopBar() {
         setAnchorElUser(null);
     };
 
-    const iconColor = mode === 'light' ? '#ff9800' : '#ff9800';
+
     const location = useLocation();
     return (
         <Box sx={{
             display: "flex", justifyContent: "space-between", alignItems: "center",
             padding: "30px 60px 0px 60px ",
         }}>
-            <Typography variant="body1" sx={{ fontSize: "15px", color: "#222240" }}>
+            <Typography variant="body1" sx={{ fontSize: "15px", color: theme.palette.secondaryColor.main }}>
                 {pageTitles[location.pathname] || 'Dashboard'}
             </Typography>
 
@@ -58,7 +59,7 @@ export default function TopBar() {
 
                 <Box sx={{ marginRight: "20px", display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
                     <LightModeOutlinedIcon onClick={handleToggleMode}
-                        sx={{ fontSize: "20px", fill: mode === 'light' ? iconColor : '#575756' }} />
+                        sx={{ fontSize: "20px", fill: mode === 'light' ? theme.palette.orangePrimary.icon : '#575756' }} />
                     <Switch
                         checked={mode === 'light'}
                         onChange={handleToggle}
@@ -71,7 +72,7 @@ export default function TopBar() {
                             '& .MuiSwitch-thumb': {
                                 width: 18,
                                 height: 18,
-                                color: "#ef7d00",
+                                color: theme.palette.orangePrimary.main,
                             },
                             '& .MuiSwitch-track': {
                                 borderRadius: 12,
@@ -79,7 +80,7 @@ export default function TopBar() {
                                 width: 50,
                             },
                             '& .MuiSwitch-switchBase.Mui-checked': {
-                                color: "#ef7d00",
+                                color: theme.palette.orangePrimary.main,
                             },
                             '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
                                 backgroundColor: "#D8E0E0",
@@ -87,7 +88,7 @@ export default function TopBar() {
                         }}
                     />
                     <DarkModeOutlinedIcon onClick={handleToggleMode}
-                        sx={{ fontSize: "20px", fill: mode === 'dark' ? iconColor : '#575756' }} />
+                        sx={{ fontSize: "20px", fill: mode === 'dark' ? theme.palette.orangePrimary.icon : '#575756' }} />
                 </Box>
 
                 <Language />
@@ -96,9 +97,9 @@ export default function TopBar() {
                     onClick={handleUserClick}
                     sx={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "3px" }}>
                     <IconButton color="inherit" sx={{
-                        backgroundColor: '#ef7d00', borderRadius: '30%', padding: '5px',
+                        backgroundColor: theme.palette.orangePrimary.main, borderRadius: '30%', padding: '5px',
                         '&:hover': {
-                            backgroundColor: '#ef7d00',
+                            backgroundColor: theme.palette.orangePrimary.main,
                         }
                     }}>
                         <PersonOutlineOutlinedIcon sx={{ fontSize: "20px", color: "white" }} />
@@ -118,7 +119,7 @@ export default function TopBar() {
                 >
                     <Box sx={{ width: 200, padding: '10px' }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row', marginBottom: '20px', gap: '10px' }}>
-                            <Avatar sx={{ bgcolor: '#ef7d00', width: 40, height: 40 }}>
+                            <Avatar sx={{ bgcolor: theme.palette.orangePrimary.main, width: 40, height: 40 }}>
                                 <PersonOutlineOutlinedIcon sx={{ fontSize: "22px" }} />
                             </Avatar>
                             <Box>
@@ -133,7 +134,7 @@ export default function TopBar() {
                                 onClick={() => navigate('/')}
                                 sx={{
                                     cursor: "pointer",
-                                    backgroundColor: "#222240",
+                                    backgroundColor: theme.palette.secondaryColor.main,
                                     color: "white",
                                     marginBottom: "10px",
                                     borderRadius: "30px",
@@ -146,7 +147,7 @@ export default function TopBar() {
                                     margin: "0 auto",
                                 }}>
 
-                                <span class="icon-home-icon-silhouette" style={{ color: "#ef7d00", marginRight: "5px", fontSize: "15px" }} ></span>
+                                <span class="icon-home-icon-silhouette" style={{ color: theme.palette.orangePrimary.main, marginRight: "5px", fontSize: "15px" }} ></span>
                                 <span style={{ color: "white", fontSize: "12px", textTransform: "capitalize" }}>
                                     Home
                                 </span>
