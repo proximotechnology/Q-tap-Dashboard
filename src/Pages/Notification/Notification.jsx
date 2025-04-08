@@ -75,7 +75,7 @@ export const Notification = () => {
 
         <Divider />
 
-        <Box sx={{ marginTop: "20px" }}>
+        <Box sx={{ marginTop: "20px", height: "65vh", overflowY: "auto" }}>
           {notificationsData && notificationsData.map((notification) => (
             <Box key={notification.id} display="flex" justifyContent="center" alignItems="center" sx={{ marginBottom: '8px' }}>
               <Paper

@@ -14,6 +14,7 @@ import { toast } from 'react-toastify';
 
 import styles from './supportCard.module.css'
 import { useTranslation } from 'react-i18next';
+import { AddFeedback } from './AddFeedback';
 const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onClick }) => {
   const statusStyles = {
     'in_progress': { backgroundColor: '#222240', color: '#f4f6fc' },
@@ -74,7 +75,7 @@ const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onC
           <>
             <span className="icon-check" style={{ fontSize: "13px", color: "#222240" }} />
             <Typography variant="body1" sx={{ fontSize: "11px", color: "#222240", ml: 1 }}>
-            {t("done")}
+              {t("done")}
             </Typography>
           </>
         ) : (
@@ -97,6 +98,26 @@ const Support = () => {
   ]);
 
   const { t } = useTranslation();
+  // State for AddQuestion modal
+  const [openQuestionModal, setOpenQuestionModal] = useState(false);
+  const handleOpenQuestionModal = () => setOpenQuestionModal(true);
+  const handleCloseQuestionModal = () => setOpenQuestionModal(false);
+
+  // State for AddFeedback modal
+  const [openFeedbackModal, setOpenFeedbackModal] = useState(false);
+  const handleOpenFeedbackModal = () => setOpenFeedbackModal(true);
+  const handleCloseFeedbackModal = () => setOpenFeedbackModal(false);
+
+  // Handle adding feedback
+  const addFeedback = (newFeedback) => {
+    setFeedbackData([...feedbackData, {
+      id: feedbackData.length + 1, // Temporary ID, replace with API response if needed
+      client: { name: newFeedback.name, mobile: newFeedback.phone },
+      star: newFeedback.star,
+      emoji: newFeedback.emoji,
+      comment: "Manual feedback" // Placeholder, adjust as needed
+    }]);
+  };
   const addQuestion = (newQuestion) => {
     if (newQuestion.trim() !== "") {
       setQuestions([...questions, newQuestion]);
@@ -122,14 +143,14 @@ const Support = () => {
     setActiveStars(newStars);
   };
   // ============================================================
-  const [openModal, setOpenModal] = useState(false);
-  const handleOpenModel = () => {
-    setOpenModal(true);
-  };
+  // const [openModal, setOpenModal] = useState(false);
+  // const handleOpenModel = () => {
+  //   setOpenModal(true);
+  // };
 
-  const handleCloseModel = () => {
-    setOpenModal(false);
-  };
+  // const handleCloseModel = () => {
+  //   setOpenModal(false);
+  // };
   // ============================================================
 
   const [selectedRow, setSelectedRow] = useState(null);
@@ -415,20 +436,30 @@ const Support = () => {
 
         <Box sx={{ padding: "30px 30px 0px 30px ", display: "flex", justifyContent: "space-between", alignItems: "center"  }}>
           <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>
-          {t("feedbacks.many")}
+            {t("feedbacks.many")}
           </Typography>
 
-          <Typography
-            onClick={handleOpenModel}
-            variant="body1" sx={{ fontSize: "10px", color: "#E57C00", cursor: "pointer", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-
-            <AddIcon style={{ fontSize: "20px", fontWeight: "bold" }} />
-            {t("addQuestion")}
-          </Typography>
-
-          <AddQuestion open={openModal} handleCloseModel={handleCloseModel} onAddQuestion={addQuestion} />
+          <Box sx={{ display: "flex", gap: 1 }}>
+            <Typography
+              onClick={handleOpenQuestionModal}
+              variant="body1"
+              sx={{ fontSize: "10px", color: "#E57C00", cursor: "pointer", display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+            >
+              <AddIcon style={{ fontSize: "20px", fontWeight: "bold" }} />
+              {t("addQuestion")}
+            </Typography>
+            <Typography
+              onClick={handleOpenFeedbackModal}
+              variant="body1"
+              sx={{ fontSize: "10px", color: "#E57C00", cursor: "pointer", display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+            >
+              <AddIcon style={{ fontSize: "20px", fontWeight: "bold" }} />
+              {t("addFeedback")}
+            </Typography>
+          </Box>
         </Box>
-
+        <AddQuestion open={openQuestionModal} handleCloseModel={handleCloseQuestionModal} onAddQuestion={addQuestion} />
+        <AddFeedback open={openFeedbackModal} handleCloseModel={handleCloseFeedbackModal} onAddFeedback={addFeedback} />
         <Divider sx={{
           width: "94%", height: "2px", background: "linear-gradient(45deg, #FDB913, #F2672E)", borderRadius: "50px",
           margin: "5px 30px",

@@ -117,6 +117,8 @@
     "saved": "Saved",
     "welcomeP1": " Hi Partner, Thanks for joining us, your account will be activated after payment confirmation.",
     "welcomeP2": "Please get in touch with our sales team",
+    "welcomeP3": "The account has been created, but please complete the payment process through the link.",
+    "welcomeBtn": "Complete payment Process",
     "help": "Help",
     "accepted": "Accepted",
     "newOrder": "New Order",
@@ -294,6 +296,7 @@
         "updateErr": "failt to update ticket"
     },
     "addQuestion": "Add Question",
+    "addFeedback": "Add Feedback",
     "question": "Question",
     "answer": "Answer",
     "orderId": "Order Id",

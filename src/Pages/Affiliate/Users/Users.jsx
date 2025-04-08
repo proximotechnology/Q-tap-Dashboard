@@ -34,6 +34,8 @@ export const Users = () => {
   const handleClick = (event, user) => {
     setAnchorEl(event.currentTarget);
     setSelectedUser(user);
+    console.log("user======================", user);
+
   };
   // console.log("sletected user", selectedUser);
 
@@ -282,7 +284,7 @@ export const Users = () => {
                       >
                         {user.img ? (
                           <img
-                            src={`https://highleveltecknology.com/Qtap/${user.img}`}
+                            src={`https://highleveltecknology.com/Qtap/public/${user.img}`}
                             alt={user.name}
                             style={{
                               width: "22px",

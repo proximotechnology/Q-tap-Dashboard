@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, Button, IconButton, Typography } from "@mui/material";
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import { MenuItem, Menu, Divider } from "@mui/material";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { styled } from '@mui/system';
+import { styled, width } from '@mui/system';
 import { useNavigate } from 'react-router';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram, faFacebookF, faXTwitter, faTiktok } from "@fortawesome/free-brands-svg-icons";
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 
 const Divider2 = styled(Box)({
@@ -23,7 +24,7 @@ export const Welcome = () => {
   const [selectedLanguage, setSelectedLanguage] = useState('en');
   const openLanguage = Boolean(anchorElLanguage);
 
-  const {t , i18n} = useTranslation()
+  const { t, i18n } = useTranslation()
 
   const handleLanguageClick = (event) => {
     setAnchorElLanguage(event.currentTarget);
@@ -115,14 +116,50 @@ export const Welcome = () => {
 
         <img src="/assets/qtapwhite.svg" alt="qtap" style={{ width: "200px", height: "60px", marginBottom: "60px" }} />
 
-        <Typography variant="body2" sx={{ fontSize: "16px", width: "400px", lineHeight: 2, mb: 2 }}>
+        {!sessionStorage.getItem("paymentUrl") ? <Typography variant="body2" sx={{ fontSize: "16px", width: "400px", lineHeight: 2, mb: 2 }}>
           {t("welcomeP1")}
-        </Typography>
-        <Divider2 />
+        </Typography> : (<>
+          <Typography variant="body2" sx={{ fontSize: "16px", width: "400px", lineHeight: 2, mb: 2 }}>
+            {t("welcomeP3")}
+          </Typography>
+          <Button
+            variant="contained"
+            target='_blank'
+            onClick={() => {
+              const paymentUrl = sessionStorage.getItem("paymentUrl");
+              if (paymentUrl) {
+                window.open(paymentUrl, '_blank');
+              } else {
+                console.error("Invalid payment URL");
+              }
+            }}
+            sx={{
+              width: { lg: "300px", md: "200px", xs: "150px" },
+              padding: "5px 20px",
+              borderRadius: "50px",
+              backgroundColor: "#E57C00",
+              animation: "bounce 2s infinite",
+              "@keyframes bounce": {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-10px)" },
+              },
+              "&:hover": {
+                backgroundColor: "#FF8C00",
+              },
+              margin: "20px 0 20px 0"
+            }}>
+            {t("welcomeBtn")}
+          </Button>
+        </>)
+
+
+        }
+        <Divider2 my={10} />
 
         <Typography variant="body2" sx={{ fontSize: "12px", mt: 2, mb: 2 }}>
           {t("welcomeP2")}
         </Typography>
+
 
         <Typography variant="body2" sx={{ fontSize: "13px", mb: 3 }}>
           <a href="mailto:your-email@example.com" style={{ color: "white" }}>
@@ -153,6 +190,6 @@ export const Welcome = () => {
         </Box>
 
       </Box>
-    </Box>
+    </Box >
   );
 }

@@ -1,16 +1,43 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Grid, MenuItem, Paper, Select, Typography } from "@mui/material";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import LineChart2 from "../LineChart2";
 import { useTranslation } from "react-i18next";
 
 export const Revenue = () => {
-  const [year, setYear] = React.useState("2024");
+  const [year, setYear] = React.useState("2025");
+  const [revenueData, setRevenueData] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
   const { t } = useTranslation()
   const handleYearChange = (event) => {
     setYear(event.target.value);
   };
-
+  const getRvenueData = async () => {
+    try {
+      setLoading(true)
+      const response = await fetch(`https://highleveltecknology.com/Qtap/api/Sales/${year}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
+        }
+      )
+      const data = await response.json();
+      console.log("data", data);
+      if (response.ok) {
+        setRevenueData(data);
+        setLoading(false)
+      }
+    } catch (error) {
+      console.log("error", error);
+      setLoading(false)
+    }
+  }
+  useEffect(() => {
+    getRvenueData()
+  }, [year])
   return (
 
     <Paper
@@ -47,14 +74,14 @@ export const Revenue = () => {
                   ".MuiSelect-icon": { fontSize: "20px" },
                 }}
               >
-                <MenuItem value="2022" sx={{ fontSize: "10px", color: "gray" }}>
-                  2022
-                </MenuItem>
                 <MenuItem value="2023" sx={{ fontSize: "10px", color: "gray" }}>
                   2023
                 </MenuItem>
                 <MenuItem value="2024" sx={{ fontSize: "10px", color: "gray" }}>
                   2024
+                </MenuItem>
+                <MenuItem value="2025" sx={{ fontSize: "10px", color: "gray" }}>
+                  2025
                 </MenuItem>
               </Select>
             </Box>
@@ -82,7 +109,7 @@ export const Revenue = () => {
             marginLeft: "-40px",
           }}
         >
-          <LineChart2 />
+          <LineChart2 revenueData={revenueData} />
         </Grid>
       </Grid>
 

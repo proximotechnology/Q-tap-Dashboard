@@ -192,17 +192,13 @@ export const Save = () => {
       },
       serving_ways: getServingWays(branch.servingWays || servingWays),
       tables_number: parseInt(branch.tableCount) || 0,
-      pricing_id: "1", // Default pricing ID per branch
-      pricing_way: "monthly_price", // Default pricing way per branch
       payment_services: getPaymentServices(branch.paymentMethods || paymentMethods),
-      discount_id: "1", // Default discount ID
       business_name: branch.businessName?.trim() || '',
       business_country: branch.country || '',
       business_city: branch.city || '',
       latitude: '846.668848',
       longitude: '648.4684684',
       business_format: (branch.format || 'uk').toLowerCase(),
-      payment_method: 'cash', // Default payment method per branch
       menu_design: branch.design || 'grid',
       default_mode: branch.mode === 'light' ? 'white' : 'dark',
       payment_time: branch.paymentTime?.beforeServing ? 'before' : 'after',
@@ -221,17 +217,17 @@ export const Save = () => {
       password: personalData.password || '1',
       user_type: 'qtap_clients',
       img: '',
-      payment_method: 'cash', // Root-level payment method
-      pricing_id: "1", // Root-level pricing ID
-      pricing_way: "monthly_price", // Root-level pricing way
-      discount_id: "1", // Root-level discount ID
+      payment_method: personalData.payment_method, // Root-level payment method
+      pricing_id: personalData.pricing_id, // Root-level pricing ID
+      pricing_way: personalData.pricing_way, // Root-level pricing way
+      discount_id: personalData.discount_id, // Root-level discount ID
       ...apiBranches.reduce((acc, branch, index) => {
         acc[`brunch${index + 1}`] = branch;
         return acc;
       }, {}),
     };
 
-    console.log('Full API Data:', JSON.stringify(fullApiData, null, 2));
+    console.log('Full API Data:', JSON.stringify(fullApiData));
 
     // Validate data
     const validateData = (data) => {
@@ -268,10 +264,14 @@ export const Save = () => {
       console.log('API Response:', responseData);
 
       if (response.ok) {
+        const { payment_url } = responseData; // Ensure payment_url is extracted from the API response
         toast.success(t("dataSavedSuccessfully"));
+        if (payment_url) {
+          sessionStorage.setItem("paymentUrl", payment_url);
+        }
         navigate('/welcome');
       } else {
-        console.error('API Error Response:', responseData);
+        // console.error('API Error Response:', responseData);
         toast.error(t("errorWhileSavingData"));
         // toast.error(responseData.message || t("errorWhileSavingData"));
       }
@@ -491,7 +491,7 @@ export const Save = () => {
               '&:hover': { backgroundColor: '#ef7d10' },
             }}
           >
-            <CheckOutlined sx={{ fontSize: '22px', mr: 1 }} /> {t("saved")}
+            <CheckOutlined sx={{ fontSize: '22px', mr: 1 }} /> {t("save")}
           </Button>
         </Grid>
       </Box>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, createTheme, CssBaseline } from "@mui/material";
 
 import SideBar from "../../ComponentDashClient/SideBar/SideBar";
@@ -6,6 +6,7 @@ import TopBar from "../../ComponentDashClient/TopBar/TopBar";
 import Content from "../../ComponentDashClient/Content/Content";
 import { getDesignTokens } from "../../../Themes/dark";
 import SidebarButton from "../../../../Component/MobileSideBarButton/SidebarButton";
+
 
 
 export default function HomeClient() {
@@ -19,7 +20,7 @@ export default function HomeClient() {
     return (
         <Box
             sx={{
-                display: "flex",flexDirection:"row",
+                display: "flex", flexDirection: "row",
                 backgroundColor: mode === 'dark' ? '#181616' : theme.palette.bodyColor.main,
                 color: mode === 'dark' ? '#181616' : '#000',
                 width:"100%" , minHeight:"125vh",

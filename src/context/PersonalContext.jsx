@@ -14,7 +14,12 @@ export const PersonalProvider = ({ children }) => {
         password: '',
         confirmPassword: '',
         img: '',
-        website :'',
+        website: '',
+
+        pricing_way: '',
+        pricing_id: '',
+        payment_method: '',
+        discount_id: '',
     });
 
     const updatePersonalData = (newData) => {
@@ -36,13 +41,18 @@ export const PersonalProvider = ({ children }) => {
             password: '',
             confirmPassword: '',
             img: '',
-            website :'',
+            website: '',
+
+            pricing_way: '',
+            pricing_id: '',
+            payment_method: '',
+            discount_id: '',
         });
     };
 
 
     return (
-        <PersonalContext.Provider value={{ personalData, updatePersonalData, clearPersonalData , setPersonalData}}>
+        <PersonalContext.Provider value={{ personalData, updatePersonalData, clearPersonalData, setPersonalData }}>
             {children}
         </PersonalContext.Provider>
     );

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Avatar, Paper, IconButton } from '@mui/material';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 
 
 
@@ -34,6 +35,31 @@ export const Transactions = () => {
         }
     ];
     const { t } = useTranslation();
+    const [transData, settransData] = useState([]);
+    const getTransactions = async () => {
+        try {
+            const response = await axios.get(
+                "https://highleveltecknology.com/Qtap/api/affiliate_transactions",
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+                    },
+                }
+            );
+
+            if (response.data.success) {
+                settransData(response?.data?.transactions);
+                console.log("Fetched transactions:", response?.data?.transactions);
+
+            }
+        } catch (error) {
+            console.error("Error fetching users:", error);
+        }
+    };
+    useEffect(() => {
+        getTransactions();
+    }, []);
 
     return (
         <Paper sx={{ padding: "20px", borderRadius: '20px', mt: 2 }}>
@@ -61,7 +87,7 @@ export const Transactions = () => {
                     <Table>
                         <TableHead>
                             <TableRow sx={{ height: "25px" }}>
-                            {/* Amount */}     {[t("user"), t("reverenceNO"), t("date"), t("time"), t("amount"), t("status")].map((header) => (
+                                {/* Amount */}     {[t("user"), t("reverenceNO"), t("date"), t("time"), t("amount"), t("status")].map((header) => (
                                     <TableCell
                                         key={header}
                                         sx={{
@@ -76,7 +102,7 @@ export const Transactions = () => {
                         </TableHead>
 
                         <TableBody >
-                            {tableData.map((row, index) => (
+                            {transData?.map((row, index) => (
                                 <TableRow key={index}>
                                     <TableCell sx={{ padding: "0px", textAlign: "left", border: "none", color: "#575756" }}>
                                         <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -85,21 +111,29 @@ export const Transactions = () => {
                                             </Avatar>
 
                                             <Box sx={{ fontSize: "12px", }}>
-                                                {row.user}
+                                                {row.affiliate}
                                                 <Typography sx={{ fontSize: "11px", marginTop: "5px", color: "#AAAAAA", width: "100%" }}>
-                                                    ID: <span style={{ borderBottom: "1px solid #AAAAAA" }}>{row.reverence}</span></Typography>
+                                                    ID: #<span style={{ borderBottom: "1px solid #AAAAAA" }}>{row.Reverence_no}</span></Typography>
                                             </Box>
                                         </Box>
                                     </TableCell>
 
                                     <TableCell sx={{ padding: "0px 10px", textAlign: "left", border: "none" }}>
                                         <span style={{ fontSize: "12px", color: "#AAAAAA", borderBottom: "1px solid #AAAAAA" }}>
-                                            {row.reverence}</span>
+                                            {row.Reverence_no}</span>
                                     </TableCell>
 
 
-                                    <TableCell sx={{ padding: "0px 10px", textAlign: "left", color: "#AAAAAA", border: "none" }}>{row.date}</TableCell>
-                                    <TableCell sx={{ padding: "0px 10px", textAlign: "left", color: "#AAAAAA", border: "none" }}>{row.time}</TableCell>
+                                    <TableCell sx={{ padding: "0px 10px", textAlign: "left", color: "#AAAAAA", border: "none" }}>
+                                        {row.updated_at?.split('T')[0].split('-').reverse().join('/')}
+                                    </TableCell>
+                                    <TableCell sx={{ padding: "0px 10px", textAlign: "left", color: "#AAAAAA", border: "none" }}>
+                                        {new Date(row.updated_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+                                    </TableCell>
+
+
+
+                                    {/* Amount */}
                                     <TableCell sx={{
                                         textAlign: "left", fontSize: "22px", color: "#ef7d00",
                                         border: "none"
@@ -110,11 +144,25 @@ export const Transactions = () => {
 
 
                                     <TableCell sx={{ textAlign: "center", border: "none", color: "gray" }}>
-                                        <Box display="flex" alignItems="center">
-                                            {row.icon}
+                                        <Box display="flex" alignItems="center" justifyContent="start">
+                                            {row.status === "Done" && (
+                                                <span className="icon-double-check" style={{ color: "#30AEF8", fontSize: "20px" }}>
+                                                    <span className="path1"></span>
+                                                    <span className="path2"></span>
+                                                    <span className="path3"></span>
+                                                    <span className="path4"></span>
+                                                </span>
+                                            )}
+                                            {row.status === "pending" && (
+                                                <span className="icon-pending" style={{ color: "#AC4182", fontSize: "20px" }}></span>
+                                            )}
+                                            {row.status === "failed" && (
+                                                <span className="icon-close" style={{ color: "#AC4182", fontSize: "15px" }}></span>
+                                            )}
                                             <Box sx={{ ml: 1, color: '#AAAAAA', fontSize: "13px" }}>{t(row.status)}</Box>
                                         </Box>
                                     </TableCell>
+
                                 </TableRow>
                             ))}
                         </TableBody>
