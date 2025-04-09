@@ -60,7 +60,7 @@ export const Cart4 = () => {
 
   React.useEffect(() => {
     getPerformanceDashboard(selectedYear);
-  }, [selectedYear, getPerformanceDashboard]);
+  }, [selectedYear]);
 
   return (
     <>
