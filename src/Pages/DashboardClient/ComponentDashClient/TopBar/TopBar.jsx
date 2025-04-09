@@ -15,29 +15,30 @@ import Language from "./Language";
 import { useBranch } from "../../../../context/BranchContext";
 import { useTranslation } from "react-i18next";
 
-const useStyles = makeStyles({
-    button: {
-        background: 'linear-gradient(90deg, #E67D00, #222240)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        width: '130px',
-    },
-    menu: {
-        marginTop: '10px',
-        '& .MuiMenuItem-root': {
-            display: 'flex',
-            alignItems: 'center',
-        },
-        '& .MuiMenuItem-root svg': {
-            marginRight: '8px',
-        },
-    },
-});
+
 
 export default function TopBar() {
     const {t} = useTranslation();
     const theme = useTheme();
+    const useStyles = makeStyles({
+        button: {
+            background: `linear-gradient(90deg, #E67D00, ${theme.palette.secondaryColor.main})`,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            width: '130px',
+        },
+        menu: {
+            marginTop: '10px',
+            '& .MuiMenuItem-root': {
+                display: 'flex',
+                alignItems: 'center',
+            },
+            '& .MuiMenuItem-root svg': {
+                marginRight: '8px',
+            },
+        },
+    });
     const pageTitles = {
         '/dashboard-client': t("dashboard"),
         '/order': t("order"),

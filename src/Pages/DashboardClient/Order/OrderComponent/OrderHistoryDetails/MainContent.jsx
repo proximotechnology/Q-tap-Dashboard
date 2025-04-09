@@ -154,7 +154,7 @@ const CommentSection = ({ order }) => {
                 fontSize: "11px", backgroundColor: theme.palette.secondaryColor.main, borderRadius: "10px",
                 textTransform: "capitalize", marginRight: "10px", marginTop: "20px",
                 '&:hover': {
-                    backgroundColor: '#222240',
+                    backgroundColor: theme.palette.secondaryColor.main,
                 }
             }} startIcon={
                 <span class="icon-map-1" style={{}}><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span><span class="path14"></span><span class="path15"></span></span>

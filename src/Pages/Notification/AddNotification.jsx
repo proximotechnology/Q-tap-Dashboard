@@ -115,14 +115,14 @@ export const AddNotification = ({ open, handleClose, addNotification }) => {
                             variant="contained"
                             onClick={handleSend}
                             sx={{
-                                backgroundColor: '#222240',
+                                backgroundColor: theme.palette.secondaryColor.main,
                                 color: 'white',
                                 width: '45%',
                                 borderRadius: '30px',
                                 textTransform: 'capitalize',
                                 padding: '3px 20px',
                                 fontSize: '13px',
-                                "&:hover": { backgroundColor: '#222240' },
+                                "&:hover": { backgroundColor: theme.palette.secondaryColor.main },
                             }}
                             endIcon={<ArrowRightAltIcon sx={{ color: theme.palette.orangePrimary.main }} />}
                         >

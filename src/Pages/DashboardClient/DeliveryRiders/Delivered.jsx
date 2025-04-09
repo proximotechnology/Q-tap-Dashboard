@@ -7,7 +7,7 @@ import { DeliveredBody } from './DeliveredBody/DeliveredBody'
 export const Delivered = () => {
     return (
 
-        <Box sx={{ backgroundColor: "#EBEDF3"}}>
+        <Box sx={{ backgroundColor: "#EBEDF3", position:'relative'}}>
             <DeliveredHeader />
             <DeliveredBody /> 
             <DeliveredFooter />

@@ -35,7 +35,7 @@ export const DeliveredCard = ({ orders }) => {
             position: 'absolute',
             bottom: 0,
             borderRadius: '0 0 8px 8px',
-            background: 'linear-gradient(to right, #fbc927, #f05a27)',
+            background: `linear-gradient(to right, ${theme.palette.gradient.yellow}, ${theme.palette.gradient.deepOrange})`,
           }}
         />
       </Box> {/*Tabs */}
@@ -126,7 +126,7 @@ export const DeliveredCard = ({ orders }) => {
             <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} margin={"20px 0px 15px 0px"}>
               <Typography color="black" fontSize="12px" marginLeft={"15px"} ><span class="icon-close"></span> {t("cancel")}</Typography>
               <Button variant="contained" sx={{
-                background: 'linear-gradient(to right, #fbc927, #f05a27)', padding: "5px 25px",
+                background: `linear-gradient(to right, ${theme.palette.gradient.orange}, ${theme.palette.gradient.deepOrange})`, padding: "5px 25px",
                 color: "white", textTransform: "capitalize", borderRadius: "30px", fontSize: "12px"
               }}
               ><img src="/assets/balance.svg" alt="icon" style={{ width: "16px", height: "16px", marginRight:"5px" }} /> {t("cashReceived")}</Button>

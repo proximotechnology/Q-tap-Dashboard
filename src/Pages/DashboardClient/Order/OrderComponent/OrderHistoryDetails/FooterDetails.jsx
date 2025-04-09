@@ -1,11 +1,12 @@
 
-import { Box, Divider, Typography } from '@mui/material';
+import { Box, Divider, Typography, useTheme } from '@mui/material';
 
 const FooterDetails = () => {
+    const theme = useTheme()
     return (
         <Box
             style={{
-                backgroundColor: '#222240',
+                backgroundColor: theme.palette.secondaryColor.main,
                 color: '#fff',
                 padding: 12,
                 bottom: 0,

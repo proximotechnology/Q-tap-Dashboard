@@ -17,7 +17,7 @@ export const Transaction = () => {
           sx={{
             borderRadius: '20px',
             backgroundImage: `
-        linear-gradient(#222240, rgba(28, 31, 57, 0.8)),
+        linear-gradient(${theme.palette.secondaryColor.main}, rgba(28, 31, 57, 0.8)),
         url('/images/bg-paymob.jpg')`  ,
             backgroundSize: 'cover',
             backgroundPosition: 'center',

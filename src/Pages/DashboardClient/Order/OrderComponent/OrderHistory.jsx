@@ -27,7 +27,7 @@ export const OrderHistory = () => {
     return (
         <Box sx={{ backgroundColor: "#f4f6fc" }}>
 
-            <AppBar position="static" style={{ padding: "20px 20px", backgroundColor: '#222240', zIndex: 3, boxShadow: 'none' }}>
+            <AppBar position="static" style={{ padding: "20px 20px", backgroundColor: theme.palette.secondaryColor.main, zIndex: 3, boxShadow: 'none' }}>
                 <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <IconButton
                         onClick={() => { navigate('/order'); }}

@@ -1,5 +1,5 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Grid, Typography, Divider } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box, useTheme } from '@mui/system';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import CircleIcon from '@mui/icons-material/Circle';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +12,7 @@ export const UsersLog = () => {
 
     ];
     const {t} = useTranslation();
+    const theme = useTheme()
     return (
         <TableContainer component={Paper} sx={{ borderRadius: "20px", boxShadow: 'none' , minHeight:"50vh" , maxHeight:"62vh" , overflow:'auto'}}>
             <Grid container justifyContent="space-between" alignItems="center" sx={{ padding: "20px 20px 0px 20px" }}>
@@ -69,7 +70,7 @@ export const UsersLog = () => {
                             }}
 
                         >
-                            <TableCell sx={{ textAlign: 'center', border: 'none', padding: '0px', fontSize: '11px', color: '#222240' }}>
+                            <TableCell sx={{ textAlign: 'center', border: 'none', padding: '0px', fontSize: '11px', color: theme.palette.secondaryColor.main }}>
                                 <Box
                                     sx={{
                                         padding: '0px 8px',

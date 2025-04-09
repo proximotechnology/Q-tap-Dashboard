@@ -7,17 +7,12 @@ import CategoryForm from './AddCategory';
 import { DiscountModel } from './DiscountModel';
 import { OffersModel } from './OffersModel';
 import { useTranslation } from 'react-i18next';
-const StyledAppBar = styled(AppBar)({
-    background: 'linear-gradient(to right, #b4650f, #222240)',
-    padding: '8px 0px',
-    overflowX:'auto',
-    whiteSpace:'nowrap'
-});
 
 
 
-export const AddButton = styled(Button)({
-    background: 'linear-gradient(45deg, #FDB913, #F2672E)',
+
+export const AddButton = styled(Button)(({ theme })=>({
+    background: `linear-gradient(45deg, ${theme.palette.gradient.yellow},${theme.palette.gradient.deepOrange})`,
     borderRadius: '25px',
     color: 'white',
     textTransform: 'none',
@@ -25,10 +20,10 @@ export const AddButton = styled(Button)({
     marginLeft: '10px',
     fontSize: "12px",
     '&:hover': {
-        background: 'linear-gradient(45deg, #FDB913, #F2672E)'
+        background: `linear-gradient(45deg, ${theme.palette.gradient.yellow},${theme.palette.gradient.deepOrange})`
 
     },
-});
+}));
 
 const ExportText = styled(Box)({
     color: 'white',
@@ -39,6 +34,12 @@ const ExportText = styled(Box)({
 
 const Header = () => {
     const theme = useTheme();
+    const StyledAppBar = styled(AppBar)({
+        background: `linear-gradient(to right, #b4650f, ${theme.palette.secondaryColor.main})`,
+        padding: '8px 0px',
+        overflowX:'auto',
+        whiteSpace:'nowrap'
+    });
     const StyledButton = styled(Button)({
         borderRadius: '25px',
         borderColor: 'white',

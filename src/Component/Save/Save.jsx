@@ -407,7 +407,7 @@ export const Save = () => {
                   onClick={() => navigate('/')}
                   sx={{
                     cursor: 'pointer',
-                    backgroundColor: '#222240',
+                    backgroundColor: theme.palette.secondaryColor.main,
                     color: 'white',
                     marginBottom: '10px',
                     borderRadius: '30px',

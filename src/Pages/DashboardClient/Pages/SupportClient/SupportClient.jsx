@@ -18,7 +18,7 @@ import { AddFeedback } from './AddFeedback';
 const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onClick }) => {
   const theme = useTheme();
   const statusStyles = {
-    'in_progress': { backgroundColor: '#222240', color: '#f4f6fc' },
+    'in_progress': { backgroundColor: theme.palette.secondaryColor.main, color: '#f4f6fc' },
     'open': { backgroundColor: '#EBEDF3', color: '#575756' },
     'Done': { backgroundColor: '#EBEDF3', color: '#575756' },
   };

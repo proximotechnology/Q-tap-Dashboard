@@ -36,7 +36,7 @@ export const Branches = () => {
 
   return (
     <Box marginTop={'50px'} flexGrow={1}>
-      <Typography variant="body1" sx={{ fontSize: '18px', color: '#222240' }}>
+      <Typography variant="body1" sx={{ fontSize: '18px', color: theme.palette.secondaryColor.main }}>
         {t("branches")}
       </Typography>
       <Divider />
@@ -52,7 +52,7 @@ export const Branches = () => {
               marginRight: { sm: '20px' },
               height: '140px',
               borderRadius: '20px',
-              backgroundColor: '#222240',
+              backgroundColor: theme.palette.secondaryColor.main,
               marginBottom: '20px',
               padding: "10px 10px 15px 10px ",
             }}

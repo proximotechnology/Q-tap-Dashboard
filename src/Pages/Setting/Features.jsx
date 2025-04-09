@@ -49,7 +49,7 @@ const FeatureSection = ({ section, updateSection, index }) => {
                         variant="contained"
                         startIcon={<StraightIcon sx={{ fontSize: "8px", color: theme.palette.orangePrimary.main }} />}
                         sx={{
-                            backgroundColor: '#222240', fontSize: "11px", padding: "1px 20px", borderRadius: "20px", textTransform: "capitalize",
+                            backgroundColor: theme.palette.secondaryColor.main, fontSize: "11px", padding: "1px 20px", borderRadius: "20px", textTransform: "capitalize",
                             color: 'white', '&:hover': { backgroundColor: '#222244d3' }
                         }}
                         onClick={handleFileInputClick}
@@ -260,7 +260,7 @@ export const Features = forwardRef((props, ref) => {
                 <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.7)', zIndex: 1000, borderRadius: "20px" }}>
                     <Box sx={{ textAlign: 'center' }}>
                         <CircularProgress sx={{ color: theme.palette.orangePrimary.main }} />
-                        <Typography sx={{ mt: 2, color: '#222240' }}>{t("saving")}</Typography>
+                        <Typography sx={{ mt: 2, color: theme.palette.secondaryColor.main }}>{t("saving")}</Typography>
                     </Box>
                 </Box>
             )}

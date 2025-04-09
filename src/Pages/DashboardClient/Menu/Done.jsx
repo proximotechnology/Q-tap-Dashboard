@@ -9,6 +9,7 @@ import done from '../../../animation/done.json';
 import { Finsh } from './Finsh';
 import {Language} from '../ComponentDashClient/TopBar/Language'
 import { useTranslation } from 'react-i18next';
+import { customWidth } from './utils';
 
 export const Done = () => {
     const [isFinsh, setIsFinsh] = useState(false);
@@ -19,7 +20,7 @@ export const Done = () => {
     };
     return (
         <>
-        <Box sx={{ overflowY: "auto", width: '340px', boxShadow: 3, bgcolor: 'white', position: 'fixed', right: 0, top: 0, height: '100vh' }}>
+        <Box sx={{ overflowY: "auto", width: customWidth.itemSectionWidth, boxShadow: 3, bgcolor: 'white', position: 'fixed', right: 0, top: 0, height: '100vh' }}>
             <AppBar position="sticky" color="inherit">
                 <Toolbar>
                     <Box sx={{ flexGrow: 1 }} />

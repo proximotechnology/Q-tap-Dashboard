@@ -14,7 +14,7 @@ const MenuClient = () => {
         <Box sx={{ display: 'flex',background:"#EBEDF3" ,padding:"20px 0px"}}>
             <SideBar setFilteredItems={setFilteredItems}/>
 
-            <Box sx={{ flex: 1 }}>
+            <Box sx={{ flex: 1 ,maxWidth:{xs:"100vw",sm:'calc(100vw - 100px)'},marginX:{xs:'0px',sm:'100px'} }}>
                 <Content items={filteredItems} />
             </Box>
         </Box>

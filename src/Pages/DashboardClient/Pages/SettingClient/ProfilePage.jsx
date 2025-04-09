@@ -603,7 +603,7 @@ const ProfilePage = () => {
                   fullWidth
                   sx={{
                     textTransform: 'capitalize',
-                    backgroundColor: '#222240',
+                    backgroundColor: theme.palette.secondaryColor.main,
                     color: 'white',
                     borderRadius: '6px',
                     fontSize: '9px',
@@ -781,7 +781,7 @@ const ProfilePage = () => {
                 <Button
                   variant="contained"
                   sx={{
-                    backgroundColor: '#222240',
+                    backgroundColor: theme.palette.secondaryColor.main,
                     textTransform: 'capitalize',
                     color: 'white',
                     padding: '3px 20px',

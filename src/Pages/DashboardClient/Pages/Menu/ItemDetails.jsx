@@ -306,7 +306,7 @@ export const ItemDetails = ({ categoryId }) => {
                                 variant="contained"
                                 startIcon={<StraightOutlinedIcon sx={{ fontSize: '10px', color: theme.palette.orangePrimary.main }} />}
                                 sx={{
-                                    minWidth: 'auto', backgroundColor: '#222240', fontSize: "10px", padding: "2px 20px", color: '#fff', textTransform: 'none', borderRadius: "20px",
+                                    minWidth: 'auto', backgroundColor: theme.palette.secondaryColor.main, fontSize: "10px", padding: "2px 20px", color: '#fff', textTransform: 'none', borderRadius: "20px",
                                     "&:hover": {
                                         backgroundColor: '#222242',
                                     }

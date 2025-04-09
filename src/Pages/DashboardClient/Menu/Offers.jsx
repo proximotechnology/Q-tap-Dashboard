@@ -37,7 +37,7 @@ const OfferCard = ({ offer }) => {
         <Box sx={{ flex: 1, padding: "0px 10px", marginTop: "10px" }}>
             <Box
                 sx={{
-                    backgroundColor: '#222240',
+                    backgroundColor: theme.palette.secondaryColor.main,
                     color: 'white',
                     padding: '5px',
                     borderRadius: '10%',
@@ -104,9 +104,21 @@ const Offers = ({ isItemSelected }) => {
         beforeChange: (current, next) => setActiveSlide(next),  
         responsive: [
             {
-                breakpoint: 1024,
+                breakpoint: 1200,
                 settings: {
                     slidesToShow: isItemSelected ? 3 : 4,
+                }
+            },
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                }
+            },
+            {
+                breakpoint: 900,
+                settings: {
+                    slidesToShow: 2,
                 }
             },
             {

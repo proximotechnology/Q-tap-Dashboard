@@ -72,7 +72,7 @@ export const DeliveryLogin = () => {
     <Box sx={{ backgroundColor: "#EBEDF3", height: "100vh" }}>
 
       <AppBar position="static" style={{
-        padding: "20px", backgroundColor: '#222240', zIndex: 3,
+        padding: "20px", backgroundColor: theme.palette.secondaryColor.main, zIndex: 3,
         boxShadow: 'none', borderRadius: "0px 0px 30px 30px", position: 'relative', height: "150px", overflow: 'hidden',
       }}>
         <Box

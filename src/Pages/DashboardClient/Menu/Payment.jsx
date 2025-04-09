@@ -9,6 +9,7 @@ import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDown
 import { Done } from './Done';
 import Language from '../ComponentDashClient/TopBar/Language';
 import { useTranslation } from 'react-i18next';
+import { customWidth } from './utils';
 
 
 
@@ -22,9 +23,10 @@ export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, p
     const toggleDone = () => {
         setIsDone(!isDone);
     };
+    
     return (
         <>
-            <Box sx={{ overflowY: "auto", width: '340px', boxShadow: 3, bgcolor: 'white', position: 'fixed', right: 0, top: 0, height: '100vh' }}>
+            <Box sx={{ overflowY: "auto", width: customWidth.itemSectionWidth, boxShadow: 3, bgcolor: 'white', position: 'fixed', right: 0, top: 0, height: '100vh' }}>
                 <AppBar position="sticky" color="inherit">
                     <Toolbar>
                         <IconButton edge="start" color="inherit" aria-label="cart">
@@ -191,7 +193,7 @@ export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, p
 
                 <Box
                     sx={{
-                        position: "fixed", bottom: 0, backgroundColor: "white", height: "40px", width: "300px", padding: "20px",
+                        position: "fixed", bottom: 0, backgroundColor: "white", height: "40px", width: customWidth.buttonSectionWidth, padding: "20px",
                         boxShadow: 3, borderRadius: "30px 30px 0px 0px",
                         display: "flex", justifyContent: "space-between", textAlign: "center", alignItems: "center"
                     }}>

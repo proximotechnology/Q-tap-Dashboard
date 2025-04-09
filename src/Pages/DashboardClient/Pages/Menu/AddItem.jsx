@@ -37,7 +37,7 @@ export const AddItem = () => {
     return (
         <Box sx={{ backgroundColor: "#f4f6fc" }}>
             {/*  top Bar  */}
-            <AppBar position="static" style={{ padding: "20px 20px", backgroundColor: '#222240', zIndex: 3, boxShadow: 'none' }}>
+            <AppBar position="static" style={{ padding: "20px 20px", backgroundColor: theme.palette.secondaryColor.main, zIndex: 3, boxShadow: 'none' }}>
                 <Toolbar style={{ display: 'flex', alignItems: "center", justifyContent: 'space-between' }}>
                     <IconButton
                         onClick={() => { navigate('/menu'); }}

@@ -207,7 +207,7 @@ export const FeedbackAdmin = () => {
                                                 onClick={() => publishFeedback(row.id, row.publish)} style={{ marginLeft: "5px" }}
                                                 variant="contained"
                                                 sx={{
-                                                    backgroundColor: row.publish === "yes" || row.publish === "Yes" ? '#808285' : '#222240',
+                                                    backgroundColor: row.publish === "yes" || row.publish === "Yes" ? '#808285' : theme.palette.secondaryColor.main,
                                                     color: 'white',
                                                     borderRadius: '20px',
                                                     textTransform: 'capitalize',

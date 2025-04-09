@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, IconButton, List, ListItem, ListItemIcon, ListItemText, Typography, useTheme } from '@mui/material';
+import { Box, Button, IconButton, List, ListItem, ListItemIcon, ListItemText, Typography, useTheme } from '@mui/material';
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 import { itemsData } from './data/itemsData';
 import { useTranslation } from 'react-i18next';
@@ -43,8 +43,16 @@ const SideBar = ({ setFilteredItems }) => {
             setFilteredItems(filtered);
         }
     };
+    const [isOpen,setIsOpen] = useState(false)
+    const handleOpenSideBar=()=>{
+        setIsOpen(!isOpen)
+    }
+
     return (
-        <Box sx={{ position: 'fixed', left: 0, top: 0, height: '100vh', overflowY: 'auto', zIndex: 1201, bgcolor: "white", width: '100px' }}>
+        <> {/* TODO: style the button */}
+        <Button sx={{ position: {sm:'none', xs:isOpen?'none':'fixed' ,zIndex: 1201,}}} onClick={handleOpenSideBar}>open</Button>
+            <Box sx={{ position: {xs:isOpen?'fixed':'none', sm:'fixed'}, left: 0, top: 0, height: '100vh', overflowY: 'auto', zIndex: 1201, bgcolor: "white", width: '100px' }}>
+            <Button sx={{zIndex: 1201,}} onClick={handleOpenSideBar}>close</Button>
             <Box sx={{ textAlign: "center", alignItems: "center", justifyContent: "center", padding: "20px" }}>
                 <IconButton sx={{
                     backgroundColor: theme.palette.orangePrimary.main, width: "40px", height: "40px",
@@ -116,6 +124,7 @@ const SideBar = ({ setFilteredItems }) => {
             <img src="/images/qtap.PNG" alt="logo" style={{ width: "80%", paddingLeft: "12px" }} />
         </Box>
 
+        </>
     );
 };
 

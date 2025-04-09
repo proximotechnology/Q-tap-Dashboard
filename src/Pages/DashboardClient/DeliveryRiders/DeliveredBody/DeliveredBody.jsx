@@ -35,7 +35,7 @@ export const orders = [
 export const DeliveredBody = () => {
   return (
     <OrderProvider>
-      <Grid container justifyContent="space-around" sx={{ padding: "0px 30px" }}>
+      <Grid container justifyContent="space-around" sx={{ padding: "0px 30px" ,marginBottom:"15px"}}>
         <Grid item xs={12} md={4} lg={3}>
           <DeliveredCard orders={orders} />
         </Grid>

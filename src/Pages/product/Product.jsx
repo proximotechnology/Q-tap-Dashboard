@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, Paper, Typography, IconButton } from '@mui/material';
+import { Box, Card, CardContent, Paper, Typography, IconButton, useTheme } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -8,6 +8,7 @@ import AddMenuModal from './AddMenuModal';
 const Product = () => {
   const [menus, setMenus] = useState([]);
   const [openAddModal, setOpenAddModal] = useState(false);
+  const theme = useTheme()
 
   const getMenus = async () => {
     try {
@@ -69,7 +70,7 @@ const Product = () => {
             width: "17%",
             height: "39vh",
             minWidth:"200px",
-            background: 'linear-gradient(to Bottom,#222240,#3B2D37,#694328 ,#DA7703)',
+            background: `linear-gradient(to Bottom,${theme.palette.secondaryColor.main},#3B2D37,#694328 ,#DA7703)`,
             color: 'white',
             position: 'relative',
           }}>

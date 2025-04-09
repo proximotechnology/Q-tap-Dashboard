@@ -26,7 +26,7 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
 const StyledButton = styled(Button)(() => ({
-    backgroundColor: '#222240',
+    backgroundColor: theme.palette.secondaryColor.main,
     color: '#fff',
     padding: '1px 30px',
     textTransform: 'capitalize',
@@ -35,7 +35,7 @@ const StyledButton = styled(Button)(() => ({
     textAlign: 'center',
     justifyContent: 'center',
     '&:hover': {
-        backgroundColor: '#222240',
+        backgroundColor: theme.palette.secondaryColor.main,
     },
 }));
 
@@ -525,7 +525,7 @@ const {t} = useTranslation();
                                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                         <span
                                             className="icon-hand-up"
-                                            style={{ fontSize: 16, color: '#222240', marginRight: '10px' }}
+                                            style={{ fontSize: 16, color: theme.palette.secondaryColor.main, marginRight: '10px' }}
                                         ></span>
                                         <Typography sx={{ fontSize: '15px', color: 'gray' }}>
                                         {t("activeCallWaiter")}

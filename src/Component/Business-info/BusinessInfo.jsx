@@ -348,7 +348,7 @@ export const BusinessInfo = () => {
                                                 <Grid item xs={3} sx={{ margin: "5px 20px" }}>
                                                     <Box display="flex" alignItems="center"
                                                         sx={{
-                                                            backgroundColor: '#222240',
+                                                            backgroundColor: theme.palette.secondaryColor.main,
                                                             borderRadius: '20px', width: "100px", height: "30px",
                                                             padding: "0 3px ",
                                                         }}>

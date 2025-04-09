@@ -1,12 +1,13 @@
-import { Box, Divider, Typography } from '@mui/material';
+import { Box, Divider, Typography, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 const Footer = ({ selectedOrder ,isAccepted ,isServed ,isDone ,isClose}) => {
     const {t} = useTranslation()
+    const theme = useTheme()
     return (
         <Box
             style={{
-                backgroundColor: '#222240',
+                backgroundColor: theme.palette.secondaryColor.main,
                 color: '#fff',
                 padding: 12,
                 position: "fixed",

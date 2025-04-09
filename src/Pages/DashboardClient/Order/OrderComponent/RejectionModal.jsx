@@ -65,7 +65,7 @@ const RejectionModal = ({ open, onClose }) => {
                             fontSize: "11px",
                             textTransform: "capitalize",
                             '&:hover': {
-                                backgroundColor: '#222240',
+                                backgroundColor: theme.palette.secondaryColor.main,
                             }
                         }}
                     >

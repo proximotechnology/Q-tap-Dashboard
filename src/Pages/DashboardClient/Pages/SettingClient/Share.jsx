@@ -103,7 +103,7 @@ export const Share = () => {
                         <Button
                             onClick={handleDownloadQRCode}
                             style={{
-                                backgroundColor: '#222240',
+                                backgroundColor: theme.palette.secondaryColor.main,
                                 textTransform: "capitalize",
                                 borderRadius: "20px",
                                 color: 'white',

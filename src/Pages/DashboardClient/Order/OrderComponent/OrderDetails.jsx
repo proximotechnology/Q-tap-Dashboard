@@ -178,7 +178,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                             <span class="icon-send" style={{ fontSize: "16px", color: "white" }} />
                                         </IconButton>
 
-                                        <IconButton sx={{ backgroundColor: '#222240', color: 'white', borderRadius: "8px" }}>
+                                        <IconButton sx={{ backgroundColor: theme.palette.secondaryColor.main, color: 'white', borderRadius: "8px" }}>
                                             <span class="icon-map-1" style={{ fontSize: "16px", color: "white" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span><span class="path14"></span><span class="path15"></span></span>
                                         </IconButton>
                                     </Box>
@@ -477,7 +477,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                                                         width: "60%",
                                                                                         borderRadius: "20px",
                                                                                         '&:hover': {
-                                                                                            backgroundColor: '#222240',
+                                                                                            backgroundColor: theme.palette.secondaryColor.main,
                                                                                         }
                                                                                     }}
                                                                                 >
@@ -500,7 +500,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                                                         width: "70%",
                                                                                         borderRadius: "20px",
                                                                                         '&:hover': {
-                                                                                            backgroundColor: '#222240',
+                                                                                            backgroundColor: theme.palette.secondaryColor.main,
                                                                                         }
                                                                                     }}
                                                                                 >
@@ -552,7 +552,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                                 width: "90%",
                                                                 borderRadius: "20px",
                                                                 '&:hover': {
-                                                                    backgroundColor: '#222240',
+                                                                    backgroundColor: theme.palette.secondaryColor.main,
                                                                 }
                                                             }}
                                                         >
@@ -583,7 +583,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                     padding: 0,
                                                     borderRadius: "20px",
                                                     '&:hover': {
-                                                        backgroundColor: '#222240',
+                                                        backgroundColor: theme.palette.secondaryColor.main,
                                                     }
                                                 }}
                                             >

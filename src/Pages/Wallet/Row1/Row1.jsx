@@ -7,6 +7,7 @@ import {
   Paper,
   Select,
   Typography,
+  useTheme,
 } from "@mui/material";
 import LineChart1 from "./LineChart1";
 import { useTranslation } from "react-i18next";
@@ -14,6 +15,7 @@ import { useTranslation } from "react-i18next";
 export const Row1 = () => {
   const [year, setYear] = React.useState("2024");
   const { t } = useTranslation()
+  const theme = useTheme()
   const handleYearChange = (event) => {
     setYear(event.target.value);
   };
@@ -120,7 +122,7 @@ export const Row1 = () => {
           >
             <Button
               sx={{
-                background: "linear-gradient(45deg, #E57C00, #222240)",
+                background: `linear-gradient(45deg, ${theme.palette.orangePrimary.main}, ${theme.palette.secondaryColor.main})`,
                 borderRadius: 30,
                 color: "#fff",
                 width: "140px",

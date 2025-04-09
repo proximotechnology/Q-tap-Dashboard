@@ -12,6 +12,7 @@ import TableBarOutlinedIcon from '@mui/icons-material/TableBarOutlined';
 import { Payment } from '../Payment';
 import Language from '../../ComponentDashClient/TopBar/Language';
 import { useTranslation } from 'react-i18next';
+import { customWidth } from '../utils';
 const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getItemCount, totalCart, selectedSize }) => {
 
     const [selectedType, setSelectedType] = useState('Dine In');
@@ -41,7 +42,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getI
     const {t} = useTranslation()
     return (
         <>
-            <Box sx={{ overflowY: "auto", width: '340px', boxShadow: 3, bgcolor: 'white', position: 'fixed', right: 0, top: 0, height: '100vh' }}>
+            <Box sx={{ overflowY: "auto", width:customWidth.itemSectionWidth, boxShadow: 3, bgcolor: 'white', position: 'fixed', right: 0, top: 0, height: '100vh' }}>
                 <AppBar position="sticky" color="inherit">
                     <Toolbar>
                         <IconButton edge="start" color="inherit" aria-label="cart">
@@ -73,7 +74,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getI
 
                                     onClick={() => handleSelectType(type.type)}
                                     sx={{
-                                        backgroundColor: selectedType === type.type ? '#222240' : '#949493',
+                                        backgroundColor: selectedType === type.type ? theme.palette.secondaryColor.main : '#949493',
                                         color: selectedType === type.type ? theme.palette.orangePrimary.main : '#3A3A38',
                                         '&:hover': {
                                             backgroundColor: selectedType === type.type ? '#222250' : '#B2B2AD'
@@ -268,7 +269,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getI
 
                 <Box
                     sx={{
-                        position: "fixed", bottom: 0, backgroundColor: "white", width: "300px", padding: "20px",
+                        position: "fixed", bottom: 0, backgroundColor: "white", width: customWidth.buttonSectionWidth, padding: "20px",
                         boxShadow: 3, borderRadius: "30px 30px 0px 0px", display: "flex", justifyContent: "space-between",
                     }}>
                     <Box sx={{ width: "100%" }}>

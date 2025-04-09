@@ -7,13 +7,14 @@ import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDown
 import Lottie  from 'lottie-react';
 import ghostAnimation from '../../../animation/ghost.json'; 
 import Language from '../ComponentDashClient/TopBar/Language';
+import { customWidth } from './utils';
 
 export const Finsh = () => {
     const theme = useTheme();
 
     return (
         
-        <Box sx={{ overflowY: "auto", width: '340px',
+        <Box sx={{ overflowY: "auto", width: customWidth.itemSectionWidth,
             boxShadow: '3', bgcolor: 'white', position: 'fixed', right: 0, top: 0, height: '100vh' }}>
             <AppBar position="sticky" color="inherit">
                 <Toolbar>

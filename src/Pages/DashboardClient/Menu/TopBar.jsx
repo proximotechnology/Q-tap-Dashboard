@@ -14,7 +14,7 @@ const TopBar = ({isItemSelected}) => {
                     {t("logo")}
                 </Typography>
 
-                <Box sx={{ display: 'flex', alignItems: 'center', bgcolor: 'white', borderRadius: '50px', pl: 1 }}>
+                <Box sx={{ display: {xs:'none',sm:'flex'}, alignItems: 'center', bgcolor: 'white', borderRadius: '50px', pl: 1 }}>
                     <IconButton type="submit" sx={{  p: '5px 20px' }}>
                         <span class="icon-magnifier" style={{ color: "black",fontSize:"18px" }}></span> 
                     </IconButton>
@@ -26,6 +26,10 @@ const TopBar = ({isItemSelected}) => {
                         <span class="icon-settings-sliders"style={{ color: theme.palette.orangePrimary.main,fontSize:"22px" }}></span> 
                     </IconButton>
                 </Box>
+                {/* TODO: make this button open the search input */}
+                <IconButton type="submit" sx={{  p: '5px 20px' , display:{xs:'flex', sm:'none'} }}>
+                        <span class="icon-magnifier" style={{ color: "black",fontSize:"18px" }}></span> 
+                    </IconButton>
             </Toolbar>
         </Box>
     );

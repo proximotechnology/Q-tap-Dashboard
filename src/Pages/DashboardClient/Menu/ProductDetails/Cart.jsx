@@ -10,6 +10,7 @@ import RemoveCircleOutlinedIcon from '@mui/icons-material/RemoveCircleOutlined';
 import OrderTypeForm from './OrderTypeForm';
 import Language from '../../ComponentDashClient/TopBar/Language';
 import { useTranslation } from 'react-i18next';
+import { customWidth } from '../utils';
 
 
 const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, selectedSize, handleMinusItem, handleAddItem, getItemCount }) => {
@@ -31,8 +32,8 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, selectedSize,
     return (
 
         <>
-            <Box sx={{ overflowY: "auto", width: '340px', boxShadow: 3, bgcolor: 'white', position: 'fixed', right: 0, top: 0, height: '100vh' }}>
-                <Box sx={{ position: "fixed", top: 0, width: "340px", zIndex: 1201 }}>
+            <Box sx={{ overflowY: "auto", width:  customWidth.itemSectionWidth, boxShadow: 3, bgcolor: 'white', position: 'fixed', right: 0, top: 0, height: '100vh' }}>
+                <Box sx={{ position: "fixed", top: 0, width: customWidth.itemSectionWidth, zIndex: 1201 }}>
 
                     <AppBar position="static" color="inherit">
                         <Toolbar>
@@ -137,7 +138,7 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, selectedSize,
                                                   
                     <Box
                         sx={{
-                            position: "fixed", bottom: 0, backgroundColor: "white", height: "40px", width: "300px", padding: "20px",
+                            position: "fixed", bottom: 0, backgroundColor: "white", height: "40px", width:customWidth.buttonSectionWidth, padding: "20px",
                             boxShadow: 3, borderRadius: "30px 30px 0px 0px", display: "flex", justifyContent: "space-between",
                         }}>
                         <Box>

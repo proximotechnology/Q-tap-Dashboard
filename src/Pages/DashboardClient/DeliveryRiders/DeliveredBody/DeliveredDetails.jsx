@@ -28,24 +28,24 @@ export const DeliveredDetails = ({ orders }) => {
           width: "90%",
           backgroundColor: "white",
           borderRadius: "10px",
-          minWidth: 600,
+          minWidth: {md:'600'},
           boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.2)',
-          position: 'relative',
-          top: '20%',
+          position: 'fixed',
+          top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          zIndex: 15,
+          zIndex: 111,
         }}
       >
         <Box sx={{ padding: '10px 20px' }}>
-          <Grid container display="flex" justifyContent="space-between" alignItems="center">
-            <Grid item xs={11} sx={{ alignItems: "center" }}>
+          <Box  display="flex" justifyContent="space-between" alignItems="center">
+            <Box  sx={{ alignItems: "center" }}>
               <Typography variant="body2" sx={{ color: 'gray', fontSize: "11px" }}>
                 {selectedOrder.date}
               </Typography>
-            </Grid>
+            </Box>
 
-            <Grid item xs={1} sx={{ display: "flex", textAlign: "center", alignItems: "center" }}>
+            <Box  sx={{ display: "flex", textAlign: "center", alignItems: "center" }}>
               <IconButton onClick={handlePrint} >
                 <span class='icon-printer' style={{fontSize: "18px" }} />
               </IconButton>
@@ -55,13 +55,13 @@ export const DeliveredDetails = ({ orders }) => {
                   onClick={handleClose}
                   style={{ fontSize: "12px" }}></span>
               </IconButton>
-            </Grid>
-          </Grid>  {/*Header */}
+            </Box>
+          </Box>  {/*Header */}
           <Divider />
+          {/* section --- dine method & order details --- */}
+          <Grid container spacing={3} sx={{ marginTop: '0px', justifyContent: "space-around" , whiteSpace:'wrap'}}>
 
-          <Grid container spacing={3} sx={{ marginTop: '0px', justifyContent: "space-around" }}>
-
-            <Grid item xs={5}>
+            <Grid item xs={12} md={5}>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                 <Box>
                   <Typography color="#262624" fontSize="12px"  >{t("dineMethod")}</Typography>
@@ -106,10 +106,11 @@ export const DeliveredDetails = ({ orders }) => {
               flexItem
               sx={{
                 background: "#D8E0E0",
-                width: '1px', marginTop: "20px", transform: 'scaleX(0.5)'
+                width: '1px', marginTop: "20px", transform: 'scaleX(0.5)',
+                display:{xs:'none',md:'block'}
               }}
             />
-            <Grid item xs={6} sx={{ padding: "0px 15px" }} >
+            <Grid item xs={12} md={5} sx={{ padding: "0px 15px" , whiteSpace:'wrap' }} >
               <Box>
                 <Typography color="#262624" fontSize="12px" marginBottom={"10px"} >{t("orderDetail")}</Typography>
                 {selectedOrder.items.map((item, index) => (

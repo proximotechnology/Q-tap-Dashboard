@@ -71,7 +71,7 @@ export const ClientsLog = () => {
                             }}
 
                         >
-                            <TableCell sx={{ textAlign: 'center', border: 'none', padding: '0px', fontSize: '11px', color: '#222240', paddingX: '1px' }}>
+                            <TableCell sx={{ textAlign: 'center', border: 'none', padding: '0px', fontSize: '11px', color: theme.palette.secondaryColor.main, paddingX: '1px' }}>
                                 <Box
                                     sx={{
                                         padding: '0px 8px',

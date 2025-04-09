@@ -51,7 +51,7 @@ export const Welcome = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundImage: 'linear-gradient(to right, #E67D00, #222240), url(/images/Qtop1.jpg)',
+        backgroundImage: `linear-gradient(to right, ${theme.palette.orangePrimary.main}, ${theme.palette.secondaryColor.main}), url(/images/Qtop1.jpg)`,
         backgroundBlendMode: "overlay",
         backgroundSize: "cover",
         backgroundPosition: "center 38%",

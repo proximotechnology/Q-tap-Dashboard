@@ -105,12 +105,12 @@ export const DeliveredTable = ({ orders }) => {
             position: 'absolute',
             bottom: 0,
             borderRadius: '0 0 8px 8px',
-            background: 'linear-gradient(to right, #fbc927, #f05a27)',
+            background: `linear-gradient(to right, ${theme.palette.gradient.yellow}, ${theme.palette.gradient.deepOrange})`,
           }}
         />
       </Box>
 
-      <TableContainer component={Paper} sx={{ height: "68vh" }}>
+      <TableContainer component={Paper} sx={{ height: "68vh" ,whiteSpace:'nowrap' }}>
         <Table>
           <TableHead>
             <TableRow>
