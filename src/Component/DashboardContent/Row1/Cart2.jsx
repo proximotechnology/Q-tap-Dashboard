@@ -1,6 +1,6 @@
+import { color } from '@mui/system';
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-
 
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
@@ -14,43 +14,105 @@ const CustomTooltip = ({ active, payload }) => {
 };
 
 const Cart2 = ({ Total_Orders }) => {
-  const [orders, setOrders] = React.useState([]);
+  const [allOrders, setAllOrders] = React.useState([]);
+  const [displayedOrders, setDisplayedOrders] = React.useState([]);
+  const [page, setPage] = React.useState(0);
 
   React.useEffect(() => {
     if (Total_Orders) {
       const orderArray = Object.values(Total_Orders);
-      setOrders(orderArray);
+      setAllOrders(orderArray);
+      // Initially show first 6 orders
+      setDisplayedOrders(orderArray.slice(0, 6));
     } else {
-      setOrders([]);
+      setAllOrders([]);
+      setDisplayedOrders([]);
     }
   }, [Total_Orders]);
-  // console.log("Total_Orders", orders);
+
+  const handleTogglePage = () => {
+    const newPage = page === 0 ? 1 : 0;
+    setPage(newPage);
+    const startIndex = newPage * 6;
+    const endIndex = startIndex + 6;
+    setDisplayedOrders(allOrders.slice(startIndex, endIndex));
+  };
+
+  const hasMoreOrders = allOrders.length > 6;
 
   return (
-    <ResponsiveContainer width="100%" height={160}>
-      <BarChart
-        data={orders}
-        layout="vertical"
-        margin={{ top: 5, right: 10, left: -30, bottom: -15 }}
-      >
-        <XAxis type="number" tickFormatter={(tick) => `${tick / 1000}k`}
-          tick={{ fontSize: 9 }} axisLine={false} tickLine={false} />
+    <div style={{ position: 'relative' }}>
+      <ResponsiveContainer width="100%" height={160}>
+        <BarChart
+          data={displayedOrders}
+          layout="vertical"
+          margin={{ top: 5, right: 10, left: -30, bottom: -10 }}
+        >
+          <XAxis 
+            type="number" 
+            tickFormatter={(tick) => `${tick / 1000}k`}
+            tick={{ fontSize: 9 }} 
+            axisLine={false} 
+            tickLine={false} 
+          />
 
-        <YAxis dataKey="month_name" type="category" tick={{ fontSize: 8 }}
-          interval={0} axisLine={false} tickLine={false} />
+          <YAxis 
+            dataKey="month_name" 
+            type="category" 
+            tick={{ fontSize: 10 }}
+            interval={0} 
+            axisLine={false} 
+            tickLine={false} 
+          />
 
-        <Tooltip contentStyle={{ fontSize: '10px' }}
-          content={<CustomTooltip />}
-          cursor={{ fill: 'transparent' }} />
+          <Tooltip 
+            contentStyle={{ fontSize: '10px' }}
+            content={<CustomTooltip />}
+            cursor={{ fill: 'transparent' }} 
+          />
 
+          <Bar 
+            dataKey="total_order" 
+            fill="#000000" 
+            background={{
+              fill: '#d3d3d3',
+              radius: [10, 10, 10, 10]
+            }} 
+            barSize={6.5}
+            radius={[10, 10, 10, 10]} 
+          />
+        </BarChart>
+      </ResponsiveContainer>
 
-        <Bar dataKey="total_order" fill="#000000" background={{
-          fill: '#d3d3d3',
-          radius: [10, 10, 10, 10] // Adding radius to the background
-        }} barSize={5}
-          radius={[10, 10, 10, 10]} />
-      </BarChart>
-    </ResponsiveContainer>
+      {hasMoreOrders && (
+        <button
+          onClick={handleTogglePage}
+          style={{
+            position: 'absolute',
+            right: 0,
+            top: 0,
+            transform: 'translateY(-50%)',
+            width: '20px',
+            height: '20px',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 0,
+            fontSize: '22px',
+            marginTop: "-14px",
+            marginRight: "10px",
+            border: 'none',
+            background: 'transparent',
+            color:"rgb(219, 136, 40)"
+          }}
+          onMouseEnter={(e) => e.target.style.color = 'rgb(241, 181, 113)'}
+          onMouseLeave={(e) => e.target.style.color = 'rgb(219, 136, 40)'}
+        >
+          {page === 0 ? '>' : '<'}
+        </button>
+      )}
+    </div>
   );
 };
 
