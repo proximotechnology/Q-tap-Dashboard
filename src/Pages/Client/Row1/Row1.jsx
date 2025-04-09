@@ -3,6 +3,7 @@ import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
 import { Paper, Typography, Box, useTheme } from '@mui/material';
 import { PieChart, Pie, Cell } from 'recharts';
 import { useTranslation } from 'react-i18next';
+import { DashboardDataContext } from '../../../context/DashboardDataContext';
 
 const data01 = [{ name: 'Free', value: 50 }, { name: 'Remaining', value: 50 }];
 const data02 = [{ name: 'Starter', value: 25 }, { name: 'Remaining', value: 75 }];
@@ -13,13 +14,42 @@ const data03 = [{ name: 'Pro', value: 10 }, { name: 'Remaining', value: 90 }];
 
 
 export const Row1 = () => {
-    const {t} = useTranslation()
+    const { t } = useTranslation()
     const theme = useTheme();
     const COLORS = [theme.palette.orangePrimary.main, '#AD4181', '#2EA6F7'];
+    const [clients, setClients] = React.useState([]);
+    const { dashboardData, getDashboard } = React.useContext(DashboardDataContext);
+    const { Client } = dashboardData;
+    React.useEffect(() => {
+        getDashboard();
+        if (Client) {
+            const clientArray = Object.values(Client).filter(client => client.id !== 11); // استبعاد العنصر "test" إذا لزم الأمر
+            setClients(clientArray);
+        } else {
+            setClients([]);
+        }
+    }, []);
+    console.log("clients", clients);
+    // تحويل النسب المئوية إلى قيم عددية (إزالة % وحساب المتبقي)
+    const freeData = clients[0] ? [
+        { name: 'Free', value: parseFloat(clients[0].percentage) },
+        { name: 'Remaining', value: 100 - parseFloat(clients[0].percentage) }
+    ] : [{ name: 'Free', value: 0 }, { name: 'Remaining', value: 100 }];
+
+    const starterData = clients[1] ? [
+        { name: 'Starter', value: parseFloat(clients[1].percentage) },
+        { name: 'Remaining', value: 100 - parseFloat(clients[1].percentage) }
+    ] : [{ name: 'Starter', value: 0 }, { name: 'Remaining', value: 100 }];
+
+    const proData = clients[2] ? [
+        { name: 'Pro', value: parseFloat(clients[2].percentage) },
+        { name: 'Remaining', value: 100 - parseFloat(clients[2].percentage) }
+    ] : [{ name: 'Pro', value: 0 }, { name: 'Remaining', value: 100 }];
+
     return (
         <Box sx={{ padding: "0 20px" }}>
             <Paper elevation={3} sx={{ padding: "20px 40px", borderRadius: 5 }}>
-                <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ overflow:'clip',overflowX:"auto" ,flexDirection: {xs: 'column', sm: 'row',  } }}>
+                <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ overflow: 'clip', overflowX: "auto", flexDirection: { xs: 'column', sm: 'row', } }}>
                     <Box>
                         <Typography variant="h6" color="#575756" fontSize="17px"
                             display={"flex"} textAlign={"center"} alignItems={"center"}>
@@ -30,13 +60,13 @@ export const Row1 = () => {
                         </Typography>
 
                         <Typography variant="h3" sx={{ fontSize: "28px", color: theme.palette.orangePrimary.main, marginLeft: "40px" }}>
-                            1.234
+                            {Client?.number_branches_clients}
                         </Typography>
                     </Box>
 
 
                     <Box display={"flex"} justifyContent="center" alignItems="center">
-                        <Box sx={{ display: "flex",flexDirection: {xs: 'column', sm: 'row',  }  }} gap={2}>
+                        <Box sx={{ display: "flex", flexDirection: { xs: 'column', sm: 'row', } }} gap={2}>
                             <PieChart width={110} height={110}>
                                 <defs>
                                     <linearGradient id="gradientFree" x1="0" y1="0" x2="100%" y2="0">
@@ -45,7 +75,7 @@ export const Row1 = () => {
                                     </linearGradient>
                                 </defs>
                                 <Pie
-                                    data={data01}
+                                    data={freeData}
                                     cx={50}
                                     cy={50}
                                     innerRadius={33}
@@ -53,10 +83,13 @@ export const Row1 = () => {
                                     fill="#D8E0E0"
                                     paddingAngle={0}
                                 >
-                                    <Cell fill="url(#gradientFree)" />
+                                    <Cell fill="url(#gradientFree)" stroke={theme.palette.orangePrimary.main} strokeWidth={.2} cornerRadius={5} />
+
                                     <Cell fill="#D8E0E0" />
                                 </Pie>
-                                <text x={55} y={57} textAnchor="middle" dominantBaseline="middle" fill={COLORS[0]} fontSize="18">{data01[0].value}%</text>
+                                <text x={55} y={57} textAnchor="middle" dominantBaseline="middle" fill={COLORS[0]} fontSize="18">
+                                    {clients[0] ? `${parseInt(clients[0].percentage)}%` : "0%"}
+                                </text>
                             </PieChart>
 
                             <PieChart width={110} height={110}>
@@ -67,7 +100,7 @@ export const Row1 = () => {
                                     </linearGradient>
                                 </defs>
                                 <Pie
-                                    data={data02}
+                                    data={starterData}
                                     cx={50}
                                     cy={50}
                                     innerRadius={33}
@@ -75,10 +108,13 @@ export const Row1 = () => {
                                     fill="#D8E0E0"
                                     paddingAngle={0}
                                 >
-                                    <Cell fill={`url(#gradientStarter)`} />
+                                    <Cell fill="url(#gradientStarter)" stroke="#AD4181" strokeWidth={.2} cornerRadius={5} />
+
                                     <Cell fill="#d3d3d3" />
                                 </Pie>
-                                <text x={55} y={57} textAnchor="middle" dominantBaseline="middle" fill={COLORS[1]} fontSize="18">{data02[0].value}%</text>
+                                <text x={55} y={57} textAnchor="middle" dominantBaseline="middle" fill={COLORS[1]} fontSize="18">
+                                    {clients[1] ? `${parseInt(clients[1].percentage)}%` : "0%"}
+                                </text>
                             </PieChart>
 
                             <PieChart width={110} height={110}>
@@ -89,7 +125,7 @@ export const Row1 = () => {
                                     </linearGradient>
                                 </defs>
                                 <Pie
-                                    data={data03}
+                                    data={proData}
                                     cx={50}
                                     cy={50}
                                     innerRadius={33}
@@ -97,21 +133,25 @@ export const Row1 = () => {
                                     fill="#D8E0E0"
                                     paddingAngle={0}
                                 >
-                                    <Cell fill={`url(#gradientPro)`} />
+                                    <Cell fill="url(#gradientPro)" stroke="#2EA6F7" strokeWidth={2} cornerRadius={5} />
                                     <Cell fill="#d3d3d3" />
                                 </Pie>
-                                <text x={55} y={57} textAnchor="middle" dominantBaseline="middle" fill={COLORS[2]} fontSize="18">{data03[0].value}%</text>
+                                <text x={55} y={57} textAnchor="middle" dominantBaseline="middle" fill={COLORS[2]} fontSize="18">
+                                    {clients[2] ? `${parseInt(clients[2].percentage)}%` : "0%"}
+                                </text>
                             </PieChart>
                         </Box>
                     </Box>
 
-                    <Box sx={{ marginRight: {xs:"0px",sm:"70px"} }}>
+                    <Box sx={{ marginRight: { xs: "0px", sm: "70px" } }}>
                         <Box display={"flex"} textAlign={"center"} alignItems={"center"} >
                             <Box component="span" sx={{
                                 background: `linear-gradient(to right,${theme.palette.orangePrimary.main},rgb(248, 203, 158))`,
                                 width: '22px', borderRadius: "20px", height: '10px', display: 'inline-block', marginRight: '8px'
                             }} />
-                            <Typography variant="body2" sx={{ fontSize: "10px", color: "gray" }}>{t("free")}</Typography>
+                            <Typography variant="body2" sx={{ fontSize: "10px", color: "gray" }}>
+                                {clients[0]?.name}
+                            </Typography>
                         </Box>
 
 
@@ -120,7 +160,10 @@ export const Row1 = () => {
                                 background: 'linear-gradient(to right, #AD4181,rgb(255, 174, 216))',
                                 width: '22px', borderRadius: "20px", height: '10px', display: 'inline-block', marginRight: '8px'
                             }} />
-                            <Typography variant="body2" sx={{ fontSize: "10px", color: "gray" }}>{t("starter")}</Typography>
+                            <Typography variant="body2" sx={{ fontSize: "10px", color: "gray" }}>
+                                {clients[1]?.name}
+
+                            </Typography>
                         </Box>
 
                         <Box display={"flex"} textAlign={"center"} alignItems={"center"}>
@@ -128,7 +171,9 @@ export const Row1 = () => {
                                 background: 'linear-gradient(to right, #2EA6F7,rgb(170, 214, 243))',
                                 width: '22px', borderRadius: "20px", height: '10px', display: 'inline-block', marginRight: '8px'
                             }} />
-                            <Typography variant="body2" sx={{ fontSize: "10px", color: "gray" }}>{t("pro")}</Typography>
+                            <Typography variant="body2" sx={{ fontSize: "10px", color: "gray" }}>
+                                {clients[2]?.name}
+                            </Typography>
                         </Box>
                     </Box>
                 </Box>

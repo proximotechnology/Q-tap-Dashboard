@@ -4,22 +4,39 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { PieChart, Pie, Cell } from "recharts";
 
-const data01 = [
-  { name: "Pro", value: 10 },
-  { name: "Remaining", value: 90 },
-];
-
 const COLORS = ["#AD4181", "#D8E0E0"];
 
-export const Cart3 = () => {
-  const {t} = useTranslation()
+export const Cart3 = ({ Affiliate_Users }) => {
+  const { t } = useTranslation();
+  const [affiliates, setAffiliates] = React.useState({});
+
+  React.useEffect(() => {
+    if (Affiliate_Users) {
+      setAffiliates(Affiliate_Users);
+    } else {
+      setAffiliates({});
+    }
+  }, [Affiliate_Users]);
+
+  // تحويل البيانات إلى تنسيق Pie Chart
+  const pieData = affiliates.active_percentage
+    ? [
+        { name: "Affiliated", value: parseFloat(affiliates.active_percentage) },
+        { name: "Remaining", value: 100 - parseFloat(affiliates.active_percentage) },
+      ]
+    : [
+        { name: "Affiliated", value: 0 },
+        { name: "Remaining", value: 100 },
+      ];
+
+
   return (
     <Box
       display={"flex"}
       justifyContent="space-between"
       alignItems="center"
       padding={"0px 15px"}
-      sx={{ marginTop: "-5px" }}
+      sx={{ marginTop: "15px" }}
     >
       <Box>
         <Box display={"flex"} textAlign={"center"} alignItems={"center"}>
@@ -37,7 +54,7 @@ export const Cart3 = () => {
           <Typography
             variant="body2"
             color="text.secondary"
-            sx={{ fontSize: "6px", color: "gray" }}
+            sx={{ fontSize: "7px", color: "gray" }}
           >
             {t("subscriptions")}
           </Typography>
@@ -47,29 +64,28 @@ export const Cart3 = () => {
           display={"flex"}
           textAlign={"center"}
           alignItems={"center"}
-          marginTop={"5px"}
+          marginTop={"10px"}
         >
           <Box
             component="span"
             sx={{
-              background:"linear-gradient(to right , #893e9c , #fd4845 )",
+              background: "linear-gradient(to right , #893e9c , #fd4845 )",
               width: "15px",
               borderRadius: "20px",
               height: "6px",
               display: "inline-block",
-              marginRight: "8px",
+              marginRight: "7px",
             }}
           />
           <Typography
             variant="body2"
             color="text.secondary"
-            sx={{ fontSize: "6px", color: "gray" }}
+            sx={{ fontSize: "8px", color: "gray" }}
           >
             {t("affiliatedSub")}
           </Typography>
         </Box>
       </Box>
-
       <PieChart width={120} height={120}>
         <defs>
           <linearGradient id="colorGradient2" x1="0" y1="0" x2="1" y2="0">
@@ -78,29 +94,28 @@ export const Cart3 = () => {
           </linearGradient>
         </defs>
         <Pie
-          data={data01}
-          cx={60}
-          cy={60}
-          innerRadius={30}
-          outerRadius={45}
+          data={pieData}
+          cx={55}
+          cy={55}
+          innerRadius={40}
+          outerRadius={60}
           fill="#D8E0E0"
           paddingAngle={0}
           startAngle={0}
           endAngle={450}
         >
-          <Cell fill="url(#colorGradient2)" />
+          <Cell fill="url(#colorGradient2)" strokeWidth={0.2} cornerRadius={5} />
           <Cell fill="#D8E0E0" />
-          <Cell fill="#d3d3d3" />
         </Pie>
         <text
-          x={65}
-          y={65}
+          x={62}
+          y={62}
           textAnchor="middle"
           dominantBaseline="middle"
           fill={COLORS[0]}
-          fontSize="18"
+          fontSize="22"
         >
-          {data01[0].value}%
+          {affiliates.active_percentage || "0%"}
         </text>
       </PieChart>
     </Box>

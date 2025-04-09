@@ -7,14 +7,27 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import MinimizeOutlinedIcon from '@mui/icons-material/MinimizeOutlined';
 import { transactionsData } from './transactionsData';
 import { useTranslation } from 'react-i18next';
+import { DashboardDataContext } from '../../../context/DashboardDataContext';
 
 export const Row3 = () => {
     const { t } = useTranslation();
     const theme = useTheme();
+    const [deposits, setdeposits] = React.useState([]);
+    const { depositsData, getDeposits } = React.useContext(DashboardDataContext);
+    React.useEffect(() => {
+        getDeposits("2024-03-01/2025-06-31");
+        if (depositsData) {
+            setdeposits(depositsData);
+            console.log("depositsData", depositsData);
+
+        }
+    }, [depositsData]);
+    console.log("depositsData", deposits);
+
     return (
-        <Grid container spacing={2} sx={{ marginTop: "5px"}}>
-            <Grid item xs={12}>
-                <Card sx={{ borderRadius: 4, height: "100%",overflow: 'auto' }}>
+        <Grid container spacing={2} sx={{ marginTop: "5px" }}>
+            <Grid item xs={12} md={6} lg={6} >
+                <Card sx={{ borderRadius: 4, height: "100%", overflow: 'auto' }}>
                     <CardContent>
                         <Box
                             display="flex"
@@ -159,8 +172,8 @@ export const Row3 = () => {
                 </Card>
             </Grid>
 
-            <Grid item xs={12}>
-                <Card sx={{ borderRadius: 4, height: "100%",overflow: 'auto' }}>
+            <Grid item xs={12} md={6} lg={6} >
+                <Card sx={{ borderRadius: 4, height: "100%", overflow: 'auto' }}>
                     <CardContent>
                         <Box
                             display="flex"

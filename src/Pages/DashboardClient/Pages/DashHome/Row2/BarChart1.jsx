@@ -1,10 +1,11 @@
 import { Paper, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { data } from './BarChart';
 import { Box, useTheme } from '@mui/system';
 import { Grid, Select, MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { DashboardDataContext } from '../../../../../context/DashboardDataContext';
 const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
         return (
@@ -18,12 +19,18 @@ const CustomTooltip = ({ active, payload }) => {
 
 
 export const BarChart1 = () => {
-    const [year, setYear] = React.useState('2024');
+    const [year, setYear] = React.useState('2025');
     const { t } = useTranslation()
     const theme = useTheme();
     const handleYearChange = (event) => {
         setYear(event.target.value);
     };
+    const { salesData, getSalesDashboard } = React.useContext(DashboardDataContext);
+
+    React.useEffect(() => {
+        getSalesDashboard(year);
+        // console.log("salesData", salesData);
+    }, [year]);
     return (
         <Paper sx={{ height: "220px", borderRadius: "20px" }}>
             <Grid container justifyContent="space-between" alignItems="center" sx={{ padding: "10px 20px", }} >
@@ -56,9 +63,9 @@ export const BarChart1 = () => {
             </Grid>
 
             <ResponsiveContainer width="100%" height={250}>
-                <BarChart data={data} margin={{ top: 5, right: 10, left: -10, bottom: 70 }}>
+                <BarChart data={salesData ? Object.values(salesData) : []} margin={{ top: 5, right: 10, left: -10, bottom: 70 }}>
                     <XAxis
-                        dataKey="name"
+                        dataKey="month_name"
                         tickLine={false}
                         axisLine={false}
                         tick={{ fontSize: 9 }}
@@ -75,7 +82,16 @@ export const BarChart1 = () => {
                     <Tooltip contentStyle={{ fontSize: '10px' }}
                         content={<CustomTooltip />}
                         cursor={{ fill: 'transparent' }} />
-                    <Bar dataKey="value" fill={theme.palette.orangePrimary.main} background={{ fill: '#D8E0E0' }} barSize={12} radius={[10, 10, 0, 0]} />
+                    <Bar
+                        dataKey="total_revenue"
+                        fill={theme.palette.orangePrimary.main}
+                        background={{
+                            fill: '#D8E0E0',
+                            radius: [10, 10, 0, 0] // Adding radius to the background
+                        }}
+                        barSize={12}
+                        radius={[10, 10, 0, 0]}
+                    />
 
                 </BarChart>
             </ResponsiveContainer>

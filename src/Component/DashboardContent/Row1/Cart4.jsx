@@ -1,26 +1,50 @@
+
 import { Menu, MenuItem, Typography } from "@mui/material";
 import { Box, useTheme } from "@mui/system";
 import React, { useState } from "react";
 import { PieChart, Pie, Cell } from "recharts";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import { useTranslation } from "react-i18next";
-
-const data01 = [
-  { name: "Subscriptions", value: 20 },
-  { name: "Remaining", value: 80 },
-];
-const data02 = [
-  { name: "Order", value: 10 },
-  { name: "Remaining", value: 90 },
-];
-
-
+import { DashboardDataContext } from "../../../context/DashboardDataContext";
 export const Cart4 = () => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [selectedYear, setSelectedYear] = useState("2023-2024");
-  const {t} = useTranslation()
+  const [selectedYear, setSelectedYear] = useState("2024-2025");
+  const { t } = useTranslation();
   const theme = useTheme();
-  const COLORS = [theme.palette.orangePrimary.main, "#AD4181"];
+  const { performanceData, getPerformanceDashboard } = React.useContext(DashboardDataContext);
+
+  // Calculate totals from performanceData
+  const { subscriptionsTotal, ordersTotal } = React.useMemo(() => {
+    if (!performanceData) return { subscriptionsTotal: 0, ordersTotal: 0 };
+    
+    let subsTotal = 0;
+    let ordsTotal = 0;
+    
+    Object.entries(performanceData).forEach(([key, value]) => {
+      if (key.startsWith('Subscriptions_')) {
+        subsTotal += Number(value);
+      } else if (key.startsWith('Orders_')) {
+        ordsTotal += Number(value);
+      }
+    });
+    
+    return {
+      subscriptionsTotal: subsTotal/2,
+      ordersTotal: ordsTotal/2
+    };
+  }, [performanceData]);
+
+  // Prepare chart data
+  const subscriptionsData = [
+    { name: "Subscriptions", value: subscriptionsTotal },
+    { name: "Remaining", value: Math.max(0, 100 - subscriptionsTotal) }
+  ];
+
+  const ordersData = [
+    { name: "Orders", value: ordersTotal },
+    { name: "Remaining", value: Math.max(0, 100 - ordersTotal) }
+  ];
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -33,10 +57,16 @@ export const Cart4 = () => {
   };
 
   const years = ["2021-2022", "2022-2023", "2023-2024", "2024-2025"];
+
+  React.useEffect(() => {
+    getPerformanceDashboard(selectedYear);
+  }, [selectedYear, getPerformanceDashboard]);
+
   return (
     <>
       <Box display={"flex"} justifyContent="center" alignItems="center">
-        <Box sx={{ display: "flex" }}>
+        <Box sx={{ display: "flex" , marginTop:"10px" }}>
+          {/* Subscriptions Pie Chart */}
           <PieChart width={120} height={120}>
             <defs>
               <linearGradient id="colorGradient" x1="0" y1="0" x2="1" y2="0">
@@ -45,7 +75,7 @@ export const Cart4 = () => {
               </linearGradient>
             </defs>
             <Pie
-              data={data01}
+              data={subscriptionsData}
               cx={60}
               cy={60}
               innerRadius={30}
@@ -55,9 +85,8 @@ export const Cart4 = () => {
               startAngle={90}
               endAngle={-270}
             >
-              <Cell fill="url(#colorGradient)" />
+              <Cell fill="url(#colorGradient)" strokeWidth={.2} cornerRadius={5}/>
               <Cell fill="#D8E0E0" />
-              <Cell fill="#d3d3d3" />
             </Pie>
             <rect
               x={45}
@@ -65,7 +94,7 @@ export const Cart4 = () => {
               width={40}
               height={40}
               fill="url(#colorGradient)"
-              rx={50}
+              rx={50}strokeWidth={.2} cornerRadius={5}
             />
             <text
               x={65}
@@ -75,10 +104,11 @@ export const Cart4 = () => {
               fill="white"
               fontSize="14"
             >
-              {data01[0].value}%
+              {Math.floor(subscriptionsTotal)}%
             </text>
           </PieChart>
 
+          {/* Orders Pie Chart */}
           <PieChart width={120} height={120}>
             <defs>
               <linearGradient id="colorGradient2" x1="0" y1="0" x2="1" y2="0">
@@ -87,7 +117,7 @@ export const Cart4 = () => {
               </linearGradient>
             </defs>
             <Pie
-              data={data02}
+              data={ordersData}
               cx={60}
               cy={60}
               innerRadius={30}
@@ -95,9 +125,8 @@ export const Cart4 = () => {
               fill="#D8E0E0"
               paddingAngle={0}
             >
-              <Cell fill="url(#colorGradient2)" />
+              <Cell fill="url(#colorGradient2)" strokeWidth={.2} cornerRadius={5}/>
               <Cell fill="#D8E0E0" />
-              <Cell fill="#d3d3d3" />
             </Pie>
             <rect
               x={45}
@@ -115,22 +144,20 @@ export const Cart4 = () => {
               fill="white"
               fontSize="14"
             >
-              {data02[0].value}%
-            </text>
+              {Math.floor(ordersTotal)}%
+              </text>
           </PieChart>
         </Box>
       </Box>
-      <Box
-        display={"flex"}
-        justifyContent={"space-between"}
-        paddingRight={"10px"}
-      >
-        <Box justifyContent="left" sx={{ paddingLeft: "20px" }}>
+      
+      <Box display={"flex"} justifyContent={"space-between"} paddingRight={"10px"}>
+        <Box justifyContent="left" sx={{ paddingLeft: "20px" , marginTop:"20px"}}>
+          {/* Subscriptions Legend */}
           <Box display={"flex"} textAlign={"center"} alignItems={"center"}>
             <Box
               component="span"
               sx={{
-                background:"linear-gradient(to right , #f2672e , #fdb913 )",
+                background: "linear-gradient(to right , #f2672e , #fdb913 )",
                 width: "15px",
                 borderRadius: "20px",
                 height: "6px",
@@ -147,11 +174,12 @@ export const Cart4 = () => {
             </Typography>
           </Box>
 
+          {/* Orders Legend */}
           <Box display={"flex"} textAlign={"center"} alignItems={"center"}>
             <Box
               component="span"
               sx={{
-                background:"linear-gradient(to right , #893e9c , #fd4845 )",
+                background: "linear-gradient(to right , #893e9c , #fd4845 )",
                 width: "15px",
                 borderRadius: "20px",
                 height: "6px",
@@ -169,6 +197,7 @@ export const Cart4 = () => {
           </Box>
         </Box>
 
+        {/* Year Selector */}
         <Box>
           <Typography
             variant="body2"
@@ -181,7 +210,7 @@ export const Cart4 = () => {
               alignItems: "end",
               fontSize: "10px",
               color: "#575756",
-              marginTop: "10px",
+              marginTop: "30px",
               marginLeft: "20px",
             }}
           >
@@ -197,15 +226,13 @@ export const Cart4 = () => {
             onClose={() => handleClose(null)}
           >
             {years.map((year) => (
-              
-                <MenuItem
-                  dataKey={year}
-                  sx={{ fontSize: "10px", color: "gray" }}
-                  onClick={() => handleClose(year)}
-                >
-                  {year}
-                </MenuItem>
-              
+              <MenuItem
+                key={year}
+                sx={{ fontSize: "10px", color: "gray" }}
+                onClick={() => handleClose(year)}
+              >
+                {year}
+              </MenuItem>
             ))}
           </Menu>
         </Box>
