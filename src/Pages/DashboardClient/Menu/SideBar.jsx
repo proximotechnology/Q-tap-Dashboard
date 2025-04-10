@@ -52,7 +52,7 @@ const SideBar = ({ setFilteredItems }) => {
         <> {/* TODO: style the button */}
         <Button sx={{ position: {sm:'none', xs:isOpen?'none':'fixed' ,zIndex: 1201,}}} onClick={handleOpenSideBar}>open</Button>
             <Box sx={{ position: {xs:isOpen?'fixed':'none', sm:'fixed'}, left: 0, top: 0, height: '100vh', overflowY: 'auto', zIndex: 1201, bgcolor: "white", width: '100px' }}>
-            <Button sx={{zIndex: 1201,}} onClick={handleOpenSideBar}>close</Button>
+            <Button sx={{zIndex: 1201,display:{sm:'none',xs:'block'} ,alignItems:'center'}} onClick={handleOpenSideBar}>X</Button>
             <Box sx={{ textAlign: "center", alignItems: "center", justifyContent: "center", padding: "20px" }}>
                 <IconButton sx={{
                     backgroundColor: theme.palette.orangePrimary.main, width: "40px", height: "40px",

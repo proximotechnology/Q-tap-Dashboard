@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import SideBar from "../../../Component/dashboard/SideBar/SideBar";
-import { Box, createTheme, CssBaseline } from "@mui/material";
+import { Box,  CssBaseline, useTheme } from "@mui/material";
 import Content from "../../../Component/DashboardContent/Content";
 import TopBar from "../../../Component/dashboard/TopBar/TopBar";
-import { getDesignTokens } from "../../Themes/dark";
 import SidebarButton from "../../../Component/MobileSideBarButton/SidebarButton";
 
 
 export default function Home() {
     const [mode, setMode] = useState('light');
-    const theme = createTheme(getDesignTokens(mode));
     const [openSidebar, setOpenSidebar] = useState(false);
-
+    const theme = useTheme()
     const handleToggleSideBar = () => {
         setOpenSidebar(!openSidebar)
     }

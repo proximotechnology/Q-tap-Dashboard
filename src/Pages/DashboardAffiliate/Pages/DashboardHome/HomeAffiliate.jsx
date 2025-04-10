@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import { Box, createTheme, CssBaseline } from "@mui/material";
 import SideBar from "../../Component/SideBar/SideBar";
 import TopBar from "../../Component/TopBar/TopBar";
 import Content from "../../Component/Content/Content";
-import { getDesignTokens } from "../../../Themes/dark";
 import SidebarButton from "../../../../Component/MobileSideBarButton/SidebarButton";
+import { Box, useTheme } from "@mui/system";
+import { CssBaseline } from "@mui/material";
 
 export default function HomeAffiliate() {
     const [mode, setMode] = useState('light'); 
-    const theme = createTheme(getDesignTokens(mode));  
     const [isSidebarOpen,setSidebarOpen] = useState(false)
     const handleToggleSideBar = ()=>{
         setSidebarOpen(!isSidebarOpen)
     }
+    const theme = useTheme()
     return (
         <Box
             

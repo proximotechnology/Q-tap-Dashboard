@@ -6,7 +6,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
  
 import { ThemeProvider, createTheme } from '@mui/material/styles' 
-import { deepOrange, yellow } from '@mui/material/colors';
 const theme = createTheme({
   palette: {
     mode: 'light', 
@@ -14,6 +13,7 @@ const theme = createTheme({
       // main: "#E57C00", 
       main: "#000", 
       icon:"#ff9800",
+      // secondary:'#E57C00'
     },
     secondaryColor:{
       // main:"#222240", //theme.palette.secondaryColor.main
@@ -31,6 +31,7 @@ const theme = createTheme({
     bgColor: {
       main:  "#FEE1DC",  
     }, 
+    bodyColor:{main:  '#181616',},
     gradient:{
       // orange:'#f7931e',
       // red:'#f15a24',

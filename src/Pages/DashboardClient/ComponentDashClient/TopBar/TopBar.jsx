@@ -10,35 +10,35 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 
 import { useLocation, useNavigate } from "react-router";
-import { makeStyles } from "@mui/styles";
 import Language from "./Language";
 import { useBranch } from "../../../../context/BranchContext";
 import { useTranslation } from "react-i18next";
 
-
+const styles =  (theme) =>({
+    button: {
+        background: `linear-gradient(90deg, #E67D00,${theme.palette.secondaryColor.main} )`,//${theme.palette.secondaryColor.main}
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        width: '130px',
+    },
+    menu: {
+        marginTop: '10px',
+        '& .MuiMenuItem-root': {
+            display: 'flex',
+            alignItems: 'center',
+        },
+        '& .MuiMenuItem-root svg': {
+            marginRight: '8px',
+        },
+    },
+});
 
 export default function TopBar() {
     const {t} = useTranslation();
     const theme = useTheme();
-    const useStyles = makeStyles({
-        button: {
-            background: `linear-gradient(90deg, #E67D00, ${theme.palette.secondaryColor.main})`,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            width: '130px',
-        },
-        menu: {
-            marginTop: '10px',
-            '& .MuiMenuItem-root': {
-                display: 'flex',
-                alignItems: 'center',
-            },
-            '& .MuiMenuItem-root svg': {
-                marginRight: '8px',
-            },
-        },
-    });
+    
+
     const pageTitles = {
         '/dashboard-client': t("dashboard"),
         '/order': t("order"),
@@ -56,7 +56,6 @@ export default function TopBar() {
             </IconButton>,
     };
 
-    const classes = useStyles();
     const navigate = useNavigate();
     const [mode, setMode] = useState('light');
     const { branches, setBranches, selectedBranch, setSelectedBranch } = useBranch();
@@ -145,8 +144,9 @@ export default function TopBar() {
 
             <Box sx={{ display: "flex", alignItems: "center", gap: "7px" }}>
 
-                <Button className={classes.button} onClick={BranchOpen}
+                <Button onClick={BranchOpen}
                     sx={{
+                        ...styles(theme).button,
                         fontSize: "11px", borderRadius: "20px", color: "white",
                         textTransform: "capitalize", justifyContent: "center",
                     }}>

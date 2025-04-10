@@ -25,19 +25,7 @@ import Days from '../Menu/Days';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
-const StyledButton = styled(Button)(() => ({
-    backgroundColor: theme.palette.secondaryColor.main,
-    color: '#fff',
-    padding: '1px 30px',
-    textTransform: 'capitalize',
-    borderRadius: '20px',
-    fontSize: '9px',
-    textAlign: 'center',
-    justifyContent: 'center',
-    '&:hover': {
-        backgroundColor: theme.palette.secondaryColor.main,
-    },
-}));
+
 
 const ImageBox = styled(Box)(({ imageUrl }) => ({
     width: '120px',
@@ -105,7 +93,7 @@ const Menu = () => {
         });
         return initialTimes;
     });
-const {t} = useTranslation();
+    const { t } = useTranslation();
 
     // Handle save
     const handleSave = async (id) => {
@@ -260,12 +248,24 @@ const {t} = useTranslation();
                             )}
                         </ImageBox>
                         <Typography variant="subtitle1" sx={{ fontSize: '8px', color: '#AAAAAA', mb: 1, mt: 1 }}>
-                        {t("logo500")}
+                            {t("logo500")}
                         </Typography>
-                        <StyledButton variant="contained" component="label">
+                        <Button sx={{
+                            backgroundColor: theme.palette.secondaryColor.main,
+                            color: '#fff',
+                            padding: '1px 30px',
+                            textTransform: 'capitalize',
+                            borderRadius: '20px',
+                            fontSize: '9px',
+                            textAlign: 'center',
+                            justifyContent: 'center',
+                            '&:hover': {
+                                backgroundColor: theme.palette.secondaryColor.main,
+                            },
+                        }} variant="contained" component="label">
                             <StraightIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: '16px' }} /> {t("upload")}
                             <input type="file" accept="image/*" hidden onChange={handleLogoUpload} />
-                        </StyledButton>
+                        </Button>
                     </Box>
 
                     <Box
@@ -297,12 +297,24 @@ const {t} = useTranslation();
                             )}
                         </Box>
                         <Typography variant="subtitle1" align="center" sx={{ fontSize: '8px', color: '#AAAAAA', mt: 1 }}>
-                        {t("banner1000x500")}
+                            {t("banner1000x500")}
                         </Typography>
-                        <StyledButton variant="contained" component="label" sx={{ mt: 1 }}>
+                        <Button variant="contained" component="label" sx={{
+                            backgroundColor: theme.palette.secondaryColor.main,
+                            color: '#fff',
+                            padding: '1px 30px',
+                            textTransform: 'capitalize',
+                            borderRadius: '20px',
+                            fontSize: '9px',
+                            textAlign: 'center',
+                            justifyContent: 'center',
+                            '&:hover': {
+                                backgroundColor: theme.palette.secondaryColor.main,
+                            }, mt: 1
+                        }}>
                             <StraightIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: '16px' }} /> {t("upload")}
                             <input type="file" accept="image/*" hidden onChange={handleBannerUpload} />
-                        </StyledButton>
+                        </Button>
                     </Box>
                 </Grid>
 
@@ -528,7 +540,7 @@ const {t} = useTranslation();
                                             style={{ fontSize: 16, color: theme.palette.secondaryColor.main, marginRight: '10px' }}
                                         ></span>
                                         <Typography sx={{ fontSize: '15px', color: 'gray' }}>
-                                        {t("activeCallWaiter")}
+                                            {t("activeCallWaiter")}
                                         </Typography>
                                     </Box>
                                 }
@@ -551,7 +563,7 @@ const {t} = useTranslation();
                         {/* Payment Method */}
                         <Box sx={{ width: '100%' }}>
                             <Typography variant="body1" sx={{ display: 'flex', fontSize: '15px', color: 'gray' }}>
-                            {t("paymentMethod")}
+                                {t("paymentMethod")}
                             </Typography>
                             <Box display="flex" justifyContent="space-between">
                                 <FormControlLabel
@@ -670,7 +682,7 @@ const {t} = useTranslation();
                         {/* Payment Time */}
                         <Box sx={{ width: '100%' }}>
                             <Typography variant="body1" sx={{ display: 'flex', fontSize: '15px', color: 'gray' }}>
-                            {t("paymentTime")}
+                                {t("paymentTime")}
                             </Typography>
                             <Box display="flex" justifyContent="left">
                                 <FormControlLabel
@@ -726,10 +738,10 @@ const {t} = useTranslation();
 
                 {/* Third Column */}
                 <Grid item xs={12} lg={4} sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                    }}
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
                 >
                     {/* Working Hours Title */}
                     <Box
@@ -753,7 +765,7 @@ const {t} = useTranslation();
                             <span className="path8"></span>
                         </span>
                         <Typography variant="h6" sx={{ fontSize: '13px', color: 'gray', marginLeft: '5px' }}>
-                        {t("workHours")}
+                            {t("workHours")}
                         </Typography>
                     </Box>
 
@@ -812,7 +824,7 @@ const {t} = useTranslation();
                                     {/* To Time */}
                                     <Box sx={{ display: 'flex', alignItems: 'center', marginRight: 2 }}>
                                         <Typography sx={{ fontSize: '11px', color: '#BDBDBD', marginRight: 1 }}>
-                                        {t("to")}
+                                            {t("to")}
                                         </Typography>
                                         <FormControl variant="outlined" size="small" sx={{ minWidth: 70 }}>
                                             <Select
@@ -836,7 +848,7 @@ const {t} = useTranslation();
                                     {/* From Time */}
                                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                         <Typography sx={{ fontSize: '11px', color: '#BDBDBD', marginRight: 1 }}>
-                                        {t("from")}
+                                            {t("from")}
                                         </Typography>
                                         <FormControl variant="outlined" size="small" sx={{ minWidth: 70 }}>
                                             <Select
@@ -883,7 +895,7 @@ const {t} = useTranslation();
                     {t("save")}
                 </Button>
             </Box>
-        </Paper>
+        </Paper >
     );
 };
 

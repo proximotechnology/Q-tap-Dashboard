@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 
 
 const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onClick }) => {
+  const theme = useTheme();
   const statusStyles = {
     'in_progress': { backgroundColor: theme.palette.secondaryColor.main, color: '#f4f6fc' },
     'open': { backgroundColor: '#EBEDF3', color: '#575756' },
@@ -21,7 +22,6 @@ const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onC
   const formattedDate = new Date(created_at).toLocaleDateString();
   // console.log(status, "status ");
   const { t } = useTranslation()
-  const theme = useTheme();
 
   return (
     <Paper

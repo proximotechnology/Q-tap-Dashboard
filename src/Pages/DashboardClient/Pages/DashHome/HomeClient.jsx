@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Box, createTheme, CssBaseline } from "@mui/material";
+import React, {  useState } from "react";
+import { Box, CssBaseline, useTheme } from "@mui/material";
 
 import SideBar from "../../ComponentDashClient/SideBar/SideBar";
 import TopBar from "../../ComponentDashClient/TopBar/TopBar";
 import Content from "../../ComponentDashClient/Content/Content";
-import { getDesignTokens } from "../../../Themes/dark";
 import SidebarButton from "../../../../Component/MobileSideBarButton/SidebarButton";
 
 
 
 export default function HomeClient() {
-    const [mode, setMode] = useState('light');
+    const theme = useTheme()
     const [isSideBarOpen, setisSideBarOpen] = useState(false);
-    const theme = createTheme(getDesignTokens(mode));
 
     const handleOpenSideBar = ()=>{
         setisSideBarOpen(!isSideBarOpen)
@@ -21,8 +19,8 @@ export default function HomeClient() {
         <Box
             sx={{
                 display: "flex", flexDirection: "row",
-                backgroundColor: mode === 'dark' ? '#181616' : theme.palette.bodyColor.main,
-                color: mode === 'dark' ? '#181616' : '#000',
+                backgroundColor: theme.palette.bodyColor.main,
+                color: '#000',
                 width:"100%" , minHeight:"125vh",
                 paddingRight:"0px !important",
             
@@ -32,7 +30,7 @@ export default function HomeClient() {
             <SidebarButton top={'30px'} openSidebar={isSideBarOpen} handleToggleSideBar={handleOpenSideBar} />
             <SideBar isOpen={isSideBarOpen}/>
             <Box sx={{ flexGrow: 1,width:"100%",  padding:"0px 30px ",  marginLeft: {sm:"0px",md:'200px'}, overflow: "hidden" }}>
-                <TopBar mode={mode} setMode={setMode} />
+                <TopBar />
                 <Content />
             </Box>
         </Box>
