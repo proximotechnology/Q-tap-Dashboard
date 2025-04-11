@@ -1,4 +1,4 @@
-import { color } from '@mui/system';
+import { color, useTheme } from '@mui/system';
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
@@ -17,7 +17,7 @@ const Cart2 = ({ Total_Orders }) => {
   const [allOrders, setAllOrders] = React.useState([]);
   const [displayedOrders, setDisplayedOrders] = React.useState([]);
   const [page, setPage] = React.useState(0);
-
+  const theme  = useTheme()
   React.useEffect(() => {
     if (Total_Orders) {
       const orderArray = Object.values(Total_Orders);
@@ -104,10 +104,10 @@ const Cart2 = ({ Total_Orders }) => {
             marginRight: "10px",
             border: 'none',
             background: 'transparent',
-            color:"rgb(219, 136, 40)"
+            color:theme.palette.orangePrimary.main
           }}
-          onMouseEnter={(e) => e.target.style.color = 'rgb(241, 181, 113)'}
-          onMouseLeave={(e) => e.target.style.color = 'rgb(219, 136, 40)'}
+          onMouseEnter={(e) => e.target.style.color = theme.palette.chart.orangeLight}
+          onMouseLeave={(e) => e.target.style.color = theme.palette.orangePrimary.main}
         >
           {page === 0 ? '>' : '<'}
         </button>

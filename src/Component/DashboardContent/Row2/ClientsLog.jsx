@@ -1,5 +1,5 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Grid, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box, useTheme } from '@mui/system';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import CircleIcon from '@mui/icons-material/Circle';
 import { useTranslation } from 'react-i18next';
@@ -25,6 +25,7 @@ export const ClientsLog = () => {
     const { t } = useTranslation();
     const { dashboardData, getDashboard } = React.useContext(DashboardDataContext);
     const { Clients_Log } = dashboardData || {};
+    const theme = useTheme()
 
     React.useEffect(() => {
         getDashboard();
@@ -45,17 +46,18 @@ export const ClientsLog = () => {
             boxShadow: 'none', 
             minHeight: "50vh", 
             maxHeight: "62vh", 
-            whiteSpace: "nowrap" 
+            whiteSpace: "nowrap" ,
+            backgroundColor:theme.palette.bodyColor.secandary
         }}>
             <Grid container justifyContent="space-between" alignItems="center" sx={{ padding: "20px 20px 0px 20px" }}>
                 <Grid item>
-                    <Typography variant="body1" component="div" sx={{ fontSize: '13px', color: "#575756" }}>
+                    <Typography variant="body1" component="div" sx={{ fontSize: '13px', color: theme.palette.text.secondary }}>
                         {t("clientLog")}
                     </Typography>
                 </Grid>
                 <Grid item>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <img src="/assets/Clients.svg" alt="icon" style={{ color: "#D8E0E0", width: "18px", height: "18px" }} />
+                        <img src="/assets/Clients.svg" alt="icon" style={{ color: theme.palette.text.default, width: "18px", height: "18px" }} />
                     </Box>
                 </Grid>
             </Grid>
@@ -91,7 +93,7 @@ export const ClientsLog = () => {
                                         borderRadius: '20px',
                                         overflow: 'hidden',
                                         margin: '2px 0px',
-                                        backgroundColor: index % 2 === 0 ? '#EBEDF3' : '#ffffff',
+                                        backgroundColor: index % 2 === 0 ? theme.palette.bodyColor.tableSecandary : theme.palette.bodyColor.tableMain,
                                         '& td:first-of-type': {
                                             borderTopLeftRadius: '20px',
                                             borderBottomLeftRadius: '20px',
@@ -111,7 +113,7 @@ export const ClientsLog = () => {
                                                 borderRadius: '50%',
                                                 marginRight: '8px',
                                             }}>
-                                                <PersonOutlineOutlinedIcon sx={{ color: 'gray', fontSize: '15px' }} />
+                                                <PersonOutlineOutlinedIcon sx={{ color: theme.palette.text.default, fontSize: '15px' }} />
                                             </Box>
                                             {row.client_id}
                                         </Box>
@@ -122,7 +124,7 @@ export const ClientsLog = () => {
                                     <TableCell sx={{ textAlign: 'center', border: 'none', fontSize: '11px', color: 'gray', padding: '0px', paddingX: '1px' }}>
                                         {date}
                                     </TableCell>
-                                    <TableCell sx={{ textAlign: 'center', border: 'none', fontSize: '11px', color: row.action ? 'orange' : 'gray', padding: '0px', paddingX: '1px' }}>
+                                    <TableCell sx={{ textAlign: 'center', border: 'none', fontSize: '11px', color: row.action ? theme.palette.text.orange : theme.palette.text.default, padding: '0px', paddingX: '1px' }}>
                                         {row.action && <CircleIcon sx={{ fontSize: "7px" }} />} {t(row.action ? "active Now" : "inactive")}
                                     </TableCell>
                                 </TableRow>
@@ -131,7 +133,7 @@ export const ClientsLog = () => {
                     ) : (
                         <TableRow>
                             <TableCell colSpan={4} sx={{ textAlign: 'center', border: 'none', padding: '20px' }}>
-                                <Typography sx={{ fontSize: '11px', color: 'gray' }}>
+                                <Typography sx={{ fontSize: '11px', color: theme.palette.text.default }}>
                                     {t("noDataAvailable")}
                                 </Typography>
                             </TableCell>

@@ -64,7 +64,7 @@ const SideBar = ({ setFilteredItems }) => {
                 </IconButton>
             </Box>
             <Box sx={{
-                width: "100%", height: "30px", background: "linear-gradient(90deg, #E57C00 0%, #FE9E2F 100%)",
+                width: "100%", height: "30px", background: `linear-gradient(90deg, ${theme.palette.orangePrimary.main} 0%, #FE9E2F 100%)`,
                 display: "flex", textAlign: "center", alignItems: "center", justifyContent: "center"
             }}>
                 <Typography variant='body2' sx={{ fontSize: "10px", color: "white" }}>{t("categories")}</Typography>

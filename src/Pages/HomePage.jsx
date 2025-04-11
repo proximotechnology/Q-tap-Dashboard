@@ -49,7 +49,9 @@ export const HomePage = () => {
       }}
     >
       <Grid container spacing={0}>
+        <Grid item xs={12} md={6}>
         <QtapLogo />
+        </Grid>
 
         <Grid item xs={12} md={6}>
           {/* language component */}
@@ -149,7 +151,8 @@ export const HomePage = () => {
             flexDirection="column"
             justifyContent="center"
             alignItems="center"
-            height="100vh"
+            minHeight="calc(100vh - 70px)"
+            marginTop='70px'
           >
             <Box sx={{ width: { lg: "43%", md: "60%", xs: "90%" } }}>
               <QtapHome

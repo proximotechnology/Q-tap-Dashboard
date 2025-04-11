@@ -88,7 +88,7 @@ export const Feedback = () => {
             </Box>
             <Divider
                 sx={{
-                    backgroundImage: 'linear-gradient(to right , #FDB913, #E57C00 )',
+                    backgroundImage: `linear-gradient(to right , #FDB913, ${theme.palette.orangePrimary.main} )`,
                     height: '2px',
                     width: "100%", border: "none",
                 }}
@@ -200,10 +200,10 @@ export const Feedback = () => {
                     onClick={handleSaveFeedback}
                     sx={{
                         textTransform: "capitalize", color: "white", padding: "3px 30px",
-                        backgroundImage: "linear-gradient(to right, #FDB913, #E57C00)",
+                        backgroundImage: `linear-gradient(to right, #FDB913, ${theme.palette.orangePrimary.main})`,
                         fontSize: "12px", borderRadius: "20px",
                         '&:hover': {
-                            backgroundImage: 'linear-gradient(to right , #FDB913, #E57C00 )'
+                            backgroundImage: `linear-gradient(to right , #FDB913, ${theme.palette.orangePrimary.main} )`
                         }
                     }}>
                     <CheckIcon sx={{ marginRight: "6px", fontSize: "15px", strokeWidth: 1 , stroke:"white" }} /> {t("submit")}

@@ -177,18 +177,18 @@ export const Login = () => {
         >
           <FormControlLabel
             value="qtap_admins"
-            control={<Radio sx={{ '& .MuiSvgIcon-root': { fontSize: 18, color: '#e2944a' } }} />}
-            label={<Typography sx={{ fontSize: '12px' }}>{t("admin")}</Typography>}
+            control={<Radio sx={{ '& .MuiSvgIcon-root': { fontSize: 18, color: theme.palette.orangePrimary.main } }} />}
+            label={<Typography sx={{ fontSize: '12px',color:theme.palette.text.default }}>{t("admin")}</Typography>}
           />
           <FormControlLabel
             value="qtap_affiliates"
-            control={<Radio sx={{ '& .MuiSvgIcon-root': { fontSize: 18, color: '#e2944a' } }} />}
-            label={<Typography sx={{ fontSize: '12px' }}>{t("affiliate")}</Typography>}
+            control={<Radio sx={{ '& .MuiSvgIcon-root': { fontSize: 18, color: theme.palette.orangePrimary.main } }} />}
+            label={<Typography sx={{ fontSize: '12px',color:theme.palette.text.default }}>{t("affiliate")}</Typography>}
           />
           <FormControlLabel
             value="qtap_clients"
-            control={<Radio sx={{ '& .MuiSvgIcon-root': { fontSize: 18, color: '#e2944a' } }} />}
-            label={<Typography sx={{ fontSize: '12px' }}>{t("client")}</Typography>}
+            control={<Radio sx={{ '& .MuiSvgIcon-root': { fontSize: 18, color: theme.palette.orangePrimary.main } }} />}
+            label={<Typography sx={{ fontSize: '12px',color:theme.palette.text.default }}>{t("client")}</Typography>}
           />
         </RadioGroup>
       </FormControl>

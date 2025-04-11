@@ -22,7 +22,7 @@ export const Row1 = () => {
         <Box sx={{ flexGrow: 1, padding: '0px 20px 20px 20px' }}>
             <Grid className="mainContainer" container spacing={3}>
                 <Grid item xs={12} md={6} lg={3} >
-                    <Card sx={{ borderRadius: '20px', height: '250px' }}>
+                    <Card sx={{ borderRadius: '20px', height: '250px',backgroundColor:theme.palette.bodyColor.secandary }}>
                         <CardContent sx={{ overflowX: 'auto' }}>
                             <Box display={"flex"} justifyContent={"space-between"}>
                                 <Typography variant="subtitle1" color="#575756">{t("client")}</Typography>
@@ -36,11 +36,11 @@ export const Row1 = () => {
                 </Grid>
 
                 <Grid item xs={12} md={6} lg={3}>
-                    <Card sx={{ borderRadius: '20px', height: '250px' }}>
+                    <Card sx={{ borderRadius: '20px', height: '250px',backgroundColor:theme.palette.bodyColor.secandary }}>
                         <CardContent>
                             <Box display={"flex"} justifyContent={"space-between"}>
                                 <Typography variant="subtitle1" color="text.secondary">{t("totalOrders")}</Typography>
-                                <span class="icon-shopping-bag" style={{ color: "#D8E0E0", fontSize: "22px" }}></span>
+                                <span class="icon-shopping-bag" style={{ color: theme.palette.text.secondary, fontSize: "22px" }}></span>
                             </Box >
                             <Typography variant="body2" sx={{ color: theme.palette.orangePrimary.main, fontSize: "20px" }}>5.564</Typography>
 
@@ -51,7 +51,7 @@ export const Row1 = () => {
                 </Grid>
 
                 <Grid item xs={12} md={6} lg={3}>
-                    <Card sx={{ borderRadius: '20px', height: '250px' }}>
+                    <Card sx={{ borderRadius: '20px', height: '250px' ,backgroundColor:theme.palette.bodyColor.secandary}}>
                         <CardContent>
                             <Box display={"flex"} justifyContent={"space-between"}>
                                 <Typography variant="subtitle1" color="text.secondary">{t("affiliateUsers")}</Typography>
@@ -66,7 +66,7 @@ export const Row1 = () => {
 
 
                 <Grid item xs={12} md={6} lg={3}>
-                    <Card sx={{ borderRadius: '20px', height: '250px' }}>
+                    <Card sx={{ borderRadius: '20px', height: '250px' ,backgroundColor:theme.palette.bodyColor.secandary}}>
                         <CardContent>
                             <Box display={"flex"} justifyContent={"space-between"}>
                                 <Typography variant="subtitle1" color="text.secondary">{t("performance")}</Typography>

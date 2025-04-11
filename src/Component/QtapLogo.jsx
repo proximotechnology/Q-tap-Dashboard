@@ -14,6 +14,7 @@ const QtapLogo = () => {
         backgroundImage: 'url(/images/Qtop1.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+        width:"100%",
         display: 'flex',
         justifyContent: 'center',
         height: "100vh",
@@ -53,8 +54,8 @@ const QtapLogo = () => {
 
     return (
 
-        <Grid item xs={12} md={6} sx={{ position: 'relative' }}>
-            <ImageContainer>
+        
+            <ImageContainer sx={{ position: 'relative',height:'100%', minHeight:'100vh' }}>
                 <ChevronLeftOutlinedIcon sx={{ position: "absolute", top: "40px", left: "10%", color: "white", fontSize: "33px", zIndex: "8" }} />
                 <TextOverlay sx={{ width: "80%" }}>
 
@@ -70,7 +71,7 @@ const QtapLogo = () => {
                 </TextOverlay>
 
             </ImageContainer>
-        </Grid>
+        
 
     )
 }

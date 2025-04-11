@@ -43,8 +43,8 @@ export const Cart1 = ({ Client }) => {
                     <PieChart width={78} height={78}>
                         <defs>
                             <linearGradient id="gradientFree" x1="0" y1="0" x2="100%" y2="0">
-                                <stop offset="0%" stopColor="rgb(255, 194, 133)" />
-                                <stop offset="100%" stopColor={theme.palette.orangePrimary.main} />
+                                <stop offset="0%" stopColor={theme.palette.chart.orangeLight} />
+                                <stop offset="100%" stopColor={theme.palette.chart.orange} />
                             </linearGradient>
                         </defs>
                         <Pie
@@ -75,8 +75,8 @@ export const Cart1 = ({ Client }) => {
                     <PieChart width={78} height={78}>
                         <defs>
                             <linearGradient id="gradientStarter" x1="0" y1="0" x2="100%" y2="0">
-                                <stop offset="0%" stopColor="rgb(255, 174, 216)" />
-                                <stop offset="100%" stopColor="#AD4181" />
+                                <stop offset="0%" stopColor={theme.palette.chart.pinkLight} />
+                                <stop offset="100%" stopColor={theme.palette.chart.pink} />
                             </linearGradient>
                         </defs>
                         <Pie

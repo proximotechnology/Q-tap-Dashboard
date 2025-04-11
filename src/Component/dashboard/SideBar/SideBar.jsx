@@ -97,13 +97,13 @@ export default function SideBar({isOpen}) {
                 xs:'60%',
                 md:'200px'
             },
-            backgroundColor: '#fff',
+            backgroundColor: theme.palette.bodyColor.secandary,
             padding: '25px 20px',
             position: 'fixed',
             top: 0,
             left: 0,
             height: '100vh',
-            // removed overflowY: 'auto'
+            overflowY: 'auto',
             display: {
                 xs:isOpen? "" :"none",
                 md:'flex'

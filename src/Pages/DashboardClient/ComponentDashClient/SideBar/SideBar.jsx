@@ -182,7 +182,7 @@ export default function SideBar({isOpen}) {
                 ))}
             </List>
 
-            <List sx={{ marginTop: "12vh" }}>
+            <List sx={{  marginTop:'clamp(10px, 5vw, 10vh)' }}>
                 {Arr2.map((item, index) => (
                     <Tooltip
                         ListItem

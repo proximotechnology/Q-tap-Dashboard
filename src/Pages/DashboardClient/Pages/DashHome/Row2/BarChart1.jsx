@@ -32,7 +32,7 @@ export const BarChart1 = () => {
         // console.log("salesData", salesData);
     }, [year]);
     return (
-        <Paper sx={{ height: "220px", borderRadius: "20px" }}>
+        <Paper sx={{ height: "220px", borderRadius: "20px",backgroundColor:theme.palette.bodyColor.secandary }}>
             <Grid container justifyContent="space-between" alignItems="center" sx={{ padding: "10px 20px", }} >
                 <Grid item>
                     <Typography variant="body1" component="div" sx={{ color: "#575756", fontSize: '13px' }}>

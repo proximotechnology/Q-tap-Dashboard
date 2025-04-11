@@ -73,7 +73,7 @@ export const WalletAffiliate = () => {
                         {t("currentBalance")}
                     </Typography>
 
-                    <Typography variant='h1' sx={{ fontSize: "30px", color: "#E57C00", marginBottom: "8px" }}>
+                    <Typography variant='h1' sx={{ fontSize: "30px", color: theme.palette.orangePrimary.main, marginBottom: "8px" }}>
                         501,420 <span style={{ color: "#AAAAAA", fontSize: "18px" }}>EGP</span>
                     </Typography>
                     <Typography sx={{ fontSize: "13px", color: "gray", marginBottom: "10px" }}>

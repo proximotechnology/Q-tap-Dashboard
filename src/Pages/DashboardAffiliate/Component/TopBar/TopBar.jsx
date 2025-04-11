@@ -10,6 +10,7 @@ import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Language from "../../../DashboardClient/ComponentDashClient/TopBar/Language";
 import { useTranslation } from "react-i18next";
+import DarkModeSwitch from "../../../../Component/DarkModeSwitch";
 
 
 export default function TopBar() {
@@ -57,41 +58,11 @@ export default function TopBar() {
 
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
 
-                <Box sx={{ marginRight: "20px", display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
-                    <LightModeOutlinedIcon onClick={handleToggleMode}
-                        sx={{ fontSize: "20px", fill: mode === 'light' ? theme.palette.orangePrimary.icon : '#575756' }} />
-                    <Switch
-                        checked={mode === 'light'}
-                        onChange={handleToggle}
-                        sx={{
-                            margin: "0px -10px !important",
-                            transform: 'scale(0.8)',
-                            '& .MuiSwitch-switchBase': {
-                                padding: -1,
-                            },
-                            '& .MuiSwitch-thumb': {
-                                width: 18,
-                                height: 18,
-                                color: theme.palette.orangePrimary.main,
-                            },
-                            '& .MuiSwitch-track': {
-                                borderRadius: 12,
-                                height: 15,
-                                width: 50,
-                            },
-                            '& .MuiSwitch-switchBase.Mui-checked': {
-                                color: theme.palette.orangePrimary.main,
-                            },
-                            '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-                                backgroundColor: "#D8E0E0",
-                            },
-                        }}
-                    />
-                    <DarkModeOutlinedIcon onClick={handleToggleMode}
-                        sx={{ fontSize: "20px", fill: mode === 'dark' ? theme.palette.orangePrimary.icon : '#575756' }} />
+                <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
+                    <DarkModeSwitch />
+                    <Language />
                 </Box>
 
-                <Language />
                 <Box
                     aria-describedby={openUserPopover ? 'simple-popover' : undefined}
                     onClick={handleUserClick}

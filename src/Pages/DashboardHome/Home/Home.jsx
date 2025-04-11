@@ -19,8 +19,8 @@ export default function Home() {
             sx={{
                 display: "flex",
                 flexDirection: "column",
-                backgroundColor: mode === 'dark' ? '#181616' : theme.palette.bodyColor.main,
-                color: mode === 'dark' ? '#fff' : '#000',
+                backgroundColor:  theme.palette.bodyColor.main,
+                color:  theme.palette.text.default,
                 minHeight: "100vh",
                 width: "100%",
                 overflow: "hidden",

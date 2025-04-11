@@ -13,6 +13,7 @@ import { useLocation, useNavigate } from "react-router";
 import Language from "./Language";
 import { useBranch } from "../../../../context/BranchContext";
 import { useTranslation } from "react-i18next";
+import DarkModeSwitch from "../../../../Component/DarkModeSwitch";
 
 const styles =  (theme) =>({
     button: {
@@ -137,7 +138,7 @@ export default function TopBar() {
         }}>
             <Typography variant="body1" sx={{
                 fontSize: "18px", color: theme.palette.secondaryColor.main, width: "3%",
-                borderBottom: "2px solid #E57C00"
+                borderBottom: `2px solid ${theme.palette.orangePrimary.main}`
             }}>
                 {pageTitles[location.pathname] || 'Dashboard'}
             </Typography>
@@ -207,38 +208,8 @@ export default function TopBar() {
                 </IconButton>
 
 
-                <Box sx={{ display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center", margin: "0 5px" }}>
-                    <LightModeOutlinedIcon onClick={handleToggleMode}
-                        sx={{ fontSize: "20px", fill: mode === 'light' ? iconColor : '#575756' }} />
-                    <Switch
-                        checked={mode === 'light'}
-                        onChange={handleToggle}
-                        sx={{
-                            margin: "0px -10px !important",
-                            transform: 'scale(0.8)', // تصغير الحجم العام
-                            '& .MuiSwitch-switchBase': {
-                                padding: -1, // تصغير القاعدة
-                            },
-                            '& .MuiSwitch-thumb': {
-                                width: 18, // تصغير النقطة
-                                height: 18,
-                                color: theme.palette.orangePrimary.main,
-                            },
-                            '& .MuiSwitch-track': {
-                                borderRadius: 12,
-                                height: 15,
-                                width: 50, // تصغير المسار
-                            },
-                            '& .MuiSwitch-switchBase.Mui-checked': {
-                                color: theme.palette.orangePrimary.main,
-                            },
-                            '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-                                backgroundColor: "#D8E0E0",
-                            },
-                        }}
-                    />
-                    <DarkModeOutlinedIcon onClick={handleToggleMode}
-                        sx={{ fontSize: "20px", fill: mode === 'dark' ? iconColor : '#575756' }} />
+                <Box sx={{ display:{xs:'none',sm:'flex'} }}>
+                    <DarkModeSwitch />
                 </Box>
 
 

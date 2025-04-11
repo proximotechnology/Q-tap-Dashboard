@@ -33,7 +33,7 @@ export const Reset = () => {
 
             <Box
                 sx={{
-                    borderBottom: "3px solid #E57C00",
+                    borderBottom: `3px solid ${theme.palette.orangePrimary.main}`,
                     width: { lg: "85%", md: "50%", xs: "50%" },
                     marginBottom: 5
                 }}

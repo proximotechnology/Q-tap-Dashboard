@@ -10,10 +10,10 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import Language from "./Language";
 import { useTranslation } from "react-i18next";
-
+import { useColorMode } from '../../../context/ThemeModeProvider'
+import DarkModeSwitch from "../../DarkModeSwitch";
 
 export default function TopBar() {
-    const [mode, setMode] = useState('light');
     const navigate = useNavigate();
     const { t } = useTranslation();
     const theme = useTheme();
@@ -29,13 +29,7 @@ export default function TopBar() {
         "/notification": t("notification"),
         "/feedback-admin": t("feedback"),
     };
-    const handleToggle = (event) => {
-        setMode(event.target.checked ? 'light' : 'dark');
-    };
 
-    const handleToggleMode = () => {
-        setMode(prevMode => prevMode === 'light' ? 'dark' : 'light');
-    };
 
     const [anchorElLanguage, setAnchorElLanguage] = useState(null);
     const [selectedLanguage, setSelectedLanguage] = useState('en');
@@ -69,7 +63,6 @@ export default function TopBar() {
         setAnchorElUser(null);
     };
 
-    const iconColor = mode === 'light' ? '#ff9800' : '#ff9800';
     const location = useLocation();
     return (
         <Box sx={{
@@ -81,43 +74,13 @@ export default function TopBar() {
             </Typography>
 
             <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
-            {/* TODO:lang / dark mode disappear in xs screen and go to the parson list item */}
+                {/* TODO:lang / dark mode disappear in xs screen and go to the parson list item */}
                 {/* light dark mode */}
-                <Box sx={{ marginRight: "20px", display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
-                    <LightModeOutlinedIcon onClick={handleToggleMode}
-                        sx={{ fontSize: "20px", fill: mode === 'light' ? iconColor : '#575756' }} />
-                    <Switch
-                        checked={mode === 'light'}
-                        onChange={handleToggle}
-                        sx={{
-                            margin: "0px -10px !important",
-                            transform: 'scale(0.8)', // تصغير الحجم العام
-                            '& .MuiSwitch-switchBase': {
-                                padding: -1, // تصغير القاعدة
-                            },
-                            '& .MuiSwitch-thumb': {
-                                width: 18, // تصغير النقطة
-                                height: 18,
-                                color: theme.palette.orangePrimary.main,
-                            },
-                            '& .MuiSwitch-track': {
-                                borderRadius: 12,
-                                height: 15,
-                                width: 50, // تصغير المسار
-                            },
-                            '& .MuiSwitch-switchBase.Mui-checked': {
-                                color: theme.palette.orangePrimary.main,
-                            },
-                            '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-                                backgroundColor: "#D8E0E0",
-                            },
-                        }}
-                    />
-                    <DarkModeOutlinedIcon onClick={handleToggleMode}
-                        sx={{ fontSize: "20px", fill: mode === 'dark' ? iconColor : '#575756' }} />
+                <Box sx={{ display:{xs:'none',sm:'flex'} }}>
+                    <DarkModeSwitch />
+                <Language />
                 </Box>
                 {/* language */}
-                <Language />
 
                 {/* user option */}
                 <Box
