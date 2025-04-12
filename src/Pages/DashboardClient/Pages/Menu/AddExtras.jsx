@@ -1,76 +1,29 @@
 import { Button, Box, Divider, IconButton, Modal, Typography, TextField, Grid, MenuItem, Select, FormControl, useTheme } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
-import { ContentMenu } from '../../../../context/ContentMenuContext';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 
-export const AddExtras = ({ open, handleClose }) => {
-
+export const AddExtras = ({ open, handleClose, onAdd, variants }) => {
+    const { t } = useTranslation();
+    const theme = useTheme();
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
     const [variantsId, setVariantsId] = useState("");
-    const [loading, setLoading] = useState(false)
-    const selectedBranch = localStorage.getItem('selectedBranch')
-    const { variantsContext } = useContext(ContentMenu);
-    const {t} = useTranslation();
-    useEffect(() => {
-        console.log("varianet page new", selectedBranch, variantsContext)
-    }, [])
 
-    const handleAdd = async () => {
-        try {
-            setLoading(true);
-            if (!name || !price) {
-                toast.error(t("plFillAllField"));
-                setLoading(false);
-                return;
-            }
-
-
-            const formData = new FormData();
-            formData.append('name', name);
-            formData.append('price', price);
-            formData.append("variants_id", variantsId)
-            formData.append('brunch_id', selectedBranch);
-
-            const response = await axios({
-                method: 'POST',
-                url: 'https://highleveltecknology.com/Qtap/api/meals_extra',
-                data: formData,
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            if (response.data) {
-                toast.success(t("extra.addSucc"));
-                // reload page to get new variants whic added now
-                const today = new Date().toLocaleDateString();
-                setName('');
-                setPrice('');
-                window.location.reload();
-
-            }
-        } catch (error) {
-            console.error('Error adding variants:', error);
-            const errorMessage = error.response?.data?.message || t("extra.addErr");
-            if (error.response?.data?.errors) {
-                Object.values(error.response.data.errors).forEach(err => {
-                    toast.error(err.join(', '));
-                });
-            } else {
-                toast.error(errorMessage);
-            }
-        } finally {
-            setLoading(false);
+    const handleAdd = () => {
+        if (!name || !price || !variantsId) {
+            toast.error(t("plFillAllField"));
+            return;
         }
+        onAdd({ name, price, variants_id: variantsId });
+        setName('');
+        setPrice('');
+        setVariantsId('');
+        handleClose();
     };
 
-    const theme = useTheme();
     return (
         <Modal open={open} onClose={handleClose}>
             <Box
@@ -92,12 +45,8 @@ export const AddExtras = ({ open, handleClose }) => {
                         <CloseIcon sx={{ fontSize: "20px", color: "gray" }} />
                     </IconButton>
                 </Box>
-                <Divider sx={{ backgroundColor: '#FF6600', }} />
-
-
-                <Grid container spacing={2}
-                    sx={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
-
+                <Divider sx={{ backgroundColor: '#FF6600' }} />
+                <Grid container spacing={2} sx={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
                     <Grid item xs={10}>
                         <Typography variant='body2' sx={{ fontSize: "10px" }}>{t("name")}</Typography>
                         <TextField
@@ -109,7 +58,6 @@ export const AddExtras = ({ open, handleClose }) => {
                             InputProps={{ sx: { height: '30px', fontSize: "10px" } }}
                         />
                     </Grid>
-
                     <Grid item xs={10}>
                         <Typography variant='body2' sx={{ fontSize: "10px" }}>{t("price.one")}</Typography>
                         <TextField
@@ -117,7 +65,7 @@ export const AddExtras = ({ open, handleClose }) => {
                             value={price}
                             variant="outlined"
                             fullWidth
-                            placeholder='0:00'
+                            placeholder='0.00'
                             InputProps={{
                                 sx: { height: '30px', fontSize: "10px" },
                                 endAdornment: <Typography sx={{ fontSize: "10px", color: "gray" }}>EGP</Typography>,
@@ -125,8 +73,11 @@ export const AddExtras = ({ open, handleClose }) => {
                         />
                     </Grid>
                     <Grid item xs={10}>
+                        <Typography variant='body2' sx={{ fontSize: "10px" }}>{t("variant.one")}</Typography>
                         <FormControl fullWidth size="small" sx={{ minWidth: 90 }}>
                             <Select
+                                value={variantsId}
+                                onChange={(e) => setVariantsId(e.target.value)}
                                 displayEmpty
                                 inputProps={{ 'aria-label': 'Without label' }}
                                 sx={{
@@ -147,22 +98,20 @@ export const AddExtras = ({ open, handleClose }) => {
                                     }
                                 }}
                             >
-                                {variantsContext?.map((variant) => (
+                                <MenuItem value="" disabled>{t("selectVariant")}</MenuItem>
+                                {variants.map((variant) => (
                                     <MenuItem
-                                        key={variant.id}
-                                        value={variant.id}
-                                        selected={variantsId === variant.id}
-                                        onClick={() => setVariantsId(variant.id)}
+                                        key={variant.name}
+                                        value={variant.name}
                                         sx={{ color: "gray", fontSize: "10px", textAlign: 'center' }}
                                     >
                                         {variant.name}
                                     </MenuItem>
                                 ))}
                             </Select>
-
                         </FormControl>
                     </Grid>
-                    <Box sx={{ marginTop: "30px", display: "flex", textAlign: "center", justifyContent: "center", alignItems: "center", }}>
+                    <Box sx={{ marginTop: "30px", display: "flex", textAlign: "center", justifyContent: "center", alignItems: "center" }}>
                         <Button
                             onClick={handleAdd}
                             variant="contained"
@@ -172,10 +121,7 @@ export const AddExtras = ({ open, handleClose }) => {
                                 color: 'white',
                                 textTransform: 'none',
                                 padding: '3px 52px',
-
-                                '&:hover': {
-                                    backgroundColor: '#f18101',
-                                },
+                                '&:hover': { backgroundColor: '#f18101' },
                             }}
                         >
                             <CheckOutlinedIcon /> {t("save")}
