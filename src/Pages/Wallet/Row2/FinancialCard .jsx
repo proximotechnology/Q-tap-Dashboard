@@ -4,17 +4,35 @@ import { financialData } from "./financialData";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useTranslation } from 'react-i18next';
+import { DashboardDataContext } from "../../../context/DashboardDataContext";
+import { all } from "axios";
 
 const FinancialCard = () => {
   const { t } = useTranslation();
   const theme = useTheme();
+  const [year, setYear] = React.useState('2025');
+  const [allData, setAllData] = React.useState([]);
+  const { walletChartTwoData, getWalletChartTwo } = React.useContext(DashboardDataContext);
+  // Fetch financial data
+  React.useEffect(() => {
+    if (walletChartTwoData.length === 0) {
+      getWalletChartTwo(year);
+    } else {
+      setAllData(walletChartTwoData);
+    }
+  }, [year, walletChartTwoData]);
+  console.log("walletChartTwoData", walletChartTwoData);
+
+
+
   return (
+
     <Box display="flex" justifyContent="space-around" flexWrap="wrap">
       {financialData.map((data, index) => (
         <Card
           key={index}
           sx={{
-            width: {xs:'98%', md:'49%', lg:"24%"},
+            width: { xs: '98%', md: '49%', lg: "24%" },
             padding: "0px 5px",
             marginTop: "20px",
             borderRadius: 4,
@@ -38,32 +56,44 @@ const FinancialCard = () => {
                       {t(data.title)}
                     </Typography>
                   </Box>
-
-                  <Box sx={{ width: "70px", height: "70px" }}>
-                    <CircularProgressbar
-                      value={parseInt(data.percentage)}
-                      text={`${data.percentage}`}
-                      strokeWidth={10}
-                      styles={buildStyles({
-                        textSize: "20px",
-                        pathColor: `url(#gradient-${data.title === "Balance" ? "balance" : "other"})`,
-                        textColor: "#AD4181",
-                        trailColor: "#D8E0E0",
-                      })}
-                    />
-                    <svg style={{ height: 0 }}>
-                      <defs>
-                        <linearGradient id="gradient-balance" x1="0%" y1="0%" x2="100%" y2="0%">
-                          <stop offset="0%" stopColor="rgb(163, 215, 255)" />
-                          <stop offset="100%" stopColor="#1C7FCB" />
-                        </linearGradient>
-                        <linearGradient id="gradient-other" x1="0%" y1="0%" x2="100%" y2="0%">
-                          <stop offset="0%" stopColor="rgb(250, 160, 214)" />
-                          <stop offset="100%" stopColor="#8A2C5E" />
-                        </linearGradient>
-                      </defs>
-                    </svg>
-                  </Box>
+                  {allData && (
+                    <Box sx={{ width: "70px", height: "70px" }}>
+                      <CircularProgressbar
+                        value={
+                          data.title === "Revenue" ? allData.Revenue :
+                            data.title === "Expenses" ? allData.Expenses :
+                              data.title === "Withdrawal" ? allData.Withdrawal :
+                                data.title === "Balance" ? allData.Balance : 0
+                        }
+                        text={
+                          `${data.title === "Revenue" ? allData.Revenue :
+                            data.title === "Expenses" ? allData.Expenses :
+                              data.title === "Withdrawal" ? allData.Withdrawal :
+                                data.title === "Balance" ? allData.Balance : 0
+                          }%`
+                        }
+                        strokeWidth={10}
+                        styles={buildStyles({
+                          textSize: "20px",
+                          pathColor: `url(#gradient-${data.title === "Balance" ? "balance" : "other"})`,
+                          textColor: "#AD4181",
+                          trailColor: "#D8E0E0",
+                        })}
+                      />
+                      <svg style={{ height: 0 }}>
+                        <defs>
+                          <linearGradient id="gradient-balance" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stopColor="rgb(163, 215, 255)" />
+                            <stop offset="100%" stopColor="#1C7FCB" />
+                          </linearGradient>
+                          <linearGradient id="gradient-other" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stopColor="rgb(250, 160, 214)" />
+                            <stop offset="100%" stopColor="#8A2C5E" />
+                          </linearGradient>
+                        </defs>
+                      </svg>
+                    </Box>
+                  )}
                 </Box>
 
                 <Typography

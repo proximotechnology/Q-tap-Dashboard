@@ -71,6 +71,9 @@ const Menu = () => {
         existBranch?.workschedule?.filter((day) => day.day) || []
     );
 
+    useEffect(() => {
+        getClientData();
+    }, [])
     // Helper function to format API time (e.g., "9am" to "9:00 am")
     const formatTime = (time) => {
         if (!time) return '9:00 am'; // Default fallback

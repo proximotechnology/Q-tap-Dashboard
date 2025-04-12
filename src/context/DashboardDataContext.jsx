@@ -9,6 +9,8 @@ export const DashboardDataProvider = ({ children }) => {
     const [performanceData, setPerformanceData] = useState([]);
     const [dashboardData, setDashboardData] = useState([]);
     const [depositsData, setDepositsData] = useState([]);
+    const [withdrawalsData, setWithdrawalsData] = useState([]);
+    const [walletChartTwoData, setWalletChartTwoData] = useState([]);
 
 
     const getSalesDashboard = async (id) => {
@@ -81,10 +83,15 @@ export const DashboardDataProvider = ({ children }) => {
     };
     const getDeposits = async (id) => {
         try {
-            const response = await axios.get(`https://highleveltecknology.com/Qtap/api/Deposits/${id}`, {}, {
+            const token = localStorage.getItem('adminToken');
+            if (!token) {
+                console.error('Authorization token is missing');
+                return;
+            }
+            const response = await axios.get(`https://highleveltecknology.com/Qtap/api/Deposits/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                    'Authorization': `Bearer ${token}`
                 }
             });
             if (response.data) {
@@ -96,6 +103,64 @@ export const DashboardDataProvider = ({ children }) => {
             console.error('Error fetching Deposits Data :', error);
         }
     };
+    const getWithdrawals = async (id) => {
+        try {
+            const token = localStorage.getItem('adminToken');
+            if (!token) {
+                console.error('Authorization token is missing');
+                return;
+            }
+            const response = await axios.get(`https://highleveltecknology.com/Qtap/api/withdraw/${id}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (response.data) {
+                setWithdrawalsData(response.data); // تعيين البيانات الصحيحة
+                console.log('Fetched Withdrawals Data :', response.data);
+
+            }
+        } catch (error) {
+            console.error('Error fetching Withdrawals Data :', error);
+        }
+    };
+    const getWalletChartTwo = async (id) => {
+        try {
+            const token = localStorage.getItem('adminToken');
+            if (!token) {
+                console.error('Authorization token is missing');
+                return;
+            }
+            let response;
+            try {
+                response = await axios.post(`https://highleveltecknology.com/Qtap/api/wallet/${id}`, {}, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                if (response.status === 401) {
+                    console.error('Unauthorized: Invalid or expired token');
+                    return;
+                }
+            } catch (error) {
+                if (error.response && error.response.status === 401) {
+                    console.error('Unauthorized: Invalid or expired token');
+                } else {
+                    throw error;
+                }
+            }
+            if (response && response.data) {
+                setWalletChartTwoData(response.data); // تعيين البيانات الصحيحة
+                console.log('Fetched wallet chart two Data :', response.data);
+
+            }
+        } catch (error) {
+            console.error('Error fetching wallet chart two Data :', error);
+        }
+    };
+
 
     return (
         <DashboardDataContext.Provider value={{
@@ -103,7 +168,9 @@ export const DashboardDataProvider = ({ children }) => {
             salesVolumeData, setSalesVolumeData, getSalesVolumeDashboard,
             performanceData, setPerformanceData, getPerformanceDashboard,
             dashboardData, setDashboardData, getDashboard,
-            depositsData, setDepositsData, getDeposits
+            depositsData, setDepositsData, getDeposits,
+            withdrawalsData, setWithdrawalsData, getWithdrawals,
+            walletChartTwoData, setWalletChartTwoData, getWalletChartTwo
         }}>
             {children}
         </DashboardDataContext.Provider>

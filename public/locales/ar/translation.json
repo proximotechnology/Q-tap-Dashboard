@@ -635,5 +635,6 @@
     "walletNo": "رقم المحفظة",
     "courier": "ساعي",
     "cardNo": "رقم البطاقة",
-    "update": "تحديث"
+    "update": "تحديث",
+    "noDataAvailable": "لا توجد بيانات متاحة"
 }

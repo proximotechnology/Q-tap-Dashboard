@@ -67,9 +67,9 @@ export const ClientLoginDataProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        getClientData();
-        getAreaData();
-        getTableDataRes();
+        // getClientData();
+        // getAreaData();
+        // getTableDataRes();
     }, []);
 
 

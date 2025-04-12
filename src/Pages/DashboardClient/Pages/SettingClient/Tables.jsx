@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Button,
   Card,
@@ -214,6 +214,9 @@ export const Tables = ({ openOldMenu }) => {
       toast.error(t("table.deleteErr"));
     }
   };
+  useEffect(()=>{
+    getTableDataRes(); // Fetch table data when component mounts
+  },[])
 
   return (
     <Paper style={{ padding: '20px 30px', borderRadius: '10px', marginTop: '16px' }}>

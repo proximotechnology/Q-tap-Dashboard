@@ -24,7 +24,7 @@ import { useTranslation } from 'react-i18next';
 
 const AddTableModal = ({ open, onClose, onSave, tableData }) => {
   const theme = useTheme();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const selectedBranch = localStorage.getItem('selectedBranch');
   const { areaData, getAreaData, getTableDataRes } = useContext(ClientLoginData);
   const { areas } = areaData;
@@ -85,6 +85,10 @@ const AddTableModal = ({ open, onClose, onSave, tableData }) => {
       toast.error(t("table.saveErr"));
     }
   };
+  useEffect(() => {
+    getTableDataRes(); // Fetch table data when component mounts
+  }, [])
+
 
   return (
     <Modal open={open} onClose={onClose}>
