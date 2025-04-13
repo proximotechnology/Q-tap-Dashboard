@@ -17,7 +17,7 @@ const AddAreaModal = ({ open, onClose }) => {
     const { areas } = areaData;
 
     useEffect(() => {
-        console.log("area data", areas);
+        getAreaData(); // جلب بيانات المناطق عند فتح المودال
     }, []);
 
     //========================================== حفظ منطقة جديدة

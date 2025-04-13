@@ -1,9 +1,8 @@
-
-import React, { useState } from "react";
-import { Avatar, Box, Divider, Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, Popover, Typography, useTheme } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Avatar, Box, Divider, Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, Popover, Typography, useTheme, Button } from "@mui/material";
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import { AppBar, Toolbar } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -13,15 +12,40 @@ import { ExtrasTable } from './ExtrasTable';
 import { DeliveredFooter } from "../../DeliveryRiders/DeliveredFooter";
 import { useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import axios from "axios";
+import { toast } from "react-toastify";
+
 export const AddItem = () => {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const theme = useTheme();
     const navigate = useNavigate();
+    const location = useLocation();
     const [searchParams] = useSearchParams();
     const categoryId = searchParams.get('categoryId');
+    const itemId = searchParams.get('itemId');
+    const selectedBranch = localStorage.getItem('selectedBranch');
 
-    // console.log(categoryId);
-    
+    // الحالة لتخزين البيانات
+    const [itemData, setItemData] = useState({
+        name: '',
+        brief: '',
+        description: '',
+        ingredients: '',
+        calories: '',
+        time: '',
+        tax: '',
+        priceSmall: '',
+        priceMedium: '',
+        priceLarge: '',
+        price: '',
+        discount: '',
+        image: null,
+    });
+    const [variants, setVariants] = useState([]);
+    const [extras, setExtras] = useState([]);
+    const [limitVariants, setLimitVariants] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
 
     const [anchorElUser, setAnchorElUser] = useState(null);
     const openUserPopover = Boolean(anchorElUser);
@@ -34,9 +58,186 @@ export const AddItem = () => {
         setAnchorElUser(null);
     };
 
+    // جلب بيانات العنصر عند التعديل
+    useEffect(() => {
+        if (itemId) {
+            const fetchItem = async () => {
+                try {
+                    const response = await axios.get(`https://highleveltecknology.com/Qtap/api/meals/${itemId}`, {
+                        headers: { 'Authorization': `Bearer ${localStorage.getItem('clientToken')}` },
+                    });
+                    const item = response.data;
+                    setItemData({
+                        name: item.name || '',
+                        brief: item.Brief || '',
+                        description: item.Description || '',
+                        ingredients: item.Ingredients || '',
+                        calories: item.Calories || '',
+                        time: item.Time || '',
+                        tax: item.Tax || '',
+                        priceSmall: item.price_small || '',
+                        priceMedium: item.price_medium || '',
+                        priceLarge: item.price_large || '',
+                        price: item.price || '',
+                        discount: item.discount_id || '',
+                        image: item.img || null,
+                    });
+                    setVariants(item.variants || []);
+                    setExtras(item.extra || []);
+                    setLimitVariants(item.limit_variants || '');
+                    setIsEditing(true);
+                } catch (error) {
+                    toast.error(t("errorOccurred"));
+                    console.error("Error fetching item:", error);
+                }
+            };
+            fetchItem();
+        }
+    }, [itemId, t]);
+
+    // دالة لتحديث بيانات ItemDetails
+    const updateItemData = (data) => {
+        setItemData(data);
+    };
+
+    // دالة لتحديث بيانات VariantsTable
+    const updateVariants = (variantsData) => {
+        setVariants(variantsData);
+    };
+
+    // دالة لتحديث بيانات ExtrasTable
+    const updateExtras = (extrasData) => {
+        setExtras(extrasData);
+    };
+
+    // دالة لإرسال البيانات إلى الـ API
+    const handleSubmit = async () => {
+        try {
+            setLoading(true);
+
+            // التحقق من الحقول المطلوبة
+            if (!itemData.name || !itemData.brief || !itemData.description || !itemData.ingredients ||
+                !itemData.calories || !itemData.time || !itemData.tax || !itemData.priceSmall ||
+                !itemData.priceMedium || !itemData.priceLarge || !itemData.price || !itemData.discount ||
+                !itemData.image || !limitVariants) {
+                toast.error(t("plFillAllField"));
+                return;
+            }
+
+            // إنشاء البيانات بناءً على التنسيق المطلوب
+            const data = {
+                name: itemData.name,
+                Brief: itemData.brief,
+                Description: itemData.description,
+                Ingredients: itemData.ingredients,
+                Calories: itemData.calories,
+                Time: itemData.time,
+                Tax: itemData.tax,
+                price_small: itemData.priceSmall,
+                price_medium: itemData.priceMedium,
+                price_large: itemData.priceLarge,
+                price: itemData.price,
+                discount_id: itemData.discount,
+                categories_id: categoryId,
+                brunch_id: selectedBranch,
+                limit_variants: limitVariants,
+                variants: variants.map(variant => ({
+                    name: variant.name,
+                    price: variant.price,
+                })),
+                extra: extras.map(extra => ({
+                    name: extra.name,
+                    price: extra.price,
+                    variants_id: extra.variants_id || '',
+                })),
+            };
+
+            // إذا كان هناك صورة جديدة، استخدم FormData لإرسال البيانات مع الصورة
+            let response;
+            if (itemData.image && typeof itemData.image !== 'string') {
+                const formData = new FormData();
+                formData.append('name', data.name);
+                formData.append('Brief', data.Brief);
+                formData.append('Description', data.Description);
+                formData.append('Ingredients', data.Ingredients);
+                formData.append('Calories', data.Calories);
+                formData.append('Time', data.Time);
+                formData.append('Tax', data.Tax);
+                formData.append('price_small', data.price_small);
+                formData.append('price_medium', data.price_medium);
+                formData.append('price_large', data.price_large);
+                formData.append('price', data.price);
+                formData.append('discount_id', data.discount_id);
+                formData.append('categories_id', data.categories_id);
+                formData.append('brunch_id', data.brunch_id);
+                formData.append('limit_variants', data.limit_variants);
+                formData.append('img', itemData.image);
+
+                // إضافة variants و extra كمصفوفتين
+                data.variants.forEach((variant, index) => {
+                    formData.append(`variants[${index}][name]`, variant.name);
+                    formData.append(`variants[${index}][price]`, variant.price);
+                });
+                data.extra.forEach((extra, index) => {
+                    formData.append(`extra[${index}][name]`, extra.name);
+                    formData.append(`extra[${index}][price]`, extra.price);
+                    if (extra.variants_id) {
+                        formData.append(`extra[${index}][variants_id]`, extra.variants_id);
+                    }
+                });
+
+                const url = isEditing
+                    ? `https://highleveltecknology.com/Qtap/api/meals/${itemId}`
+                    : "https://highleveltecknology.com/Qtap/api/meals";
+                const method = isEditing ? 'post' : 'post'; // ملاحظة: بعض واجهات الـ API تستخدم POST للتحديث مع _method=PUT
+
+                response = await axios({
+                    method,
+                    url,
+                    data: formData,
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+            } else {
+                // إذا لم تكن هناك صورة جديدة، أرسل البيانات كـ JSON
+                const url = isEditing
+                    ? `https://highleveltecknology.com/Qtap/api/meals/${itemId}`
+                    : "https://highleveltecknology.com/Qtap/api/meals";
+                const method = isEditing ? 'put' : 'post';
+
+                response = await axios({
+                    method,
+                    url,
+                    data,
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+            }
+
+            if (response.status === 200 || response.status === 201) {
+                toast.success(isEditing ? t("item.updateSucc") : t("item.addSucc"));
+                navigate('/menu');
+            }
+        } catch (error) {
+            if (error.response?.status === 422 && error.response?.data?.errors) {
+                Object.values(error.response.data.errors).forEach((err) => {
+                    toast.error(err.join(', '));
+                });
+            } else {
+                toast.error(error.response?.data?.message || t("errorOccurred"));
+            }
+            console.error("Error:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <Box sx={{ backgroundColor: "#f4f6fc" }}>
-            {/*  top Bar  */}
             <AppBar position="static" style={{ padding: "20px 20px", backgroundColor: theme.palette.secondaryColor.main, zIndex: 3, boxShadow: 'none' }}>
                 <Toolbar style={{ display: 'flex', alignItems: "center", justifyContent: 'space-between' }}>
                     <IconButton
@@ -44,16 +245,13 @@ export const AddItem = () => {
                         edge="start" color="inherit" aria-label="back">
                         <ArrowBackIosNewIcon sx={{ fontSize: "20px" }} />
                     </IconButton>
-
                     <Box
                         aria-describedby={openUserPopover ? 'simple-popover' : undefined}
                         onClick={handleUserClick}
                         sx={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "3px" }}>
                         <IconButton color="inherit" sx={{
                             backgroundColor: theme.palette.orangePrimary.main, borderRadius: '30%', padding: '5px',
-                            '&:hover': {
-                                backgroundColor: theme.palette.orangePrimary.main,
-                            }
+                            '&:hover': { backgroundColor: theme.palette.orangePrimary.main },
                         }}>
                             <PersonOutlineOutlinedIcon sx={{ fontSize: "20px", color: "white" }} />
                         </IconButton>
@@ -65,11 +263,7 @@ export const AddItem = () => {
                         open={openUserPopover}
                         anchorEl={anchorElUser}
                         onClose={handleUserClose}
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'left',
-                        }}
-                    >
+                        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}>
                         <Box sx={{ width: 200, padding: '10px' }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row', marginBottom: '20px', gap: '10px' }}>
                                 <Avatar sx={{ bgcolor: theme.palette.orangePrimary.main, width: 40, height: 40 }}>
@@ -81,7 +275,6 @@ export const AddItem = () => {
                                 </Box>
                             </Box>
                             <Divider />
-
                             <List>
                                 <Box
                                     onClick={() => navigate('/')}
@@ -99,76 +292,87 @@ export const AddItem = () => {
                                         padding: "5px 0px",
                                         margin: "0 auto",
                                     }}>
-
-                                    <span class="icon-home-icon-silhouette" style={{ color: theme.palette.orangePrimary.main, marginRight: "5px", fontSize: "15px" }} ></span>
+                                    <span className="icon-home-icon-silhouette" style={{ color: theme.palette.orangePrimary.main, marginRight: "5px", fontSize: "15px" }} ></span>
                                     <Typography style={{ color: "white", fontSize: "11px", textTransform: "capitalize" }}>
                                         Home
                                     </Typography>
                                 </Box>
-
-                                <ListItem sx={{ cursor: "pointer" }} oonClick={handleUserClose}>
+                                <ListItem sx={{ cursor: "pointer" }} onClick={handleUserClose}>
                                     <ListItemIcon>
                                         <img src="/assets/setting.svg" alt="icon" style={{ width: "16px", height: "16px" }} />
                                     </ListItemIcon>
                                     <ListItemText primary="Edit Profile"
-                                        primaryTypographyProps={{
-                                            sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: "-30px" }
-                                        }} />
+                                        primaryTypographyProps={{ sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: "-30px" } }} />
                                 </ListItem>
-
                                 <ListItem sx={{ cursor: "pointer" }} onClick={handleUserClose}>
                                     <ListItemIcon>
-                                        <span class="icon-price-tag" style={{ fontSize: "20px" }}></span>
+                                        <span className="icon-price-tag" style={{ fontSize: "20px" }}></span>
                                     </ListItemIcon>
                                     <ListItemText primary="My Subscription"
-                                        primaryTypographyProps={{
-                                            sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: "-30px" }
-                                        }} />
+                                        primaryTypographyProps={{ sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: "-30px" } }} />
                                 </ListItem>
-
                                 <ListItem sx={{ cursor: "pointer" }} onClick={handleUserClose}>
                                     <ListItemIcon>
                                         <HelpOutlineOutlinedIcon sx={{ fontSize: "20px" }} />
                                     </ListItemIcon>
                                     <ListItemText primary="FAQ"
-                                        primaryTypographyProps={{
-                                            sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: "-30px" }
-                                        }} />
+                                        primaryTypographyProps={{ sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: "-30px" } }} />
                                 </ListItem>
-
                                 <ListItem sx={{ cursor: "pointer" }} onClick={handleUserClose}>
                                     <ListItemIcon>
                                         <img src="/assets/logout.svg" alt="icon" style={{ width: "16px", height: "16px" }} />
                                     </ListItemIcon>
                                     <ListItemText primary="Logout"
-                                        primaryTypographyProps={{
-                                            sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: "-30px" }
-                                        }} />
+                                        primaryTypographyProps={{ sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: "-30px" } }} />
                                 </ListItem>
                             </List>
                         </Box>
                     </Popover>
-
                 </Toolbar>
                 <Typography variant="h6" style={{ flexGrow: 1, fontSize: "20px", textAlign: 'left', color: 'white', marginLeft: "100px" }}>
-                    {t("item.add")}
+                    {isEditing ? t("item.update") : t("item.add")}
                 </Typography>
             </AppBar>
 
             <Box sx={{ padding: {xs:'' ,md:"0px 70px"} }}>
                 <Grid container spacing={6} justifyContent={"space-around"}>
-
                     <Grid item xs={12} md={6}>
-                        <ItemDetails categoryId={categoryId} />{/* first component */}
+                        <ItemDetails
+                            categoryId={categoryId}
+                            itemId={itemId}
+                            updateItemData={updateItemData}
+                            initialData={itemData}
+                        />
                     </Grid>
-
                     <Grid item xs={12} md={6}>
-                        <VariantsTable />
-                        <ExtrasTable />
+                        <VariantsTable
+                            updateVariants={updateVariants}
+                            initialVariants={variants}
+                            limitVariants={limitVariants}
+                            setLimitVariants={setLimitVariants}
+                        />
+                        <ExtrasTable
+                            updateExtras={updateExtras}
+                            initialExtras={extras}
+                            variants={variants}
+                        />
                     </Grid>
                 </Grid>
+                <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+                    <Button
+                        onClick={handleSubmit}
+                        variant="contained"
+                        sx={{
+                            width: "33%", backgroundColor: theme.palette.orangePrimary.main, padding: "8px", borderRadius: "20px", textTransform: "capitalize",
+                            '&:hover': { backgroundColor: theme.palette.orangePrimary.main },
+                        }}
+                        disabled={loading}
+                    >
+                        {loading ? t("loading") : isEditing ? t("update") : t("save")}
+                    </Button>
+                </Box>
             </Box>
             <DeliveredFooter />
         </Box>
-    )
-}
+    );
+};

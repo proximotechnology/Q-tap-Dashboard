@@ -1,68 +1,44 @@
 import { Button, Divider, IconButton, Paper, TextField, Typography, useTheme } from '@mui/material';
-import React, { useContext, useEffect, useState } from 'react';
-import { Box, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Box, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 import { AddVariant } from './AddVariant';
 import DoneIcon from '@mui/icons-material/Done';
-import { useBranch } from '../../../../context/BranchContext';
-import axios from 'axios';
 import { toast } from 'react-toastify';
-import { ContentMenu } from '../../../../context/ContentMenuContext';
 import { useTranslation } from 'react-i18next';
-export const VariantsTable = () => {
-    const [openVariant, setOpenOffers] = useState(false);
-    const [allVariants, setAllVariants] = useState([])
-    const { setVariantsContext } = useContext(ContentMenu);
-    const selectedBranch = localStorage.getItem('selectedBranch');
-    const {t} = useTranslation();
+
+export const VariantsTable = ({ updateVariants, initialVariants, limitVariants, setLimitVariants }) => {
+    const { t } = useTranslation();
     const theme = useTheme();
-    // useEffect(() => {
-    //     console.log("varianet page data  ", selectedBranch)
-    // }, [])
-    const handleOffersOpen = () => {
-        setOpenOffers(true);
+    const [openVariant, setOpenVariant] = useState(false);
+    const [allVariants, setAllVariants] = useState(initialVariants || []);
+
+    // تحديث الحالة عند تغيير initialVariants
+    useEffect(() => {
+        setAllVariants(initialVariants || []);
+    }, [initialVariants]);
+
+    // تحديث المكون الأب عند تغيير allVariants
+    useEffect(() => {
+        updateVariants(allVariants);
+    }, [allVariants, updateVariants]);
+
+    const handleVariantOpen = () => {
+        setOpenVariant(true);
     };
 
     const handleClose = () => {
-        setOpenOffers(false);
+        setOpenVariant(false);
     };
 
-    useEffect(() => {
-        getVariants();
-    }, [selectedBranch]);
-
-    const getVariants = async () => {
-        try {
-            const response = await axios.get('https://highleveltecknology.com/Qtap/api/meals_variants', {
-                headers: { 'Authorization': `Bearer ${localStorage.getItem('clientToken')}` },
-                params: { brunch_id: selectedBranch }
-            });
-
-            if (response.data) {
-                // إضافة خاصية isEditing إلى كل عنصر
-                const updatedVariants = response.data.map(variant => ({
-                    ...variant,
-                    isEditing: false,
-                }));
-                setAllVariants(updatedVariants);
-                setVariantsContext(updatedVariants);
-            }
-        } catch (error) {
-            console.error('Error fetching variants:', error);
-            // toast.error('Error fetching variants');
-        }
+    const handleAddVariant = (newVariant) => {
+        const updatedVariants = [...allVariants, { ...newVariant, isEditing: false }];
+        setAllVariants(updatedVariants);
     };
 
-    const handleDelete = async (id) => {
-        try {
-            await axios.delete(`https://highleveltecknology.com/Qtap/api/meals_variants/${id}`, {
-                headers: { 'Authorization': `Bearer ${localStorage.getItem('clientToken')}` }
-            });
-            toast.success(t("variant.deleteSucc"));
-            getVariants();
-        } catch (error) {
-            console.error('Error deleting variant:', error);
-            toast.error(t("variant.deleteErr"));
-        }
+    const handleDelete = (index) => {
+        const updatedVariants = allVariants.filter((_, i) => i !== index);
+        setAllVariants(updatedVariants);
+        toast.success(t("variant.deleteSucc"));
     };
 
     const handleEditToggle = (index) => {
@@ -77,31 +53,9 @@ export const VariantsTable = () => {
         setAllVariants(updatedVariants);
     };
 
-    const handleUpdate = async (index) => {
-        const variant = allVariants[index];
-
-        try {
-            const response = await axios.put(
-                `https://highleveltecknology.com/Qtap/api/meals_variants/${variant.id}`,
-                {
-                    name: variant.name,
-                    price: variant.price,
-                    brunch_id: selectedBranch
-                },
-                {
-                    headers: { 'Authorization': `Bearer ${localStorage.getItem('clientToken')}` }
-                }
-            );
-
-            if (response.data) {
-                toast.success(t("variant.updateSucc"));
-                handleEditToggle(index); // إغلاق وضع التعديل
-                getVariants(); // تحديث البيانات
-            }
-        } catch (error) {
-            console.error('Error updating variant:', error);
-            toast.error(t("variant.updateErr"));
-        }
+    const handleUpdate = (index) => {
+        handleEditToggle(index);
+        toast.success(t("variant.updateSucc"));
     };
 
     return (
@@ -118,29 +72,27 @@ export const VariantsTable = () => {
                     <Box sx={{ display: "flex", alignItems: "center", marginRight: "15px" }}>
                         <Typography sx={{ fontSize: "10px", color: "gray", marginRight: "5px" }}>{t("limit")}</Typography>
                         <TextField
+                            value={limitVariants}
+                            onChange={(e) => setLimitVariants(e.target.value)}
                             placeholder='0.0'
                             variant="outlined"
                             fullWidth
                             type="number"
                             InputProps={{
-                                sx:
-                                    { height: '20px', fontSize: "9px", width: "55px" },
+                                sx: { height: '20px', fontSize: "9px", width: "55px" },
                             }}
                         />
                         <DoneIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "16px" }} />
                     </Box>
-
-                    <Button onClick={handleOffersOpen} >
+                    <Button onClick={handleVariantOpen}>
                         <Typography variant='body1' sx={{ fontSize: "13px", textTransform: "capitalize", color: theme.palette.orangePrimary.main }}>
-                            + {t("addOne")}</Typography>
+                            + {t("addOne")}
+                        </Typography>
                     </Button>
-                    <AddVariant open={openVariant} handleClose={handleClose} />
+                    <AddVariant open={openVariant} handleClose={handleClose} onAdd={handleAddVariant} />
                 </Box>
             </Box>
-
-
             <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main }} />
-
             <Table sx={{ mt: 3, mb: 5, width: '100%', whiteSpace:'nowrap' }}>
                 <TableHead>
                     <TableRow sx={{ backgroundColor: "#EBEDF3" }}>
@@ -149,12 +101,9 @@ export const VariantsTable = () => {
                         <TableCell sx={{ fontSize: "10px", padding: '3px 10px', borderBottom: "none", textAlign: "left", color: "#575756" }}></TableCell>
                     </TableRow>
                 </TableHead>
-
-
                 <TableBody>
                     {allVariants.map((variant, index) => (
-                        <TableRow key={variant.id} sx={{ height: '36px' }}>
-                            {/* إذا كان في وضع التعديل، أظهر حقل إدخال، وإلا أظهر النص */}
+                        <TableRow key={index} sx={{ height: '36px' }}>
                             <TableCell sx={{ textAlign: "left", fontSize: "11px", color: "gray" }}>
                                 {variant.isEditing ? (
                                     <TextField
@@ -167,7 +116,6 @@ export const VariantsTable = () => {
                                     variant.price
                                 )}
                             </TableCell>
-
                             <TableCell sx={{ textAlign: "left", fontSize: "11px", color: "gray" }}>
                                 {variant.isEditing ? (
                                     <TextField
@@ -180,7 +128,6 @@ export const VariantsTable = () => {
                                     variant.name
                                 )}
                             </TableCell>
-
                             <TableCell sx={{ textAlign: "center", fontSize: "12px" }}>
                                 {variant.isEditing ? (
                                     <IconButton size="small" color='success' onClick={() => handleUpdate(index)}>
@@ -188,11 +135,11 @@ export const VariantsTable = () => {
                                     </IconButton>
                                 ) : (
                                     <IconButton size="small" color='success' onClick={() => handleEditToggle(index)}>
-                                        <span class="icon-edit" style={{ fontSize: "18px" }} />
+                                        <span className="icon-edit" style={{ fontSize: "18px" }} />
                                     </IconButton>
                                 )}
-                                <IconButton size="small" color='error' onClick={() => handleDelete(variant.id)}>
-                                    <span class="icon-delete" style={{ fontSize: "18px" }} />
+                                <IconButton size="small" color='error' onClick={() => handleDelete(index)}>
+                                    <span className="icon-delete" style={{ fontSize: "18px" }} />
                                 </IconButton>
                             </TableCell>
                         </TableRow>
@@ -200,5 +147,5 @@ export const VariantsTable = () => {
                 </TableBody>
             </Table>
         </Paper>
-    )
-}
+    );
+};

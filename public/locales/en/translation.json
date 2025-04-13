@@ -635,5 +635,6 @@
     "walletNo": "Wallet No.",
     "courier": "Courier",
     "cardNo": "Card No.",
-    "update": "update"
+    "update": "update",
+    "noDataAvailable": "No data available"
 }
