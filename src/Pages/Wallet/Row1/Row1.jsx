@@ -11,14 +11,20 @@ import {
 } from "@mui/material";
 import LineChart1 from "./LineChart1";
 import { useTranslation } from "react-i18next";
+import { DashboardDataContext } from "../../../context/DashboardDataContext";
 
 export const Row1 = () => {
-  const [year, setYear] = React.useState("2024");
+  const [year, setYear] = React.useState("2025");
   const { t } = useTranslation()
   const theme = useTheme()
   const handleYearChange = (event) => {
     setYear(event.target.value);
   };
+  const { salesData, getSalesDashboard } = React.useContext(DashboardDataContext);
+
+  React.useEffect(() => {
+    getSalesDashboard(year);
+  }, [year]);
 
   return (
     <Paper
@@ -79,12 +85,15 @@ export const Row1 = () => {
                 <MenuItem value="2024" sx={{ fontSize: "12px", color: "gray" }}>
                   2024
                 </MenuItem>
+                <MenuItem value="2025" sx={{ fontSize: "12px", color: "gray" }}>
+                  2025
+                </MenuItem>
               </Select>
             </Box>
           </Grid>
         </Grid>
         <Grid>
-          <LineChart1 />
+          <LineChart1 salesData={salesData} />
         </Grid>
       </Grid>
 

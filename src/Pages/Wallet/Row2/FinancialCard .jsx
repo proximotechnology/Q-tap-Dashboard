@@ -21,7 +21,7 @@ const FinancialCard = () => {
       setAllData(walletChartTwoData);
     }
   }, [year, walletChartTwoData]);
-  console.log("walletChartTwoData", walletChartTwoData);
+  // console.log("walletChartTwoData", walletChartTwoData);
 
 
 
@@ -60,17 +60,17 @@ const FinancialCard = () => {
                     <Box sx={{ width: "70px", height: "70px" }}>
                       <CircularProgressbar
                         value={
-                          data.title === "Revenue" ? allData.Revenue :
-                            data.title === "Expenses" ? allData.Expenses :
-                              data.title === "Withdrawal" ? allData.Withdrawal :
-                                data.title === "Balance" ? allData.Balance : 0
+                          data.title === "Revenue" ? parseInt(allData.Revenue_Percentage) :
+                            data.title === "Expenses" ? parseInt(allData.Expenses_Percentage) :
+                              data.title === "Withdrawal" ? parseInt(allData.Withdrawal_Percentage) :
+                                data.title === "Balance" ? parseInt(allData.Balance_Percentage) : 0
                         }
                         text={
-                          `${data.title === "Revenue" ? allData.Revenue :
-                            data.title === "Expenses" ? allData.Expenses :
-                              data.title === "Withdrawal" ? allData.Withdrawal :
-                                data.title === "Balance" ? allData.Balance : 0
-                          }%`
+                          `${data.title === "Revenue" ? allData.Revenue_Percentage :
+                            data.title === "Expenses" ? allData.Expenses_Percentage :
+                              data.title === "Withdrawal" ? allData.Withdrawal_Percentage :
+                                data.title === "Balance" ? allData.Balance_Percentage : 0
+                          }`
                         }
                         strokeWidth={10}
                         styles={buildStyles({
@@ -95,31 +95,36 @@ const FinancialCard = () => {
                     </Box>
                   )}
                 </Box>
+                {allData && (
 
-                <Typography
-                  variant="bady1"
-                  sx={{
-                    fontSize: "25px",
-                    color: theme.palette.secondaryColor.main,
-                    fontWeight: "bold",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 1
-                  }}
-                >
-                  {data.value}
-                  <span
-                    style={{
-                      color: "gray",
-                      fontSize: "15px",
-                      fontWeight: "normal",
+                  <Typography
+                    variant="bady1"
+                    sx={{
+                      fontSize: "25px",
+                      color: theme.palette.secondaryColor.main,
+                      fontWeight: "bold",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1
                     }}
                   >
-                    {" "}
-                    EGP
-                  </span>
-                </Typography>
-
+                    {data.title === "Revenue" ? allData.Revenue :
+                      data.title === "Expenses" ? allData.Expenses :
+                        data.title === "Withdrawal" ? allData.Withdrawal :
+                          data.title === "Balance" ? allData.Balance : 0
+                    }
+                    <span
+                      style={{
+                        color: "gray",
+                        fontSize: "15px",
+                        fontWeight: "normal",
+                      }}
+                    >
+                      {" "}
+                      EGP
+                    </span>
+                  </Typography>
+                )}
                 <Typography
                   variant="body2"
                   color="#D8E0E0"

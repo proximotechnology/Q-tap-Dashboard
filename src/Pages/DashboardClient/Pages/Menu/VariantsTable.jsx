@@ -109,7 +109,8 @@ export const VariantsTable = ({ updateVariants, initialVariants, limitVariants, 
                                         size="small"
                                     />
                                 ) : (
-                                    variant.price
+                                    `${parseFloat(variant.price).toFixed(2)} EGP`
+
                                 )}
                             </TableCell>
                             <TableCell sx={{ textAlign: "left", fontSize: "11px", color: "gray" }}>
