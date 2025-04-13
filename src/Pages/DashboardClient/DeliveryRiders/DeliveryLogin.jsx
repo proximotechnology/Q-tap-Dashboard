@@ -11,8 +11,8 @@ import { TextField, InputAdornment } from '@mui/material';
 import PhoneAndroidOutlinedIcon from '@mui/icons-material/PhoneAndroidOutlined';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { DeliveredFooter } from './DeliveredFooter'
-import Language from '../ComponentDashClient/TopBar/Language';
 import { useTranslation } from 'react-i18next';
+import Language from '../../../Component/dashboard/TopBar/Language';
 
 
 

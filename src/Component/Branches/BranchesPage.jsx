@@ -1,36 +1,12 @@
 
 import { SetupPage } from '../Business-info/SetupPage';
 import { Branches } from './Branches';
-import React, { useEffect, useState } from 'react';
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import { Box, MenuItem, Grid, Menu, Divider, useTheme } from '@mui/material';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import React, { useEffect, } from 'react';
+import { Box, Grid, useTheme } from '@mui/material';
 import { useBusinessContext } from '../../context/BusinessContext';
-import { useTranslation } from 'react-i18next';
+import Language from '../dashboard/TopBar/Language';
 
 export const BranchesPage = () => {
-    const theme = useTheme();
-    const [anchorElLanguage, setAnchorElLanguage] = useState(null);
-    const [selectedLanguage, setSelectedLanguage] = useState('en');
-    const openLanguage = Boolean(anchorElLanguage);
-    const { i18n } = useTranslation()
-    const handleLanguageClick = (event) => {
-        setAnchorElLanguage(event.currentTarget);
-    };
-
-    const handleLanguageClose = (language) => {
-        setAnchorElLanguage(null);
-        i18n.changeLanguage(language)
-        setSelectedLanguage(language);
-    };
-
-    const getLanguageIcon = () => {
-        return selectedLanguage === 'ar' ? (
-            <span className="icon-translation" style={{ color: theme.palette.orangePrimary.main, fontSize: '22px' }}> </span>
-        ) : (
-            <LanguageOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: '22px' }} />
-        );
-    };
 
     // Access context
     const { branches } = useBusinessContext();
@@ -57,10 +33,11 @@ export const BranchesPage = () => {
                     sx={{
                         position: 'absolute',
                         top: "calc(1rem + 7px)",
-                        right: '1rem',
+                        insetInlineEnd : '1rem',
                         cursor: 'pointer',
                         display: 'flex',
                         alignItems: 'center',
+                        zIndex:10000
                     }}
                 >
                     <img
@@ -69,38 +46,7 @@ export const BranchesPage = () => {
                         style={{ width: '25px', height: '25px', marginRight: '30px' }}
                     />
 
-                    <Box
-                        sx={{ cursor: 'pointer', display: 'flex', marginRight: '20px', alignItems: 'center' }}
-                        onClick={handleLanguageClick}
-                    >
-                        {getLanguageIcon()}
-                        <KeyboardArrowDownIcon sx={{ fontSize: '18px', color: '#575756' }} />
-                        <Menu
-                            anchorEl={anchorElLanguage}
-                            open={openLanguage}
-                            onClose={() => setAnchorElLanguage(null)}
-                            sx={{ padding: '2px' }}
-                        >
-                            <MenuItem onClick={(e) => {
-                                e.stopPropagation()
-                                handleLanguageClose('ar')
-                            }}>
-                                <span
-                                    className="icon-translation"
-                                    style={{ color: '#575756', marginRight: '8px', fontSize: '20px' }}
-                                ></span>
-                                <span style={{ fontSize: '12px', color: '#575756' }}>Arabic</span>
-                            </MenuItem>
-                            <Divider />
-                            <MenuItem onClick={(e) => {
-                                e.stopPropagation()
-                                handleLanguageClose('en')
-                            }}>
-                                <LanguageOutlinedIcon sx={{ color: '#575756', marginRight: '8px', fontSize: '20px' }} />
-                                <span style={{ fontSize: '12px', color: '#575756' }}>English</span>
-                            </MenuItem>
-                        </Menu>
-                    </Box>
+                    <Language/>
                 </Box>
 
                 <Branches />

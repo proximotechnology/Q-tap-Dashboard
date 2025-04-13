@@ -10,7 +10,7 @@ const TopBar = ({isItemSelected}) => {
         <Box  sx={{boxShadow: 'none',width:isItemSelected ?"77%":"100%" , transition: 'width 0.1s ease', 
         position:"relative" , left:"1%"}}>
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Typography variant="h6" sx={{ color: theme.palette.orangePrimary.main,fontSize:"22px",fontWeight:900 }}>
+                <Typography variant="h6" sx={{ color: theme.palette.orangePrimary.main,fontSize:"22px",fontWeight:900, marginInlineStart:{xs:'20px',sm:'0px'} }}>
                     {t("logo")}
                 </Typography>
 

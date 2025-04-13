@@ -377,8 +377,6 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Menu,
-  MenuItem,
   Popover,
   Typography,
 } from "@mui/material";
@@ -387,7 +385,6 @@ import React, { useState, useEffect } from "react";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
 import { useNavigate, useLocation } from "react-router";
 import axios from "axios";
@@ -396,6 +393,7 @@ import { BusinessInfoAdmin } from "./BusinessInfoAdmin";
 import { PersonalInfoAdmin } from "./PersonalInfoAdmin";
 import { useClientContext } from "../../../../context/ClientContext";
 import { useTranslation } from 'react-i18next';
+import Language from "../../../../Component/dashboard/TopBar/Language";
 export const AddClient = () => {
   const { t , i18n} = useTranslation() // translation and change language  functions
   const theme = useTheme();
@@ -562,30 +560,10 @@ export const AddClient = () => {
     }
   };
 
-  const [anchorElLanguage, setAnchorElLanguage] = useState(null);
-  const [selectedLanguage, setSelectedLanguage] = useState("en");
-  const openLanguage = Boolean(anchorElLanguage);
+ 
 
-  const handleLanguageClick = (event) => {
-    setAnchorElLanguage(event.currentTarget);
-  };
 
-  const handleLanguageClose = (language) => {
-    setAnchorElLanguage(null);
-    if (language) {
-      setSelectedLanguage(language);
-      console.log("langChange",language)
-      i18n.changeLanguage(language)
-    }
-  };
 
-  const getLanguageIcon = () => {
-    return selectedLanguage === "ar" ? (
-      <span className="icon-translation" style={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }}></span>
-    ) : (
-      <LanguageOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }} />
-    );
-  };
 
   const [anchorElUser, setAnchorElUser] = useState(null);
   const openUserPopover = Boolean(anchorElUser);
@@ -616,29 +594,7 @@ export const AddClient = () => {
         </Box>
 
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Box
-            sx={{ cursor: "pointer", display: "flex", marginRight: "20px", alignItems: "center" }}
-            onClick={handleLanguageClick}
-          >
-            {getLanguageIcon()}
-            <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: "#575756" }} />
-            <Menu
-              anchorEl={anchorElLanguage}
-              open={openLanguage}
-              onClose={() => handleLanguageClose(null)}
-              sx={{ padding: "2px" }}
-            >
-              <MenuItem onClick={() => handleLanguageClose("ar")}>
-                <span className="icon-translation" style={{ color: "#575756", marginRight: "8px", fontSize: "20px" }}></span>
-                <span style={{ fontSize: "12px", color: "#575756" }}>Arabic</span>
-              </MenuItem>
-              <Divider />
-              <MenuItem onClick={() => handleLanguageClose("en")}>
-                <LanguageOutlinedIcon sx={{ color: "#575756", marginRight: "8px", fontSize: "20px" }} />
-                <span style={{ fontSize: "12px", color: "#575756" }}>English</span>
-              </MenuItem>
-            </Menu>
-          </Box>
+          <Language/>
 
           <Box
             aria-describedby={openUserPopover ? "simple-popover" : undefined}

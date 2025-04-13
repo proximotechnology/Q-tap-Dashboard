@@ -30,6 +30,7 @@ import { BusinessInfo } from '../../Pages/Client/Row2/AddClient/BusinessInfo';
 import { usePersonalContext } from '../../context/PersonalContext';
 import { useBusinessContext } from '../../context/BusinessContext';
 import { useTranslation } from 'react-i18next';
+import Language from '../dashboard/TopBar/Language';
 
 export const Save = () => {
   const { businessData, updateBusinessData, branches, setBranches } = useBusinessContext();
@@ -329,35 +330,7 @@ export const Save = () => {
         </Box>
 
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Box
-            sx={{ cursor: 'pointer', display: 'flex', marginRight: '20px', alignItems: 'center' }}
-            onClick={handleLanguageClick}
-          >
-            {getLanguageIcon()}
-            <KeyboardArrowDown sx={{ fontSize: '18px', color: '#575756' }} />
-            <Menu
-              anchorEl={anchorElLanguage}
-              open={openLanguage}
-              onClose={() => setAnchorElLanguage(null)}
-              sx={{ padding: '2px' }}
-            >
-              <MenuItem onClick={(e) => {
-                e.stopPropagation()
-                handleLanguageClose('ar')
-              }} >
-                <span className="icon-translation" style={{ color: '#575756', marginRight: '8px', fontSize: '20px' }} />
-                <span style={{ fontSize: '12px', color: '#575756' }}>Arabic</span>
-              </MenuItem>
-              <Divider />
-              <MenuItem onClick={(e) => {
-                e.stopPropagation()
-                handleLanguageClose('en')
-              }}>
-                <LanguageOutlined sx={{ color: '#575756', marginRight: '8px', fontSize: '20px' }} />
-                <span style={{ fontSize: '12px', color: '#575756' }}>English</span>
-              </MenuItem>
-            </Menu>
-          </Box>
+          <Language/>
 
           <Box
             aria-describedby={openUserPopover ? 'simple-popover' : undefined}

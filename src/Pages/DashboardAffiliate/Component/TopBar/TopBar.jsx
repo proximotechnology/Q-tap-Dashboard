@@ -8,9 +8,11 @@ import Switch from '@mui/material/Switch';
 import { useLocation, useNavigate } from "react-router";
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import Language from "../../../DashboardClient/ComponentDashClient/TopBar/Language";
+
 import { useTranslation } from "react-i18next";
 import DarkModeSwitch from "../../../../Component/DarkModeSwitch";
+import UserOptions from "../../../../Component/UserOptions";
+import Language from "../../../../Component/dashboard/TopBar/Language";
 
 
 export default function TopBar() {
@@ -61,9 +63,10 @@ export default function TopBar() {
                 <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
                     <DarkModeSwitch />
                     <Language />
+                    <UserOptions />
                 </Box>
 
-                <Box
+                {/* <Box
                     aria-describedby={openUserPopover ? 'simple-popover' : undefined}
                     onClick={handleUserClick}
                     sx={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "3px" }}>
@@ -77,8 +80,8 @@ export default function TopBar() {
                     </IconButton>
                     <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>User01</Typography>
                     <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: "#575756" }} />
-                </Box>
-                <Popover disableScrollLock
+                </Box> */}
+                {/* <Popover disableScrollLock
                     id={openUserPopover ? 'simple-popover' : undefined}
                     open={openUserPopover}
                     anchorEl={anchorElUser}
@@ -165,7 +168,7 @@ export default function TopBar() {
                             </ListItem>
                         </List>
                     </Box>
-                </Popover>
+                </Popover> */}
 
             </Box>
         </Box>

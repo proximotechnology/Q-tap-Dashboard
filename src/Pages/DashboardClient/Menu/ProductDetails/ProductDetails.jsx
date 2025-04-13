@@ -8,9 +8,9 @@ import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import RemoveCircleOutlinedIcon from '@mui/icons-material/RemoveCircleOutlined';
 import { ingrediants, itemsData, options } from '../data/itemsData';
 import Cart from './Cart';
-import Language from '../../ComponentDashClient/TopBar/Language';
 import { useTranslation } from 'react-i18next';
 import { customWidth } from '../utils';
+import Language from '../../../../Component/dashboard/TopBar/Language';
 
 
 const ProductDetails = ({ item, activeItemId, handleOptionClick, selectedItemOptions, selectedSize, handleSizeClick, isCartOpen, toggleCart,

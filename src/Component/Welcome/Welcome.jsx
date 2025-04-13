@@ -1,22 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Box, Button, IconButton, Typography } from "@mui/material";
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import { MenuItem, Menu, Divider } from "@mui/material";
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { styled, useTheme, width } from '@mui/system';
+import { styled, useTheme } from '@mui/system';
 import { useNavigate } from 'react-router';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram, faFacebookF, faXTwitter, faTiktok } from "@fortawesome/free-brands-svg-icons";
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-
-
+import Language from '../dashboard/TopBar/Language';
 
 export const Welcome = () => {
   const theme = useTheme();
-  const [anchorElLanguage, setAnchorElLanguage] = useState(null);
-  const [selectedLanguage, setSelectedLanguage] = useState('en');
-  const openLanguage = Boolean(anchorElLanguage);
   const Divider2 = styled(Box)({
     width: '20%',
     height: '5px',
@@ -25,22 +17,9 @@ export const Welcome = () => {
     display: "flex",
     margin: "0 auto",
   });
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
-  const handleLanguageClick = (event) => {
-    setAnchorElLanguage(event.currentTarget);
-  };
 
-  const handleLanguageClose = (language) => {
-    setAnchorElLanguage(null);
-    setSelectedLanguage(language);
-    i18n.changeLanguage(language)
-  };
-
-  const getLanguageIcon = () => {
-    return selectedLanguage === 'ar' ? <span class="icon-translation" style={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }}> </span>
-      : <LanguageOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }} />;
-  };
   const navigate = useNavigate();
 
   return (
@@ -81,27 +60,7 @@ export const Welcome = () => {
         }}>
           <img src="/assets/helplogo.svg" alt="icon" style={{ width: "25px", height: "25px", marginRight: "30px" }} />
 
-          <Box sx={{ cursor: "pointer", display: "flex", marginRight: "20px", alignItems: "center" }}
-            onClick={handleLanguageClick}>
-            {getLanguageIcon()}
-            <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: "#575756" }} />
-            <Menu
-              anchorEl={anchorElLanguage}
-              open={openLanguage}
-              onClose={() => setAnchorElLanguage(null)}
-              sx={{ padding: "2px" }}
-            >
-              <MenuItem onClick={() => handleLanguageClose('ar')}>
-                <span class="icon-translation" style={{ color: "#575756", marginRight: '8px', fontSize: "20px" }}></span>
-                <span style={{ fontSize: "12px", color: "#575756" }}>Arabic</span>
-              </MenuItem>
-              <Divider />
-              <MenuItem onClick={() => handleLanguageClose('en')}>
-                <LanguageOutlinedIcon sx={{ color: "#575756", marginRight: '8px', fontSize: "20px" }} />
-                <span style={{ fontSize: "12px", color: "#575756" }}>English</span>
-              </MenuItem>
-            </Menu>
-          </Box>
+          <Language/>
         </Box>
 
       </Box>
@@ -117,7 +76,7 @@ export const Welcome = () => {
 
         <img src="/assets/qtapwhite.svg" alt="qtap" style={{ width: "200px", height: "60px", marginBottom: "60px" }} />
 
-        {!sessionStorage.getItem("paymentUrl") ? <Typography variant="body2" sx={{ fontSize: "16px", width: "400px", lineHeight: 2, mb: 2 }}>
+        {!sessionStorage.getItem("paymentUrl") ? <Typography variant="body2" sx={{ fontSize: "16px", maxWidth: "400px", lineHeight: 2, mb: 2 }}>
           {t("welcomeP1")}
         </Typography> : (<>
           <Typography variant="body2" sx={{ fontSize: "16px", width: "400px", lineHeight: 2, mb: 2 }}>
@@ -162,14 +121,14 @@ export const Welcome = () => {
         </Typography>
 
 
-        <Typography variant="body2" sx={{ fontSize: "13px", mb: 3 }}>
-          <a href="mailto:your-email@example.com" style={{ color: "white" }}>
+        <Typography variant="body2" sx={{ fontSize: "13px", mb: 3 ,overflowWrap:'anywhere'}}>
+          <a href="mailto:your-email@example.com" style={{ color: theme.palette.text.white }}>
             sales@qtap.com</a>
 
-          <a href="tel:+201234567890" style={{ color: "white", padding: "0px 20px" }}>
+          <a href="tel:+201234567890" style={{ color: theme.palette.text.white, padding: "0px 20px" }}>
             +201050727984</a>
 
-          <a href="tel:+201234567890" style={{ color: "white" }}>
+          <a href="tel:+201234567890" style={{ color: theme.palette.text.white }}>
             +201063879878</a>
         </Typography>
 

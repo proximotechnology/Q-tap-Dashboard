@@ -37,7 +37,7 @@ const OrderCard = ({ order, isSelected, onClick, isAccepted, isPayment, isServed
                         color: "white",
                     }}
                 >
-                   {t("id")} #{order.id}
+                    {t("id")} #{order.id}
                 </Typography>
 
                 {isAccepted ? (
@@ -85,7 +85,7 @@ const OrderCard = ({ order, isSelected, onClick, isAccepted, isPayment, isServed
                         </Box>
 
                         <Typography color="textSecondary" fontSize="12px" padding="0px 20px 5px 20px">
-                           {t("Dine In")}: <span style={{ color: theme.palette.orangePrimary.main }}>{order.table}</span>
+                            {t("Dine In")}: <span style={{ color: theme.palette.orangePrimary.main }}>{order.table}</span>
                         </Typography>
                         <hr width="90%" />
                         <Typography variant="body2" fontSize="12px" padding="0px 20px">

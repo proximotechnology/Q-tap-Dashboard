@@ -29,7 +29,7 @@ export default function HomeClient() {
             <CssBaseline />
             <SidebarButton top={'30px'} openSidebar={isSideBarOpen} handleToggleSideBar={handleOpenSideBar} />
             <SideBar isOpen={isSideBarOpen}/>
-            <Box sx={{ flexGrow: 1,width:"100%",  padding:"0px 30px ",  marginLeft: {sm:"0px",md:'200px'}, overflow: "hidden" }}>
+            <Box sx={{ flexGrow: 1,width:"100%",  padding:"0px 30px ",  marginInlineStart: {sm:"0px",md:'200px'}, overflow: "hidden" }}>
                 <TopBar />
                 <Content />
             </Box>

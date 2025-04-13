@@ -70,7 +70,7 @@ const Content = ({ items }) => {
             <Offers isItemSelected={!!selectedItem} />
 
             <Box sx={{ mt: 5, display: 'flex', }}>
-                <Box sx={{ width: selectedItem ? '96%' : '100%', transition: 'width 0.3s ease', position: "relative", left: "3%" }}>
+                <Box sx={{ width: selectedItem ? '96%' : '100%', transition: 'width 0.3s ease', position: "relative", start: "3%" }}>
                     <Typography variant="h5" sx={{ fontSize: '15px', fontWeight: 'bold', marginBottom: '20px', color: '#575756', }} >
                         <span style={{ padding: '2px 0px', borderBottom: '2px solid #ef7d00' }}>
                             {t("item.many")}

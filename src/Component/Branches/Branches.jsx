@@ -41,7 +41,7 @@ export const Branches = () => {
       </Typography>
       <Divider />
 
-      <Box sx={{ display: 'flex', marginTop: { xs: '20px', md: '50px' }, marginLeft: '30px', flexWrap: 'wrap' }}>
+      <Box sx={{ display: 'flex', marginTop: { xs: '20px', md: '50px' }, marginInlineStart: '30px', flexWrap: 'wrap' }}>
         {/* Display existing branches */}
         {branches.map((branch, index) => (
           <Box

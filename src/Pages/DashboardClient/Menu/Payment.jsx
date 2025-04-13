@@ -7,9 +7,9 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
  
 import { Done } from './Done';
-import Language from '../ComponentDashClient/TopBar/Language';
 import { useTranslation } from 'react-i18next';
 import { customWidth } from './utils';
+import Language from '../../../Component/dashboard/TopBar/Language';
 
 
 

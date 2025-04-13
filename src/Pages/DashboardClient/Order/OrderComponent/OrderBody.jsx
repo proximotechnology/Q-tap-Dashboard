@@ -15,13 +15,13 @@ export const OrderBody = () => {
     const [servedOrders, setServedOrders] = useState([]);
     const [doneOrders, setDoneOrders] = useState([]);
     const [closeOrders, setCloseOrders] = useState([]);
-    const {t} = useTranslation()
+    const { t } = useTranslation()
     const theme = useTheme();
     const [orders, setOrders] = useState([
         {
             id: '3208',
             items: 4,
-            order:"Order Placed ,Unpaid",
+            order: "Order Placed ,Unpaid",
             state: "Rejected",
             pay: 'Unpaid',
             date: 'Monday, August 4, 2024 3:59 PM',
@@ -51,7 +51,7 @@ export const OrderBody = () => {
         {
             id: '32348',
             items: 7,
-            order:"Order Placed ,Unpaid",
+            order: "Order Placed ,Unpaid",
             state: "Done",
             pay: 'paid',
             date: 'Sunday, August 4, 2024 3:59 PM',
@@ -145,33 +145,38 @@ export const OrderBody = () => {
         }
     };
 
+    const handleCloseOrderDetailsOnMobile = () => {
+        setSelectedOrder(null)
+    }
 
     return (
-        <Box sx={{ width: selectedOrder ? "78%" : "100%", transition: "width 0.3s ease-in-out", 
-        backgroundColor: "#EBEDF3",  }}>
+        <Box sx={{
+            width: { xs:"100%", md:selectedOrder ? "78%" : "100%"}, transition: "width 0.3s ease-in-out",
+            backgroundColor: "#EBEDF3", minHeight: '100vh',display:'flex',flexDirection:'column',overflow:'hidden'
+        }}>
             <Header />
 
             <Grid container>
-                <Grid item xs={12} sx={{ display: "flex" }}>
-                    <Grid xs={4}>
-                        <Box 
+                <Grid container item xs={12} sx={{ display: "flex" }}>
+                    <Grid item xs={12} md={4} sx={{ marginBottom: '20px' }}>
+                        <Box
                             sx={{
-                                position: "relative",color:"black",
-                                backgroundColor: "white", width: "80%",  zIndex: 1000, textTransform: "capitalize",
+                                position: "relative", color: "black",
+                                backgroundColor: "white", width: "80%", zIndex: 1000, textTransform: "capitalize",
                                 margin: "-20px 10% 5% 10%", height: "45px", borderBottom: "4px solid #ef7d00",
                                 textAlign: "center",
                                 display: "flex",
                                 justifyContent: "center",
-                                alignItems: "center", fontSize:"14px",
-                                fontFamily:"sans-serif",
+                                alignItems: "center", fontSize: "14px",
+                                fontFamily: "sans-serif",
                                 "&.Mui-selected": {
                                     color: theme.palette.orangePrimary.main,
                                 },
                                 marginRight: "60px",
                                 borderRadius: "5px",
                             }} >
-                                {t("newOrder")}
-                            </Box>
+                            {t("newOrder")}
+                        </Box>
 
 
                         {orders.map((order) => (
@@ -192,17 +197,17 @@ export const OrderBody = () => {
 
                     </Grid>
 
-                    <Grid xs={4}>
-                    <Box 
+                    <Grid item xs={12} md={4} sx={{ marginBottom: '20px' }}>
+                        <Box
                             sx={{
-                                position: "relative",color:"black",
-                                backgroundColor: "white", width: "80%",  zIndex: 1000, textTransform: "capitalize",
+                                position: "relative", color: "black",
+                                backgroundColor: "white", width: "80%", zIndex: 1000, textTransform: "capitalize",
                                 margin: "-20px 10% 5% 10%", height: "45px", borderBottom: "4px solid #ef7d00",
                                 textAlign: "center",
                                 display: "flex",
                                 justifyContent: "center",
-                                alignItems: "center", fontSize:"14px",
-                                fontFamily:"sans-serif",
+                                alignItems: "center", fontSize: "14px",
+                                fontFamily: "sans-serif",
                                 "&.Mui-selected": {
                                     color: theme.palette.orangePrimary.main,
                                 },
@@ -210,9 +215,9 @@ export const OrderBody = () => {
                                 borderRadius: "5px",
                             }} >
                             {t("accepted")}
-                            </Box>
+                        </Box>
                         {orders.map((order) => (
-                            ([...acceptedOrders, ...paidOrders, ...servedOrders,...doneOrders].includes(order.id)) &&
+                            ([...acceptedOrders, ...paidOrders, ...servedOrders, ...doneOrders].includes(order.id)) &&
                             (!(closeOrders.includes(order.id)))
                             &&
                             (
@@ -231,17 +236,17 @@ export const OrderBody = () => {
                         ))}
                     </Grid>
 
-                    <Grid xs={4}>
-                    <Box 
+                    <Grid item xs={12} md={4} sx={{ marginBottom: '20px' }}>
+                        <Box
                             sx={{
-                                position: "relative",color:"black",
-                                backgroundColor: "white", width: "80%",  zIndex: 1000, textTransform: "capitalize",
+                                position: "relative", color: "black",
+                                backgroundColor: "white", width: "80%", zIndex: 1000, textTransform: "capitalize",
                                 margin: "-20px 10% 5% 10%", height: "45px", borderBottom: "4px solid #ef7d00",
                                 textAlign: "center",
                                 display: "flex",
                                 justifyContent: "center",
-                                alignItems: "center", fontSize:"14px",
-                                fontFamily:"sans-serif",
+                                alignItems: "center", fontSize: "14px",
+                                fontFamily: "sans-serif",
                                 "&.Mui-selected": {
                                     color: theme.palette.orangePrimary.main,
                                 },
@@ -249,9 +254,9 @@ export const OrderBody = () => {
                                 borderRadius: "5px",
                             }} >
                             {t("done")}
-                            </Box>
-                            {orders.map((order) => (
-                            ([...closeOrders ].includes(order.id)) && (
+                        </Box>
+                        {orders.map((order) => (
+                            ([...closeOrders].includes(order.id)) && (
                                 <OrderCard
                                     key={order.id}
                                     order={order}
@@ -269,7 +274,7 @@ export const OrderBody = () => {
                 </Grid>
 
                 {selectedOrder && (
-                    <Grid item xs={3}>
+                    <Box   >
                         <Box>
                             <OrderDetails
                                 order={selectedOrder}
@@ -284,18 +289,21 @@ export const OrderBody = () => {
                                 isServed={servedOrders.includes(selectedOrder.id)}
                                 isDone={doneOrders.includes(selectedOrder.id)}
                                 isClose={closeOrders.includes(selectedOrder.id)}
+                                closeDetails={handleCloseOrderDetailsOnMobile}
                             />
                         </Box>
-                    </Grid>
+                    </Box>
                 )}
             </Grid>
 
-            <Footer selectedOrder={selectedOrder}
-                isAccepted={selectedOrder && acceptedOrders.includes(selectedOrder.id)}
-                isServed={selectedOrder && servedOrders.includes(selectedOrder.id)}
-                isDone={selectedOrder && doneOrders.includes(selectedOrder.id)}
-                isClose={selectedOrder && closeOrders.includes(selectedOrder.id)}
-            />
+            <Box sx={{ marginTop:'auto' }}>
+                <Footer selectedOrder={selectedOrder}
+                    isAccepted={selectedOrder && acceptedOrders.includes(selectedOrder.id)}
+                    isServed={selectedOrder && servedOrders.includes(selectedOrder.id)}
+                    isDone={selectedOrder && doneOrders.includes(selectedOrder.id)}
+                    isClose={selectedOrder && closeOrders.includes(selectedOrder.id)}
+                />
+            </Box>
             <RejectionModal open={modalOpen} onClose={handleModalClose} />
         </Box>
     );

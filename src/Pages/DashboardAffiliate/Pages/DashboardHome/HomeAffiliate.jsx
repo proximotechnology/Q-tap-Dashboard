@@ -28,7 +28,7 @@ export default function HomeAffiliate() {
             <CssBaseline />
             <SidebarButton handleToggleSideBar={handleToggleSideBar} openSidebar={isSidebarOpen} top={'30px'}/>
             <SideBar isOpen={isSidebarOpen} />
-            <Box sx={{ flexGrow: 1,width:"100%",marginLeft: {xs:'0px',md:'200px'}, overflow: "hidden" }}>
+            <Box sx={{ flexGrow: 1,width:"100%",marginInlineStart: {xs:'0px',md:'200px'}, overflow: "hidden" }}>
                 <TopBar mode={mode} setMode={setMode} />  
                 <Content />
             </Box>

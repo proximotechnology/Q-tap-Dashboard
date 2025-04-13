@@ -10,10 +10,10 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 
 import { useLocation, useNavigate } from "react-router";
-import Language from "./Language";
 import { useBranch } from "../../../../context/BranchContext";
 import { useTranslation } from "react-i18next";
 import DarkModeSwitch from "../../../../Component/DarkModeSwitch";
+import Language from "../../../../Component/dashboard/TopBar/Language";
 
 const styles =  (theme) =>({
     button: {

@@ -10,9 +10,10 @@ import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
 import 'react-phone-input-2/lib/style.css';
 import TableBarOutlinedIcon from '@mui/icons-material/TableBarOutlined';
 import { Payment } from '../Payment';
-import Language from '../../ComponentDashClient/TopBar/Language';
+
 import { useTranslation } from 'react-i18next';
 import { customWidth } from '../utils';
+import Language from '../../../../Component/dashboard/TopBar/Language';
 const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getItemCount, totalCart, selectedSize }) => {
 
     const [selectedType, setSelectedType] = useState('Dine In');

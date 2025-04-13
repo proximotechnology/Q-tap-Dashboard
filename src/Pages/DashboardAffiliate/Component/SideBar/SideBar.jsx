@@ -4,40 +4,46 @@ import { Box, List, ListItemButton, ListItemIcon, ListItemText, Tooltip, useThem
 import { useLocation, useNavigate } from "react-router-dom";
 import { grey } from "@mui/material/colors";
 import { useTranslation } from "react-i18next";
+import SidebarExtraMobileSection from "../../../../Component/SidebarExtraMobileSection";
 
 
-const Arr1 = [ 
-    { text: "Dashboard", 
-        icon:  <img src="/assets/dashboard.svg" alt="icon" style={{ width: "16px", height: "16px" }} />, 
-        path: "/dashboard-affiliate" },
+const Arr1 = [
+    {
+        text: "Dashboard",
+        icon: <img src="/assets/dashboard.svg" alt="icon" style={{ width: "16px", height: "16px" }} />,
+        path: "/dashboard-affiliate"
+    },
 
-    { text: "Wallet", 
-        icon:<span class="icon-wallet1" style={{ width: "34.539", height: "34.544" }}></span>,
-        path: "/wallet-affiliate" },
+    {
+        text: "Wallet",
+        icon: <span class="icon-wallet1" style={{ width: "34.539", height: "34.544" }}></span>,
+        path: "/wallet-affiliate"
+    },
 ];
 
 
-export default function SideBar({isOpen}) {
+export default function SideBar({ isOpen }) {
     const location = useLocation();
     const navigate = useNavigate();
     const theme = useTheme();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     return (
-        <Box 
-        sx={{
-            width: {xs:'60%',md:'200px'}, 
-            backgroundColor: '#fff', 
-            padding: '25px 20px', 
-            position: 'fixed',  
-            top: 0,   
-            left: 0,   
-            height: '100vh',   
-             display:{xs:isOpen?'block':'none',md:"block"},
-            zIndex: 1000 }}>
-            <Box sx={{ display: "felx", justifyContent: "center", textAlign: "center", alignItems: "center"}}>
+        <Box
+            sx={{
+                width: { xs: '60%', md: '200px' },
+                backgroundColor: '#fff',
+                padding: '25px 20px',
+                position: 'fixed',
+                top: 0,
+                insetInlineStart: 0,
+                height: '100vh',
+                display: { xs: isOpen ? 'block' : 'none', md: "block" },
+                zIndex: 1000
+            }}>
+            <Box sx={{ display: "felx", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
                 <img src="/images/logoDash.jpg" alt="Logo" style={{ width: '110px' }} />
             </Box>
-
+            <SidebarExtraMobileSection />
             <List >
                 {Arr1.map((item, index) => (
                     <Tooltip
@@ -51,16 +57,16 @@ export default function SideBar({isOpen}) {
                                 sx={{
                                     justifyContent: "center",
                                     px: 2,
-                                    
-                                    color: 
+
+                                    color:
                                         location.pathname === item.path
                                             ? theme.palette.mode === "dark"
                                                 ? grey[600]
                                                 : theme.palette.orangePrimary.main
                                             : "gray",
-                                    
+
                                 }}
-                                onClick={() => {navigate(item.path);  }}
+                                onClick={() => { navigate(item.path); }}
                             >
                                 <ListItemIcon
                                     sx={{

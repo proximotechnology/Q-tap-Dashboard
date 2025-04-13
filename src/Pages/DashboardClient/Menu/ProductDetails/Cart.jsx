@@ -8,9 +8,9 @@ import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import RemoveCircleOutlinedIcon from '@mui/icons-material/RemoveCircleOutlined';
 import OrderTypeForm from './OrderTypeForm';
-import Language from '../../ComponentDashClient/TopBar/Language';
 import { useTranslation } from 'react-i18next';
 import { customWidth } from '../utils';
+import Language from '../../../../Component/dashboard/TopBar/Language';
 
 
 const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, selectedSize, handleMinusItem, handleAddItem, getItemCount }) => {

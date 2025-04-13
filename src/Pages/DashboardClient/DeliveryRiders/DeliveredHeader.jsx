@@ -7,8 +7,8 @@ import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDown
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import BedtimeOutlinedIcon from '@mui/icons-material/BedtimeOutlined';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import Language from '../ComponentDashClient/TopBar/Language';
 import { useTranslation } from 'react-i18next';
+import Language from '../../../Component/dashboard/TopBar/Language';
 export const DeliveredHeader = () => {
     const {t} = useTranslation();
     const theme = useTheme();

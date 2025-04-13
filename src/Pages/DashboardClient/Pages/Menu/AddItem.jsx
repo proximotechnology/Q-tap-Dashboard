@@ -343,7 +343,7 @@ export const AddItem = () => {
                 </Typography>
             </AppBar>
 
-            <Box sx={{ padding: "0px 70px" }}>
+            <Box sx={{ padding: {xs:'' ,md:"0px 70px"} }}>
                 <Grid container spacing={6} justifyContent={"space-around"}>
                     <Grid item xs={12} md={6}>
                         <ItemDetails

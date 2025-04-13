@@ -17,7 +17,7 @@ const Cart2 = ({ Total_Orders }) => {
   const [allOrders, setAllOrders] = React.useState([]);
   const [displayedOrders, setDisplayedOrders] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const theme  = useTheme()
+  const theme = useTheme()
   React.useEffect(() => {
     if (Total_Orders) {
       const orderArray = Object.values(Total_Orders);
@@ -42,54 +42,57 @@ const Cart2 = ({ Total_Orders }) => {
 
   return (
     <div style={{ position: 'relative' }}>
-      <ResponsiveContainer width="100%" height={160}>
-        <BarChart
-          data={displayedOrders}
-          layout="vertical"
-          margin={{ top: 5, right: 10, left: -30, bottom: -10 }}
-        >
-          <XAxis 
-            type="number" 
-            tickFormatter={(tick) => `${tick / 1000}k`}
-            tick={{ fontSize: 9 }} 
-            axisLine={false} 
-            tickLine={false} 
-          />
+      <div style={{ direction: 'ltr' }}>
+        <ResponsiveContainer width="100%" height={160}>
+          <BarChart
+            data={displayedOrders}
+            layout="vertical"
+            margin={{ top: 5, end: 10, start: -30, bottom: -10 }}
+          >
+            <XAxis
+              type="number"
+              tickFormatter={(tick) => `${tick / 1000}k`}
+              tick={{ fontSize: 9 }}
+              axisLine={false}
+              tickLine={false}
+            />
 
-          <YAxis 
-            dataKey="month_name" 
-            type="category" 
-            tick={{ fontSize: 10 }}
-            interval={0} 
-            axisLine={false} 
-            tickLine={false} 
-          />
+            <YAxis
+              dataKey="month_name"
+              type="category"
+              tick={{ fontSize: 10 }}
+              interval={0}
+              axisLine={false}
+              tickLine={false}
+            />
 
-          <Tooltip 
-            contentStyle={{ fontSize: '10px' }}
-            content={<CustomTooltip />}
-            cursor={{ fill: 'transparent' }} 
-          />
+            <Tooltip
+              contentStyle={{ fontSize: '10px' }}
+              content={<div></div>}
+              cursor={{ fill: 'transparent' }}
+            />
 
-          <Bar 
-            dataKey="total_order" 
-            fill="#000000" 
-            background={{
-              fill: '#d3d3d3',
-              radius: [10, 10, 10, 10]
-            }} 
-            barSize={6.5}
-            radius={[10, 10, 10, 10]} 
-          />
-        </BarChart>
-      </ResponsiveContainer>
+            <Bar
+              dataKey="total_order"
+              fill="#000000"
+              background={{
+                fill: '#d3d3d3',
+                radius: [10, 10, 10, 10]
+              }}
+              barSize={6.5}
+              radius={[10, 10, 10, 10]}
+            />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+
 
       {hasMoreOrders && (
         <button
           onClick={handleTogglePage}
           style={{
             position: 'absolute',
-            right: 0,
+            insetInlineEnd: 0,
             top: 0,
             transform: 'translateY(-50%)',
             width: '20px',
@@ -104,7 +107,7 @@ const Cart2 = ({ Total_Orders }) => {
             marginRight: "10px",
             border: 'none',
             background: 'transparent',
-            color:theme.palette.orangePrimary.main
+            color: theme.palette.orangePrimary.main
           }}
           onMouseEnter={(e) => e.target.style.color = theme.palette.chart.orangeLight}
           onMouseLeave={(e) => e.target.style.color = theme.palette.orangePrimary.main}

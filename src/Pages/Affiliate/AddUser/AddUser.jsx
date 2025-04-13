@@ -5,7 +5,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import { useNavigate, useLocation } from "react-router";
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
 import axios from 'axios';
@@ -14,12 +13,13 @@ import { PersonalInfo } from './PersonalInfo';
 import { PaymentInfo } from './PaymentInfo';
 import { useTranslation } from 'react-i18next';
 import { AffiliateClientContext } from '../../../context/AffiliateClient';
+import Language from '../../../Component/dashboard/TopBar/Language';
 
 export const AddUsers = () => {
     const navigate = useNavigate();
     const theme = useTheme();
     const location = useLocation();
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const user = location.state?.user; // Get user data from navigation state
     const { affiliates, getAffiliateData } = useContext(AffiliateClientContext);
 
@@ -46,11 +46,9 @@ export const AddUsers = () => {
             user.payment_way === 'credit_card' ? 'Card' :null
     ) : 'Bank');
 
-    // Language and User States
-    const [anchorElLanguage, setAnchorElLanguage] = useState(null);
-    const [selectedLanguage, setSelectedLanguage] = useState('en');
+
     const [anchorElUser, setAnchorElUser] = useState(null);
-    const openLanguage = Boolean(anchorElLanguage);
+
 
     // Add error states
     const [errors, setErrors] = useState({});
@@ -94,27 +92,12 @@ export const AddUsers = () => {
         }
     }, [affiliates, user]);
 
-    const handleLanguageClick = (event) => {
-        setAnchorElLanguage(event.currentTarget);
-    };
-
-    const handleLanguageClose = (language) => {
-        setAnchorElLanguage(null);
-        setSelectedLanguage(language);
-        i18n.changeLanguage(language);
-    };
+ 
 
     const handlePrint = () => {
         window.print();
     };
 
-    const getLanguageIcon = () => {
-        return selectedLanguage === 'ar' ? (
-            <span className="icon-translation" style={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }}></span>
-        ) : (
-            <LanguageOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }} />
-        );
-    };
 
     const openUserPopover = Boolean(anchorElUser);
 
@@ -260,26 +243,7 @@ export const AddUsers = () => {
                     <img src="/images/qtap.PNG" alt='logo' width={"140px"} />
                 </Box>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <Box sx={{ cursor: "pointer", display: "flex", marginRight: "20px", alignItems: "center" }} onClick={handleLanguageClick}>
-                        {getLanguageIcon()}
-                        <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: "#575756" }} />
-                        <Menu
-                            anchorEl={anchorElLanguage}
-                            open={openLanguage}
-                            onClose={() => setAnchorElLanguage(null)}
-                            sx={{ padding: "2px" }}
-                        >
-                            <MenuItem onClick={() => handleLanguageClose('ar')}>
-                                <span className="icon-translation" style={{ color: "#575756", marginRight: '8px', fontSize: "20px" }}></span>
-                                <span style={{ fontSize: "12px", color: "#575756" }}>Arabic</span>
-                            </MenuItem>
-                            <Divider />
-                            <MenuItem onClick={() => handleLanguageClose('en')}>
-                                <LanguageOutlinedIcon sx={{ color: "#575756", marginRight: '8px', fontSize: "20px" }} />
-                                <span style={{ fontSize: "12px", color: "#575756" }}>English</span>
-                            </MenuItem>
-                        </Menu>
-                    </Box>
+                   <Language/>
                     <Box
                         aria-describedby={openUserPopover ? 'simple-popover' : undefined}
                         onClick={handleUserClick}

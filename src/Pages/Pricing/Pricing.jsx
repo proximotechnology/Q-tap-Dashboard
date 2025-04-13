@@ -70,7 +70,7 @@ export const Pricing = () => {
         borderRadius: '50px 50px 50px 0px',
         padding: '20px 35px',
         width: '28%',
-        backgroundColor: 'white',
+        backgroundColor: theme.palette.bodyColor.secandary,
         margin: '20px',
         marginTop: "70px",
         minWidth:"200px",

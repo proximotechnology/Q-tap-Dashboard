@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Grid, Typography, Button, IconButton, Divider, } from "@mui/material";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import { Box, styled, useTheme } from "@mui/system";
+import { Box, display, minHeight, styled, useTheme } from "@mui/system";
 import ModeCommentIcon from '@mui/icons-material/ModeComment';
 import { useNavigate } from "react-router";
-import Language from "../../Pages/DashboardClient/ComponentDashClient/TopBar/Language";
 import { useTranslation } from "react-i18next";
+import Language from "../dashboard/TopBar/Language";
 
 const ImageContainer = styled(Box)({
     backgroundImage: 'url(/images/logoClient.jpg)',
@@ -14,7 +14,7 @@ const ImageContainer = styled(Box)({
     display: 'flex',
     flexDirection: 'column',
     position: 'relative',
-    height: "100vh",
+    minHeight: "100vh",
 
     '::before': {
         content: '""',
@@ -26,7 +26,7 @@ const ImageContainer = styled(Box)({
         backgroundColor: 'rgba(0, 0, 0, 0.4)',
         backdropFilter: 'blur(3px)',
         zIndex: 1,
-        height: "100vh",
+        minHeight: "100vh",
     },
 });
 
@@ -49,7 +49,7 @@ export const LogoClient = () => {
         setSelectedId(id);
     };
     return (
-        <Grid item xs={12} md={6} sx={{ width: "100%", overflow: "hidden", }}>
+        <Grid item xs={12} md={6} sx={{ width: "100%", }}>
             <ImageContainer >
                 <Box sx={{ display: "flex", justifyContent: "space-between", zIndex: '4', padding: { xs: "10px", md: "30px" }, alignItems: "center" }}>
                     <Box>
@@ -171,23 +171,25 @@ export const LogoClient = () => {
 
                 </TextOverlay>
 
-                <Box sx={{
-                    zIndex: "4", display: "flex", justifyContent: "space-between", padding: "20px",
-                    alignItems: "center", width: "90%", position: "fixed", bottom: "0"
-                }}  >
-                    <Box >
-                        <img src="/assets/qtapwhite.svg" alt="logo Qtap" style={{ width: "85px" }} />
-                    </Box>
+                <Box sx={{ zIndex: 2 , marginTop:'auto' }}>
+                    <Box sx={{
+                        zIndex: "4", display: "flex", justifyContent: "space-between", padding: "20px",
+                        alignItems: "center", width: "90%", bottom: "0"
+                    }}  >
+                        <Box >
+                            <img src="/assets/qtapwhite.svg" alt="logo Qtap" style={{ width: "85px" }} />
+                        </Box>
 
-                    <Box>
-                        <Button
-                            startIcon={<ModeCommentIcon sx={{ color: "#f47b2a" }} />}
-                            style={{
-                                color: "white",
-                                textTransform: "capitalize", fontSize: "11px",
-                            }} >
-                            {t("help")}
-                        </Button>
+                        <Box>
+                            <Button
+                                startIcon={<ModeCommentIcon sx={{ color: "#f47b2a" }} />}
+                                style={{
+                                    color: "white",
+                                    textTransform: "capitalize", fontSize: "11px",
+                                }} >
+                                {t("help")}
+                            </Button>
+                        </Box>
                     </Box>
                 </Box>
 

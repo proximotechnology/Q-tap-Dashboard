@@ -61,7 +61,7 @@ export const ExtrasTable = ({ updateExtras, initialExtras, variants }) => {
     };
 
     return (
-        <Paper sx={{ borderRadius: "10px", padding: "20px 30px", marginTop: "-20px" }}>
+        <Paper sx={{ borderRadius: "10px", padding: "20px 30px", marginTop: "-20px" ,overflowX:'auto' }}>
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>
                     {t("extra.many")}
@@ -74,7 +74,8 @@ export const ExtrasTable = ({ updateExtras, initialExtras, variants }) => {
                 <AddExtras open={openExtras} handleClose={handleClose} onAdd={handleAddExtra} variants={variants} />
             </Box>
             <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main }} />
-            <Table sx={{ mt: 3, mb: 5, width: '100%', tableLayout: 'fixed' }}>
+
+            <Table sx={{ mt: 3, mb: 5,whiteSpace:'nowrap' }}>
                 <TableHead>
                     <TableRow sx={{ backgroundColor: "#EBEDF3" }}>
                         <TableCell sx={{ fontSize: "10px", textAlign: "left", color: "#575756", padding: "3px 10px" }}>{t("price.one")}</TableCell>

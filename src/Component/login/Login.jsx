@@ -123,7 +123,7 @@ export const Login = () => {
             borderRadius: '50px',
             height: '35px',
             fontSize: '11px',
-            color: 'gray',
+            color: theme.palette.text.fixedGray,
             '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
               outline: 'none',
             },
@@ -163,7 +163,7 @@ export const Login = () => {
             borderRadius: '50px',
             height: '35px',
             fontSize: '11px',
-            color: 'gray',
+            color: theme.palette.text.fixedGray,
           }}
         />
       </FormControl>
@@ -196,21 +196,21 @@ export const Login = () => {
       <Typography
         variant="body2"
         sx={{
-          color: '#2E3189',
+          color: theme.palette.text.blue,
           fontSize: '10px',
           cursor: 'pointer',
           margin: '5px 0px',
         }}
         onClick={() => navigate('/reset')}
       >
-        <span style={{ borderBottom: '1px solid #2E3189' }}>{t("resetPassword")}</span>
+        <span style={{ borderBottom: `1px solid ${theme.palette.text.blue}` }}>{t("resetPassword")}</span>
       </Typography>
 
       {apiError && (
-        <Typography sx={{ color: 'red', fontSize: '12px' }}>{apiError}</Typography>
+        <Typography sx={{ color: theme.palette.text.red, fontSize: '12px' }}>{apiError}</Typography>
       )}
       {apiSuccess && (
-        <Typography sx={{ color: 'green', fontSize: '12px' }}>{apiSuccess}</Typography>
+        <Typography sx={{ color: theme.palette.text.green, fontSize: '12px' }}>{apiSuccess}</Typography>
       )}
 
       <Button
@@ -237,12 +237,12 @@ export const Login = () => {
         control={
           <Checkbox
             sx={{
-              color: '#c2bbbb',
+              color: theme.palette.text.fixedGray,
               transform: 'scale(0.7)',
             }}
           />
         }
-        label={<Typography sx={{ fontSize: '10px', color: 'gray' }}>{t("stayLogIn")}</Typography>}
+        label={<Typography sx={{ fontSize: '10px', color: theme.palette.text.fixedGray }}>{t("stayLogIn")}</Typography>}
       />
     </Box>
   );

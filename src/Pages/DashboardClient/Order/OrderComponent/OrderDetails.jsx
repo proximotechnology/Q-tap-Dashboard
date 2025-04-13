@@ -7,7 +7,7 @@ import { Alarm } from './Alarm';
 import { useTranslation } from 'react-i18next';
 
 const OrderDetails = ({ order, onReject, onAccept, isAccepted,
-    onPayment, onServe, isPayment, isServed, onDone, isDone, isClose, onClose }) => {
+    onPayment, onServe, isPayment, isServed, onDone, isDone, isClose, onClose, closeDetails }) => {
     const navigate = useNavigate();
     const printRef = useRef();
     const [selectedChef, setSelectedChef] = useState('');
@@ -32,7 +32,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
         setSelectedWaiter(e.target.value);
     };
 
-    const {t} = useTranslation()
+    const { t } = useTranslation()
     if (!order) {
         return <div>No order selected</div>;
     }
@@ -45,11 +45,11 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
         document.body.innerHTML = printContents;
         window.print();
         document.body.innerHTML = originalContents;
-        window.location.reload(); 
+        window.location.reload();
     };
     return (
-        <Card sx={{ maxWidth: 400, height: "auto", minHeight: "100vh", zIndex: 5, width: "22%", backgroundColor: "white", position: "absolute", top: 0, right: 0 }}>
-
+        <Card sx={{ maxWidth: 400, height: "100vh", overflowY: 'auto', zIndex: 1001, width: { xs: '80%', md: "22%" }, backgroundColor: "white", position: "fixed", top: 0, right: 0, }}>
+            <Button sx={{position:'absolute', top:'10px' ,zIndex:1000 }} onClick={closeDetails}>close</Button>
             <Alarm />
 
             <CardContent>
@@ -57,12 +57,12 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <Box sx={{ backgroundColor: '#73CB3C', padding: '3px 13px', borderRadius: '20px', }}>
                             <Typography variant="body2" sx={{ fontSize: "11px", color: theme.palette.secondaryColor.main }}>
-                               {t("id")} #{order.id}</Typography>
+                                {t("id")} #{order.id}</Typography>
                         </Box>
 
                         <Typography color={isPayment ? "green" : "red"} fontSize="11px" display={"flex"} alignItems={"center"}>
                             <img src="/assets/balance.svg" alt="icon" style={{ width: "18px", marginRight: "6px", height: "18px" }} />
-                            {isPayment ? t("paid") : t( order.pay)}
+                            {isPayment ? t("paid") : t(order.pay)}
                         </Typography>
                     </Box>
 
@@ -399,7 +399,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                             </Select>
                             <Typography variant="subtitle1" fontSize="11px" paddingTop="6px" >
                                 <span class="icon-circular-clock" style={{ fontSize: "14px", marginRight: "6px" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
-                               {t("preparingTime")}</Typography>
+                                {t("preparingTime")}</Typography>
                             <TextField
                                 placeholder="0.0"
                                 type="number"
@@ -541,7 +541,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                 </>
                                             ) : (
                                                 <>
-                                                <Grid item xs={12} display={"flex"}>
+                                                    <Grid item xs={12} display={"flex"}>
                                                         <Button
                                                             onClick={onServe}
                                                             variant="contained"
@@ -560,7 +560,7 @@ const OrderDetails = ({ order, onReject, onAccept, isAccepted,
                                                             {t("prepared")}
                                                         </Button>
 
-                                                        <Button  onClick={handlePrint}>
+                                                        <Button onClick={handlePrint}>
                                                             <span class="icon-printer" style={{ color: "gray", fontSize: "22px", marginRight: "3px" }} ></span>
                                                         </Button>
                                                     </Grid>

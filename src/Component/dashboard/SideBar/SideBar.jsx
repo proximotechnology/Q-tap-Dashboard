@@ -8,6 +8,8 @@ import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import GridViewIcon from '@mui/icons-material/GridView';
 import { useTranslation } from "react-i18next";
+import SidebarExtraMobileSection from '../../../Component/SidebarExtraMobileSection'
+import { CloseSideBarButton } from "../../MobileSideBarButton/SidebarButton";
 
 
 
@@ -15,7 +17,7 @@ import { useTranslation } from "react-i18next";
 
 
 
-export default function SideBar({isOpen}) {
+export default function SideBar({isOpen , handleToggleSideBar}) {
     const location = useLocation();
     const navigate = useNavigate();
     const theme = useTheme();
@@ -98,10 +100,11 @@ export default function SideBar({isOpen}) {
                 md:'200px'
             },
             backgroundColor: theme.palette.bodyColor.secandary,
+            color: theme.palette.text.black,
             padding: '25px 20px',
             position: 'fixed',
             top: 0,
-            left: 0,
+            insetInlineStart: 0,
             height: '100vh',
             overflowY: 'auto',
             display: {
@@ -114,7 +117,8 @@ export default function SideBar({isOpen}) {
             <Box sx={{ display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
                 <img src="/images/logoDash.jpg" alt="Logo" style={{ width: '110px' }} />
             </Box>
-
+            <CloseSideBarButton customSX={{top:'50px',insetInlineStart:'80%', padding:'0px',margin:'0px', minWidth: 'unset', display:{xs:"block",md:'none'}}} handleToggleSideBar={handleToggleSideBar} />
+            <SidebarExtraMobileSection />
             <List sx={{ flex: 1, marginTop: '20px' }}>
                 {Arr1.map((item, index) => (
                     <Tooltip
@@ -130,8 +134,8 @@ export default function SideBar({isOpen}) {
                                     py: 1.2, // reduced padding
                                     color:
                                         location.pathname === item.path
-                                            ? theme.palette.orangePrimary.main
-                                            : "gray",
+                                            ? theme.palette.text.orange
+                                            : theme.palette.text.gray,
                                 }}
                                 onClick={() => { navigate(item.path); }}>
 
