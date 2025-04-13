@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Menu, MenuItem, Divider, useTheme } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
@@ -11,7 +11,15 @@ export const Language = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [selectedLanguage, setSelectedLanguage] = useState(null);
     const open = Boolean(anchorEl);
-    const {i18n} = useTranslation()
+    const { i18n } = useTranslation()
+
+    useEffect(() => {
+        setSelectedLanguage(i18n.language)
+        if (i18n.language === 'en')
+            document.documentElement.dir = 'ltr';
+        else
+            document.documentElement.dir = 'rtl';
+    }, [i18n.language])
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
         console.log("open")
@@ -20,9 +28,13 @@ export const Language = () => {
 
     const handleClose = (language) => {
         if (language) {
-            console.log("lang",language)
             i18n.changeLanguage(language)
             setSelectedLanguage(language);
+            document.documentElement.lang = language;
+            if (language === 'en')
+                document.documentElement.dir = 'ltr';
+            else
+                document.documentElement.dir = 'rtl';
         }
         setAnchorEl(null);
         console.log("close")
@@ -40,7 +52,7 @@ export const Language = () => {
     };
 
     return (
-        <Box sx={{ cursor: "pointer", display: "flex", alignItems: "center" , marginRight:"20px"}} >
+        <Box sx={{ cursor: "pointer", display: "flex", alignItems: "center", marginRight: "20px" }} >
             <Box onClick={handleClick} sx={{ display: "flex", alignItems: "center" }}>
                 {getLanguageIcon()}
                 <KeyboardArrowDownIcon sx={{ fontSize: "15px", color: "#575756" }} />

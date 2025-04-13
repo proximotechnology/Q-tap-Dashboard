@@ -77,7 +77,7 @@ export const ServingWays = () => {
             </Typography>
             <Divider />
 
-            <Box sx={{ marginTop: "70px", marginLeft: "50px" }}>
+            <Box sx={{ marginTop: "70px", marginInlineStart: "50px" }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
                     <span className="icon-waiter" style={{ color: 'grey', marginRight: "6px" }}></span>
                     <Typography variant="h6" sx={{ fontSize: { xs: "12px", md: "12px" }, color: "gray" }}>

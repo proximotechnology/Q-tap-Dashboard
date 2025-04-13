@@ -7,9 +7,9 @@ import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDown
 import Lottie  from 'lottie-react';
 import done from '../../../animation/done.json'; 
 import { Finsh } from './Finsh';
-import {Language} from '../ComponentDashClient/TopBar/Language'
 import { useTranslation } from 'react-i18next';
 import { customWidth } from './utils';
+import Language from '../../../Component/dashboard/TopBar/Language';
 
 export const Done = () => {
     const [isFinsh, setIsFinsh] = useState(false);

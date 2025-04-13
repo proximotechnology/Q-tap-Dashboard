@@ -6,7 +6,12 @@ import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
 import { useTranslation } from 'react-i18next';
 
 
+/* 2 backgroundColor
 
+
+text 
+:theme.palette.text.fixedWhite
+*/
 const QtapLogo = () => {
     const { t } = useTranslation();
     const theme = useTheme();
@@ -14,7 +19,7 @@ const QtapLogo = () => {
         backgroundImage: 'url(/images/Qtop1.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        width:"100%",
+        width: "100%",
         display: 'flex',
         justifyContent: 'center',
         height: "100vh",
@@ -39,8 +44,8 @@ const QtapLogo = () => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        textAlign: 'left',
-        color: 'white',
+        textAlign: 'start',
+        color: theme.palette.text.fixedWhite,
         padding: '20px',
     });
     const Divider = styled(Box)({
@@ -49,29 +54,29 @@ const QtapLogo = () => {
         backgroundColor: theme.palette.orangePrimary.main,
         margin: '40px 0px 20px 0px',
         borderRadius: "20px"
-    
+
     });
 
     return (
 
-        
-            <ImageContainer sx={{ position: 'relative',height:'100%', minHeight:'100vh' }}>
-                <ChevronLeftOutlinedIcon sx={{ position: "absolute", top: "40px", left: "10%", color: "white", fontSize: "33px", zIndex: "8" }} />
-                <TextOverlay sx={{ width: "80%" }}>
 
-                    <Typography variant="h1" sx={{ width: "80%", fontSize: "27px", fontWeight: "500", wordSpacing: "3px" }}>
-                       {t("qtapLogoPageTitle")}
-                    </Typography>
+        <ImageContainer sx={{ position: 'relative', height: '100%', minHeight: '100vh' }}>
+            <ChevronLeftOutlinedIcon sx={{ position: "absolute", top: "40px", left: "10%", color: theme.palette.text.fixedWhite, fontSize: "33px", zIndex: "8" }} />
+            <TextOverlay sx={{ width: "80%" }}>
+
+                <Typography variant="h1" sx={{ width: "80%", fontSize: "27px", fontWeight: "500", wordSpacing: "3px" }}>
+                    {t("qtapLogoPageTitle")}
+                </Typography>
 
 
-                    <Divider />
-                    <Typography variant="body1" sx={{ fontSize: "11px", width: "70%", color: "#F1F2F2" }} >
-                        { t("qtapLogoPageParagraph")}
-                    </Typography>
-                </TextOverlay>
+                <Divider />
+                <Typography variant="body1" sx={{ fontSize: "11px", width: "70%", color: theme.palette.text.fixedWhite }} >
+                    {t("qtapLogoPageParagraph")}
+                </Typography>
+            </TextOverlay>
 
-            </ImageContainer>
-        
+        </ImageContainer>
+
 
     )
 }

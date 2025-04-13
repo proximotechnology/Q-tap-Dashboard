@@ -10,9 +10,10 @@ const Footer = ({ selectedOrder ,isAccepted ,isServed ,isDone ,isClose}) => {
                 backgroundColor: theme.palette.secondaryColor.main,
                 color: '#fff',
                 padding: 12,
-                position: "fixed",
+                // position: "fixed",
+                marginTop:"auto",
                 bottom: 0,
-                width: selectedOrder ? "77%" : "100%",
+                width: selectedOrder ? "100%" : "100%", // why 77%
                 transition: "width 0.3s ease-in-out",
                 display: "flex",zIndex:1 ,
             }}

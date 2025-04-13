@@ -71,7 +71,7 @@ const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onC
           <>
             <span className="icon-check" style={{ fontSize: "13px", color: theme.palette.secondaryColor.main }} />
             <Typography variant="body1" sx={{ fontSize: "11px", color: theme.palette.secondaryColor.main, ml: 1 }}>
-              Done
+              {t("done")}
             </Typography>
           </>
         ) : (

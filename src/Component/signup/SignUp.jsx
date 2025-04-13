@@ -161,7 +161,7 @@ const SignUp = () => {
                     id="outlined-phone"
                     endAdornment={
                         <InputAdornment position="end">
-                            <Typography sx={{ fontSize: "10px", color: "black" }} >{t("verify")}</Typography>
+                            <Typography sx={{ fontSize: "10px", color: theme.palette.text.fixedBlack }} >{t("verify")}</Typography>
                         </InputAdornment>
                     }
                     startAdornment={
@@ -196,7 +196,7 @@ const SignUp = () => {
 
             <Grid container alignItems="center" sx={{ marginTop: "10px", }}>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
-                    <Grid container alignItems="center" sx={{ color: "grey", marginTop: "5px", marginBottom:"2px" }} >
+                    <Grid container alignItems="center" sx={{ color: theme.palette.text.fixedGray, marginTop: "5px", marginBottom: "2px" }} >
                         <CalendarMonthOutlinedIcon sx={{ marginRight: 1, fontSize: "15px" }} />
                         <Typography variant="body1" sx={{ fontSize: "11px" }}>{t("dateOfBirth")}</Typography>
                     </Grid>
@@ -209,23 +209,23 @@ const SignUp = () => {
                             value={month}
                             onChange={(e) => setMonth(e.target.value)}
                             displayEmpty
-                            sx={{ borderRadius: '50px', height: '33px', fontSize: "10px", color: "gray", marginRight: "5px" }}
+                            sx={{ borderRadius: '50px', height: '33px', fontSize: "10px", color: theme.palette.text.fixedGray, marginRight: "5px" }}
                         >
-                            <MenuItem value="" disabled sx={{ fontSize: "10px", color: "gray" }} >
+                            <MenuItem value="" disabled sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >
                                 {t("month")}
                             </MenuItem>
-                            <MenuItem value="01" sx={{ fontSize: "10px", color: "gray" }}>01</MenuItem>
-                            <MenuItem value="02" sx={{ fontSize: "10px", color: "gray" }}>02</MenuItem>
-                            <MenuItem value="03" sx={{ fontSize: "10px", color: "gray" }}>03</MenuItem>
-                            <MenuItem value="04" sx={{ fontSize: "10px", color: "gray" }}>04</MenuItem>
-                            <MenuItem value="05" sx={{ fontSize: "10px", color: "gray" }}>05</MenuItem>
-                            <MenuItem value="06" sx={{ fontSize: "10px", color: "gray" }}>06</MenuItem>
-                            <MenuItem value="07" sx={{ fontSize: "10px", color: "gray" }}>07</MenuItem>
-                            <MenuItem value="08" sx={{ fontSize: "10px", color: "gray" }}>08</MenuItem>
-                            <MenuItem value="09" sx={{ fontSize: "10px", color: "gray" }}>09</MenuItem>
-                            <MenuItem value="10" sx={{ fontSize: "10px", color: "gray" }}>10</MenuItem>
-                            <MenuItem value="11" sx={{ fontSize: "10px", color: "gray" }}>11</MenuItem>
-                            <MenuItem value="12" sx={{ fontSize: "10px", color: "gray" }}>12</MenuItem>
+                            <MenuItem value="01" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>01</MenuItem>
+                            <MenuItem value="02" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>02</MenuItem>
+                            <MenuItem value="03" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>03</MenuItem>
+                            <MenuItem value="04" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>04</MenuItem>
+                            <MenuItem value="05" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>05</MenuItem>
+                            <MenuItem value="06" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>06</MenuItem>
+                            <MenuItem value="07" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>07</MenuItem>
+                            <MenuItem value="08" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>08</MenuItem>
+                            <MenuItem value="09" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>09</MenuItem>
+                            <MenuItem value="10" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>10</MenuItem>
+                            <MenuItem value="11" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>11</MenuItem>
+                            <MenuItem value="12" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>12</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
@@ -237,13 +237,13 @@ const SignUp = () => {
                             value={day}
                             onChange={(e) => setDay(e.target.value)}
                             displayEmpty
-                            sx={{ borderRadius: '50px', height: '33px', fontSize: "10px", color: "gray", marginRight: "5px" }}
+                            sx={{ borderRadius: '50px', height: '33px', fontSize: "10px", color: theme.palette.text.fixedGray, marginRight: "5px" }}
                         >
-                            <MenuItem value="" disabled sx={{ fontSize: "10px", color: "gray" }}>
+                            <MenuItem value="" disabled sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>
                                 {t("day")}
                             </MenuItem>
                             {[...Array(31).keys()].map((i) => (
-                                <MenuItem key={i + 1} value={i + 1} sx={{ fontSize: "10px", color: "gray" }} >
+                                <MenuItem key={i + 1} value={i + 1} sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >
                                     {String(i + 1).padStart(2, '0')}
                                 </MenuItem>
                             ))}
@@ -258,13 +258,13 @@ const SignUp = () => {
                             value={year}
                             onChange={(e) => setYear(e.target.value)}
                             displayEmpty
-                            sx={{ borderRadius: '50px', height: '33px', fontSize: "10px", color: "gray" }}
+                            sx={{ borderRadius: '50px', height: '33px', fontSize: "10px", color: theme.palette.text.fixedGray }}
                         >
-                            <MenuItem value="" disabled sx={{ fontSize: "10px", color: "gray" }}>
+                            <MenuItem value="" disabled sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>
                                 {t("year")}
                             </MenuItem>
                             {Array.from({ length: 2025 - 2000 + 1 }, (_, i) => (
-                                <MenuItem key={i + 2000} value={i + 2000} sx={{ fontSize: "10px", color: "gray" }}>
+                                <MenuItem key={i + 2000} value={i + 2000} sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>
                                     {i + 2000}
                                 </MenuItem>
                             ))}
@@ -280,7 +280,7 @@ const SignUp = () => {
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
                     displayEmpty
-                    sx={{ borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px", color: "gray" }}
+                    sx={{ borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px", color: theme.palette.text.fixedGray }}
                     startAdornment={
                         <InputAdornment position="start">
                             <span class="icon-map" style={{ fontSize: "14px" }}></span>
@@ -290,9 +290,9 @@ const SignUp = () => {
                     <MenuItem value="" disabled >
                         {t("country")}
                     </MenuItem>
-                    <MenuItem value="US" sx={{ fontSize: "10px", color: "gray" }} >United States</MenuItem>
-                    <MenuItem value="CA" sx={{ fontSize: "10px", color: "gray" }} >Canada</MenuItem>
-                    <MenuItem value="UK" sx={{ fontSize: "10px", color: "gray" }} >United Kingdom</MenuItem>
+                    <MenuItem value="US" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >United States</MenuItem>
+                    <MenuItem value="CA" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >Canada</MenuItem>
+                    <MenuItem value="UK" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >United Kingdom</MenuItem>
                 </Select>
             </FormControl>
             <FormControl variant="outlined" fullWidth  >
@@ -301,19 +301,19 @@ const SignUp = () => {
                     value={user_type}
                     onChange={(e) => setUserType(e.target.value)}
                     displayEmpty
-                    sx={{ borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px", color: "gray" }}
+                    sx={{ borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px", color: theme.palette.text.fixedGray }}
                     startAdornment={
                         <InputAdornment position="start">
-                            <PeopleOutlineIcon style={{fontSize:"18px" }}></PeopleOutlineIcon>
+                            <PeopleOutlineIcon style={{ fontSize: "18px" }}></PeopleOutlineIcon>
                         </InputAdornment>
                     }
                 >
                     <MenuItem value="" disabled >
                         {t("userType")}
                     </MenuItem>
-                    <MenuItem value="qtap_admins" sx={{ fontSize: "10px", color: "gray" }} >{t("admin")}</MenuItem>
-                    <MenuItem value="qtap_clients" sx={{ fontSize: "10px", color: "gray" }} >{t("client")}</MenuItem>
-                    <MenuItem value="qtap_affiliates" sx={{ fontSize: "10px", color: "gray" }} >{t("affiliate")}</MenuItem>
+                    <MenuItem value="qtap_admins" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >{t("admin")}</MenuItem>
+                    <MenuItem value="qtap_clients" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >{t("client")}</MenuItem>
+                    <MenuItem value="qtap_affiliates" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >{t("affiliate")}</MenuItem>
                 </Select>
             </FormControl>
 
@@ -380,17 +380,17 @@ const SignUp = () => {
                 />
             </FormControl>
 
-            <FormControlLabel sx={{ display: "flex", justifyContent: "center", width: "90%", marginTop: "20px", padding:"15px 25px 0 25px" }}
+            <FormControlLabel sx={{ display: "flex", justifyContent: "center", width: "90%", marginTop: "20px", padding: "15px 25px 0 25px" }}
                 control={<Checkbox
                     sx={{
                         color: "#c2bbbb",
                         transform: "scale(0.7)"
                     }}
                 />}
-                label={<Typography sx={{ fontSize: "10px", color: "gray" }}> {t("registerAgree")}</Typography>}
+                label={<Typography sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}> {t("registerAgree")}</Typography>}
             />
-            {apiError && <Typography sx={{ color: 'red', fontSize: '13px', textAlign: "center" }}>{apiError}</Typography>}
-            {apiSuccess && <Typography sx={{ color: 'green', fontSize: '13px', textAlign: "center" }}>{apiSuccess}</Typography>}
+            {apiError && <Typography sx={{ color: theme.palette.text.red, fontSize: '13px', textAlign: "center" }}>{apiError}</Typography>}
+            {apiSuccess && <Typography sx={{ color: theme.palette.text.green, fontSize: '13px', textAlign: "center" }}>{apiSuccess}</Typography>}
             <Button
                 disabled={isLoading}
                 variant="contained"
@@ -399,7 +399,7 @@ const SignUp = () => {
                     marginTop: 2,
                     borderRadius: '50px',
                     backgroundColor: theme.palette.orangePrimary.main,
-                    color: '#ffffff',
+                    color: theme.palette.text.fixedWhite,
                     height: '35px',
                     textTransform: "capitalize",
                     '&:hover': {

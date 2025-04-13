@@ -10,8 +10,8 @@ import { useNavigate } from "react-router";
 import { PersonalInfo } from './PersonalInfo';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
 import { PaymentInfo } from '../../../Affiliate/AddUser/PaymentInfo';
-import Language from '../../../DashboardClient/ComponentDashClient/TopBar/Language'
 import { useTranslation } from 'react-i18next';
+import Language from '../../../../Component/dashboard/TopBar/Language';
 
 export const AddAffiliate = () => {
     const theme = useTheme();

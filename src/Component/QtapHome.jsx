@@ -39,7 +39,7 @@ const QtapHome = () => {
                             justifyContent: "center",
                             alignItems: "center",
                             fontSize: "11px",
-                            color: "rgb(3, 3, 80)",
+                            color: theme.palette.text.blue,
                             paddingBottom: "10px",
                             cursor: "pointer",
                         }}
@@ -64,7 +64,7 @@ const QtapHome = () => {
                             justifyContent: "center",
                             alignItems: "center",
                             fontSize: "11px",
-                            color: "rgb(2, 2, 66)",
+                            color: theme.palette.text.blue,
                             paddingBottom: "10px",
                             cursor: "pointer",
                         }}

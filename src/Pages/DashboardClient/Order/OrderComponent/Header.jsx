@@ -15,7 +15,7 @@ const ImageContainer = styled(Box)({
     backgroundImage: 'url(/images/header.jpg)',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    height: "150px",
+    minHeight: "150px",
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -62,7 +62,7 @@ const Header = () => {
                 backgroundColor: 'transparent',
                 padding: "0px 40px", zIndex: 3, boxShadow: 'none'
             }}>
-                <Box style={{ display: 'flex', alignItems: "center", justifyContent: 'space-between' }}>
+                <Box sx={{ display: 'flex', alignItems: "center", justifyContent: 'space-between',margin:{xs:'3px 0px',md:'0px'} ,padding:{xs:'3px 0px',md:'0px'}}} className="overhere">
                     <IconButton
                         onClick={() => { navigate('/dashboard-client'); }}
                         edge="start" color="inherit" aria-label="back">
@@ -70,7 +70,7 @@ const Header = () => {
                     </IconButton>
 
 
-                    <Box style={{ display: 'flex', alignItems: 'center' }} gap={1}>
+                    <Box style={{ display: 'flex', alignItems: 'center' }} gap={1}  flexWrap={{ xs:'wrap',md:'nowrap' }}>
                         <Button
                             onClick={() => { navigate('/order-history'); }}
                             sx={{
@@ -213,9 +213,9 @@ const Header = () => {
                     </Box>
                 </Box>
 
-                <Typography variant="h6" style={{
+                <Typography variant="h6" sx={{
                     flexGrow: 1, fontSize: "20px",
-                    textAlign: 'left', color: 'white', marginLeft: "100px"
+                    textAlign: 'left', color: 'white', marginInlineStart: {xs:'0px',md:"100px"} ,marginBottom:{xs:'20px',md:'0px'}
                 }}>
                    {t("liveOrders")}
                 </Typography>

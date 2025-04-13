@@ -1,32 +1,12 @@
 
 import { SetupPage } from '../Business-info/SetupPage'
-import React, { useState } from 'react'
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import { Box, MenuItem, Grid, Menu, Divider, useTheme } from "@mui/material";
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import React from 'react'
+import { Box, Grid} from "@mui/material";
 import { Products } from './Products';
-import { useTranslation } from 'react-i18next';
+
+import Language from '../dashboard/TopBar/Language';
 
 export const ProductsPage = () => {
-    const theme = useTheme();
-    const [anchorElLanguage, setAnchorElLanguage] = useState(null);
-    const [selectedLanguage, setSelectedLanguage] = useState('en');
-    const openLanguage = Boolean(anchorElLanguage);
-    const { i18n } = useTranslation()
-    const handleLanguageClick = (event) => {
-        setAnchorElLanguage(event.currentTarget);
-    };
-
-    const handleLanguageClose = (language) => {
-        setAnchorElLanguage(null);
-        setSelectedLanguage(language);
-        i18n.changeLanguage(language)
-    };
-
-    const getLanguageIcon = () => {
-        return selectedLanguage === 'ar' ? <span class="icon-translation" style={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }}> </span>
-            : <LanguageOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }} />;
-    };
 
     return (
         <Grid container
@@ -35,38 +15,12 @@ export const ProductsPage = () => {
 
             <Grid item xs={12} md={8} >
                 <Box sx={{
-                    position: "absolute", top: "30px", right: "1rem",
+                    position: "absolute", top: "30px", insetInlineEnd: "1rem",
                     cursor: "pointer", display: "flex", alignItems: "center",zIndex:'10000'
                 }}>
                     <img src="/assets/helplogo.svg" alt="icon" style={{ width: "25px", height: "25px", marginRight: "30px" }} />
 
-                    <Box sx={{ cursor: "pointer", display: "flex", marginRight: "20px", alignItems: "center" }}
-                        onClick={handleLanguageClick}>
-                        {getLanguageIcon()}
-                        <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: "#575756" }} />
-                        <Menu
-                            anchorEl={anchorElLanguage}
-                            open={openLanguage}
-                            onClose={() => setAnchorElLanguage(null)}
-                            sx={{ padding: "2px" }}
-                        >
-                            <MenuItem onClick={(e) => {
-                                e.stopPropagation()
-                                handleLanguageClose('ar')
-                            }}>
-                                <span class="icon-translation" style={{ color: "#575756", marginRight: '8px', fontSize: "20px" }}></span>
-                                <span style={{ fontSize: "12px", color: "#575756" }}>Arabic</span>
-                            </MenuItem>
-                            <Divider />
-                            <MenuItem onClick={(e) => {
-                                e.stopPropagation()
-                                handleLanguageClose('en')
-                            }}>
-                                <LanguageOutlinedIcon sx={{ color: "#575756", marginRight: '8px', fontSize: "20px" }} />
-                                <span style={{ fontSize: "12px", color: "#575756" }}>English</span>
-                            </MenuItem>
-                        </Menu>
-                    </Box>
+                  <Language/>
                 </Box>
 
                 <Products />

@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import SideBar from "../../../Component/dashboard/SideBar/SideBar";
-import { Box,  CssBaseline, useTheme } from "@mui/material";
+import { Box, CssBaseline, useTheme } from "@mui/material";
 import Content from "../../../Component/DashboardContent/Content";
 import TopBar from "../../../Component/dashboard/TopBar/TopBar";
-import SidebarButton from "../../../Component/MobileSideBarButton/SidebarButton";
+import { OpenSideBarButton } from "../../../Component/MobileSideBarButton/SidebarButton";
 
 
 export default function Home() {
-    const [mode, setMode] = useState('light');
     const [openSidebar, setOpenSidebar] = useState(false);
     const theme = useTheme()
     const handleToggleSideBar = () => {
@@ -19,18 +18,18 @@ export default function Home() {
             sx={{
                 display: "flex",
                 flexDirection: "column",
-                backgroundColor:  theme.palette.bodyColor.main,
-                color:  theme.palette.text.default,
+                backgroundColor: theme.palette.bodyColor.main,
+                color: theme.palette.text.white,
                 minHeight: "100vh",
                 width: "100%",
                 overflow: "hidden",
                 transition: "all 0.3s ease-in-out",
             }}>
             {/* sidebar open close button for xs screen */}
-           <SidebarButton handleToggleSideBar={handleToggleSideBar} openSidebar={openSidebar}/>
-
+            {/* <SidebarButton handleToggleSideBar={handleToggleSideBar} openSidebar={openSidebar}/> */}
+            <OpenSideBarButton customSX={{ top: '47px' , padding:''}} handleToggleSideBar={handleToggleSideBar} />
             <CssBaseline />
-            <SideBar isOpen={openSidebar} setOpen={setOpenSidebar} />
+            <SideBar isOpen={openSidebar} handleToggleSideBar={handleToggleSideBar} />
             <Box
                 sx={{
                     flexGrow: 1,
@@ -38,7 +37,7 @@ export default function Home() {
                         sm: "100%",
                         md: 'calc(100% - 200px)'
                     },
-                    marginLeft: {
+                    marginInlineStart: {
                         sm: "0",
                         md: '200px'
                     },
@@ -52,7 +51,7 @@ export default function Home() {
 
                 }}
             >
-                <TopBar mode={mode} setMode={setMode} />
+                <TopBar />
                 <Content />
             </Box>
         </Box>

@@ -1,11 +1,11 @@
 import React from "react";
 import { Grid, Button, IconButton, Typography, Switch, TextField,} from "@mui/material";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import { Box, styled } from "@mui/system";
+import { Box, minHeight, styled } from "@mui/system";
 import ModeCommentIcon from '@mui/icons-material/ModeComment';
 import { useNavigate } from "react-router";
-import Language from "../../Pages/DashboardClient/ComponentDashClient/TopBar/Language";
 import { useTranslation } from "react-i18next";
+import Language from "../dashboard/TopBar/Language";
 
 const ImageContainer = styled(Box)({
     backgroundImage: 'url(/images/logoClient.jpg)',
@@ -16,7 +16,7 @@ const ImageContainer = styled(Box)({
     alignItems: 'center',
     justifyContent: 'space-between',
     position: 'relative',
-   height:"100vh",
+   minHeight:"100vh",
     
     '::before': {
         content: '""',
@@ -28,7 +28,7 @@ const ImageContainer = styled(Box)({
         backgroundColor: 'rgba(0, 0, 0, 0.4)',
         backdropFilter: 'blur(3px)',
         zIndex: 1,
-    height: '100vh',
+    minHeight: '100vh',
 
     },
 });

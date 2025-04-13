@@ -6,8 +6,8 @@ import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDown
 
 import Lottie  from 'lottie-react';
 import ghostAnimation from '../../../animation/ghost.json'; 
-import Language from '../ComponentDashClient/TopBar/Language';
 import { customWidth } from './utils';
+import Language from '../../../Component/dashboard/TopBar/Language';
 
 export const Finsh = () => {
     const theme = useTheme();

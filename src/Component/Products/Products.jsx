@@ -75,7 +75,7 @@ export const Products = () => {
                         textTransform: 'none',
                         padding: "6px 0",
                         position: "fixed", bottom: "30px",
-                        left: "55%",
+                        insetInlineStart: "55%",
                         '&:hover': {
                             backgroundColor: theme.palette.orangePrimary.main,
                         },
