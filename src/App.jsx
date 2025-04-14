@@ -62,6 +62,7 @@ import Pusher from "pusher-js";
 import { toast } from "react-toastify";
 import { useEffect } from 'react';
 import { DashboardDataProvider } from './context/DashboardDataContext';
+import { MenuDataProvider } from './context/MenuDataContext';
 
 function App() {
   const routes = createBrowserRouter([
@@ -303,28 +304,30 @@ function App() {
 
   return (
     <ClientProvider>
-      <DashboardDataProvider>
-        <AffiliateClientProvider>
-          <ClientLoginDataProvider>
-            <RegisterClientProvider>
-              <ContentMenuProvider>
-                <BranchProvider>
-                  <PersonalProvider>
-                    <BusinessProvider>
-                      <div style={{ minHeight: "100vh" }}>
-                        <div className="w-100 ">
-                          <RouterProvider router={routes}></RouterProvider>
+      <MenuDataProvider>
+        <DashboardDataProvider>
+          <AffiliateClientProvider>
+            <ClientLoginDataProvider>
+              <RegisterClientProvider>
+                <ContentMenuProvider>
+                  <BranchProvider>
+                    <PersonalProvider>
+                      <BusinessProvider>
+                        <div style={{ minHeight: "100vh" }}>
+                          <div className="w-100 ">
+                            <RouterProvider router={routes}></RouterProvider>
+                          </div>
+                          <ToastContainer />
                         </div>
-                        <ToastContainer />
-                      </div>
-                    </BusinessProvider>
-                  </PersonalProvider>
-                </BranchProvider>
-              </ContentMenuProvider>
-            </RegisterClientProvider>
-          </ClientLoginDataProvider>
-        </AffiliateClientProvider>
-      </DashboardDataProvider>
+                      </BusinessProvider>
+                    </PersonalProvider>
+                  </BranchProvider>
+                </ContentMenuProvider>
+              </RegisterClientProvider>
+            </ClientLoginDataProvider>
+          </AffiliateClientProvider>
+        </DashboardDataProvider>
+      </MenuDataProvider>
     </ClientProvider>
 
   );
