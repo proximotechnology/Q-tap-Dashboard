@@ -12,6 +12,8 @@ export const ExtrasTable = ({ updateExtras, initialExtras, variants }) => {
     const [openExtras, setOpenExtras] = useState(false);
     const [allExtras, setAllExtras] = useState(initialExtras || []);
 
+
+    
     // تحديث الحالة عند تغيير initialExtras
     useEffect(() => {
         setAllExtras(initialExtras || []);
@@ -95,7 +97,7 @@ export const ExtrasTable = ({ updateExtras, initialExtras, variants }) => {
                                         sx={{ width: "90px", height: "30px", "& .MuiInputBase-root": { height: "30px", fontSize: "10px" } }}
                                     />
                                 ) : (
-                                    extra.price
+                                    `${parseFloat(extra.price).toFixed(2)} EGP`
                                 )}
                             </TableCell>
                             <TableCell sx={{ textAlign: "left", fontSize: "11px", color: "gray" }}>

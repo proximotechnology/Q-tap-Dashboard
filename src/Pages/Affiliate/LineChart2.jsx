@@ -35,7 +35,7 @@ const LineChart2 = ({ revenueData }) => {
             month_name: key,
             total_revenue: revenueData[key]
         }));
-        console.log("revenueArray", revenueArray);
+        // console.log("revenueArray", revenueArray);
     return (
         <ResponsiveContainer width="100%" height={180}>
             <LineChart data={revenueArray} margin={{ top: 5, right: 20, left: 0, bottom: 0 }}>

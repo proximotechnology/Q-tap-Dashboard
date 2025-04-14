@@ -63,10 +63,19 @@ export const AddItem = () => {
         if (itemId) {
             const fetchItem = async () => {
                 try {
-                    const response = await axios.get(`https://highleveltecknology.com/Qtap/api/meals/${itemId}`, {
+                    const response = await axios.get(`https://highleveltecknology.com/Qtap/api/meals`, {
+                        params: { brunch_id: selectedBranch },
                         headers: { 'Authorization': `Bearer ${localStorage.getItem('clientToken')}` },
                     });
-                    const item = response.data;
+                    const meal = response.data;
+                    // console.log("Fetched meal:", meal);
+                    const item = meal.find(item => item.id === parseInt(itemId));
+                    if (!item) {
+                        toast.error(t("itemNotFound"));
+                        return;
+                    }
+                    // console.log("Fetched item:", item);
+
                     setItemData({
                         name: item.name || '',
                         brief: item.Brief || '',
@@ -83,7 +92,7 @@ export const AddItem = () => {
                         image: item.img || null,
                     });
                     setVariants(item.variants || []);
-                    setExtras(item.extra || []);
+                    setExtras(item.extras || []);
                     setLimitVariants(item.limit_variants || '');
                     setIsEditing(true);
                 } catch (error) {
@@ -358,7 +367,7 @@ export const AddItem = () => {
                         />
                     </Grid>
                 </Grid>
-                <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+                <Box sx={{ display: "flex", justifyContent: "center", mt: 0 , mb: 6 }}>
                     <Button
                         onClick={handleSubmit}
                         variant="contained"

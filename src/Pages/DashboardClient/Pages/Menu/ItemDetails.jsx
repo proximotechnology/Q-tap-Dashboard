@@ -4,10 +4,13 @@ import { Typography, Box, Paper, Divider, Grid, TextField, Button, useTheme } fr
 import StraightOutlinedIcon from '@mui/icons-material/StraightOutlined';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 
 export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData }) => {
     const { t } = useTranslation();
     const theme = useTheme();
+    // const [discountData, setDiscountData] = useState([])
+    // const [selectedBranch, setSelectedBranch] = useState(localStorage.getItem('selectedBranch'))
 
     // استخدام initialData لتهيئة الحالة
     const [name, setName] = useState(initialData.name || '');
@@ -76,7 +79,31 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
         };
         fileInput.click();
     };
+    // const getDiscounts = async () => {
+    //     try {
+    //         const response = await axios.get('https://highleveltecknology.com/Qtap/api/meals_discount', {
+    //             headers: {
+    //                 'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+    //             },
+    //             params: {
+    //                 brunch_id: selectedBranch
+    //             }
+    //         });
 
+    //         if (response.data) {
+    //             setDiscountData(response.data.discounts);
+
+    //             console.log("response discount", response.data.discounts);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error fetching discounts:', error);
+    //     }
+    // };
+    // useEffect(() => {
+    //     if (categoryId && itemId) {
+    //         getDiscounts()
+    //     }
+    // }, [])
     return (
         <Paper sx={{ marginTop: "-20px", marginBottom: "30px", borderRadius: "10px", padding: "20px 50px" }}>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
