@@ -12,7 +12,7 @@ export const getDesignTokens = (mode) => ({
           main: "#222240", //theme.palette.secondaryColor.main
         },
         bluePrimary: {
-          main: '#222240',  //theme.palette.
+          main: '#222240',  //theme.palette.bluePrimary
         },
         bgColor: {
           main: "#FEE1DC",
@@ -61,12 +61,12 @@ export const getDesignTokens = (mode) => ({
           main: "#000", //theme.palette.secondaryColor.main
         },
         bluePrimary: {
-          main: '#000',  //theme.palette.
+          main: '#222240',  //theme.palette.bluePrimary.main
         },
         bgColor: {
           main: "#000",
         },
-        bodyColor: {
+        bodyColor: {//theme.palette.
           main: '#121212',
           secandary: "#2d2c2c",//
           dark: '#000',

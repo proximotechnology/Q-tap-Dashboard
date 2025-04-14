@@ -137,7 +137,7 @@ export default function TopBar() {
             padding: "30px 30px 0px 30px"
         }}>
             <Typography variant="body1" sx={{
-                fontSize: "18px", color: theme.palette.secondaryColor.main, width: "3%",
+                fontSize: "18px", color: theme.palette.text.black, width: "3%",
                 borderBottom: `2px solid ${theme.palette.orangePrimary.main}`
             }}>
                 {pageTitles[location.pathname] || 'Dashboard'}

@@ -82,11 +82,11 @@ export default function SideBar({isOpen}) {
     return (
         <Box sx={{
             width: {xs:'60%',md:'200px'},
-            backgroundColor: '#fff',
+            backgroundColor: theme.palette.bodyColor.secandary,
             padding: '25px 20px',
             position: 'fixed',
             top: 0,
-            left: 0,
+            insetInlineStart: 0,
             height: '100vh',
             zIndex: 1000,
             display:{xs:isOpen?'block':'none', md:'block'}
