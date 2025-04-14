@@ -1,8 +1,9 @@
 import { Menu, Close } from '@mui/icons-material'
-import { Button } from '@mui/material'
+import { Button, useTheme } from '@mui/material'
 import React from 'react'
 
 const SidebarButton = ({ openSidebar, handleToggleSideBar, top }) => {
+    const theme = useTheme()
     return (
         <Button sx={{
             position: openSidebar ? "fixed" : "absolute",
@@ -16,7 +17,7 @@ const SidebarButton = ({ openSidebar, handleToggleSideBar, top }) => {
         }}
             onClick={handleToggleSideBar}
         >
-            {openSidebar ? <Close sx={{ color: "black" }} /> : <Menu sx={{ color: "black" }} />}
+            {openSidebar ? <Close sx={{ color: theme.palette.text.black }}  /> : <Menu sx={{ color: theme.palette.text.black }}/>}
         </Button>
     )
 }
@@ -27,6 +28,7 @@ export default SidebarButton
 
 
 export const CloseSideBarButton = ({ customSX = {}, handleToggleSideBar }) => {
+    const theme = useTheme()
     return (
         <Button
             sx={{
@@ -35,12 +37,13 @@ export const CloseSideBarButton = ({ customSX = {}, handleToggleSideBar }) => {
             }}
             onClick={handleToggleSideBar}
         >
-            <Close sx={{ color: "black" }} />
+            <Close sx={{ color: theme.palette.text.black}} />
         </Button>
     )
 }
 
 export const OpenSideBarButton = ({ customSX = {}, handleToggleSideBar }) => {
+    const theme = useTheme()
     return (
         <Button
             sx={{
@@ -49,7 +52,7 @@ export const OpenSideBarButton = ({ customSX = {}, handleToggleSideBar }) => {
             }}
             onClick={handleToggleSideBar}
         >
-            <Menu sx={{ color: "black" }} />
+            <Menu sx={{ color: theme.palette.text.black }} />
         </Button>
     )
 }
