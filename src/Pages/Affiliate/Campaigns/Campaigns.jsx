@@ -54,7 +54,16 @@ const Campaigns = () => {
   };
 
   useEffect(() => {
-    getCampaigns();
+    let isMounted = true; // Flag to prevent setting state if component is unmounted
+    const fetchCampaigns = async () => {
+      if (isMounted) {
+        await getCampaigns();
+      }
+    };
+    fetchCampaigns();
+    return () => {
+      isMounted = false; // Cleanup to prevent multiple requests
+    }
   }, []);
 
   const handleDeleteCampaign = async (campaignId) => {

@@ -10,7 +10,7 @@ const SalesVolumeChart = ({ salesVolumeData }) => {
     return (
         <Box sx={{ height: "150px", width: '100%' }}>
             <ResponsiveContainer width="100%" height={250}>
-                <LineChart data={salesVolumeData} margin={{ top: 10, right: 10, left: -10, bottom: 90 }}>
+                <LineChart data={salesVolumeData?.data} margin={{ top: 10, right: 10, left: -10, bottom: 90 }}>
                     <XAxis dataKey="week" tickLine={false} tick={{ fontSize: 10 }} />
                     <YAxis tickFormatter={(tick) => `${tick}k`} tick={{ fontSize: 10 }}
                         tickLine={false} interval={0} />

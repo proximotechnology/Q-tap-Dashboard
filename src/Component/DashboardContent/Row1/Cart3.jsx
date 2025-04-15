@@ -11,11 +11,20 @@ export const Cart3 = ({ Affiliate_Users }) => {
   const [affiliates, setAffiliates] = React.useState({});
 
   React.useEffect(() => {
-    if (Affiliate_Users) {
-      setAffiliates(Affiliate_Users);
-    } else {
-      setAffiliates({});
-    }
+    let isMounted = true; // Flag to prevent setting state if component is unmounted
+    const updateAffiliates = () => {
+      if (isMounted) {
+        if (Affiliate_Users) {
+          setAffiliates(Affiliate_Users);
+        } else {
+          setAffiliates({});
+        }
+      }
+    };
+    updateAffiliates();
+    return () => {
+      isMounted = false; // Cleanup to prevent state updates on unmounted component
+    };
   }, [Affiliate_Users]);
 
   // تحويل البيانات إلى تنسيق Pie Chart

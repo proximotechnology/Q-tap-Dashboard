@@ -68,9 +68,18 @@ export const UserTable = () => {
 
   // Fetch data when selectedBranch changes
   useEffect(() => {
-    if (selectedBranch) {
-      getUserStaff();
-    }
+    let isMounted = true; // Flag to prevent setting state if component is unmounted
+    const fetchUserStaff = async () => {
+      if (isMounted && selectedBranch) {
+        await getUserStaff();
+        console.log("selectedBranch ", selectedBranch);
+        
+      }
+    };
+    fetchUserStaff();
+    return () => {
+      isMounted = false; // Cleanup to prevent multiple requests
+    };
   }, [selectedBranch]); // Re-fetch data when selectedBranch changes
 
   // Handle delete user staff

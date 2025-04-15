@@ -15,8 +15,16 @@ export const Row1 = () => {
     const { dashboardData, getDashboard } = React.useContext(DashboardDataContext);
     const { Affiliate_Users, Client, Total_Orders} = dashboardData;
     React.useEffect(() => {
-        getDashboard();
-        console.log("dashboardData", dashboardData);
+        let isMounted = true; // Flag to prevent setting state if component is unmounted
+        const fetchDashboardData = async () => {
+            if (isMounted) {
+                await getDashboard();
+            }
+        };
+        fetchDashboardData();
+        return () => {
+            isMounted = false; // Cleanup to prevent multiple requests
+        };
     }, []);
     return (
         <Box sx={{ flexGrow: 1, padding: '0px 20px 20px 20px' }}>

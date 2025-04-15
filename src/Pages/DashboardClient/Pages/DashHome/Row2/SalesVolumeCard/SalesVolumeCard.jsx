@@ -15,10 +15,21 @@ const SalesVolumeCard = () => {
     const { salesVolumeData, getSalesVolumeDashboard } = React.useContext(DashboardDataContext);
 
     React.useEffect(() => {
-        getSalesVolumeDashboard(year);
+        let isMounted = true; // Flag to prevent setting state if component is unmounted
+        const fetchSalesVolumeData = async () => {
+            if (isMounted) {
+                await getSalesVolumeDashboard(year);
+                console.log("salesVolumeData", salesVolumeData);
+                
+            }
+        };
+        fetchSalesVolumeData();
+        return () => {
+            isMounted = false; // Cleanup to prevent multiple requests
+        }
     }, [year]);
     return (
-        <Paper sx={{ borderRadius: "20px", marginTop: "20px", padding: "10px",backgroundColor:theme.palette.bodyColor.secandary }}>
+        <Paper sx={{ borderRadius: "20px", marginTop: "20px", padding: "10px", backgroundColor: theme.palette.bodyColor.secandary }}>
             <Grid container justifyContent="space-between" alignItems="center" sx={{ padding: "10px 20px", }} >
                 <Grid item>
                     <Typography variant="body1" component="div" sx={{ color: theme.palette.text.secondary, fontSize: '13px' }}>

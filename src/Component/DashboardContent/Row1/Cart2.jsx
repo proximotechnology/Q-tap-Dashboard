@@ -19,15 +19,22 @@ const Cart2 = ({ Total_Orders }) => {
   const [page, setPage] = React.useState(0);
   const theme = useTheme()
   React.useEffect(() => {
-    if (Total_Orders) {
-      const orderArray = Object.values(Total_Orders);
-      setAllOrders(orderArray);
-      // Initially show first 6 orders
-      setDisplayedOrders(orderArray.slice(0, 6));
-    } else {
-      setAllOrders([]);
-      setDisplayedOrders([]);
-    }
+    let isMounted = true; // Flag to prevent setting state if component is unmounted
+    const fetchOrders = async () => {
+      if (isMounted && Total_Orders) {
+        const orderArray = Object.values(Total_Orders);
+        setAllOrders(orderArray);
+        // Initially show first 6 orders
+        setDisplayedOrders(orderArray.slice(0, 6));
+      } else if (isMounted) {
+        setAllOrders([]);
+        setDisplayedOrders([]);
+      }
+    };
+    fetchOrders();
+    return () => {
+      isMounted = false; // Cleanup to prevent setting state after unmount
+    };
   }, [Total_Orders]);
 
   const handleTogglePage = () => {

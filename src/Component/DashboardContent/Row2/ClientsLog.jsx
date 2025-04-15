@@ -28,8 +28,17 @@ export const ClientsLog = () => {
     const theme = useTheme()
 
     React.useEffect(() => {
-        getDashboard();
-    }, [getDashboard]); // Added getDashboard to dependency array
+        let isMounted = true; // Flag to prevent setting state if component is unmounted
+        const fetchDashboardData = async () => {
+            if (isMounted) {
+                await getDashboard();
+            }
+        };
+        fetchDashboardData();
+        return () => {
+            isMounted = false; // Cleanup to prevent multiple requests
+        };
+    }, []);
 
     // Prepare data with fallback
     const clientData = Clients_Log?.map(log => ({
