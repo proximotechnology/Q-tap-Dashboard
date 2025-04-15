@@ -1,11 +1,13 @@
-import React from "react";
-import { Grid, Button, IconButton, Typography, Switch, TextField,} from "@mui/material";
+import React, { useState } from "react";
+import { Grid, Button, IconButton, Typography, Switch, TextField, CircularProgress, } from "@mui/material";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import { Box, minHeight, styled } from "@mui/system";
+import { Box,  styled } from "@mui/system";
 import ModeCommentIcon from '@mui/icons-material/ModeComment';
 import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import Language from "../dashboard/TopBar/Language";
+import { useBranch } from "../../context/BranchContext";
+import { handleClientLogin } from "../../utils/clientLogin";
 
 const ImageContainer = styled(Box)({
     backgroundImage: 'url(/images/logoClient.jpg)',
@@ -16,8 +18,8 @@ const ImageContainer = styled(Box)({
     alignItems: 'center',
     justifyContent: 'space-between',
     position: 'relative',
-   minHeight:"100vh",
-    
+    minHeight: "100vh",
+
     '::before': {
         content: '""',
         position: 'absolute',
@@ -28,7 +30,7 @@ const ImageContainer = styled(Box)({
         backgroundColor: 'rgba(0, 0, 0, 0.4)',
         backdropFilter: 'blur(3px)',
         zIndex: 1,
-    minHeight: '100vh',
+        minHeight: '100vh',
 
     },
 });
@@ -41,33 +43,48 @@ const TextOverlay = styled(Box)({
 });
 
 export const LoginAdmin = () => {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const navigate = useNavigate();
+    const [pin, setPin] = useState()
+    const [isLoading, setIsLoading] = useState(false);
+    const { setBranches, setSelectedBranch } = useBranch();
+    const handleLogin = async () =>{
+        await handleClientLogin({
+            pin,
+            setIsLoading,
+            setBranches,
+            setSelectedBranch,
+            navigate,
+            t,
+            role:'admin'
+        })
+    }
+    
     return (
-        <Grid item xs={12} md={6} sx={{height:"100vh " ,msOverflow:"hidden !important "}}>
+        <Grid item xs={12} md={6} sx={{ height: "100vh ", msOverflow: "hidden !important " }}>
             <ImageContainer >
-                
+
                 <Box
                     sx={{
                         display: "flex",
                         justifyContent: "space-between",
                         zIndex: '4',
                         padding: { xs: "10px 20px ", md: "30px" },
-                        alignItems: "center" ,width:"90%"
+                        alignItems: "center", width: "90%"
                     }}
                 >
-                    
+
                     <Box>
                         <IconButton onClick={() => navigate('/logo-cient')}>
                             <ArrowBackIosNewIcon sx={{ color: "white", fontSize: "22px" }} />
                         </IconButton>
                     </Box>
 
-                     <Language />
+                    <Language />
                 </Box>
 
 
-                <TextOverlay sx={{ width: "90%",  }}>
+                <TextOverlay sx={{ width: "90%", }}>
                     <Typography variant="h4" style={{ fontSize: "22px", color: "white" }}>
                         {t("busnessLogo")}
                     </Typography>
@@ -111,6 +128,7 @@ export const LoginAdmin = () => {
                                     <TextField
                                         variant="outlined"
                                         placeholder={t("insertPin")}
+                                        onChange={(e) => setPin(e.target.value)}
                                         InputProps={{
                                             style: {
                                                 border: 'none',
@@ -141,10 +159,10 @@ export const LoginAdmin = () => {
                                         fontSize: '13px',
                                         textTransform: 'none',
                                     }}
-                                    onClick={() => navigate('/dashboard-client')}
+                                    onClick={() => handleLogin()}
 
                                 >
-                                    {t("logIn")}
+                                    {isLoading ? <CircularProgress size={24} /> : t("logIn")}
                                 </Button>
 
                                 {/* Stay Logged In */}
