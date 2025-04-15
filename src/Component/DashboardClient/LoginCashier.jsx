@@ -42,7 +42,7 @@ const TextOverlay = styled(Box)({
     zIndex: 2,
 });
 
-export const LoginAdmin = () => {
+export const LoginCashier = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const [pin, setPin] = useState()
@@ -56,9 +56,10 @@ export const LoginAdmin = () => {
             setSelectedBranch,
             navigate,
             t,
-            role:'admin',
-            navurl:'/dashboard-client'
+            role:'cashier',
+            navurl:'/menu-client'
         })
+        //
     }
     
     return (
@@ -92,11 +93,11 @@ export const LoginAdmin = () => {
 
                     <Grid container spacing={4} justifyContent="center" marginTop={"50px"}>
                         <Grid item >
-                            <img src="/assets/admin.svg" alt="" style={{ width: "110px", height: "110px" }} />
+                            <img src="/assets/pos.svg" alt="" style={{ width: "110px", height: "110px" }} />
                             <Typography
                                 style={{ color: "white", textAlign: "center", marginTop: "20px" }}
                             >
-                                {t("admin")}
+                                {t("cashier")}
                             </Typography>
                         </Grid>
                     </Grid>

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export const handleClientLogin = async ({pin,setIsLoading,setBranches,setSelectedBranch,navigate ,t , role}) => {
+export const handleClientLogin = async ({pin,setIsLoading,setBranches,setSelectedBranch,navigate ,t , role,navurl}) => {
         const data = {
             email: localStorage.getItem('clientEmail'),
             password: localStorage.getItem('clientPassword'),
@@ -37,7 +37,7 @@ export const handleClientLogin = async ({pin,setIsLoading,setBranches,setSelecte
                 }
             }
             console.log('success login',response)
-            navigate('/dashboard-client')
+            navigate(navurl)
         } catch (err) {
             console.log(err)
             toast.error(t('loginFaild'))

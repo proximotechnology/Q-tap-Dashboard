@@ -98,7 +98,7 @@ export const LogoClient = () => {
                         </Grid>
 
                         <Grid item xs={3} sm={2}
-                            onClick={() => navigate('/menu-client')}
+                            onClick={() => navigate('/cashier-login')}
                             sx={{
                                 display: "flex", flexDirection: "column", justifyContent: "center",
                                 alignItems: "center", cursor: "pointer"
@@ -110,7 +110,7 @@ export const LogoClient = () => {
                         </Grid>
 
                         <Grid item xs={3} sm={2}
-                            onClick={() => navigate('/order-body')}
+                            onClick={() => navigate('/chef-login')}
                             sx={{
                                 display: "flex", flexDirection: "column", justifyContent: "center",
                                 alignItems: "center", cursor: "pointer"

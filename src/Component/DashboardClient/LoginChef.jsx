@@ -42,7 +42,7 @@ const TextOverlay = styled(Box)({
     zIndex: 2,
 });
 
-export const LoginAdmin = () => {
+export const LoginChef = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const [pin, setPin] = useState()
@@ -56,9 +56,10 @@ export const LoginAdmin = () => {
             setSelectedBranch,
             navigate,
             t,
-            role:'admin',
-            navurl:'/dashboard-client'
+            role:'chef',
+            navurl:'/order-body'
         })
+        //
     }
     
     return (
@@ -92,11 +93,11 @@ export const LoginAdmin = () => {
 
                     <Grid container spacing={4} justifyContent="center" marginTop={"50px"}>
                         <Grid item >
-                            <img src="/assets/admin.svg" alt="" style={{ width: "110px", height: "110px" }} />
+                            <img src="/assets/kitchen.svg" alt="" style={{ width: "110px", height: "110px" }} />
                             <Typography
                                 style={{ color: "white", textAlign: "center", marginTop: "20px" }}
                             >
-                                {t("admin")}
+                                {t("chef")}
                             </Typography>
                         </Grid>
                     </Grid>
@@ -160,7 +161,7 @@ export const LoginAdmin = () => {
                                         fontSize: '13px',
                                         textTransform: 'none',
                                     }}
-                                    onClick={() => handleLogin()}
+                                    onClick={handleLogin}
 
                                 >
                                     {isLoading ? <CircularProgress size={24} /> : t("logIn")}

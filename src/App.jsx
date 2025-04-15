@@ -63,6 +63,8 @@ import { toast } from "react-toastify";
 import { useEffect } from 'react';
 import { DashboardDataProvider } from './context/DashboardDataContext';
 import { MenuDataProvider } from './context/MenuDataContext';
+import { LoginChef } from './Component/DashboardClient/LoginChef';
+import { LoginCashier } from './Component/DashboardClient/LoginCashier';
 
 function App() {
   const routes = createBrowserRouter([
@@ -114,6 +116,14 @@ function App() {
     {
       path: "/admin-login",
       element: <LoginAdmin />,//  done
+    },
+    {
+      path: "/chef-login",
+      element: <LoginChef />,//  done
+    },
+    {
+      path: "/cashier-login",
+      element: <LoginCashier />,//  done
     },
     {
       path: "order-body",
