@@ -57,9 +57,17 @@ export const Cart4 = () => {
   };
 
   const years = ["2021-2022", "2022-2023", "2023-2024", "2024-2025"];
-
   React.useEffect(() => {
-    getPerformanceDashboard(selectedYear);
+    let isMounted = true; // Flag to prevent setting state if component is unmounted
+    const fetchPerformanceDashboard = async () => {
+      if (isMounted) {
+        await getPerformanceDashboard(selectedYear);
+      }
+    };
+    fetchPerformanceDashboard();
+    return () => {
+      isMounted = false; // Cleanup to prevent multiple requests
+    };
   }, [selectedYear]);
 
   return (

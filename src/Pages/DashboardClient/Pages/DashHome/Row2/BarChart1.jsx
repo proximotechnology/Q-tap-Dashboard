@@ -28,8 +28,16 @@ export const BarChart1 = () => {
     const { salesData, getSalesDashboard } = React.useContext(DashboardDataContext);
 
     React.useEffect(() => {
-        getSalesDashboard(year);
-        // console.log("salesData", salesData);
+        let isMounted = true; // Flag to prevent setting state if component is unmounted
+        const fetchSalesDashboard = async () => {
+            if (isMounted) {
+                await getSalesDashboard(year);
+            }
+        };
+        fetchSalesDashboard();
+        return () => {
+            isMounted = false; // Cleanup to prevent multiple requests
+        };
     }, [year]);
     return (
         <Paper sx={{ height: "220px", borderRadius: "20px",backgroundColor:theme.palette.bodyColor.secandary }}>

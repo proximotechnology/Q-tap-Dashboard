@@ -59,7 +59,16 @@ export const Transactions = () => {
         }
     };
     useEffect(() => {
-        getTransactions();
+        let isMounted = true; // Flag to prevent setting state if component is unmounted
+        const fetchTransactions = async () => {
+            if (isMounted) {
+                await getTransactions();
+            }
+        };
+        fetchTransactions();
+        return () => {
+            isMounted = false; // Cleanup to prevent multiple requests
+        };
     }, []);
 
     return (

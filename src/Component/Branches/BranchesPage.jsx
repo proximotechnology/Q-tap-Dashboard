@@ -11,10 +11,10 @@ export const BranchesPage = () => {
     // Access context
     const { branches } = useBusinessContext();
 
-    // Log branches data when the component mounts
-    useEffect(() => {
-        console.log('BranchesPage branches:', branches);
-    }, [branches]);
+    // // Log branches data when the component mounts
+    // useEffect(() => {
+    //     console.log('BranchesPage branches:', branches);
+    // }, [branches]);
 
     return (
         <Grid

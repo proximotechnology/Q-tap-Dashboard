@@ -50,9 +50,6 @@ export const MenuDataProvider = ({ children }) => {
         }
     };
 
-    // useEffect(() => {
-    //     getMenuData(102);
-    // }, []);
 
 
     return (

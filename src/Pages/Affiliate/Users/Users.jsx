@@ -35,7 +35,7 @@ export const Users = () => {
   const handleClick = (event, user) => {
     setAnchorEl(event.currentTarget);
     setSelectedUser(user);
-    console.log("user======================", user);
+    // console.log("user======================", user);
 
   };
   // console.log("sletected user", selectedUser);
@@ -112,7 +112,16 @@ export const Users = () => {
   };
 
   useEffect(() => {
-    getUsers();
+    let isMounted = true; // Flag to prevent setting state if component is unmounted
+    const fetchUsers = async () => {
+      if (isMounted) {
+        await getUsers();
+      }
+    };
+    fetchUsers();
+    return () => {
+      isMounted = false; // Cleanup to prevent multiple requests
+    };
   }, []);
 
   const allUsers = [...activeUsers, ...inactiveUsers];

@@ -482,7 +482,16 @@ export const Row2 = () => {
   };
 
   useEffect(() => {
-    getData();
+    let isMounted = true; // Flag to prevent setting state if component is unmounted
+    const fetchData = async () => {
+      if (isMounted) {
+        await getData();
+      }
+    };
+    fetchData();
+    return () => {
+      isMounted = false; // Cleanup to prevent multiple requests
+    };
   }, []);
 
   const updateClientStatus = async (clientId, currentStatus) => {

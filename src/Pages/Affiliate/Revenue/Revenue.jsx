@@ -37,8 +37,18 @@ export const Revenue = () => {
     }
   }
   useEffect(() => {
-    getRvenueData()
-  }, [year])
+    let isMounted = true; // Flag to prevent setting state if component is unmounted
+    const fetchRevenueData = async () => {
+      if (isMounted) {
+        await getRvenueData();
+        console.log("Fetched revenue data:", revenueData);
+      }
+    };
+    fetchRevenueData();
+    return () => {
+      isMounted = false; // Cleanup to prevent multiple requests
+    };
+  }, [year]);
   return (
 
     <Paper

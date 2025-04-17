@@ -11,12 +11,19 @@ export const Cart1 = ({ Client }) => {
     const [clients, setClients] = React.useState([]);
 
     React.useEffect(() => {
-        if (Client) {
-            const clientArray = Object.values(Client).filter(client => client.id !== 11); // استبعاد العنصر "test" إذا لزم الأمر
-            setClients(clientArray);
-        } else {
-            setClients([]);
-        }
+        let isMounted = true; // Flag to prevent setting state if component is unmounted
+        const fetchClients = async () => {
+            if (isMounted && Client) {
+                const clientArray = Object.values(Client).filter(client => client.id !== 11); // استبعاد العنصر "test" إذا لزم الأمر
+                setClients(clientArray);
+            } else if (isMounted) {
+                setClients([]);
+            }
+        };
+        fetchClients();
+        return () => {
+            isMounted = false; // Cleanup to prevent setting state after unmount
+        };
     }, [Client]);
 
     // تحويل النسب المئوية إلى قيم عددية (إزالة % وحساب المتبقي)
