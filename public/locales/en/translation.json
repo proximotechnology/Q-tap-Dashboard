@@ -636,5 +636,6 @@
     "courier": "Courier",
     "cardNo": "Card No.",
     "update": "update",
-    "noDataAvailable": "No data available"
+    "noDataAvailable": "No data available",
+    "yourMustSelectBranch":"your must select branch to login"
 }

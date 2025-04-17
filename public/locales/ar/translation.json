@@ -636,5 +636,6 @@
     "courier": "ساعي",
     "cardNo": "رقم البطاقة",
     "update": "تحديث",
-    "noDataAvailable": "لا توجد بيانات متاحة"
+    "noDataAvailable": "لا توجد بيانات متاحة",
+    "yourMustSelectBranch":"يجب ان تقوم باختيار فرع لتسجيل الدخول"
 }

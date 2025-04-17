@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import Language from "../dashboard/TopBar/Language";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const ImageContainer = styled(Box)({
     backgroundImage: 'url(/images/logoClient.jpg)',
@@ -42,7 +43,7 @@ const TextOverlay = styled(Box)({
 export const LogoClient = () => {
     const { t } = useTranslation();
     const theme = useTheme();
-    const [branches,setBranches] = useState([]) 
+    const [branches, setBranches] = useState([])
     const navigate = useNavigate();
     const [selectedId, setSelectedId] = useState(null);
     useEffect(() => {
@@ -64,7 +65,7 @@ export const LogoClient = () => {
                 }
 
                 );
-                console.log('branches',response.data.data )
+                console.log('branches', response.data.data)
                 setBranches(response.data.data)
             } catch (error) {
                 console.log(error)
@@ -74,9 +75,13 @@ export const LogoClient = () => {
         fetchBranches()
     }, [])
     const handleClick = (branch) => {
-        localStorage.setItem('branchId',branch.id)
+        localStorage.setItem('branchId', branch.id)
         setSelectedId(branch.id);
     };
+    const handleAdminClick = () => { if (selectedId) navigate('/admin-login'); else toast.error(t("yourMustSelectBranch")); }
+    const handlePosClick = () => { if (selectedId) navigate('/cashier-login'); else toast.error(t("yourMustSelectBranch")); }
+    const handleKitchenClick = () => { if (selectedId) navigate('/chef-login'); else toast.error(t("yourMustSelectBranch")); }
+    const handleDeliveryClick = () => { if (selectedId) navigate('/delivery-riders'); else toast.error(t("yourMustSelectBranch")); }
     return (
         <Grid item xs={12} md={6} sx={{ width: "100%", }}>
             <ImageContainer >
@@ -91,7 +96,7 @@ export const LogoClient = () => {
                         display: "flex", flexDirection: "row", textAlign: "center",
                         alignItems: "center",
                     }}>
-                        <Typography onClick={() => navigate('/delivery-riders')}
+                        <Typography onClick={() => handleDeliveryClick()}
                             variant="body1" sx={{ display: "flex", alignItems: "center", flexDirection: "row", marginRight: { xs: "10px", md: "50px" }, cursor: "pointer" }}>
 
                             <span class="icon-fast-shipping" style={{ fontSize: "25px", marginRight: "4px", color: theme.palette.orangePrimary.main }}> </span>
@@ -115,7 +120,7 @@ export const LogoClient = () => {
                         sx={{ flexWrap: "wrap", gap: { xs: 3, sm: 3, md: 3 }, justifyContent: "center" }} >
 
                         <Grid item xs={3} sm={2}
-                            onClick={() => navigate('/admin-login')}
+                            onClick={() => handleAdminClick()}
                             sx={{
                                 display: "flex", flexDirection: "column", justifyContent: "center",
                                 alignItems: "center", cursor: "pointer"
@@ -127,7 +132,7 @@ export const LogoClient = () => {
                         </Grid>
 
                         <Grid item xs={3} sm={2}
-                            onClick={() => navigate('/cashier-login')}
+                            onClick={() => handlePosClick()}
                             sx={{
                                 display: "flex", flexDirection: "column", justifyContent: "center",
                                 alignItems: "center", cursor: "pointer"
@@ -139,7 +144,7 @@ export const LogoClient = () => {
                         </Grid>
 
                         <Grid item xs={3} sm={2}
-                            onClick={() => navigate('/chef-login')}
+                            onClick={() => handleKitchenClick()}
                             sx={{
                                 display: "flex", flexDirection: "column", justifyContent: "center",
                                 alignItems: "center", cursor: "pointer"
@@ -187,7 +192,7 @@ export const LogoClient = () => {
                                     </span>
                                     <Typography
                                         sx={{ fontSize: selectedId === index ? "11px" : "9px", color: selectedId === index ? '#f18035' : 'white', textAlign: "center" }}>
-                                        {branch.id}{console.log("id",branch.id)}
+                                        {t("branch") + (index + 1)}
                                     </Typography>
                                 </Box>
 
