@@ -1,13 +1,14 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export const handleClientLogin = async ({pin,setIsLoading,setBranches,setSelectedBranch,navigate ,t , role,navurl}) => {
+export const handleClientLogin = async ({pin,setIsLoading,setBranches,setSelectedBranch,navigate ,t , role,navurl,brunch_id}) => {
         const data = {
             email: localStorage.getItem('clientEmail'),
             password: localStorage.getItem('clientPassword'),
             user_type: 'qtap_clients',
             role,
-            pin
+            pin,
+            brunch_id
         }
         try {
             setIsLoading(true);

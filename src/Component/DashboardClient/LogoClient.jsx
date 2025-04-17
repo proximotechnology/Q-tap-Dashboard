@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, Typography, Button, IconButton, Divider, } from "@mui/material";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { Box, display, minHeight, styled, useTheme } from "@mui/system";
@@ -6,6 +6,7 @@ import ModeCommentIcon from '@mui/icons-material/ModeComment';
 import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import Language from "../dashboard/TopBar/Language";
+import axios from "axios";
 
 const ImageContainer = styled(Box)({
     backgroundImage: 'url(/images/logoClient.jpg)',
@@ -41,12 +42,40 @@ const TextOverlay = styled(Box)({
 export const LogoClient = () => {
     const { t } = useTranslation();
     const theme = useTheme();
-    const branches = [t("branch") + "1", t("branch") + "2", t("branch") + "3"]
+    const [branches,setBranches] = useState([]) 
     const navigate = useNavigate();
     const [selectedId, setSelectedId] = useState(null);
+    useEffect(() => {
+        const fetchBranches = async () => {
+            const data = { "email": localStorage.getItem('clientEmail') }
 
-    const handleClick = (id) => {
-        setSelectedId(id);
+            if (!data.email) {
+                console.error('No email found in localStorage');
+                return;
+            }
+
+            try {
+                const response = await axios.get(
+                    'https://highleveltecknology.com/Qtap/api/get_brunchs', {
+                    params: data,
+                    headers: {
+                        headers: { 'Content-Type': 'application/json' },
+                    }
+                }
+
+                );
+                console.log('branches',response.data.data )
+                setBranches(response.data.data)
+            } catch (error) {
+                console.log(error)
+            }
+
+        }
+        fetchBranches()
+    }, [])
+    const handleClick = (branch) => {
+        localStorage.setItem('branchId',branch.id)
+        setSelectedId(branch.id);
     };
     return (
         <Grid item xs={12} md={6} sx={{ width: "100%", }}>
@@ -139,26 +168,26 @@ export const LogoClient = () => {
                         {branches.map((branch, index) => (
                             <Grid
                                 key={index} item
-                                sx={{ color: selectedId === index ? '#f18035' : 'inherit', }}
-                                onClick={() => handleClick(index)}
+                                sx={{ color: selectedId === branch.id ? '#f18035' : 'inherit', }}
+                                onClick={() => handleClick(branch)}
                             >
                                 <Box sx={{
                                     width: 60, height: 50, cursor: "pointer",
-                                    marginTop: selectedId === index ? "-20px" : "0px"
+                                    marginTop: selectedId === branch.id ? "-20px" : "0px"
                                 }}>
                                     <span class="icon-store"
                                         style={{
-                                            fontSize: selectedId === index ? 46 : 35,
-                                            background: selectedId === index ? 'linear-gradient(to right, #F8A812, #CF7205)' : 'transparent',
-                                            WebkitBackgroundClip: selectedId === index ? 'text' : 'unset',
-                                            WebkitTextFillColor: selectedId === index ? 'transparent' : '#ffffff',
-                                            color: selectedId === index ? 'inherit' : '#ffffff',
+                                            fontSize: selectedId === branch.id ? 46 : 35,
+                                            background: selectedId === branch.id ? 'linear-gradient(to right, #F8A812, #CF7205)' : 'transparent',
+                                            WebkitBackgroundClip: selectedId === branch.id ? 'text' : 'unset',
+                                            WebkitTextFillColor: selectedId === branch.id ? 'transparent' : '#ffffff',
+                                            color: selectedId === branch.id ? 'inherit' : '#ffffff',
                                         }}
                                     >
                                     </span>
                                     <Typography
                                         sx={{ fontSize: selectedId === index ? "11px" : "9px", color: selectedId === index ? '#f18035' : 'white', textAlign: "center" }}>
-                                        {branch}
+                                        {branch.id}{console.log("id",branch.id)}
                                     </Typography>
                                 </Box>
 
@@ -171,7 +200,7 @@ export const LogoClient = () => {
 
                 </TextOverlay>
 
-                <Box sx={{ zIndex: 2 , marginTop:'auto' }}>
+                <Box sx={{ zIndex: 2, marginTop: 'auto' }}>
                     <Box sx={{
                         zIndex: "4", display: "flex", justifyContent: "space-between", padding: "20px",
                         alignItems: "center", width: "90%", bottom: "0"
