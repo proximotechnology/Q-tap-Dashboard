@@ -34,7 +34,7 @@ export const DashboardDataProvider = ({ children }) => {
     const [withdrawalsData, setWithdrawalsData] = useState([]);
     const [walletChartTwoData, setWalletChartTwoData] = useState([]);
 
-
+    //// ================================================= START ADMIN DASHBOARD ===================================================
     const getSalesDashboard = async (id) => {
         try {
             const response = await fetchWithRetry(
@@ -184,6 +184,191 @@ export const DashboardDataProvider = ({ children }) => {
             console.error('Error fetching wallet chart two Data :', error);
         }
     };
+    //// ================================================= END ADMIN DASHBOARD ===================================================
+
+    const [salesClientData, setSalesClientData] = useState([]);
+    const [salesVolumeClientData, setSalesVolumeClientData] = useState([]);
+    const [dashboardClientData, setDashboardClientData] = useState([]);
+    const [performanceClientData, setPerformanceClientData] = useState([]);
+    // const [depositsData, setDepositsData] = useState([]);
+    // const [withdrawalsData, setWithdrawalsData] = useState([]);
+    // const [walletChartTwoData, setWalletChartTwoData] = useState([]);
+    const [walletClientData, setWalletClientData] = useState([]);
+    const [customerLog, setCustomerLog] = useState([]);
+
+
+
+    //// ================================================= START CLIENT DASHBOARD ===================================================
+    const getSalesClientDashboard = async (id) => {
+        try {
+            const response = await fetchWithRetry(
+                `https://highleveltecknology.com/Qtap/api/Sales_restaurant/${id}`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+                    },
+                    data: {}
+                }
+            );
+            if (response.data) {
+                setSalesClientData(response.data);
+                // console.log('Fetched sales data:', response.data);
+            }
+        } catch (error) {
+            console.error('Error fetching sales data:', error);
+        }
+    };
+
+    const getSalesVolumeClientDashboard = async (id) => {
+        try {
+            const response = await fetchWithRetry(
+                `https://highleveltecknology.com/Qtap/api/Sales_by_days_restaurant/${id}`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+                    },
+                    data: {}
+                }
+            );
+            if (response.data) {
+                setSalesVolumeClientData(response.data); // تعيين البيانات الصحيحة
+                // console.log('Fetched sales volume data:', response.data);
+            }
+        } catch (error) {
+            console.error('Error fetching sales volume data:', error);
+        }
+    };
+
+    const getClientDashboard = async (id) => {
+        try {
+            const response = await fetchWithRetry(
+                `https://highleveltecknology.com/Qtap/api/dashboard/${id}`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+                    },
+                    data: {}
+                }
+            );
+            if (response.data) {
+                setDashboardClientData(response.data); // تعيين البيانات الصحيحة
+                // console.log('Fetched dashboard Data :', response.data);
+            }
+        } catch (error) {
+            console.error('Error fetching dashboard Data :', error);
+        }
+    };
+    const getPerformanceClientDashboard = async (id) => {
+        try {
+            const response = await fetchWithRetry(
+                `https://highleveltecknology.com/Qtap/api/Performance/${id}`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+                    },
+                    data: {}
+                }
+            );
+            if (response.data) {
+                setPerformanceClientData(response.data); // تعيين البيانات الصحيحة
+                // console.log('Fetched Performance Data :', response.data);
+            }
+        } catch (error) {
+            console.error('Error fetching Performance Data :', error);
+        }
+    };
+    const getWalletData = async (id) => {
+        try {
+            const response = await fetchWithRetry(
+                `https://highleveltecknology.com/Qtap/api/wallet_restaurant/${localStorage.getItem("selectedBranch")}/${id}`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+                    },
+                    data: {}
+                }
+            );
+            if (response.data) {
+                setWalletClientData(response.data); // تعيين البيانات الصحيحة
+                console.log('Fetched Performance Data :', response.data);
+            }
+        } catch (error) {
+            console.error('Error fetching Performance Data :', error);
+        }
+    };
+
+    const getCustomerLog = async (id) => {
+        try {
+            const response = await fetchWithRetry(
+                `https://highleveltecknology.com/Qtap/api/Customer_log/${localStorage.getItem("selectedBranch")}/${id}`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+                    }
+                }
+            );
+            if (response.data) {
+                setCustomerLog(response.data);
+                console.log('Fetched Customer Log Data:', response.data);
+            }
+        } catch (error) {
+            console.error('Error fetching Customer Log Data:', error);
+        }
+    };
+    // const getWithdrawals = async (id) => {
+    //     try {
+    //         const response = await fetchWithRetry(
+    //             `https://highleveltecknology.com/Qtap/api/withdraw/${id}`,
+    //             {
+    //                 method: 'GET',
+    //                 headers: {
+    //                     'Content-Type': 'application/json',
+    //                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+    //                 }
+    //             }
+    //         );
+    //         if (response.data) {
+    //             setWithdrawalsData(response.data); // تعيين البيانات الصحيحة
+    //             console.log('Fetched Withdrawals Data :', response.data);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error fetching Withdrawals Data :', error);
+    //     }
+    // };
+
+    // const getWalletChartTwo = async (id) => {
+    //     try {
+    //         const response = await fetchWithRetry(
+    //             `https://highleveltecknology.com/Qtap/api/wallet/${id}`,
+    //             {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     'Content-Type': 'application/json',
+    //                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+    //                 },
+    //                 data: {}
+    //             }
+    //         );
+    //         if (response.data) {
+    //             setWalletChartTwoData(response.data); // تعيين البيانات الصحيحة
+    //             console.log('Fetched wallet chart two Data :', response.data);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error fetching wallet chart two Data :', error);
+    //     }
+    // };
 
 
     return (
@@ -194,7 +379,15 @@ export const DashboardDataProvider = ({ children }) => {
             dashboardData, setDashboardData, getDashboard,
             depositsData, setDepositsData, getDeposits,
             withdrawalsData, setWithdrawalsData, getWithdrawals,
-            walletChartTwoData, setWalletChartTwoData, getWalletChartTwo
+            walletChartTwoData, setWalletChartTwoData, getWalletChartTwo,
+            //========== CLIENT DASHBOARD
+            salesClientData, setSalesClientData, getSalesClientDashboard,
+            salesVolumeClientData, setSalesVolumeClientData, getSalesVolumeClientDashboard,
+            dashboardClientData, setDashboardClientData, getClientDashboard,
+            performanceClientData, setPerformanceClientData, getPerformanceClientDashboard,
+            walletClientData, setWalletClientData, getWalletData,
+            customerLog, setCustomerLog, getCustomerLog,
+
         }}>
             {children}
         </DashboardDataContext.Provider>

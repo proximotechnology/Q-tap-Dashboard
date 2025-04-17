@@ -3,7 +3,7 @@ import { Box, useTheme } from '@mui/system';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import CircleIcon from '@mui/icons-material/Circle';
 import { useTranslation } from 'react-i18next';
-export const UsersLog = () => {
+export const UsersLog = ({ users_logs }) => {
     const rows = [
         { userName: 'Admin', time: '11:15 PM', date: '22.06.2024', status: 'Active now', statusColor: 'orange' },
         { userName: 'Kitchen', time: '11:15 PM', date: '22.06.2024', status: 'Active now', statusColor: 'orange' },
@@ -11,10 +11,10 @@ export const UsersLog = () => {
         {}, {}, {}, {}
 
     ];
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const theme = useTheme()
     return (
-        <TableContainer component={Paper} sx={{ borderRadius: "20px", boxShadow: 'none' , minHeight:"50vh" , maxHeight:"62vh" , overflow:'auto'}}>
+        <TableContainer component={Paper} sx={{ borderRadius: "20px", boxShadow: 'none', minHeight: "50vh", maxHeight: "62vh", overflow: 'auto' }}>
             <Grid container justifyContent="space-between" alignItems="center" sx={{ padding: "20px 20px 0px 20px" }}>
                 <Grid item>
                     <Typography variant="body1" component="div" sx={{ fontSize: '13px', color: "#575756" }}>
@@ -49,7 +49,7 @@ export const UsersLog = () => {
                 </TableHead>
 
                 <TableBody  >
-                    {rows.map((row, index) => (
+                    {users_logs?.map((row, index) => (
                         <TableRow
                             key={index}
                             sx={{
@@ -89,17 +89,17 @@ export const UsersLog = () => {
                                     >
                                         <PersonOutlineOutlinedIcon sx={{ color: 'gray', fontSize: '15px' }} />
                                     </Box>
-                                    {row.userName}
+                                    {row.user.name}
                                 </Box>
                             </TableCell>
 
                             <TableCell sx={{ textAlign: 'center', border: 'none', fontSize: '11px', color: 'gray', padding: '0px' }}>
-                                {row.time}
+                                {new Date(row.updated_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                             </TableCell>
                             <TableCell sx={{ textAlign: 'center', border: 'none', fontSize: '11px', color: 'gray', padding: '0px' }}>
-                                {row.date}
+                                {new Date(row.updated_at).toISOString().split('T')[0].split('-').join('.')}
                             </TableCell>
-                            <TableCell sx={{ textAlign: 'center', border: 'none', fontSize: '11px', color: row.statusColor, padding: '0px' }}>
+                            <TableCell sx={{ textAlign: 'center', border: 'none', fontSize: '11px', color: row.status=="active" ?"orange" :"gray", padding: '0px' }}>
                                 {row.status ? <CircleIcon sx={{ fontSize: "7px" }} /> : null} {t(row.status)}
                             </TableCell>
                         </TableRow>

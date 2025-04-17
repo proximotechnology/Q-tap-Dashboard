@@ -56,7 +56,7 @@ export const LoginAdmin = () => {
             setSelectedBranch,
             navigate,
             t,
-            brunch_id:localStorage.getItem('branchId'),
+            brunch_id:localStorage.getItem('selectedBranch'),
             role:'admin',
             navurl:'/dashboard-client'
         })

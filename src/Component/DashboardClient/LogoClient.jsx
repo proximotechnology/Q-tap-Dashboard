@@ -66,6 +66,7 @@ export const LogoClient = () => {
 
                 );
                 console.log('branches', response.data.data)
+                localStorage.setItem('branches', JSON.stringify(response.data.data));
                 setBranches(response.data.data)
             } catch (error) {
                 console.log(error)
@@ -75,7 +76,7 @@ export const LogoClient = () => {
         fetchBranches()
     }, [])
     const handleClick = (branch) => {
-        localStorage.setItem('branchId', branch.id)
+        localStorage.setItem('selectedBranch', branch.id)
         setSelectedId(branch.id);
     };
     const handleAdminClick = () => { if (selectedId) navigate('/admin-login'); else toast.error(t("yourMustSelectBranch")); }

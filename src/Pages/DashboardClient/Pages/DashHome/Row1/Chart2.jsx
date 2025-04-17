@@ -7,10 +7,20 @@ import { PieChart, Pie, Cell } from 'recharts';
 
 const data01 = [{ name: 'Pro', value: 10 }, { name: 'Remaining', value: 90 }];
 
-const COLORS = ['#30ADF8', "#D8E0E0"]
 
-export const Chart2 = () => {
-    const {t} = useTranslation();
+const COLORS = ['#30ADF8', '#D8E0E0'];
+
+export const Chart2 = ({ dashboardClientData }) => {
+    const { t } = useTranslation();
+
+    // Parse visit_only_percentage to a number (remove '%' and convert)
+    const visitPercentage = parseFloat(dashboardClientData?.visit_only_percentage || '0') || 0;
+
+    // Data for the pie chart
+    const data = [
+        { name: 'Visits', value: visitPercentage },
+        { name: 'Remaining', value: 100 - visitPercentage },
+    ];
     return (
         <Box display={"flex"} justifyContent="space-between" alignItems="center"
             padding={"0px 15px"}  >
@@ -36,7 +46,7 @@ export const Chart2 = () => {
                     </linearGradient>
                 </defs>
                 <Pie
-                    data={data01}
+                    data={data}
                     cx={55}
                     cy={55}
                     innerRadius={33}
@@ -44,15 +54,25 @@ export const Chart2 = () => {
                     fill="#D8E0E0"
                     paddingAngle={0}
                     startAngle={0}
-                    endAngle={450}
+                    endAngle={360} // Standard pie chart
                 >
-                    <Cell fill="url(#gradientColor)" />
+                    <Cell fill={visitPercentage === 0 ? '#d3d3d3' : 'url(#gradientColor)'} />
                     <Cell fill="#d3d3d3" />
                 </Pie>
-                <text x={60} y={60} textAnchor="middle" dominantBaseline="middle" fill={COLORS[0]} fontSize="18">{data01[0].value}%</text>
+                <text
+                    x={60}
+                    y={60}
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    fill={COLORS[0]}
+                    fontSize="18"
+                >
+                    {visitPercentage}%
+                </text>
             </PieChart>
 
 
         </Box >
     )
 }
+
