@@ -21,7 +21,7 @@ const Product = () => {
       
       if (response.data.products) {  
         setMenus(response.data.products);
-        console.log(response.data);
+        // console.log(response.data);
       }
     } catch (error) {
       console.error('Error fetching menus:', error);

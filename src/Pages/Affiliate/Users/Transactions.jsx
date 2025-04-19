@@ -51,7 +51,7 @@ export const Transactions = () => {
 
             if (response.data.success) {
                 settransData(response?.data?.transactions);
-                console.log("Fetched transactions:", response?.data?.transactions);
+                // console.log("Fetched transactions:", response?.data?.transactions);
 
             }
         } catch (error) {

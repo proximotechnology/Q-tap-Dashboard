@@ -1824,7 +1824,7 @@ const ChatApp = () => {
 
     return (
       <Box
-      
+
         ref={listRef}
         sx={{
           overflowY: "auto", // Enable vertical scrolling
@@ -1923,72 +1923,78 @@ const ChatApp = () => {
                 },
               }}
             >
-              {users?.map((user) => (
-                <ListItem
-                  button
-                  key={user.id}
-                  onClick={() => handleSelectChat(user)}
-                  sx={{
-                    fontSize: "12px",
-                    padding: "3px 20px",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    "&:hover": { backgroundColor: "#f7f7f7fa" },
-                  }}
-                >
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <ListItemAvatar>
-                      <Avatar
-                        sx={{
-                          backgroundColor: selectedChat?.id === user.id ? theme.palette.orangePrimary.main : "#AAAAAA",
-                          width: 35,
-                          height: 35,
-                        }}
-                      >
-                        <PersonOutlineOutlinedIcon sx={{ fontSize: "18px" }} />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={
-                        <Box sx={{ display: "flex", alignItems: "center" }}>
-                          <Typography sx={{ fontSize: "11px", color: "#575756" }}>
-                            {user.name}
+              {users
+                ?.sort((a, b) => {
+                  const timeA = lastMessages[a.id]?.created_at ? new Date(lastMessages[a.id].created_at).getTime() : 0;
+                  const timeB = lastMessages[b.id]?.created_at ? new Date(lastMessages[b.id].created_at).getTime() : 0;
+                  return timeB - timeA; // Sort in descending order (most recent first)
+                })
+                .map((user) => (
+                  <ListItem
+                    button
+                    key={user.id}
+                    onClick={() => handleSelectChat(user)}
+                    sx={{
+                      fontSize: "12px",
+                      padding: "3px 20px",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      "&:hover": { backgroundColor: "#f7f7f7fa" },
+                    }}
+                  >
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <ListItemAvatar>
+                        <Avatar
+                          sx={{
+                            backgroundColor: selectedChat?.id === user.id ? theme.palette.orangePrimary.main : "#AAAAAA",
+                            width: 35,
+                            height: 35,
+                          }}
+                        >
+                          <PersonOutlineOutlinedIcon sx={{ fontSize: "18px" }} />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={
+                          <Box sx={{ display: "flex", alignItems: "center" }}>
+                            <Typography sx={{ fontSize: "11px", color: "#575756" }}>
+                              {user.name}
+                            </Typography>
+                            {unreadMessages[user.id] && (
+                              <Box
+                                sx={{
+                                  width: 5,
+                                  height: 5,
+                                  borderRadius: "50%",
+                                  backgroundColor: "red",
+                                  marginLeft: 1,
+                                }}
+                              />
+                            )}
+                          </Box>
+                        }
+                        secondary={
+                          <Typography sx={{ fontSize: "8px", color: "gray", marginLeft: "10px" }}>
+                            {lastMessages[user.id]?.text || ""}
                           </Typography>
-                          {unreadMessages[user.id] && (
-                            <Box
-                              sx={{
-                                width: 5,
-                                height: 5,
-                                borderRadius: "50%",
-                                backgroundColor: "red",
-                                marginLeft: 1,
-                              }}
-                            />
-                          )}
-                        </Box>
-                      }
-                      secondary={
-                        <Typography sx={{ fontSize: "8px", color: "gray", marginLeft: "10px" }}>
-                          {lastMessages[user.id]?.text || ""}
-                        </Typography>
-                      }
-                    />
-                  </Box>
-                  <Typography sx={{ fontSize: "8px", textAlign: "right" }}>
-                    {lastMessages[user.id] && (
-                      <>
-                        <span style={{ color: "#AAAAAA" }}>
-                          {new Date(lastMessages[user.id].created_at).toLocaleDateString()}
-                        </span>
-                        <br />
-                        <span style={{ color: "#AAAAAA" }}>
-                          {new Date(lastMessages[user.id].created_at).toLocaleTimeString()}
-                        </span>
-                      </>
-                    )}
-                  </Typography>
-                </ListItem>
-              ))}
+                        }
+                      />
+                    </Box>
+                    <Typography sx={{ fontSize: "8px", textAlign: "right" }}>
+                      {lastMessages[user.id] && (
+                        <>
+                          <span style={{ color: "#AAAAAA" }}>
+                            {new Date(lastMessages[user.id].created_at).toLocaleDateString()}
+                          </span>
+                          <br />
+                          <span style={{ color: "#AAAAAA" }}>
+                            {new Date(lastMessages[user.id].created_at).toLocaleTimeString()}
+                          </span>
+                        </>
+                      )}
+                    </Typography>
+                  </ListItem>
+                ))}
             </List>
           )}
         </Grid>

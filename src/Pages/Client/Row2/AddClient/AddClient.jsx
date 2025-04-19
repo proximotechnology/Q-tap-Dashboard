@@ -365,8 +365,6 @@
 // // }
 
 // // export default AddClient;
-
-
 import {
   Avatar,
   Button,
@@ -379,105 +377,170 @@ import {
   ListItemText,
   Popover,
   Typography,
+  CircularProgress,
 } from "@mui/material";
 import { Box, useTheme } from "@mui/system";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
-import { useNavigate, useLocation } from "react-router";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { BusinessInfoAdmin } from "./BusinessInfoAdmin";
 import { PersonalInfoAdmin } from "./PersonalInfoAdmin";
 import { useClientContext } from "../../../../context/ClientContext";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 import Language from "../../../../Component/dashboard/TopBar/Language";
+
 export const AddClient = () => {
-  const { t , i18n} = useTranslation() // translation and change language  functions
+  const { t } = useTranslation();
   const theme = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
   const { clientData, setClientData, clearClientData } = useClientContext();
   const [isEditMode, setIsEditMode] = useState(false);
   const [clientId, setClientId] = useState(null);
+  const [clientInfoData, setClientInfoData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const isFetching = useRef(false); // Prevent duplicate API calls
 
+  // Retry logic for API calls
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  // Fetch client info with retry on 429
+  const getClientInfo = async (clientId, retries = 3, retryDelay = 5000) => {
+    if (isFetching.current) return; // Prevent concurrent fetches
+    isFetching.current = true;
+    setLoading(true);
+
+    try {
+      const response = await axios.get(
+        `https://highleveltecknology.com/Qtap/api/get_client_info/${clientId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
+        }
+      );
+      if (response.data && response.data.qtap_clients) {
+        setClientInfoData(response.data.qtap_clients);
+        console.log("Client info data", response.data.qtap_clients);
+      }
+    } catch (e) {
+      if (e.response?.status === 429 && retries > 0) {
+        console.warn(`Rate limit hit, retrying after ${retryDelay}ms... (${retries} retries left)`);
+        toast.warn(t("rateLimitHit"), { autoClose: 3000 });
+        await delay(retryDelay);
+        return getClientInfo(clientId, retries - 1, retryDelay * 2); // Exponential backoff
+      }
+      console.error("Error fetching client info:", e);
+      toast.error(t("errorFetchingClientInfo"));
+    } finally {
+      setLoading(false);
+      isFetching.current = false;
+    }
+  };
+
+  // Handle state from location and set clientId
   useEffect(() => {
     const { clientData: incomingClientData, isEditMode: editMode } = location.state || {};
-    if (editMode && incomingClientData) {
+    if (editMode && incomingClientData && incomingClientData.id && clientId !== incomingClientData.id) {
       setIsEditMode(true);
-      setClientId(incomingClientData.id); // Assuming 'id' is the client ID field
+      setClientId(incomingClientData.id);
+    } else if (!editMode) {
+      setIsEditMode(false);
+      setClientId(null);
+      setClientInfoData(null);
+      clearClientData();
+    }
+  }, [location.state, clearClientData, clientId]);
+
+  // Fetch client info when clientId changes
+  useEffect(() => {
+    if (clientId && !clientInfoData) {
+      getClientInfo(clientId);
+    }
+  }, [clientId]);
+
+  // Transform and set client data to context when clientInfoData updates
+  useEffect(() => {
+    if (clientInfoData) {
+      const branch = clientInfoData.brunchs?.[0] || {};
+      const contactInfo = branch.contact_info?.[0] || {};
+      const parseFirstValue = (str) => (str ? str.split(",")[0].trim() : "");
 
       const transformedData = {
         personalInfo: {
-          fullName: incomingClientData.name || "",
-          phone: incomingClientData.mobile || "",
-          email: incomingClientData.email || "",
-          year: incomingClientData.birth_date?.split("-")[0] || "",
-          month: incomingClientData.birth_date?.split("-")[1] || "",
-          day: incomingClientData.birth_date?.split("-")[2] || "",
-          country: incomingClientData.country || "",
-          password: "", // Password not fetched for security
+          fullName: clientInfoData.name || "",
+          phone: clientInfoData.mobile || "",
+          email: clientInfoData.email || "",
+          year: clientInfoData.birth_date?.split("-")[0] || "",
+          month: clientInfoData.birth_date?.split("-")[1] || "",
+          day: clientInfoData.birth_date?.split("-")[2] || "",
+          country: clientInfoData.country || "",
+          img: clientInfoData.img || "",
+          password: "",
           confirmPassword: "",
-          website: incomingClientData.brunch1?.contact_info?.website[0] || "",
-          img: incomingClientData.img || "",
+          website: parseFirstValue(contactInfo.website) || "",
         },
         businessInfo: {
-          businessName: incomingClientData.brunch1?.business_name || "",
+          businessName: branch.business_name || "",
           contactInfo: {
-            businessPhone: incomingClientData.brunch1?.contact_info?.business_phone[0] || "",
-            businessEmail: incomingClientData.brunch1?.contact_info?.business_email[0] || "",
-            facebook: incomingClientData.brunch1?.contact_info?.facebook[0] || "",
-            twitter: incomingClientData.brunch1?.contact_info?.twitter[0] || "",
-            instagram: incomingClientData.brunch1?.contact_info?.instagram[0] || "",
-            address: incomingClientData.brunch1?.contact_info?.address[0] || "",
-            website: incomingClientData.brunch1?.contact_info?.website[0] || "",
+            businessPhone: parseFirstValue(contactInfo.business_phone) || "",
+            businessEmail: parseFirstValue(contactInfo.business_email) || "",
+            facebook: parseFirstValue(contactInfo.facebook) || "",
+            twitter: parseFirstValue(contactInfo.twitter) || "",
+            instagram: parseFirstValue(contactInfo.instagram) || "",
+            address: parseFirstValue(contactInfo.address) || "",
+            website: parseFirstValue(contactInfo.website) || "",
           },
-          country: incomingClientData.brunch1?.business_country || "",
-          city: incomingClientData.brunch1?.business_city || "",
-          currency: incomingClientData.brunch1?.currency_id || "1",
-          businessType: incomingClientData.brunch1?.business_format || "uk",
-          menuLanguage: incomingClientData.brunch1?.menu_language || "US",
-          numberOfTables: incomingClientData.brunch1?.tables_number || "1",
-          design: incomingClientData.brunch1?.menu_design || "grid",
-          mode: incomingClientData.brunch1?.default_mode === "white" ? "light" : "dark",
-          workSchedules: incomingClientData.brunch1?.workschedules || {
-            Saturday: ["9am", "7pm"],
-            Sunday: ["9am", "7pm"],
-            Monday: ["9am", "7pm"],
-            Tuesday: ["9am", "7pm"],
-            Wednesday: ["9am", "7pm"],
-            Thursday: ["9am", "7pm"],
-            Friday: ["9am", "7pm"],
-          },
+          country: branch.business_country || "",
+          city: branch.business_city || "",
+          currency: branch.currency_id?.toString() || "1",
+          businessType: branch.business_format?.toLowerCase() || "uk",
+          menuLanguage: "US",
+          numberOfTables: branch.tables_number?.toString() || "1",
+          design: branch.menu_design?.toLowerCase() || "grid",
+          mode: branch.default_mode === "white" ? "light" : "dark",
+          workSchedules: branch.workschedule?.length
+            ? branch.workschedule.reduce((acc, schedule) => {
+                acc[schedule.day] = [schedule.opening_time, schedule.closing_time];
+                return acc;
+              }, {})
+            : {
+                Saturday: ["9am", "7pm"],
+                Sunday: ["9am", "7pm"],
+                Monday: ["9am", "7pm"],
+                Tuesday: ["9am", "7pm"],
+                Wednesday: ["9am", "7pm"],
+                Thursday: ["9am", "7pm"],
+                Friday: ["9am", "7pm"],
+              },
           servingWays: {
-            dine_in: incomingClientData.brunch1?.serving_ways?.includes("dine_in") || false,
-            take_away: incomingClientData.brunch1?.serving_ways?.includes("take_away") || false,
-            delivery: incomingClientData.brunch1?.serving_ways?.includes("delivery") || false,
+            dine_in: branch.serving_ways?.some((way) => way.name === "dine_in") || false,
+            take_away: branch.serving_ways?.some((way) => way.name === "take_away") || false,
+            delivery: branch.serving_ways?.some((way) => way.name === "delivery") || false,
           },
           paymentMethods: {
-            cash: incomingClientData.brunch1?.payment_services?.includes("cash") || false,
-            wallet: incomingClientData.brunch1?.payment_services?.includes("wallet") || false,
-            card: incomingClientData.brunch1?.payment_services?.includes("card") || false,
+            cash: branch.payment_services?.some((service) => service.name === "cash") || false,
+            wallet: branch.payment_services?.some((service) => service.name === "wallet") || false,
+            card: branch.payment_services?.some((service) => service.name === "card") || false,
           },
           paymentTime: {
-            beforeServing: incomingClientData.brunch1?.payment_time === "before",
-            afterServing: incomingClientData.brunch1?.payment_time === "after",
+            beforeServing: branch.payment_time === "before",
+            afterServing: branch.payment_time === "after",
           },
-          callWaiter: incomingClientData.brunch1?.call_waiter === "active",
+          callWaiter: branch.call_waiter === "active",
         },
-        branches: incomingClientData.brunch1 ? [incomingClientData.brunch1] : [],
+        branches: clientInfoData.brunchs || [],
         selectedBranch: 0,
       };
 
       setClientData(transformedData);
-    } else {
-      setIsEditMode(false);
-      setClientId(null);
-      clearClientData(); // Reset form for new client
     }
-  }, [location.state, setClientData, clearClientData]);
+  }, [clientInfoData, setClientData]);
 
   const handleSave = async () => {
     try {
@@ -486,15 +549,11 @@ export const AddClient = () => {
         mobile: clientData.personalInfo.phone,
         email: clientData.personalInfo.email,
         birth_date: `${clientData.personalInfo.year}-${clientData.personalInfo.month}-${clientData.personalInfo.day}`,
-        country: clientData.personalInfo.country,
-        password: clientData.personalInfo.password || "1", // Default password if not provided
+        Country: clientData.personalInfo.country,
         user_type: "qtap_clients",
-        img: clientData.personalInfo.img || "",
+        img: clientData.personalInfo.img || null,
         payment_method: Object.keys(clientData.businessInfo.paymentMethods)
           .filter((key) => clientData.businessInfo.paymentMethods[key])[0] || "cash",
-        pricing_id: "1",
-        pricing_way: "monthly_price",
-        discount_id: "1",
         brunch1: {
           contact_info: {
             business_phone: [clientData.businessInfo.contactInfo.businessPhone || ""],
@@ -511,31 +570,26 @@ export const AddClient = () => {
             (key) => clientData.businessInfo.servingWays[key]
           ),
           tables_number: clientData.businessInfo.numberOfTables || "1",
-          pricing_id: "1",
-          pricing_way: "monthly_price",
-          payment_services: Object.keys(clientData.businessInfo.paymentMethods).filter(
-            (key) => clientData.businessInfo.paymentMethods[key]
-          ),
-          discount_id: "1",
           business_name: clientData.businessInfo.businessName || "",
           business_country: clientData.businessInfo.country || "",
           business_city: clientData.businessInfo.city || "",
-          latitude: "846.668848", // Hardcoded; replace with dynamic if available
-          longitude: "648.4684684", // Hardcoded; replace with dynamic if available
-          business_format: clientData.businessInfo.businessType || "uk",
-          menu_design: clientData.businessInfo.design || "grid",
+          latitude: "846.668848",
+          longitude: "648.4684684",
+          business_format: clientData.businessInfo.businessType?.toUpperCase() || "UK",
+          menu_design: clientData.businessInfo.design?.charAt(0).toUpperCase() + clientData.businessInfo.design?.slice(1) || "Grid",
           default_mode: clientData.businessInfo.mode === "light" ? "white" : "dark",
           payment_time: clientData.businessInfo.paymentTime.beforeServing ? "before" : "after",
           call_waiter: clientData.businessInfo.callWaiter ? "active" : "inactive",
+          payment_services: Object.keys(clientData.businessInfo.paymentMethods).filter(
+            (key) => clientData.businessInfo.paymentMethods[key]
+          ),
         },
       };
-
-      console.log("Client allClientData", allClientData);
 
       const url = isEditMode
         ? `https://highleveltecknology.com/Qtap/api/qtap_clients/${clientId}`
         : "https://highleveltecknology.com/Qtap/api/qtap_clients";
-      const method = isEditMode ? "POST" : "POST"; // Use PUT for updates, POST for creates
+      const method = isEditMode ? "POST" : "POST";
 
       const response = await axios({
         method,
@@ -547,23 +601,15 @@ export const AddClient = () => {
         },
       });
 
-      console.log("Client response", response);
-
       if (response.status === 201 || response.status === 200) {
         toast.success(isEditMode ? t("clientUpdatedSucc") : t("clients.registeredSucc"));
         navigate("/client");
       }
     } catch (error) {
       console.error("Error saving client:", error);
-      toast.error(`${t("errorWhileSavingData") }`);
-      // toast.error(`${error.response?.data?.message || t("errorWhileSavingData") }`);
+      toast.error(t("errorWhileSavingData"));
     }
   };
-
- 
-
-
-
 
   const [anchorElUser, setAnchorElUser] = useState(null);
   const openUserPopover = Boolean(anchorElUser);
@@ -574,6 +620,66 @@ export const AddClient = () => {
 
   const handleUserClose = () => {
     setAnchorElUser(null);
+  };
+
+  // Render loading indicator or content based on loading state
+  const renderContent = () => {
+    if (loading && isEditMode) {
+      return (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+            minHeight: "400px",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      );
+    }
+
+    return (
+      <Box>
+        <Grid container spacing={1}>
+          <Grid item xs={12} md={5}>
+            <PersonalInfoAdmin clientInfoData={clientInfoData} />
+          </Grid>
+
+          <Box item sx={{ display: { xs: "none", sm: "block" } }}>
+            <Divider
+              orientation="vertical"
+              sx={{ backgroundColor: "#f4f6fc", width: "1px", marginTop: "30px", height: "90%" }}
+            />
+          </Box>
+
+          <Grid item xs={12} md={6}>
+            <BusinessInfoAdmin clientInfoData={clientInfoData} />
+          </Grid>
+        </Grid>
+
+        <Grid container justifyContent="center" sx={{ marginTop: 3 }}>
+          <Button
+            sx={{
+              width: "160px",
+              textTransform: "capitalize",
+              backgroundColor: theme.palette.orangePrimary.main,
+              color: "white",
+              borderRadius: "20px",
+              padding: "5px",
+              "&:hover": {
+                backgroundColor: "#ef7d10",
+              },
+            }}
+            onClick={handleSave}
+          >
+            <CheckOutlinedIcon sx={{ fontSize: "22px", mr: 1 }} />
+            {isEditMode ? t("update") : t("save")}
+          </Button>
+        </Grid>
+      </Box>
+    );
   };
 
   return (
@@ -594,8 +700,7 @@ export const AddClient = () => {
         </Box>
 
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Language/>
-
+          <Language />
           <Box
             aria-describedby={openUserPopover ? "simple-popover" : undefined}
             onClick={handleUserClick}
@@ -631,20 +736,27 @@ export const AddClient = () => {
           >
             <Box sx={{ width: 200, padding: "10px" }}>
               <Box
-                sx={{ display: "flex", alignItems: "center", flexDirection: "row", marginBottom: "20px", gap: "10px" }}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  flexDirection: "row",
+                  marginBottom: "20px",
+                  gap: "10px",
+                }}
               >
                 <Avatar sx={{ bgcolor: theme.palette.orangePrimary.main, width: 40, height: 40 }}>
                   <PersonOutlineOutlinedIcon sx={{ fontSize: "22px" }} />
                 </Avatar>
                 <Box>
-                  <Typography variant="h6" sx={{ fontSize: "14px" }}>{localStorage.getItem("userName")}</Typography>
+                  <Typography variant="h6" sx={{ fontSize: "14px" }}>
+                    {localStorage.getItem("userName")}
+                  </Typography>
                   <Typography variant="body2" sx={{ fontSize: "12px" }} color="textSecondary">
                     {localStorage.getItem("userEmail")}
                   </Typography>
                 </Box>
               </Box>
               <Divider />
-
               <List>
                 <Box
                   onClick={() => navigate("/")}
@@ -663,7 +775,10 @@ export const AddClient = () => {
                     margin: "0 auto",
                   }}
                 >
-                  <span className="icon-home-icon-silhouette" style={{ color: theme.palette.orangePrimary.main, marginRight: "5px", fontSize: "15px" }}></span>
+                  <span
+                    className="icon-home-icon-silhouette"
+                    style={{ color: theme.palette.orangePrimary.main, marginRight: "5px", fontSize: "15px" }}
+                  ></span>
                   <span style={{ color: "white", fontSize: "12px", textTransform: "capitalize" }}>
                     Home
                   </span>
@@ -714,46 +829,11 @@ export const AddClient = () => {
         </Box>
       </Box>
 
-      <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main, borderBottom: "none", width: "100%", height: "3px" }} />
+      <Divider
+        sx={{ backgroundColor: theme.palette.orangePrimary.main, borderBottom: "none", width: "100%", height: "3px" }}
+      />
 
-      <Box>
-        <Grid container spacing={1}>
-          <Grid item xs={12} md={5}>
-            <PersonalInfoAdmin />
-          </Grid>
-
-          <Box item sx={{ display: { xs: "none", sm: "block" } }}>
-            <Divider
-              orientation="vertical"
-              sx={{ backgroundColor: "#f4f6fc", width: "1px", marginTop: "30px", height: "90%" }}
-            />
-          </Box>
-
-          <Grid item xs={12} md={6}>
-            <BusinessInfoAdmin />
-          </Grid>
-        </Grid>
-
-        <Grid container justifyContent="center" sx={{ marginTop: 3 }}>
-          <Button
-            sx={{
-              width: "160px",
-              textTransform: "capitalize",
-              backgroundColor: theme.palette.orangePrimary.main,
-              color: "white",
-              borderRadius: "20px",
-              padding: "5px",
-              "&:hover": {
-                backgroundColor: "#ef7d10",
-              },
-            }}
-            onClick={handleSave}
-          >
-            <CheckOutlinedIcon sx={{ fontSize: "22px", mr: 1 }} />
-            {isEditMode ? t("update") : t("save")}
-          </Button>
-        </Grid>
-      </Box>
+      {renderContent()}
     </Box>
   );
 };

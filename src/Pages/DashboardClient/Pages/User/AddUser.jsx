@@ -3,24 +3,27 @@ import { Modal, Box, Typography, TextField, IconButton, Divider, MenuItem, FormC
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const iconsArray = [
     { name: 'Dashboard', icon: <img src="/assets/dashboard.svg" alt="icon" style={{ width: "16px", height: "16px" }} /> },
     { name: 'Support', icon: <span class="icon-messenger" style={{ width: "34.539", height: "34.544" }}></span> },
-
     { name: 'Orders', icon: <span class="icon-shopping-bag" style={{ width: "34.539", height: "34.544" }}></span> },
     { name: 'Users', icon: <PersonOutlineOutlinedIcon sx={{ fontSize: "18px", color: "gray" }} /> },
-
     { name: 'Wallet', icon: <span class="icon-wallet1" style={{ width: "34.539", height: "34.544" }}></span> },
     { name: 'Customers Log', icon: <span class="icon-show"></span> },
-    { name: 'Menu', icon: <img src="/assets/menu.svg" alt="menu icon" style={{ width: "17px", height: "17px" }} />, },
-
+    { name: 'Menu', icon: <img src="/assets/menu.svg" alt="menu icon" style={{ width: "17px", height: "17px" }} /> },
     { name: 'Setting', icon: <img src="/assets/setting.svg" alt="icon" style={{ width: "16px", height: "16px" }} /> },
 ];
-export const AddUser = ({ open, onClose, onSave }) => {
+
+export const AddUser = ({ open, onClose, onSave, brunchId = "442" }) => {
     const theme = useTheme();
     const { t } = useTranslation();
     const [role, setRole] = useState('');
+    const [name, setName] = useState('');
+    const [pin, setPin] = useState(['', '', '', '', '', '']);
     const [checkedItems, setCheckedItems] = useState({
         Dashboard: true,
         Orders: false,
@@ -31,12 +34,77 @@ export const AddUser = ({ open, onClose, onSave }) => {
         'Customers Log': false,
         Setting: false,
     });
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleCheck = (name) => {
         setCheckedItems((prevState) => ({
             ...prevState,
             [name]: !prevState[name],
         }));
+    };
+
+    const handlePinChange = (index, value) => {
+        if (/^\d?$/.test(value)) {
+            const newPin = [...pin];
+            newPin[index] = value;
+            setPin(newPin);
+            if (value && index < 5) {
+                document.getElementById(`pin-input-${index + 1}`).focus();
+            }
+        }
+    };
+
+    const handleSave = async () => {
+        setIsSubmitting(true);
+        const pinString = pin.join('');
+        if (!name || pinString.length !== 6 || !role) {
+            toast.error(t('pleaseFillAllFields'));
+            setIsSubmitting(false);
+            return;
+        }
+
+        const staffData = {
+            name,
+            pin: pinString,
+            brunch_id: brunchId,
+        };
+
+        const roleData = {
+            name: role,
+            menu: checkedItems['Menu'] ? '1' : '0',
+            users: checkedItems['Users'] ? '1' : '0',
+            orders: checkedItems['Orders'] ? '1' : '0',
+            wallet: checkedItems['Wallet'] ? '1' : '0',
+            setting: checkedItems['Setting'] ? '1' : '0',
+            support: checkedItems['Support'] ? '1' : '0',
+            dashboard: checkedItems['Dashboard'] ? '1' : '0',
+            customers_log: checkedItems['Customers Log'] ? '1' : '0',
+            brunch_id: brunchId,
+        };
+
+        try {
+            const token = localStorage.getItem('clientToken');
+            const config = {
+                headers: { Authorization: `Bearer ${token}` },
+            };
+
+            const [staffResponse, roleResponse] = await Promise.all([
+                axios.post('https://highleveltecknology.com/Qtap/api/restaurant_user_staff', staffData, config),
+                axios.post('https://highleveltecknology.com/Qtap/api/roles', roleData, config),
+            ]);
+
+            if (staffResponse.status === 200 && roleResponse.status === 200) {
+                toast.success(t('userSavedSuccessfully'));
+                onClose();
+            } else {
+                toast.error(t('failedToSaveUser'));
+            }
+        } catch (error) {
+            console.error('API Error:', error);
+            toast.error(t('errorSavingUser') + ': ' + (error.response?.data?.message || error.message));
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -50,101 +118,83 @@ export const AddUser = ({ open, onClose, onSave }) => {
                     boxShadow: 24,
                     mx: 'auto',
                     mt: '10vh',
-                    position: 'relative'
-                }}>
-                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <Typography variant="body1" sx={{ fontSize: "13px", color: "#424242" }}>{t("userAdd")}</Typography>
-                    <IconButton onClick={onClose} >
-                        <span class="icon-close-1" style={{ fontSize: "15px", color: "gray" }} />
+                    position: 'relative',
+                }}
+            >
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Typography variant="body1" sx={{ fontSize: '13px', color: '#424242' }}>
+                        {t('userAdd')}
+                    </Typography>
+                    <IconButton onClick={onClose}>
+                        <span className="icon-close-1" style={{ fontSize: '15px', color: 'gray' }} />
                     </IconButton>
                 </Box>
-                <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main, }} />
+                <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main }} />
 
-                <Box sx={{
-                    marginTop: "20px",
-                    display: "flex",
-                    flexDirection: "column",
-                    width: "100%",
-                    alignItems: "left",
-                }}>
-
-                    <Typography variant='body2' sx={{ width: "22%", textAlign: "center" }} color={"#424242"} fontSize={"10px"}>
-                        {t("name")}
+                <Box sx={{ marginTop: '20px', display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'left' }}>
+                    <Typography variant="body2" sx={{ width: '22%', textAlign: 'center' }} color="#424242" fontSize="10px">
+                        {t('name')}
                     </Typography>
-                    <Box sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        width: "100%",
-                    }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
                         <TextField
                             sx={{
-                                width: "90%",
+                                width: '90%',
                                 '& .MuiInputBase-input': {
-                                    height: "30px",
-                                    padding: "0px 14px",
-                                    textAlign: "left", fontSize: "10px",
-                                    color: "gray",
-
-                                }
+                                    height: '30px',
+                                    padding: '0px 14px',
+                                    textAlign: 'left',
+                                    fontSize: '10px',
+                                    color: 'gray',
+                                },
                             }}
                             fullWidth
-                            placeholder={t("tableName")}
+                            placeholder={t('tableName')}
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
                         />
                     </Box>
                 </Box>
 
-                <Box sx={{
-                    marginTop: "20px",
-                    display: "flex",
-                    flexDirection: "column",
-                    width: "100%",
-                    alignItems: "flex-start",
-                }}>
-                    <Typography variant='body2' sx={{ width: "22%", textAlign: "center" }} color={"#424242"} fontSize={"10px"}>
-                        {t("pin")}
+                <Box sx={{ marginTop: '20px', display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'flex-start' }}>
+                    <Typography variant="body2" sx={{ width: '22%', textAlign: 'center' }} color="#424242" fontSize="10px">
+                        {t('pin')}
                     </Typography>
-                    <Box sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        width: "100%",
-                    }}>
-                        <Grid container spacing={1} sx={{ width: "90%" }} >
-                            {Array(6).fill().map((_, index) => (
+                    <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                        <Grid container spacing={1} sx={{ width: '90%' }}>
+                            {pin.map((digit, index) => (
                                 <Grid item xs={2} key={index}>
-                                    <TextField variant="outlined" inputProps={{ maxLength: 1, style: { textAlign: 'center', width: "14px", height: "6px" } }} />
+                                    <TextField
+                                        variant="outlined"
+                                        value={digit}
+                                        onChange={(e) => handlePinChange(index, e.target.value)}
+                                        inputProps={{
+                                            maxLength: 1,
+                                            style: { textAlign: 'center', width: '14px', height: '6px' },
+                                            id: `pin-input-${index}`,
+                                        }}
+                                    />
                                 </Grid>
                             ))}
                         </Grid>
                     </Box>
                 </Box>
 
-                <Box sx={{
-                    marginTop: "20px",
-                    display: "flex",
-                    flexDirection: "column",
-                    width: "100%",
-                    alignItems: "flex-start",
-                }}>
-                    <Typography variant='body2' sx={{ width: "25%", textAlign: "center" }} color={"#424242"} fontSize={"10px"}>
-                        {t("role")}
+                <Box sx={{ marginTop: '20px', display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'flex-start' }}>
+                    <Typography variant="body2" sx={{ width: '25%', textAlign: 'center' }} color="#424242" fontSize="10px">
+                        {t('role')}
                     </Typography>
-                    <Box sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        width: "100%",
-                    }}>
-                        <FormControl sx={{ width: "90%" }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                        <FormControl sx={{ width: '90%' }}>
                             <Select
                                 sx={{
                                     '& .MuiInputBase-input': {
-                                        height: "30px",
-                                        padding: "1px 14px",
-                                        textAlign: "left",
-                                        fontSize: "10px",
-                                        color: "gray",
-                                        lineHeight: "30px"
-
-                                    }
+                                        height: '30px',
+                                        padding: '1px 14px',
+                                        textAlign: 'left',
+                                        fontSize: '10px',
+                                        color: 'gray',
+                                        lineHeight: '30px',
+                                    },
                                 }}
                                 fullWidth
                                 displayEmpty
@@ -152,16 +202,24 @@ export const AddUser = ({ open, onClose, onSave }) => {
                                 onChange={(e) => setRole(e.target.value)}
                                 placeholder="Select Role"
                             >
-                                <MenuItem value="" disabled sx={{ fontSize: "10px", color: "gray" }}>{t("selectRole")}</MenuItem>
-                                <MenuItem value={"chef"} sx={{ fontSize: "10px", color: "gray" }}>{t("Chef")}</MenuItem>
-                                <MenuItem value={"cashier"} sx={{ fontSize: "10px", color: "gray" }}>{t("Cashier")}</MenuItem>
-                                <MenuItem value={"waiter"} sx={{ fontSize: "10px", color: "gray" }}>{t("Waiter")}</MenuItem>
-
+                                <MenuItem value="" disabled sx={{ fontSize: '10px', color: 'gray' }}>
+                                    {t('selectRole')}
+                                </MenuItem>
+                                <MenuItem value="chef" sx={{ fontSize: '10px', color: 'gray' }}>
+                                    {t('Chef')}
+                                </MenuItem>
+                                <MenuItem value="cashier" sx={{ fontSize: '10px', color: 'gray' }}>
+                                    {t('Cashier')}
+                                </MenuItem>
+                                <MenuItem value="waiter" sx={{ fontSize: '10px', color: 'gray' }}>
+                                    {t('Waiter')}
+                                </MenuItem>
                             </Select>
                         </FormControl>
                     </Box>
                 </Box>
-                <Grid container justifyContent="center" alignItems="center" spacing={2} width={"100%"} marginTop={"10px"} marginLeft="6%">
+
+                <Grid container justifyContent="center" alignItems="center" spacing={2} width="100%" marginTop="10px" marginLeft="6%">
                     {iconsArray.map((item, index) => (
                         <Grid item xs={6} key={index}>
                             <FormControlLabel
@@ -170,9 +228,25 @@ export const AddUser = ({ open, onClose, onSave }) => {
                                         checked={checkedItems[item.name]}
                                         onChange={() => handleCheck(item.name)}
                                         icon={<Box sx={{ border: '1px solid gray', width: '16px', height: '16px', borderRadius: '4px' }} />}
-                                        checkedIcon={<Box sx={{ border: '1px solid #ef7d00', backgroundColor: theme.palette.orangePrimary.main, color: 'white', width: '16px', height: '16px', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                            <Typography variant="caption" sx={{ color: 'white' }}>✔</Typography>
-                                        </Box>}
+                                        checkedIcon={
+                                            <Box
+                                                sx={{
+                                                    border: '1px solid #ef7d00',
+                                                    backgroundColor: theme.palette.orangePrimary.main,
+                                                    color: 'white',
+                                                    width: '16px',
+                                                    height: '16px',
+                                                    borderRadius: '4px',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                }}
+                                            >
+                                                <Typography variant="caption" sx={{ color: 'white' }}>
+                                                    ✔
+                                                </Typography>
+                                            </Box>
+                                        }
                                         sx={{
                                             padding: '5px',
                                             '& .MuiSvgIcon-root': { fontSize: 18 },
@@ -181,9 +255,8 @@ export const AddUser = ({ open, onClose, onSave }) => {
                                 }
                                 label={
                                     <Box display="flex" alignItems="center">
-                                        <Typography >{item.icon}</Typography>
-
-                                        <Typography variant="body2" sx={{ marginLeft: '6px', fontSize: '11px', color: "gray" }}>
+                                        <Typography>{item.icon}</Typography>
+                                        <Typography variant="body2" sx={{ marginLeft: '6px', fontSize: '11px', color: 'gray' }}>
                                             {t(item.name)}
                                         </Typography>
                                     </Box>
@@ -193,29 +266,26 @@ export const AddUser = ({ open, onClose, onSave }) => {
                     ))}
                 </Grid>
 
-                <Box sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "100%",
-                }}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
                     <Button
                         variant="contained"
                         color="warning"
                         sx={{
                             mt: 4,
                             borderRadius: '20px',
-                            height: "30px",
-                            width: "50%",
-                            textTransform: "capitalize",
+                            height: '30px',
+                            width: '50%',
+                            textTransform: 'capitalize',
                         }}
+                        onClick={handleSave}
+                        disabled={isSubmitting}
                     >
-                        <CheckOutlinedIcon /> {t("save")}
+                        <CheckOutlinedIcon /> {t('save')}
                     </Button>
                 </Box>
 
-
+                <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick pauseOnHover />
             </Box>
         </Modal>
-    )
-}
+    );
+};

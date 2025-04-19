@@ -44,7 +44,8 @@ export const Row1 = () => {
               >
                 <MenuItem value="2022" sx={{ fontSize: "12px", color: "gray" }}>2022</MenuItem>
                 <MenuItem value="2023" sx={{ fontSize: "12px", color: "gray" }}>2023</MenuItem>
-                <MenuItem value="2024" sx={{ fontSize: "12px", color: "gray" }}>2024</MenuItem>
+                <MenuItem value="2024" sx={{ fontSize: "12px", color: "gray" }}>2024</MenuItem>  
+                <MenuItem value="2025" sx={{ fontSize: "12px", color: "gray" }}>2025</MenuItem>  
               </Select>
             </Box>
           </Grid>

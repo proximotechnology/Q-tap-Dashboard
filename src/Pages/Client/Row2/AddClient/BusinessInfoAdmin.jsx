@@ -17,7 +17,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
@@ -33,62 +33,180 @@ import NightlightIcon from "@mui/icons-material/Nightlight";
 import ViewQuiltIcon from "@mui/icons-material/ViewQuilt";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import { ArrowForwardIos, ArrowBackIos } from "@mui/icons-material";
-import { useBusinessContext } from "../../../../context/BusinessContext";
+import { useClientContext } from "../../../../context/ClientContext";
 import { useTranslation } from "react-i18next";
 
 const daysOfWeek = ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"];
 
-export const BusinessInfoAdmin = () => {
-  const { t } = useTranslation()
-  const { businessData, updateBusinessData, branches, selectedBranch, selectBranch } =
-    useBusinessContext();
-  const [branchIndex, setBranchIndex] = useState(0);
+export const BusinessInfoAdmin = ({ clientInfoData }) => {
+  const { t } = useTranslation();
   const theme = useTheme();
-  const {
-    businessName,
-    businessPhone,
-    businessEmail,
-    country,
-    city,
-    currency,
-    businessType,
-    menuLanguage,
-    tableCount,
-    mode,
-    design,
-    workingHours = { selectedDays: [], fromTime: "9:00 am", toTime: "5:00 pm", currentDay: "Sunday" },
-    servingWays = [],
-    paymentMethods = [],
-    paymentTime = "after",
-    callWaiter = "inactive",
-  } = branches[branchIndex] || businessData;
+  const { clientData, updateBusinessData, setClientData } = useClientContext();
+  const [branchIndex, setBranchIndex] = useState(clientData.selectedBranch || 0);
+  const [businessName, setBusinessName] = useState("");
+  const [businessPhone, setBusinessPhone] = useState("");
+  const [businessEmail, setBusinessEmail] = useState("");
+  const [country, setCountry] = useState("");
+  const [city, setCity] = useState("");
+  const [currency, setCurrency] = useState("1");
+  const [businessType, setBusinessType] = useState("uk");
+  const [menuLanguage, setMenuLanguage] = useState("US");
+  const [tableCount, setTableCount] = useState("1");
+  const [mode, setMode] = useState("light");
+  const [design, setDesign] = useState("grid");
+  const [workingHours, setWorkingHours] = useState({
+    selectedDays: [],
+    fromTime: "9:00 am",
+    toTime: "5:00 pm",
+    currentDay: "Sunday",
+  });
+  const [servingWays, setServingWays] = useState([]);
+  const [paymentMethods, setPaymentMethods] = useState([]);
+  const [paymentTime, setPaymentTime] = useState("after");
+  const [callWaiter, setCallWaiter] = useState("inactive");
+
+  // Initialize state with clientInfoData
+  useEffect(() => {
+    if (clientInfoData && clientInfoData.brunchs && clientInfoData.brunchs[branchIndex]) {
+      const branch = clientInfoData.brunchs[branchIndex];
+      const contactInfo = branch.contact_info?.[0] || {};
+      const parseFirstValue = (str) => (str ? str.split(",")[0].trim() : "");
+
+      setBusinessName(branch.business_name || "");
+      setBusinessPhone(parseFirstValue(contactInfo.business_phone) || "");
+      setBusinessEmail(parseFirstValue(contactInfo.business_email) || "");
+      setCountry(branch.business_country || "");
+      setCity(branch.business_city || "");
+      setCurrency(branch.currency_id?.toString() || "1");
+      setBusinessType(branch.business_format?.toLowerCase() || "uk");
+      setMenuLanguage("US");
+      setTableCount(branch.tables_number?.toString() || "1");
+      setMode(branch.default_mode === "white" ? "light" : "dark");
+      setDesign(branch.menu_design?.toLowerCase() || "grid");
+      setWorkingHours({
+        selectedDays: branch.workschedule?.map((schedule) => schedule.day) || [],
+        fromTime: branch.workschedule?.[0]?.opening_time || "9:00 am",
+        toTime: branch.workschedule?.[0]?.closing_time || "5:00 pm",
+        currentDay: "Sunday",
+      });
+      setServingWays(branch.serving_ways?.map((way) => way.name) || []);
+      setPaymentMethods(branch.payment_services?.map((service) => service.name) || []);
+      setPaymentTime(branch.payment_time || "after");
+      setCallWaiter(branch.call_waiter || "inactive");
+
+      // Update context to reflect branch data
+      updateBusinessData({
+        businessName: branch.business_name || "",
+        contactInfo: {
+          businessPhone: parseFirstValue(contactInfo.business_phone) || "",
+          businessEmail: parseFirstValue(contactInfo.business_email) || "",
+          facebook: parseFirstValue(contactInfo.facebook) || "",
+          twitter: parseFirstValue(contactInfo.twitter) || "",
+          instagram: parseFirstValue(contactInfo.instagram) || "",
+          address: parseFirstValue(contactInfo.address) || "",
+          website: parseFirstValue(contactInfo.website) || "",
+        },
+        country: branch.business_country || "",
+        city: branch.business_city || "",
+        currency: branch.currency_id?.toString() || "1",
+        businessType: branch.business_format?.toLowerCase() || "uk",
+        menuLanguage: "US",
+        numberOfTables: branch.tables_number?.toString() || "1",
+        design: branch.menu_design?.toLowerCase() || "grid",
+        mode: branch.default_mode === "white" ? "light" : "dark",
+        workSchedules: branch.workschedule?.length
+          ? branch.workschedule.reduce((acc, schedule) => {
+            acc[schedule.day] = [schedule.opening_time, schedule.closing_time];
+            return acc;
+          }, {})
+          : {
+            Saturday: ["9am", "7pm"],
+            Sunday: ["9am", "7pm"],
+            Monday: ["9am", "7pm"],
+            Tuesday: ["9am", "7pm"],
+            Wednesday: ["9am", "7pm"],
+            Thursday: ["9am", "7pm"],
+            Friday: ["9am", "7pm"],
+          },
+        servingWays: {
+          dine_in: branch.serving_ways?.some((way) => way.name === "dine_in") || false,
+          take_away: branch.serving_ways?.some((way) => way.name === "take_away") || false,
+          delivery: branch.serving_ways?.some((way) => way.name === "delivery") || false,
+        },
+        paymentMethods: {
+          cash: branch.payment_services?.some((service) => service.name === "cash") || false,
+          wallet: branch.payment_services?.some((service) => service.name === "wallet") || false,
+          card: branch.payment_services?.some((service) => service.name === "card") || false,
+        },
+        paymentTime: {
+          beforeServing: branch.payment_time === "before",
+          afterServing: branch.payment_time === "after",
+        },
+        callWaiter: branch.call_waiter === "active",
+      });
+    }
+  }, [clientInfoData, branchIndex, updateBusinessData]);
 
   const handleBranchClick = (index) => {
     setBranchIndex(index);
-    selectBranch(index);
+    setClientData((prev) => ({ ...prev, selectedBranch: index }));
   };
 
   const handleModeChange = (event, newMode) => {
     if (newMode !== null) {
+      setMode(newMode);
       updateBusinessData({ mode: newMode });
     }
   };
 
   const handleDesignChange = (event, newDesign) => {
     if (newDesign !== null) {
+      setDesign(newDesign);
       updateBusinessData({ design: newDesign });
     }
   };
 
   const handleInputChange = (field, value) => {
+    switch (field) {
+      case "businessName":
+        setBusinessName(value);
+        break;
+      case "businessPhone":
+        setBusinessPhone(value);
+        break;
+      case "businessEmail":
+        setBusinessEmail(value);
+        break;
+      case "country":
+        setCountry(value);
+        break;
+      case "city":
+        setCity(value);
+        break;
+      case "currency":
+        setCurrency(value);
+        break;
+      case "businessType":
+        setBusinessType(value);
+        break;
+      case "menuLanguage":
+        setMenuLanguage(value);
+        break;
+      case "tableCount":
+        setTableCount(value);
+        break;
+      default:
+        break;
+    }
     updateBusinessData({ [field]: value });
   };
 
   const handleWorkingHoursChange = (updates) => {
+    setWorkingHours((prev) => ({ ...prev, ...updates }));
     updateBusinessData({
-      workingHours: {
-        ...workingHours,
-        ...updates,
+      workSchedules: {
+        ...clientData.businessInfo.workSchedules,
+        [workingHours.currentDay]: [updates.fromTime || workingHours.fromTime, updates.toTime || workingHours.toTime],
       },
     });
   };
@@ -97,15 +215,33 @@ export const BusinessInfoAdmin = () => {
     const newSelectedDays = workingHours.selectedDays.includes(day)
       ? workingHours.selectedDays.filter((d) => d !== day)
       : [...workingHours.selectedDays, day];
-    handleWorkingHoursChange({ selectedDays: newSelectedDays });
+    setWorkingHours((prev) => ({ ...prev, selectedDays: newSelectedDays }));
+    updateBusinessData({
+      workSchedules: {
+        ...clientData.businessInfo.workSchedules,
+        [day]: newSelectedDays.includes(day) ? [workingHours.fromTime, workingHours.toTime] : undefined,
+      },
+    });
   };
 
   const handleTimeChange = (event, type) => {
     const newTime = event.target.value;
     if (type === "from") {
-      handleWorkingHoursChange({ fromTime: newTime });
+      setWorkingHours((prev) => ({ ...prev, fromTime: newTime }));
+      updateBusinessData({
+        workSchedules: {
+          ...clientData.businessInfo.workSchedules,
+          [workingHours.currentDay]: [newTime, workingHours.toTime],
+        },
+      });
     } else {
-      handleWorkingHoursChange({ toTime: newTime });
+      setWorkingHours((prev) => ({ ...prev, toTime: newTime }));
+      updateBusinessData({
+        workSchedules: {
+          ...clientData.businessInfo.workSchedules,
+          [workingHours.currentDay]: [workingHours.fromTime, newTime],
+        },
+      });
     }
   };
 
@@ -113,29 +249,51 @@ export const BusinessInfoAdmin = () => {
     const updatedServingWays = servingWays.includes(way)
       ? servingWays.filter((w) => w !== way)
       : [...servingWays, way];
-    updateBusinessData({ servingWays: updatedServingWays });
+    setServingWays(updatedServingWays);
+    updateBusinessData({
+      servingWays: {
+        dine_in: updatedServingWays.includes(t("Dine In")),
+        take_away: updatedServingWays.includes(t("Takeaway")),
+        delivery: updatedServingWays.includes(t("Delivery")),
+      },
+    });
   };
 
   const handlePaymentMethodChange = (method) => {
     const updatedPaymentMethods = paymentMethods.includes(method)
       ? paymentMethods.filter((m) => m !== method)
       : [...paymentMethods, method];
-    updateBusinessData({ paymentMethods: updatedPaymentMethods });
+    setPaymentMethods(updatedPaymentMethods);
+    updateBusinessData({
+      paymentMethods: {
+        cash: updatedPaymentMethods.includes(t("cash")),
+        wallet: updatedPaymentMethods.includes(t("wallet")),
+        card: updatedPaymentMethods.includes(t("card")),
+      },
+    });
   };
 
   const handlePaymentTimeChange = (time) => {
-    updateBusinessData({ paymentTime: time });
+    setPaymentTime(time);
+    updateBusinessData({
+      paymentTime: {
+        beforeServing: time === t("beforeServing"),
+        afterServing: time === t("afterServing"),
+      },
+    });
   };
 
   const handleCallWaiterChange = (event) => {
-    updateBusinessData({ callWaiter: event.target.checked ? "active" : "inactive" });
+    const newValue = event.target.checked ? "active" : "inactive";
+    setCallWaiter(newValue);
+    updateBusinessData({ callWaiter: newValue === "active" });
   };
 
   const handleDayToggle = (direction) => {
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const currentIndex = days.indexOf(workingHours.currentDay);
     const newIndex = (currentIndex + (direction === "next" ? 1 : -1) + days.length) % days.length;
-    handleWorkingHoursChange({ currentDay: days[newIndex] });
+    setWorkingHours((prev) => ({ ...prev, currentDay: days[newIndex] }));
   };
 
   const handlePrint = () => {
@@ -144,7 +302,7 @@ export const BusinessInfoAdmin = () => {
 
   return (
     <Grid container sx={{ marginTop: "20px", paddingLeft: "20px" }}>
-      <Grid item xs={12}  sx={{ px: { xs: 2, md: 0 } }}>
+      <Grid item xs={12} sx={{ px: { xs: 2, md: 0 } }}>
         <Box display={"flex"} justifyContent={"space-between"}>
           <Box>
             <Typography variant="body2" sx={{ fontSize: "15px" }} color="#3b3a3a" gutterBottom>
@@ -162,13 +320,13 @@ export const BusinessInfoAdmin = () => {
           </Box>
         </Box>
         <Box display="flex" gap={2}>
-          {branches.map((branch, i) => (
+          {clientInfoData?.brunchs?.map((branch, i) => (
             <Button
               key={i}
               variant="contained"
               onClick={() => handleBranchClick(i)}
               sx={{
-                backgroundColor: selectedBranch === i ? theme.palette.orangePrimary.main : "#bdbdbd",
+                backgroundColor: branchIndex === i ? theme.palette.orangePrimary.main : "#bdbdbd",
                 color: "white",
                 borderRadius: "10px",
                 padding: "3px 15px",
@@ -176,7 +334,7 @@ export const BusinessInfoAdmin = () => {
                 alignItems: "center",
                 textTransform: "none",
                 "&:hover": {
-                  backgroundColor: selectedBranch === i ? theme.palette.orangePrimary.main : "#bdbdbd",
+                  backgroundColor: branchIndex === i ? theme.palette.orangePrimary.main : "#bdbdbd",
                 },
               }}
             >
@@ -190,8 +348,7 @@ export const BusinessInfoAdmin = () => {
 
       <Grid item xs={12} md={12} display={"flex"} justifyContent={"space-between"}>
         <Grid container spacing={2}>
-
-        <Grid item xs={12} md={6}  sx={{ px: { xs: 2, md: 0 } }}>
+          <Grid item xs={12} md={6} sx={{ px: { xs: 2, md: 0 } }}>
             {/* Business Info Fields */}
             <FormControl variant="outlined" fullWidth>
               <OutlinedInput
@@ -262,6 +419,7 @@ export const BusinessInfoAdmin = () => {
                   <MenuItem value="US">United States</MenuItem>
                   <MenuItem value="CA">Canada</MenuItem>
                   <MenuItem value="UK">United Kingdom</MenuItem>
+                  <MenuItem value="egypt">Egypt</MenuItem>
                 </Select>
               </FormControl>
 
@@ -281,6 +439,7 @@ export const BusinessInfoAdmin = () => {
                   <MenuItem value="" disabled>
                     {t("city")}
                   </MenuItem>
+                  <MenuItem value="cairo">Cairo</MenuItem>
                   <MenuItem value="NY">New York</MenuItem>
                   <MenuItem value="LA">Los Angeles</MenuItem>
                   <MenuItem value="CHI">Chicago</MenuItem>
@@ -322,19 +481,16 @@ export const BusinessInfoAdmin = () => {
                   </InputAdornment>
                 }
               >
-                <MenuItem value="" disabled>
-                  {t("currency")}
-                </MenuItem>
-                <MenuItem value="US">United States</MenuItem>
-                <MenuItem value="CA">Canada</MenuItem>
-                <MenuItem value="UK">United Kingdom</MenuItem>
+                <MenuItem value="1">USD</MenuItem>
+                <MenuItem value="2">CAD</MenuItem>
+                <MenuItem value="3">GBP</MenuItem>
               </Select>
             </FormControl>
 
             <FormControl variant="outlined" sx={{ width: "100%", marginBottom: "10px" }}>
               <Select
                 id="outlined-BusinessType"
-                value={businessType || "Pastry"}
+                value={businessType}
                 onChange={(e) => handleInputChange("businessType", e.target.value)}
                 displayEmpty
                 sx={{ borderRadius: "10px", height: "33px", fontSize: "12px", color: "gray" }}
@@ -352,17 +508,18 @@ export const BusinessInfoAdmin = () => {
                 <MenuItem value="cloud">{t("cloudKitchens")}</MenuItem>
                 <MenuItem value="fast">{t("fastFood")}</MenuItem>
                 <MenuItem value="truck">{t("foodTruch")}</MenuItem>
-                <MenuItem value="Bakery">{t("bakeryStore")}</MenuItem>
-                <MenuItem value="Pastry">{t("pastryStore")}</MenuItem>
-                <MenuItem value="Fruits">{t("fruitsStore")}</MenuItem>
-                <MenuItem value="Retail">{t("retailStore")}</MenuItem>
+                <MenuItem value="bakery">{t("bakeryStore")}</MenuItem>
+                <MenuItem value="pastry">{t("pastryStore")}</MenuItem>
+                <MenuItem value="fruits">{t("fruitsStore")}</MenuItem>
+                <MenuItem value="retail">{t("retailStore")}</MenuItem>
+                <MenuItem value="uk">UK</MenuItem>
               </Select>
             </FormControl>
 
             <FormControl variant="outlined" sx={{ width: "100%", marginBottom: "10px" }}>
               <Select
                 id="outlined-MenuDefaultLanguage"
-                value={menuLanguage || "US"}
+                value={menuLanguage}
                 onChange={(e) => handleInputChange("menuLanguage", e.target.value)}
                 displayEmpty
                 sx={{ borderRadius: "10px", height: "33px", fontSize: "12px", color: "gray" }}
@@ -372,9 +529,6 @@ export const BusinessInfoAdmin = () => {
                   </InputAdornment>
                 }
               >
-                <MenuItem value="" disabled>
-                  {t("menuDefLang")}
-                </MenuItem>
                 <MenuItem value="US">United States</MenuItem>
                 <MenuItem value="CA">Canada</MenuItem>
                 <MenuItem value="UK">United Kingdom</MenuItem>
@@ -384,7 +538,7 @@ export const BusinessInfoAdmin = () => {
             <FormControl variant="outlined" sx={{ width: "100%", marginBottom: "10px" }}>
               <Select
                 id="outlined-TableCount"
-                value={tableCount || 1}
+                value={tableCount}
                 onChange={(e) => handleInputChange("tableCount", e.target.value)}
                 displayEmpty
                 sx={{ borderRadius: "10px", height: "33px", fontSize: "12px", color: "gray" }}
@@ -394,9 +548,6 @@ export const BusinessInfoAdmin = () => {
                   </InputAdornment>
                 }
               >
-                <MenuItem value="" disabled>
-                  {t("HowManyTablesDoYouHave")}
-                </MenuItem>
                 <MenuItem value="1">1</MenuItem>
                 <MenuItem value="2">2</MenuItem>
                 <MenuItem value="3">3</MenuItem>
@@ -444,7 +595,7 @@ export const BusinessInfoAdmin = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} md={6}  sx={{ px: { xs: 2, md: 0 } }}>
+          <Grid item xs={12} md={6} sx={{ px: { xs: 2, md: 0 } }}>
             <Grid
               sx={{
                 display: "flex",
@@ -776,9 +927,10 @@ export const BusinessInfoAdmin = () => {
               </Box>
             </Grid>
           </Grid>
-
         </Grid>
       </Grid>
     </Grid>
   );
 };
+
+export default BusinessInfoAdmin;

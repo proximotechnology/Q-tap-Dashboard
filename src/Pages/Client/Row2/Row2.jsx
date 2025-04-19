@@ -455,6 +455,8 @@ export const Row2 = () => {
   const handleEditClient = (client) => {
     // Navigate to /add-client with full client data for editing
     navigate("/add-client", { state: { clientData: client, isEditMode: true } });
+    console.log( "client", client);
+    
   };
 
   const handleAddClient = () => {
