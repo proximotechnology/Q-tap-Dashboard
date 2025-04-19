@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Grid, useTheme } from '@mui/material';
 import Header from './Header';
 import OrderCard from './OrderCard';
@@ -6,6 +6,7 @@ import Footer from './Footer';
 import RejectionModal from './RejectionModal';
 import OrderDetails from './OrderDetails';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 
 export const OrderBody = () => {
     const [selectedOrder, setSelectedOrder] = useState(null);
@@ -17,6 +18,7 @@ export const OrderBody = () => {
     const [closeOrders, setCloseOrders] = useState([]);
     const { t } = useTranslation()
     const theme = useTheme();
+    // const [orders, setOrders] = useState([])
     const [orders, setOrders] = useState([
         {
             id: '3208',
@@ -78,6 +80,30 @@ export const OrderBody = () => {
 
         },
     ]);
+   
+    useEffect(() => {
+        const client = JSON.parse(localStorage.getItem('allClientData'))
+        const handleClient = async () => {
+            try {
+                const res = await axios.get('https://highleveltecknology.com/Qtap/api/get_new_orders',
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+                        },
+
+                    }
+                )
+                console.log('order res', res)
+
+                // setOrders(res.data.new_orders)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        handleClient()
+    },[])
+    
     const handleOrderClick = (order) => {
         setSelectedOrder(order);
     };
@@ -151,8 +177,8 @@ export const OrderBody = () => {
 
     return (
         <Box sx={{
-            width: { xs:"100%", md:selectedOrder ? "78%" : "100%"}, transition: "width 0.3s ease-in-out",
-            backgroundColor: "#EBEDF3", minHeight: '100vh',display:'flex',flexDirection:'column',overflow:'hidden'
+            width: { xs: "100%", md: selectedOrder ? "78%" : "100%" }, transition: "width 0.3s ease-in-out",
+            backgroundColor: "#EBEDF3", minHeight: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden'
         }}>
             <Header />
 
@@ -310,3 +336,37 @@ export const OrderBody = () => {
 };
 
 export default OrderBody;
+
+const orderEndPoint = {
+    chef: {
+        fetch: 'get_new_orders',
+        action: {
+            accept: 'accept_order',//has body 
+            prepared: 'order_prepared'
+        }
+    },
+    cashier: {
+        fetch: 'get_accepted_orders',
+        action: {
+            receivePayment: 'payment_received',//has body 
+        }
+    },
+    waiter: {
+        fetch: 'get_prepared_orders',
+        action: {
+            receivePayment: 'order_served',//has body 
+        }
+    },
+    delivery: {
+        fetch: {
+            getPerepared: 'get_prepared_orders_delivery',
+            delivered: 'Daily_Delivered_Orders/',// take param -> /:id
+            totalDelivered: 'Total_Delivered_Orders/',// take param -> /:id
+            canceledOrder: 'Daily_Cancaled_Orders/8',// take param -> /:id
+        },
+        action: {
+            orederDelivered: 'order_delivered',//has body 
+            changeStatus: 'update_delivery_status',//has body 
+        }
+    }
+}

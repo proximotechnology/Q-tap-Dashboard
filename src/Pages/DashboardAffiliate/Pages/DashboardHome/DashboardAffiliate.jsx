@@ -1,15 +1,49 @@
 import { Box } from '@mui/system'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Row1 } from './Row1'
 import { Row2 } from './Row2'
 import { Row3 } from './Row3'
+import axios from 'axios'
 
 export const DashboardAffiliate = () => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [userData , setUserData] = useState(null)
+
+  const handleAffiliateData = async () => {
+    console.log("get affiliate data")
+    try {
+      setIsLoading(true);
+
+      const response = await axios.get(
+        'https://highleveltecknology.com/Qtap/api/get_myinfo',
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('affiliateToken')}`
+          },
+
+        }
+      );
+
+      console.log('success login', response)
+      setUserData(response.data.affiliate)
+    } catch (error) {
+
+      console.log(error)
+
+    } finally {
+      setIsLoading(false)
+    }
+  }
+useEffect(()=>{
+  handleAffiliateData()
+},[])
+
   return (
-    <Box sx={{padding:"0px 20px"}}>
-      <Row1/>
-      <Row2 /> 
-      <Row3/>
+    <Box sx={{ padding: "0px 20px" }}>
+      <Row1 />
+      <Row2 />
+      <Row3 code={userData?.code} />
 
     </Box>
   )

@@ -10,7 +10,7 @@ const MenuClient = () => {
     const { menuData, getMenuData } = useContext(MenuDataContext);
     
     useEffect(() => {
-        getMenuData(102);
+        getMenuData(localStorage.getItem('branchId'));
     }, []);
 
     useEffect(() => {

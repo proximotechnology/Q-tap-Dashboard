@@ -57,6 +57,7 @@ export const LoginChef = () => {
             navigate,
             t,
             role:'chef',
+            brunch_id:localStorage.getItem('branchId'),
             navurl:'/order-body'
         })
         //

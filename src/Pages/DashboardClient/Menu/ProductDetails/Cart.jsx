@@ -118,7 +118,7 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, selectedSize,
                                         <AddCircleOutlinedIcon
                                             onClick={() => handleAddItem(item.id)}
                                             sx={{ fontSize: "18px", color: "black", cursor: "pointer" }} />
-                                        <Typography sx={{ fontSize: "11px", padding: "0px 8px", color: "#272725" }}> {getItemCount(item.id)}</Typography>
+                                        <Typography sx={{ fontSize: "11px", padding: "0px 8px", color: "#272725" }}> {item.quantity}</Typography>
                                         <RemoveCircleOutlinedIcon
                                             onClick={() => handleMinusItem(item.id)}
 

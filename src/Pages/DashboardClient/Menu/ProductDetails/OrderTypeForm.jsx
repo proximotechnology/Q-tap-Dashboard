@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Button, IconButton, AppBar, Toolbar, Typography, TextField, Divider, MenuItem, InputAdornment, OutlinedInput, FormControl, Select, FormControlLabel, Radio, RadioGroup, useTheme } from '@mui/material';
- 
+
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
@@ -14,6 +14,7 @@ import { Payment } from '../Payment';
 import { useTranslation } from 'react-i18next';
 import { customWidth } from '../utils';
 import Language from '../../../../Component/dashboard/TopBar/Language';
+import { toast } from 'react-toastify';
 const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getItemCount, totalCart, selectedSize }) => {
 
     const [selectedType, setSelectedType] = useState('Dine In');
@@ -38,12 +39,67 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getI
 
     const [isPayment, setIsPayment] = useState(false);
     const toggleTypeForm = () => {
+
+        if (!selectedName.trim()) {
+            toast.error("name required")
+            return;
+        }
+
+        if (selectedType === 'Dine In') {
+            if (!selectedTable) {
+                toast.error("select table required")
+                return;
+            }
+
+        }
+        if (selectedType === 'Delivery') {
+            if (!selectedCity) {
+                toast.error("select city required")
+                return;
+            }
+
+            if (!address) {
+                toast.error("select address required")
+                return;
+            }
+
+        }
+        if(!phone){
+            toast.error("select phone required")
+                return;
+        }
         setIsPayment(!isPayment);
     };
-    const {t} = useTranslation()
+    const { t } = useTranslation()
+    const [subTotal, setSubTotal] = useState(0)
+    const [tax, setTax] = useState(0)
+    const [discount, setDiscount] = useState(0)
+    const [total, setTotal] = useState(0)
+
+
+    useEffect(() => {
+        let calsubtotal = 0;
+        let caltax = 0;
+
+        for (const meal of cartItems) {
+            calsubtotal += (meal.price * meal.quantity);
+            caltax += meal.price * (meal.Tax / 100);
+            console.log("tax", meal.Tax)
+        }
+        console.log("calculate here", cartItems)
+        let discountPercentage = 10;
+        setSubTotal(calsubtotal)
+        setTax(caltax.toFixed(2))
+        setDiscount((subTotal * (discountPercentage / 100)).toFixed(2))
+        let totalCal = subTotal - Number(discount)
+        totalCal += Number(tax)
+        setTotal(totalCal)
+        console.log(totalCal)
+
+    })
     return (
         <>
-            <Box sx={{ overflowY: "auto", width:customWidth.itemSectionWidth, boxShadow: 3, bgcolor: 'white', position: 'fixed', right: 0, top: 0, height: '100vh' }}>
+            <Box sx={{ overflowY: "auto", width: customWidth.itemSectionWidth, boxShadow: 3, bgcolor: 'white', position: 'fixed', right: 0, top: 0, height: '100vh' }}>
                 <AppBar position="sticky" color="inherit">
                     <Toolbar>
                         <IconButton edge="start" color="inherit" aria-label="cart">
@@ -239,7 +295,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getI
                                             }
                                         }}>
                                             <span class="icon-map-1" style={{ fontSize: "17px", marginRight: "5px" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span><span class="path14"></span><span class="path15"></span></span>
-                                           {t("pinYourLocation")}</Button>
+                                            {t("pinYourLocation")}</Button>
                                     </Box>
                                 </>
                             )}
@@ -270,20 +326,21 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getI
 
                 <Box
                     sx={{
-                        position: "fixed", bottom: 0, backgroundColor: "white", width: customWidth.buttonSectionWidth, padding: "20px",
+                        position: "fixed", bottom: 0, backgroundColor: "white", width: customWidth.buttonSectionWidth
+                        , padding: "20px",
                         boxShadow: 3, borderRadius: "30px 30px 0px 0px", display: "flex", justifyContent: "space-between",
                     }}>
                     <Box sx={{ width: "100%" }}>
                         <Typography variant="h6" sx={{ fontSize: '9px', color: 'gray' }}>
-                            {t("subTotal")} <span style={{ color: '#3A3A38' }}>0:00 EGP</span>
+                            {t("subTotal")} <span style={{ color: '#3A3A38' }}>{subTotal} EGP</span>
                         </Typography>
 
                         <Typography variant="h6" sx={{ fontSize: '9px', color: 'gray' }}>
-                            {t("tax")} <span style={{ color: '#3A3A38' }}>0:00 EGP</span>
+                            {t("tax")} <span style={{ color: '#3A3A38' }}>{tax} EGP</span>
                         </Typography>
 
                         <Typography variant="h6" sx={{ fontSize: '9px', color: 'gray' }}>
-                            {t("discounts")} <span style={{ color: '#3A3A38' }}>0:00 EGP</span>
+                            {t("discounts")} <span style={{ color: '#3A3A38' }}>{discount} EGP</span>
                         </Typography>
 
                         <Divider sx={{ margin: "3px 30px 3px 0px" }} />
@@ -291,7 +348,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getI
                             {t("totalPrice")}
                         </Typography>
                         <Typography variant="h6" sx={{ fontSize: '18px', fontWeight: "bold", color: theme.palette.orangePrimary.main }}>
-                            {totalCart}<span style={{ fontSize: "10px", fontWeight: "400", color: '#575756' }}>EGP</span>
+                            {total}<span style={{ fontSize: "10px", fontWeight: "400", color: '#575756' }}>EGP</span>
                         </Typography>
                     </Box>
                     <Box sx={{ width: "100%" }}>
@@ -354,16 +411,22 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getI
                     getItemCount={getItemCount}
                     selectedType={selectedType}
                     phone={phone}
-                    selectedTable={selectedTable}
                     selectedValue={selectedValue}
                     totalCart={totalCart}
                     selectedItemOptions={selectedItemOptions}
                     selectedItemExtra={selectedItemExtra}
                     selectedName={selectedName}
                     comment={comment}
-                    address={address
-
-                    }
+                    // Dine In
+                    selectedTable={selectedTable}
+                    // Delivery
+                    selectedCity={selectedCity}
+                    address={address}
+                    //calulation of payment
+                    subTotal={subTotal}
+                    tax={tax}
+                    discount={discount}
+                    total={total}
                 />}
         </>
     );

@@ -1,10 +1,38 @@
 import { Box, Card, CardContent, Divider, Grid, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 
 export const Row1 = () => {
     const {t} = useTranslation()
+    const [salesData,setSalesData] = useState(null)
+    const handleAffiliateSalesData = async () => {
+        try {
+    
+          const response = await axios.get(
+            'https://highleveltecknology.com/Qtap/api/get_sales_affiliate',
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('affiliateToken')}`
+              },
+    
+            }
+          );
+    
+          console.log('sales data', response)
+          setSalesData(response.data)
+        } catch (error) {
+    
+          console.log(error)
+    
+        } finally {
+        }
+      }
+    useEffect(()=>{
+        handleAffiliateSalesData()
+    },[])
     return (
         <Box sx={{ flexGrow: 1, padding: '0px 20px 20px 20px' }}>
             <Grid container spacing={3}>
@@ -20,11 +48,11 @@ export const Row1 = () => {
 
                                 <TrendingUpIcon sx={{ color: "#d4d0d0 ",padding: "3px", fontSize: '23px', border: "1px solid #d4d0d0", borderRadius: "6px" }} />
                             </Box>
-                            <Typography variant="h4" marginTop="6px" sx={{fontSize:"28px"}}>1,234</Typography>
+                            <Typography variant="h4" marginTop="6px" sx={{fontSize:"28px"}}>{salesData?.salesAmount}</Typography>
 
                             <Box display={"flex"} justifyContent="center" alignItems="center" marginTop="20px">
                                 <Typography variant="body1"
-                                    sx={{ fontSize: "25px" }} >10%</Typography>
+                                    sx={{ fontSize: "25px" }} >{salesData?.salesAmountChangePercent}%</Typography>
                                     <img src='/assets/up.svg' alt="up icon"  style={{ width: '22px',height:"22px" }} />
                             </Box>
                             <Divider sx={{ margin: "10px 0px",height:"1px" ,backgroundColor:"#a19c9c"}} />
@@ -45,13 +73,13 @@ export const Row1 = () => {
                                 <Typography variant="subtitle1" sx={{fontSize:"12px"}}>{t("salesAmount")}</Typography>
                                 <span class="icon-price-tag" style={{fontSize:"25px",color:"#d4d0d0 "}}></span>
                             </Box>
-                            <Typography variant="h4" marginTop="5px"sx={{fontSize:"28px"}}>5,564 
+                            <Typography variant="h4" marginTop="5px"sx={{fontSize:"28px"}}>{salesData?.salesCount}
                                 <span style={{ fontSize: "14px",marginLeft:"5px" }}>EGP</span>
                                 </Typography>
 
                             <Box display={"flex"} justifyContent="center" alignItems="center" marginTop="20px">
                                 <Typography variant="body1"
-                                    sx={{  fontSize: "25px" }} >-10%</Typography>
+                                    sx={{  fontSize: "25px" }} >{salesData?.salesCountChangePercent}%</Typography>
                                 <img src='/assets/down.svg' alt="up icon"  style={{ width: '22px',height:"22px" }} />
                             </Box>
                             <Divider sx={{ margin: "10px 0px",height:"1px" ,backgroundColor:"#a19c9c"}} />
