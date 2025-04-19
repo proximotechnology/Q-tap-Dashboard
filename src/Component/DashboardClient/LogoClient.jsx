@@ -81,7 +81,7 @@ export const LogoClient = () => {
     };
     const handleAdminClick = () => { if (selectedId) navigate('/admin-login'); else toast.error(t("yourMustSelectBranch")); }
     const handlePosClick = () => { if (selectedId) navigate('/cashier-login'); else toast.error(t("yourMustSelectBranch")); }
-    const handleKitchenClick = () => { if (selectedId) navigate('/chef-login'); else toast.error(t("yourMustSelectBranch")); }
+    const handleKitchenClick = () => { if (selectedId) navigate('/kitchen-login'); else toast.error(t("yourMustSelectBranch")); }
     const handleDeliveryClick = () => { if (selectedId) navigate('/delivery-riders'); else toast.error(t("yourMustSelectBranch")); }
     return (
         <Grid item xs={12} md={6} sx={{ width: "100%", }}>

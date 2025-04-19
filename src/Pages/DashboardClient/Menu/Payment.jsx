@@ -1,29 +1,94 @@
 import { AppBar, Button, Divider, IconButton, Toolbar, Typography } from '@mui/material'
 import { Box, useTheme } from '@mui/system'
 import React, { useState } from 'react'
- 
+
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
- 
+
 import { Done } from './Done';
 import { useTranslation } from 'react-i18next';
 import { customWidth } from './utils';
 import Language from '../../../Component/dashboard/TopBar/Language';
+import axios from 'axios';
 
 
 
 
-export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, phone,
-    selectedName, selectedValue, totalCart, selectedItemOptions, selectedItemExtra, comment, address
+export const Payment = ({
+    cartItems, selectedSize,
+    phone, selectedName, comment, selectedType,
+    selectedValue, selectedItemOptions, selectedItemExtra,
+    address, selectedCity, selectedTable,
+    subTotal, tax, discount, total
 }) => {
-    const {t} = useTranslation()
+    const { t } = useTranslation()
     const theme = useTheme();
     const [isDone, setIsDone] = useState(false);
-    const toggleDone = () => {
-        setIsDone(!isDone);
+    console.log(selectedType)
+    const toggleDone = async () => {
+        try {
+            let data = {
+                name: selectedName,
+                phone: phone,
+                comments: comment,
+                brunch_id: localStorage.getItem('branchId'),
+                type: 'takeaway',
+            }
+            if (selectedType === 'Delivery') {
+                data = {
+                    ...data,
+                    city: selectedCity,
+                    address: address,
+                    latitude: 24.7136,
+                    longitude: 46.6753,
+                    type: selectedType,
+                }
+            }
+            if (selectedType === 'Dine In') {
+                data = {
+                    ...data,
+                    table_id: 1,
+                    type: selectedType,
+                }
+            }
+            //Takeaway
+            data = {
+                ...data,
+                discount_code: "DISCOUNT10", //may be nullable
+                "tax": 15.0, //may be nullable
+                "total_price": 150.75,
+
+                "payment_way": "cash",
+
+                "meal_id": cartItems[0].id,
+                "quantity": "1",
+
+                "variants": [],
+
+                "extras": [],
+            }
+            console.log('order payment data', data)
+            const response = await axios.post(
+                `https://highleveltecknology.com/Qtap/api/add_orders`,
+                data,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+
+                }
+            );
+            console.log('order payment response', response)
+            setIsDone(!isDone);
+        } catch (error) {
+            console.log('order payment errror', error)
+        }
+        finally {
+
+        }
     };
-    
+
     return (
         <>
             <Box sx={{ overflowY: "auto", width: customWidth.itemSectionWidth, boxShadow: 3, bgcolor: 'white', position: 'fixed', right: 0, top: 0, height: '100vh' }}>
@@ -53,55 +118,57 @@ export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, p
                     <Typography variant="body1" sx={{ fontSize: "10px", display: "flex", letterSpacing: 1 }}>
                         {t("item.many")}
                     </Typography>
-                    {cartItems.map((item) => (
-                        <Box display={"flex"} justifyContent={"space-between"}>
-                            <Box sx={{ paddingLeft: "10px", marginTop: "15px" }}>
-                                <Typography
-                                    variant="h1"
-                                    sx={{ fontSize: '11px', fontWeight: '900', color: '#575756' }}>
-                                    {item.name}
-                                </Typography>
+                    {cartItems.map((item) => {
+                        console.log('itm', item); return (
+                            <Box display={"flex"} justifyContent={"space-between"}>
+                                <Box sx={{ paddingLeft: "10px", marginTop: "15px" }}>
+                                    <Typography
+                                        variant="h1"
+                                        sx={{ fontSize: '11px', fontWeight: '900', color: '#575756' }}>
+                                        {item.name}
+                                    </Typography>
 
-                                <Typography variant="body2" sx={{ marginTop: '2px', fontSize: '9px', color: "gray" }}>
-                                    <span style={{ color: theme.palette.orangePrimary.main }}>{t("option")} | </span>
-                                    {selectedItemOptions[item.id] && selectedItemOptions[item.id].length > 0
-                                        ? selectedItemOptions[item.id].map(option => option.name).join(', ')
-                                        : 'No options selected'}
+                                    <Typography variant="body2" sx={{ marginTop: '2px', fontSize: '9px', color: "gray" }}>
+                                        <span style={{ color: theme.palette.orangePrimary.main }}>{t("option")} | </span>
+                                        {selectedItemOptions[item.id] && selectedItemOptions[item.id].length > 0
+                                            ? selectedItemOptions[item.id].map(option => option.name).join(', ')
+                                            : 'No options selected'}
 
-                                </Typography>
-                                <Typography variant="body2" sx={{ marginTop: '2px', fontSize: '9px', color: "gray" }} >
-                                    <span style={{ color: theme.palette.orangePrimary.main }}>{t("extra.one")} |</span>
-                                    {selectedItemExtra[item.id] && selectedItemExtra[item.id].length > 0
-                                        ? selectedItemExtra[item.id].map(extra => extra.name).join(', ')
-                                        : 'No extra selected'}
-                                </Typography>
-                            </Box>
-                            <Box>
-                                <Box textAlign={"center"} justifyContent={"center"} alignItems={"center"}  >
-                                    <Button
-                                        sx={{
-                                            height: "15px",
-                                            width: "15px",
-                                            minWidth: "15px",
-                                            fontSize: "7px",
-                                            borderRadius: "50%",
-                                            backgroundColor: theme.palette.orangePrimary.main,
-                                            color: "white",
-                                            "&:hover": {
-                                                backgroundColor: "#D47A1C"
-                                            },
-                                        }}
-                                    >
-                                        {selectedSize[item.id]}
-                                    </Button>
-                                    <span style={{ fontSize: "10px", color: "#575756", marginLeft: "10px" }}> <span style={{ color: theme.palette.orangePrimary.main }}>x</span> {getItemCount(item.id)}</span>
+                                    </Typography>
+                                    <Typography variant="body2" sx={{ marginTop: '2px', fontSize: '9px', color: "gray" }} >
+                                        <span style={{ color: theme.palette.orangePrimary.main }}>{t("extra.one")} |</span>
+                                        {selectedItemExtra[item.id] && selectedItemExtra[item.id].length > 0
+                                            ? selectedItemExtra[item.id].map(extra => extra.name).join(', ')
+                                            : 'No extra selected'}
+                                    </Typography>
                                 </Box>
-                                <Typography variant="h6" sx={{ marginTop: "5px", fontSize: '13px', fontWeight: "bold", color: theme.palette.orangePrimary.main }}>
-                                    {item.newPrice} <span style={{ fontSize: "8px", fontWeight: "400", color: '#575756' }}>EGP</span>
-                                </Typography>
+                                <Box>
+                                    <Box textAlign={"center"} justifyContent={"center"} alignItems={"center"}  >
+                                        <Button
+                                            sx={{
+                                                height: "15px",
+                                                width: "15px",
+                                                minWidth: "15px",
+                                                fontSize: "7px",
+                                                borderRadius: "50%",
+                                                backgroundColor: theme.palette.orangePrimary.main,
+                                                color: "white",
+                                                "&:hover": {
+                                                    backgroundColor: "#D47A1C"
+                                                },
+                                            }}
+                                        >
+                                            {selectedSize[item.id]}
+                                        </Button>
+                                        <span style={{ fontSize: "10px", color: "#575756", marginLeft: "10px" }}> <span style={{ color: theme.palette.orangePrimary.main }}>x</span> {item.quantity}</span>
+                                    </Box>
+                                    <Typography variant="h6" sx={{ marginTop: "5px", fontSize: '13px', fontWeight: "bold", color: theme.palette.orangePrimary.main }}>
+                                        {item.price * item.quantity} <span style={{ fontSize: "8px", fontWeight: "400", color: '#575756' }}>EGP</span>
+                                    </Typography>
+                                </Box>
                             </Box>
-                        </Box>
-                    ))}
+                        )
+                    })}
 
                     <Divider sx={{ margin: "10px 0px" }} />
                     <Box>
@@ -165,23 +232,23 @@ export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, p
                     <Box display={"flex"} justifyContent={"space-between"} marginBottom={"50px"}>
                         <Box sx={{ width: "100%" }}>
                             <Typography variant="h6" sx={{ fontSize: '9px', color: 'gray' }}>
-                                {t("subTotal")} <span style={{ color: '#3A3A38' }}>0:00 EGP</span>
+                                {t("subTotal")} <span style={{ color: '#3A3A38' }}>{subTotal} EGP</span>
                             </Typography>
 
                             <Typography variant="h6" sx={{ fontSize: '9px', color: 'gray' }}>
-                                {t("tax")} <span style={{ color: '#3A3A38' }}>0:00 EGP</span>
+                                {t("tax")} <span style={{ color: '#3A3A38' }}>{tax} EGP</span>
                             </Typography>
 
                             <Typography variant="h6" sx={{ fontSize: '9px', color: 'gray' }}>
-                                {t("discounts")} <span style={{ color: '#3A3A38' }}>0:00 EGP</span>
+                                {t("discounts")} <span style={{ color: '#3A3A38' }}>{discount} EGP</span>
                             </Typography>
                         </Box>
                         <Box sx={{ width: "100%", textAlign: "left", marginLeft: "70px" }}>
                             <Typography variant="h6" sx={{ fontSize: '10px', fontWeight: "bold", color: '#3A3A38' }}>
-                               {t("totalPrice")}
+                                {t("totalPrice")}
                             </Typography>
                             <Typography variant="h6" sx={{ fontSize: '18px', fontWeight: "bold", color: theme.palette.orangePrimary.main }}>
-                                {totalCart} <span style={{ fontSize: "10px", fontWeight: "400", color: '#575756' }}>EGP</span>
+                                {total} <span style={{ fontSize: "10px", fontWeight: "400", color: '#575756' }}>EGP</span>
                             </Typography>
                         </Box>
 
@@ -220,7 +287,7 @@ export const Payment = ({ cartItems, selectedSize, getItemCount, selectedType, p
                             <img src="/assets/balance.svg" alt="icon" style={{ width: "16px", height: "16px", marginRight: "5px" }} />
                             {t("pay")}
                         </Button>
-                        <span class="icon-printer" style={{ width: "25px", height: "22px",marginLeft:"15px"}} ></span>
+                        <span class="icon-printer" style={{ width: "25px", height: "22px", marginLeft: "15px" }} ></span>
                     </Box>
                 </Box> {/* footer */}
             </Box>

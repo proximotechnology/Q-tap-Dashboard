@@ -42,7 +42,7 @@ const TextOverlay = styled(Box)({
     zIndex: 2,
 });
 
-export const LoginCashier = () => {
+export const LoginWaiter = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const [pin, setPin] = useState()
@@ -56,9 +56,9 @@ export const LoginCashier = () => {
             setSelectedBranch,
             navigate,
             t,
+            role:'waiter',
             brunch_id:localStorage.getItem('branchId'),
-            role:'cashier',
-            navurl:'/menu-client'
+            navurl:'/order-body'
         })
         //
     }
@@ -94,11 +94,11 @@ export const LoginCashier = () => {
 
                     <Grid container spacing={4} justifyContent="center" marginTop={"50px"}>
                         <Grid item >
-                            <img src="/assets/pos.svg" alt="" style={{ width: "110px", height: "110px" }} />
+                            <img src="/assets/kitchen.svg" alt="" style={{ width: "110px", height: "110px" }} />
                             <Typography
                                 style={{ color: "white", textAlign: "center", marginTop: "20px" }}
                             >
-                                {t("cashier")}
+                                {t("waiter")}
                             </Typography>
                         </Grid>
                     </Grid>
@@ -162,7 +162,7 @@ export const LoginCashier = () => {
                                         fontSize: '13px',
                                         textTransform: 'none',
                                     }}
-                                    onClick={() => handleLogin()}
+                                    onClick={handleLogin}
 
                                 >
                                     {isLoading ? <CircularProgress size={24} /> : t("logIn")}

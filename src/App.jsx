@@ -65,6 +65,8 @@ import { DashboardDataProvider } from './context/DashboardDataContext';
 import { MenuDataProvider } from './context/MenuDataContext';
 import { LoginChef } from './Component/DashboardClient/LoginChef';
 import { LoginCashier } from './Component/DashboardClient/LoginCashier';
+import { LoginKitchen } from './Component/DashboardClient/LoginKitchen';
+import { LoginWaiter } from './Component/DashboardClient/LoginWaiter';
 
 function App() {
   const routes = createBrowserRouter([
@@ -109,6 +111,7 @@ function App() {
       path: "/welcome",
       element: <Welcome />, // done
     },
+    /// client
     {
       path: "/logo-cient",
       element: <LogoClient />, // done 
@@ -118,8 +121,16 @@ function App() {
       element: <LoginAdmin />,//  done
     },
     {
+      path: "/kitchen-login",
+      element: <LoginKitchen />,//  done
+    },
+    {
       path: "/chef-login",
       element: <LoginChef />,//  done
+    },
+    {
+      path: "/waiter-login",
+      element: <LoginWaiter />,//  done
     },
     {
       path: "/cashier-login",

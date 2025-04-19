@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { AppBar, Toolbar, IconButton, Typography, Box, Switch, Button, useTheme,  } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Typography, Box, Switch, Button, useTheme, } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 
@@ -13,6 +13,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { DeliveredFooter } from './DeliveredFooter'
 import { useTranslation } from 'react-i18next';
 import Language from '../../../Component/dashboard/TopBar/Language';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 
 
@@ -48,7 +50,7 @@ export const DeliveryLogin = () => {
       width: '100%',
       color: "#575756"
     },
-  
+
     loginButton: {
       margin: '10px 0',
       padding: '10px',
@@ -66,6 +68,54 @@ export const DeliveryLogin = () => {
   const handleChange = () => {
     setChecked(!checked);
   };
+  //login proccessing variable
+  const [pin, setPin] = useState()
+  const [mobileNumber, setMobileNumber] = useState()
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleDeliveryLogin = async () => {
+    console.log("delivery_rider login")
+    try {
+
+      const data = {
+        email: localStorage.getItem('clientEmail'),
+        pin,
+        role: "delivery_rider",
+        phone: mobileNumber,
+        brunch_id: localStorage.getItem('branchId'),
+        user_type: 'qtap_clients',
+        password: localStorage.getItem('clientPassword'),
+      }
+
+      setIsLoading(true);
+
+      const response = await axios.post(
+        'https://highleveltecknology.com/Qtap/api/login',
+        data,
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+
+      console.log('success login', response)
+      localStorage.setItem('clientToken', response.data.token);
+      localStorage.setItem('allClientData', JSON.stringify(response.data));
+      localStorage.setItem("clientName", response.data.user.name);
+      localStorage.setItem("clientEmail", response.data.user.email);
+
+
+      navigate('/delivered')
+
+    } catch (error) {
+
+      console.log(error)
+      toast.error(t('loginFaild'))
+      navigate('/')
+
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   const { t } = useTranslation();
   return (
@@ -92,12 +142,12 @@ export const DeliveryLogin = () => {
 
 
         <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <IconButton onClick={() => { navigate('/Logo-cient') }} 
+          <IconButton onClick={() => { navigate('/Logo-cient') }}
             style={{ position: "absolute", zIndex: "3", top: "20px", left: "50px" }}>
-            <ArrowBackIosNewIcon sx={{ color: "white", fontSize: "20px", alignItems: 'center'}} />
+            <ArrowBackIosNewIcon sx={{ color: "white", fontSize: "20px", alignItems: 'center' }} />
           </IconButton>
 
-          <Box style={{ display: 'flex', alignItems: 'center',position: "absolute", zIndex: "3", top: "20px", right: "40px" }}>
+          <Box style={{ display: 'flex', alignItems: 'center', position: "absolute", zIndex: "3", top: "20px", right: "40px" }}>
 
             <Box display="flex" alignItems="center" marginRight={"20px"} >
               <LightModeOutlinedIcon sx={{ color: "#FFFFFF", fontSize: "18px" }} />
@@ -121,7 +171,7 @@ export const DeliveryLogin = () => {
                   '& .MuiSwitch-switchBase': {
 
                     '&.Mui-checked': {
-                      transform: 'translateX(22px)' ,
+                      transform: 'translateX(22px)',
                       color: '#fff',
                       '& + .MuiSwitch-track': {
                         opacity: 1,
@@ -155,6 +205,7 @@ export const DeliveryLogin = () => {
           <TextField
             variant="outlined"
             placeholder={t("mobileNumber")}
+            onChange={(e) => setMobileNumber(e.target.value)}
             fullWidth
             InputProps={{
               startAdornment: (
@@ -179,6 +230,7 @@ export const DeliveryLogin = () => {
 
           <TextField
             variant="outlined"
+            onChange={(e) => setPin(e.target.value)}
             placeholder={t("password")}
             fullWidth
             type="password"
@@ -203,7 +255,7 @@ export const DeliveryLogin = () => {
           />
 
           <Button
-            onClick={() => { navigate('/delivered') }}
+            onClick={() => { handleDeliveryLogin() }}
             variant="contained"
             fullWidth
             style={styles.loginButton}

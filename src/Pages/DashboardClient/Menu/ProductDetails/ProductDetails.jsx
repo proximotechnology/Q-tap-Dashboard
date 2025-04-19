@@ -23,7 +23,8 @@ const ProductDetails = ({
     selectedItemExtra,
     handleExtraClick,
     onClose,
-    cartCount
+    cartCount,
+    setCartCount
 }) => {
     const { t } = useTranslation();
     const theme = useTheme();
@@ -36,8 +37,14 @@ const ProductDetails = ({
     const [cartItems, setCartItems] = useState([]);
 
     useEffect(() => {
-        const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        const localcart = localStorage.getItem('cartItems');
+        let storedCartItems = []
+        if (localcart){
+            console.log('here')
+            storedCartItems = JSON.parse(localcart);
+        }
         setCartItems(storedCartItems);
+        setCartCount(storedCartItems.length)
     }, []);
 
     const updateCart = (itemId, action) => {
@@ -64,6 +71,7 @@ const ProductDetails = ({
         } else {
             const updatedCart = [...cartItems, { ...newItem, quantity: 1 }];
             setCartItems(updatedCart);
+            setCartCount(cartCount+1)
             localStorage.setItem('cartItems', JSON.stringify(updatedCart));
         }
     };

@@ -138,6 +138,7 @@ const Content = ({ allMenuData, selectedCategory }) => {
                         <ProductDetails 
                             item={selectedItem} 
                             cartCount={cartCount} 
+                            setCartCount={setCartCount}
                             activeItemId={activeItemId}
                             isCartOpen={isCartOpen} 
                             toggleCart={toggleCart}
