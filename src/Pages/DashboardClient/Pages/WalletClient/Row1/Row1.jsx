@@ -2,19 +2,30 @@ import React from 'react'
 import { Box, Button, Grid, MenuItem, Paper, Select, Typography, useTheme } from '@mui/material'
 import StraightIcon from '@mui/icons-material/Straight';
 import { useNavigate } from 'react-router';
-import LineChart1 from '../../../../Wallet/Row1/LineChart1';
 import { useTranslation } from 'react-i18next';
+import { DashboardDataContext } from '../../../../../context/DashboardDataContext';
+import LineChart1 from './lineChart1';
 export const Row1 = () => {
-  const [year, setYear] = React.useState('2024');
+  const [year, setYear] = React.useState('2025');
   const navigate = useNavigate();
   const { t } = useTranslation()
   const theme = useTheme();
   const handleYearChange = (event) => {
     setYear(event.target.value);
   };
+
+  const [allData, setAllData] = React.useState([]);
+  const { walletChartClientData, getClientWalletChart } = React.useContext(DashboardDataContext);
+  // Fetch financial data
+  React.useEffect(() => {
+      getClientWalletChart(year);
+  }, [year]);
+  // console.log("allData WALLET", allData);
+
+
   return (
 
-    <Paper sx={{ height: "270px", borderRadius: "20px", display: "flex", alignItems: "center",overflow:'auto' }}>
+    <Paper sx={{ height: "270px", borderRadius: "20px", display: "flex", alignItems: "center", overflow: 'auto' }}>
       <Grid width={"80%"} >
         <Grid container justifyContent="space-between" alignItems="center"  >
           <Grid item sx={{
@@ -44,15 +55,15 @@ export const Row1 = () => {
               >
                 <MenuItem value="2022" sx={{ fontSize: "12px", color: "gray" }}>2022</MenuItem>
                 <MenuItem value="2023" sx={{ fontSize: "12px", color: "gray" }}>2023</MenuItem>
-                <MenuItem value="2024" sx={{ fontSize: "12px", color: "gray" }}>2024</MenuItem>  
-                <MenuItem value="2025" sx={{ fontSize: "12px", color: "gray" }}>2025</MenuItem>  
+                <MenuItem value="2024" sx={{ fontSize: "12px", color: "gray" }}>2024</MenuItem>
+                <MenuItem value="2025" sx={{ fontSize: "12px", color: "gray" }}>2025</MenuItem>
               </Select>
             </Box>
           </Grid>
         </Grid>
         <Grid>
 
-          <LineChart1 />
+          <LineChart1 walletChartClientData={walletChartClientData} />
         </Grid>
       </Grid>
 
@@ -99,7 +110,7 @@ export const Row1 = () => {
               zIndex: 1,
             }}
           >
-            0.00 <span style={{ fontSize: "20px"  , opacity:'0.5'}}>£</span>
+            0.00 <span style={{ fontSize: "20px", opacity: '0.5' }}>£</span>
           </Typography>
 
 
@@ -111,7 +122,7 @@ export const Row1 = () => {
             padding: "1px 10px",
             display: "flex",
             alignItems: "center",
-            justifyContent:"center"
+            justifyContent: "center"
           }}>
             <StraightIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "20px" }} />
             <Button
@@ -124,7 +135,7 @@ export const Row1 = () => {
           <Box marginTop="30px" justifyContent="left">
 
             <Box display={"flex"} textAlign={"center"} alignItems={"center"}>
-              <Box component="span" sx={{  background: "linear-gradient(to right,rgb(135, 195, 241), #1C7FCB)", width: '25px', borderRadius: "20px", height: '10px', display: 'inline-block', marginRight: '8px' }} />
+              <Box component="span" sx={{ background: "linear-gradient(to right,rgb(135, 195, 241), #1C7FCB)", width: '25px', borderRadius: "20px", height: '10px', display: 'inline-block', marginRight: '8px' }} />
               <Typography variant="body2" color="text.secondary" sx={{ fontSize: "9px" }}>{t("salesVolume")}</Typography>
             </Box>
             <Box display={"flex"} textAlign={"center"} alignItems={"center"} marginTop="5px">

@@ -154,8 +154,12 @@ const ProfilePage = () => {
 
       if (response.ok) {
         toast.success(t("updateSucc"));
+        console.log(response);
+        
       } else {
         toast.error(t("updateErr"));
+        console.log(response);
+
       }
     } catch (error) {
       console.error('Error:', error);

@@ -22,10 +22,17 @@ import styles from '../SupportClient/supportCard.module.css'
 import { useTranslation } from 'react-i18next';
 
 const TableCard = ({ table, onDeleteTable, onEditTable }) => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const theme = useTheme();
-  return(
-<Card
+  const handleCopyLink = (qrLink) => {
+    const link = `https://highleveltecknology.com/Qtap/${qrLink}`;
+    navigator.clipboard.writeText(link)
+      .then(() => alert(t("linkCopied")))
+      .catch((error) => alert(t("faildToCopyLink"), error));
+  };
+
+  return (
+    <Card
       className={styles.card3} // Apply the card3 class for the gradient background
       sx={{
         height: '270px',
@@ -124,7 +131,7 @@ const TableCard = ({ table, onDeleteTable, onEditTable }) => {
           }}
         >
           <QRCodeSVG
-            value={`https://highleveltecknology.com/Qtap${table.link}`}
+            value={`https://highleveltecknology.com/Qtap/${table.link}`}
             size={90}
             fgColor="#000000"
             bgColor="#FFFFFF"
@@ -133,7 +140,7 @@ const TableCard = ({ table, onDeleteTable, onEditTable }) => {
         </Box>
 
         <Grid container justifyContent="center" alignItems="center">
-          <IconButton>
+          <IconButton onClick={() => handleCopyLink(table.link)}>
             <span className="icon-link" style={{ fontSize: '15px', color: 'black' }} />
           </IconButton>
           <IconButton>
@@ -145,11 +152,11 @@ const TableCard = ({ table, onDeleteTable, onEditTable }) => {
         </Grid>
       </CardContent>
     </Card>
-);
+  );
 }
 export const Tables = ({ openOldMenu }) => {
   const theme = useTheme();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [modalOpen, setModalOpen] = useState(false);
   const [editingTable, setEditingTable] = useState(null);
   const { tableDataRes, getTableDataRes } = useContext(ClientLoginData);
@@ -214,9 +221,9 @@ export const Tables = ({ openOldMenu }) => {
       toast.error(t("table.deleteErr"));
     }
   };
-  useEffect(()=>{
+  useEffect(() => {
     getTableDataRes(); // Fetch table data when component mounts
-  },[])
+  }, [])
 
   return (
     <Paper style={{ padding: '20px 30px', borderRadius: '10px', marginTop: '16px' }}>
@@ -226,13 +233,13 @@ export const Tables = ({ openOldMenu }) => {
         </Typography>
 
         <Divider
-        sx={{
-          backgroundImage: 'linear-gradient(to right, #FDB913, #F2672E)',
-          height: '2px',
-          marginTop: '2px',
-          border: 'none',
-        }}
-      />
+          sx={{
+            backgroundImage: 'linear-gradient(to right, #FDB913, #F2672E)',
+            height: '2px',
+            marginTop: '2px',
+            border: 'none',
+          }}
+        />
         <Grid container spacing={2} sx={{ marginTop: '10px' }}>
           {tableDataRes.map((table, index) => (
             <Grid item key={index}>

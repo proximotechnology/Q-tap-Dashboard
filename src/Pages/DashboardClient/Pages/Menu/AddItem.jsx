@@ -163,7 +163,7 @@ export const AddItem = () => {
                 !itemData.priceLarge ||
                 !itemData.price ||
                 !itemData.discount ||
-                !itemData.image ||
+                // !itemData.image ||
                 !limitVariants
             ) {
                 toast.error(t("plFillAllField"));

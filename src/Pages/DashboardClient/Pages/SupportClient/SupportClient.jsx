@@ -278,7 +278,7 @@ const Support = () => {
         content: content,
         status: status,
         Customer_Phone: phoneNumber,
-        client_id: "10",
+        client_id: JSON.parse(localStorage.getItem("allClientData")).user.id,
         brunch_id: localStorage.getItem("selectedBranch")
       };
 
@@ -315,13 +315,13 @@ const Support = () => {
         content: content,
         status: status,
         Customer_Phone: phoneNumber,
-        client_id: "10",          /////////////////////////////????????????❌
+        client_id: JSON.parse(localStorage.getItem("allClientData")).user.id,  /////////////////////////////????????????❌
         brunch_id: localStorage.getItem("selectedBranch")
       };
 
       console.log(" dat2a", data);
 
-      const response = await axios.put(
+      const response = await axios.post(
         `https://highleveltecknology.com/Qtap/api/ticket/${selectedTicket.id}`,
         data,
         {
@@ -433,9 +433,9 @@ const Support = () => {
       </Paper>
 
 
-      <Paper sx={{ borderRadius: "10px", marginTop: "25px", paddingBottom: "30px",overflowX:'auto' }}>
+      <Paper sx={{ borderRadius: "10px", marginTop: "25px", paddingBottom: "30px", overflowX: 'auto' }}>
 
-        <Box sx={{ padding: "30px 30px 0px 30px ", display: "flex", justifyContent: "space-between", alignItems: "center"  }}>
+        <Box sx={{ padding: "30px 30px 0px 30px ", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>
             {t("feedbacks.many")}
           </Typography>
@@ -495,70 +495,113 @@ const Support = () => {
             </Box>
           ))}
         </Box>
-
-        <Table sx={{ p: 0, mt: 2, mb: 5, width: '100%',whiteSpace:'nowrap' }}>
+        <Table sx={{ mt: 2, mb: 5, width: "100%", tableLayout: "fixed" }}>
           <TableHead>
             <TableRow sx={{ backgroundColor: "#D8E0E0" }}>
-              <TableCell sx={{ fontSize: "10px", padding: '2px', borderBottom: "none", textAlign: "center", color: "#575756", width: "30%" }}>{t("customer")}</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '2px', borderBottom: "none", textAlign: "center", color: "#575756", width: "30%" }}>{t("mobileNumber")}</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '2px', borderBottom: "none", textAlign: "center", color: "#575756", width: "30%" }}>{t("orderId")}</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '2px', borderBottom: "none", textAlign: "center", color: "#575756", width: "40%" }}>{t("rate")}</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '2px', borderBottom: "none", textAlign: "center", color: "#575756", width: "20%" }}>{t("status")}</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '2px', borderBottom: "none", textAlign: "center", color: "#575756", width: "16%" }}>{t("details")}</TableCell>
-              <TableCell sx={{ fontSize: "10px", padding: '2px', borderBottom: "none", textAlign: "center", color: "#575756", width: "16%" }}>{t("action")}</TableCell>
+              {[
+                t("customer"),
+                t("mobileNumber"),
+                t("orderId"),
+                t("rate"),
+                t("status"),
+                t("details"),
+                t("action"),
+              ].map((header, index) => (
+                <TableCell
+                  key={index}
+                  sx={{
+                    fontSize: "10px",
+                    padding: "2px",
+                    borderBottom: "none",
+                    textAlign: "center",
+                    color: "#575756",
+                  }}
+                >
+                  {header}
+                </TableCell>
+              ))}
             </TableRow>
           </TableHead>
 
           <TableBody>
             {feedbackData.map((discount, rowIndex) => (
-              <TableRow key={rowIndex}
-                sx={{ height: '36px', cursor: 'pointer' ,whiteSpace:'nowrap'}}>
-
-                <TableCell sx={{ textAlign: "center", fontSize: "11px", color: "gray", padding: '5px 0px', borderBottom: "none" }}>{discount.client.name}</TableCell>
-                <TableCell sx={{ textAlign: "center", fontSize: "11px", color: "gray", padding: '5px 0px', borderBottom: "none" }}>{discount.client.mobile}</TableCell>
-                <TableCell sx={{ textAlign: "center", fontSize: "11px", color: theme.palette.orangePrimary.main, padding: '5px 0px', borderBottom: "none" }}>#{discount.id}</TableCell>
-
+              <TableRow
+                key={rowIndex}
+                sx={{ height: "36px", cursor: "pointer" }}
+              >
                 <TableCell
                   sx={{
-                    padding: '5px 0px',
-                    borderBottom: 'none',
-                    textAlign: 'center',
+                    textAlign: "center",
+                    fontSize: "11px",
+                    color: "gray",
+                    padding: "5px 0px",
+                    borderBottom: "none",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {discount.client.name}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    textAlign: "center",
+                    fontSize: "11px",
+                    color: "gray",
+                    padding: "5px 0px",
+                    borderBottom: "none",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {discount.client.mobile}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    textAlign: "center",
+                    fontSize: "11px",
+                    color: theme.palette.orangePrimary.main,
+                    padding: "5px 0px",
+                    borderBottom: "none",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  #{discount.id}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    padding: "5px 0px",
+                    borderBottom: "none",
+                    textAlign: "center",
                   }}
                 >
                   <Grid
                     container
                     spacing={0}
                     sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      flexWrap:'nowrap'
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexWrap: "nowrap",
                     }}
                   >
                     {Array.from({ length: 5 }).map((_, index) => (
-                      <Grid
-                        item
-                        key={index}
-                        sx={{
-                          display: 'flex',
-                          padding: 0,
-                        }}
-                      >
-                        <IconButton
-                          sx={{
-                            padding: '3px',
-                          }}
-                        >
+                      <Grid item key={index} sx={{ display: "flex", padding: 0 }}>
+                        <IconButton sx={{ padding: "2px" }}>
                           {index < discount.star ? (
                             <StarIcon
                               sx={{
-                                fontSize: '20px',
+                                fontSize: "16px", // Reduced size to fit better
                                 color: theme.palette.orangePrimary.main,
                               }}
                             />
                           ) : (
                             <StarOutlineIcon
                               sx={{
-                                fontSize: '20px',
+                                fontSize: "16px",
                                 color: theme.palette.orangePrimary.main,
                               }}
                             />
@@ -568,28 +611,44 @@ const Support = () => {
                     ))}
                   </Grid>
                 </TableCell>
-
-
-                <TableCell sx={{ textAlign: "center", fontSize: "20px", color: "gray", padding: '5px 0px', borderBottom: "none" }}>
-                  {discount.emoji === "said" ? <SentimentVeryDissatisfiedIcon sx={{ fontSize: "35px", color: "red" }} /> :
-                    discount.emoji === "happy" ? <SentimentSatisfiedAltIcon sx={{ fontSize: "35px", color: theme.palette.orangePrimary.main }} /> :
-                      discount.emoji === "very happy" ? <SentimentSatisfiedAltIcon sx={{ fontSize: "35px", color: "green" }} /> :
-                        ""}
+                <TableCell
+                  sx={{
+                    textAlign: "center",
+                    fontSize: "20px",
+                    color: "gray",
+                    padding: "5px 0px",
+                    borderBottom: "none",
+                  }}
+                >
+                  {discount.emoji === "said" ? (
+                    <SentimentVeryDissatisfiedIcon sx={{ fontSize: "30px", color: "red" }} />
+                  ) : discount.emoji === "happy" ? (
+                    <SentimentSatisfiedAltIcon
+                      sx={{ fontSize: "30px", color: theme.palette.orangePrimary.main }}
+                    />
+                  ) : discount.emoji === "very happy" ? (
+                    <SentimentSatisfiedAltIcon sx={{ fontSize: "30px", color: "green" }} />
+                  ) : (
+                    ""
+                  )}
                 </TableCell>
-
                 <TableCell
                   onClick={() => handleRowClick(discount)}
-                  sx={{ textAlign: "center", padding: '5px 0px', borderBottom: "none" }}>
-                  <IconButton size="small" >
-                    <span class="icon-information" style={{ fontSize: "25px", color: theme.palette.orangePrimary.main }}></span>
+                  sx={{ textAlign: "center", padding: "5px 0px", borderBottom: "none" }}
+                >
+                  <IconButton size="small">
+                    <span
+                      className="icon-information"
+                      style={{ fontSize: "20px", color: theme.palette.orangePrimary.main }}
+                    ></span>
                   </IconButton>
                 </TableCell>
-
                 <TableCell
                   onClick={() => handleDeleteFeedback(discount.id)}
-                  sx={{ textAlign: "center", padding: '5px 0px', borderBottom: "none" }}>
+                  sx={{ textAlign: "center", padding: "5px 0px", borderBottom: "none" }}
+                >
                   <IconButton size="small" color="error">
-                    <span class="icon-delete" style={{ fontSize: "25px" }}></span>
+                    <span className="icon-delete" style={{ fontSize: "20px" }}></span>
                   </IconButton>
                 </TableCell>
               </TableRow>
