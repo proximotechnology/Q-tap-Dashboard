@@ -41,7 +41,7 @@ export const Revenue = () => {
     const fetchRevenueData = async () => {
       if (isMounted) {
         await getRvenueData();
-        console.log("Fetched revenue data:", revenueData);
+        // console.log("Fetched revenue data:", revenueData);
       }
     };
     fetchRevenueData();
