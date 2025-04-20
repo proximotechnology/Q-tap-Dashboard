@@ -175,7 +175,7 @@ function App() {
 
     {
       path: "menu-client",
-      element: <MenuClient />,// TODO: style problem here  and logic modification 
+      element: <MenuClient />,// تم الترجمه
     },
 
 
@@ -302,7 +302,6 @@ function App() {
   ]);
 
 
-  // 🔔 Pusher Setup
   useEffect(() => {
     const pusher = new Pusher('63b495891d2c3cff9d36', {
       cluster: 'eu',
@@ -310,14 +309,36 @@ function App() {
 
     const channel = pusher.subscribe('notify-channel');
     channel.bind('form-submitted', function (data) {
-      // ✅ Show toast or handle state
-      // console.log("📢 Received from Pusher:", data);
+      console.log('📢 Received from Pusher:', data);
 
-      toast.info(`📢 pusher ${data?.message?.title}: ${data?.message?.content}`);
-      console.log('data app busher',data)
-      // You can also store in state if you want to display in Content
+      // Handle different types
+      switch (data?.type) {
+        case 'notfy':
+          // Handle notification type
+          toast.info(`📢 ${data?.message?.title}: ${data?.message?.content}`);
+          break;
+
+        case 'chat':
+          // Handle chat type
+          {
+            localStorage.getItem("adminToken") &&
+            toast.success(`💬 New Message: ${data?.message?.message}`);
+          }
+          // Add logic to update chat UI or state
+          break;
+
+        case 'add_order':
+          // Handle add_order type
+          toast.warn(`🛒 New Order: ${data?.message?.orderId}`);
+          // Add logic to update order UI or state
+          break;
+
+        default:
+          console.warn('Unknown data type received:', data);
+      }
     });
 
+    // Cleanup on component unmount
     return () => {
       channel.unbind_all();
       channel.unsubscribe();
