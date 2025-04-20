@@ -58,7 +58,6 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
     if (editData) {
       setName(editData.name || '');
       setPin(editData.pin || '');
-      setOrders(editData.orders || '');
       setStatus(editData.status || 'Available');
       setDeliveryAreasId(editData.delivery_areas_id || '');
 
@@ -91,7 +90,6 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
       setPhoneNumber('');
       setCountryCode('+20');
       setPin('');
-      setOrders('');
       setStatus('Available');
       setDeliveryAreasId('');
     }
@@ -99,7 +97,7 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
 
   const handleSubmit = async () => {
     try {
-      if (!name || !phoneNumber || !pin || !orders || !status || !deliveryAreasId) {
+      if (!name || !phoneNumber || !pin  || !status || !deliveryAreasId) {
         toast.error(t('plFillAllField'));
         return;
       }
@@ -110,7 +108,6 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
         name,
         phone: `${countryCode}${phoneNumber}`,
         pin,
-        orders,
         status,
       };
 
@@ -363,7 +360,7 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
           </Box>
         </Box>
 
-        <Box
+        {/* <Box
           sx={{
             marginTop: '20px',
             display: 'flex',
@@ -394,7 +391,7 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
               onChange={(e) => setOrders(e.target.value)}
             />
           </Box>
-        </Box>
+        </Box> */}
 
         <Box
           sx={{

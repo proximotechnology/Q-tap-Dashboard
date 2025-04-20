@@ -25,7 +25,7 @@ export const AddFeedback = ({ open, handleCloseModel, onAddFeedback }) => {
 
     const handleSave = async () => {
         if (!clientId || star === 0 || !emoji || !yourGoals || !missingQTapMenus || !comment) {
-            toast.error(t("feedbacks.fillAllFields"));
+            toast.error(t("plFillAllField"));
             return;
         }
 

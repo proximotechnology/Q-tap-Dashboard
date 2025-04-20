@@ -6,146 +6,69 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { ContentMenu } from '../../../../context/ContentMenuContext';
 import AddIcon from '@mui/icons-material/Add';
-import { useTranslation } from 'react-i18next'; 
+import { useTranslation } from 'react-i18next';
 
-export const OffersModel = ({ open, handleClose }) => {
-    const { selectedBranch } = useBranch();
+// New Add Offer Modal Component (unchanged)
+const AddOfferModal = ({ open, handleClose, selectedBranch, contentForMenu, onAddSuccess }) => {
+    const { t } = useTranslation();
     const theme = useTheme();
-    const [discounts, setDiscounts] = useState([
-        { code: '123456', discount: '10%', date: '8/10/2024', status: 'Active' },
-        { code: '123457', discount: '10%', date: '8/10/2024', status: 'Inactive' }
-    ]);
-    const { contentForMenu } = useContext(ContentMenu);
-    // console.log("contentForMenu", contentForMenu);
-    const {t} = useTranslation();
-    const handleAdd = async () => {
-        const newOffer = {
-            discount: "0%", // قيمة ثابتة
-            before_discount: "0", // قيمة ثابتة
-            after_discount: "0", // قيمة ثابتة
-            meals_id: "4", // قيمة ثابتة
-            brunch_id: selectedBranch // يتم استخدام الـ branch المحدد
-        };
+    const [formData, setFormData] = useState({
+        discount: "",
+        before_discount: "",
+        after_discount: "",
+        meals_id: "",
+        brunch_id: selectedBranch,
+        img: null,
+        name: "",
+        description: ""
+    });
+
+    const handleInputChange = (field, value) => {
+        setFormData({ ...formData, [field]: value });
+    };
+
+    const handleFileChange = (e) => {
+        setFormData({ ...formData, img: e.target.files[0] });
+    };
+
+    const handleSubmit = async () => {
+        const formDataToSend = new FormData();
+        formDataToSend.append("discount", formData.discount);
+        formDataToSend.append("before_discount", formData.before_discount);
+        formDataToSend.append("after_discount", formData.after_discount);
+        formDataToSend.append("meals_id", formData.meals_id);
+        formDataToSend.append("brunch_id", formData.brunch_id);
+        if (formData.img) {
+            formDataToSend.append("img", formData.img);
+        }
+        formDataToSend.append("name", formData.name);
+        formDataToSend.append("description", formData.description);
 
         try {
-            // إرسال البيانات إلى الـ API
-            const response = await axios.post('https://highleveltecknology.com/Qtap/api/meals_special_offers', newOffer, {
+            const response = await axios.post('https://highleveltecknology.com/Qtap/api/meals_special_offers', formDataToSend, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+                    'Content-Type': 'multipart/form-data'
                 }
             });
 
             if (response.data) {
                 toast.success(t("offer.addSucc"));
-                getOffers(); // إعادة جلب البيانات لتحديث الجدول
+                onAddSuccess();
+                handleClose();
             }
         } catch (error) {
             console.error('Error adding offer:', error);
             toast.error(t("offer.addErr"));
         }
     };
-    const handleDelete = async (id) => {
-        try {
-            await axios.delete(`https://highleveltecknology.com/Qtap/api/meals_special_offers/${id}`, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
-                }
-            });
-            toast.success(t("offer.deleteSucc"));
-            getOffers(); // إعادة جلب البيانات بعد الحذف
-        } catch (error) {
-            console.error('Error deleting offer:', error);
-            toast.error(t("offer.deleteErr"));
-        }
-    };
-
-
-    const [offers, setOffers] = useState([
-        { id: 1, item: 'food', discount: '10%', priceBefore: '6.00 EGP', priceAfter: '0.00 EGP', isEditing: false },
-        { id: 2, item: 'drink', discount: '10%', priceBefore: '5.00 EGP', priceAfter: '0.00 EGP', isEditing: false },
-    ]);
-
-    const handleEditToggle = async (index) => {
-        const updatedOffers = [...offers];
-        const offer = updatedOffers[index];
-
-        if (offer.isEditing) {
-            try {
-                const response = await axios.put(
-                    `https://highleveltecknology.com/Qtap/api/meals_special_offers/${offer.id}`,
-                    {
-                        discount: offer.discount, 
-                        before_discount: offer.priceBefore,
-                        after_discount: offer.priceAfter, 
-                        meals_id: offer.item, 
-                        brunch_id: selectedBranch 
-                    },
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
-                        }
-                    }
-                );
-
-                if (response.data) {
-                    toast.success(t("offer.updateSucc"));
-                    getOffers(); // إعادة جلب البيانات لتحديث الجدول
-                }
-            } catch (error) {
-                console.error('Error updating offer:', error);
-                toast.error(t("updateErr"));
-            }
-        }
-
-        offer.isEditing = !offer.isEditing; // تبديل حالة التعديل
-        setOffers(updatedOffers); // تحديث الحالة
-    };
-
-    const handleInputChange = (index, field, value) => {
-        const updatedOffers = [...offers];
-        updatedOffers[index][field] = value; // تحديث الحقل المحدد
-        setOffers(updatedOffers); // تحديث الحالة
-    };
-    const getOffers = async () => {
-        try {
-            const response = await axios.get('https://highleveltecknology.com/Qtap/api/meals_special_offers', {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
-                },
-                params: {
-                    brunch_id: selectedBranch
-                }
-            });
-            // console.log("response offers", response?.data);
-
-            if (response.data) {
-                const formattedOffers = response.data.map(offer => ({
-                    id: offer.id,
-                    item: offer.meals_id, // يمكن تعديل هذا الحقل حسب الحاجة
-                    discount: offer.discount,
-                    priceBefore: offer.before_discount,
-                    priceAfter: offer.after_discount,
-                    isEditing: false // جعل الحالة الافتراضية غير قابلة للتعديل
-                }));
-                setOffers(formattedOffers); // تحديث الحالة
-            }
-        } catch (error) {
-            console.error('Error fetching discounts:', error);
-            // toast.error('Error fetching discounts'); 
-        }
-    };
-    useEffect(() => {
-        getOffers();
-    }, [selectedBranch]);
-
-
 
     return (
         <Modal open={open} onClose={handleClose} disableScrollLock>
             <Box
                 sx={{
                     width: 500,
-                    height: "400px",
+                    height: "auto",
                     bgcolor: 'background.paper',
                     p: 4,
                     borderRadius: 3,
@@ -156,7 +79,7 @@ export const OffersModel = ({ open, handleClose }) => {
                 }}>
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>
-                        {t("specialOffers")}
+                        {t("addNewOffer")}
                     </Typography>
                     <IconButton onClick={handleClose}>
                         <span class="icon-close-1" style={{ fontSize: "12px", color: "gray" }} />
@@ -170,135 +93,400 @@ export const OffersModel = ({ open, handleClose }) => {
                     }}
                 />
 
-                <Table sx={{ mt: 3, mb: 5, width: '500px', marginLeft: '-32px', tableLayout: 'fixed' }}>
-                    <TableHead>
-                        <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
-                            <TableCell sx={{ fontSize: '10px', padding: '3px 0px', borderBottom: 'none', textAlign: 'center', color: '#575756' }}>{t("item.one")}</TableCell>
-                            <TableCell sx={{ fontSize: '10px', padding: '3px 0px', borderBottom: 'none', textAlign: 'center', color: '#575756' }}>{t("discount.one")}</TableCell>
-                            <TableCell sx={{ fontSize: '10px', padding: '3px 0px', borderBottom: 'none', textAlign: 'center', color: '#575756' }}>{t("price.before")}</TableCell>
-                            <TableCell sx={{ fontSize: '10px', padding: '3px 0px', borderBottom: 'none', textAlign: 'center', color: '#575756' }}>{t("price.after")}</TableCell>
-                            <TableCell sx={{ fontSize: '10px', padding: '3px 0px', borderBottom: 'none', textAlign: 'center', color: '#575756' }}>{t("action")}</TableCell>
-                        </TableRow>
-                    </TableHead>
-
-                    <TableBody>
-                        {offers.map((offer, index) => (
-                            <TableRow key={index} sx={{ height: '36px' }}>
-                                {/* Item Field */}
-                                <TableCell sx={{ textAlign: 'center', fontSize: '12px', color: 'gray', padding: '3px 0px', borderBottom: 'none' }}>
-                                    {offer.isEditing ? (
-                                        <FormControl
-                                            size="small"
-                                            sx={{ width: "70px", height: "30px", "& .MuiInputBase-root": { height: "30px", fontSize: "10px" } }}>
-                                            <Select
-                                                value={offer.item}
-                                                onChange={(e) => handleInputChange(index, 'item', e.target.value)}
-                                                displayEmpty
-                                            >
-                                                {contentForMenu.map((item) => (
-                                                    <MenuItem key={item.id} value={item.id}>
-                                                        {item.name}
-                                                    </MenuItem>
-                                                ))}
-                                            </Select>
-                                        </FormControl>
-                                    ) : (
-                                        <span style={{ fontSize: '10px', color: 'gray' }}>{offer.item}</span>
-                                    )}
-                                </TableCell>
-
-                                {/* Discount Field */}
-                                <TableCell sx={{ textAlign: 'center', fontSize: '12px', color: 'gray', padding: '3px 0px', borderBottom: 'none' }}>
-                                    {offer.isEditing ? (
-                                        <TextField
-                                            value={offer.discount}
-                                            onChange={(e) => handleInputChange(index, 'discount', e.target.value)}
-                                            variant="outlined"
-                                            size="small"
-                                            sx={{ width: "70px", height: "30px", "& .MuiInputBase-root": { height: "30px", fontSize: "10px" } }}
-                                        />
-                                    ) : (
-                                        <span style={{ fontSize: '10px', color: 'gray' }}>{offer.discount}</span>
-                                    )}
-                                </TableCell>
-
-                                {/* Price Before Field */}
-                                <TableCell sx={{ textAlign: 'center', fontSize: '12px', color: 'gray', padding: '3px 0px', borderBottom: 'none' }}>
-                                    {offer.isEditing ? (
-                                        <TextField
-                                            value={offer.priceBefore}
-                                            onChange={(e) => handleInputChange(index, 'priceBefore', e.target.value)}
-                                            variant="outlined"
-                                            size="small"
-                                            sx={{ width: "70px", height: "30px", "& .MuiInputBase-root": { height: "30px", fontSize: "10px" } }}
-                                        />
-                                    ) : (
-                                        <span style={{ fontSize: '10px', color: 'gray' }}>{offer.priceBefore}</span>
-                                    )}
-                                </TableCell>
-
-                                {/* Price After Field */}
-                                <TableCell sx={{ textAlign: 'center', fontSize: '12px', color: 'gray', padding: '3px 0px', borderBottom: 'none' }}>
-                                    {offer.isEditing ? (
-                                        <TextField
-                                            value={offer.priceAfter}
-                                            onChange={(e) => handleInputChange(index, 'priceAfter', e.target.value)}
-                                            variant="outlined"
-                                            size="small"
-                                            sx={{ width: "70px", height: "30px", "& .MuiInputBase-root": { height: "30px", fontSize: "10px" } }}
-                                        />
-                                    ) : (
-                                        <span style={{ fontSize: '10px', color: 'gray' }}>{offer.priceAfter}</span>
-                                    )}
-                                </TableCell>
-
-                                {/* Actions */}
-                                <TableCell sx={{ fontSize: "10px", textAlign: "center", padding: '3px 0px', borderBottom: "none" }}>
-                                    {offer.isEditing ? (
-                                        <IconButton size="small" onClick={() => handleEditToggle(index)} color="primary">
-                                            <img src="/assets/true.svg" alt="save icon" />
-                                        </IconButton>
-                                    ) : (
-                                        <>
-                                            <IconButton size="small" onClick={() => handleEditToggle(index)}>
-                                                <span class="icon-edit" sx={{ fontSize: "10px", color: "black" }}></span>
-                                            </IconButton>
-                                            <IconButton size="small" onClick={() => handleDelete(offer.id)} color="error">
-                                                <span class="icon-delete" sx={{ fontSize: "10px" }}></span>
-                                            </IconButton>
-                                        </>
-                                    )}
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-
-                {/* add button */}
-                <Box sx={{ display: "flex", textAlign: "center", justifyContent: "center", alignItems: "center", }}>
+                <Box sx={{ mt: 3, display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <TextField
+                        type='number'
+                        label={t("discount.one")}
+                        value={formData.discount}
+                        onChange={(e) => handleInputChange('discount', e.target.value)}
+                        variant="outlined"
+                        size="small"
+                        sx={{ "& .MuiInputBase-root": { height: "40px", fontSize: "12px" } }}
+                    />
+                    <TextField
+                        label={t("price.before")}
+                        value={formData.before_discount}
+                        onChange={(e) => handleInputChange('before_discount', e.target.value)}
+                        variant="outlined"
+                        size="small"
+                        sx={{ "& .MuiInputBase-root": { height: "40px", fontSize: "12px" } }}
+                    />
+                    <TextField
+                        label={t("price.after")}
+                        value={formData.after_discount}
+                        onChange={(e) => handleInputChange('after_discount', e.target.value)}
+                        variant="outlined"
+                        size="small"
+                        sx={{ "& .MuiInputBase-root": { height: "40px", fontSize: "12px" } }}
+                    />
+                    <FormControl size="small" sx={{ "& .MuiInputBase-root": { height: "40px", fontSize: "12px" } }}>
+                        <Select
+                            value={formData.meals_id}
+                            onChange={(e) => handleInputChange('meals_id', e.target.value)}
+                            displayEmpty
+                        >
+                            {contentForMenu.map((item) => (
+                                <MenuItem key={item.id} value={item.id}>
+                                    {item.name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <TextField
+                        label={t("name")}
+                        value={formData.name}
+                        onChange={(e) => handleInputChange('name', e.target.value)}
+                        variant="outlined"
+                        size="small"
+                        sx={{ "& .MuiInputBase-root": { height: "40px", fontSize: "12px" } }}
+                    />
+                    <TextField
+                        label={t("description")}
+                        value={formData.description}
+                        onChange={(e) => handleInputChange('description', e.target.value)}
+                        variant="outlined"
+                        size="small"
+                        sx={{ "& .MuiInputBase-root": { height: "40px", fontSize: "12px" } }}
+                    />
+                    <Box>
+                        <Typography variant="body2" sx={{ fontSize: "12px", color: "#575756" }}>
+                            {t("image")}
+                        </Typography>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleFileChange}
+                            style={{ marginTop: '8px' }}
+                        />
+                    </Box>
                     <Button
-                        onClick={handleAdd}
+                        onClick={handleSubmit}
                         variant="contained"
                         sx={{
                             backgroundColor: theme.palette.orangePrimary.main,
                             borderRadius: '25px',
                             color: 'white',
-                            width: "30%",
                             textTransform: 'none',
-                            padding: '3px 12px', fontSize: "12px",
-                            display: 'flex',
-                            justifyContent: "center",
-                            alignItems: "center",
+                            padding: '3px 12px',
+                            fontSize: "12px",
+                            mt: 2,
                             '&:hover': {
                                 backgroundColor: '#f18101',
                             },
                         }}
                     >
-                         <AddIcon sx={{ margin: "0 2px 2px 0", fontSize: "11px", color: "white", "& path": { stroke: "white", strokeWidth: 3 } }} /> {t("add")}
+                        {t("submit")}
                     </Button>
                 </Box>
+            </Box>
+        </Modal>
+    );
+};
 
-            </Box >
-        </Modal >
+export const OffersModel = ({ open, handleClose }) => {
+    const { selectedBranch } = useBranch();
+    const theme = useTheme();
+    const { contentForMenu } = useContext(ContentMenu);
+    const { t } = useTranslation();
+    const [openAddModal, setOpenAddModal] = useState(false);
+    const [offers, setOffers] = useState([]);
+
+    const handleOpenAddModal = () => setOpenAddModal(true);
+    const handleCloseAddModal = () => setOpenAddModal(false);
+
+    const getOffers = async () => {
+        try {
+            const response = await axios.get('https://highleveltecknology.com/Qtap/api/meals_special_offers', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+                },
+                params: {
+                    brunch_id: selectedBranch
+                }
+            });
+
+            if (response.data) {
+                const formattedOffers = response.data.map(offer => ({
+                    id: offer.id,
+                    item: offer.meals_id,
+                    discount: offer.discount,
+                    priceBefore: offer.before_discount,
+                    priceAfter: offer.after_discount,
+                    name: offer.name || '', // Ensure name is included
+                    description: offer.description || '', // Ensure description is included
+                    isEditing: false
+                }));
+                setOffers(formattedOffers);
+            }
+        } catch (error) {
+            console.error('Error fetching discounts:', error);
+        }
+    };
+
+    const handleEditToggle = async (index) => {
+        const updatedOffers = [...offers];
+        const offer = updatedOffers[index];
+
+        if (offer.isEditing) {
+            // Validate required fields
+            if (!offer.name || !offer.description) {
+                toast.error(t("offer.nameAndDescriptionRequired"));
+                return;
+            }
+
+            try {
+                const response = await axios.put(
+                    `https://highleveltecknology.com/Qtap/api/meals_special_offers/${offer.id}`,
+                    {
+                        discount: offer.discount,
+                        before_discount: offer.priceBefore,
+                        after_discount: offer.priceAfter,
+                        meals_id: offer.item,
+                        brunch_id: selectedBranch,
+                        name: offer.name,
+                        description: offer.description
+                    },
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+                        }
+                    }
+                );
+
+                if (response.data) {
+                    toast.success(t("offer.updateSucc"));
+                    getOffers();
+                }
+            } catch (error) {
+                console.error('Error updating offer:', error);
+                toast.error(t("offer.updateErr"));
+            }
+        }
+
+        offer.isEditing = !offer.isEditing;
+        setOffers(updatedOffers);
+    };
+
+    const handleInputChange = (index, field, value) => {
+        const updatedOffers = [...offers];
+        updatedOffers[index][field] = value;
+        setOffers(updatedOffers);
+    };
+
+    const handleDelete = async (id) => {
+        try {
+            await axios.delete(`https://highleveltecknology.com/Qtap/api/meals_special_offers/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+                }
+            });
+            toast.success(t("offer.deleteSucc"));
+            getOffers();
+        } catch (error) {
+            console.error('Error deleting offer:', error);
+            toast.error(t("offer.deleteErr"));
+        }
+    };
+
+    useEffect(() => {
+        getOffers();
+    }, [selectedBranch]);
+
+    return (
+        <>
+            <Modal open={open} onClose={handleClose} disableScrollLock>
+                <Box
+                    sx={{
+                        width: 600, // Increased width to accommodate new fields
+                        height: "auto",
+                        bgcolor: 'background.paper',
+                        p: 4,
+                        borderRadius: 3,
+                        boxShadow: 24,
+                        mx: 'auto',
+                        mt: '20vh',
+                        position: 'relative'
+                    }}>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>
+                            {t("specialOffers")}
+                        </Typography>
+                        <IconButton onClick={handleClose}>
+                            <span class="icon-close-1" style={{ fontSize: "12px", color: "gray" }} />
+                        </IconButton>
+                    </Box>
+
+                    <Divider
+                        sx={{
+                            backgroundColor: '#FF6600',
+                            height: '1px',
+                        }}
+                    />
+
+                    <Table sx={{ mt: 3, mb: 5, width: '100%', tableLayout: 'fixed' }}>
+                        <TableHead>
+                            <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
+                                <TableCell sx={{ fontSize: '10px', padding: '3px 0px', borderBottom: 'none', textAlign: 'center', color: '#575756' }}>{t("item.one")}</TableCell>
+                                <TableCell sx={{ fontSize: '10px', padding: '3px 0px', borderBottom: 'none', textAlign: 'center', color: '#575756' }}>{t("name")}</TableCell>
+                                <TableCell sx={{ fontSize: '10px', padding: '3px 0px', borderBottom: 'none', textAlign: 'center', color: '#575756' }}>{t("description")}</TableCell>
+                                <TableCell sx={{ fontSize: '10px', padding: '3px 0px', borderBottom: 'none', textAlign: 'center', color: '#575756' }}>{t("discount.one")}</TableCell>
+                                <TableCell sx={{ fontSize: '10px', padding: '3px 0px', borderBottom: 'none', textAlign: 'center', color: '#575756' }}>{t("price.before")}</TableCell>
+                                <TableCell sx={{ fontSize: '10px', padding: '3px 0px', borderBottom: 'none', textAlign: 'center', color: '#575756' }}>{t("price.after")}</TableCell>
+                                <TableCell sx={{ fontSize: '10px', padding: '3px 0px', borderBottom: 'none', textAlign: 'center', color: '#575756' }}>{t("action")}</TableCell>
+                            </TableRow>
+                        </TableHead>
+
+                        <TableBody>
+                            {offers.map((offer, index) => (
+                                <TableRow key={index} sx={{ height: '36px' }}>
+                                    <TableCell sx={{ textAlign: 'center', fontSize: '12px', color: 'gray', padding: '3px 0px', borderBottom: 'none' }}>
+                                        {offer.isEditing ? (
+                                            <FormControl
+                                                size="small"
+                                                sx={{ width: "70px", height: "30px", "& .MuiInputBase-root": { height: "30px", fontSize: "10px" } }}>
+                                                <Select
+                                                    value={offer.item}
+                                                    onChange={(e) => handleInputChange(index, 'item', e.target.value)}
+                                                    displayEmpty
+                                                >
+                                                    {contentForMenu.map((item) => (
+                                                        <MenuItem key={item.id} value={item.id}>
+                                                            {item.name}
+                                                        </MenuItem>
+                                                    ))}
+                                                </Select>
+                                            </FormControl>
+                                        ) : (
+                                            <span style={{ fontSize: '10px', color: 'gray' }}>
+                                                {contentForMenu.find(item => item.id === offer.item)?.name || offer.item}
+                                            </span>
+                                        )}
+                                    </TableCell>
+
+                                    <TableCell sx={{ textAlign: 'center', fontSize: '12px', color: 'gray', padding: '3px 0px', borderBottom: 'none' }}>
+                                        {offer.isEditing ? (
+                                            <TextField
+                                                value={offer.name}
+                                                onChange={(e) => handleInputChange(index, 'name', e.target.value)}
+                                                variant="outlined"
+                                                size="small"
+                                                sx={{ width: "70px", height: "30px", "& .MuiInputBase-root": { height: "30px", fontSize: "10px" } }}
+                                            />
+                                        ) : (
+                                            <span style={{ fontSize: '10px', color: 'gray' }}>{offer.name}</span>
+                                        )}
+                                    </TableCell>
+
+                                    <TableCell sx={{ textAlign: 'center', fontSize: '12px', color: 'gray', padding: '3px 0px', borderBottom: 'none' }}>
+                                        {offer.isEditing ? (
+                                            <TextField
+                                                value={offer.description}
+                                                onChange={(e) => handleInputChange(index, 'description', e.target.value)}
+                                                variant="outlined"
+                                                size="small"
+                                                sx={{ width: "70px", height: "30px", "& .MuiInputBase-root": { height: "30px", fontSize: "10px" } }}
+                                            />
+                                        ) : (
+                                            <span style={{ fontSize: '10px', color: 'gray' }}>{offer.description}</span>
+                                        )}
+                                    </TableCell>
+
+                                    <TableCell sx={{ textAlign: 'center', fontSize: '12px', color: 'gray', padding: '3px 0px', borderBottom: 'none' }}>
+                                        {offer.isEditing ? (
+                                            <TextField
+                                                type='number'
+                                                value={offer.discount}
+                                                onChange={(e) => handleInputChange(index, 'discount', e.target.value)}
+                                                variant="outlined"
+                                                size="small"
+                                                sx={{ width: "70px", height: "30px", "& .MuiInputBase-root": { height: "30px", fontSize: "10px" } }}
+                                            />
+                                        ) : (
+                                            <span style={{ fontSize: '10px', color: 'gray' }}>{offer.discount}%</span>
+                                        )}
+                                    </TableCell>
+
+                                    <TableCell sx={{ textAlign: 'center', fontSize: '12px', color: 'gray', padding: '3px 0px', borderBottom: 'none' }}>
+                                        {offer.isEditing ? (
+                                            <TextField
+                                                value={offer.priceBefore}
+                                                onChange={(e) => handleInputChange(index, 'priceBefore', e.target.value)}
+                                                variant="outlined"
+                                                size="small"
+                                                sx={{ width: "70px", height: "30px", "& .MuiInputBase-root": { height: "30px", fontSize: "10px" } }}
+                                            />
+                                        ) : (
+                                            <span style={{ fontSize: '10px', color: 'gray' }}>{offer.priceBefore}</span>
+                                        )}
+                                    </TableCell>
+
+                                    <TableCell sx={{ textAlign: 'center', fontSize: '12px', color: 'gray', padding: '3px 0px', borderBottom: 'none' }}>
+                                        {offer.isEditing ? (
+                                            <TextField
+                                                value={offer.priceAfter}
+                                                onChange={(e) => handleInputChange(index, 'priceAfter', e.target.value)}
+                                                variant="outlined"
+                                                size="small"
+                                                sx={{ width: "70px", height: "30px", "& .MuiInputBase-root": { height: "30px", fontSize: "10px" } }}
+                                            />
+                                        ) : (
+                                            <span style={{ fontSize: '10px', color: 'gray' }}>{offer.priceAfter}</span>
+                                        )}
+                                    </TableCell>
+
+                                    <TableCell sx={{ fontSize: "10px", textAlign: "center", padding: '3px 0px', borderBottom: "none" }}>
+                                        {offer.isEditing ? (
+                                            <IconButton size="small" onClick={() => handleEditToggle(index)} color="primary">
+                                                <img src="/assets/true.svg" alt="save icon" />
+                                            </IconButton>
+                                        ) : (
+                                            <>
+                                                <IconButton size="small" onClick={() => handleEditToggle(index)}>
+                                                    <span class="icon-edit" sx={{ fontSize: "10px", color: "black" }}></span>
+                                                </IconButton>
+                                                <IconButton size="small" onClick={() => handleDelete(offer.id)} color="error">
+                                                    <span class="icon-delete" sx={{ fontSize: "10px" }}></span>
+                                                </IconButton>
+                                            </>
+                                        )}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+
+                    <Box sx={{ display: "flex", textAlign: "center", justifyContent: "center", alignItems: "center" }}>
+                        <Button
+                            onClick={handleOpenAddModal}
+                            variant="contained"
+                            sx={{
+                                backgroundColor: theme.palette.orangePrimary.main,
+                                borderRadius: '25px',
+                                color: 'white',
+                                width: "30%",
+                                textTransform: 'none',
+                                padding: '3px 12px',
+                                fontSize: "12px",
+                                display: 'flex',
+                                justifyContent: "center",
+                                alignItems: "center",
+                                '&:hover': {
+                                    backgroundColor: '#f18101',
+                                },
+                            }}
+                        >
+                            <AddIcon sx={{ margin: "0 2px 2px 0", fontSize: "11px", color: "white", "& path": { stroke: "white", strokeWidth: 3 } }} /> {t("add")}
+                        </Button>
+                    </Box>
+                </Box>
+            </Modal>
+            <AddOfferModal
+                open={openAddModal}
+                handleClose={handleCloseAddModal}
+                selectedBranch={selectedBranch}
+                contentForMenu={contentForMenu}
+                onAddSuccess={getOffers}
+            />
+        </>
     );
 };

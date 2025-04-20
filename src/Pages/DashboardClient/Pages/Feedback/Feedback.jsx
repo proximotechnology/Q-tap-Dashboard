@@ -21,7 +21,7 @@ export const Feedback = () => {
     const [yourGoals, setYourGoals] = useState("");
     const [missingQtapMenus, setMissingQtapMenus] = useState("");
     const [comment, setComment] = useState("");
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const handleStarClick = (index) => {
         setStar(index + 1);
     };
@@ -44,6 +44,10 @@ export const Feedback = () => {
 
     const handleSaveFeedback = async () => {
         try {
+            if (star === 0 || !emoji || !yourGoals || !missingQtapMenus || !comment) {
+                toast.error(t("plFillAllField"));
+                return;
+            }
             const dataFormat = {
                 client_id: "1",
                 star: star.toString(),
@@ -52,7 +56,7 @@ export const Feedback = () => {
                 "missing_Q-tap_Menus": missingQtapMenus,
                 comment: comment
             };
-            console.log("data formate", dataFormat);
+            // console.log("data formate", dataFormat);
 
 
             await axios.post(`https://highleveltecknology.com/Qtap/api/feedback`, dataFormat, {
@@ -63,6 +67,13 @@ export const Feedback = () => {
             });
 
             toast.success(t("feedbacks.sendSucc"));
+
+            // Clear all inputs on success
+            setStar(0);
+            setEmoji("");
+            setYourGoals("");
+            setMissingQtapMenus("");
+            setComment("");
         } catch (error) {
             toast.error(t("feedbacks.sendErr"));
             console.log("data error feedback ", error);
@@ -206,7 +217,7 @@ export const Feedback = () => {
                             backgroundImage: `linear-gradient(to right , #FDB913, ${theme.palette.orangePrimary.main} )`
                         }
                     }}>
-                    <CheckIcon sx={{ marginRight: "6px", fontSize: "15px", strokeWidth: 1 , stroke:"white" }} /> {t("submit")}
+                    <CheckIcon sx={{ marginRight: "6px", fontSize: "15px", strokeWidth: 1, stroke: "white" }} /> {t("submit")}
                 </Button>
             </Box>
         </Paper>

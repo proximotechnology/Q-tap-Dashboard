@@ -168,7 +168,7 @@ const AddArea = ({ open, onClose, getDeliveryArea, editData }) => {
           </Box>
         </Box>
 
-        <Box
+        {/* <Box
           sx={{
             marginTop: '20px',
             display: 'flex',
@@ -211,7 +211,7 @@ const AddArea = ({ open, onClose, getDeliveryArea, editData }) => {
               </Select>
             </FormControl>
           </Box>
-        </Box>
+        </Box> */}
 
         <Box
           sx={{

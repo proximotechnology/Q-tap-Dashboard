@@ -146,7 +146,7 @@ export const Table1 = () => {
       <Table sx={{ borderCollapse: 'separate', borderSpacing: '0 5px' }}>
         <TableHead>
           <TableRow sx={{ height: '25px', borderBottom: '2px solid #f0f0f0' }}>
-            {[t('country'), t('state'), t('city'), t('phone'), t('cost'), ''].map((header) => (
+            {[t('country'), t('city'), t('phone'), t('cost'), ''].map((header) => (
               <TableCell
                 key={header}
                 sx={{ fontSize: '11px', padding: '0px', width: `${100 / 6}%`, textAlign: 'center' }}
@@ -182,7 +182,7 @@ export const Table1 = () => {
               >
                 <span sx={{ alignItems: 'center', display: 'flex' }}>{row.icon} {row.country}</span>
               </TableCell>
-              <TableCell
+              {/* <TableCell
                 sx={{
                   color: theme.palette.secondaryColor.main,
                   fontSize: '11px',
@@ -193,7 +193,7 @@ export const Table1 = () => {
                 }}
               >
                 {row.state}
-              </TableCell>
+              </TableCell> */}
               <TableCell
                 sx={{
                   color: theme.palette.secondaryColor.main,
