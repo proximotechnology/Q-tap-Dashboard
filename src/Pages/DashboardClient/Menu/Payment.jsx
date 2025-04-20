@@ -11,12 +11,13 @@ import { useTranslation } from 'react-i18next';
 import { customWidth } from './utils';
 import Language from '../../../Component/dashboard/TopBar/Language';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 
 
 
 export const Payment = ({
-    cartItems, selectedSize,
+    cartItems, setCartItems,
     phone, selectedName, comment, selectedType,
     selectedValue, selectedItemOptions, selectedItemExtra,
     address, selectedCity, selectedTable,
@@ -25,16 +26,41 @@ export const Payment = ({
     const { t } = useTranslation()
     const theme = useTheme();
     const [isDone, setIsDone] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     console.log(selectedType)
-    const toggleDone = async () => {
+    const payOrderRequestApi = async () => {
         try {
+            setIsLoading(true) // disable the button untill the request finish
+            /*  the request data contain 2 part 
+                1 - fixed part meal , name , phone ,comments ,type , payment_way , branch_id , tax , total_price
+                2 - dynamic part change depend on the type of order (dine in , takeaway , delivery)
+            */
             let data = {
                 name: selectedName,
                 phone: phone,
                 comments: comment,
-                brunch_id: localStorage.getItem('branchId'),
                 type: 'takeaway',
+                payment_way:selectedValue,
+                brunch_id: localStorage.getItem('branchId'),
+                "tax": 15.0, //may be nullable
+                "total_price": 150.75,
+                meals:[]
             }
+            //// add meals data to the request 
+            const sizeConvert = {'L':'l' , 'M':'m','S':'s'}
+            cartItems.map((item)=>{
+                const itemData = {
+                    discount_code:item.discounts,
+                    meal_id:item.id,
+                    quantity: item.quantity,
+                    variants: item.variant,
+                    extras: item.extra,
+                    size:item.selectedSize?sizeConvert[item.selectedSize] : 's',
+                }
+
+                data.meals = [...data.meals , itemData]
+            })
+            // dynamic part 
             if (selectedType === 'Delivery') {
                 data = {
                     ...data,
@@ -42,33 +68,16 @@ export const Payment = ({
                     address: address,
                     latitude: 24.7136,
                     longitude: 46.6753,
-                    type: selectedType,
+                    type: 'delivery',
                 }
             }
             if (selectedType === 'Dine In') {
                 data = {
                     ...data,
                     table_id: 1,
-                    type: selectedType,
+                    type: 'dinein',
                 }
             }
-            //Takeaway
-            data = {
-                ...data,
-                discount_code: "DISCOUNT10", //may be nullable
-                "tax": 15.0, //may be nullable
-                "total_price": 150.75,
-
-                "payment_way": "cash",
-
-                "meal_id": cartItems[0].id,
-                "quantity": "1",
-
-                "variants": [],
-
-                "extras": [],
-            }
-            console.log('order payment data', data)
             const response = await axios.post(
                 `https://highleveltecknology.com/Qtap/api/add_orders`,
                 data,
@@ -79,7 +88,8 @@ export const Payment = ({
 
                 }
             );
-            console.log('order payment response', response)
+            localStorage.setItem('cartItems','')
+            setCartItems([])
             setIsDone(!isDone);
         } catch (error) {
             console.log('order payment errror', error)
@@ -118,8 +128,7 @@ export const Payment = ({
                     <Typography variant="body1" sx={{ fontSize: "10px", display: "flex", letterSpacing: 1 }}>
                         {t("item.many")}
                     </Typography>
-                    {cartItems.map((item) => {
-                        console.log('itm', item); return (
+                    {cartItems?.map((item) => { return (
                             <Box display={"flex"} justifyContent={"space-between"}>
                                 <Box sx={{ paddingLeft: "10px", marginTop: "15px" }}>
                                     <Typography
@@ -158,7 +167,7 @@ export const Payment = ({
                                                 },
                                             }}
                                         >
-                                            {selectedSize[item.id]}
+                                            {item.selectedSize ? item.selectedSize : 'S'} {/* desplay size if no selectedsize display small */}
                                         </Button>
                                         <span style={{ fontSize: "10px", color: "#575756", marginLeft: "10px" }}> <span style={{ color: theme.palette.orangePrimary.main }}>x</span> {item.quantity}</span>
                                     </Box>
@@ -276,7 +285,7 @@ export const Payment = ({
 
                     <Box width={"100%"} float={"right"} display={"flex"} alignItems={"center"} >
                         <Button
-                            onClick={toggleDone}
+                            onClick={payOrderRequestApi}
                             sx={{
                                 backgroundColor: theme.palette.secondaryColor.main, color: "white", textTransform: "capitalize", fontSize: "10px",
                                 borderRadius: "20px", width: "65%", height: "30px",

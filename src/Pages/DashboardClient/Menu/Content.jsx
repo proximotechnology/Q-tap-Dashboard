@@ -8,15 +8,19 @@ import { useTranslation } from 'react-i18next';
 
 const Content = ({ allMenuData, selectedCategory }) => {
     const [selectedItem, setSelectedItem] = useState(null);
+    const [isCartOpen, setIsCartOpen] = useState(false);
+
     const [activeItemId, setActiveItemId] = useState(null);
+
     const [selectedSize, setSelectedSize] = useState({});
     const [selectedItemOptions, setSelectedItemOptions] = useState({});
     const [selectedItemExtra, setSelectedItemExtra] = useState({});
+    
     const [searchQuery, setSearchQuery] = useState('');
 
-    const handleItemClick = (item) => {
+    const handleItemClick = (item) => { // بيفتح التفصيل بتاعت الوجبه
         setSelectedItem(item);
-        setIsCartOpen(false);
+        setIsCartOpen(false); // بيقفل الشنطه لما اختار وجبه
         setActiveItemId(item.id === activeItemId ? null : item.id);
     };
 
@@ -49,7 +53,7 @@ const Content = ({ allMenuData, selectedCategory }) => {
         }));
     };
 
-    const [isCartOpen, setIsCartOpen] = useState(false);
+
     const toggleCart = () => {
         setIsCartOpen(!isCartOpen);
     };
@@ -91,7 +95,7 @@ const Content = ({ allMenuData, selectedCategory }) => {
                         position: "relative", 
                         start: "3%" 
                     }}
-                    onClick={() => setSelectedItem(null)}
+                    onClick={() => setSelectedItem(null)} // TODO: delete this
                 >
                     <Typography 
                         variant="h5" 

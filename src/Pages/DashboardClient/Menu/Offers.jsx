@@ -207,12 +207,12 @@ const Offers = ({ isItemSelected }) => {
         try {
             const response = await axios.get('https://highleveltecknology.com/Qtap/api/meals_special_offers', {
                 headers: {
-                    // 'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
-                    'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2hpZ2hsZXZlbHRlY2tub2xvZ3kuY29tL1F0YXAvYXBpL2xvZ2luIiwiaWF0IjoxNzQ0NzE5ODU4LCJleHAiOjE3NDQ3NjMwNTgsIm5iZiI6MTc0NDcxOTg1OCwianRpIjoiM29SVzROZFFwNURwZExPdSIsInN1YiI6IjEiLCJwcnYiOiJiODgwNWZkMjFkOTAwNWQ1YjFjMmJkOGZhZjNlZGIwOTEzMjJmMWRiIn0.1D0MLr31LKxhuiSH_VQlsTuj-WN5Rq68P0yVpoowvaw`,
+                    'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+                    // 'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2hpZ2hsZXZlbHRlY2tub2xvZ3kuY29tL1F0YXAvYXBpL2xvZ2luIiwiaWF0IjoxNzQ0NzE5ODU4LCJleHAiOjE3NDQ3NjMwNTgsIm5iZiI6MTc0NDcxOTg1OCwianRpIjoiM29SVzROZFFwNURwZExPdSIsInN1YiI6IjEiLCJwcnYiOiJiODgwNWZkMjFkOTAwNWQ1YjFjMmJkOGZhZjNlZGIwOTEzMjJmMWRiIn0.1D0MLr31LKxhuiSH_VQlsTuj-WN5Rq68P0yVpoowvaw`,
                 },
-                params: {
-                    // brunch_id: selectedBranch
-                    brunch_id: 102,
+                data: {
+                    brunch_id: localStorage.getItem('branchId')
+                    // brunch_id: 102,
                 }
             });
 

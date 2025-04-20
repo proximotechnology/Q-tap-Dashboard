@@ -175,7 +175,7 @@ function App() {
 
     {
       path: "menu-client",
-      element: <MenuClient />,// تم الترجمه
+      element: <MenuClient />,// TODO: style problem here  and logic modification 
     },
 
 
@@ -313,7 +313,8 @@ function App() {
       // ✅ Show toast or handle state
       // console.log("📢 Received from Pusher:", data);
 
-      toast.info(`📢 ${data?.message?.title}: ${data?.message?.content}`);
+      toast.info(`📢 pusher ${data?.message?.title}: ${data?.message?.content}`);
+      console.log('data app busher',data)
       // You can also store in state if you want to display in Content
     });
 

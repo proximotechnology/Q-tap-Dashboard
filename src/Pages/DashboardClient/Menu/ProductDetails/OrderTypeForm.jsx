@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { customWidth } from '../utils';
 import Language from '../../../../Component/dashboard/TopBar/Language';
 import { toast } from 'react-toastify';
-const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getItemCount, totalCart, selectedSize }) => {
+const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, totalCart, setCartItems }) => {
 
     const [selectedType, setSelectedType] = useState('Dine In');
     const theme = useTheme();
@@ -64,9 +64,9 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getI
             }
 
         }
-        if(!phone){
+        if (!phone) {
             toast.error("select phone required")
-                return;
+            return;
         }
         setIsPayment(!isPayment);
     };
@@ -107,7 +107,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getI
                             <Typography sx={{
                                 position: "relative", top: "-10px", left: "-10px", fontSize: "8px", padding: "0px 3px", borderRadius: "50%",
                                 backgroundColor: theme.palette.orangePrimary.main, color: "white"
-                            }}>{cartItems.length}</Typography>
+                            }}>{cartItems?.length}</Typography>
                         </IconButton>
 
                         <Box sx={{ flexGrow: 1 }} />
@@ -406,9 +406,9 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, getI
                 </Box> {/* footer */}
             </Box >
             {isPayment &&
-                <Payment cartItems={cartItems}
-                    selectedSize={selectedSize}
-                    getItemCount={getItemCount}
+                <Payment
+                    cartItems={cartItems}
+                    setCartItems={setCartItems}
                     selectedType={selectedType}
                     phone={phone}
                     selectedValue={selectedValue}

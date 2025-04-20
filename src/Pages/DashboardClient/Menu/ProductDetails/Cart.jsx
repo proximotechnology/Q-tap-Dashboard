@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Typography, IconButton, AppBar, Toolbar, Button, useTheme, } from '@mui/material';
 
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
@@ -13,26 +13,70 @@ import { customWidth } from '../utils';
 import Language from '../../../../Component/dashboard/TopBar/Language';
 
 
-const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, selectedSize, handleMinusItem, handleAddItem, getItemCount }) => {
-    const {t} = useTranslation()
+const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems ,setCartItems }) => {
+    const { t } = useTranslation()
     const theme = useTheme();
     const [isFormOpen, setIsFormOpen] = useState(false);
     const toggleTypeForm = () => {
         setIsFormOpen(!isFormOpen);
     };
 
-    const totalCart = cartItems.reduce((acc, item) => {
-        const itemCount = getItemCount(item.id);
-        const validItemCount = isNaN(itemCount) ? 0 : itemCount;
-        const validPrice = isNaN(item.newPrice) ? 0 : item.newPrice;
+    const totalCart = cartItems.reduce((acc, item) => { //TODO: What this do ????!!!
+        // // const itemCount = getItemCount(item.id);
+        // const validItemCount = isNaN(itemCount) ? 0 : itemCount;
+        // const validPrice = isNaN(item.newPrice) ? 0 : item.newPrice;
 
-        return acc + validPrice * validItemCount;
+        // return acc + validPrice * validItemCount;
     }, 0);
+    const [total, setTotal] = useState(0)
+    useEffect(() => {
+        setTotal(calculateTotalPrice())
+    }, [cartItems])
+
+    const calculateTotalPrice = () => { /// TODO: what if the user select multi size of same meal
+        let subTotal = 0;
+        let totalTax = 0;
+
+        cartItems.map((item) => {
+            if (item.selectedSize) {// if user select size 
+                console.log('item tax ', item.Tax)
+                if (item.selectedSize === 'S') { subTotal += item.quantity * item.price_small; totalTax += item.Tax * item.price_small / 100; }
+                if (item.selectedSize === 'M') { subTotal += item.quantity * item.price_medium; totalTax += item.Tax * item.price_medium / 100; }
+                if (item.selectedSize === 'L') { subTotal += item.quantity * item.price_large; totalTax += item.Tax * item.price_large / 100; }
+
+            } else {
+                subTotal += item.quantity * item.price;
+                totalTax += item.Tax * item.price / 100;
+            }
+
+        })
+
+        const finalTotal = (subTotal + totalTax).toFixed(2)
+        return finalTotal;
+    }
+
+    const calculateSingleItemTotalPrice = (item) => {
+        let subTotal = 0;
+        let totalTax = 0;
+
+        if (item.selectedSize) {// if user select size 
+            console.log('item tax ', item.Tax)
+            if (item.selectedSize === 'S') { subTotal += item.quantity * item.price_small; totalTax += item.Tax * item.price_small / 100; }
+            if (item.selectedSize === 'M') { subTotal += item.quantity * item.price_medium; totalTax += item.Tax * item.price_medium / 100; }
+            if (item.selectedSize === 'L') { subTotal += item.quantity * item.price_large; totalTax += item.Tax * item.price_large / 100; }
+
+        } else {
+            subTotal += item.quantity * item.price;
+            totalTax += item.Tax * item.price / 100;
+        }
+        return (subTotal + totalTax).toFixed(2)
+    }
+    console.log("cart - cartItem ", cartItems)
 
     return (
 
         <>
-            <Box sx={{ overflowY: "auto", width:  customWidth.itemSectionWidth, boxShadow: 3, bgcolor: 'white', position: 'fixed', right: 0, top: 0, height: '100vh' }}>
+            <Box sx={{ overflowY: "auto", width: customWidth.itemSectionWidth, boxShadow: 3, bgcolor: 'white', position: 'fixed', right: 0, top: 0, height: '100vh' }}>
                 <Box sx={{ position: "fixed", top: 0, width: customWidth.itemSectionWidth, zIndex: 1201 }}>
 
                     <AppBar position="static" color="inherit">
@@ -116,18 +160,18 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, selectedSize,
                                 <Box sx={{ display: 'flex', flexDirection: "column", alignItems: 'center' }}>
                                     <Box sx={{ display: "flex", flexDirection: "row" }}>
                                         <AddCircleOutlinedIcon
-                                            onClick={() => handleAddItem(item.id)}
+                                            onClick={() => {}} // TODO: create function to increase the quantity
                                             sx={{ fontSize: "18px", color: "black", cursor: "pointer" }} />
                                         <Typography sx={{ fontSize: "11px", padding: "0px 8px", color: "#272725" }}> {item.quantity}</Typography>
                                         <RemoveCircleOutlinedIcon
-                                            onClick={() => handleMinusItem(item.id)}
+                                            onClick={() => {}}  // TODO: create function to decrease the quantity
 
                                             sx={{ fontSize: "18px", color: "black", cursor: "pointer" }}
                                         />
                                     </Box>
                                     <Box>
                                         <Typography variant="h6" sx={{ marginTop: "5px", fontSize: '15px', fontWeight: "bold", color: theme.palette.orangePrimary.main }}>
-                                            {item.newPrice} <span style={{ fontSize: "9px", fontWeight: "400", color: '#575756' }}>EGP</span>
+                                            {/* {item.newPrice} */} {calculateSingleItemTotalPrice(item)} <span style={{ fontSize: "9px", fontWeight: "400", color: '#575756' }}>EGP</span> {/* TODO: what is item.newPrice */}
                                         </Typography>
                                     </Box>
                                 </Box>
@@ -135,18 +179,19 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, selectedSize,
                         ))}
 
                     </Box>
-                                                  
+
                     <Box
                         sx={{
-                            position: "fixed", bottom: 0, backgroundColor: "white", height: "40px", width:customWidth.buttonSectionWidth, padding: "20px",
+                            position: "fixed", bottom: '0px', backgroundColor: "white", height: "40px", width: customWidth.buttonSectionWidth, padding: "20px",
                             boxShadow: 3, borderRadius: "30px 30px 0px 0px", display: "flex", justifyContent: "space-between",
                         }}>
-                        <Box>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                             <Typography variant="h6" sx={{ fontSize: '11px', fontWeight: "bold", color: '#3A3A38' }}>
                                 {t("totalPrice")}
                             </Typography>
                             <Typography variant="h6" sx={{ fontSize: '18px', fontWeight: "bold", color: theme.palette.orangePrimary.main }}>
-                                {isNaN(totalCart) ? 0 : totalCart}
+                                {/* {isNaN(totalCart) ? 0 : totalCart} */}
+                                {isNaN(total) ? 0 : total}
                                 <span style={{ fontSize: "10px", fontWeight: "400", color: '#575756' }}>EGP</span>
                             </Typography>
                         </Box>
@@ -164,14 +209,13 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, selectedSize,
                     </Box> {/* footer */}
                 </Box>
             </Box >
-            {isFormOpen &&
-                <OrderTypeForm cartItems={cartItems} 
-                selectedSize={selectedSize}
-                    getItemCount={getItemCount} 
-                    totalCart={totalCart} 
-                    selectedItemOptions={selectedItemOptions} 
-                    selectedItemExtra={selectedItemExtra} 
-                    />}
+            {isFormOpen && // here we calculate the total price 
+                <OrderTypeForm cartItems={cartItems}
+                    totalCart={totalCart}
+                    selectedItemOptions={selectedItemOptions}
+                    selectedItemExtra={selectedItemExtra}
+                    setCartItems={setCartItems}
+                />}
 
         </>
     );

@@ -39,22 +39,23 @@ const ProductDetails = ({
     useEffect(() => {
         const localcart = localStorage.getItem('cartItems');
         let storedCartItems = []
-        if (localcart){
+        if (localcart) {
             console.log('here')
             storedCartItems = JSON.parse(localcart);
         }
         setCartItems(storedCartItems);
         setCartCount(storedCartItems.length)
     }, []);
-
+    /* helper function */
     const updateCart = (itemId, action) => {
+        // actions => ( increase , decrease , remove )
         const updatedCartItems = cartItems.map(cartItem => {
             if (cartItem.id === itemId) {
                 if (action === 'increase') {
                     return { ...cartItem, quantity: cartItem.quantity + 1 };
                 } else if (action === 'decrease' && cartItem.quantity > 1) {
                     return { ...cartItem, quantity: cartItem.quantity - 1 };
-                }
+                }//TODO: what happen when item quantity is 1 and user decrease
             }
             return cartItem;
         }).filter(cartItem => !(action === 'remove' && cartItem.id === itemId));
@@ -62,21 +63,24 @@ const ProductDetails = ({
         setCartItems(updatedCartItems);
         localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
     };
-
+    /* this call by the button  */
     const addItemToCart = (newItem) => {
+        // get the first item or undefine if not exist
         const existingItem = cartItems.find(cartItem => cartItem.id === newItem.id);
-
+        // check if item already in cart 
         if (existingItem) {
+            // increase the quantity of the item
             updateCart(newItem.id, 'increase');
         } else {
+            // add new item to cart and update the local storage and cartitem , cartcount <state>
             const updatedCart = [...cartItems, { ...newItem, quantity: 1 }];
             setCartItems(updatedCart);
-            setCartCount(cartCount+1)
+            setCartCount(cartCount + 1)
             localStorage.setItem('cartItems', JSON.stringify(updatedCart));
         }
     };
-
-    const [itemCount, setItemCount] = useState([]);
+//TODO: delete this section get item quantity from property in the  cartItems
+    const [itemCount, setItemCount] = useState([]); // TODO: what this do 
 
     const handleAddItem = (itemId) => {
         setItemCount((prevItems) => {
@@ -108,7 +112,7 @@ const ProductDetails = ({
         const countItem = itemCount.find(i => i.id === itemId);
         return countItem ? countItem.count : 0;
     };
-
+    /// TODO: replace this part by our totalCalculator
     // حساب السعر الإجمالي
     const getTotalPrice = () => {
         // السعر الأساسي بناءً على الحجم المختار
@@ -144,7 +148,7 @@ const ProductDetails = ({
                                 <Typography sx={{
                                     position: "relative", top: "-10px", left: "-10px", fontSize: "8px", padding: "0px 3px", borderRadius: "50%",
                                     backgroundColor: theme.palette.orangePrimary.main, color: "white"
-                                }}>{cartCount}</Typography>
+                                }}>{cartItems?.length}</Typography>
                             </IconButton>
                             <Box sx={{ flexGrow: 1 }} />
                             <IconButton onClick={onClose} sx={{ color: theme.palette.orangePrimary.main }}>
@@ -397,7 +401,7 @@ const ProductDetails = ({
                     <Button
                         onClick={() => addItemToCart({
                             ...item,
-                            price: getTotalPrice(),
+                            // price: getTotalPrice(),
                             selectedSize: selectedSize[item.id],
                             selectedOptions: selectedItemOptions[item.id],
                             selectedExtras: selectedItemExtra[item.id]
@@ -425,6 +429,7 @@ const ProductDetails = ({
                 <Cart
                     itemCount={itemCount}
                     cartItems={cartItems}
+                    setCartItems={setCartItems}
                     updateCart={updateCart}
                     getItemCount={getItemCount}
                     handleMinusItem={handleMinusItem}
