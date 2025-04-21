@@ -21,7 +21,7 @@ export const ServingWays = () => {
         borderRadius: "20px",
         marginBottom: "20px"
     });
-    
+
     const Divider2 = styled(Box)({
         width: '60%',
         height: '1px',
@@ -71,7 +71,7 @@ export const ServingWays = () => {
     };
 
     return (
-        <Box marginTop={"50px"} flexGrow={1}>
+        <Box marginTop={"50px"} padding={"10px 40px"} flexGrow={1}>
             <Typography variant="body1" sx={{ fontSize: "18px", color: theme.palette.secondaryColor.main }}>
                 {t("busnessInfo")}
             </Typography>
@@ -189,9 +189,9 @@ export const ServingWays = () => {
                             backgroundColor: theme.palette.orangePrimary.main,
                             textTransform: 'none',
                             padding: "6px ",
-                            // position: "fixed",
-                            // bottom: "30px",
-                            // left: "55%",
+                            position: "fixed",
+                            bottom: "30px",
+                            left: "54%",
                             '&:hover': {
                                 backgroundColor: theme.palette.orangePrimary.main,
                             },

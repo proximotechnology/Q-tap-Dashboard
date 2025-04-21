@@ -42,7 +42,7 @@ export const FeedbackAdmin = () => {
     // get data from backend to display in the table
     const getFeedbackData = async () => {
         try {
-            const response = await axios.get('https://highleveltecknology.com/Qtap/api/feedback', {
+            const response = await axios.get('https://highleveltecknology.com/Qtap/api/feedback_client', {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`

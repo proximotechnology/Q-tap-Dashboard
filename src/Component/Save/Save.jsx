@@ -120,6 +120,8 @@ export const Save = () => {
       });
     }
   }, [businessData]);
+  console.log("business data in save page" , businessData);
+  
 
   // Handle Personal Info Changes
   const handlePersonalChange = (field, value) => {
