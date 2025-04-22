@@ -224,7 +224,7 @@ export const Save = () => {
       img: '',
       payment_method: personalData.payment_method, // Root-level payment method
       pricing_id: personalData.pricing_id, // Root-level pricing ID
-      pricing_way: personalData.pricing_way, // Root-level pricing way
+      pricing_way: `${personalData.pricing_way}_price`, // Root-level pricing way
       discount_id: personalData.discount_id, // Root-level discount ID
       ...apiBranches.reduce((acc, branch, index) => {
         acc[`brunch${index + 1}`] = branch;
@@ -232,7 +232,7 @@ export const Save = () => {
       }, {}),
     };
 
-    console.log('Full API Data:', JSON.stringify(fullApiData));
+    console.log('Full API Data:', fullApiData);
 
     // Validate data
     const validateData = (data) => {

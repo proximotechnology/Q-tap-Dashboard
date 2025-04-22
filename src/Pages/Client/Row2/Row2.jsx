@@ -497,19 +497,21 @@ export const Row2 = () => {
   }, []);
 
   const updateClientStatus = async (clientId, currentStatus) => {
+    console.log(clientId, "clientid ::::");
+    
     const newStatus = currentStatus === "active" ? "inactive" : "active";
     try {
       const response = await fetch(
-        `https://highleveltecknology.com/Qtap/api/qtap_clients/${clientId}`,
+        `https://highleveltecknology.com/Qtap/api/active_clients/${clientId}`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
           },
-          body: JSON.stringify({
-            status: newStatus,
-          }),
+          // body: JSON.stringify({
+          //   status: newStatus,
+          // }),
         }
       );
       const data = await response.json();

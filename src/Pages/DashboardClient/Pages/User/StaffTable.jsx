@@ -98,7 +98,7 @@ export const StaffTable = ({ userStaff }) => {
     };
 
     // Filter tickets based on search query
-    const filteredRestStaff = RestStaff.filter(user =>
+    const filteredRestStaff = RestStaff?.filter(user =>
         user.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
     return (
@@ -192,7 +192,7 @@ export const StaffTable = ({ userStaff }) => {
                 </TableHead>
 
                 <TableBody>
-                    {filteredRestStaff.map((row) => (
+                    {filteredRestStaff?.map((row) => (
                         <TableRow
                             key={row.id}
                             sx={{
