@@ -67,7 +67,11 @@ export const LogoClient = () => {
                 }
 
                 );
-                console.log('branches', response.data.data)
+                console.log('branches', response)
+                if(response.data.status === 'error') {// some time api return status code 200 but with status prob error
+                    toast.error("some thing want wrong please check your email and passward")
+                    navigate('/')
+                }
                 localStorage.setItem('branches', JSON.stringify(response.data.data));
                 setBranches(response.data.data)
             } catch (error) {
