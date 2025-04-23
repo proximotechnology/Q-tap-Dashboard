@@ -58,7 +58,7 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
     if (editData) {
       setName(editData.name || '');
       setPin(editData.pin || '');
-      setStatus(editData.status || 'Available');
+      setStatus(editData.status_rider || 'Available');
       setDeliveryAreasId(editData.delivery_areas_id || '');
 
       // Handle phone number splitting
@@ -108,8 +108,10 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
         name,
         phone: `${countryCode}${phoneNumber}`,
         pin,
-        status,
+        status_rider:status,
       };
+      console.log('formData' , formData);
+      
 
       const token = localStorage.getItem('clientToken');
       const headers = {
@@ -138,6 +140,8 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
 
       if (response.data) {
         toast.success(t(editData ? 'rider updated successfully' : 'rider added successfully'));
+        console.log(response);
+        
         onClose();
         getRiderData();
       }

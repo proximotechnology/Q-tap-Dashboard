@@ -29,13 +29,13 @@ export const BusinessInfo = () => {
     borderRadius: "20px",
     marginBottom: "20px"
 });
-    const { businessData, updateBusinessData, addBranch } = useBusinessContext();
+    const { businessData, updateBusinessData } = useBusinessContext();
     const navigate = useNavigate();
     
 
 
     // Initialize all state values from context
-    const [mode, setMode] = React.useState(businessData.mode || 'light');
+    const [mode, setMode] = React.useState(businessData.mode || 'white');
     const [design, setDesign] = React.useState(businessData.design || 'grid');
     const [format, setFormat] = useState(businessData.format || '');
     const [currency, setCurrency] = useState(businessData.currency || '');
@@ -178,9 +178,8 @@ export const BusinessInfo = () => {
         
 
         // Add the current business data as a new branch
-        addBranch();
 
-        setMode('light');
+        setMode('white');
         setDesign('grid');
         setFormat('');
         setCurrency('');
@@ -549,17 +548,17 @@ export const BusinessInfo = () => {
                                         sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "space-around", marginLeft: "-14px" }}
                                     >
                                         <ToggleButton
-                                            value="light"
+                                            value="white"
                                             sx={{
                                                 padding: "10px",
-                                                backgroundColor: mode === "light" ? theme.palette.orangePrimary.main : "transparent",
-                                                border: `1px solid ${design === "light" ? theme.palette.orangePrimary.main : "#AAAAAA"} !important`,
+                                                backgroundColor: mode === "white" ? theme.palette.orangePrimary.main : "transparent",
+                                                border: `1px solid ${design === "white" ? theme.palette.orangePrimary.main : "#AAAAAA"} !important`,
                                                 borderRadius: "8px !important",
                                                 marginRight: "8px",
                                             }}
                                         >
                                             <WbSunnyIcon
-                                                sx={{ fontSize: "35px", color: mode === "light" ? theme.palette.orangePrimary.main : "#AAAAAA" }}
+                                                sx={{ fontSize: "35px", color: mode === "white" ? theme.palette.orangePrimary.main : "#AAAAAA" }}
                                             />
                                         </ToggleButton>
                                         <ToggleButton

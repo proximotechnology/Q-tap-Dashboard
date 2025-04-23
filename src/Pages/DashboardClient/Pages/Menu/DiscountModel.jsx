@@ -98,8 +98,8 @@ export const DiscountModel = ({ open, handleClose }) => {
       if (response.data) {
         setDiscounts(response.data.discounts || []);
         setDiscountContent(response.data.discounts || []);
-        localStorage.setItem("dicountId", response.data.discount || []);
-        // console.log("response discount", response.data.discounts);
+        // localStorage.setItem("dicountId", response.data.discount || []);
+        console.log("response discount", response.data.discounts);
       }
     } catch (error) {
       console.error('Error fetching discounts:', error);

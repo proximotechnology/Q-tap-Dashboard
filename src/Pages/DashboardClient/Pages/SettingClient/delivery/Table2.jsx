@@ -256,7 +256,7 @@ export const Table2 = () => {
                                     width: `${100 / 6}%`,
                                     textAlign: 'center',
                                     borderBottom: 'none',
-                                    color: row.status === 'Available' ? 'green' : row.status === 'Busy' ? 'red' : 'defaultColor',
+                                    color: row.status_rider === 'Available' ? 'green' : row.status_rider === 'Busy' ? 'red' : 'defaultColor',
                                 }}
                             >
                                 <span
@@ -266,11 +266,11 @@ export const Table2 = () => {
                                         height: '6px',
                                         borderRadius: '50%',
                                         backgroundColor:
-                                            row.status === 'Available' ? 'green' : row.status === 'Busy' ? 'red' : 'defaultColor',
+                                            row.status_rider === 'Available' ? 'green' : row.status_rider === 'Busy' ? 'red' : 'defaultColor',
                                         marginRight: '5px',
                                     }}
                                 ></span>
-                                {t(row.status)}
+                                {t(row.status_rider)}
                             </TableCell>
                             <TableCell
                                 sx={{ padding: '2px', width: `${100 / 6}%`, textAlign: 'center', borderBottom: 'none' }}

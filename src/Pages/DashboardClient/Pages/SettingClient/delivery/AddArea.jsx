@@ -154,13 +154,13 @@ const AddArea = ({ open, onClose, getDeliveryArea, editData }) => {
                 <MenuItem value="" disabled sx={{ fontSize: '12px', color: 'gray' }}>
                   {t('selectCountry')}
                 </MenuItem>
+                <MenuItem value="Egypt" sx={{ fontSize: '12px', color: 'gray' }}>
+                  Egypt
+                </MenuItem>
                 <MenuItem value="cairo" sx={{ fontSize: '12px', color: 'gray' }}>
                   Cairo
                 </MenuItem>
-                <MenuItem value="alex" sx={{ fontSize: '12px', color: 'gray' }}>
-                  Alex
-                </MenuItem>
-                <MenuItem value="tanta" sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value="Tanta" sx={{ fontSize: '12px', color: 'gray' }}>
                   Tanta
                 </MenuItem>
               </Select>
@@ -247,13 +247,13 @@ const AddArea = ({ open, onClose, getDeliveryArea, editData }) => {
                 <MenuItem value="" disabled sx={{ fontSize: '12px', color: 'gray' }}>
                   {t('selectCity')}
                 </MenuItem>
-                <MenuItem value="Egypt" sx={{ fontSize: '12px', color: 'gray' }}>
-                  Egypt
-                </MenuItem>
                 <MenuItem value="cairo" sx={{ fontSize: '12px', color: 'gray' }}>
                   Cairo
                 </MenuItem>
-                <MenuItem value="Tanta" sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value="alex" sx={{ fontSize: '12px', color: 'gray' }}>
+                  Alex
+                </MenuItem>
+                <MenuItem value="tanta" sx={{ fontSize: '12px', color: 'gray' }}>
                   Tanta
                 </MenuItem>
               </Select>

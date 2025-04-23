@@ -191,8 +191,8 @@ export const Row3 = () => {
               </TableHead>
 
               <TableBody>
-                {filteredDeposits.length > 0 ? (
-                  filteredDeposits.map((transaction, index) => {
+                {[].length > 0 ? (
+                  [].map((transaction, index) => {
                     const { time, date } = formatDateTime(transaction.updated_at);
                     return (
                       <TableRow key={index}>

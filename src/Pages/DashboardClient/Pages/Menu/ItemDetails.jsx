@@ -5,14 +5,13 @@ import StraightOutlinedIcon from '@mui/icons-material/StraightOutlined';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
+import { useBranch } from '../../../../context/BranchContext';
 
 export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData }) => {
     const { t } = useTranslation();
     const theme = useTheme();
-    // const [discountData, setDiscountData] = useState([])
-    // const [selectedBranch, setSelectedBranch] = useState(localStorage.getItem('selectedBranch'))
+    const { discountContent } = useBranch();
 
-    // استخدام initialData لتهيئة الحالة
     const [name, setName] = useState(initialData.name || '');
     const [brief, setBrief] = useState(initialData.brief || '');
     const [description, setDescription] = useState(initialData.description || '');
@@ -24,7 +23,8 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
     const [priceMedium, setPriceMedium] = useState(initialData.priceMedium || '');
     const [priceLarge, setPriceLarge] = useState(initialData.priceLarge || '');
     const [price, setPrice] = useState(initialData.price || '');
-    const [discount, setDiscount] = useState(initialData.discount || '');
+    const [discount, setDiscount] = useState(initialData.discount || ''); // سيحتوي على id الخصم
+    const [discountCode, setDiscountCode] = useState(''); // لتخزين الرمز النصي مؤقتًا
     const [image, setImage] = useState(initialData.image || null);
 
     // تحديث الحالة عند تغيير initialData (عند التعديل)
@@ -42,7 +42,17 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
         setPrice(initialData.price || '');
         setDiscount(initialData.discount || '');
         setImage(initialData.image || null);
-    }, [initialData]);
+
+        // إذا كان هناك discount (id)، ابحث عن الرمز المقابل له في discountContent
+        if (initialData.discount && discountContent) {
+            const foundDiscount = discountContent.find(
+                (item) => item.id === parseInt(initialData.discount)
+            );
+            if (foundDiscount) {
+                setDiscountCode(foundDiscount.code || '');
+            }
+        }
+    }, [initialData, discountContent]);
 
     // تحديث المكون الأب عند تغيير أي حقل
     useEffect(() => {
@@ -58,10 +68,32 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
             priceMedium,
             priceLarge,
             price,
-            discount,
+            discount, // إرسال id الخصم
             image,
         });
     }, [name, brief, description, ingredients, calories, time, tax, priceSmall, priceMedium, priceLarge, price, discount, image, updateItemData]);
+
+    // التعامل مع إدخال رمز الخصم
+    const handleDiscountChange = (e) => {
+        const code = e.target.value;
+        setDiscountCode(code);
+
+        // البحث عن الرمز في discountContent
+        if (code && discountContent) {
+            const foundDiscount = discountContent.find(
+                (item) => item.code.toLowerCase() === code.toLowerCase()
+            );
+            if (foundDiscount) {
+                setDiscount(foundDiscount.id); // حفظ id الخصم
+                // toast.success(t("discount valid")); // رسالة نجاح
+            } else {
+                setDiscount(''); // إعادة تعيين id الخصم إذا لم يكن الرمز صحيحًا
+                // toast.error(t("discount invalid")); // رسالة خطأ
+            }
+        } else {
+            setDiscount(''); // إعادة تعيين id الخصم إذا كان الحقل فارغًا
+        }
+    };
 
     const handleImageUpload = (e) => {
         const fileInput = document.createElement('input');
@@ -79,31 +111,7 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
         };
         fileInput.click();
     };
-    // const getDiscounts = async () => {
-    //     try {
-    //         const response = await axios.get('https://highleveltecknology.com/Qtap/api/meals_discount', {
-    //             headers: {
-    //                 'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
-    //             },
-    //             params: {
-    //                 brunch_id: selectedBranch
-    //             }
-    //         });
 
-    //         if (response.data) {
-    //             setDiscountData(response.data.discounts);
-
-    //             console.log("response discount", response.data.discounts);
-    //         }
-    //     } catch (error) {
-    //         console.error('Error fetching discounts:', error);
-    //     }
-    // };
-    // useEffect(() => {
-    //     if (categoryId && itemId) {
-    //         getDiscounts()
-    //     }
-    // }, [])
     return (
         <Paper sx={{ marginTop: "-20px", marginBottom: "30px", borderRadius: "10px", padding: "20px 50px" }}>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -372,14 +380,13 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
                     <Grid item xs={3}>
                         <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>{t("discount.one")}</Typography>
                         <TextField
-                            value={discount}
-                            onChange={(e) => setDiscount(e.target.value)}
+                            value={discountCode} // عرض الرمز النصي
+                            onChange={handleDiscountChange} // التحقق من الرمز
                             variant="outlined"
                             fullWidth
-                            type="number"
                             InputProps={{
                                 sx: { height: '35px', fontSize: "10px" },
-                                endAdornment: <Typography sx={{ fontSize: "12px", color: "gray" }}>%</Typography>,
+                                // endAdornment: <Typography sx={{ fontSize: "12px", color: "gray" }}>%</Typography>,
                             }}
                         />
                     </Grid>

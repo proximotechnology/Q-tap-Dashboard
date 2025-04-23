@@ -29,6 +29,7 @@ import { useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useBranch } from "../../../../context/BranchContext";
 
 export const AddItem = () => {
     const { t } = useTranslation();
@@ -39,6 +40,9 @@ export const AddItem = () => {
     const categoryId = searchParams.get("categoryId");
     const itemId = searchParams.get("itemId");
     const selectedBranch = localStorage.getItem("selectedBranch");
+    // const { discountContent } = useBranch();
+    // console.log('discountContent',discountContent);
+  
 
     // State for data
     const [itemData, setItemData] = useState({
@@ -352,7 +356,7 @@ export const AddItem = () => {
                             variant="body1"
                             sx={{ fontSize: "13px", color: "ef7d00" }}
                         >
-                            Admin
+                            {localStorage.getItem("clientName")}
                         </Typography>
                         <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: "ef7d00" }} />
                     </Box>
@@ -385,14 +389,14 @@ export const AddItem = () => {
                                 </Avatar>
                                 <Box>
                                     <Typography variant="h6" sx={{ fontSize: "14px" }}>
-                                        User01
+                                        {localStorage.getItem("clientName")}
                                     </Typography>
                                     <Typography
                                         variant="body2"
                                         sx={{ fontSize: "12px" }}
                                         color="textSecondary"
                                     >
-                                        Mail@mail.com
+                                        {localStorage.getItem("clientEmail")}
                                     </Typography>
                                 </Box>
                             </Box>

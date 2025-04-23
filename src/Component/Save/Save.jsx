@@ -48,7 +48,7 @@ export const Save = () => {
   const [businessType, setBusinessType] = useState('');
   const [menuLanguage, setMenuLanguage] = useState('');
   const [tableCount, setTableCount] = useState('');
-  const [mode, setMode] = useState('light');
+  const [mode, setMode] = useState('white');
   const [design, setDesign] = useState('grid');
   const { t, i18n } = useTranslation()
   const theme = useTheme();
@@ -95,7 +95,7 @@ export const Save = () => {
       setBusinessType(businessData.format || '');
       setMenuLanguage(businessData.menuLanguage || '');
       setTableCount(businessData.tableCount || '');
-      setMode(businessData.mode || 'light');
+      setMode(businessData.mode || 'white');
       setDesign(businessData.design || 'grid');
       setWorkingHours(businessData.workingHours || {
         selectedDays: ['Sa', 'Su'],
@@ -205,7 +205,7 @@ export const Save = () => {
       longitude: '648.4684684',
       business_format: (branch.format || 'uk').toLowerCase(),
       menu_design: branch.design || 'grid',
-      default_mode: branch.mode === 'light' ? 'white' : 'dark',
+      default_mode: branch.mode === 'white' ? 'white' : 'dark',
       payment_time: branch.paymentTime?.beforeServing ? 'before' : 'after',
       call_waiter: branch.callWaiter ? 'active' : 'inactive',
     }));

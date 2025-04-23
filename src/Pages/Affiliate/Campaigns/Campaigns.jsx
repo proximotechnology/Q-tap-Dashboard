@@ -322,7 +322,7 @@ const Campaigns = () => {
             sx={{
               width: "160px",
               height: "175px",
-              // background: "linear-gradient(to top right,rgba(34, 34, 64, 0.86) 10%, #222240)",
+              background: "linear-gradient(to top right,rgba(34, 34, 64, 0.86) 10%, #222240)",
               borderRadius: "20px",
               padding: "12px 15px",
               color: "white",

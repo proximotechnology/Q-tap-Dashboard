@@ -536,7 +536,7 @@ export const Row2 = () => {
   );
   return (
     <Box sx={{ padding: "0 20px", marginTop: "20px" }}>
-      <Paper sx={{ padding: "20px", borderRadius: 5, height: "360px" , overflow:"auto" }}>
+      <Paper sx={{ padding: "20px", borderRadius: 5, height: "360px" }}>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Typography
             variant="h5"
@@ -601,7 +601,7 @@ export const Row2 = () => {
             
           </Box>
 
-            <Button
+            {/* <Button
               onClick={handleAddClient} // Updated to handleAddClient
               sx={{
                 color: theme.palette.orangePrimary.main,
@@ -611,7 +611,7 @@ export const Row2 = () => {
             >
               {t("add")}
               <AddIcon sx={{ color: "#575756", fontSize: "12px" }} />
-            </Button>
+            </Button> */}
 
             <Button
               onClick={() => exportToExcel(data?.qtap_clients || [])}

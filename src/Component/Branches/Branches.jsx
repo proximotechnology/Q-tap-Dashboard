@@ -30,9 +30,10 @@ export const Branches = () => {
   const { t } = useTranslation()
 
   const handleDoneClick = () => {
-    // console.log('Branches:::::', branches);
+    console.log('Branches:::::', branches);
     navigate('/payment');
   };
+  console.log('Branches:::::', branches);
 
   return (
     <Box marginTop={'50px'} padding={"10px 40px"} flexGrow={1}>

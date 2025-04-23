@@ -1,18 +1,17 @@
-
 import { Box, Button, FormControl, Grid, InputAdornment, MenuItem, Select, styled, TextField, Typography, useTheme } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import TableBarOutlinedIcon from '@mui/icons-material/TableBarOutlined';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import { toast } from 'react-toastify';
-import { useBusinessContext } from '../../context/BusinessContext';
 import { useTranslation } from 'react-i18next';
 import styles from '../../Pages/DashboardClient/Pages/SupportClient/supportCard.module.css';
-
-
+import { useBusinessContext } from '../../context/BusinessContext';
 
 export const ServingWays = () => {
+    const { addBranch } = useBusinessContext();
+
     const theme = useTheme();
     const Divider = styled(Box)({
         width: '5%',
@@ -29,17 +28,46 @@ export const ServingWays = () => {
         borderRadius: "20px",
         marginBottom: "20px"
     });
+
     const navigate = useNavigate();
     const { updateBusinessData, businessData } = useBusinessContext();
+    const { t } = useTranslation();
+
+    // Initialize servingWays from businessData
     const [servingWays, setServingWays] = useState(businessData.servingWays || []);
 
+    // Initialize serviceOptions with selected state based on businessData.servingWays
     const [serviceOptions, setServiceOptions] = useState([
-        { name: "Dine In", value: "dine_in", icon: <span className="icon-chair" style={{ fontSize: "80px" }}></span>, selected: false },
-        { name: "Takeaway", value: "take_away", icon: <span className="icon-takeaway" style={{ fontSize: "80px" }}></span>, selected: false },
-        { name: "Delivery", value: "delivery", icon: <span className="icon-fast-shipping" style={{ fontSize: "80px" }}></span>, selected: false }
+        { 
+            name: "Dine In", 
+            value: "dine_in", 
+            icon: <span className="icon-chair" style={{ fontSize: "80px" }}></span>, 
+            selected: businessData.servingWays?.includes("dine_in") || false 
+        },
+        { 
+            name: "Takeaway", 
+            value: "take_away", 
+            icon: <span className="icon-takeaway" style={{ fontSize: "80px" }}></span>, 
+            selected: businessData.servingWays?.includes("take_away") || false 
+        },
+        { 
+            name: "Delivery", 
+            value: "delivery", 
+            icon: <span className="icon-fast-shipping" style={{ fontSize: "80px" }}></span>, 
+            selected: businessData.servingWays?.includes("delivery") || false 
+        }
     ]);
 
-    const { t } = useTranslation()
+    // Sync local servingWays with businessData.servingWays on mount
+    useEffect(() => {
+        setServingWays(businessData.servingWays || []);
+        setServiceOptions((prevOptions) =>
+            prevOptions.map((option) => ({
+                ...option,
+                selected: businessData.servingWays?.includes(option.value) || false
+            }))
+        );
+    }, [businessData.servingWays]);
 
     const handleBoxClick = (index) => {
         // Toggle the selected state of the clicked service
@@ -51,9 +79,9 @@ export const ServingWays = () => {
 
         // Update servingWays array with only the selected services
         const selectedServices = newOptions
-            .filter(option => option.selected) // Filter only selected options
-            .map(option => option.value); // Extract their values
-
+            .filter(option => option.selected)
+            .map(option => option.value);
+        
         setServingWays(selectedServices);
 
         // Update BusinessContext with the new serving ways
@@ -62,8 +90,13 @@ export const ServingWays = () => {
         });
     };
 
+    const handleTableCountChange = (value) => {
+        updateBusinessData({ tableCount: value });
+    };
+
     const handleNextClick = () => {
         if (servingWays.length > 0) {
+            addBranch();
             navigate('/branches');
         } else {
             toast.error(t("plSelectOneService"));
@@ -86,94 +119,82 @@ export const ServingWays = () => {
                 </Box>
 
                 <Box display="flex" flexWrap="wrap" justifyContent="flex-start" gap={2} sx={{ marginBottom: 4 }}>
-                    {serviceOptions.map((option, index) => {
-                        return (
-                            <Box
-                                className={styles.card4}
-                                key={index}
-                                onClick={() => handleBoxClick(index)}
+                    {serviceOptions.map((option, index) => (
+                        <Box
+                            className={styles.card4}
+                            key={index}
+                            onClick={() => handleBoxClick(index)}
+                            sx={{
+                                width: { xs: "115px", sm: "115px" },
+                                marginRight: "20px",
+                                height: "160px",
+                                borderRadius: "20px",
+                                backgroundColor: theme.palette.secondaryColor.main,
+                                cursor: "pointer",
+                                overflow: "hidden"
+                            }}
+                        >
+                            <Typography
+                                variant="h6"
                                 sx={{
-                                    width: { xs: "115px", sm: "115px" },
-                                    marginRight: "20px",
-                                    height: "160px",
-                                    borderRadius: "20px",
-                                    backgroundColor: theme.palette.secondaryColor.main,
-                                    cursor: "pointer",
-                                    overflow: "hidden"
+                                    fontSize: "13px",
+                                    color: theme.palette.orangePrimary.main,
+                                    padding: "20px 0px 2px 0px",
+                                    display: "flex",
+                                    justifyContent: "center"
                                 }}
                             >
-                                <Typography
-                                    variant="h6"
-                                    sx={{
-                                        fontSize: "13px",
-                                        color: theme.palette.orangePrimary.main,
-                                        padding: "20px 0px 2px 0px",
-                                        display: "flex",
-                                        justifyContent: "center"
-                                    }}
-                                >
-                                    {t(option.name)}
-                                </Typography>
-                                <Divider2 />
-
-                                <Box
-                                    sx={{
-                                        color: "gray",
-                                        display: "flex",
-                                        justifyContent: "end",
-                                        alignItems: "end",
-                                        margin: "30px -10px 0 0"
-                                    }}
-                                >
-                                    {React.cloneElement(option.icon)}
-                                </Box>
-
-                                {option.selected && (
-                                    <CheckOutlinedIcon
-                                        sx={{
-                                            position: "relative",
-                                            bottom: "20px",
-                                            left: "10px",
-                                            fontSize: "23px",
-                                            color: "#FF7F3F",
-                                        }}
-                                    />
-                                )}
+                                {t(option.name)}
+                            </Typography>
+                            <Divider2 />
+                            <Box
+                                sx={{
+                                    color: "gray",
+                                    display: "flex",
+                                    justifyContent: "end",
+                                    alignItems: "end",
+                                    margin: "30px -10px 0 0"
+                                }}
+                            >
+                                {React.cloneElement(option.icon)}
                             </Box>
-                        );
-                    })}
+                            {option.selected && (
+                                <CheckOutlinedIcon
+                                    sx={{
+                                        position: "relative",
+                                        bottom: "20px",
+                                        left: "10px",
+                                        fontSize: "23px",
+                                        color: "#FF7F3F"
+                                    }}
+                                />
+                            )}
+                        </Box>
+                    ))}
                 </Box>
 
                 {servingWays.includes("dine_in") && (
-                    <FormControl
-                        variant="outlined"
-                        fullWidth
-                        sx={{ marginTop: 4, maxWidth: { xs: "100%", sm: 330 } }}
-                    >
+                    <FormControl variant="outlined" fullWidth sx={{ marginTop: 4, maxWidth: { xs: "100%", sm: 330 } }}>
                         <Select
-                            value={businessData.tableCount} // Default to "1" if undefined
-                            onChange={(e) => updateBusinessData({ tableCount: e.target.value })}
+                            value={businessData.tableCount || ''}
+                            onChange={(e) => handleTableCountChange(e.target.value)}
                             displayEmpty
                             sx={{
                                 border: "1px solid gray",
                                 height: "35px",
                                 fontSize: "11px",
                                 borderRadius: "10px",
-                                "& fieldset": { border: "none" },
+                                "& fieldset": { border: "none" }
                             }}
                             startAdornment={
                                 <InputAdornment position="start">
-                                    <TableBarOutlinedIcon sx={{ fontSize: "19px" }} /> {/* Changed to TableBarIcon to match your import */}
+                                    <TableBarOutlinedIcon sx={{ fontSize: "19px" }} />
                                 </InputAdornment>
                             }
                         >
-                            <MenuItem value="" disabled>
-                                {t("HowManyTablesDoYouHave") + t("optional")}
-                            </MenuItem>
+                            <MenuItem value="" disabled>{t("HowManyTablesDoYouHave") + t("optional")}</MenuItem>
                             {[1, 2, 3, 4, 5, 6].map((number) => (
-                                <MenuItem key={number} value={number.toString()}>
-                                    {number}
-                                </MenuItem>
+                                <MenuItem key={number} value={number.toString()}>{number}</MenuItem>
                             ))}
                         </Select>
                     </FormControl>
@@ -183,18 +204,16 @@ export const ServingWays = () => {
                     <Button
                         variant="contained"
                         sx={{
-                            width: '20%',
+                            width: { xs: '50%', md: '20%' },
                             fontSize: "13px",
                             borderRadius: '50px',
                             backgroundColor: theme.palette.orangePrimary.main,
                             textTransform: 'none',
-                            padding: "6px ",
+                            padding: "6px 15px",
                             position: "fixed",
                             bottom: "30px",
-                            left: "54%",
-                            '&:hover': {
-                                backgroundColor: theme.palette.orangePrimary.main,
-                            },
+                            left: { xs: '25%', md: '54%' },
+                            '&:hover': { backgroundColor: theme.palette.orangePrimary.main },
                             color: "#fff"
                         }}
                         onClick={handleNextClick}

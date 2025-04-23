@@ -171,7 +171,7 @@ export const LogoClient = () => {
                     >
                         <Divider orientation="vertical" style={{ backgroundColor: 'white', height: '55px' }} />
 
-                        {branches.map((branch, index) => (
+                        {branches?.map((branch, index) => (
                             <Grid
                                 key={index} item
                                 sx={{ color: selectedId === branch.id ? '#f18035' : 'inherit', }}
