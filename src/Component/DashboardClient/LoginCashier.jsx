@@ -56,7 +56,7 @@ export const LoginCashier = () => {
             setSelectedBranch,
             navigate,
             t,
-            brunch_id:localStorage.getItem('branchId'),
+            brunch_id:localStorage.getItem('selectedBranch'),
             role:'cashier',
             navurl:'/menu-client'
         })

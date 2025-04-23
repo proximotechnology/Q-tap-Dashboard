@@ -211,7 +211,7 @@ const Offers = ({ isItemSelected }) => {
                     // 'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2hpZ2hsZXZlbHRlY2tub2xvZ3kuY29tL1F0YXAvYXBpL2xvZ2luIiwiaWF0IjoxNzQ0NzE5ODU4LCJleHAiOjE3NDQ3NjMwNTgsIm5iZiI6MTc0NDcxOTg1OCwianRpIjoiM29SVzROZFFwNURwZExPdSIsInN1YiI6IjEiLCJwcnYiOiJiODgwNWZkMjFkOTAwNWQ1YjFjMmJkOGZhZjNlZGIwOTEzMjJmMWRiIn0.1D0MLr31LKxhuiSH_VQlsTuj-WN5Rq68P0yVpoowvaw`,
                 },
                 data: {
-                    brunch_id: localStorage.getItem('branchId')
+                    brunch_id: localStorage.getItem('selectedBranch')
                     // brunch_id: 102,
                 }
             });

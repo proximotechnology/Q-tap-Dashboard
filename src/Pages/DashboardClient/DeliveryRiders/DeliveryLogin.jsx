@@ -82,7 +82,7 @@ export const DeliveryLogin = () => {
         pin,
         role: "delivery_rider",
         phone: mobileNumber,
-        brunch_id: localStorage.getItem('branchId'),
+        brunch_id: localStorage.getItem('selectedBranch'),
         user_type: 'qtap_clients',
         password: localStorage.getItem('clientPassword'),
       }

@@ -89,24 +89,27 @@ const OrderCard = ({ order, isSelected, onClick, isAccepted, isPayment, isServed
                         </Typography>
                         <hr width="90%" />
                         <Typography variant="body2" fontSize="12px" padding="0px 20px">
-                            {t("total")} <span style={{ color: theme.palette.orangePrimary.main }}>{order.total.toFixed(2)}</span>
+                            {t("total")} <span style={{ color: theme.palette.orangePrimary.main }}>{order.total?.toFixed(2)}</span>
                             <span style={{ fontSize: "9px", color: "gray" }}>EGP</span>
                         </Typography>
                     </>
                 ) : (
                     <>
                         <Typography color="textSecondary" fontSize="12px" padding="10px 20px 5px 20px">
-                            {order.order}
+                            {order.order} {/* TODO: what is this */}
                         </Typography>
                         <Typography color="textSecondary" fontSize="12px" padding="0px 18px 5px 20px">
-                            {order.date}
+                            {order.created_at}
                         </Typography>
                         <Typography color="textSecondary" fontSize="12px" padding="0px 20px 10px 20px">
-                            {t("Dine In")}, <span style={{ color: theme.palette.orangePrimary.main }}>{order.table}</span>
+                        {order.type === "dinein" ? (  <> {t("Dine In")}, <span style={{ color: theme.palette.orangePrimary.main }}>{order.table_id}</span> </>):<></>}
+                        {order.type === 'takeaway' ? ( <span style={{ color: theme.palette.orangePrimary.main }}>{t("Takeaway")}</span>):<></>}
+                        {order.type === 'delivery' ? ( <span style={{ color: theme.palette.orangePrimary.main }}>{t("Delivery")}</span>):<></>}
+                            
                         </Typography>
                         <hr style={{ width: "80%" }} />
                         <Typography variant="body2" fontSize="12px" padding="0px 20px">
-                            {t("total")} {order.total.toFixed(2)}
+                            {t("total")} {order.total_price?.toFixed(2)}
                             <span style={{ fontSize: "9px", color: "gray" }}>EGP</span>
                         </Typography>
                     </>

@@ -174,7 +174,7 @@ function App() {
     },
 
     {
-      path: "menu-client",
+      path: "menu-client", // todo: disapple pay button
       element: <MenuClient />,// TODO: style problem here  and logic modification 
     },
 

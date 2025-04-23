@@ -10,29 +10,8 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import OrderHistoryDetails from './OrderHistoryDetails/OrderHistoryDetails';
 import { useTranslation } from 'react-i18next';
 
-const orders = [
-    {
-        id: '# 3218',
-        created: 'Sun, Aug 4, 2024 3:59 PM',
-        method: 'Dine In, Table 02',
-        items: 4,
-        price: '40.00 EGP',
-        payment: 'Unpaid',
-        status: 'Rejected',
-    },
-    {
-        id: '# 2218',
-        created: 'Sun, Aug 4, 2024 3:59 PM',
-        method: 'Delivery',
-        items: 7,
-        price: '40.00 EGP',
-        payment: 'Paid',
-        status: 'Done',
-    },
 
-];
-
-const OrderTable = () => {
+const OrderTable = ({ orders }) => {
     const theme = useTheme();
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
@@ -63,7 +42,7 @@ const OrderTable = () => {
         link.click();
         URL.revokeObjectURL(url);
     };
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     return (
         <Box
             display="flex"
@@ -94,7 +73,7 @@ const OrderTable = () => {
                         InputProps={{
                             startAdornment: <CalendarMonthOutlinedIcon sx={{ fontSize: "15px", marginRight: "5px", color: "#c7c3c3" }} />,
                             endAdornment: <ArrowDropDownIcon sx={{ color: "#615f5f", fontSize: "18px" }} />,
-                            style: { fontSize: '10px', height:"25px",padding: '0px 6px', borderRadius: "6px" },
+                            style: { fontSize: '10px', height: "25px", padding: '0px 6px', borderRadius: "6px" },
                         }}
                         InputLabelProps={{
                             style: { fontSize: '10px' },
@@ -108,7 +87,7 @@ const OrderTable = () => {
                         InputProps={{
                             startAdornment: <CalendarMonthOutlinedIcon sx={{ fontSize: "15px", marginRight: "5px", color: "#c7c3c3" }} />,
                             endAdornment: <ArrowDropDownIcon sx={{ color: "#615f5f", fontSize: "18px" }} />,
-                            style: { fontSize: '10px', height:"25px",padding: '0px 6px', borderRadius: "6px" },
+                            style: { fontSize: '10px', height: "25px", padding: '0px 6px', borderRadius: "6px" },
                         }}
                     />
                     <Button
@@ -151,41 +130,41 @@ const OrderTable = () => {
                                 </TableCell>
 
                                 <TableCell sx={{ textAlign: "center", color: "gray" }}>
-                                    <Typography variant="body2" sx={{ fontSize: "12px" }} >{order.created}</Typography>
+                                    <Typography variant="body2" sx={{ fontSize: "12px" }} >{order.created_at}</Typography>
                                 </TableCell>
 
                                 <TableCell sx={{ textAlign: "center", color: "gray", }}>
                                     <Typography variant="body2" sx={{ fontSize: "12px" }}>
-                                        {order.method.split(', ')[0]},
-                                        <span style={{ color: '#ff9800' }}> {order.method.split(', ')[1]}</span>
+                                        {order.type},
+                                        <span style={{ color: '#ff9800' }}> {order.type}</span>
                                     </Typography>
                                 </TableCell>
 
-                                <TableCell sx={{ textAlign: "center", color: "gray", fontSize: "12px" }}>{order.items}</TableCell>
+                                <TableCell sx={{ textAlign: "center", color: "gray", fontSize: "12px" }}>{order.meals?.length}</TableCell>
 
-                                <TableCell sx={{ textAlign: "center", color: "gray", fontSize: "12px" }}>{order.price}</TableCell>
+                                <TableCell sx={{ textAlign: "center", color: "gray", fontSize: "12px" }}>{order.total_price}</TableCell>
 
-                                <TableCell style={{ color: order.payment === 'Paid' ? '#4CAF50' : '#f44336', textAlign: "center" }}>
+                                <TableCell style={{ color: order.payment_status === 'paid' ? '#4CAF50' : '#f44336', textAlign: "center" }}>
                                     <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                                         <img src="/assets/balance.svg" alt="icon" style={{ width: "18px", marginRight: "6px", height: "18px" }} />
-                                        {t(order.payment)}
+                                        {t(order.payment_status)}
                                     </Box>
                                 </TableCell>
 
-                                <TableCell style={{textAlign: "center" }}>
-
-                                    {order.status === 'Done' ?
-                                        <Box  sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                        <span class="icon-double-check" style={{fontSize:"20px",marginRight:"5px"}}><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
+                                <TableCell style={{ textAlign: "center" }}>
+                                    {/* confirmed / pending*/}
+                                    {order.status === 'confirmed' ?
+                                        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                            <span class="icon-double-check" style={{ fontSize: "20px", marginRight: "5px" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
                                             <Typography variant="body2" sx={{ fontSize: "12px" }}>
-                                            {t("done")}
+                                                {t("done") + " " + order.status}
                                             </Typography>
                                         </Box>
                                         :
                                         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                            <span class="icon-close" style={{ fontSize: "14px",marginRight:"5px" }}></span>
+                                            <span class="icon-close" style={{ fontSize: "14px", marginRight: "5px" }}></span>
                                             <Typography variant="body2" sx={{ fontSize: "12px" }}>
-                                                {t("rejected")}
+                                                {t("rejected") + " "}{order.status}
                                             </Typography>
                                         </Box>
 
@@ -204,7 +183,7 @@ const OrderTable = () => {
                     flexDirection="column"
                     alignItems="center"
                     padding="10px"
-                    position="relative"
+                    position="absolute"
                     width="90%"
                 >
                     <OrderHistoryDetails order={selectedOrder} onClose={handleCloseDetails} />

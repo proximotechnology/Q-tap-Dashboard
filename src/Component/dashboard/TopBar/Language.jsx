@@ -46,7 +46,7 @@ export const Language = () => {
             return <LanguageOutlinedIcon sx={{ width: "22px", color: theme.palette.orangePrimary.main, height: "22px", }} />
 
         } else if (selectedLanguage === 'en') {
-            return <span class="icon-translation" style={{ width: "22px", color: theme.palette.orangePrimary.main, height: "22px", }}></span>
+            return <span className="icon-translation" style={{ width: "22px", color: theme.palette.orangePrimary.main, height: "22px", }}></span>
         }
         return <LanguageOutlinedIcon sx={{ fontSize: "22px", color: theme.palette.orangePrimary.main, marginRight: '1px' }} />;
     };
@@ -66,7 +66,7 @@ export const Language = () => {
 
             >
                 <MenuItem onClick={() => handleClose('en')} >
-                    <span class="icon-translation" style={{ width: "23px", height: "23px", marginRight: '8px' }}></span>
+                    <span className="icon-translation" style={{ width: "23px", height: "23px", marginRight: '8px' }}></span>
                     <span style={{ fontSize: "12px", color: "#575756" }}>English</span>
                 </MenuItem>
                 <Divider />
