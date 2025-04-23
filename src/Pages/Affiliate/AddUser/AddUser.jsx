@@ -35,6 +35,7 @@ export const AddUsers = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [selectedImage, setSelectedImage] = useState(null);
     const [selectedOption, setSelectedOption] = useState(user?.campaign || 'Winter Campaign');
+    
 
     // Payment Info States
     const [bankName, setBankName] = useState(user?.bank_name || '');
@@ -45,7 +46,7 @@ export const AddUsers = () => {
             user.payment_way === 'digital_wallet' ? 'D.Wallet' :
             user.payment_way === 'credit_card' ? 'Card' :null
     ) : 'Bank');
-
+    const [addressBank, setAddressBank] =useState(user.address ||"")
 
     const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -61,32 +62,37 @@ export const AddUsers = () => {
     useEffect(() => {
         if (user) {
             getAffiliateData(user.id); // Fetch data for the specific user
+            console.log("affiliate" , affiliates);
+            
         }
-    }, [user, getAffiliateData]);
+    }, [user]);
 
     // Sync local state with fetched affiliate data
     useEffect(() => {
         if (user && affiliates.length > 0) {
             const affiliateData = affiliates.find(aff => aff.id === user.id) || affiliates[0]; // Fallback to first item if no match
             if (affiliateData) {
-                setFullName(affiliateData.name || fullName);
-                setPhone(affiliateData.mobile || phone);
-                setEmail(affiliateData.email || email);
-                if (affiliateData.birth_date) {
-                    const [y, m, d] = affiliateData.birth_date.split('-');
+
+                setFullName(affiliateData.affiliate?.name || fullName);
+                setPhone(affiliateData.affiliate?.mobile || phone);
+                setEmail(affiliateData.affiliate?.email || email);
+                if (affiliateData.affiliate?.birth_date) {
+                    const [y, m, d] = affiliateData.affiliate?.birth_date.split('-');
                     setYear(y);
                     setMonth(m);
                     setDay(d);
                 }
-                setCountry(affiliateData.country || country);
-                setSelectedOption(affiliateData.campaign || selectedOption);
-                setBankName(affiliateData.bank_name || bankName);
-                setAccountNumber(affiliateData.bank_account_number || accountNumber);
-                setAccountName(affiliateData.bank_account_name || accountName);
-                setPaymentOption(affiliateData.payment_way ? (
-                    affiliateData.payment_way === 'bank_account' ? 'Bank' :
-                        affiliateData.payment_way === 'digital_wallet' ? 'D.Wallet' :
-                            affiliateData.payment_way === 'credit_card' ? 'Card' : null
+                setCountry(affiliateData.affiliate?.country || country);
+                setSelectedOption(affiliateData.affiliate?.campaign || selectedOption);
+                setBankName(affiliateData.affiliate?.payment_info?.bank_name || bankName);
+                setAccountNumber(affiliateData.affiliate?.payment_info?.bank_account_number || accountNumber);
+                setAccountName(affiliateData.affiliate?.payment_info?.bank_account_name || accountName);
+                setAddressBank(affiliateData.affiliate?.payment_info?.address || addressBank);
+                
+                setPaymentOption(affiliateData.affiliate?.payment_info?.payment_way ? (
+                    affiliateData.affiliate?.payment_way === 'bank_account' ? 'Bank' :
+                        affiliateData.affiliate?.payment_way === 'digital_wallet' ? 'D.Wallet' :
+                            affiliateData.affiliate?.payment_way === 'credit_card' ? 'Card' : "Bank"
                 ) : paymentOption);
             }
         }
@@ -367,6 +373,9 @@ export const AddUsers = () => {
                             setAccountNumber={setAccountNumber}
                             accountName={accountName}
                             setAccountName={setAccountName}
+                            setAddressBank ={setAddressBank}
+                            addressBank ={addressBank}
+                            
                             errors={errors}
                         />
                     </Grid>
