@@ -10,7 +10,7 @@ export const BusinessProvider = ({ children }) => {
         businessPhone: '',
         country: '',
         city: '',
-        mode: 'white',
+        mode: 'light',
         design: 'grid',
         format: '',
         currency: '',
@@ -57,6 +57,8 @@ export const BusinessProvider = ({ children }) => {
         }
     };
 
+    console.log("businessData" , businessData);
+    
     return (
         <BusinessContext.Provider
             value={{

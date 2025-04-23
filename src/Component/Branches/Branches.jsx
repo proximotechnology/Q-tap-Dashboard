@@ -35,7 +35,7 @@ export const Branches = () => {
   };
 
   return (
-    <Box marginTop={'50px'} flexGrow={1}>
+    <Box marginTop={'50px'} padding={"10px 40px"} flexGrow={1}>
       <Typography variant="body1" sx={{ fontSize: '18px', color: theme.palette.secondaryColor.main }}>
         {t("branches")}
       </Typography>
@@ -107,15 +107,16 @@ export const Branches = () => {
         sx={{
           display: 'flex',
           flexDirection:'column',
-          alignItems:'center'
-          // bottom: '30px',
-          // left: '55%',
+          alignItems:'center',
+          position:"fixed",
+          bottom: '30px',
+          left: '47%',
         }}
       >
         <Typography
           variant="body1"
           sx={{
-            width: { xs: '90%', md: '65%', lg: '65%' },
+            width: { xs: '90%', md: '80%', lg: '80%' },
             color: 'gray',
             fontSize: '13px',
             marginBottom: '20px',
@@ -131,7 +132,7 @@ export const Branches = () => {
           <Button
             variant="contained"
             sx={{
-              width: '60%',
+              width: '300px',
               fontSize: '13px',
               borderRadius: '50px',
               backgroundColor: theme.palette.orangePrimary.main,

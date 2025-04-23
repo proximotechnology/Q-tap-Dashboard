@@ -6,6 +6,7 @@ import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import DoneIcon from '@mui/icons-material/Done';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 
 
 export const Products = () => {
@@ -30,8 +31,31 @@ export const Products = () => {
             toast.error(t("plSelectProduct"));
         }
     };
+    // const [menus, setMenus] = useState([]);
+
+    // const getMenus = async () => {
+    //     try {
+    //         const response = await axios.get('https://highleveltecknology.com/Qtap/api/products', {
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+    //             }
+    //         });
+
+    //         if (response.data.products) {
+    //             setMenus(response.data.products);
+    //             console.log(response.data);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error fetching menus:', error);
+    //     }
+    // };
+    // useEffect(() => {
+    //     getMenus();
+    // }, []);
+
     return (
-        <Box marginTop={"50px"} flexGrow={1}>
+        <Box marginTop={"50px"} padding={"50px"} flexGrow={1}>
             <Typography variant="body1" sx={{ fontSize: "18px", color: theme.palette.secondaryColor.main }}>
                 {t("selectProduct")}
             </Typography>
@@ -40,7 +64,7 @@ export const Products = () => {
             <Box onClick={handleCardClick}
                 sx={{
                     position: 'relative',
-                    width: "110px", height: "200px",
+                    width: "160px", height: "220px",
                     backgroundImage: "url(/images/card.jpg)",
                     backgroundSize: "cover",
                     backgroundPosition: "center center",

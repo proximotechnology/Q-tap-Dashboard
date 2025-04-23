@@ -14,6 +14,7 @@ import { useBusinessContext } from '../../context/BusinessContext';
 import { useTranslation } from 'react-i18next';
 import GridViewIcon from '@mui/icons-material/GridView';
 import ListIcon from '@mui/icons-material/List';
+import { toast } from 'react-toastify';
 
 const daysOfWeek = ['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr'];
 
@@ -125,27 +126,27 @@ export const BusinessInfo = () => {
     const handleNextClick = () => {
         // Required fields validation
         if (!businessName.trim()) {
-            alert(t("plEntBusinessName"));
+            toast.error(t("plEntBusinessName"));
             return;
         }
 
         if (!businessPhone.trim()) {
-            alert(t("plEntBusinessPhone"));
+            toast.error(t("plEntBusinessPhone"));
             return;
         }
 
         if (!country) {
-            alert(t("plSelectCountry"));
+            toast.error(t("plSelectCountry"));
             return;
         }
 
         if (!city) {
-            alert(t("plSelectCity"));
+            toast.error(t("plSelectCity"));
             return;
         }
 
         if (!currency) {
-            alert(t("plSelectCurrency"));
+            toast.error(t("plSelectCurrency"));
             return;
         }
 
@@ -153,6 +154,28 @@ export const BusinessInfo = () => {
             alert(t("plSelectBusinessFormat"));
             return;
         }
+        // console.log("Business Data:", {
+        //     mode,
+        //     design,
+        //     format,
+        //     currency,
+        //     country,
+        //     city,
+        //     businessName,
+        //     website,
+        //     businessEmail,
+        //     businessPhone,
+        //     callWaiter: activeWaiter,
+        //     paymentTime,
+        //     paymentMethods,
+        //     workingHours: {
+        //     selectedDays,
+        //     currentDay,
+        //     fromTime,
+        //     toTime,
+        //     }
+        // });
+        
 
         // Add the current business data as a new branch
         addBranch();
@@ -179,7 +202,7 @@ export const BusinessInfo = () => {
     };
 
     return (
-        <Box marginTop={"50px"}>
+        <Box marginTop={"50px"} padding={"20px 0 0 40px "}>
             <Typography variant="body1" sx={{ fontSize: "18px", color: theme.palette.secondaryColor.main }}>
                 {t("busnessInfo")}
             </Typography>
@@ -387,7 +410,7 @@ export const BusinessInfo = () => {
                                                     </Grid>
                                                 </Box>{/* from */}
 
-                                                <Box display={"flex"} marginTop={"3px"} marginLeft={"22px"}>
+                                                <Box display={"flex"} marginTop={"3px"} marginLeft={"24px"}>
                                                     <Grid item>
                                                         <Typography variant='body1' sx={{ fontSize: '11px', color: "gray", mr: 1 }}>{t("to")}</Typography>
                                                     </Grid>
@@ -815,12 +838,12 @@ export const BusinessInfo = () => {
                         <Button
                             variant="contained"
                             sx={{
-                                minWidth: '20%',
+                                width: '300px',
                                 fontSize: "13px",
                                 borderRadius: '50px',
                                 backgroundColor: theme.palette.orangePrimary.main,
                                 textTransform: 'none',
-                                padding: "6px 3px",
+                                padding: "6px 15px",
                                 // position: "fixed",
                                 // bottom: "30px",
                                 // left: "55%",

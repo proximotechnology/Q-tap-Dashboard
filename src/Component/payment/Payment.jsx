@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router';
 import DoneIcon from '@mui/icons-material/Done';
 import { useTranslation } from 'react-i18next';
 import { usePersonalContext } from '../../context/PersonalContext';
+import { toast } from 'react-toastify';
 
 
 
@@ -111,138 +112,146 @@ export const Payment = () => {
   };
 
   const totals = calculateTotals();
+  console.log(selectedPlans);
 
+  const handleNext = () => {
+    if (selectedPlans.length === 0 || !selectedPlans[0].pricingWay) {
+      toast.error("please select plan");
+    } else {
+      navigate('/save');
+    }
+  }
   return (
     <Box marginTop={"50px"} flexGrow={1} >
-      <Typography variant="body1" sx={{ fontSize: "18px", color: theme.palette.secondaryColor.main }}>
+      <Typography variant="body1" sx={{ marginLeft: "50px", fontSize: "18px", color: theme.palette.secondaryColor.main }}>
         {t("payment")}
       </Typography>
-      <Divider />
+      <Divider marginLeft={"50px"} />
 
-      <Box 
-      sx={{ display:"flex", flexDirection:'column' }}
+      <Box
+        sx={{ display: "flex", flexDirection: 'column' }}
       >
-      <Grid container  spacing={1} sx={{ width: "100%", minHeight: "300px", justifyContent: "center" }}>
-        {pricing.map((plan) => (
-          <Grid item xs={12} sm={6} md={2} key={plan.id}>
-            <PricingCard
-              title={plan.name}
-              pricePerMonth={plan.monthly_price}
-              pricePerYear={plan.yearly_price}
-              orders={plan.orders_limit}
-              buttonText={t("select")}
-              isSelected={selectedPlans.some(p => p.plan.id === plan.id)}
-              onSelect={() => handlePlanSelect(plan)}
-              onPricingWayChange={(pricingWay) => handlePricingWayChange(plan.id, pricingWay)}
-              pricingWay={selectedPlans.find(p => p.plan.id === plan.id)?.pricingWay || ''}
-            />
-          </Grid>
-        ))}
-      </Grid>
-      <Box sx={{ height:'15px' }}></Box>
-        {/* section2 calc & discount */}
-      <Grid container  spacing={2} >
-        <Grid item xs={12} md={6}>
-          <Box sx={{ textAlign: "center", justifyContent: "center", marginTop: "15px" }}>
-            <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
-              {t("subTotal")}
-              <span style={{ fontSize: '17px', color: theme.palette.secondaryColor.main, marginLeft: "10px" }}>
-                {totals.subTotal.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
-              </span>
-            </Typography>
-            <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
-              {t("addOns")}
-              <span style={{ fontSize: '17px', color: theme.palette.secondaryColor.main, marginLeft: "10px" }}>
-                {totals.addOns.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
-              </span>
-            </Typography>
-            <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
-              {t("tax")}
-              <span style={{ fontSize: '17px', color: theme.palette.secondaryColor.main, marginLeft: "10px" }}>
-                {totals.tax.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
-              </span>
-            </Typography>
-            <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
-              {t("discounts")}
-              <span style={{ fontSize: '17px', color: theme.palette.secondaryColor.main, marginLeft: "10px" }}>
-                {totals.discounts.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
-              </span>
-            </Typography>
-            <Divider2 sx={{ mt: 1, mb: 1 }} />
-            <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
-              {t("total")}
-              <span style={{ fontSize: '17px', color: theme.palette.orangePrimary.main, marginLeft: "10px" }}>
-                {totals.total.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
-              </span>
-            </Typography>
-          </Box>
+        <Grid container spacing={1} sx={{ width: "100%", minHeight: "300px", justifyContent: "center" }}>
+          {pricing.map((plan) => (
+            <Grid item xs={12} sm={6} md={2} key={plan.id}>
+              <PricingCard
+                title={plan.name}
+                pricePerMonth={plan.monthly_price}
+                pricePerYear={plan.yearly_price}
+                orders={plan.orders_limit}
+                buttonText={t("select")}
+                isSelected={selectedPlans.some(p => p.plan.id === plan.id)}
+                onSelect={() => handlePlanSelect(plan)}
+                onPricingWayChange={(pricingWay) => handlePricingWayChange(plan.id, pricingWay)}
+                pricingWay={selectedPlans.find(p => p.plan.id === plan.id)?.pricingWay || ''}
+              />
+            </Grid>
+          ))}
         </Grid>
+        <Box sx={{ height: '15px' }}></Box>
+        {/* section2 calc & discount */}
+        <Grid container spacing={2} >
+          <Grid item xs={12} md={6}>
+            <Box sx={{ textAlign: "center", justifyContent: "center", marginTop: "15px" }}>
+              <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
+                {t("subTotal")}
+                <span style={{ fontSize: '17px', color: theme.palette.secondaryColor.main, marginLeft: "10px" }}>
+                  {totals.subTotal.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
+                </span>
+              </Typography>
+              <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
+                {t("addOns")}
+                <span style={{ fontSize: '17px', color: theme.palette.secondaryColor.main, marginLeft: "10px" }}>
+                  {totals.addOns.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
+                </span>
+              </Typography>
+              <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
+                {t("tax")}
+                <span style={{ fontSize: '17px', color: theme.palette.secondaryColor.main, marginLeft: "10px" }}>
+                  {totals.tax.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
+                </span>
+              </Typography>
+              <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
+                {t("discounts")}
+                <span style={{ fontSize: '17px', color: theme.palette.secondaryColor.main, marginLeft: "10px" }}>
+                  {totals.discounts.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
+                </span>
+              </Typography>
+              <Divider2 sx={{ mt: 1, mb: 1 }} />
+              <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
+                {t("total")}
+                <span style={{ fontSize: '17px', color: theme.palette.orangePrimary.main, marginLeft: "10px" }}>
+                  {totals.total.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
+                </span>
+              </Typography>
+            </Box>
+          </Grid>
 
-        <Grid item xs={12} md={6}  sx={{ marginTop: "30px" }}>
-          <Box sx={{ width: '100%', textAlign: 'center' ,display:"flex", flexDirection:"column" ,alignItems:"center"}}>
-            <Box sx={{ width: { lg: '220px', md: "100%", xs: "100%" } }}>
-              <Box sx={{ display: "flex", alignItems: "center" ,justifyContent:'center'}}>
-                <Box>
-                  <Typography sx={{ fontSize: '9px', color: "gray" }}>{t("disCode")}</Typography>
-                  <TextField
-                    variant="outlined"
-                    size="small"
-                    value={discountCode}
-                    onChange={handleDiscountChange}
-                    sx={{
-                      width: "70px",
-                      "& .MuiOutlinedInput-root": { height: "26px" },
-                    }}
-                  />
-                </Box>
-                <Box alignItems={"center"}>
-                  <IconButton>
-                    <DoneIcon sx={{ fontSize: "15px", color: theme.palette.orangePrimary.main }} />
-                  </IconButton>
-                  <IconButton>
-                    <span className="icon-close-1" style={{ fontSize: "9px", color: theme.palette.secondaryColor.main }}></span>
-                  </IconButton>
+          <Grid item xs={12} md={6} sx={{ marginTop: "30px" }}>
+            <Box sx={{ width: '100%', textAlign: 'center', display: "flex", flexDirection: "column", alignItems: "center" }}>
+              <Box sx={{ width: { lg: '220px', md: "100%", xs: "100%" } }}>
+                <Box sx={{ display: "flex", alignItems: "center", justifyContent: 'center' }}>
+                  <Box>
+                    <Typography sx={{ fontSize: '9px', color: "gray" }}>{t("disCode")}</Typography>
+                    <TextField
+                      variant="outlined"
+                      size="small"
+                      value={discountCode}
+                      onChange={handleDiscountChange}
+                      sx={{
+                        width: "70px",
+                        "& .MuiOutlinedInput-root": { height: "26px" },
+                      }}
+                    />
+                  </Box>
+                  <Box alignItems={"center"}>
+                    <IconButton>
+                      <DoneIcon sx={{ fontSize: "15px", color: theme.palette.orangePrimary.main }} />
+                    </IconButton>
+                    <IconButton>
+                      <span className="icon-close-1" style={{ fontSize: "9px", color: theme.palette.secondaryColor.main }}></span>
+                    </IconButton>
+                  </Box>
                 </Box>
               </Box>
-            </Box>
 
-            <RadioGroup defaultValue="cash" sx={{ mt: 1 }} onChange={handleChange}>
-              <FormControlLabel
-                sx={{ color: 'gray', fontSize: "11px" }}
-                value="cash"
-                control={<Radio size="small" sx={{ color: selectedValue === 'cash' ? theme.palette.orangePrimary.main : 'gray', '&.Mui-checked': { color: theme.palette.orangePrimary.main } }} />}
-                label={<Typography sx={{ fontSize: "12px", color: 'gray' }}>{t("cashOrCard")}</Typography>}
-              />
-              <FormControlLabel
-                sx={{ color: 'gray', fontSize: "11px", mt: '-8px' }}
-                value="wallet"
-                control={<Radio size="small" sx={{ color: selectedValue === 'wallet' ? theme.palette.orangePrimary.main : 'gray', '&.Mui-checked': { color: theme.palette.orangePrimary.main } }} />}
-                label={<Typography sx={{ fontSize: "12px", color: 'gray' }}>{t("onlinePayment")}</Typography>}
-              />
-            </RadioGroup>
-          </Box>
+              <RadioGroup defaultValue="cash" sx={{ mt: 1 }} onChange={handleChange}>
+                <FormControlLabel
+                  sx={{ color: 'gray', fontSize: "11px" }}
+                  value="cash"
+                  control={<Radio size="small" sx={{ color: selectedValue === 'cash' ? theme.palette.orangePrimary.main : 'gray', '&.Mui-checked': { color: theme.palette.orangePrimary.main } }} />}
+                  label={<Typography sx={{ fontSize: "12px", color: 'gray' }}>{t("cashOrCard")}</Typography>}
+                />
+                <FormControlLabel
+                  sx={{ color: 'gray', fontSize: "11px", mt: '-8px' }}
+                  value="wallet"
+                  control={<Radio size="small" sx={{ color: selectedValue === 'wallet' ? theme.palette.orangePrimary.main : 'gray', '&.Mui-checked': { color: theme.palette.orangePrimary.main } }} />}
+                  label={<Typography sx={{ fontSize: "12px", color: 'gray' }}>{t("onlinePayment")}</Typography>}
+                />
+              </RadioGroup>
+            </Box>
+          </Grid>
         </Grid>
-      </Grid>
-{/* section 3 pay button */}
-      <Grid container >
-        <Button
-          variant="contained"
-          sx={{
-            width: '20%',
-            fontSize: "13px",
-            borderRadius: '50px',
-            backgroundColor: theme.palette.orangePrimary.main,
-            textTransform: 'none',
-            padding: "6px 0",
-            marginX:'auto',
-            '&:hover': { backgroundColor: theme.palette.orangePrimary.main },
-            color: "#fff",
-          }}
-          onClick={() => navigate('/save')}
-        >
-          {t("pay")}
-        </Button>
-      </Grid>
+        {/* section 3 pay button */}
+        <Grid container >
+          <Button
+            variant="contained"
+            sx={{
+              width: '20%',
+              fontSize: "13px",
+              borderRadius: '50px',
+              backgroundColor: theme.palette.orangePrimary.main,
+              textTransform: 'none',
+              padding: "6px 0",
+              marginX: 'auto',
+              '&:hover': { backgroundColor: theme.palette.orangePrimary.main },
+              color: "#fff",
+            }}
+            onClick={handleNext}
+          >
+            {t("pay")}
+          </Button>
+        </Grid>
       </Box>
     </Box>
   );

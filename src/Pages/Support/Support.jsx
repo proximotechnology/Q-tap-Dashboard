@@ -115,7 +115,7 @@ const Support = () => {
   const fetchTickets = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('https://highleveltecknology.com/Qtap/api/ticket', {
+      const response = await axios.get('https://highleveltecknology.com/Qtap/api/ticket_client', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
         }
@@ -169,7 +169,7 @@ const Support = () => {
       };
 
       const response = await axios.put(
-        `https://highleveltecknology.com/Qtap/api/ticket/${selectedTicket.id}`,
+        `https://highleveltecknology.com/Qtap/api/ticket_client/${selectedTicket.id}`,
         data,
         {
           headers: {
@@ -209,7 +209,7 @@ const Support = () => {
       // console.log(" dat2a add", data);
 
       const response = await axios.post(
-        'https://highleveltecknology.com/Qtap/api/ticket',
+        'https://highleveltecknology.com/Qtap/api/ticket_client',
         data,
         {
           headers: {
