@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppBar, Toolbar, useTheme } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { Avatar, Box, Divider, IconButton, List, ListItem, ListItemIcon, ListItemText, Popover, Typography } from "@mui/material";
@@ -9,13 +9,16 @@ import OrderTable from './OrderTable ';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export const OrderHistory = () => {
     const navigate = useNavigate();
     const theme = useTheme();
     const [anchorElUser, setAnchorElUser] = useState(null);
     const openUserPopover = Boolean(anchorElUser);
-
+    const { t } = useTranslation();
+    const [orders,setOrdera] = useState([])
     const handleUserClick = (event) => {
         setAnchorElUser(event.currentTarget);
     };
@@ -23,7 +26,37 @@ export const OrderHistory = () => {
     const handleUserClose = () => {
         setAnchorElUser(null);
     };
-    const {t} = useTranslation();
+
+    useEffect(() => {
+        const getOrder = async () => {
+            try {
+                const loginclient = JSON.parse(localStorage.getItem('allClientData'))
+                const selectedBranch = localStorage.getItem('selectedBranch')
+                const BASE_URL = 'https://highleveltecknology.com/Qtap/api/';
+                console.log('currnt user ',loginclient)
+                if (! loginclient || loginclient.user.role !== "admin") {
+                    toast.error("unauth")
+                    return ;
+                }
+                    const res = await axios.get(`${BASE_URL}orders/${selectedBranch}`,
+                        {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+                            },
+
+                        }
+                    )
+                console.log('get order', res)
+                setOrdera(res.data.orders)
+            } catch (error) {
+                console.log('get order', error)
+            }
+        }
+
+        getOrder()
+    }, [])
+
     return (
         <Box sx={{ backgroundColor: "#f4f6fc" }}>
 
@@ -146,7 +179,7 @@ export const OrderHistory = () => {
                 </Typography>
             </AppBar>  {/*  top Bar  */}
 
-            <OrderTable />
+            <OrderTable orders = {orders}/>
             <Box sx={{
                 width: "100%", height: "15px", backgroundImage: "linear-gradient(to right, #FDB913, #F2672E)",
                 position: "fixed", bottom: 0,

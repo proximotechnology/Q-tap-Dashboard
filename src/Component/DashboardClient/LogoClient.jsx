@@ -52,6 +52,8 @@ export const LogoClient = () => {
 
             if (!data.email) {
                 console.error('No email found in localStorage');
+                toast.error("")
+                navigate('/')
                 return;
             }
 
@@ -70,6 +72,9 @@ export const LogoClient = () => {
                 setBranches(response.data.data)
             } catch (error) {
                 console.log(error)
+                toast.error("some thing want wrong please check your email and passward")
+                navigate('/')
+
             }
 
         }

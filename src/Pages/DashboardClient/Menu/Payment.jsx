@@ -40,25 +40,25 @@ export const Payment = ({
                 phone: phone,
                 comments: comment,
                 type: 'takeaway',
-                payment_way:selectedValue,
-                brunch_id: localStorage.getItem('branchId'),
+                payment_way: selectedValue,
+                brunch_id: localStorage.getItem('selectedBranch'),
                 "tax": 15.0, //may be nullable
                 "total_price": 150.75,
-                meals:[]
+                meals: []
             }
             //// add meals data to the request 
-            const sizeConvert = {'L':'l' , 'M':'m','S':'s'}
-            cartItems.map((item)=>{
+            const sizeConvert = { 'L': 'l', 'M': 'm', 'S': 's' }
+            cartItems.map((item) => {
                 const itemData = {
-                    discount_code:item.discounts,
-                    meal_id:item.id,
+                    meal_id: item.id,
                     quantity: item.quantity,
                     variants: item.variant,
                     extras: item.extra,
-                    size:item.selectedSize?sizeConvert[item.selectedSize] : 's',
+                    size: item.selectedSize ? sizeConvert[item.selectedSize] : 's',
+                    discount_code: item.discount_code ? item.discount_code.code : null,
                 }
 
-                data.meals = [...data.meals , itemData]
+                data.meals = [...data.meals, itemData]
             })
             // dynamic part 
             if (selectedType === 'Delivery') {
@@ -69,6 +69,7 @@ export const Payment = ({
                     latitude: 24.7136,
                     longitude: 46.6753,
                     type: 'delivery',
+
                 }
             }
             if (selectedType === 'Dine In') {
@@ -78,6 +79,7 @@ export const Payment = ({
                     type: 'dinein',
                 }
             }
+            console.log('pay order data', data)
             const response = await axios.post(
                 `https://highleveltecknology.com/Qtap/api/add_orders`,
                 data,
@@ -88,7 +90,7 @@ export const Payment = ({
 
                 }
             );
-            localStorage.setItem('cartItems','')
+            localStorage.setItem('cartItems', '')
             setCartItems([])
             setIsDone(!isDone);
         } catch (error) {
@@ -128,7 +130,8 @@ export const Payment = ({
                     <Typography variant="body1" sx={{ fontSize: "10px", display: "flex", letterSpacing: 1 }}>
                         {t("item.many")}
                     </Typography>
-                    {cartItems?.map((item) => { return (
+                    {cartItems?.map((item) => {
+                        return (
                             <Box display={"flex"} justifyContent={"space-between"}>
                                 <Box sx={{ paddingLeft: "10px", marginTop: "15px" }}>
                                     <Typography

@@ -31,6 +31,7 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems ,setCartItems 
     const [total, setTotal] = useState(0)
     useEffect(() => {
         setTotal(calculateTotalPrice())
+        console.log('cart item ' ,cartItems)
     }, [cartItems])
 
     const calculateTotalPrice = () => { /// TODO: what if the user select multi size of same meal

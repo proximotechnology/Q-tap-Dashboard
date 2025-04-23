@@ -48,20 +48,7 @@ export const LoginKitchen = () => {
     const [pin, setPin] = useState()
     const [isLoading, setIsLoading] = useState(false);
     const { setBranches, setSelectedBranch } = useBranch();
-    const handleLogin = async () => {
-        await handleClientLogin({
-            pin,
-            setIsLoading,
-            setBranches,
-            setSelectedBranch,
-            navigate,
-            t,
-            role: 'chef',
-            brunch_id: localStorage.getItem('branchId'),
-            navurl: '/order-body'
-        })
-        //
-    }
+    
 
     return (
         <Grid item xs={12} md={6} sx={{ height: "100vh ", msOverflow: "hidden !important " }}>

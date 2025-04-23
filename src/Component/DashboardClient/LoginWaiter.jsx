@@ -57,7 +57,7 @@ export const LoginWaiter = () => {
             navigate,
             t,
             role:'waiter',
-            brunch_id:localStorage.getItem('branchId'),
+            brunch_id:localStorage.getItem('selectedBranch'),
             navurl:'/order-body'
         })
         //

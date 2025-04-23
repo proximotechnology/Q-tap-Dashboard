@@ -7,85 +7,106 @@ import RejectionModal from './RejectionModal';
 import OrderDetails from './OrderDetails';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
+import OrderDetailsNew from './OrderDetailsNew';
+import Pusher from 'pusher-js';
+import { toast } from 'react-toastify';
 
 export const OrderBody = () => {
-    const [selectedOrder, setSelectedOrder] = useState(null);
-    const [modalOpen, setModalOpen] = useState(false);
-    const [acceptedOrders, setAcceptedOrders] = useState([]);
-    const [paidOrders, setPaidOrders] = useState([]);
-    const [servedOrders, setServedOrders] = useState([]);
-    const [doneOrders, setDoneOrders] = useState([]);
-    const [closeOrders, setCloseOrders] = useState([]);
+    const [selectedOrder, setSelectedOrder] = useState(null);// used to show details panel
+    const [modalOpen, setModalOpen] = useState(false); // used to show reject panel
+    const [orders, setOrders] = useState([])
+    const [client, setClient] = useState(null)
+
+
     const { t } = useTranslation()
     const theme = useTheme();
-    // const [orders, setOrders] = useState([])
-    const [orders, setOrders] = useState([
-        {
-            id: '3208',
-            items: 4,
-            order: "Order Placed ,Unpaid",
-            state: "Rejected",
-            pay: 'Unpaid',
-            date: 'Monday, August 4, 2024 3:59 PM',
-            table: 'Table 02',
-            total: 200.00,
-            subTotal: 190.00,
-            tax: 10.00,
-            discount: 0.00,
-            orderDetails: [
-                { num: "2", item: 'Negrsco', size: 'M', extras: ['Extra sauce'], price: 50.00 },
-                { num: "1", item: 'Tea', price: 10.00 },
-            ],
-            comment: "Don't add onions Please",
-            paymentMethod: 'Cash',
-            dineMethod: {
-                type: 'Dine in', table: "T02", area: 'B02', name: 'Yoyo',
-                address: '21 Algaish St, Mansoura, Dakahlia', phone: '555-1234'
-            },
-            chef: 'afaf',
-            cashier: "Ahmed",
-            waiter: "Aya",
-            preparingTime: 30,
-            name: '',
-            address: '',
-            phone: '',
-        },
-        {
-            id: '32348',
-            items: 7,
-            order: "Order Placed ,Unpaid",
-            state: "Done",
-            pay: 'paid',
-            date: 'Sunday, August 4, 2024 3:59 PM',
-            table: 'Table 02',
-            total: 100.00,
-            subTotal: 190.00,
-            tax: 10.00,
-            discount: 0.00,
-            orderDetails: [
-                { num: "5", item: 'cap cake', size: 'M', extras: ['Extra chocolate'], price: 50.00 },
-                { num: "1", item: 'coffe', price: 20.00 },
-            ],
-            comment: "Don't add onions Please",
-            paymentMethod: 'Cash',
-            dineMethod: {
-                type: 'Delivery', table: "T02", area: 'B02', name: 'John Doe',
-                address: '21 Algaish St, Mansoura, Dakahlia', phone: '555-1234'
-            },
-            chef: 'mohamed',
-            cashier: "Ahmed",
-            waiter: "mostafa",
-            preparingTime: 30,
 
 
-        },
-    ]);
-   
+
+    // const [orders, setOrders] = useState([
+    //     {
+    //         id: '3208',
+    //         items: 4,
+    //         order: "Order Placed ,Unpaid",
+    //         state: "Rejected",
+    //         pay: 'Unpaid',
+    //         date: 'Monday, August 4, 2024 3:59 PM',
+    //         table: 'Table 02',
+    //         total: 200.00,
+    //         subTotal: 190.00,
+    //         tax: 10.00,
+    //         discount: 0.00,
+    //         orderDetails: [
+    //             { num: "2", item: 'Negrsco', size: 'M', extras: ['Extra sauce'], price: 50.00 },
+    //             { num: "1", item: 'Tea', price: 10.00 },
+    //         ],
+    //         comment: "Don't add onions Please",
+    //         paymentMethod: 'Cash',
+    //         dineMethod: {
+    //             type: 'Dine in', table: "T02", area: 'B02', name: 'Yoyo',
+    //             address: '21 Algaish St, Mansoura, Dakahlia', phone: '555-1234'
+    //         },
+    //         chef: 'afaf',
+    //         cashier: "Ahmed",
+    //         waiter: "Aya",
+    //         preparingTime: 30,
+    //         name: '',
+    //         address: '',
+    //         phone: '',
+    //     },
+    //     {
+    //         id: '32348',
+    //         items: 7,
+    //         order: "Order Placed ,Unpaid",
+    //         state: "Done",
+    //         pay: 'paid',
+    //         date: 'Sunday, August 4, 2024 3:59 PM',
+    //         table: 'Table 02',
+    //         total: 100.00,
+    //         subTotal: 190.00,
+    //         tax: 10.00,
+    //         discount: 0.00,
+    //         orderDetails: [
+    //             { num: "5", item: 'cap cake', size: 'M', extras: ['Extra chocolate'], price: 50.00 },
+    //             { num: "1", item: 'coffe', price: 20.00 },
+    //         ],
+    //         comment: "Don't add onions Please",
+    //         paymentMethod: 'Cash',
+    //         dineMethod: {
+    //             type: 'Delivery', table: "T02", area: 'B02', name: 'John Doe',
+    //             address: '21 Algaish St, Mansoura, Dakahlia', phone: '555-1234'
+    //         },
+    //         chef: 'mohamed',
+    //         cashier: "Ahmed",
+    //         waiter: "mostafa",
+    //         preparingTime: 30,
+
+
+    //     },
+    // ]);
+    const parseResponseOrderItem = (item, phase) => {
+        if (!item) return null;
+        console.log('parseditem', item)
+        item.meal_id = (typeof item.meal_id === "string" ? JSON.parse(item.meal_id) : item.meal_id)
+        item.quantity = (typeof item.quantity === "string" ? JSON.parse(item.quantity) : item.quantity)
+        item.size = (typeof item.size === "string" ? JSON.parse(item.size) : item.size)
+        item.discount_code = (typeof item.discount_code === "string" ? JSON.parse(item.discount_code) : item.discount_code)
+        item.extras = (typeof item.extras === "string" ? JSON.parse(item.extras) : item.extras)
+        item.variants = (typeof item.variants === "string" ? JSON.parse(item.variants) : item.variants)
+        item.phase = phase;
+
+
+        return item
+    }
+
     useEffect(() => {
-        const client = JSON.parse(localStorage.getItem('allClientData'))
+        const loginclient = JSON.parse(localStorage.getItem('allClientData'))
+        setClient(loginclient)
+        console.log("loginClient ", loginclient)
         const handleClient = async () => {
             try {
-                const res = await axios.get('https://highleveltecknology.com/Qtap/api/get_new_orders',
+
+                const res = await axios.get(`${orderEndPoint.BASE_URL}${orderEndPoint[loginclient.user.role].fetch[0]}`,
                     {
                         headers: {
                             'Content-Type': 'application/json',
@@ -94,16 +115,101 @@ export const OrderBody = () => {
 
                     }
                 )
-                console.log('order res', res)
 
-                // setOrders(res.data.new_orders)
+                console.log('role : ', loginclient.user.role, ' order res : ', res)
+
+                // each request has its response data :
+                ///-------------------------------------------
+                // chef data.new_orders
+                // cashier data.accepted_orders
+                // admin data.served_orders
+                // admin data.delivery_riders\
+                //waiter data.prepared_orders
+                let orders = []
+
+                if (loginclient.user.role === 'chef') {
+
+                    orders = res.data.new_orders.map((item) => parseResponseOrderItem(item, orderPhaseType.ACCEPTING))
+                    console.log("parde data ", orders)
+                    const savedOrder = localStorage.getItem('chefAcceptedOrder')
+                    const parsedSavedOrder = savedOrder ? JSON.parse(savedOrder) : []
+                    setOrders([...orders, ...parsedSavedOrder])
+
+                } else if (loginclient.user.role === 'cashier') {
+
+                    orders = res.data.accepted_orders.map((item) => item ? { ...parseResponseOrderItem(item, orderPhaseType.PAYING), chef: item.user } : undefined)
+                    orders = orders.filter(order => order !== undefined);
+                    console.log("parde data ", orders)
+                    setOrders(orders)
+
+                } else if (loginclient.user.role === 'waiter') {
+
+                    
+                    orders = res.data.prepared_orders.map((item) =>item? { ...parseResponseOrderItem(item, orderPhaseType.SERVRING)} : undefined)
+                    orders = orders.filter(order => order !== undefined);
+                    console.log("waiter data ", orders)
+                    setOrders(orders)
+
+                }else if (loginclient.user.role === 'admin') {
+                    orders = res.data.served_orders.map((item) =>item? { ...parseResponseOrderItem(item, orderPhaseType.DONING)} : undefined)
+                    orders = orders.filter(order => order !== undefined);
+                    console.log("admin data ", orders)
+                    setOrders(orders)
+                }
+
             } catch (error) {
+
                 console.log(error)
+
             }
         }
+
         handleClient()
-    },[])
+
+    }, [])
+    useEffect(() => {
+        const pusher = new Pusher('63b495891d2c3cff9d36', {
+          cluster: 'eu',
+        });
     
+        const channel = pusher.subscribe('notify-channel');
+        channel.bind('form-submitted', function (data) {
+          // ✅ Show toast or handle state
+          // console.log("📢 Received from Pusher:", data);
+    
+          toast.info(`📢 pusher ${data?.message?.title}: ${data?.message?.content}`);
+          console.log('data app busher',data)
+          // You can also store in state if you want to display in Content
+        });
+    
+        return () => {
+          channel.unbind_all();
+          channel.unsubscribe();
+        };
+      }, []);
+
+    // Function to update the phase of a specific order
+    const updateOrderPhase = (orderId, newPhase ,newOrder = null ) => {
+        
+        setOrders(prevOrders =>
+            prevOrders.map(order =>{
+                if(!newOrder){
+                    order = newOrder
+                }
+                return order.id === orderId ?  { ...order, phase: newPhase } : order;
+            }
+                
+            )
+        );
+    };
+
+    // Function to remove a specific order
+    const removeOrder = (orderId) => {
+        setOrders(prevOrders =>
+            prevOrders.filter(order => order.id !== orderId)
+        );
+    };
+
     const handleOrderClick = (order) => {
         setSelectedOrder(order);
     };
@@ -114,61 +220,6 @@ export const OrderBody = () => {
 
     const handleModalClose = () => {
         setModalOpen(false);
-    };
-
-    const handleAcceptOrder = () => {
-        if (selectedOrder) {
-            const updatedOrders = orders.map(order =>
-                order.id === selectedOrder.id ? { ...order, status: 'Accepted' } : order
-            );
-            setOrders(updatedOrders);
-            setAcceptedOrders([...acceptedOrders, selectedOrder.id]);
-            setSelectedOrder({ ...selectedOrder, status: 'Accepted' });
-        }
-    };
-
-    const handlePayment = () => {
-        if (selectedOrder) {
-            const updatedOrders = orders.map(order =>
-                order.id === selectedOrder.id ? { ...order, status: 'Paid' } : order
-            );
-            setOrders(updatedOrders);
-            setPaidOrders([...paidOrders, selectedOrder.id]);
-            setSelectedOrder({ ...selectedOrder, status: 'Paid' });
-        }
-    };
-
-    const handleServeOrder = () => {
-        if (selectedOrder) {
-            const updatedOrders = orders.map(order =>
-                order.id === selectedOrder.id ? { ...order, status: 'Served' } : order
-            );
-            setOrders(updatedOrders);
-            setServedOrders([...servedOrders, selectedOrder.id]);
-            setSelectedOrder({ ...selectedOrder, status: 'Served' });
-        }
-    };
-
-    const handleDoneOrder = () => {
-        if (selectedOrder) {
-            const updatedOrders = orders.map(order =>
-                order.id === selectedOrder.id ? { ...order, status: 'Done' } : order
-            );
-            setOrders(updatedOrders);
-            setDoneOrders([...doneOrders, selectedOrder.id]);
-            setSelectedOrder({ ...selectedOrder, status: 'Done' });
-        }
-    };
-
-    const handleCloseOrder = () => {
-        if (selectedOrder) {
-            const updatedOrders = orders.map(order =>
-                order.id === selectedOrder.id ? { ...order, status: 'Closed' } : order
-            );
-            setOrders(updatedOrders);
-            setCloseOrders([...closeOrders, selectedOrder.id]);
-            setSelectedOrder({ ...selectedOrder, status: 'Closed' });
-        }
     };
 
     const handleCloseOrderDetailsOnMobile = () => {
@@ -206,17 +257,13 @@ export const OrderBody = () => {
 
 
                         {orders.map((order) => (
-                            !([...acceptedOrders, ...paidOrders, ...servedOrders, ...doneOrders, ...closeOrders].includes(order.id)) && (
+                            order.phase === orderPhaseType.ACCEPTING && (
                                 <OrderCard
                                     key={order.id}
                                     order={order}
                                     isSelected={selectedOrder?.id === order.id}
                                     onClick={() => handleOrderClick(order)}
-                                    isAccepted={acceptedOrders.includes(order.id)}
-                                    isPayment={paidOrders.includes(order.id)}
-                                    isServed={servedOrders.includes(order.id)}
-                                    isDone={doneOrders.includes(order.id)}
-                                    isClose={closeOrders.includes(order.id)}
+
                                 />
                             )
                         ))}
@@ -243,20 +290,13 @@ export const OrderBody = () => {
                             {t("accepted")}
                         </Box>
                         {orders.map((order) => (
-                            ([...acceptedOrders, ...paidOrders, ...servedOrders, ...doneOrders].includes(order.id)) &&
-                            (!(closeOrders.includes(order.id)))
-                            &&
-                            (
+                            (order.phase === orderPhaseType.PAYING || order.phase === orderPhaseType.PREPAREING || order.phase === orderPhaseType.SERVRING || order.phase === orderPhaseType.DONING)
+                            && (
                                 <OrderCard
                                     key={order.id}
                                     order={order}
                                     isSelected={selectedOrder?.id === order.id}
                                     onClick={() => handleOrderClick(order)}
-                                    isAccepted={acceptedOrders.includes(order.id)}
-                                    isPayment={paidOrders.includes(order.id)}
-                                    isServed={servedOrders.includes(order.id)}
-                                    isDone={doneOrders.includes(order.id)}
-                                    isClose={closeOrders.includes(order.id)}
                                 />
                             )
                         ))}
@@ -281,18 +321,14 @@ export const OrderBody = () => {
                             }} >
                             {t("done")}
                         </Box>
-                        {orders.map((order) => (
-                            ([...closeOrders].includes(order.id)) && (
+                        {orders.map((order) => order.phase === orderPhaseType.CLOSING && (
+                            (
                                 <OrderCard
                                     key={order.id}
                                     order={order}
                                     isSelected={selectedOrder?.id === order.id}
                                     onClick={() => handleOrderClick(order)}
-                                    isAccepted={acceptedOrders.includes(order.id)}
-                                    isPayment={paidOrders.includes(order.id)}
-                                    isServed={servedOrders.includes(order.id)}
-                                    isDone={doneOrders.includes(order.id)}
-                                    isClose={closeOrders.includes(order.id)}
+
                                 />
                             )
                         ))}
@@ -302,33 +338,31 @@ export const OrderBody = () => {
                 {selectedOrder && (
                     <Box   >
                         <Box>
-                            <OrderDetails
+                            {/* <OrderDetails
                                 order={selectedOrder}
                                 onReject={handleModalOpen}
-                                onAccept={handleAcceptOrder}
-                                onPayment={handlePayment}
-                                onServe={handleServeOrder}
-                                onDone={handleDoneOrder}
-                                onClose={handleCloseOrder}
-                                isAccepted={acceptedOrders.includes(selectedOrder.id)}
-                                isPayment={paidOrders.includes(selectedOrder.id)}
-                                isServed={servedOrders.includes(selectedOrder.id)}
-                                isDone={doneOrders.includes(selectedOrder.id)}
-                                isClose={closeOrders.includes(selectedOrder.id)}
-                                closeDetails={handleCloseOrderDetailsOnMobile}
+                                closeDetails={handleCloseOrderDetailsOnMobile}// show x button on mobile to close this details panel
+                                orderPhaseType={orderPhase}
+                            /> */}
+                            <OrderDetailsNew
+                                order={selectedOrder}
+                                onReject={handleModalOpen}
+                                closeDetails={handleCloseOrderDetailsOnMobile}// show x button on mobile to close this details panel
+                                // order control function
+                                updateOrderPhase={updateOrderPhase}
+                                removeOrder={removeOrder}
+                                loginUser={client}
                             />
                         </Box>
                     </Box>
                 )}
             </Grid>
 
-            <Box sx={{ marginTop:'auto' }}>
-                <Footer selectedOrder={selectedOrder}
-                    isAccepted={selectedOrder && acceptedOrders.includes(selectedOrder.id)}
-                    isServed={selectedOrder && servedOrders.includes(selectedOrder.id)}
-                    isDone={selectedOrder && doneOrders.includes(selectedOrder.id)}
-                    isClose={selectedOrder && closeOrders.includes(selectedOrder.id)}
-                />
+            <Box sx={{ marginTop: 'auto' }}>
+                <Footer selectedOrder={selectedOrder}/>
+            </Box>
+            <Box sx={{ height:'40px' }}>
+                
             </Box>
             <RejectionModal open={modalOpen} onClose={handleModalClose} />
         </Box>
@@ -337,24 +371,33 @@ export const OrderBody = () => {
 
 export default OrderBody;
 
-const orderEndPoint = {
+export const orderEndPoint = {
+    BASE_URL: 'https://highleveltecknology.com/Qtap/api/',
     chef: {
-        fetch: 'get_new_orders',
+        fetch: ['get_new_orders'],
         action: {
             accept: 'accept_order',//has body 
             prepared: 'order_prepared'
         }
     },
     cashier: {
-        fetch: 'get_accepted_orders',
+        fetch: ['get_accepted_orders'],
         action: {
             receivePayment: 'payment_received',//has body 
         }
     },
     waiter: {
-        fetch: 'get_prepared_orders',
+        fetch: ['get_prepared_orders'],
         action: {
-            receivePayment: 'order_served',//has body 
+            serve: 'order_served',//has body 
+        }
+    },
+    admin: {
+        fetch: ['get_served_orders', 'get_delivery_available'],
+        action: {
+            orderDone: 'order_done',
+            chooseDelivery: 'choose_delivery',
+            orders: 'orders'
         }
     },
     delivery: {
@@ -369,4 +412,13 @@ const orderEndPoint = {
             changeStatus: 'update_delivery_status',//has body 
         }
     }
+}
+
+export const orderPhaseType = {
+    ACCEPTING: 'accept',//accept the order',
+    PAYING: 'pay',//pay the order',
+    PREPAREING: 'perpare',//prepare the order',
+    SERVRING: 'served',//order ready to serve',
+    DONING: 'done',//order served'
+    CLOSING: 'close'
 }
