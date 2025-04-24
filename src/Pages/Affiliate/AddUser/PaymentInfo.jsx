@@ -12,7 +12,9 @@ export const PaymentInfo = ({
   setAccountNumber,
   accountName,
   setAccountName,
-  errors
+  errors,
+  setAddressBank,
+  addressBank
 }) => {
   const {t} = useTranslation();
   const theme = useTheme();
@@ -40,8 +42,8 @@ export const PaymentInfo = ({
               variant="outlined"
               sx={{ mb: 2 }}
               InputProps={{ sx: { borderRadius: "5px", height: "30px", fontSize: "12px", color: "gray", width: "85%" } }}
-              value={bankName}
-              onChange={(e) => setBankName(e.target.value)}
+              value={accountName}
+              onChange={(e) => setAccountName(e.target.value)}
               error={!!errors.bankName}
             />
 
@@ -58,6 +60,8 @@ export const PaymentInfo = ({
 
             <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("Bank")}</Typography>
             <TextField
+              value={bankName}
+              onChange={(e) => setBankName(e.target.value)}
               select
               fullWidth
               InputProps={{ sx: { borderRadius: "5px", fontSize: "12px", color: "gray", height: "30px", width: "85%" } }}
@@ -75,9 +79,9 @@ export const PaymentInfo = ({
               variant="outlined"
               sx={{ mb: 2 }}
               InputProps={{ sx: { borderRadius: "5px", height: "30px", fontSize: "12px", color: "gray", width: "85%" } }}
-              value={accountName}
-              onChange={(e) => setAccountName(e.target.value)}
-              error={!!errors.accountName}
+              value={addressBank}
+              onChange={(e) => setAddressBank(e.target.value)}
+              error={!!errors.addressBank}
             />
           </>
         );
@@ -90,8 +94,8 @@ export const PaymentInfo = ({
               variant="outlined"
               sx={{ mb: 2 }}
               InputProps={{ sx: { borderRadius: "5px", height: "30px", fontSize: "12px", color: "gray", width: "85%" } }}
-              value={bankName}
-              onChange={(e) => setBankName(e.target.value)}
+              value={accountName}
+              onChange={(e) => setAccountName(e.target.value)}
               error={!!errors.bankName}
             />
             <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("walletNo")}</Typography>
@@ -127,8 +131,8 @@ export const PaymentInfo = ({
               variant="outlined"
               sx={{ mb: 2 }}
               InputProps={{ sx: { borderRadius: "5px", height: "30px", fontSize: "12px", color: "gray", width: "85%" } }}
-              value={bankName}
-              onChange={(e) => setBankName(e.target.value)}
+              value={accountName}
+              onChange={(e) => setAccountName(e.target.value)}
               error={!!errors.bankName}
             />
             <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("cardNo")}</Typography>
@@ -143,6 +147,8 @@ export const PaymentInfo = ({
             />
             <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("Bank")}</Typography>
             <TextField
+              value={bankName}
+              onChange={(e) => setBankName(e.target.value)}
               select
               fullWidth
               InputProps={{ sx: { borderRadius: "5px", fontSize: "12px", color: "gray", height: "30px", width: "85%" } }}
@@ -159,9 +165,9 @@ export const PaymentInfo = ({
               variant="outlined"
               sx={{ mb: 2 }}
               InputProps={{ sx: { borderRadius: "5px", height: "30px", fontSize: "12px", color: "gray", width: "85%" } }}
-              value={accountName}
-              onChange={(e) => setAccountName(e.target.value)}
-              error={!!errors.accountName}
+              value={addressBank}
+              onChange={(e) => setAddressBank(e.target.value)}
+              error={!!errors.addressBank}
             />
           </>
         );
