@@ -11,6 +11,7 @@ import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { parseResponseOrderItem } from './OrderBody';
 
 export const OrderHistory = () => {
     const navigate = useNavigate();
@@ -47,8 +48,10 @@ export const OrderHistory = () => {
 
                         }
                     )
-                console.log('get order', res)
-                setOrdera(res.data.orders)
+                
+                const parsedOrder = res.data.orders.map((item)=>parseResponseOrderItem(item))
+                setOrdera(parsedOrder)
+                console.log("order history ",parsedOrder)
             } catch (error) {
                 console.log('get order', error)
             }

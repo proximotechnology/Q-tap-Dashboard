@@ -20,6 +20,7 @@ import { useNavigate } from 'react-router';
 import axios from 'axios';
 import { useBranch } from '../../context/BranchContext';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -31,7 +32,7 @@ export const Login = () => {
   const [apiError, setApiError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [apiSuccess, setApiSuccess] = useState('');
-  const [userType, setUserType] = useState('qtap_admins');
+  const [userType, setUserType] = useState('qtap_affiliates');
   const { t } = useTranslation();
 
   const handleSubmit = async () => {
@@ -76,11 +77,12 @@ export const Login = () => {
           const loginUserType = response.data.user?.user_type;
 
           if (loginUserType === 'qtap_admins') {
-            localStorage.setItem('adminToken', response.data.token);
-            localStorage.setItem("userName", response.data.user.name);
-            localStorage.setItem("userEmail", response.data.user.email);
-            localStorage.setItem("adminId", response.data.user.id);
-            navigate('/dashboard-home');
+            // localStorage.setItem('adminToken', response.data.token);
+            // localStorage.setItem("userName", response.data.user.name);
+            // localStorage.setItem("userEmail", response.data.user.email);
+            // localStorage.setItem("adminId", response.data.user.id);
+            // navigate('/dashboard-home');
+            toast.error(t("someThingGoWrong"))
           } else if (loginUserType === 'qtap_affiliates') {
             localStorage.setItem('affiliateToken', response.data.token);
             navigate('/dashboard-affiliate');
@@ -185,11 +187,6 @@ export const Login = () => {
           onChange={(e) => setUserType(e.target.value)}
           sx={{ justifyContent: 'center' }}
         >
-          <FormControlLabel
-            value="qtap_admins"
-            control={<Radio sx={{ '& .MuiSvgIcon-root': { fontSize: 18, color: theme.palette.orangePrimary.main } }} />}
-            label={<Typography sx={{ fontSize: '12px', color: theme.palette.text.default }}>{t("admin")}</Typography>}
-          />
           <FormControlLabel
             value="qtap_affiliates"
             control={<Radio sx={{ '& .MuiSvgIcon-root': { fontSize: 18, color: theme.palette.orangePrimary.main } }} />}

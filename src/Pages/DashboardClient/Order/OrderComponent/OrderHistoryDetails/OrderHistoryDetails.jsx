@@ -26,7 +26,7 @@ const OrderHistoryDetails = ({ order, onClose }) => {
             <Header order={order} onClick={onClose}  onPrint={handlePrint} /> 
             <MainContent order={order} ref={printRef} />
             </Box>
-            <FooterDetails/>
+            <FooterDetails order={order}/>
         </Paper>
     );
 };

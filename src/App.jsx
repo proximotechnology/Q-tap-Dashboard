@@ -7,6 +7,7 @@ import { PaymentPage } from './Component/payment/PaymentPage';
 import { ResetPage } from './Component/reset/ResetPage';
 import { ServingWaysPage } from './Component/serving Ways/ServingWaysPage';
 import { HomePage } from './Pages/HomePage';
+import HomePageAdmin from './Pages/HomePageAdmin';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from './Pages/DashboardHome/Home/Home';
 import Product from "./Pages/product/Product";
@@ -68,13 +69,17 @@ import { LoginCashier } from './Component/DashboardClient/LoginCashier';
 import { LoginKitchen } from './Component/DashboardClient/LoginKitchen';
 import { LoginWaiter } from './Component/DashboardClient/LoginWaiter';
 
+
 function App() {
   const routes = createBrowserRouter([
     {
       path: "/",
       element: <HomePage />, // done
     },
-
+    {
+      path: "/admin",
+      element: <HomePageAdmin />, // done
+    },
     {
       path: "/reset",
       element: <ResetPage />, //  done

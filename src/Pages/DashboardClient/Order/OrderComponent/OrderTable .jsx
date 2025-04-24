@@ -9,7 +9,9 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import OrderHistoryDetails from './OrderHistoryDetails/OrderHistoryDetails';
 import { useTranslation } from 'react-i18next';
-
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const OrderTable = ({ orders }) => {
     const theme = useTheme();
@@ -152,10 +154,11 @@ const OrderTable = ({ orders }) => {
                                 </TableCell>
 
                                 <TableCell style={{ textAlign: "center" }}>
-                                    {/* confirmed / pending*/}
-                                    {order.status === 'confirmed' ?
+                                    {/* confirmed / pending*/} {/* pending', 'confirmed', 'delivered', 'rejected', 'cancelled' */}
+                                    {/* {order.status === 'confirmed' ?
                                         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                                             <span class="icon-double-check" style={{ fontSize: "20px", marginRight: "5px" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
+
                                             <Typography variant="body2" sx={{ fontSize: "12px" }}>
                                                 {t("done") + " " + order.status}
                                             </Typography>
@@ -168,7 +171,54 @@ const OrderTable = ({ orders }) => {
                                             </Typography>
                                         </Box>
 
-                                    }
+                                    } */}
+                                    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                        {order.status === 'pending' && (<>
+                                            <AccessTimeIcon />
+                                            <Typography variant="body2" sx={{ fontSize: "12px" }}>
+                                                {t("pending")}
+                                            </Typography>
+                                        </>)}
+                                        {order.status === 'confirmed' && (
+                                            <>
+                                                <span class="icon-double-check" style={{ fontSize: "20px", marginRight: "5px" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
+
+                                                <Typography variant="body2" sx={{ fontSize: "12px" }}>
+                                                    {t("cofirmed")}
+                                                </Typography>
+                                            </>
+                                        )}
+                                        {order.status === 'delivered' && (
+                                            <>
+                                                <LocalShippingIcon />
+                                                <Typography variant="body2" sx={{ fontSize: "12px" }}>
+                                                    {t("delivered")}
+                                                </Typography>
+                                            </>
+                                        )}
+                                        {order.status === 'rejected' && (
+                                            <>
+                                                <span class="icon-close" style={{ fontSize: "14px", marginRight: "5px" }}></span>
+                                                <Typography variant="body2" sx={{ fontSize: "12px" }}>
+                                                    {t("rejected")}
+                                                </Typography>
+                                            </>
+                                        )}
+                                        {order.status === 'cancelled' && (
+                                            <>
+                                                <CancelIcon />
+                                                <Typography variant="body2" sx={{ fontSize: "12px" }}>
+                                                    {t("cancelled")}
+                                                </Typography>
+                                            </>
+                                        )}
+
+
+                                    </Box>
+
+
+
+
                                 </TableCell>
                             </TableRow>
                         ))}

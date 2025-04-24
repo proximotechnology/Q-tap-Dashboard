@@ -11,6 +11,23 @@ import OrderDetailsNew from './OrderDetailsNew';
 import Pusher from 'pusher-js';
 import { toast } from 'react-toastify';
 
+
+
+export const parseResponseOrderItem = (item, phase = '') => {
+    if (!item) return null;
+    
+    item.meal_id = (typeof item.meal_id === "string" ? JSON.parse(item.meal_id) : item.meal_id)
+    item.quantity = (typeof item.quantity === "string" ? JSON.parse(item.quantity) : item.quantity)
+    item.size = (typeof item.size === "string" ? JSON.parse(item.size) : item.size)
+    item.discount_code = (typeof item.discount_code === "string" ? JSON.parse(item.discount_code) : item.discount_code)
+    item.extras = (typeof item.extras === "string" ? JSON.parse(item.extras) : item.extras)
+    item.variants = (typeof item.variants === "string" ? JSON.parse(item.variants) : item.variants)
+    item.phase = phase;
+
+    
+    return item
+}
+
 export const OrderBody = () => {
     const [selectedOrder, setSelectedOrder] = useState(null);// used to show details panel
     const [modalOpen, setModalOpen] = useState(false); // used to show reject panel
@@ -84,20 +101,7 @@ export const OrderBody = () => {
 
     //     },
     // ]);
-    const parseResponseOrderItem = (item, phase) => {
-        if (!item) return null;
-        console.log('parseditem', item)
-        item.meal_id = (typeof item.meal_id === "string" ? JSON.parse(item.meal_id) : item.meal_id)
-        item.quantity = (typeof item.quantity === "string" ? JSON.parse(item.quantity) : item.quantity)
-        item.size = (typeof item.size === "string" ? JSON.parse(item.size) : item.size)
-        item.discount_code = (typeof item.discount_code === "string" ? JSON.parse(item.discount_code) : item.discount_code)
-        item.extras = (typeof item.extras === "string" ? JSON.parse(item.extras) : item.extras)
-        item.variants = (typeof item.variants === "string" ? JSON.parse(item.variants) : item.variants)
-        item.phase = phase;
 
-
-        return item
-    }
 
     useEffect(() => {
         const loginclient = JSON.parse(localStorage.getItem('allClientData'))
@@ -144,14 +148,14 @@ export const OrderBody = () => {
 
                 } else if (loginclient.user.role === 'waiter') {
 
-                    
-                    orders = res.data.prepared_orders.map((item) =>item? { ...parseResponseOrderItem(item, orderPhaseType.SERVRING)} : undefined)
+
+                    orders = res.data.prepared_orders.map((item) => item ? { ...parseResponseOrderItem(item, orderPhaseType.SERVRING) } : undefined)
                     orders = orders.filter(order => order !== undefined);
                     console.log("waiter data ", orders)
                     setOrders(orders)
 
-                }else if (loginclient.user.role === 'admin') {
-                    orders = res.data.served_orders.map((item) =>item? { ...parseResponseOrderItem(item, orderPhaseType.DONING)} : undefined)
+                } else if (loginclient.user.role === 'admin') {
+                    orders = res.data.served_orders.map((item) => item ? { ...parseResponseOrderItem(item, orderPhaseType.DONING) } : undefined)
                     orders = orders.filter(order => order !== undefined);
                     console.log("admin data ", orders)
                     setOrders(orders)
@@ -169,36 +173,38 @@ export const OrderBody = () => {
     }, [])
     useEffect(() => {
         const pusher = new Pusher('63b495891d2c3cff9d36', {
-          cluster: 'eu',
+            cluster: 'eu',
         });
-    
+
         const channel = pusher.subscribe('notify-channel');
         channel.bind('form-submitted', function (data) {
-          // ✅ Show toast or handle state
-          // console.log("📢 Received from Pusher:", data);
-    
-          toast.info(`📢 pusher ${data?.message?.title}: ${data?.message?.content}`);
-          console.log('data app busher',data)
-          // You can also store in state if you want to display in Content
+            // ✅ Show toast or handle state
+            // console.log("📢 Received from Pusher:", data);
+
+            toast.info(`📢 pusher ${data?.message?.title}: ${data?.message?.content}`);
+            console.log('data app busher', data)
+            // You can also store in state if you want to display in Content
         });
-    
+
         return () => {
-          channel.unbind_all();
-          channel.unsubscribe();
+            channel.unbind_all();
+            channel.unsubscribe();
         };
-      }, []);
+    }, []);
 
     // Function to update the phase of a specific order
-    const updateOrderPhase = (orderId, newPhase ,newOrder = null ) => {
-        
+    const updateOrderPhase = (orderId, newPhase, newOrder = null) => {
+        console.log('updateOrderPhase functino ', orderId, " = ", newPhase, " = ", newOrder)
         setOrders(prevOrders =>
-            prevOrders.map(order =>{
-                if(!newOrder){
-                    order = newOrder
+            prevOrders.map(order => {
+                console.log('updateOrderPhase functino order ', order)
+                if (newOrder) {
+                    return order?.id === orderId ? { ...newOrder, phase: newPhase } : order;
                 }
-                return order.id === orderId ?  { ...order, phase: newPhase } : order;
+                return order?.id === orderId ? { ...order, phase: newPhase } : order;
+
             }
-                
+
             )
         );
     };
@@ -257,7 +263,7 @@ export const OrderBody = () => {
 
 
                         {orders.map((order) => (
-                            order.phase === orderPhaseType.ACCEPTING && (
+                            order?.phase === orderPhaseType.ACCEPTING && (
                                 <OrderCard
                                     key={order.id}
                                     order={order}
@@ -290,7 +296,7 @@ export const OrderBody = () => {
                             {t("accepted")}
                         </Box>
                         {orders.map((order) => (
-                            (order.phase === orderPhaseType.PAYING || order.phase === orderPhaseType.PREPAREING || order.phase === orderPhaseType.SERVRING || order.phase === orderPhaseType.DONING)
+                            (order?.phase === orderPhaseType.PAYING || order?.phase === orderPhaseType.PREPAREING || order?.phase === orderPhaseType.SERVRING || order?.phase === orderPhaseType.DONING)
                             && (
                                 <OrderCard
                                     key={order.id}
@@ -321,7 +327,7 @@ export const OrderBody = () => {
                             }} >
                             {t("done")}
                         </Box>
-                        {orders.map((order) => order.phase === orderPhaseType.CLOSING && (
+                        {orders.map((order) => order?.phase === orderPhaseType.CLOSING && (
                             (
                                 <OrderCard
                                     key={order.id}
@@ -359,10 +365,10 @@ export const OrderBody = () => {
             </Grid>
 
             <Box sx={{ marginTop: 'auto' }}>
-                <Footer selectedOrder={selectedOrder}/>
+                <Footer selectedOrder={selectedOrder} />
             </Box>
-            <Box sx={{ height:'40px' }}>
-                
+            <Box sx={{ height: '40px' }}>
+
             </Box>
             <RejectionModal open={modalOpen} onClose={handleModalClose} />
         </Box>

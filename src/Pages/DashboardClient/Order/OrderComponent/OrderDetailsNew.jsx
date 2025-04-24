@@ -54,8 +54,8 @@ const OrderDetailsNew = ({
                 setIsLoading(false)
             }
         }
-
-        getDelivery()
+        if (loginUser.user.role === 'admin')
+            getDelivery()
     }, [])
 
 
