@@ -18,7 +18,7 @@ export const PersonalProvider = ({ children }) => {
 
         pricing_way: '',
         pricing_id: '',
-        payment_method: '',
+        payment_method: 'cash',
         discount_id: '',
     });
 
@@ -50,6 +50,8 @@ export const PersonalProvider = ({ children }) => {
         });
     };
 
+    // console.log("context personalData" , personalData);
+    
 
     return (
         <PersonalContext.Provider value={{ personalData, updatePersonalData, clearPersonalData, setPersonalData }}>

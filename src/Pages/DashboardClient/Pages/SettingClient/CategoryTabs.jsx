@@ -6,40 +6,52 @@ import ProfilePage from './ProfilePage';
 import { Box, useTheme } from '@mui/system';
 import Payment from './Payment';
 import { Share } from './Share';
-import  Menu  from './Menu';
+import Menu from './Menu';
 import { Tables } from './Tables';
 import { Delivery } from './delivery/Delivery';
 import RoomServiceOutlinedIcon from '@mui/icons-material/RoomServiceOutlined';
 import { useTranslation } from 'react-i18next';
 //TODO: navigate button styling
 const CategoryTabs = () => {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const theme = useTheme();
     const [buttons, setButtons] = useState([
-        { name: 'profile', label: 'Profile', 
+        {
+            name: 'profile', label: 'Profile',
             icon: <PersonOutlineOutlinedIcon />,
-            content: <ProfilePage/> , selected: true },
+            content: <ProfilePage />, selected: true
+        },
 
-        { name: 'menu', label: 'Menu', 
+        {
+            name: 'menu', label: 'Menu',
             icon: <RoomServiceOutlinedIcon sx={{ fontSize: "26px" }} />,
-            content: <Menu/>, selected: false },
+            content: <Menu />, selected: false
+        },
 
-        { name: 'payment', label: 'payment', 
+        {
+            name: 'payment', label: 'payment',
             // icon: <span class="icon-chair" style={{fontSize:"20px"}}></span>,
-            icon: <CreditCardOutlinedIcon sx={{fontSize:"23px"}}/> ,
-            content:  <Payment/>, selected: false },
+            icon: <CreditCardOutlinedIcon sx={{ fontSize: "23px" }} />,
+            content: <Payment />, selected: false
+        },
 
-        { name: 'tables', label: 'tables', 
-            icon: <span class="icon-chair" style={{fontSize:"20px"}}></span>,
-            content: <Tables/> , selected: false },
+        {
+            name: 'tables', label: 'tables',
+            icon: <span class="icon-chair" style={{ fontSize: "20px" }}></span>,
+            content: <Tables />, selected: false
+        },
 
-        { name: 'Delivery', label: 'Delivery', 
-            icon:  <span class="icon-scooter-1"></span>, 
-            content: <Delivery /> , selected: false },
+        {
+            name: 'Delivery', label: 'Delivery',
+            icon: <span class="icon-scooter-1"></span>,
+            content: <Delivery />, selected: false
+        },
 
-        { name: 'share', label: 'share', 
-            icon: <span class="icon-send-1" ></span>, 
-            content: <Share />, selected: false },
+        {
+            name: 'share', label: 'share',
+            icon: <span class="icon-send-1" ></span>,
+            content: <Share />, selected: false
+        },
 
     ]);
 
@@ -55,30 +67,36 @@ const CategoryTabs = () => {
 
     return (
         <Box>
-            <Box display='grid' gridTemplateColumns='repeat(auto-fit, minmax(100px, 1fr))'>
-            {buttons.map((button) => (
-                <Button
-                    key={button.name}
-                    onClick={() => handleButtonClick(button.name)}
-                    style={{
-                        backgroundColor: button.selected ? theme.palette.orangePrimary.main : 'transparent',
-                        color: button.selected ? 'white' : '#575756',
-                        marginRight: '8px',
-                        textTransform: "capitalize",
-                        border: button.selected ? "none" : "1px solid #AAAAAA",
-                        borderRadius: "6px",
-                        padding: "3px 25px",
-                    }}
+            <Box display="flex" flexDirection="column" alignItems="Start">
+                <Box
+                    display='grid'
+                    gridTemplateColumns='repeat(auto-fit, minmax(80px, 1fr))'
+                    gap={1}
+                    width={{ xs: "100%", sm: "75%" }} // Adjust width for small screens
                 >
-                    {React.cloneElement(button.icon, {
-                        style: { color: button.selected ? 'white' : '#AAAAAA', fontSize:"18px",marginRight: '5px' }
-                    })}
-                    <Typography sx={{fontSize:"12px",}}>{t(button.label)} </Typography> 
-                </Button>
-            ))}
+                    {buttons.map((button) => (
+                        <Button
+                            key={button.name}
+                            onClick={() => handleButtonClick(button.name)}
+                            style={{
+                                backgroundColor: button.selected ? theme.palette.orangePrimary.main : 'transparent',
+                                color: button.selected ? 'white' : '#575756',
+                                marginRight: '8px',
+                                textTransform: "capitalize",
+                                border: button.selected ? "none" : "1px solid #AAAAAA",
+                                borderRadius: "6px",
+                                padding: "3px 20px",
+                            }}
+                        >
+                            {React.cloneElement(button.icon, {
+                                style: { color: button.selected ? 'white' : '#AAAAAA', fontSize: "18px", marginRight: '5px' }
+                            })}
+                            <Typography sx={{ fontSize: "12px", }}>{t(button.label)} </Typography>
+                        </Button>
+                    ))}
+                </Box>
             </Box>
-
-            <Box  >
+            <Box>
                 {activeContent}
             </Box>
         </Box>

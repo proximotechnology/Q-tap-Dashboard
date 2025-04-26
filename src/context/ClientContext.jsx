@@ -35,7 +35,7 @@ export const ClientProvider = ({ children }) => {
       menuLanguage: "",
       numberOfTables: "1",
       design: "grid",
-      mode: "light",
+      mode: "white",
       workSchedules: {
         Saturday: ["9am", "7pm"],
         Sunday: ["9am", "7pm"],

@@ -179,7 +179,7 @@ const ProfilePage = () => {
   return (
     <Paper elevation={3} style={{ padding: '20px 30px', borderRadius: '10px', marginTop: '16px' }}>
       <Box elevation={3} sx={{ paddingTop: '15px' }}>
-        <Grid container spacing={3} justifyContent="space-between">
+        <Grid container spacing={{xl:"-100px",lg:"-10px" , sm:"-50px"}} justifyContent="space-between">
           {/* <Box display="flex" justifyContent="space-around" paddingTop="20px"> */}
             {/* Profile Image Column */}
             <Grid item xs={12} sm={12} md={3} lg={2} container justifyContent="center" alignItems="flex-start">
