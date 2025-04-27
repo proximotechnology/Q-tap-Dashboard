@@ -4,10 +4,9 @@ import * as XLSX from 'xlsx';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
-import { DeliveredDetails } from './DeliveredDetails'
 import { OrderContext } from './DeliveredContext';
 import { useTranslation } from 'react-i18next';
-export const DeliveredTable = ({ orders }) => {
+export const DeliveredTable = ({ orders, setSelectedOrder, setIsOrderDetailsOpen }) => {
   const theme = useTheme();
   const handleExport = () => {
     const data = [
@@ -23,8 +22,11 @@ export const DeliveredTable = ({ orders }) => {
     XLSX.utils.book_append_sheet(workbook, worksheet, "Transactions");
     XLSX.writeFile(workbook, "transactions.xlsx");
   };
-  const { handleOpen } = useContext(OrderContext);
-  const {t} = useTranslation();
+  const handleOpen = (order) => {
+    setSelectedOrder(order)
+    setIsOrderDetailsOpen(true)
+  }
+  const { t } = useTranslation();
   return (
     <>
       <Box
@@ -110,7 +112,7 @@ export const DeliveredTable = ({ orders }) => {
         />
       </Box>
 
-      <TableContainer component={Paper} sx={{ height: "68vh" ,whiteSpace:'nowrap' }}>
+      <TableContainer component={Paper} sx={{ height: "68vh", whiteSpace: 'nowrap' }}>
         <Table>
           <TableHead>
             <TableRow>
@@ -133,7 +135,7 @@ export const DeliveredTable = ({ orders }) => {
 
                 <TableCell sx={{ borderBottom: "none", fontSize: "12px", textAlign: "center", color: order.paymentColor }}>
                   <Box display="flex" alignItems="center" justifyContent="center">
-                  <img src="/assets/balance.svg" alt="icon" style={{ width: "16px", height: "16px", marginRight:"5px" }} />
+                    <img src="/assets/balance.svg" alt="icon" style={{ width: "16px", height: "16px", marginRight: "5px" }} />
                     <span>{t(order.payment)}</span>
                   </Box>
                 </TableCell>
@@ -157,7 +159,6 @@ export const DeliveredTable = ({ orders }) => {
             ))}
           </TableBody>
         </Table>
-        <DeliveredDetails />
       </TableContainer>
 
     </>

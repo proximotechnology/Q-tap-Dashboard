@@ -40,7 +40,6 @@ const ProductDetails = ({
         const localcart = localStorage.getItem('cartItems');
         let storedCartItems = []
         if (localcart) {
-            console.log('here')
             storedCartItems = JSON.parse(localcart);
         }
         setCartItems(storedCartItems);
@@ -63,23 +62,46 @@ const ProductDetails = ({
         setCartItems(updatedCartItems);
         localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
     };
+    function haveSameExtrasAndOptions(obj1, obj2) {
+        if (obj1.selectedExtras && obj2.selectedExtras) {
+            const extras1 = obj1.selectedExtras?.map(e => e.id).sort();
+            const extras2 = obj2.selectedExtras?.map(e => e.id).sort();
+
+            const options1 = obj1.selectedOptions?.map(o => o.id).sort();
+            const options2 = obj2.selectedOptions?.map(o => o.id).sort();
+
+            const extrasEqual = JSON.stringify(extras1) === JSON.stringify(extras2);
+            const optionsEqual = JSON.stringify(options1) === JSON.stringify(options2);
+
+            return extrasEqual && optionsEqual;
+        } else if (!obj1.selectedExtras && !obj2.selectedExtras) {
+            return true;
+        }else {
+            return false;
+        }
+
+    }
     /* this call by the button  */
     const addItemToCart = (newItem) => {
+        console.log('new', newItem)
+        const quantity = getItemCount(newItem.id)
+        //selectedExtras / selectedOptions
         // get the first item or undefine if not exist
-        const existingItem = cartItems.find(cartItem => cartItem.id === newItem.id);
+        const existingItem = cartItems.find(cartItem => (cartItem.id === newItem.id && cartItem.selectedSize === newItem.selectedSize && haveSameExtrasAndOptions(cartItem, newItem)));
+        console.log('exist', existingItem)
         // check if item already in cart 
         if (existingItem) {
             // increase the quantity of the item
             updateCart(newItem.id, 'increase');
         } else {
             // add new item to cart and update the local storage and cartitem , cartcount <state>
-            const updatedCart = [...cartItems, { ...newItem, quantity: 1 }];
+            const updatedCart = [...cartItems, { ...newItem, quantity: quantity }];
             setCartItems(updatedCart);
             setCartCount(cartCount + 1)
             localStorage.setItem('cartItems', JSON.stringify(updatedCart));
         }
     };
-//TODO: delete this section get item quantity from property in the  cartItems
+    //TODO: delete this section get item quantity from property in the  cartItems
     const [itemCount, setItemCount] = useState([]); // TODO: what this do 
 
     const handleAddItem = (itemId) => {

@@ -9,8 +9,8 @@ import BedtimeOutlinedIcon from '@mui/icons-material/BedtimeOutlined';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { useTranslation } from 'react-i18next';
 import Language from '../../../Component/dashboard/TopBar/Language';
-export const DeliveredHeader = () => {
-    const {t} = useTranslation();
+export const DeliveredHeader = ({ totalDeliveredOrders, canceledOrders, deliveredOrders }) => {
+    const { t } = useTranslation();
     const theme = useTheme();
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -36,9 +36,10 @@ export const DeliveredHeader = () => {
     const handleChange = () => {
         setChecked(!checked);
     };
-    const [showDetails, setShowDetails] = useState(true);
+    /// deatils
+    const [showDetails, setShowDetails] = useState(false);
     const toggleDetails = () => setShowDetails((prev) => !prev);
-
+    console.log(totalDeliveredOrders, canceledOrders, deliveredOrders)
     return (
         <Box>
             <AppBar position="static" style={{
@@ -78,7 +79,7 @@ export const DeliveredHeader = () => {
                                     {t("totalDeliveredOrders")}
                                 </Typography>
                                 <Typography variant="h3" sx={{ color: theme.palette.orangePrimary.main, paddingLeft: "10px" }}>
-                                    500
+                                    {totalDeliveredOrders?totalDeliveredOrders:0}
                                 </Typography>
                             </Box>
                         </Grid>
@@ -98,7 +99,7 @@ export const DeliveredHeader = () => {
                                     <CalendarMonthIcon sx={{ fontSize: "15px" }} />
                                 </Box>
                                 <Typography variant="h3" color="limegreen">
-                                    18
+                                    {deliveredOrders?deliveredOrders:0}
                                 </Typography>
                             </Box>
                         </Grid>
@@ -117,16 +118,16 @@ export const DeliveredHeader = () => {
                                     <CalendarMonthIcon sx={{ fontSize: "15px" }} />
                                 </Box>
                                 <Typography variant="h3" color="#E02828">
-                                    03
+                                    {canceledOrders?canceledOrders:0}
                                 </Typography>
                             </Box>
                         </Grid>
                     </Grid>
-                    {showDetails && <DeliveredDetails onClose={toggleDetails} />}
+                    {showDetails && <DayDeliveredDetails onClose={toggleDetails}  totalDeliveredOrders={totalDeliveredOrders} canceledOrders={canceledOrders}  deliveredOrders={deliveredOrders}/>}
                     <Box
                         aria-describedby={id}
                         onClick={handlePopoverClick}
-                        sx={{ display: "flex", alignItems: "center", gap: "3px", marginLeft: "10px", cursor: "pointer",position:'relative',zIndex:9 }}
+                        sx={{ display: "flex", alignItems: "center", gap: "3px", marginLeft: "10px", cursor: "pointer", position: 'relative', zIndex: 9 }}
                     >
                         <IconButton color="inherit" sx={{
                             backgroundColor: theme.palette.orangePrimary.main,
@@ -237,15 +238,15 @@ export const DeliveredHeader = () => {
                     </Popover>
 
                 </Toolbar>  {/*  top Bar  */}
-                
-                <Box sx={{ display: "flex", alignItems: "center", marginLeft: "50px", marginTop: "-20px" ,flexWrap:'wrap' ,position:'relative',zIndex:'99'}}>
-                <Button
-                onClick={toggleDetails}
-                sx={{  display:{sm:'block',md:'none' },}}
-                >
-                    {t('openStatus')}
-                </Button>
-                    
+
+                <Box sx={{ display: "flex", alignItems: "center", marginLeft: "50px", marginTop: "-20px", flexWrap: 'wrap', position: 'relative', zIndex: '99' }}>
+                    <Button
+                        onClick={toggleDetails}
+                        sx={{ display: { sm: 'block', md: 'none' }, }}
+                    >
+                        {t('openStatus')}
+                    </Button>
+
                     <Box >
                         {checkedAv ?
                             <Typography sx={{ display: "flex", textAlign: "center", alignItems: "center" }} >
@@ -301,7 +302,7 @@ export const DeliveredHeader = () => {
 
 
 
-const DeliveredDetails = ({ onClose }) => {
+const DayDeliveredDetails = ({ onClose ,totalDeliveredOrders, canceledOrders, deliveredOrders }) => {
     const { t } = useTranslation();
     const theme = useTheme();
     return (
@@ -312,71 +313,71 @@ const DeliveredDetails = ({ onClose }) => {
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
                 zIndex: 9000,
-                background:theme.palette.secondaryColor.main,
-                padding:'1rem',
-                borderRadius:"1rem"
+                background: theme.palette.secondaryColor.main,
+                padding: '1rem',
+                borderRadius: "1rem"
             }}
         >
-         <Box container spacing={2} alignItems="center" justifyContent="end" sx={{ marginRight: "80px" }} >
-                        <Grid item>
-                            <Box
-                                sx={{
-                                    width: "160px",
-                                    borderRadius: '10px',
-                                    padding: "5px 0px",
-                                    textAlign: "left",
-                                    border: '2px solid #ef7d00',
-                                }}
-                            >
-                                <Typography variant="subtitle2" color='white'
-                                    sx={{ borderBottom: '2px solid #ef7d00', alignItems: "center", paddingLeft: "10px", fontSize: "10px" }}>
-                                    {t("totalDeliveredOrders")}
-                                </Typography>
-                                <Typography variant="h3" sx={{ color: theme.palette.orangePrimary.main, paddingLeft: "10px" }}>
-                                    500
-                                </Typography>
-                            </Box>
-                        </Grid>
-
-                        <Grid item>
-                            <Box
-                                sx={{
-                                    width: "150px",
-                                    padding: '5px 0px',
-                                    textAlign: 'left',
-                                }}
-                            >
-                                <Box sx={{ display: "flex", justifyContent: "space-between", borderBottom: '2px solid #ef7d00' }}>
-                                    <Typography variant="subtitle2" sx={{ color: 'white', fontSize: "10px", }}>
-                                        {t("dailyDeliveredOrders")}
-                                    </Typography>
-                                    <CalendarMonthIcon sx={{ fontSize: "15px" }} />
-                                </Box>
-                                <Typography variant="h3" color="limegreen">
-                                    18
-                                </Typography>
-                            </Box>
-                        </Grid>
-                        <Grid item>
-                            <Box
-                                sx={{
-                                    width: "150px",
-                                    padding: '5px 0px',
-                                    textAlign: 'left',
-                                }}
-                            >
-                                <Box sx={{ display: "flex", justifyContent: "space-between", borderBottom: '2px solid #ef7d00' }}>
-                                    <Typography variant="subtitle2" sx={{ color: 'white', fontSize: "10px", }}>
-                                        {t("dailyCancaledOrders")}
-                                    </Typography>
-                                    <CalendarMonthIcon sx={{ fontSize: "15px" }} />
-                                </Box>
-                                <Typography variant="h3" color="#E02828">
-                                    03
-                                </Typography>
-                            </Box>
-                        </Grid>
+            <Box container spacing={2} alignItems="center" justifyContent="end" sx={{ marginRight: "80px" }} >
+                <Grid item>
+                    <Box
+                        sx={{
+                            width: "160px",
+                            borderRadius: '10px',
+                            padding: "5px 0px",
+                            textAlign: "left",
+                            border: '2px solid #ef7d00',
+                        }}
+                    >
+                        <Typography variant="subtitle2" color='white'
+                            sx={{ borderBottom: '2px solid #ef7d00', alignItems: "center", paddingLeft: "10px", fontSize: "10px" }}>
+                            {t("totalDeliveredOrders")}
+                        </Typography>
+                        <Typography variant="h3" sx={{ color: theme.palette.orangePrimary.main, paddingLeft: "10px" }}>
+                            {totalDeliveredOrders}
+                        </Typography>
                     </Box>
+                </Grid>
+
+                <Grid item>
+                    <Box
+                        sx={{
+                            width: "150px",
+                            padding: '5px 0px',
+                            textAlign: 'left',
+                        }}
+                    >
+                        <Box sx={{ display: "flex", justifyContent: "space-between", borderBottom: '2px solid #ef7d00' }}>
+                            <Typography variant="subtitle2" sx={{ color: 'white', fontSize: "10px", }}>
+                                {t("dailyDeliveredOrders")}
+                            </Typography>
+                            <CalendarMonthIcon sx={{ fontSize: "15px" }} />
+                        </Box>
+                        <Typography variant="h3" color="limegreen">
+                            {deliveredOrders}
+                        </Typography>
+                    </Box>
+                </Grid>
+                <Grid item>
+                    <Box
+                        sx={{
+                            width: "150px",
+                            padding: '5px 0px',
+                            textAlign: 'left',
+                        }}
+                    >
+                        <Box sx={{ display: "flex", justifyContent: "space-between", borderBottom: '2px solid #ef7d00' }}>
+                            <Typography variant="subtitle2" sx={{ color: 'white', fontSize: "10px", }}>
+                                {t("dailyCancaledOrders")}
+                            </Typography>
+                            <CalendarMonthIcon sx={{ fontSize: "15px" }} />
+                        </Box>
+                        <Typography variant="h3" color="#E02828">
+                            {canceledOrders}
+                        </Typography>
+                    </Box>
+                </Grid>
+            </Box>
             <Button
                 onClick={onClose}
                 style={{
@@ -395,5 +396,6 @@ const DeliveredDetails = ({ onClose }) => {
                 X
             </Button>
         </div>
-)};
+    )
+};
 

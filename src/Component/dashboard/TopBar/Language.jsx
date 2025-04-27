@@ -22,7 +22,6 @@ export const Language = () => {
     }, [i18n.language])
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
-        console.log("open")
 
     };
 
@@ -37,7 +36,6 @@ export const Language = () => {
                 document.documentElement.dir = 'rtl';
         }
         setAnchorEl(null);
-        console.log("close")
     };
 
 

@@ -15,7 +15,7 @@ import { toast } from 'react-toastify';
 
 export const parseResponseOrderItem = (item, phase = '') => {
     if (!item) return null;
-    
+
     item.meal_id = (typeof item.meal_id === "string" ? JSON.parse(item.meal_id) : item.meal_id)
     item.quantity = (typeof item.quantity === "string" ? JSON.parse(item.quantity) : item.quantity)
     item.size = (typeof item.size === "string" ? JSON.parse(item.size) : item.size)
@@ -24,7 +24,7 @@ export const parseResponseOrderItem = (item, phase = '') => {
     item.variants = (typeof item.variants === "string" ? JSON.parse(item.variants) : item.variants)
     item.phase = phase;
 
-    
+
     return item
 }
 
@@ -39,74 +39,9 @@ export const OrderBody = () => {
     const theme = useTheme();
 
 
-
-    // const [orders, setOrders] = useState([
-    //     {
-    //         id: '3208',
-    //         items: 4,
-    //         order: "Order Placed ,Unpaid",
-    //         state: "Rejected",
-    //         pay: 'Unpaid',
-    //         date: 'Monday, August 4, 2024 3:59 PM',
-    //         table: 'Table 02',
-    //         total: 200.00,
-    //         subTotal: 190.00,
-    //         tax: 10.00,
-    //         discount: 0.00,
-    //         orderDetails: [
-    //             { num: "2", item: 'Negrsco', size: 'M', extras: ['Extra sauce'], price: 50.00 },
-    //             { num: "1", item: 'Tea', price: 10.00 },
-    //         ],
-    //         comment: "Don't add onions Please",
-    //         paymentMethod: 'Cash',
-    //         dineMethod: {
-    //             type: 'Dine in', table: "T02", area: 'B02', name: 'Yoyo',
-    //             address: '21 Algaish St, Mansoura, Dakahlia', phone: '555-1234'
-    //         },
-    //         chef: 'afaf',
-    //         cashier: "Ahmed",
-    //         waiter: "Aya",
-    //         preparingTime: 30,
-    //         name: '',
-    //         address: '',
-    //         phone: '',
-    //     },
-    //     {
-    //         id: '32348',
-    //         items: 7,
-    //         order: "Order Placed ,Unpaid",
-    //         state: "Done",
-    //         pay: 'paid',
-    //         date: 'Sunday, August 4, 2024 3:59 PM',
-    //         table: 'Table 02',
-    //         total: 100.00,
-    //         subTotal: 190.00,
-    //         tax: 10.00,
-    //         discount: 0.00,
-    //         orderDetails: [
-    //             { num: "5", item: 'cap cake', size: 'M', extras: ['Extra chocolate'], price: 50.00 },
-    //             { num: "1", item: 'coffe', price: 20.00 },
-    //         ],
-    //         comment: "Don't add onions Please",
-    //         paymentMethod: 'Cash',
-    //         dineMethod: {
-    //             type: 'Delivery', table: "T02", area: 'B02', name: 'John Doe',
-    //             address: '21 Algaish St, Mansoura, Dakahlia', phone: '555-1234'
-    //         },
-    //         chef: 'mohamed',
-    //         cashier: "Ahmed",
-    //         waiter: "mostafa",
-    //         preparingTime: 30,
-
-
-    //     },
-    // ]);
-
-
     useEffect(() => {
         const loginclient = JSON.parse(localStorage.getItem('allClientData'))
         setClient(loginclient)
-        console.log("loginClient ", loginclient)
         const handleClient = async () => {
             try {
 
@@ -120,7 +55,7 @@ export const OrderBody = () => {
                     }
                 )
 
-                console.log('role : ', loginclient.user.role, ' order res : ', res)
+                console.log(res)
 
                 // each request has its response data :
                 ///-------------------------------------------
@@ -134,7 +69,6 @@ export const OrderBody = () => {
                 if (loginclient.user.role === 'chef') {
 
                     orders = res.data.new_orders.map((item) => parseResponseOrderItem(item, orderPhaseType.ACCEPTING))
-                    console.log("parde data ", orders)
                     const savedOrder = localStorage.getItem('chefAcceptedOrder')
                     const parsedSavedOrder = savedOrder ? JSON.parse(savedOrder) : []
                     setOrders([...orders, ...parsedSavedOrder])
@@ -143,7 +77,7 @@ export const OrderBody = () => {
 
                     orders = res.data.accepted_orders.map((item) => item ? { ...parseResponseOrderItem(item, orderPhaseType.PAYING), chef: item.user } : undefined)
                     orders = orders.filter(order => order !== undefined);
-                    console.log("parde data ", orders)
+
                     setOrders(orders)
 
                 } else if (loginclient.user.role === 'waiter') {
@@ -151,15 +85,42 @@ export const OrderBody = () => {
 
                     orders = res.data.prepared_orders.map((item) => item ? { ...parseResponseOrderItem(item, orderPhaseType.SERVRING) } : undefined)
                     orders = orders.filter(order => order !== undefined);
-                    console.log("waiter data ", orders)
+
                     setOrders(orders)
 
                 } else if (loginclient.user.role === 'admin') {
                     orders = res.data.served_orders.map((item) => item ? { ...parseResponseOrderItem(item, orderPhaseType.DONING) } : undefined)
                     orders = orders.filter(order => order !== undefined);
-                    console.log("admin data ", orders)
-                    setOrders(orders)
+                    orders = orders.filter(order => !order.orders_processing.some(item=>item.status === 'done'));
+
+
+                    try {
+                        console.log('admin parsed orders', orders)
+                        const res = await axios.get(`${orderEndPoint.BASE_URL}${orderEndPoint[loginclient.user.role].fetch[2]}`,
+                            {
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+                                },
+
+                            }
+                        )
+                        let delivryorders = []
+                        console.log('admin fetch', res)
+                        delivryorders = res.data.prepared_orders.map((item) => item ? { ...parseResponseOrderItem(item, orderPhaseType.DONING) } : undefined)
+                        delivryorders = delivryorders.filter(order => order !== undefined);
+                        delivryorders = delivryorders.filter(order => order.type === "delivery" && !order.orders_processing.some(item=>item.status === 'done'));
+                        console.log('admin parsed delivery', delivryorders)
+
+                        setOrders([...delivryorders, ...orders].sort((a, b) => a.id - b.id));
+                    }
+
+                    catch (error) {
+                        console.log("admin fetch", error)
+                    }
                 }
+
+
 
             } catch (error) {
 
@@ -171,33 +132,87 @@ export const OrderBody = () => {
         handleClient()
 
     }, [])
+    //live update 
     useEffect(() => {
+        if (!client) return;
         const pusher = new Pusher('63b495891d2c3cff9d36', {
             cluster: 'eu',
         });
-
+        console.log('declare pusher')
         const channel = pusher.subscribe('notify-channel');
         channel.bind('form-submitted', function (data) {
             // ✅ Show toast or handle state
             // console.log("📢 Received from Pusher:", data);
+            /**
+             * if order new     
+             *      1 - show to all the chef
+             * if one chef accept the order 
+             *      1- show the order to online cashier
+             *      2- delete it from other chef
+             * if cashier receive payment
+             *      1- delete the order from other online cashier
+             * if chef prepare the order
+             *      1- show the order to online waiter
+             * if waiter serve the order 
+             *      1- delete the order from other waiter
+             *      2- add order to admin done
+             */
+            if (data.type === "add_order") {
+                toast.info(`📢 pusher new order add`);
+                if (client?.user?.role === "chef") {
+                    setOrders((prev => [...prev, parseResponseOrderItem(data.message, orderPhaseType.ACCEPTING)]))
+                }
+            }
 
-            toast.info(`📢 pusher ${data?.message?.title}: ${data?.message?.content}`);
-            console.log('data app busher', data)
-            // You can also store in state if you want to display in Content
+            if (data.type === 'accepted_order') {
+
+                toast.info(`📢 pusher accepted_order`);
+                if (client?.user?.role === "chef") {
+                    removeOrder(data?.message?.id)
+                } else if (client?.user?.role === "cashier") {
+                    data.message.id = data.message.order_id
+                    setOrders((prev => [...prev, parseResponseOrderItem(data.message, orderPhaseType.PAYING)]))
+                }
+            }
+            if (data.type === 'payment_received_order') {
+
+                toast.info(`📢 pusher payment_recived_order`);
+                if (client?.user?.role === "cashier") {
+                    //id here is id of request not the order the order id is in order_id
+                    removeOrder(data.message.order_id)
+                }
+            }
+
+            if (data.type === 'prepared_order') {
+                toast.info(`📢 pusher prepared_order`);
+                if (client?.user?.role === "waiter") {
+                    setOrders((prev => [...prev, parseResponseOrderItem(data.message, orderPhaseType.SERVRING)]))
+                }
+            }
+
+            if (data.type === 'served_order') {
+                toast.info(`📢 pusher served_order`);
+                if (client?.user?.role === "waiter") {
+                    removeOrder(data.message.id)
+                } else if (client?.user?.role === "waiter") {
+                    setOrders((prev => [...prev, parseResponseOrderItem(data.message, orderPhaseType.DONING)]))
+                }
+            }
+            if (data.type === 'done_order') { toast.info(`📢 pusher done_order`); }
+
+
         });
 
         return () => {
             channel.unbind_all();
             channel.unsubscribe();
         };
-    }, []);
+    }, [client]);
 
     // Function to update the phase of a specific order
     const updateOrderPhase = (orderId, newPhase, newOrder = null) => {
-        console.log('updateOrderPhase functino ', orderId, " = ", newPhase, " = ", newOrder)
         setOrders(prevOrders =>
             prevOrders.map(order => {
-                console.log('updateOrderPhase functino order ', order)
                 if (newOrder) {
                     return order?.id === orderId ? { ...newOrder, phase: newPhase } : order;
                 }
@@ -399,7 +414,7 @@ export const orderEndPoint = {
         }
     },
     admin: {
-        fetch: ['get_served_orders', 'get_delivery_available'],
+        fetch: ['get_served_orders', 'get_delivery_available', 'get_prepared_orders_delivery'],
         action: {
             orderDone: 'order_done',
             chooseDelivery: 'choose_delivery',

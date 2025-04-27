@@ -63,7 +63,7 @@ const SideBar = ({ setSelectedCategory, allMenuData, selectedCategory }) => {
                 <Menu />
             </Button>
             <Box sx={{
-                position: { xs: isOpen ? 'fixed' : 'none', sm: 'fixed' },
+                position: { xs: isOpen ? 'fixed' : 'relative', sm: 'fixed' },
                 start: 0,
                 top: 0,
                 height: '100vh',
@@ -204,7 +204,7 @@ const SideBar = ({ setSelectedCategory, allMenuData, selectedCategory }) => {
                         );
                     })}
                 </List>
-                <img src="/images/qtap.PNG" alt="logo" style={{ width: "80%", paddingLeft: "12px", position: 'absolute', bottom: "20px" }} />
+                <img src="/images/qtap.PNG" alt="logo" style={{ width: "80%", paddingInlineStart: "12px", position: 'absolute', bottom: "20px" }} />
             </Box>
         </>
     );

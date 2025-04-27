@@ -22,7 +22,7 @@ const OrderCard = ({ order, isSelected, onClick, isAccepted, isPayment, isServed
                 transition: "all 0.3s ease-in-out, top 0.1s ease-in-out",
 
             }}
-
+            key={order.id}
             onClick={onClick}
         >
             <CardContent sx={{ padding: 0, width: "100%" }}>
