@@ -96,7 +96,7 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
             }
         } catch (error) {
             console.error('Error fetching discounts:', error);
-            toast.error(t("discount.fetchErr"));
+            // toast.error(t("discount.fetchErr"));
         }
     };
 

@@ -112,7 +112,9 @@ export const Payment = () => {
   };
 
   const totals = calculateTotals();
-  console.log(selectedPlans);
+  // console.log(selectedPlans);
+  // console.log("radio payment way", selectedValue);
+  
 
   const handleNext = () => {
     if (selectedPlans.length === 0 || !selectedPlans[0].pricingWay) {

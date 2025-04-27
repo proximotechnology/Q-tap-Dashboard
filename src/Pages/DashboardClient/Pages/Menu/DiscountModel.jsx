@@ -183,7 +183,7 @@ export const DiscountModel = ({ open, handleClose }) => {
                 <Typography variant='body2' sx={{ fontSize: "11px", color: "#575756" }}>{t("code")}</Typography>
                 <TextField
                   fullWidth
-                  type="number"
+                  
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
                   placeholder={t("plEnterOnlyDigits")}
@@ -251,7 +251,7 @@ export const DiscountModel = ({ open, handleClose }) => {
                       onChange={(e) => handleInputChange(index, "code", e.target.value)}
                       size="small"
                       sx={{ width: "70px", height: "30px", "& .MuiInputBase-root": { height: "30px", fontSize: "10px" } }}
-                      type="number"
+                      
                     />
                   ) : (
                     discount.code

@@ -310,13 +310,10 @@ const Support = () => {
       if (!selectedTicket) return;
 
       const data = {
-        Customer_Name: customerName,
-        Customer_Email: customerEmail,
+
         content: content,
         status: status,
-        Customer_Phone: phoneNumber,
-        client_id: JSON.parse(localStorage.getItem("allClientData")).user.id,  /////////////////////////////????????????❌
-        brunch_id: localStorage.getItem("selectedBranch")
+
       };
 
       console.log(" dat2a", data);

@@ -158,7 +158,7 @@ export const UserTable = ({ userStaff, getUserStaff }) => {
       <Table sx={{ whiteSpace: 'nowrap' }}>
         <TableHead>
           <TableRow sx={{ height: "20px", borderBottom: "2px solid #f0f0f0" }}>
-            {[t("userName"), t("created"), t("pin"), t("access"), t("status")].map((header) => (
+            {[t("userName"), t("created"), t("pin"), t("status")].map((header) => (
               <TableCell key={header} sx={{ fontSize: "12px", padding: "3px", width: `${100 / 6}%`, textAlign: "center", color: "#575756" }}>
                 {header}
               </TableCell>
@@ -167,11 +167,11 @@ export const UserTable = ({ userStaff, getUserStaff }) => {
         </TableHead>
 
         <TableBody>
-          {filteredUserStaff.map((row) => (
+          {filteredUserStaff.map((row , index) => (
             <TableRow
               key={row.id}
               sx={{
-                backgroundColor: row.id % 2 !== 0 ? '#EBEDF3' : 'white',
+                backgroundColor: index % 2 == 0 ? '#EBEDF3' : 'white',
                 height: "20px",
                 borderRadius: '20px',
                 '& td:first-of-type': { borderTopLeftRadius: '20px', borderBottomLeftRadius: '20px' },
@@ -193,9 +193,9 @@ export const UserTable = ({ userStaff, getUserStaff }) => {
                   {visiblePasswords[row.id] ? <VisibilityOutlinedIcon sx={{ fontSize: "18px" }} /> : <VisibilityOffOutlinedIcon sx={{ fontSize: "18px" }} />}
                 </IconButton>
               </TableCell>
-              <TableCell sx={{ color: "#575756", fontSize: '11px', padding: "0px 2px", textAlign: "center", borderBottom: "none" }}>
+              {/* <TableCell sx={{ color: "#575756", fontSize: '11px', padding: "0px 2px", textAlign: "center", borderBottom: "none" }}>
                 {row.access || ''}
-              </TableCell>
+              </TableCell> */}
               <TableCell sx={{ color: "#575756", fontSize: '11px', padding: "0px 2px", textAlign: "center", borderBottom: "none" }}>
                 <Button sx={{
                   color: "white", textTransform: "capitalize", fontSize: "10px",

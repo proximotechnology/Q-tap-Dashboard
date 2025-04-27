@@ -37,6 +37,7 @@ import { useClientContext } from "../../../../context/ClientContext";
 import { useTranslation } from "react-i18next";
 
 const daysOfWeek = ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"];
+const fullDays = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
 export const BusinessInfoAdmin = ({ clientInfoData }) => {
   const { t } = useTranslation();
@@ -52,7 +53,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
   const [businessType, setBusinessType] = useState("uk");
   const [menuLanguage, setMenuLanguage] = useState("US");
   const [tableCount, setTableCount] = useState("1");
-  const [mode, setMode] = useState("light");
+  const [mode, setMode] = useState("white");
   const [design, setDesign] = useState("grid");
   const [workingHours, setWorkingHours] = useState({
     selectedDays: [],
@@ -67,7 +68,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
 
   // Initialize state with clientInfoData
   useEffect(() => {
-    if (clientInfoData && clientInfoData.brunchs && clientInfoData.brunchs[branchIndex]) {
+    if (clientInfoData?.brunchs?.[branchIndex]) {
       const branch = clientInfoData.brunchs[branchIndex];
       const contactInfo = branch.contact_info?.[0] || {};
       const parseFirstValue = (str) => (str ? str.split(",")[0].trim() : "");
@@ -79,22 +80,22 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
       setCity(branch.business_city || "");
       setCurrency(branch.currency_id?.toString() || "1");
       setBusinessType(branch.business_format?.toLowerCase() || "uk");
-      setMenuLanguage("US");
-      setTableCount(branch.tables_number?.toString() || "1");
-      setMode(branch.default_mode === "white" ? "light" : "dark");
+      setMenuLanguage("US"); // API doesn't provide this, default to US
+      setTableCount(branch.serving_ways?.find(way => way.name === "dine_in")?.tables_number?.toString() || "1");
+      setMode(branch.default_mode || "white");
       setDesign(branch.menu_design?.toLowerCase() || "grid");
       setWorkingHours({
-        selectedDays: branch.workschedule?.map((schedule) => schedule.day) || [],
+        selectedDays: branch.workschedule?.map((schedule) => daysOfWeek[fullDays.indexOf(schedule.day)]) || [],
         fromTime: branch.workschedule?.[0]?.opening_time || "9:00 am",
         toTime: branch.workschedule?.[0]?.closing_time || "5:00 pm",
-        currentDay: "Sunday",
+        currentDay: branch.workschedule?.[0]?.day || "Sunday(chartreuse)",
       });
       setServingWays(branch.serving_ways?.map((way) => way.name) || []);
       setPaymentMethods(branch.payment_services?.map((service) => service.name) || []);
       setPaymentTime(branch.payment_time || "after");
       setCallWaiter(branch.call_waiter || "inactive");
 
-      // Update context to reflect branch data
+      // Update context
       updateBusinessData({
         businessName: branch.business_name || "",
         contactInfo: {
@@ -111,23 +112,15 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
         currency: branch.currency_id?.toString() || "1",
         businessType: branch.business_format?.toLowerCase() || "uk",
         menuLanguage: "US",
-        numberOfTables: branch.tables_number?.toString() || "1",
+        numberOfTables: branch.serving_ways?.find(way => way.name === "dine_in")?.tables_number?.toString() || "1",
         design: branch.menu_design?.toLowerCase() || "grid",
-        mode: branch.default_mode === "white" ? "light" : "dark",
+        mode: branch.default_mode || "white",
         workSchedules: branch.workschedule?.length
           ? branch.workschedule.reduce((acc, schedule) => {
             acc[schedule.day] = [schedule.opening_time, schedule.closing_time];
             return acc;
           }, {})
-          : {
-            Saturday: ["9am", "7pm"],
-            Sunday: ["9am", "7pm"],
-            Monday: ["9am", "7pm"],
-            Tuesday: ["9am", "7pm"],
-            Wednesday: ["9am", "7pm"],
-            Thursday: ["9am", "7pm"],
-            Friday: ["9am", "7pm"],
-          },
+          : fullDays.reduce((acc, day) => ({ ...acc, [day]: ["9am", "7pm"] }), {}),
         servingWays: {
           dine_in: branch.serving_ways?.some((way) => way.name === "dine_in") || false,
           take_away: branch.serving_ways?.some((way) => way.name === "take_away") || false,
@@ -145,7 +138,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
         callWaiter: branch.call_waiter === "active",
       });
     }
-  }, [clientInfoData, branchIndex, updateBusinessData]);
+  }, [branchIndex]);
 
   const handleBranchClick = (index) => {
     setBranchIndex(index);
@@ -153,20 +146,21 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
   };
 
   const handleModeChange = (event, newMode) => {
-    if (newMode !== null) {
+    if (newMode) {
       setMode(newMode);
       updateBusinessData({ mode: newMode });
     }
   };
 
   const handleDesignChange = (event, newDesign) => {
-    if (newDesign !== null) {
+    if (newDesign) {
       setDesign(newDesign);
       updateBusinessData({ design: newDesign });
     }
   };
 
   const handleInputChange = (field, value) => {
+    const updates = { [field]: value };
     switch (field) {
       case "businessName":
         setBusinessName(value);
@@ -194,11 +188,12 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
         break;
       case "tableCount":
         setTableCount(value);
+        updates.numberOfTables = value;
         break;
       default:
         break;
     }
-    updateBusinessData({ [field]: value });
+    updateBusinessData(updates);
   };
 
   const handleWorkingHoursChange = (updates) => {
@@ -216,10 +211,11 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
       ? workingHours.selectedDays.filter((d) => d !== day)
       : [...workingHours.selectedDays, day];
     setWorkingHours((prev) => ({ ...prev, selectedDays: newSelectedDays }));
+    const fullDay = fullDays[daysOfWeek.indexOf(day)];
     updateBusinessData({
       workSchedules: {
         ...clientData.businessInfo.workSchedules,
-        [day]: newSelectedDays.includes(day) ? [workingHours.fromTime, workingHours.toTime] : undefined,
+        [fullDay]: newSelectedDays.includes(day) ? [workingHours.fromTime, workingHours.toTime] : undefined,
       },
     });
   };
@@ -252,9 +248,9 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
     setServingWays(updatedServingWays);
     updateBusinessData({
       servingWays: {
-        dine_in: updatedServingWays.includes(t("Dine In")),
-        take_away: updatedServingWays.includes(t("Takeaway")),
-        delivery: updatedServingWays.includes(t("Delivery")),
+        dine_in: updatedServingWays.includes("dine_in"),
+        take_away: updatedServingWays.includes("take_away"),
+        delivery: updatedServingWays.includes("delivery"),
       },
     });
   };
@@ -266,9 +262,9 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
     setPaymentMethods(updatedPaymentMethods);
     updateBusinessData({
       paymentMethods: {
-        cash: updatedPaymentMethods.includes(t("cash")),
-        wallet: updatedPaymentMethods.includes(t("wallet")),
-        card: updatedPaymentMethods.includes(t("card")),
+        cash: updatedPaymentMethods.includes("cash"),
+        wallet: updatedPaymentMethods.includes("wallet"),
+        card: updatedPaymentMethods.includes("card"),
       },
     });
   };
@@ -277,8 +273,8 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
     setPaymentTime(time);
     updateBusinessData({
       paymentTime: {
-        beforeServing: time === t("beforeServing"),
-        afterServing: time === t("afterServing"),
+        beforeServing: time === "before",
+        afterServing: time === "after",
       },
     });
   };
@@ -290,10 +286,15 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
   };
 
   const handleDayToggle = (direction) => {
-    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    const currentIndex = days.indexOf(workingHours.currentDay);
-    const newIndex = (currentIndex + (direction === "next" ? 1 : -1) + days.length) % days.length;
-    setWorkingHours((prev) => ({ ...prev, currentDay: days[newIndex] }));
+    const currentIndex = fullDays.indexOf(workingHours.currentDay);
+    const newIndex = (currentIndex + (direction === "next" ? 1 : -1) + fullDays.length) % fullDays.length;
+    const newDay = fullDays[newIndex];
+    setWorkingHours((prev) => ({
+      ...prev,
+      currentDay: newDay,
+      fromTime: clientData.businessInfo.workSchedules[newDay]?.[0] || "9:00 am",
+      toTime: clientData.businessInfo.workSchedules[newDay]?.[1] || "5:00 pm",
+    }));
   };
 
   const handlePrint = () => {
@@ -352,7 +353,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
             {/* Business Info Fields */}
             <FormControl variant="outlined" fullWidth>
               <OutlinedInput
-                id="outlined-fullname"
+                id="outlined-business-name"
                 startAdornment={
                   <InputAdornment position="start">
                     <StorefrontOutlinedIcon sx={{ fontSize: "20px" }} />
@@ -368,7 +369,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
 
             <FormControl variant="outlined" fullWidth>
               <OutlinedInput
-                id="outlined-fullname"
+                id="outlined-business-phone"
                 startAdornment={
                   <InputAdornment position="start">
                     <PhoneOutlinedIcon sx={{ fontSize: "20px" }} />
@@ -384,7 +385,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
 
             <FormControl variant="outlined" fullWidth>
               <OutlinedInput
-                id="outlined-fullname"
+                id="outlined-business-email"
                 startAdornment={
                   <InputAdornment position="start">
                     <MailOutlinedIcon sx={{ fontSize: "20px" }} />
@@ -416,10 +417,10 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                   <MenuItem value="" disabled>
                     {t("country")}
                   </MenuItem>
+                  <MenuItem value="egypt">Egypt</MenuItem>
                   <MenuItem value="US">United States</MenuItem>
                   <MenuItem value="CA">Canada</MenuItem>
                   <MenuItem value="UK">United Kingdom</MenuItem>
-                  <MenuItem value="egypt">Egypt</MenuItem>
                 </Select>
               </FormControl>
 
@@ -553,6 +554,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                 <MenuItem value="3">3</MenuItem>
                 <MenuItem value="4">4</MenuItem>
                 <MenuItem value="6">6</MenuItem>
+                <MenuItem value="12">12</MenuItem>
               </Select>
             </FormControl>
 
@@ -604,29 +606,121 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                 width: "100%",
               }}
             >
-              {/* Default Mode and Menu Design */}
-              <Box
-                sx={{
-                  display: "flex",
-                  width: "100%",
-                }}
-              >
+              <Box sx={{ marginTop: "6px", display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                <Grid container direction="column" spacing={1}>
+                  <Typography
+                    variant="body2"
+                    sx={{ fontSize: "14px", fontWeight: "500", color: "#AAAAAA", textAlign: "start", margin: "0 0 5px 0px" }}
+                  >
+                    {t("defaultMode")}
+                  </Typography>
+                  <ToggleButtonGroup
+                    value={mode}
+                    exclusive
+                    onChange={handleModeChange}
+                    sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "space-around", marginLeft: "-14px" }}
+                  >
+                    <ToggleButton
+                      value="white"
+                      sx={{
+                        padding: "8px",
+                        backgroundColor: mode === "white" ? theme.palette.orangePrimary.main : "transparent",
+                        border: `1px solid ${mode === "white" ? theme.palette.orangePrimary.main : "#AAAAAA"} !important`,
+                        borderRadius: "8px !important",
+                        marginRight: "8px",
+                      }}
+                    >
+                      <WbSunnyIcon
+                        sx={{ fontSize: "30px", color: mode === "white" ? theme.palette.orangePrimary.main : "#AAAAAA" }}
+                      />
+                    </ToggleButton>
+                    <ToggleButton
+                      value="dark"
+                      sx={{
+                        padding: "8px",
+                        backgroundColor: mode === "dark" ? theme.palette.orangePrimary.main : "transparent",
+                        border: `1px solid ${mode === "dark" ? theme.palette.orangePrimary.main : "#AAAAAA"} !important`,
+                        borderRadius: "8px !important",
+                      }}
+                    >
+                      <NightlightIcon
+                        sx={{ fontSize: "30px", color: mode === "dark" ? theme.palette.orangePrimary.main : "#AAAAAA" }}
+                      />
+                    </ToggleButton>
+                  </ToggleButtonGroup>
+                </Grid>
+
+                <Divider
+                  orientation="vertical"
+                  flexItem
+                  sx={{
+                    height: "40px",
+                    width: "2px",
+                    backgroundColor: theme.palette.orangePrimary.main,
+                    margin: "auto 20px",
+                  }}
+                />
+
+                <Grid container direction="column" spacing={0.5}>
+                  <Typography
+                    variant="body2"
+                    sx={{ fontSize: "14px", fontWeight: "500", color: "#AAAAAA", textAlign: "start", margin: "0 0 5px 0px" }}
+                  >
+                    {t("menus.design")}
+                  </Typography>
+                  <ToggleButtonGroup
+                    value={design}
+                    exclusive
+                    onChange={handleDesignChange}
+                    sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "space-around", marginLeft: "-14px" }}
+                  >
+                    <ToggleButton
+                      value="grid"
+                      sx={{
+                        padding: "8px",
+                        backgroundColor: design === "grid" ? theme.palette.orangePrimary.main : "transparent",
+                        border: `1px solid ${design === "grid" ? theme.palette.orangePrimary.main : "#AAAAAA"} !important`,
+                        borderRadius: "8px !important",
+                        marginRight: "8px",
+                      }}
+                    >
+                      <ViewQuiltIcon
+                        sx={{ fontSize: "30px", color: design === "grid" ? theme.palette.orangePrimary.main : "#AAAAAA" }}
+                      />
+                    </ToggleButton>
+                    <ToggleButton
+                      value="list"
+                      sx={{
+                        padding: "8px",
+                        backgroundColor: design === "list" ? theme.palette.orangePrimary.main : "transparent",
+                        border: `1px solid ${design === "list" ? theme.palette.orangePrimary.main : "#AAAAAA"} !important`,
+                        borderRadius: "8px !important",
+                      }}
+                    >
+                      <FormatListBulletedIcon
+                        sx={{ fontSize: "30px", color: design === "list" ? theme.palette.orangePrimary.main : "#AAAAAA" }}
+                      />
+                    </ToggleButton>
+                  </ToggleButtonGroup>
+                </Grid>
+              </Box>
+              {/* Default Mode and Menu Design
+              <Box sx={{ display: "flex", width: "100%" }}>
                 <Grid container spacing={1}>
                   <Typography variant="h3" sx={{ fontSize: "13px", width: "100%", fontWeight: "500", color: "gray" }}>
                     {t("defaultMode")}
                   </Typography>
                   <ToggleButtonGroup value={mode} exclusive onChange={handleModeChange}>
                     <ToggleButton
-                      value="light"
+                      value="white"
                       sx={{
                         padding: "5px 8px",
-                        backgroundColor: mode === "light" ? theme.palette.orangePrimary.main : "inherit",
-                        color: mode === "light" ? "#FFFFFF" : "gray",
+                        backgroundColor: mode === "white" ? theme.palette.orangePrimary.main : "inherit",
+                        color: mode === "white" ? "#FFFFFF" : "gray",
                       }}
                     >
-                      <WbSunnyIcon sx={{ fontSize: "30px", color: mode === "light" ? theme.palette.orangePrimary.main : "inherit" }} />
+                      <WbSunnyIcon sx={{ fontSize: "30px" }} />
                     </ToggleButton>
-
                     <ToggleButton
                       value="dark"
                       sx={{
@@ -635,7 +729,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                         color: mode === "dark" ? "#FFFFFF" : "gray",
                       }}
                     >
-                      <NightlightIcon sx={{ fontSize: "30px", color: mode === "dark" ? theme.palette.orangePrimary.main : "inherit" }} />
+                      <NightlightIcon sx={{ fontSize: "30px" }} />
                     </ToggleButton>
                   </ToggleButtonGroup>
                 </Grid>
@@ -656,24 +750,24 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                       sx={{
                         padding: "5px 8px",
                         backgroundColor: design === "grid" ? theme.palette.orangePrimary.main : "inherit",
-                        color: design === "grid" ? theme.palette.orangePrimary.main : "inherit",
+                        color: design === "grid" ? "#FFFFFF" : "gray",
                       }}
                     >
-                      <ViewQuiltIcon sx={{ fontSize: "30px", color: design === "grid" ? theme.palette.orangePrimary.main : "gray" }} />
+                      <ViewQuiltIcon sx={{ fontSize: "30px" }} />
                     </ToggleButton>
                     <ToggleButton
                       value="list"
                       sx={{
                         padding: "5px 8px",
                         backgroundColor: design === "list" ? theme.palette.orangePrimary.main : "inherit",
-                        color: design === "list" ? theme.palette.orangePrimary.main : "inherit",
+                        color: design === "list" ? "#FFFFFF" : "gray",
                       }}
                     >
-                      <FormatListBulletedIcon sx={{ fontSize: "30px", color: design === "list" ? theme.palette.orangePrimary.main : "gray" }} />
+                      <FormatListBulletedIcon sx={{ fontSize: "30px" }} />
                     </ToggleButton>
                   </ToggleButtonGroup>
                 </Grid>
-              </Box>
+              </Box> */}
 
               <Divider sx={{ backgroundColor: "#f4f6fc", height: "2px", margin: "8px 0px" }} flexItem />
 
@@ -693,7 +787,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                         sx={{
                           backgroundColor: theme.palette.secondaryColor.main,
                           borderRadius: "20px",
-                          width: "90px",
+                          width: "100px",
                           height: "30px",
                         }}
                       >
@@ -705,7 +799,6 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                         >
                           {t(workingHours.currentDay)}
                         </Typography>
-
                         <IconButton onClick={() => handleDayToggle("next")} sx={{ color: theme.palette.orangePrimary.main }}>
                           <ArrowForwardIos sx={{ fontSize: "11px" }} />
                         </IconButton>
@@ -799,7 +892,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                   {t("servingWay")}
                 </Typography>
                 <Box display="flex">
-                  {[t("Dine In"), t("Takeaway"), t("Delivery")].map((way) => (
+                  {["dine_in", "take_away", "delivery"].map((way) => (
                     <FormControlLabel
                       key={way}
                       control={
@@ -815,7 +908,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                           }}
                         />
                       }
-                      label={way.replace("_", " ")}
+                      label={t(way.replace("_", " "))}
                       sx={{
                         "& .MuiTypography-root": {
                           fontSize: "12px",
@@ -862,7 +955,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                   {t("paymentMethod")}
                 </Typography>
                 <Box display="flex" justifyContent="left">
-                  {[t("cash"), t("wallet"), t("card")].map((method) => (
+                  {["cash", "wallet", "card"].map((method) => (
                     <FormControlLabel
                       key={method}
                       control={
@@ -898,7 +991,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                   {t("paymentTime")}
                 </Typography>
                 <Box display="flex" justifyContent="left">
-                  {[t("beforeServing"), t("afterServing")].map((time) => (
+                  {["before", "after"].map((time) => (
                     <FormControlLabel
                       key={time}
                       control={
@@ -914,7 +1007,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                           }}
                         />
                       }
-                      label={time.charAt(0).toUpperCase() + time.slice(1)}
+                      label={t(time === "before" ? "beforeServing" : "afterServing")}
                       sx={{
                         "& .MuiTypography-root": {
                           fontSize: "13px",

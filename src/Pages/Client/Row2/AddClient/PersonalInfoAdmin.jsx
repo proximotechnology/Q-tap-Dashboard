@@ -95,10 +95,10 @@ import {
       try {
         setFieldValue(field, value);
         updatePersonalData({ [field]: value });
-        setSuccessOpen(true);
+        // setSuccessOpen(true);
       } catch (error) {
         console.error("Error updating field:", error);
-        setErrorOpen(true);
+        // setErrorOpen(true);
       }
     };
   
