@@ -192,11 +192,11 @@ export const StaffTable = ({ userStaff }) => {
                 </TableHead>
 
                 <TableBody>
-                    {filteredRestStaff?.map((row) => (
+                    {filteredRestStaff?.map((row , index) => (
                         <TableRow
                             key={row.id}
                             sx={{
-                                backgroundColor: row.id % 2 !== 0 ? '#EBEDF3' : 'white',
+                                backgroundColor: index % 2 == 0 ? '#EBEDF3' : 'white',
                                 height: "20px",
                                 borderRadius: '20px',
                                 '& td:first-of-type': {

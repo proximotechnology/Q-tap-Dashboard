@@ -159,13 +159,9 @@ const Support = () => {
       if (!selectedTicket) return;
 
       const data = {
-        Customer_Name: customerName,
-        Customer_Email: customerEmail,
         content: content,
         status: status,
-        Customer_Phone: phoneNumber,
-        client_id: "10",
-        brunch_id: "10"
+
       };
 
       const response = await axios.put(
@@ -296,7 +292,7 @@ const Support = () => {
             </Grid>
           ))}
 
-          <Grid item>
+          {/* <Grid item>
             <Paper
               elevation={3}
               sx={{
@@ -314,7 +310,7 @@ const Support = () => {
               <IconButton onClick={handleClickOpen}>
                 <AddIcon sx={{ fontSize: 50, fontWeight: "bolder" }} />
               </IconButton>            </Paper>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Paper>
 
