@@ -49,7 +49,7 @@ const LineChart1 = ({ salesData, showLine1, showLine2 }) => {
                     <Line
                         type="linear"
                         dataKey="total_revenue"
-                        stroke="#2DA0F6" // لون مختلف للخط الأول
+                        stroke="#707070" // لون مختلف للخط الأول
                         strokeWidth={2}
                         dot={{ fill: 'url(#lineChartGradient2)', r: 5, stroke: 'none', zIndex: 10 }}
                     />
@@ -58,7 +58,7 @@ const LineChart1 = ({ salesData, showLine1, showLine2 }) => {
                     <Line
                         type="linear"
                         dataKey="total_revenue"
-                        stroke="#AD4081" // لون مختلف للخط الثاني
+                        stroke="#707070" // لون مختلف للخط الثاني
                         strokeWidth={2}
                         dot={{ fill: 'url(#lineChartGradient1)', r: 5, stroke: 'none', zIndex: 10 }}
                     />

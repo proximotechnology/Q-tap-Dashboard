@@ -96,7 +96,7 @@ export const PersonalInfo = ({
 
       <Grid item xs={12} md={6}>
         <Typography variant="body2" sx={{ fontSize: "12px" }} color="#575756" gutterBottom>
-          {t("personalInfo")}...........
+          {t("personalInfo")}
         </Typography>
         <Divider sx={{ width: "30%", borderBottom: "4px solid #ef7d00", marginBottom: "18px" }} />
 

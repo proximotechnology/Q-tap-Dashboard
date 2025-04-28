@@ -46,7 +46,7 @@ export const AddUsers = () => {
             user.payment_way === 'digital_wallet' ? 'D.Wallet' :
             user.payment_way === 'credit_card' ? 'Card' :null
     ) : 'Bank');
-    const [addressBank, setAddressBank] =useState(user.address ||"")
+    const [addressBank, setAddressBank] =useState(user?.address ||"")
 
     const [anchorElUser, setAnchorElUser] = useState(null);
 

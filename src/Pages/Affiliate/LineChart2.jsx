@@ -34,7 +34,7 @@ const LineChart2 = ({ revenueData }) => {
         // console.log("revenueArray", revenueData);
     return (
         <ResponsiveContainer width="100%" height={180}>
-            <LineChart data={Object.values(revenueData)} margin={{ top: 5, right: 20, left: 0, bottom: 0 }}>
+            <LineChart data={Object.values(revenueData)} margin={{ top: 5, right: 15, left: 0, bottom: 0 }}>
                 <CartesianGrid stroke="#eee" strokeDasharray="3 3" />
                 <XAxis dataKey="month_name" tick={{ fontSize: 9 }} tickLine={false} interval={0} />
                 <YAxis style={{ fontSize: 10 }} domain={[0, 500]} ticks={[0, 100, 200, 300, 400, 500]} tickFormatter={(tick) => tick === 0 ? `${tick / 1} ` : `${tick / 1} k`}
