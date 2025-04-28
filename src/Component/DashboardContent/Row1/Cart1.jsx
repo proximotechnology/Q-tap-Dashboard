@@ -16,7 +16,7 @@ export const Cart1 = ({ Client }) => {
             if (isMounted && Client) {
                 const clientArray = Object.values(Client).filter(client => client.id !== 11); // استبعاد العنصر "test" إذا لزم الأمر
                 setClients(clientArray);
-                console.log(clients);
+                console.log("clients cart1" ,clients );
                 
             } else if (isMounted) {
                 setClients([]);
