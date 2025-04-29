@@ -36,6 +36,8 @@ export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
     }, []);
 
     const handleSave = async () => {
+        console.log("Button clicked!");
+
         setIsLoading(true);
         try {
             const userId = userStaff?.find((user) => user.name === name)?.id;

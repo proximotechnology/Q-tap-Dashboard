@@ -10,11 +10,14 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useBranch } from '../../../../context/BranchContext';
 import { useTranslation } from 'react-i18next';
+import { AddRole } from './AddRole';
 
 export const UserTable = ({ userStaff, getUserStaff }) => {
   const theme = useTheme();
   const [visiblePasswords, setVisiblePasswords] = useState({});
-  const [modalOpen, setModalOpen] = useState(false);
+  const [addUserModalOpen, setAddUserModalOpen] = useState(false);
+  const [addRoleModalOpen, setAddRoleModalOpen] = useState(false);
+
   const { selectedBranch } = useBranch(); // Use selectedBranch from context
 
   const { t } = useTranslation();
@@ -25,8 +28,8 @@ export const UserTable = ({ userStaff, getUserStaff }) => {
     }));
   };
 
-  const handleOpen = () => setModalOpen(true);
-  const handleClose = () => setModalOpen(false);
+  // const handleOpen = () => setModalOpen(true);
+  // const handleClose = () => setModalOpen(false);
 
   const handleExport = () => {
     const dataToExport = userStaff.map((row) => ({
@@ -94,54 +97,64 @@ export const UserTable = ({ userStaff, getUserStaff }) => {
   return (
     <Paper sx={{ padding: "15px 30px 50px 30px", borderRadius: "20px", overflow: 'auto' }}>
       <Box display="flex" justifyContent="space-between" alignItems="center" width="100%" padding="5px 0">
-        <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box sx={{ display: "flex", alignItems: "center"}}>
           <img src="/assets/Clients.svg" alt="icon" style={{ color: "#D8E0E0", width: "25px", height: "25px", marginRight: "10px" }} />
           <Typography variant="body1" sx={{ fontSize: "16px", color: "#575756" }}>{t("users")}</Typography>
         </Box>
 
-        <Box sx={{ display: "flex" }}>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "center",
-            }}
-          >
-            {showSearch && (
-              <Box sx={{ width: showSearch ? "100%" : "20%" }}>
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search by name..."
-                  style={{
-                    width: "100%",
-                    padding: "6px 8px",
-                    borderRadius: "6px",
-                    border: "1px solid rgba(0, 0, 0, 0.23)",
-                    fontSize: "12px",
-                    outline: "none",
-                    backgroundColor: "#fff",
-                    "&:hover": {
-                      borderColor: "rgba(0, 0, 0, 0.87)",
-                    },
-                  }}
-                />
-              </Box>
-            )}
-            <IconButton onClick={handleSearchClick}>
-              <span
-                className="icon-magnifier"
-                style={{ fontSize: "15px", color: "#575756" }}
-              />
-            </IconButton>
 
-          </Box>
-          <Button onClick={handleOpen} sx={{ fontSize: "12px", color: theme.palette.orangePrimary.main, display: "flex", cursor: "pointer", textTransform: "capitalize" }}>
-            {t("add")}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+            width: "70%",
+          }}
+        >
+          {showSearch && (
+            <Box sx={{ width: showSearch ? "30%" : "20%" }}>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search by name..."
+                style={{
+                  width: "100%",
+                  padding: "6px 8px",
+                  borderRadius: "6px",
+                  border: "1px solid rgba(0, 0, 0, 0.23)",
+                  fontSize: "12px",
+                  outline: "none",
+                  backgroundColor: "#fff",
+                  "&:hover": {
+                    borderColor: "rgba(0, 0, 0, 0.87)",
+                  },
+                }}
+              />
+            </Box>
+          )}
+          <IconButton onClick={handleSearchClick}>
+            <span
+              className="icon-magnifier"
+              style={{ fontSize: "15px", color: "#575756" }}
+            />
+          </IconButton>
+
+
+          <Button onClick={() => setAddUserModalOpen(true)} sx={{ fontSize: "12px", color: theme.palette.orangePrimary.main, display: "flex", cursor: "pointer", textTransform: "capitalize" }}>
+            {t("add user")}
             <span style={{ fontSize: "15px", color: theme.palette.orangePrimary.main, fontWeight: 700, paddingLeft: "6px" }}>+</span>
           </Button>
-          <AddUser open={modalOpen} onClose={handleClose} />
+          <AddUser open={addUserModalOpen} onClose={() => {
+            setAddUserModalOpen(false)
+            getUserStaff()
+          }} />
+
+          <Button onClick={() => setAddRoleModalOpen(true)} sx={{ fontSize: "12px", color: theme.palette.orangePrimary.main, display: "flex", cursor: "pointer", textTransform: "capitalize" }}>
+            {t("add role")}
+            <span style={{ fontSize: "15px", color: theme.palette.orangePrimary.main, fontWeight: 700, paddingLeft: "6px" }}>+</span>
+          </Button>
+          <AddRole open={addRoleModalOpen} onClose={() => setAddRoleModalOpen(false)} />
 
           <Button onClick={handleExport} variant="text" sx={{ color: theme.palette.orangePrimary.main, textTransform: "capitalize", fontSize: "12px" }}>
             {t("export")}
@@ -167,7 +180,7 @@ export const UserTable = ({ userStaff, getUserStaff }) => {
         </TableHead>
 
         <TableBody>
-          {filteredUserStaff.map((row , index) => (
+          {filteredUserStaff.map((row, index) => (
             <TableRow
               key={row.id}
               sx={{

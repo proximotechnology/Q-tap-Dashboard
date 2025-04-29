@@ -141,7 +141,15 @@ const ProfilePage = () => {
 
   // Handle Save Button Click
   const handleSave = async () => {
-
+    if (!password || !confirmPassword) {
+      toast.error(t("please enter password and confirm password"));
+      return; // Stop further execution
+    }
+    if ((password && confirmPassword) && (password !== confirmPassword)) {
+      toast.error(t("password not match"));
+      return; // Stop further execution
+    }
+    
     const updatedData = {
       brunch_id: selectedBranch,
       name: fullName,
@@ -186,7 +194,7 @@ const ProfilePage = () => {
         // console.log("response udpate data profile", response);
 
       } else {
-        toast.error(t("updateErr"));
+        // toast.error(t("updateErr"));
         console.log(response);
 
       }

@@ -20,7 +20,7 @@ const ImageContainer = styled(Box)({
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundColor: 'rgba(0, 0, 0, 0.15)',
         zIndex: 1,
 
     },
@@ -54,10 +54,10 @@ export const SetupPage = () => {
     return (
 
         <Grid container item xs={12} md={3} >
-            <ImageContainer sx={{ width: '100%' , display:'flex' , flexDirection:'column',alignItems:'start', justifyContent:'space-between',padding:'1rem'}} className='here' >
+            <ImageContainer sx={{ width: '100%' , display:'flex' , flexDirection:'column',alignItems:'start', justifyContent:'space-between',padding:'3rem'}} className='here' >
                 <ChevronLeftOutlinedIcon onClick={() => navigate('/')}
-                    // sx={{ position: "absolute", top: "40px", left: "10%", color: "white", fontSize: "33px", zIndex: "8" }}
-                    sx={{ zIndex:'100',fontSize: "33px" }}
+                    sx={{  color: "white", fontSize: "40px", zIndex: "100" }}
+                    // sx={{ zIndex:'100',fontSize: "33px" }}
                      />
 
                 {/* <TextOverlay sx={{ width: { xs: "90%", sm: "75%", md: "60%" }, margin: "0 auto" }}> */}
@@ -70,7 +70,7 @@ export const SetupPage = () => {
                         {t("setup")}
                     </Typography>
                     <Divider />
-                    <Typography sx={{ fontSize: "11px", color: '#F1F2F2', marginTop: 4 }}>
+                    <Typography sx={{ fontSize: "11px", color: 'white', marginTop: 4 }}>
                         {t("lorm")}
                     </Typography>
                 </Box>

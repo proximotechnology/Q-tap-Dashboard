@@ -18,30 +18,15 @@ const iconsArray = [
     { name: 'Setting', icon: <img src="/assets/setting.svg" alt="icon" style={{ width: "16px", height: "16px" }} /> },
 ];
 
-export const AddUser = ({ open, onClose, onSave, brunchId = "442" }) => {
+export const AddUser = ({ open, onClose }) => {
     const theme = useTheme();
     const { t } = useTranslation();
-    const [role, setRole] = useState('');
     const [name, setName] = useState('');
     const [pin, setPin] = useState(['', '', '', '', '', '']);
-    const [checkedItems, setCheckedItems] = useState({
-        Dashboard: true,
-        Orders: false,
-        Wallet: false,
-        Menu: false,
-        Support: false,
-        Users: false,
-        'Customers Log': false,
-        Setting: false,
-    });
+
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleCheck = (name) => {
-        setCheckedItems((prevState) => ({
-            ...prevState,
-            [name]: !prevState[name],
-        }));
-    };
+
 
     const handlePinChange = (index, value) => {
         if (/^\d?$/.test(value)) {
@@ -57,7 +42,7 @@ export const AddUser = ({ open, onClose, onSave, brunchId = "442" }) => {
     const handleSave = async () => {
         setIsSubmitting(true);
         const pinString = pin.join('');
-        if (!name || pinString.length !== 6 || !role) {
+        if (!name || pinString.length !== 6) {
             toast.error(t('pleaseFillAllFields'));
             setIsSubmitting(false);
             return;
@@ -66,20 +51,7 @@ export const AddUser = ({ open, onClose, onSave, brunchId = "442" }) => {
         const staffData = {
             name,
             pin: pinString,
-            brunch_id: brunchId,
-        };
-
-        const roleData = {
-            name: role,
-            menu: checkedItems['Menu'] ? '1' : '0',
-            users: checkedItems['Users'] ? '1' : '0',
-            orders: checkedItems['Orders'] ? '1' : '0',
-            wallet: checkedItems['Wallet'] ? '1' : '0',
-            setting: checkedItems['Setting'] ? '1' : '0',
-            support: checkedItems['Support'] ? '1' : '0',
-            dashboard: checkedItems['Dashboard'] ? '1' : '0',
-            customers_log: checkedItems['Customers Log'] ? '1' : '0',
-            brunch_id: brunchId,
+            brunch_id: localStorage.getItem("selectedBranch"),
         };
 
         try {
@@ -88,16 +60,14 @@ export const AddUser = ({ open, onClose, onSave, brunchId = "442" }) => {
                 headers: { Authorization: `Bearer ${token}` },
             };
 
-            const [staffResponse, roleResponse] = await Promise.all([
-                axios.post('https://highleveltecknology.com/Qtap/api/restaurant_user_staff', staffData, config),
-                axios.post('https://highleveltecknology.com/Qtap/api/roles', roleData, config),
-            ]);
+            const response = await axios.post('https://highleveltecknology.com/Qtap/api/restaurant_user_staff', staffData, config)
 
-            if (staffResponse.status === 200 && roleResponse.status === 200) {
-                toast.success(t('userSavedSuccessfully'));
+
+            if (response.status === 200) {
+                toast.success(t('add user success'));
                 onClose();
             } else {
-                toast.error(t('failedToSaveUser'));
+                toast.error(t('failed to add used'));
             }
         } catch (error) {
             console.error('API Error:', error);
@@ -179,92 +149,6 @@ export const AddUser = ({ open, onClose, onSave, brunchId = "442" }) => {
                     </Box>
                 </Box>
 
-                <Box sx={{ marginTop: '20px', display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'flex-start' }}>
-                    <Typography variant="body2" sx={{ width: '25%', textAlign: 'center' }} color="#424242" fontSize="10px">
-                        {t('role')}
-                    </Typography>
-                    <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-                        <FormControl sx={{ width: '90%' }}>
-                            <Select
-                                sx={{
-                                    '& .MuiInputBase-input': {
-                                        height: '30px',
-                                        padding: '1px 14px',
-                                        textAlign: 'left',
-                                        fontSize: '10px',
-                                        color: 'gray',
-                                        lineHeight: '30px',
-                                    },
-                                }}
-                                fullWidth
-                                displayEmpty
-                                value={role}
-                                onChange={(e) => setRole(e.target.value)}
-                                placeholder="Select Role"
-                            >
-                                <MenuItem value="" disabled sx={{ fontSize: '10px', color: 'gray' }}>
-                                    {t('selectRole')}
-                                </MenuItem>
-                                <MenuItem value="chef" sx={{ fontSize: '10px', color: 'gray' }}>
-                                    {t('Chef')}
-                                </MenuItem>
-                                <MenuItem value="cashier" sx={{ fontSize: '10px', color: 'gray' }}>
-                                    {t('Cashier')}
-                                </MenuItem>
-                                <MenuItem value="waiter" sx={{ fontSize: '10px', color: 'gray' }}>
-                                    {t('Waiter')}
-                                </MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Box>
-                </Box>
-
-                <Grid container justifyContent="center" alignItems="center" spacing={2} width="100%" marginTop="10px" marginLeft="6%">
-                    {iconsArray.map((item, index) => (
-                        <Grid item xs={6} key={index}>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        checked={checkedItems[item.name]}
-                                        onChange={() => handleCheck(item.name)}
-                                        icon={<Box sx={{ border: '1px solid gray', width: '16px', height: '16px', borderRadius: '4px' }} />}
-                                        checkedIcon={
-                                            <Box
-                                                sx={{
-                                                    border: '1px solid #ef7d00',
-                                                    backgroundColor: theme.palette.orangePrimary.main,
-                                                    color: 'white',
-                                                    width: '16px',
-                                                    height: '16px',
-                                                    borderRadius: '4px',
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                }}
-                                            >
-                                                <Typography variant="caption" sx={{ color: 'white' }}>
-                                                    ✔
-                                                </Typography>
-                                            </Box>
-                                        }
-                                        sx={{
-                                            padding: '5px',
-                                            '& .MuiSvgIcon-root': { fontSize: 18 },
-                                        }}
-                                    />
-                                }
-                                label={
-                                    <Box display="flex" alignItems="center">
-                                        <Typography>{item.icon}</Typography>
-                                        <Typography variant="body2" sx={{ marginLeft: '6px', fontSize: '11px', color: 'gray' }}>
-                                            {t(item.name)}
-                                        </Typography>
-                                    </Box>
-                                }
-                            />
-                        </Grid>
-                    ))}
-                </Grid>
 
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
                     <Button

@@ -14,30 +14,10 @@ export const StaffTable = ({ userStaff }) => {
     const theme = useTheme();
     const { t } = useTranslation();
     const [modalOpen, setModalOpen] = useState(false);
-    // console.log("userStaff in stafftable",userStaff);
+    console.log("userStaff in stafftable", userStaff);
 
 
-    const handleOpen = () => setModalOpen(true);
 
-    const handleClose = () => setModalOpen(false);
-
-    const handleExport = () => {
-
-        const dataToExport = staffData.map((row) => ({
-            "Name": row.name,
-            "Role": row.role,
-            "Orders": row.orders,
-            "Status": row.status,
-        }));
-
-
-        const worksheet = XLSX.utils.json_to_sheet(dataToExport);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Users");
-
-
-        XLSX.writeFile(workbook, "User_Data.xlsx");
-    };
     //========================================== get RestStaff data 
 
     const [RestStaff, setRestStaff] = useState([]);
@@ -101,6 +81,31 @@ export const StaffTable = ({ userStaff }) => {
     const filteredRestStaff = RestStaff?.filter(user =>
         user.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
+
+    const handleOpen = () => setModalOpen(true);
+
+    const handleClose = () => {
+        setModalOpen(false);
+        getRestStaff(); // Refresh the staff data after closing the modal
+    }
+
+    const handleExport = () => {
+
+        const dataToExport = staffData.map((row) => ({
+            "Name": row.name,
+            "Role": row.role,
+            "Orders": row.orders,
+            "Status": row.status,
+        }));
+
+
+        const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Users");
+
+
+        XLSX.writeFile(workbook, "User_Data.xlsx");
+    };
     return (
         <Paper sx={{ padding: "15px 30px 50px 30px", marginTop: "20px", borderRadius: "20px" }}>
             <Box
@@ -125,7 +130,7 @@ export const StaffTable = ({ userStaff }) => {
                         }}
                     >
                         {showSearch && (
-                            <Box sx={{ width: showSearch ? "60%" : "20%" }}>
+                            <Box sx={{ width: showSearch ? "100%" : "20%" }}>
                                 <input
                                     type="text"
                                     value={searchQuery}
@@ -192,7 +197,7 @@ export const StaffTable = ({ userStaff }) => {
                 </TableHead>
 
                 <TableBody>
-                    {filteredRestStaff?.map((row , index) => (
+                    {filteredRestStaff?.map((row, index) => (
                         <TableRow
                             key={row.id}
                             sx={{
