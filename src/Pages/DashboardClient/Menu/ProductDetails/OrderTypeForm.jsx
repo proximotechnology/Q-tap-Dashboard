@@ -15,6 +15,8 @@ import { useTranslation } from 'react-i18next';
 import { customWidth } from '../utils';
 import Language from '../../../../Component/dashboard/TopBar/Language';
 import { toast } from 'react-toastify';
+import { BASE_URL } from '../../../../utils/helperFunction';
+import axios from 'axios';
 const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, totalCart, setCartItems }) => {
 
     const [selectedType, setSelectedType] = useState('Dine In');
@@ -29,8 +31,38 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
     const [selectedName, setSelectedName] = useState("");
     const [comment, setComment] = useState("");
     const [address, setAddress] = useState("");
+    const egyptGovernorates = [
+        "Cairo",
+        "Giza",
+        "Alexandria",
+        "Qalyubia",
+        "Port Said",
+        "Suez",
+        "Dakahlia",
+        "Sharqia",
+        "Kalyubia",
+        "Kafr El Sheikh",
+        "Gharbia",
+        "Monufia",
+        "Beheira",
+        "Ismailia",
+        "Giza",
+        "Beni Suef",
+        "Faiyum",
+        "Minya",
+        "Asyut",
+        "Sohag",
+        "Qena",
+        "Aswan",
+        "Luxor",
+        "Red Sea",
+        "New Valley",
+        "Matrouh",
+        "North Sinai",
+        "South Sinai"
+    ];
 
-
+    const [table, setTable] = useState([])
 
     const [selectedValue, setSelectedValue] = useState('cash');
     const handleChange = (event) => {
@@ -76,27 +108,53 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
     const [discount, setDiscount] = useState(0)
     const [total, setTotal] = useState(0)
 
-
-    useEffect(() => {
+    const calculateTotalPrice = () => { /// TODO: what if the user select multi size of same meal
         let calsubtotal = 0;
         let caltax = 0;
+        let caldiscount = 0
 
         for (const meal of cartItems) {
-            calsubtotal += (meal.price * meal.quantity);
-            caltax += meal.price * (meal.Tax / 100);
-            console.log("tax", meal.Tax)
-        }
-        console.log("calculate here", cartItems)
-        let discountPercentage = 10;
-        setSubTotal(calsubtotal)
-        setTax(caltax.toFixed(2))
-        setDiscount((subTotal * (discountPercentage / 100)).toFixed(2))
-        let totalCal = subTotal - Number(discount)
-        totalCal += Number(tax)
-        setTotal(totalCal)
-        console.log(totalCal)
+            let priceOfItem = 0;
+            if (meal.selectedSize === 'S') {
+                priceOfItem = meal.price_small
+            }
+            if (meal.selectedSize === 'M') {
+                priceOfItem = meal.price_medium
+            }
+            if (meal.selectedSize === 'L') {
+                priceOfItem = meal.price_large
+            }
+            calsubtotal += (priceOfItem * meal.quantity);
+            caltax += priceOfItem * (meal.Tax / 100);
+            caldiscount += priceOfItem * (meal.discounts?.discount ? meal.discounts?.discount / 100 : 0)
 
-    })
+        }
+        let totalCal = calsubtotal - caldiscount
+        totalCal += caltax
+        setSubTotal(calsubtotal.toFixed(2))
+        setTax(caltax.toFixed(2))
+        setDiscount(caldiscount.toFixed(2))
+        setTotal(totalCal.toFixed(2))
+    }
+    const getBranchTable = async () => {
+        const response = await axios.get(
+            `${BASE_URL}tables`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+                }
+
+            }
+        )
+        console.log(response)
+        setTable(response.data.tables)
+    }
+    useEffect(() => {
+        calculateTotalPrice()
+        getBranchTable()
+    },[])
+
     return (
         <>
             <Box sx={{ overflowY: "auto", width: customWidth.itemSectionWidth, boxShadow: 3, bgcolor: 'white', position: 'fixed', right: 0, top: 0, height: '100vh' }}>
@@ -234,10 +292,10 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
                                             <MenuItem value="" disabled sx={{ fontSize: "11px", color: "#5D5D59", }}>
                                                 {t("selectTable")}
                                             </MenuItem>
-                                            <MenuItem value={1} sx={{ fontSize: "11px", color: "#5D5D59", }}>Table 1</MenuItem>
-                                            <MenuItem value={2} sx={{ fontSize: "11px", color: "#5D5D59", }}>Table 2</MenuItem>
-                                            <MenuItem value={3} sx={{ fontSize: "11px", color: "#5D5D59", }}>Table 3</MenuItem>
-                                            <MenuItem value={4} sx={{ fontSize: "11px", color: "#5D5D59", }}>Table 4</MenuItem>
+                                            {table?.map((item) => (<MenuItem value={item?.id} sx={{ fontSize: "11px", color: "#5D5D59", }}>
+                                                 {item?.name +" -size:"+ item?.size}
+                                            </MenuItem>
+                                            ))}
                                         </Select>
                                     </FormControl>
                                 </>
@@ -265,10 +323,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
                                             <MenuItem value="" disabled sx={{ fontSize: "11px", color: "#5D5D59", }}>
                                                 {t("plSelectCity")}
                                             </MenuItem>
-                                            <MenuItem value={1} sx={{ fontSize: "11px", color: "#5D5D59", }}>City 1</MenuItem>
-                                            <MenuItem value={2} sx={{ fontSize: "11px", color: "#5D5D59", }}>City 2</MenuItem>
-                                            <MenuItem value={3} sx={{ fontSize: "11px", color: "#5D5D59", }}>City 3</MenuItem>
-                                            <MenuItem value={4} sx={{ fontSize: "11px", color: "#5D5D59", }}>City 4</MenuItem>
+                                            {egyptGovernorates.map(item => <MenuItem value={item} sx={{ fontSize: "11px", color: "#5D5D59", }}>{t(item)}</MenuItem>)}
                                         </Select>
                                     </FormControl>
                                     <Typography variant='body2' sx={{ fontSize: "11px", marginBottom: "3px", color: "#444442" }}>{t("address")}</Typography>
@@ -348,7 +403,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
                             {t("totalPrice")}
                         </Typography>
                         <Typography variant="h6" sx={{ fontSize: '18px', fontWeight: "bold", color: theme.palette.orangePrimary.main }}>
-                            {total}<span style={{ fontSize: "10px", fontWeight: "400", color: '#575756' }}>EGP</span>
+                            {totalCart} <span style={{ fontSize: "10px", fontWeight: "400", color: '#575756' }}>EGP</span>
                         </Typography>
                     </Box>
                     <Box sx={{ width: "100%" }}>

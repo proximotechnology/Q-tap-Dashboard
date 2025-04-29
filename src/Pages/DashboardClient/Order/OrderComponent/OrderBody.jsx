@@ -10,6 +10,7 @@ import axios from 'axios';
 import OrderDetailsNew from './OrderDetailsNew';
 import Pusher from 'pusher-js';
 import { toast } from 'react-toastify';
+import { BASE_URL } from '../../../../utils/helperFunction';
 
 
 
@@ -45,7 +46,7 @@ export const OrderBody = () => {
         const handleClient = async () => {
             try {
 
-                const res = await axios.get(`${orderEndPoint.BASE_URL}${orderEndPoint[loginclient.user.role].fetch[0]}`,
+                const res = await axios.get(`${BASE_URL}${orderEndPoint[loginclient.user.role].fetch[0]}`,
                     {
                         headers: {
                             'Content-Type': 'application/json',
@@ -91,12 +92,16 @@ export const OrderBody = () => {
                 } else if (loginclient.user.role === 'admin') {
                     orders = res.data.served_orders.map((item) => item ? { ...parseResponseOrderItem(item, orderPhaseType.DONING) } : undefined)
                     orders = orders.filter(order => order !== undefined);
-                    orders = orders.filter(order => !order.orders_processing.some(item=>item.status === 'done'));
+                    orders = orders.filter(order => !order.orders_processing.some(item => item.status === 'done'));
 
 
                     try {
                         console.log('admin parsed orders', orders)
-                        const res = await axios.get(`${orderEndPoint.BASE_URL}${orderEndPoint[loginclient.user.role].fetch[2]}`,
+                        /* Admin sees two types of orders: 
+                                1 - those served by the waiter 
+                                2 - those prepared by the chef for delivery. The admin can assign a delivery person to them.
+                         */
+                        const res = await axios.get(`${BASE_URL}${orderEndPoint[loginclient.user.role].fetch[2]}`,
                             {
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -109,7 +114,7 @@ export const OrderBody = () => {
                         console.log('admin fetch', res)
                         delivryorders = res.data.prepared_orders.map((item) => item ? { ...parseResponseOrderItem(item, orderPhaseType.DONING) } : undefined)
                         delivryorders = delivryorders.filter(order => order !== undefined);
-                        delivryorders = delivryorders.filter(order => order.type === "delivery" && !order.orders_processing.some(item=>item.status === 'done'));
+                        delivryorders = delivryorders.filter(order => order.type === "delivery" && !order.orders_processing.some(item => item.status === 'done'));
                         console.log('admin parsed delivery', delivryorders)
 
                         setOrders([...delivryorders, ...orders].sort((a, b) => a.id - b.id));
@@ -133,16 +138,17 @@ export const OrderBody = () => {
 
     }, [])
     //live update 
+    // pusher
     useEffect(() => {
         if (!client) return;
         const pusher = new Pusher('63b495891d2c3cff9d36', {
             cluster: 'eu',
         });
-        console.log('declare pusher')
         const channel = pusher.subscribe('notify-channel');
+        console.log("📢 Pusher decleared:")
         channel.bind('form-submitted', function (data) {
             // ✅ Show toast or handle state
-            // console.log("📢 Received from Pusher:", data);
+            console.log("📢 Received from Pusher:", data);
             /**
              * if order new     
              *      1 - show to all the chef
@@ -153,6 +159,7 @@ export const OrderBody = () => {
              *      1- delete the order from other online cashier
              * if chef prepare the order
              *      1- show the order to online waiter
+             *      2- if order is delivery show it to the admin to assign delivery person to it
              * if waiter serve the order 
              *      1- delete the order from other waiter
              *      2- add order to admin done
@@ -161,6 +168,7 @@ export const OrderBody = () => {
                 toast.info(`📢 pusher new order add`);
                 if (client?.user?.role === "chef") {
                     setOrders((prev => [...prev, parseResponseOrderItem(data.message, orderPhaseType.ACCEPTING)]))
+                    console.log('pusher new order add update ', orders)
                 }
             }
 
@@ -168,10 +176,9 @@ export const OrderBody = () => {
 
                 toast.info(`📢 pusher accepted_order`);
                 if (client?.user?.role === "chef") {
-                    removeOrder(data?.message?.id)
+                    removeOrder(data?.message?.[0].id)
                 } else if (client?.user?.role === "cashier") {
-                    data.message.id = data.message.order_id
-                    setOrders((prev => [...prev, parseResponseOrderItem(data.message, orderPhaseType.PAYING)]))
+                    setOrders((prev => [...prev, parseResponseOrderItem(data.message?.[0], orderPhaseType.PAYING)]))
                 }
             }
             if (data.type === 'payment_received_order') {
@@ -186,8 +193,9 @@ export const OrderBody = () => {
             if (data.type === 'prepared_order') {
                 toast.info(`📢 pusher prepared_order`);
                 if (client?.user?.role === "waiter") {
-                    setOrders((prev => [...prev, parseResponseOrderItem(data.message, orderPhaseType.SERVRING)]))
+                    setOrders((prev => [...prev, parseResponseOrderItem(data.message?.[0], orderPhaseType.SERVRING)]))
                 }
+                if(client?.user?.role === "admin"  && data.message?.[0]?.type === 'delivery') { console.log("admin delivery order here " ,data.message?.[0])}
             }
 
             if (data.type === 'served_order') {
@@ -393,7 +401,6 @@ export const OrderBody = () => {
 export default OrderBody;
 
 export const orderEndPoint = {
-    BASE_URL: 'https://highleveltecknology.com/Qtap/api/',
     chef: {
         fetch: ['get_new_orders'],
         action: {

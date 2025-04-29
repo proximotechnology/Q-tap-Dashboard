@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import Language from "../dashboard/TopBar/Language";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { BASE_URL } from "../../utils/helperFunction";
 
 const ImageContainer = styled(Box)({
     backgroundImage: 'url(/images/logoClient.jpg)',
@@ -59,7 +60,7 @@ export const LogoClient = () => {
 
             try {
                 const response = await axios.get(
-                    'https://highleveltecknology.com/Qtap/api/get_brunchs', {
+                    `${BASE_URL}get_brunchs`, {
                     params: data,
                     headers: {
                         headers: { 'Content-Type': 'application/json' },

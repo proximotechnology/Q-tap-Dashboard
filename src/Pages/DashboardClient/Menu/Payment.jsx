@@ -12,6 +12,7 @@ import { customWidth } from './utils';
 import Language from '../../../Component/dashboard/TopBar/Language';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { BASE_URL } from '../../../utils/helperFunction';
 
 
 
@@ -52,10 +53,10 @@ export const Payment = ({
                 const itemData = {
                     meal_id: item.id,
                     quantity: item.quantity,
-                    variants: item.variant,
-                    extras: item.extra,
+                    variants: (item.selectedOptions?? []).map(item => item.id),
+                    extras: (item.selectedExtras ?? []).map(item => item.id),
                     size: item.selectedSize ? sizeConvert[item.selectedSize] : 's',
-                    discount_code: item.discount_code ? item.discount_code.code : null,
+                    discount_code: item.discounts ? item.discounts.code : null,
                 }
 
                 data.meals = [...data.meals, itemData]
@@ -81,7 +82,7 @@ export const Payment = ({
             }
             console.log('pay order data', data)
             const response = await axios.post(
-                `https://highleveltecknology.com/Qtap/api/add_orders`,
+                `${BASE_URL}add_orders`,
                 data,
                 {
                     headers: {

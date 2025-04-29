@@ -21,6 +21,7 @@ import axios from 'axios';
 import { useBranch } from '../../context/BranchContext';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { BASE_URL } from '../../utils/helperFunction';
 
 export const LoginAdmin = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -59,7 +60,7 @@ export const LoginAdmin = () => {
         try {
             setIsLoading(true);
             const response = await axios.post(
-                'https://highleveltecknology.com/Qtap/api/login',
+                 `${BASE_URL}login`,
                 data,
                 {
                     headers: { 'Content-Type': 'application/json' },

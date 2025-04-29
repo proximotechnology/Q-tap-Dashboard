@@ -10,6 +10,7 @@ import { Box } from '@mui/system';
 import CheckIcon from '@mui/icons-material/Check';
 import { orderPhaseType, orderEndPoint } from './OrderBody';
 import Pusher from 'pusher-js';
+import { BASE_URL } from '../../../../utils/helperFunction';
 const OrderDetailsNew = ({
     order,
     onReject, // open reject form panel
@@ -28,7 +29,7 @@ const OrderDetailsNew = ({
     const [delivery, setDelivery] = useState([]);
     const [selectedDelivery, setSelectedDelivery] = useState(null)
     const [selectedDeliveryId, setSelectedDeliveryId] = useState("")
-
+console.log('OrderDetailsNew ',order)
     useEffect(() => {
         const getDelivery = async () => {
             try {
@@ -91,7 +92,7 @@ const OrderDetailsNew = ({
 
         try {
             setIsLoading(true)
-            const res = await axios.post(`${orderEndPoint.BASE_URL}${orderEndPoint.chef.action.accept}`,
+            const res = await axios.post(`${BASE_URL}${orderEndPoint.chef.action.accept}`,
                 data,
                 {
                     headers: {
@@ -133,7 +134,7 @@ const OrderDetailsNew = ({
             }
             if (isLoading) return;
             setIsLoading(true)
-            const res = await axios.post(`${orderEndPoint.BASE_URL}${orderEndPoint.chef.action.prepared}`,
+            const res = await axios.post(`${BASE_URL}${orderEndPoint.chef.action.prepared}`,
                 data,
                 {
                     headers: {
@@ -171,7 +172,7 @@ const OrderDetailsNew = ({
             }
             if (isLoading) return;
             setIsLoading(true)
-            const res = await axios.post(`${orderEndPoint.BASE_URL}${orderEndPoint.cashier.action.receivePayment}`,
+            const res = await axios.post(`${BASE_URL}${orderEndPoint.cashier.action.receivePayment}`,
                 data,
                 {
                     headers: {
@@ -201,7 +202,7 @@ const OrderDetailsNew = ({
 
             if (isLoading) return;
             setIsLoading(true)
-            const res = await axios.post(`${orderEndPoint.BASE_URL}${orderEndPoint.waiter.action.serve}`,
+            const res = await axios.post(`${BASE_URL}${orderEndPoint.waiter.action.serve}`,
                 data,
                 {
                     headers: {
@@ -247,7 +248,7 @@ const OrderDetailsNew = ({
                 console.log('order data', deliveryData)
                 /* after select delivery add it to the order throw request */
                 console.log(`Bearer ${localStorage.getItem('clientToken')}`)
-                const setDelivery = await axios.post(`${orderEndPoint.BASE_URL}choose_delivery`,
+                const setDelivery = await axios.post(`${BASE_URL}choose_delivery`,
                     deliveryData,
                     {
                         headers: {
@@ -262,7 +263,7 @@ const OrderDetailsNew = ({
             }
 
 
-            const res = await axios.post(`${orderEndPoint.BASE_URL}${orderEndPoint.admin.action.orderDone}`,
+            const res = await axios.post(`${BASE_URL}${orderEndPoint.admin.action.orderDone}`,
                 data,
                 {
                     headers: {
@@ -286,6 +287,11 @@ const OrderDetailsNew = ({
         removeOrder(order.id)
         closeDetails()
     }
+
+    const getNameById = (id , searchArray) => {
+        const item = searchArray.find(obj => obj.id === id);
+        return item ? item.name : 'Not Found';  // Default to 'Not Found' if id doesn't exist
+      };
 
     return (
         <Card sx={{ maxWidth: 400, height: "100vh", overflowY: 'auto', zIndex: 1001, width: { xs: '80%', md: "22%" }, backgroundColor: "white", position: "fixed", top: 0, right: 0, }}>
@@ -312,7 +318,10 @@ const OrderDetailsNew = ({
                         <span class="icon-edit" style={{ fontSize: "15px", marginLeft: "12px", color: theme.palette.orangePrimary.main }}></span>
                     </Typography>
                     {/* order details - > meal : name , quantity and price */}
-                    {order?.meal_id?.map((id, index) => (
+                    {order?.meal_id?.map((id, index) =>  { 
+                        const item = order?.meals.find(item => item.id === id);
+                        console.log('order',order ,'item',item)
+                        return (
                         <Box
                             key={index}
                             sx={{
@@ -324,8 +333,9 @@ const OrderDetailsNew = ({
                             }}
                         >
                             <Typography variant="body2" sx={{ fontSize: "10px", color: "#AAAAAA" }}>
-                                {order?.quantity[index]} x {order?.meals[index].name} {order?.size[index] && `(size: ${order.size[index]})`}
-                                {order?.extras[index] && ` + ${order.extras[index]}`}
+                                {order?.quantity[index]} x {item.name} {order?.size[index] && `(size: ${order.size[index]})`}
+                                {order?.extras?.[index] && order?.extras?.[index]?.length > 0 &&` + ${order.extras[index]}`}
+                                {order?.variants?.[index] && order?.variants?.[index]?.length > 0 && ` + ${order.variants[index]}`}
                             </Typography>
 
                             <Box
@@ -342,14 +352,14 @@ const OrderDetailsNew = ({
                                     }}
                                 />
                                 <Typography variant="body2" sx={{ fontSize: "10px", color: "#AAAAAA" }}>
-                                    {order?.size[index] && order.size[index] === 'l' ? order.meals[index].price_large : ""}
-                                    {order?.size[index] && order.size[index] === 'm' ? order.meals[index].price_medium : ""}
-                                    {order?.size[index] && order.size[index] === 's' ? order.meals[index].price_small : ""}
+                                    {order?.size[index] && order.size[index] === 'l' ? item?.price_large : ""}
+                                    {order?.size[index] && order.size[index] === 'm' ? item?.price_medium : ""}
+                                    {order?.size[index] && order.size[index] === 's' ? item?.price_small : ""}
                                     EGP
                                 </Typography>
                             </Box>
                         </Box>
-                    ))}
+                    )})}
                     {/* section 2 */}
                     <Typography variant="subtitle1" fontSize="12px" paddingTop="6px">{t("comment")}</Typography>
                     <Typography variant="body2" fontSize="11px" color="#AAAAAA" padding="0px 8px">{order?.comments}</Typography>
@@ -367,7 +377,7 @@ const OrderDetailsNew = ({
 
                     {order?.type === 'dinein' &&
                         <Typography variant="body2" color="#AAAAAA" fontSize="11px" padding="0px 8px">
-                            {t(order.dineMethod.type)}
+                            {t(order?.type)}
                             <Typography sx={{ color: "#AAAAAA", fontSize: "10px" }}>
                                 <span style={{ color: theme.palette.orangePrimary.main, fontSize: "11px" }}>{t("table.one")}: </span>
                                 {order.type}
