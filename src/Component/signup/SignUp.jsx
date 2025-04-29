@@ -27,7 +27,7 @@ const SignUp = () => {
     const [country, setCountry] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [user_type, setUserType] = useState('');
+    // const [user_type, setUserType] = useState('');
 
     const [apiError, setApiError] = useState('')
     const [isLoading, setIsLoading] = useState(false)
@@ -68,10 +68,10 @@ const SignUp = () => {
             return;
         }
 
-        if (!user_type) {
-            setApiError(t("userTypeRequired"));
-            return;
-        }
+        // if (!user_type) {
+        //     setApiError(t("userTypeRequired"));
+        //     return;
+        // }
 
         // resive data from user 
         const data = {
@@ -82,11 +82,11 @@ const SignUp = () => {
             confirmPassword,
             birth_date: `${year}-${month}-${day}`,
             country,
-            user_type
+            user_type :"qtap_clients"
         };
 
         // Store data in PersonalContext if user is affiliate
-        if (user_type === "qtap_clients") {
+        // if (user_type === "qtap_clients") {
             const personalContextData = {
                 fullName,
                 phone,
@@ -97,44 +97,44 @@ const SignUp = () => {
                 country,
                 password,
                 confirmPassword,
-                user_type
+                 user_type :"qtap_clients"
             };
             updatePersonalData(personalContextData);
             navigate("/product")
             return;
-        }
+        // }
 
 
         // send data to api 
-        try {
-            setIsLoading(true);
-            const options = {
-                method: 'POST',
-                url: "https://highleveltecknology.com/Qtap/api/register",
-                headers: { 'Content-Type': 'application/json' },
-                data
+        // try {
+        //     setIsLoading(true);
+        //     const options = {
+        //         method: 'POST',
+        //         url: "https://highleveltecknology.com/Qtap/api/register",
+        //         headers: { 'Content-Type': 'application/json' },
+        //         data
 
-            }
-            const response = await axios.request(options)
-                .then(res => res)
-                .catch(error => console.log(error))
-            console.log(response);
+        //     }
+        //     const response = await axios.request(options)
+        //         .then(res => res)
+        //         .catch(error => console.log(error))
+        //     console.log(response);
 
-            setIsLoading(false);
+        //     setIsLoading(false);
 
 
-            if (response?.data?.status === "success") {
-                setApiSuccess(t("registrationSuccess"));
+        //     if (response?.data?.status === "success") {
+        //         setApiSuccess(t("registrationSuccess"));
 
-                // dashboard-affiliate
+        //         // dashboard-affiliate
 
-            } else {
-                setApiError(response?.data?.message || t("checkEmailOrPhoneDublicated"));
-            }
-        } catch (error) {
-            setIsLoading(false);
-            setApiError(error.response?.data?.message || t("registerFiald"));
-        }
+        //     } else {
+        //         setApiError(response?.data?.message || t("checkEmailOrPhoneDublicated"));
+        //     }
+        // } catch (error) {
+        //     setIsLoading(false);
+        //     setApiError(error.response?.data?.message || t("registerFiald"));
+        // }
     };
 
     return (
@@ -295,7 +295,7 @@ const SignUp = () => {
                     <MenuItem value="UK" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >United Kingdom</MenuItem>
                 </Select>
             </FormControl>
-            <FormControl variant="outlined" fullWidth  >
+            {/* <FormControl variant="outlined" fullWidth  >
                 <Select
                     id="outlined-user-type"
                     value={user_type}
@@ -315,7 +315,7 @@ const SignUp = () => {
                     <MenuItem value="qtap_clients" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >{t("client")}</MenuItem>
                     <MenuItem value="qtap_affiliates" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >{t("affiliate")}</MenuItem>
                 </Select>
-            </FormControl>
+            </FormControl> */}
 
             <FormControl variant="outlined" fullWidth  >
                 <OutlinedInput

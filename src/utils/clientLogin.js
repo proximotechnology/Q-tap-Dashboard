@@ -1,5 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import { BASE_URL } from "./helperFunction";
 
 export const handleClientLogin = async ({pin,setIsLoading,setBranches,setSelectedBranch,navigate ,t , role,navurl,brunch_id}) => {
         const data = {
@@ -13,7 +14,7 @@ export const handleClientLogin = async ({pin,setIsLoading,setBranches,setSelecte
         try {
             setIsLoading(true);
             const response = await axios.post(
-                'https://highleveltecknology.com/Qtap/api/login',
+                `${BASE_URL}login`,
                 data,
                 {
                     headers: { 'Content-Type': 'application/json' },

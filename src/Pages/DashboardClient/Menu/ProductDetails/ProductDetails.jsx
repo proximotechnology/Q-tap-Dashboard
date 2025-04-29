@@ -10,6 +10,7 @@ import Cart from './Cart';
 import { useTranslation } from 'react-i18next';
 import { customWidth } from '../utils';
 import Language from '../../../../Component/dashboard/TopBar/Language';
+import { toast } from 'react-toastify';
 
 const ProductDetails = ({
     item,
@@ -35,6 +36,7 @@ const ProductDetails = ({
     ];
 
     const [cartItems, setCartItems] = useState([]);
+    const [quantity, setQuantity] = useState(0);
 
     useEffect(() => {
         const localcart = localStorage.getItem('cartItems');
@@ -62,44 +64,63 @@ const ProductDetails = ({
         setCartItems(updatedCartItems);
         localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
     };
+    /* 
+    *   cartItems :
+    *   1- check size selected & quantity not equal zero
+    *   2- cart doesnt have the  meal
+    *   3- Cart has the meal 
+    *       - meal identical (size , options , extras) --> update the meal
+    *       - meal not identical --> create new meal with this specification
+    */
     function haveSameExtrasAndOptions(obj1, obj2) {
-        if (obj1.selectedExtras && obj2.selectedExtras) {
-            const extras1 = obj1.selectedExtras?.map(e => e.id).sort();
-            const extras2 = obj2.selectedExtras?.map(e => e.id).sort();
+        const extras1 = (obj1.selectedExtras ?? []).map(e => e.id).sort();
+        const extras2 = (obj2.selectedExtras ?? []).map(e => e.id).sort();
 
-            const options1 = obj1.selectedOptions?.map(o => o.id).sort();
-            const options2 = obj2.selectedOptions?.map(o => o.id).sort();
+        const options1 = (obj1.selectedOptions ?? []).map(o => o.id).sort();
+        const options2 = (obj2.selectedOptions ?? []).map(o => o.id).sort();
 
-            const extrasEqual = JSON.stringify(extras1) === JSON.stringify(extras2);
-            const optionsEqual = JSON.stringify(options1) === JSON.stringify(options2);
-
-            return extrasEqual && optionsEqual;
-        } else if (!obj1.selectedExtras && !obj2.selectedExtras) {
-            return true;
-        }else {
-            return false;
-        }
-
-    }
+        const extrasEqual = JSON.stringify(extras1) === JSON.stringify(extras2);
+        const optionsEqual = JSON.stringify(options1) === JSON.stringify(options2);
+        return  extrasEqual &  optionsEqual
+    }   
     /* this call by the button  */
     const addItemToCart = (newItem) => {
         console.log('new', newItem)
-        const quantity = getItemCount(newItem.id)
-        //selectedExtras / selectedOptions
-        // get the first item or undefine if not exist
-        const existingItem = cartItems.find(cartItem => (cartItem.id === newItem.id && cartItem.selectedSize === newItem.selectedSize && haveSameExtrasAndOptions(cartItem, newItem)));
-        console.log('exist', existingItem)
-        // check if item already in cart 
+        if (quantity === 0) {
+            toast.error('select quantity')
+            return;
+        }
+
+        if (!newItem.selectedSize) {
+            toast.error('select size')
+            return;
+        }
+
+        const existingItem = cartItems?.find(cartItem => (cartItem.id === newItem.id && cartItem.selectedSize === newItem.selectedSize && haveSameExtrasAndOptions(cartItem, newItem)));
         if (existingItem) {
-            // increase the quantity of the item
-            updateCart(newItem.id, 'increase');
+            setCartItems(prev => {
+                const updatedCart = prev.map(item => {
+                    if (item.id === newItem.id && item.selectedSize === newItem.selectedSize && haveSameExtrasAndOptions(item, newItem)) {
+                        return {
+                            ...item,
+                            quantity: item.quantity + quantity
+                        };
+                    }
+                    return item;
+                });
+                // Update localStorage with the new cart
+                localStorage.setItem('cartItems', JSON.stringify(updatedCart));
+                console.log('updatedCart', updatedCart)
+                return updatedCart;
+            });
         } else {
-            // add new item to cart and update the local storage and cartitem , cartcount <state>
-            const updatedCart = [...cartItems, { ...newItem, quantity: quantity }];
-            setCartItems(updatedCart);
-            setCartCount(cartCount + 1)
+            newItem.quantity = quantity;
+            const updatedCart = [...cartItems, newItem];
+            setCartItems(updatedCart)
             localStorage.setItem('cartItems', JSON.stringify(updatedCart));
         }
+        setQuantity(0)
+       
     };
     //TODO: delete this section get item quantity from property in the  cartItems
     const [itemCount, setItemCount] = useState([]); // TODO: what this do 
@@ -199,14 +220,14 @@ const ProductDetails = ({
                                         justifyContent: "center", textAlign: "center", alignItems: "center", padding: "5px 2px",
                                     }}>
                                         <AddCircleOutlinedIcon
-                                            onClick={() => handleAddItem(item.id)}
+                                            onClick={() => setQuantity(quantity + 1)}
                                             sx={{ fontSize: "18px", color: theme.palette.orangePrimary.main, cursor: "pointer" }}
                                         />
                                         <Typography sx={{ fontSize: "11px", padding: "4px 0px", color: "#272725" }}>
-                                            {getItemCount(item.id)}
+                                            {quantity}
                                         </Typography>
                                         <RemoveCircleOutlinedIcon
-                                            onClick={() => handleMinusItem(item.id)}
+                                            onClick={() => { if (quantity !== 0) setQuantity(quantity - 1) }}
                                             sx={{ fontSize: "18px", color: theme.palette.orangePrimary.main, cursor: "pointer" }}
                                         />
                                     </Box>

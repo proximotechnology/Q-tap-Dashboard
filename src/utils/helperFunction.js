@@ -1,3 +1,4 @@
+export const BASE_URL = 'https://highleveltecknology.com/Qtap/api/'
 export const formateDate = (timestamp) => {
     const date = new Date(timestamp);
     // Get YYYY-MM-DD

@@ -13,7 +13,7 @@ import { customWidth } from '../utils';
 import Language from '../../../../Component/dashboard/TopBar/Language';
 
 
-const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems ,setCartItems }) => {
+const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, setCartItems }) => {
     const { t } = useTranslation()
     const theme = useTheme();
     const [isFormOpen, setIsFormOpen] = useState(false);
@@ -21,39 +21,38 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems ,setCartItems 
         setIsFormOpen(!isFormOpen);
     };
 
-    const totalCart = cartItems.reduce((acc, item) => { //TODO: What this do ????!!!
-        // // const itemCount = getItemCount(item.id);
-        // const validItemCount = isNaN(itemCount) ? 0 : itemCount;
-        // const validPrice = isNaN(item.newPrice) ? 0 : item.newPrice;
 
-        // return acc + validPrice * validItemCount;
-    }, 0);
     const [total, setTotal] = useState(0)
     useEffect(() => {
         setTotal(calculateTotalPrice())
-        console.log('cart item ' ,cartItems)
+        console.log('cart item ', cartItems)
     }, [cartItems])
 
     const calculateTotalPrice = () => { /// TODO: what if the user select multi size of same meal
-        let subTotal = 0;
-        let totalTax = 0;
+        let calsubtotal = 0;
+        let caltax = 0;
+        let caldiscount = 0
 
-        cartItems.map((item) => {
-            if (item.selectedSize) {// if user select size 
-                console.log('item tax ', item.Tax)
-                if (item.selectedSize === 'S') { subTotal += item.quantity * item.price_small; totalTax += item.Tax * item.price_small / 100; }
-                if (item.selectedSize === 'M') { subTotal += item.quantity * item.price_medium; totalTax += item.Tax * item.price_medium / 100; }
-                if (item.selectedSize === 'L') { subTotal += item.quantity * item.price_large; totalTax += item.Tax * item.price_large / 100; }
-
-            } else {
-                subTotal += item.quantity * item.price;
-                totalTax += item.Tax * item.price / 100;
+        for (const meal of cartItems) {
+            let priceOfItem = 0;
+            if (meal.selectedSize === 'S') {
+                priceOfItem = meal.price_small
             }
+            if (meal.selectedSize === 'M') {
+                priceOfItem = meal.price_medium
+            }
+            if (meal.selectedSize === 'L') {
+                priceOfItem = meal.price_large
+            }
+            calsubtotal += (priceOfItem * meal.quantity);
+            caltax += priceOfItem * (meal.Tax / 100);
+            caldiscount += priceOfItem * (meal.discounts?.discount ? meal.discounts?.discount / 100 : 0)
 
-        })
-
-        const finalTotal = (subTotal + totalTax).toFixed(2)
-        return finalTotal;
+        }
+        let totalCal = calsubtotal - caldiscount
+        totalCal += caltax
+        console.log('cart.jsx total ', totalCal)
+        return totalCal.toFixed(2);
     }
 
     const calculateSingleItemTotalPrice = (item) => {
@@ -72,13 +71,44 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems ,setCartItems 
         }
         return (subTotal + totalTax).toFixed(2)
     }
-    console.log("cart - cartItem ", cartItems)
+    
+    function haveSameExtrasAndOptions(obj1, obj2) {
+        const extras1 = (obj1.selectedExtras ?? []).map(e => e.id).sort();
+        const extras2 = (obj2.selectedExtras ?? []).map(e => e.id).sort();
 
+        const options1 = (obj1.selectedOptions ?? []).map(o => o.id).sort();
+        const options2 = (obj2.selectedOptions ?? []).map(o => o.id).sort();
+
+        const extrasEqual = JSON.stringify(extras1) === JSON.stringify(extras2);
+        const optionsEqual = JSON.stringify(options1) === JSON.stringify(options2);
+        return extrasEqual & optionsEqual
+    }
+    
+    const handleCartItemQuantityChange = (meal, event /* 1 for increase , -1 for decrease */) => {
+        let cartStorage = localStorage.getItem('cartItems') ? localStorage.getItem('cartItems') : "[]";
+
+        cartStorage = JSON.parse(cartStorage)
+
+        const newCart = cartStorage?.map(item => {
+            if (item.id === meal.id && meal.selectedSize === item.selectedSize && haveSameExtrasAndOptions(item, meal)) {
+                item.quantity += event;
+            }
+            return item
+        })
+
+        const filterCart = newCart.filter(item => item.quantity > 0)
+        setCartItems(filterCart)
+
+        const newCartString = JSON.stringify(filterCart)
+        localStorage.setItem('cartItems',newCartString)
+        
+
+    }
     return (
 
         <>
             <Box sx={{ overflowY: "auto", width: customWidth.itemSectionWidth, boxShadow: 3, bgcolor: 'white', position: 'fixed', right: 0, top: 0, height: '100vh' }}>
-                <Box sx={{ position: "fixed", top: 0, width: customWidth.itemSectionWidth, zIndex: 1201 }}>
+                <Box sx={{ position: "fixed", top: 0, width: customWidth.itemSectionWidth, zIndex: 1201, }}>
 
                     <AppBar position="static" color="inherit">
                         <Toolbar>
@@ -87,7 +117,7 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems ,setCartItems 
                                 <Typography sx={{
                                     position: "relative", top: "-10px", left: "-10px", fontSize: "8px", padding: "0px 3px", borderRadius: "50%",
                                     backgroundColor: theme.palette.orangePrimary.main, color: "white"
-                                }}>{cartItems.length}</Typography>
+                                }}>{cartItems?.length}</Typography>
                             </IconButton>
 
                             <Box sx={{ flexGrow: 1 }} />
@@ -101,118 +131,125 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems ,setCartItems 
                             </Box>
                         </Toolbar>
                     </AppBar>  {/* Header */}
-
-                    <Box sx={{ padding: 2 }}>
-                        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center" }}>
-                            <Typography variant="body1" sx={{ fontSize: "10px", display: "flex", letterSpacing: 1 }}>
-                                <ShoppingCartOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, marginRight: "5px", fontSize: "17px" }} /> {t("yourCart")}
-                            </Typography>
-                            <Typography variant="body2" sx={{ fontSize: "9px", color: "gray", letterSpacing: 1 }}>{cartItems.length} {t("item.many")}</Typography>
-                        </Box>
-                        {cartItems.map((item) => (
-                            <Box
-                                key={item.id}
-                                sx={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                    marginY: 2,
-                                    borderBottom: '1px solid #e0e0e0',
-                                    paddingBottom: "5px",
-                                }}
-                            >
-                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                    <img
-                                        src={item.image}
-                                        alt={item.name}
-                                        style={{ width: '50px', height: '50px', borderRadius: "10px", marginRight: '10px' }}
-                                    />
-                                    <Box>
-                                        <Typography
-                                            variant="h1"
-                                            sx={{ fontSize: '11px', fontWeight: '900', color: '#575756' }}>
-                                            {item.name}
-                                        </Typography>
-
-                                        <Typography
-                                            variant="body2"
-                                            color="textSecondary"
-                                            sx={{ fontSize: '9px', marginTop: '3px' }}>
-                                            {item.description}
-                                        </Typography>
-
-                                        <Typography variant="body2" sx={{ marginTop: '2px', fontSize: '9px', color: "#575756" }}>
-                                            <span style={{ color: theme.palette.orangePrimary.main }}>{t("option")} | </span>
-                                            {selectedItemOptions[item.id] && selectedItemOptions[item.id].length > 0
-                                                ? selectedItemOptions[item.id].map(option => option.name).join(', ')
-                                                : t("noOptionsSelected")}
-
-                                        </Typography>
-
-                                        <Typography variant="body2" sx={{ marginTop: '2px', fontSize: '9px', color: "#575756" }}>
-                                            <span style={{ color: theme.palette.orangePrimary.main }}>{t("extra.one")} |</span>
-                                            {selectedItemExtra[item.id] && selectedItemExtra[item.id].length > 0
-                                                ? selectedItemExtra[item.id].map(extra => extra.name).join(', ')
-                                                : t("noOptionsSelected")}
-                                        </Typography>
-                                    </Box>
-                                </Box>
-
-                                <Box sx={{ display: 'flex', flexDirection: "column", alignItems: 'center' }}>
-                                    <Box sx={{ display: "flex", flexDirection: "row" }}>
-                                        <AddCircleOutlinedIcon
-                                            onClick={() => {}} // TODO: create function to increase the quantity
-                                            sx={{ fontSize: "18px", color: "black", cursor: "pointer" }} />
-                                        <Typography sx={{ fontSize: "11px", padding: "0px 8px", color: "#272725" }}> {item.quantity}</Typography>
-                                        <RemoveCircleOutlinedIcon
-                                            onClick={() => {}}  // TODO: create function to decrease the quantity
-
-                                            sx={{ fontSize: "18px", color: "black", cursor: "pointer" }}
-                                        />
-                                    </Box>
-                                    <Box>
-                                        <Typography variant="h6" sx={{ marginTop: "5px", fontSize: '15px', fontWeight: "bold", color: theme.palette.orangePrimary.main }}>
-                                            {/* {item.newPrice} */} {calculateSingleItemTotalPrice(item)} <span style={{ fontSize: "9px", fontWeight: "400", color: '#575756' }}>EGP</span> {/* TODO: what is item.newPrice */}
-                                        </Typography>
-                                    </Box>
-                                </Box>
+                    <Box sx={{ overflow: 'auto', maxHeight: '90vh', height: '90vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                        <Box sx={{ padding: 2, marginBottom: '40px', height: 'auto' }}>
+                            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center" }}>
+                                <Typography variant="body1" sx={{ fontSize: "10px", display: "flex", letterSpacing: 1 }}>
+                                    <ShoppingCartOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, marginRight: "5px", fontSize: "17px" }} /> {t("yourCart")}
+                                </Typography>
+                                <Typography variant="body2" sx={{ fontSize: "9px", color: "gray", letterSpacing: 1 }}>{cartItems?.length} {t("item.many")}</Typography>
                             </Box>
-                        ))}
+                            {cartItems?.map((item) => (
+                                <Box
+                                    key={item.id}
+                                    sx={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        marginY: 2,
+                                        borderBottom: '1px solid #e0e0e0',
+                                        paddingBottom: "5px",
+                                    }}
+                                >
+                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <img
+                                            src={item.image}
+                                            alt={item.name}
+                                            style={{ width: '50px', height: '50px', borderRadius: "10px", marginRight: '10px' }}
+                                        />
+                                        <Box>
+                                            <Typography
+                                                variant="h1"
+                                                sx={{ fontSize: '11px', fontWeight: '900', color: '#575756' }}>
+                                                {item.name}  <span style={{ color: theme.palette.orangePrimary.main }}>{item.selectedSize}</span>
+                                            </Typography>
 
-                    </Box>
+                                            <Typography
+                                                variant="body2"
+                                                color="textSecondary"
+                                                sx={{ fontSize: '9px', marginTop: '3px' }}>
+                                                {item.description}
+                                            </Typography>
 
-                    <Box
-                        sx={{
-                            position: "fixed", bottom: '0px', backgroundColor: "white", height: "40px", width: customWidth.buttonSectionWidth, padding: "20px",
-                            boxShadow: 3, borderRadius: "30px 30px 0px 0px", display: "flex", justifyContent: "space-between",
-                        }}>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <Typography variant="h6" sx={{ fontSize: '11px', fontWeight: "bold", color: '#3A3A38' }}>
-                                {t("totalPrice")}
-                            </Typography>
-                            <Typography variant="h6" sx={{ fontSize: '18px', fontWeight: "bold", color: theme.palette.orangePrimary.main }}>
-                                {/* {isNaN(totalCart) ? 0 : totalCart} */}
-                                {isNaN(total) ? 0 : total}
-                                <span style={{ fontSize: "10px", fontWeight: "400", color: '#575756' }}>EGP</span>
-                            </Typography>
+                                            <Typography variant="body2" sx={{ marginTop: '2px', fontSize: '9px', color: "#575756" }}>
+                                                <span style={{ color: theme.palette.orangePrimary.main }}>{t("option")} | </span>
+                                                {/* {selectedItemOptions[item.id] && selectedItemOptions[item.id].length > 0
+                                                ? selectedItemOptions[item.id].map(option => option.name).join(', ')
+                                                : t("noOptionsSelected")} */}
+                                                {
+                                                    (item.selectedOptions ?? []).map(extra => extra.name).join(', ')
+                                                }
+
+                                            </Typography>
+
+                                            <Typography variant="body2" sx={{ marginTop: '2px', fontSize: '9px', color: "#575756" }}>
+                                                <span style={{ color: theme.palette.orangePrimary.main }}>{t("extra.one")} |</span>
+                                                {/* {selectedItemExtra[item.id] && selectedItemExtra[item.id].length > 0
+                                                ? selectedItemExtra[item.id].map(extra => extra.name).join(', ')
+                                                : t("noOptionsSelected")} */}
+                                                {
+                                                    (item.selectedExtras ?? []).map(extra => extra.name).join(', ')
+                                                }
+                                            </Typography>
+                                        </Box>
+                                    </Box>
+
+                                    <Box sx={{ display: 'flex', flexDirection: "column", alignItems: 'center' }}>
+                                        <Box sx={{ display: "flex", flexDirection: "row" }}>
+                                            <AddCircleOutlinedIcon
+                                                onClick={() => {handleCartItemQuantityChange(item,1) }} // TODO: create function to increase the quantity
+                                                sx={{ fontSize: "18px", color: "black", cursor: "pointer" }} />
+                                            <Typography sx={{ fontSize: "11px", padding: "0px 8px", color: "#272725" }}> {item.quantity}</Typography>
+                                            <RemoveCircleOutlinedIcon
+                                                onClick={() => {handleCartItemQuantityChange(item,-1) }}  // TODO: create function to decrease the quantity
+
+                                                sx={{ fontSize: "18px", color: "black", cursor: "pointer" }}
+                                            />
+                                        </Box>
+                                        <Box>
+                                            <Typography variant="h6" sx={{ marginTop: "5px", fontSize: '15px', fontWeight: "bold", color: theme.palette.orangePrimary.main }}>
+                                                {/* {item.newPrice} */} {calculateSingleItemTotalPrice(item)} <span style={{ fontSize: "9px", fontWeight: "400", color: '#575756' }}>EGP</span> {/* TODO: what is item.newPrice */}
+                                            </Typography>
+                                        </Box>
+                                    </Box>
+                                </Box>
+                            ))}
+
                         </Box>
-                        <Button
-                            onClick={toggleTypeForm}
-                            sx={{
-                                backgroundColor: theme.palette.orangePrimary.main, color: "white", textTransform: "capitalize", fontSize: "10px",
-                                float: "right", borderRadius: "20px", width: "55%", height: "30px",
-                                "&:hover": {
-                                    backgroundColor: "#ef7d10",
-                                }
+
+                        <Box
+                            sx={{//position: "fixed",bottom: '0px',
+                                backgroundColor: "white", height: "fit-content", width: customWidth.buttonSectionWidth, padding: "20px",
+                                boxShadow: 3, borderRadius: "30px 30px 0px 0px", display: "flex", justifyContent: "space-between",
                             }}>
-                            {t("checkout")}<TrendingFlatIcon sx={{ fontSize: "18px", mr: 1 }} />
-                        </Button>
-                    </Box> {/* footer */}
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <Typography variant="h6" sx={{ fontSize: '11px', fontWeight: "bold", color: '#3A3A38' }}>
+                                    {t("totalPrice")}
+                                </Typography>
+                                <Typography variant="h6" sx={{ fontSize: '18px', fontWeight: "bold", color: theme.palette.orangePrimary.main }}>
+                                    {/* {isNaN(totalCart) ? 0 : totalCart} */}
+                                    {total}
+                                    <span style={{ fontSize: "10px", fontWeight: "400", color: '#575756' }}>EGP</span>
+                                </Typography>
+                            </Box>
+                            <Button
+                                onClick={toggleTypeForm}
+                                sx={{
+                                    backgroundColor: theme.palette.orangePrimary.main, color: "white", textTransform: "capitalize", fontSize: "10px",
+                                    float: "right", borderRadius: "20px", width: "55%", height: "30px",
+                                    "&:hover": {
+                                        backgroundColor: "#ef7d10",
+                                    }
+                                }}>
+                                {t("checkout")}<TrendingFlatIcon sx={{ fontSize: "18px", mr: 1 }} />
+                            </Button>
+                        </Box> {/* footer */}
+                    </Box>
                 </Box>
             </Box >
             {isFormOpen && // here we calculate the total price 
                 <OrderTypeForm cartItems={cartItems}
-                    totalCart={totalCart}
+                    totalCart={total}
                     selectedItemOptions={selectedItemOptions}
                     selectedItemExtra={selectedItemExtra}
                     setCartItems={setCartItems}
