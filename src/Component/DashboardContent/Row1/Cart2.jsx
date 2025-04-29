@@ -24,6 +24,7 @@ const Cart2 = ({ Total_Orders }) => {
       if (isMounted && Total_Orders) {
         const orderArray = Object.values(Total_Orders);
         setAllOrders(orderArray);
+        console.log("orders cart2", orderArray);
         // Initially show first 6 orders
         setDisplayedOrders(orderArray.slice(0, 6));
       } else if (isMounted) {
@@ -49,7 +50,7 @@ const Cart2 = ({ Total_Orders }) => {
 
   return (
     <div style={{ position: 'relative' }}>
-      <div style={{ direction: 'ltr' }}>
+      <div style={{ direction: 'ltr' , marginLeft:"-30px"}}>
         <ResponsiveContainer width="100%" height={160}>
           <BarChart
             data={displayedOrders}

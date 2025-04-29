@@ -398,16 +398,16 @@ import {
           </FormControl>
         </Grid>
   
-        <Snackbar
+        {/* <Snackbar
           open={successOpen}
           autoHideDuration={3000}
           onClose={handleCloseSnackbar}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
-          <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: "100%" }}>
+         <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: "100%" }}>
             {t("updateSucc")}
-          </Alert>
-        </Snackbar>
+          </Alert> 
+        </Snackbar> */}
   
         <Snackbar
           open={errorOpen}
