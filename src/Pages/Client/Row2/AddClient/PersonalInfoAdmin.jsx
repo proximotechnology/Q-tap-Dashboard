@@ -148,11 +148,11 @@ import {
           />
         </Box>
   
-        <Grid item xs={12} md={3} sx={{ marginRight: "40px" }}>
+        <Grid item xs={12} md={3} style={{ minWidth:'150px',padding:'0px' }} sx={{ marginRight: "40px" }}>
           <Box sx={{ textAlign: "center" }}>
             <Box
               sx={{
-                width: "100%",
+                width: "150px",
                 height: "100%",
                 borderRadius: "50%",
                 overflow: "hidden",
@@ -160,12 +160,13 @@ import {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                marginX:'auto'
               }}
             >
               <img
                 src={image ? (typeof image === "string" ? image : URL.createObjectURL(image)) : "/images/User.jpg"}
                 alt="user"
-                width="170"
+                width="150"
                 height="150"
               />
               <Box
