@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { parseResponseOrderItem } from './OrderBody';
+import { BASE_URL } from '../../../../utils/helperFunction';
 
 export const OrderHistory = () => {
     const navigate = useNavigate();
@@ -33,7 +34,6 @@ export const OrderHistory = () => {
             try {
                 const loginclient = JSON.parse(localStorage.getItem('allClientData'))
                 const selectedBranch = localStorage.getItem('selectedBranch')
-                const BASE_URL = 'https://highleveltecknology.com/Qtap/api/';
                 console.log('currnt user ',loginclient)
                 if (! loginclient || loginclient.user.role !== "admin") {
                     toast.error("unauth")

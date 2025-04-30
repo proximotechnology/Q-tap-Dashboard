@@ -36,7 +36,7 @@ console.log('OrderDetailsNew ',order)
 
                 if (isLoading) return;
                 setIsLoading(true)
-                const res = await axios.get(`${orderEndPoint.BASE_URL}${orderEndPoint.admin.fetch[1]}`,
+                const res = await axios.get(`${BASE_URL}${orderEndPoint.admin.fetch[1]}`,
                     {
                         headers: {
                             'Content-Type': 'application/json',
@@ -319,7 +319,7 @@ console.log('OrderDetailsNew ',order)
                     </Typography>
                     {/* order details - > meal : name , quantity and price */}
                     {order?.meal_id?.map((id, index) =>  { 
-                        const item = order?.meals.find(item => item.id === id);
+                        const item = order?.meals.find(item => item.id == id);
                         console.log('order',order ,'item',item)
                         return (
                         <Box
@@ -333,7 +333,7 @@ console.log('OrderDetailsNew ',order)
                             }}
                         >
                             <Typography variant="body2" sx={{ fontSize: "10px", color: "#AAAAAA" }}>
-                                {order?.quantity[index]} x {item.name} {order?.size[index] && `(size: ${order.size[index]})`}
+                                {order?.quantity[index]} x {item?.name} {order?.size[index] && `(size: ${order.size[index]})`}
                                 {order?.extras?.[index] && order?.extras?.[index]?.length > 0 &&` + ${order.extras[index]}`}
                                 {order?.variants?.[index] && order?.variants?.[index]?.length > 0 && ` + ${order.variants[index]}`}
                             </Typography>

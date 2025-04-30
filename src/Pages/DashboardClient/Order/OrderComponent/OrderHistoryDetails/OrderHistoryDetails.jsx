@@ -20,7 +20,7 @@ const OrderHistoryDetails = ({ order, onClose }) => {
     if (!order) return null;
     return (
         
-        <Paper sx={{ width: "75%", backgroundColor: "white", marginTop: "-160px", 
+        <Paper sx={{ width: "75%", backgroundColor: "white", 
         boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',borderRadius: '8px' }}>
             <Box sx={{padding: '20px', }}> 
             <Header order={order} onClick={onClose}  onPrint={handlePrint} /> 

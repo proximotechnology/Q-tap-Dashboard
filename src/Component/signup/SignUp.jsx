@@ -42,7 +42,10 @@ const SignUp = () => {
     const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
 
     const theme = useTheme()
-
+    const  isValidPassword = (password)=> {
+        const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+        return regex.test(password);
+      }
     // call api to register
     const handleSignUp = async () => {
 
@@ -54,7 +57,10 @@ const SignUp = () => {
             setApiError(t("fieldAreRequired"));
             return;
         }
-
+        if(!isValidPassword(password)){
+            setApiError(t("passTooShortOrDontHaveNumber"));
+            return;
+        }
         if (password !== confirmPassword) {
             setApiError(t("PasswordsDoNotMatch"));
             return;
@@ -67,6 +73,7 @@ const SignUp = () => {
             setApiError(t("countryFieldIsRequired"));
             return;
         }
+       
 
         // if (!user_type) {
         //     setApiError(t("userTypeRequired"));

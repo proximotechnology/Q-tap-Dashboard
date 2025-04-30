@@ -663,5 +663,6 @@
     "New Valley": "New Valley",
     "Matrouh": "Matrouh",
     "North Sinai": "North Sinai",
-    "South Sinai": "South Sinai"
+    "South Sinai": "South Sinai",
+    "passTooShortOrDontHaveNumber":"Password should be at least 6 characters long and consist of both letters and numbers."
 }

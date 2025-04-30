@@ -663,5 +663,6 @@
     "New Valley": "الوادي الجديد",
     "Matrouh": "مطروح",
     "North Sinai": "شمال سيناء",
-    "South Sinai": "جنوب سيناء"
+    "South Sinai": "جنوب سيناء",
+    "passTooShortOrDontHaveNumber":"يجب أن تتكون كلمة المرور من 6 أحرف على الأقل وتتكون من أحرف وأرقام."
 }

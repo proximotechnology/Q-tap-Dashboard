@@ -56,14 +56,20 @@ const SideBar = ({ setSelectedCategory, allMenuData, selectedCategory }) => {
                     display: { sm: 'none', xs: isOpen ? 'none' : 'block' },
                     zIndex: 1201,
                     top: '30px',
-                    backgroundColor: 'red'
+                    backgroundColor: 'red',
+                    minWidth:'0px',
+                    minHeight:'0px',
+                    padding:'0'
                 }}
                 onClick={handleOpenSideBar}
             >
                 <Menu />
             </Button>
-            <Box sx={{
+            <Box className="fixHere"
+            sx={{
                 position: { xs: isOpen ? 'fixed' : 'relative', sm: 'fixed' },
+                display: { xs: isOpen ? 'flex' : 'none', sm: 'flex'},
+                flexDirection:'column',
                 start: 0,
                 top: 0,
                 height: '100vh',

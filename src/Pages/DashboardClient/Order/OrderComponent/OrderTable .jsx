@@ -233,8 +233,16 @@ const OrderTable = ({ orders }) => {
                     flexDirection="column"
                     alignItems="center"
                     padding="10px"
-                    position="absolute"
+                    position="fixed"
                     width="90%"
+                    top='50%'
+                    left='50%'
+                    maxHeight='90vh'
+                    className='details'
+                    overflow='auto'
+                    sx={{
+                        transform: 'translate(-50%, -50%)',
+                    }}
                 >
                     <OrderHistoryDetails order={selectedOrder} onClose={handleCloseDetails} />
                 </Box>

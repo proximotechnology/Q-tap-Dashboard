@@ -202,8 +202,9 @@ export const OrderBody = () => {
                 toast.info(`📢 pusher served_order`);
                 if (client?.user?.role === "waiter") {
                     removeOrder(data.message.id)
-                } else if (client?.user?.role === "waiter") {
-                    setOrders((prev => [...prev, parseResponseOrderItem(data.message, orderPhaseType.DONING)]))
+                } else if (client?.user?.role === "admin") {
+                    console.log('here admin add served order')
+                    setOrders((prev => [...prev, parseResponseOrderItem(data.message?.[0], orderPhaseType.DONING)]))
                 }
             }
             if (data.type === 'done_order') { toast.info(`📢 pusher done_order`); }

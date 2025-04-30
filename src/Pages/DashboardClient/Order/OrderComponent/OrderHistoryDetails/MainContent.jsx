@@ -65,19 +65,19 @@ const MainContent = forwardRef(({ order }) => {
 
     return (
         <Grid container spacing={2} >
-            <Grid item xs={4}>
+            <Grid item xsm={4} xs={12}>
                 <OrderDetails order={order} />
             </Grid>
 
-            <Divider orientation="vertical" flexItem sx={{ color: 'gray', height: "250px" }} />
+            <Divider orientation="vertical" flexItem sx={{ color: 'gray', height: "250px",  display:{xs:'none',sm:'block'}}} />
 
-            <Grid item xs={4}>
+            <Grid item sm={4} xs={12}>
                 <CommentSection order={order} />
             </Grid>
 
-            <Divider orientation="vertical" flexItem sx={{ color: 'gray', height: "250px" }} />
+            <Divider orientation="vertical" flexItem sx={{ color: 'gray', height: "250px", display:{xs:'none',sm:'block'} }} />
 
-            <Grid item xs={3}>
+            <Grid item sm={3} xs={12}>
                 <ChefSection order={order} />
             </Grid>
         </Grid>

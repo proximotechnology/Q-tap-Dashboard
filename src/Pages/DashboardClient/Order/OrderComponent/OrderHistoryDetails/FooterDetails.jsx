@@ -17,6 +17,7 @@ const FooterDetails = ({ order }) => {
                 transition: "width 0.3s ease-in-out",
                 display: "flex",
                 position: 'relative', borderRadius: "0px 0px 10px 10px",
+                overflow:'auto'
             }}
 
         >

@@ -7,6 +7,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import { parseResponseOrderItem } from '../Order/OrderComponent/OrderBody'
 import { DeliveredDetails } from './DeliveredBody/DeliveredDetails'
+import { BASE_URL } from '../../../utils/helperFunction'
 
 export const Delivered = () => {
     const [preparedOrders, setPreparedOrders] = useState([])
@@ -17,7 +18,7 @@ export const Delivered = () => {
     const [selectedOrder, setSelectedOrder] = useState(null)
     const [isOrderDetailsOpen, setIsOrderDetailsOpen] = useState(false)
 
-    const BASE_URL = 'https://highleveltecknology.com/Qtap/api/';
+
     const delivery = {
         fetch: {
             getPerepared: 'get_prepared_orders_delivery/',
