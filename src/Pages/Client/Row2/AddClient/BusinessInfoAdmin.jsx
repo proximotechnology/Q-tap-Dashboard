@@ -348,7 +348,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
       </Grid>
 
       <Grid item xs={12} md={12} display={"flex"} justifyContent={"space-between"} >
-        <Grid container spacing={1} >
+        <Grid container  >
           <Grid item xs={12} md={6} >
             {/* Business Info Fields */}
             <FormControl variant="outlined" fullWidth>
@@ -597,16 +597,15 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
             </Box>
           </Grid>
           {/* part of branch */}
-          <Grid item xs={12} md={6} className="here_the_container" overflow={'hidden'}>
+          <Grid item xs={12} md={6} className="here_the_container" overflow={'hidden'} sx={{  paddingInlineStart:{xs:'0px',md:'8px'}}}>
             <Grid
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                marginTop: "10px",
                 width: "100%",
               }}
             >
-              <Box sx={{ marginTop: "6px", display: 'flex', justifyContent: 'space-between', width: '100%', overflow: 'hidden', flexWrap: 'nowrap' }} className="here_section">
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', overflow: 'hidden', flexWrap: 'nowrap' }} className="here_section">
                 <Box sx={{ flexGrow: '1', flex: "1 1 auto" }} >
                   <Typography
                     sx={{ fontSize: "14px", fontWeight: "500", color: "#AAAAAA", textAlign: "start" }}
@@ -700,7 +699,8 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                   </ToggleButtonGroup>
                 </Box>
               </Box>
-              {/* Default Mode and Menu Design
+              {
+                /* Default Mode and Menu Design
               <Box sx={{ display: "flex", width: "100%" }}>
                 <Grid container spacing={1}>
                   <Typography variant="h3" sx={{ fontSize: "13px", width: "100%", fontWeight: "500", color: "gray" }}>
@@ -827,10 +827,10 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                       </Box>
                     </Grid>
 
-                    <Grid item xs={6} padding='1rem'>
+                    <Grid item xs={6} paddingInlineStart={'21px'}>
                       <Grid container alignItems="center">
 
-                        <Grid item container sx={{ justifyContent:'space-between' }}>
+                        <Grid item container sx={{ justifyContent:'end' }}>
                           <Grid item>
                             <Typography variant="body1" sx={{ fontSize: "11px", color: "gray", mr: 1 }}>
                               {t("from")}
@@ -842,7 +842,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                               value={workingHours.fromTime}
                               onChange={(e) => handleTimeChange(e, "from")}
                               size="small"
-                              sx={{ width: "90px", height: "30px" }}
+                              sx={{ width: "100px", height: "30px" }}
                               inputProps={{ sx: { padding: "2px 10px", fontSize: "12px" } }}
                             >
                               {["9:00 am", "10:00 am", "11:00 am"].map((time) => (
@@ -854,7 +854,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                           </Grid>
                         </Grid>
 
-                        <Grid item container sx={{ justifyContent:'space-between' }}>
+                        <Grid item container sx={{ justifyContent:'end' }}>
                           <Grid item>
                             <Typography variant="body1" sx={{ fontSize: "11px", color: "gray", mr: 1 }}>
                               {t("to")}
@@ -866,7 +866,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                               value={workingHours.toTime}
                               onChange={(e) => handleTimeChange(e, "to")}
                               size="small"
-                              sx={{ width: "90px", height: "30px" }}
+                              sx={{ width: "100px", height: "30px" }}
                               inputProps={{ sx: { padding: "2px 10px", fontSize: "12px" } }}
                             >
                               {["5:00 pm", "6:00 pm", "7:00 pm"].map((time) => (
