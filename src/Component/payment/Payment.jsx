@@ -6,20 +6,22 @@ import DoneIcon from '@mui/icons-material/Done';
 import { useTranslation } from 'react-i18next';
 import { usePersonalContext } from '../../context/PersonalContext';
 import { toast } from 'react-toastify';
-
-
-
-
+import { useBusinessContext } from '../../context/BusinessContext';
 
 export const Payment = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const theme = useTheme();
   const { personalData, updatePersonalData } = usePersonalContext();
+  const { branches } = useBusinessContext();
   const [selectedValue, setSelectedValue] = useState('cash');
   const [pricing, setPricing] = useState([]);
-  const [selectedPlans, setSelectedPlans] = useState([]); // Array of { plan, pricingWay }
+  const [discounts, setDiscounts] = useState([]);
+  const [selectedPlan, setSelectedPlan] = useState(null); // { plan, pricingWay }
   const [discountCode, setDiscountCode] = useState('');
+  const [isLoading, setIsLoading] = useState(true); // حالة تحميل جديدة
+  // console.log("branches", branches);
+
   const Divider2 = styled(Box)({
     width: '35%',
     height: '2px',
@@ -35,20 +37,38 @@ export const Payment = () => {
     borderRadius: "20px",
     marginBottom: "20px",
   });
-  // Fetch pricing data from API
+
+  // Fetch pricing and discount data from API
   useEffect(() => {
-    fetch('https://highleveltecknology.com/Qtap/api/pricing', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
-        setPricing(data.data);
-        console.log("price data register", data);
+    setIsLoading(true);
+    Promise.all([
+      fetch('https://highleveltecknology.com/Qtap/api/pricing', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
-      .catch(error => console.error('Error fetching pricing data:', error));
+        .then(response => response.json())
+        .then(data => {
+          setPricing(data.data);
+          // console.log("price data register", data);
+        })
+        .catch(error => console.error('Error fetching pricing data:', error)),
+
+      fetch('https://highleveltecknology.com/Qtap/api/discount', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(response => response.json())
+        .then(data => {
+          setDiscounts(data.discounts);
+          // console.log("discount data register", data.discounts);
+        })
+        .catch(error => console.error('Error fetch discount data:', error)),
+    ])
+      .finally(() => setIsLoading(false));
   }, []);
 
   const handleChange = (event) => {
@@ -58,81 +78,99 @@ export const Payment = () => {
 
   const handleDiscountChange = (event) => {
     setDiscountCode(event.target.value);
-    updatePersonalData({ discount_id: event.target.value });
+    // التحقق من كود الخصم سيتم في handleNext
   };
 
   const handlePlanSelect = (plan) => {
-    const isSelected = selectedPlans.some(p => p.plan.id === plan.id);
-    let updatedPlans;
-    if (isSelected) {
-      updatedPlans = selectedPlans.filter(p => p.plan.id !== plan.id); // Deselect
+    if (selectedPlan && selectedPlan.plan.id === plan.id) {
+      // إلغاء اختيار الباقة إذا تم النقر عليها مرة أخرى
+      setSelectedPlan(null);
+      updatePersonalData({ pricing_id: '', pricing_way: '' });
     } else {
-      updatedPlans = [...selectedPlans, { plan, pricingWay: '' }]; // Add without pricingWay initially
+      // اختيار باقة واحدة فقط
+      setSelectedPlan({ plan, pricingWay: '' });
+      updatePersonalData({ pricing_id: plan.id, pricing_way: '' });
     }
-    setSelectedPlans(updatedPlans);
-
-    // Update pricing_id with the first selected plan's ID as a string, or empty string if none
-    const firstPlanId = updatedPlans.length > 0 ? updatedPlans[0].plan.id : '';
-    updatePersonalData({ pricing_id: firstPlanId });
   };
 
   const handlePricingWayChange = (planId, pricingWay) => {
-    const updatedPlans = selectedPlans.map(p =>
-      p.plan.id === planId ? { ...p, pricingWay } : p
-    );
-    setSelectedPlans(updatedPlans);
-
-    // Update pricing_way in context if all selected plans have a consistent pricingWay
-    const allPricingWays = updatedPlans.map(p => p.pricingWay).filter(Boolean);
-    if (allPricingWays.length === updatedPlans.length && allPricingWays.every(pw => pw === allPricingWays[0])) {
-      updatePersonalData({ pricing_way: allPricingWays[0] }); // Set to 'monthly' or 'yearly'
-    } else {
-      updatePersonalData({ pricing_way: '' }); // Clear if not all match or some are unset
+    if (selectedPlan && selectedPlan.plan.id === planId) {
+      setSelectedPlan({ ...selectedPlan, pricingWay });
+      updatePersonalData({ pricing_way: pricingWay });
     }
   };
 
   const calculateTotals = () => {
-    if (selectedPlans.length === 0) return { subTotal: 0, addOns: 0, tax: 0, discounts: 0, total: 0 };
+    if (!selectedPlan || !selectedPlan.pricingWay) {
+      return { subTotal: 0, addOns: 0, tax: 0, discounts: 0, total: 0 };
+    }
 
-    // Check if all selected plans have pricingWay set
-    const allPricingWaysSet = selectedPlans.every(p => p.pricingWay);
-    if (!allPricingWaysSet) return { subTotal: 0, addOns: 0, tax: 0, discounts: 0, total: 0 };
+    const { plan, pricingWay } = selectedPlan;
+    const price = pricingWay === 'monthly' ? parseFloat(plan.monthly_price) : parseFloat(plan.yearly_price);
+    const subTotal = price || 0;
 
-    const subTotal = selectedPlans.reduce((sum, { plan, pricingWay }) => {
-      const price = pricingWay === 'monthly' ? parseFloat(plan.monthly_price) : parseFloat(plan.yearly_price);
-      return sum + (price || 0);
-    }, 0);
+    // حساب addOns بناءً على عدد الفروع
+    let addOns = 0;
+    if (branches.length > 1) {
+      addOns = subTotal / 2; // إضافة نصف سعر الباقة إذا كان هناك أكثر من فرع
+    }
 
-    const addOns = 0; // Adjust as needed
-    const tax = 0; // Adjust as needed
-    const discounts = discountCode ? parseFloat(discountCode) || 0 : 0;
-    const total = subTotal + addOns + tax - discounts;
+    const tax = 0; // يمكن تعديله حسب الحاجة
+    // التحقق الآمن من discounts
+    const discountValue = discountCode && Array.isArray(discounts)
+      ? parseFloat(discounts.find(d => d.code === discountCode && d.status === 'active')?.discount || 0)
+      : 0;
+    const total = subTotal + addOns + tax - discountValue;
 
-    return { subTotal, addOns, tax, discounts, total };
+    return { subTotal, addOns, tax, discounts: discountValue, total };
   };
 
   const totals = calculateTotals();
-  // console.log(selectedPlans);
-  // console.log("radio payment way", selectedValue);
-  
+  const totalPrice = totals.total; // تخزين إجمالي السعر في متغير totalPrice
 
   const handleNext = () => {
-    if (selectedPlans.length === 0 || !selectedPlans[0].pricingWay) {
-      toast.error("please select plan");
-    } else {
-      navigate('/save');
+    if (!selectedPlan) {
+      toast.error(t("pleaseSelectPlan"));
+      return;
     }
+    if (!selectedPlan.pricingWay) {
+      toast.error(t("pleaseSelectPricingWay"));
+      return;
+    }
+
+    // التحقق من كود الخصم
+    if (discountCode) {
+      const validDiscount = Array.isArray(discounts) && discounts.find(d => d.code === discountCode && d.status === 'active');
+      if (!validDiscount) {
+        toast.error(t("invalidDiscountCode"));
+        return;
+      }
+      updatePersonalData({ discount_id: validDiscount.id });
+    } else {
+      updatePersonalData({ discount_id: null });
+    }
+
+    console.log('Total Price:', totalPrice);
+    navigate('/save');
+  };
+
+  // عرض حالة التحميل أثناء جلب البيانات
+  if (isLoading) {
+    return (
+      <Box sx={{ textAlign: 'center', marginTop: '50px' }}>
+        <Typography variant="h6">{t("loading")}</Typography>
+      </Box>
+    );
   }
+
   return (
-    <Box marginTop={"50px"} flexGrow={1} >
+    <Box marginTop={"50px"} flexGrow={1}>
       <Typography variant="body1" sx={{ marginLeft: "50px", fontSize: "18px", color: theme.palette.secondaryColor.main }}>
         {t("payment")}
       </Typography>
       <Divider marginLeft={"50px"} />
 
-      <Box
-        sx={{ display: "flex", flexDirection: 'column' }}
-      >
+      <Box sx={{ display: "flex", flexDirection: 'column' }}>
         <Grid container spacing={1} sx={{ width: "100%", minHeight: "300px", justifyContent: "center" }}>
           {pricing.map((plan) => (
             <Grid item xs={12} sm={6} md={2} key={plan.id}>
@@ -142,17 +180,17 @@ export const Payment = () => {
                 pricePerYear={plan.yearly_price}
                 orders={plan.orders_limit}
                 buttonText={t("select")}
-                isSelected={selectedPlans.some(p => p.plan.id === plan.id)}
+                isSelected={selectedPlan && selectedPlan.plan.id === plan.id}
                 onSelect={() => handlePlanSelect(plan)}
                 onPricingWayChange={(pricingWay) => handlePricingWayChange(plan.id, pricingWay)}
-                pricingWay={selectedPlans.find(p => p.plan.id === plan.id)?.pricingWay || ''}
+                pricingWay={selectedPlan && selectedPlan.plan.id === plan.id ? selectedPlan.pricingWay : ''}
               />
             </Grid>
           ))}
         </Grid>
         <Box sx={{ height: '15px' }}></Box>
         {/* section2 calc & discount */}
-        <Grid container spacing={2} >
+        <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Box sx={{ textAlign: "center", justifyContent: "center", marginTop: "15px" }}>
               <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
@@ -183,7 +221,7 @@ export const Payment = () => {
               <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
                 {t("total")}
                 <span style={{ fontSize: '17px', color: theme.palette.orangePrimary.main, marginLeft: "10px" }}>
-                  {totals.total.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
+                  {totalPrice.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
                 </span>
               </Typography>
             </Box>
@@ -235,7 +273,7 @@ export const Payment = () => {
           </Grid>
         </Grid>
         {/* section 3 pay button */}
-        <Grid container >
+        <Grid container>
           <Button
             variant="contained"
             sx={{

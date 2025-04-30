@@ -26,7 +26,7 @@ export function PricingCard({ title, pricePerMonth, pricePerYear, orders, button
     onPricingWayChange(newPricingWay); // Pass pricingWay to parent
   };
 
-  // Determine which price to display based on pricingWay
+  // عرض السعر بناءً على pricingWay
   const displayPrice = pricingWay === 'yearly' ? pricePerYear : pricePerMonth;
   const priceLabel = pricingWay === 'yearly' ? t("year") : t("month");
 
@@ -39,21 +39,19 @@ export function PricingCard({ title, pricePerMonth, pricePerYear, orders, button
       </Box>
 
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <Box sx={{ width: "100%", height: "100%", borderRadius: "20px", backgroundColor: theme.palette.secondaryColor.main, textAlign: "center", color: "#fff" }}>
+        <Box sx={{ width: "90%", height: "100%", borderRadius: "20px", backgroundColor: theme.palette.secondaryColor.main, textAlign: "center", color: "#fff" }}>
           <Box sx={{ padding: "10px 0px" }}>
-
             <Typography variant="body1" sx={{ margin: "15px 0", fontSize: "10px" }}>
               <sup style={{ color: theme.palette.orangePrimary.main, fontSize: "8px", margin: "0px 5px 0px 0px" }}>EGP</sup>
-              <span style={{ fontSize: "18px" }}>{pricePerMonth}</span>/{"Month"}
+              <span style={{ fontSize: "18px" }}>{pricePerMonth}</span>/{t("month")}
             </Typography>
 
             <Divider />
 
             <Typography variant="body1" sx={{ margin: "15px 0", fontSize: "10px" }}>
               <sup style={{ color: theme.palette.orangePrimary.main, fontSize: "8px", margin: "0px 5px 0px 0px" }}>EGP</sup>
-              <span style={{ fontSize: "18px" }}>{pricePerYear}</span>/{"Year"}
+              <span style={{ fontSize: "18px" }}>{pricePerYear}</span>/{t("year")}
             </Typography>
-
           </Box>
           <Box sx={{ backgroundColor: theme.palette.orangePrimary.main, height: "50px", justifyContent: "center", display: "flex", alignItems: "center", borderRadius: "0px 0px 20px 20px" }}>
             <Typography variant="body2" sx={{ color: "white", fontSize: "12px" }}>
@@ -67,10 +65,10 @@ export function PricingCard({ title, pricePerMonth, pricePerYear, orders, button
           variant="contained"
           onClick={handleClick}
           sx={{
-            width: { lg: "70%", md: "30%", xs: "30%" },
+            width: { lg: "60%", md: "30%", xs: "30%" },
             marginTop: "10px",
             padding: "1px",
-            marginLeft: { lg: "20px", md: "0" },
+            marginLeft: { lg: "10px", md: "0" },
             borderRadius: "50px",
             backgroundColor: isSelected ? theme.palette.orangePrimary.main : theme.palette.secondaryColor.main,
             textTransform: "capitalize",
@@ -86,7 +84,7 @@ export function PricingCard({ title, pricePerMonth, pricePerYear, orders, button
           sx={{ width: "200px", marginTop: "5px", display: 'flex', justifyContent: 'center' }}
           value={pricingWay}
           onChange={handlePricingWayChange}
-          disabled={!isSelected} // Disable unless card is selected
+          disabled={!isSelected} // تعطيل إلا إذا تم اختيار الباقة
         >
           <Box>
             <FormControlLabel
