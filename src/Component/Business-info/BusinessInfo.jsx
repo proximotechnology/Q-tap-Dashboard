@@ -1,5 +1,6 @@
-import { Box, Button, MenuItem, styled, TextField, ToggleButton, ToggleButtonGroup, Typography, Grid, InputAdornment, Select, FormControl, useTheme, IconButton, Checkbox, FormControlLabel, Radio } from '@mui/material'
-import React, { useState, useEffect } from 'react'
+
+import { Box, Button, MenuItem, styled, TextField, ToggleButton, ToggleButtonGroup, Typography, Grid, InputAdornment, Select, FormControl, useTheme, IconButton, Checkbox, FormControlLabel, Radio } from '@mui/material';
+import React, { useState, useEffect } from 'react';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
@@ -15,49 +16,69 @@ import { useTranslation } from 'react-i18next';
 import GridViewIcon from '@mui/icons-material/GridView';
 import ListIcon from '@mui/icons-material/List';
 import { toast } from 'react-toastify';
+import { timeOptions } from './WorkingHoursDays';
 
+// تحديد الأيام بأحرف مختصرة للعرض
 const daysOfWeek = ['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr'];
-
-
+// تحديد الأيام الكاملة للـ context
+const fullDaysOfWeek = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
 export const BusinessInfo = () => {
     const theme = useTheme();
     const Divider = styled(Box)({
-    width: '5%',
-    height: '3px',
-    backgroundColor: theme.palette.orangePrimary.main,
-    borderRadius: "20px",
-    marginBottom: "20px"
-});
-    const { businessData, updateBusinessData } = useBusinessContext();
+        width: '5%',
+        height: '3px',
+        backgroundColor: theme.palette.orangePrimary.main,
+        borderRadius: "20px",
+        marginBottom: "20px"
+    });
+    const { businessData, updateBusinessData, branches, selectedBranch, addBranch } = useBusinessContext();
     const navigate = useNavigate();
-    
-
+    const { t } = useTranslation();
 
     // Initialize all state values from context
-    const [mode, setMode] = React.useState(businessData.mode || 'white');
-    const [design, setDesign] = React.useState(businessData.design || 'grid');
-    const [format, setFormat] = useState(businessData.format || '');
-    const [currency, setCurrency] = useState(businessData.currency || '');
-    const [country, setCountry] = useState(businessData.country || '');
-    const [city, setCity] = useState(businessData.city || '');
-    const [businessName, setBusinessName] = useState(businessData.businessName || '');
-    const [website, setWebsite] = useState(businessData.website || '');
-    const [businessEmail, setBusinessEmail] = useState(businessData.businessEmail || '');
-    const [businessPhone, setBusinessPhone] = useState(businessData.businessPhone || '');
-    const [selectedDays, setSelectedDays] = useState(businessData.workingHours?.selectedDays || ['Sa', 'Su']);
-    const [currentDay, setCurrentDay] = useState(businessData.workingHours?.currentDay || 'Sunday');
-    const [fromTime, setFromTime] = useState(businessData.workingHours?.fromTime || '9:00 am');
-    const [toTime, setToTime] = useState(businessData.workingHours?.toTime || '5:00 pm');
-    const [paymentMethods, setPaymentMethods] = useState(businessData.paymentMethods || []);
-    const [paymentTime, setPaymentTime] = useState(businessData.paymentTime || '');
-    const [activeWaiter, setActiveWaiter] = useState(businessData.callWaiter || 'inactive');
+    const dataSource = selectedBranch !== null && branches[selectedBranch] ? branches[selectedBranch] : businessData;
+    const [mode, setMode] = useState(dataSource.mode || 'white');
+    const [design, setDesign] = useState(dataSource.design || 'grid');
+    const [format, setFormat] = useState(dataSource.format || '');
+    const [currency, setCurrency] = useState(dataSource.currency || '');
+    const [country, setCountry] = useState(dataSource.country || '');
+    const [city, setCity] = useState(dataSource.city || '');
+    const [businessName, setBusinessName] = useState(dataSource.businessName || '');
+    const [website, setWebsite] = useState(dataSource.website || '');
+    const [businessEmail, setBusinessEmail] = useState(dataSource.businessEmail || '');
+    const [businessPhone, setBusinessPhone] = useState(dataSource.businessPhone || '');
+    const [selectedDays, setSelectedDays] = useState(
+        dataSource.workschedules
+            ? Object.keys(dataSource.workschedules).map((day) => daysOfWeek[fullDaysOfWeek.indexOf(day)])
+            : ['Sa', 'Su']
+    );
+    const [currentDay, setCurrentDay] = useState('Saturday');
+    const [fromTime, setFromTime] = useState(
+        dataSource.workschedules?.[currentDay]?.[0] || '9:00 am'
+    );
+    const [toTime, setToTime] = useState(
+        dataSource.workschedules?.[currentDay]?.[1] || '7:00 pm'
+    );
+    const [paymentMethods, setPaymentMethods] = useState(dataSource.paymentMethods || []);
+    const [paymentTime, setPaymentTime] = useState(dataSource.paymentTime || 'after');
+    const [activeWaiter, setActiveWaiter] = useState(dataSource.callWaiter || 'inactive');
 
-    const { t } = useTranslation()
-    // Update context whenever any value changes
+    // تحديث fromTime و toTime عند تغيير currentDay
     useEffect(() => {
+        const schedules = dataSource.workschedules || {};
+        if (schedules[currentDay]) {
+            setFromTime(schedules[currentDay][0]);
+            setToTime(schedules[currentDay][1]);
+        } else {
+            setFromTime('9:00 am');
+            setToTime('7:00 pm');
+        }
+    }, [currentDay, dataSource.workschedules]);
 
-        updateBusinessData({
+    // Update context whenever values change (excluding workschedules)
+    useEffect(() => {
+        const updatedData = {
             mode,
             design,
             format,
@@ -70,18 +91,14 @@ export const BusinessInfo = () => {
             businessPhone,
             callWaiter: activeWaiter,
             paymentTime,
-            paymentMethods,
-            workingHours: {
-                selectedDays,
-                currentDay,
-                fromTime,
-                toTime,
-            }
-        });
+            paymentMethods
+        };
+        console.log('Updating context (excluding workschedules):', updatedData);
+        updateBusinessData(updatedData);
     }, [mode, design, format, currency, country, city, businessName, website,
-        businessEmail, businessPhone, selectedDays, currentDay, fromTime, toTime, activeWaiter, paymentTime, paymentMethods]);
+        businessEmail, businessPhone, activeWaiter, paymentTime, paymentMethods]);
 
-    // Modify existing handlers to update both state and context
+    // Handlers
     const handleModeChange = (event, newMode) => {
         if (newMode !== null) {
             setMode(newMode);
@@ -99,28 +116,43 @@ export const BusinessInfo = () => {
             ? selectedDays.filter((d) => d !== day)
             : [...selectedDays, day];
         setSelectedDays(newSelectedDays);
+
+        // تحديث workschedules
+        const updatedSchedules = { ...dataSource.workschedules };
+        const fullDay = fullDaysOfWeek[daysOfWeek.indexOf(day)];
+        if (newSelectedDays.includes(day)) {
+            updatedSchedules[fullDay] = updatedSchedules[fullDay] || [fromTime, toTime];
+        } else {
+            delete updatedSchedules[fullDay];
+        }
+        console.log('Updating workschedules:', updatedSchedules);
+        updateBusinessData({ workschedules: updatedSchedules });
     };
 
     const handleTimeChange = (event, type) => {
+        const newTime = event.target.value;
         if (type === 'from') {
-            setFromTime(event.target.value);
+            setFromTime(newTime);
         } else {
-            setToTime(event.target.value);
+            setToTime(newTime);
+        }
+
+        // تحديث workschedules فقط إذا كان اليوم محددًا
+        const dayAbbr = daysOfWeek[fullDaysOfWeek.indexOf(currentDay)];
+        if (selectedDays.includes(dayAbbr)) {
+            const updatedSchedules = {
+                ...dataSource.workschedules,
+                [currentDay]: type === 'from' ? [newTime, toTime] : [fromTime, newTime]
+            };
+            console.log('Updating workschedules:', updatedSchedules);
+            updateBusinessData({ workschedules: updatedSchedules });
         }
     };
 
     const handleDayToggle = (direction) => {
-        const days = [
-            t("sunday"),
-            t("monday"),
-            t("tuesday"),
-            t("wednesday"),
-            t("thursday"),
-            t("friday"),
-            t("saturday")];
-        const currentIndex = days.indexOf(currentDay);
-        const newIndex = (currentIndex + (direction === 'next' ? 1 : -1) + days.length) % days.length;
-        setCurrentDay(days[newIndex]);
+        const currentIndex = fullDaysOfWeek.indexOf(currentDay);
+        const newIndex = (currentIndex + (direction === 'next' ? 1 : -1) + fullDaysOfWeek.length) % fullDaysOfWeek.length;
+        setCurrentDay(fullDaysOfWeek[newIndex]);
     };
 
     const handleNextClick = () => {
@@ -129,75 +161,31 @@ export const BusinessInfo = () => {
             toast.error(t("plEntBusinessName"));
             return;
         }
-
         if (!businessPhone.trim()) {
             toast.error(t("plEntBusinessPhone"));
             return;
         }
-
         if (!country) {
             toast.error(t("plSelectCountry"));
             return;
         }
-
         if (!city) {
             toast.error(t("plSelectCity"));
             return;
         }
-
         if (!currency) {
             toast.error(t("plSelectCurrency"));
             return;
         }
-
         if (!format) {
-            alert(t("plSelectBusinessFormat"));
+            toast.error(t("plSelectBusinessFormat"));
             return;
         }
-        // console.log("Business Data:", {
-        //     mode,
-        //     design,
-        //     format,
-        //     currency,
-        //     country,
-        //     city,
-        //     businessName,
-        //     website,
-        //     businessEmail,
-        //     businessPhone,
-        //     callWaiter: activeWaiter,
-        //     paymentTime,
-        //     paymentMethods,
-        //     workingHours: {
-        //     selectedDays,
-        //     currentDay,
-        //     fromTime,
-        //     toTime,
-        //     }
-        // });
-        
 
-        // Add the current business data as a new branch
-
-        setMode('white');
-        setDesign('grid');
-        setFormat('');
-        setCurrency('');
-        setCountry('');
-        setCity('');
-        setBusinessName('');
-        setWebsite('');
-        setBusinessEmail('');
-        setBusinessPhone('');
-        setSelectedDays(['Sa', 'Su']);
-        setCurrentDay('Sunday');
-        setFromTime('9:00 am');
-        setToTime('5:00 pm');
-        setPaymentMethods([]);
-        setPaymentTime('');
-        setActiveWaiter('inactive');
+        // إضافة الفرع الحالي إلى branches
+        // addBranch();
+        console.log('Navigating to serving-ways with businessData:', businessData);
         navigate('/serving-ways');
-
     };
 
     return (
@@ -208,9 +196,7 @@ export const BusinessInfo = () => {
             <Divider />
 
             <Box sx={{ padding: "20px 50px" }}>
-
-                <Grid container display="flex" justifyContent="space-between" alignItems="center" flexDirection='column'
-                    gap='1rem' textAlign="center" spacing={2}>
+                <Grid container display="flex" justifyContent="space-between" alignItems="center" flexDirection='column' gap='1rem' textAlign="center" spacing={2}>
                     <Grid container display={"flex"} justifyContent={"space-between"} >
                         <Grid item xs={12} md={6}>
                             <TextField
@@ -224,16 +210,9 @@ export const BusinessInfo = () => {
                                             <StorefrontOutlinedIcon sx={{ fontSize: "18px", color: "#575756" }} />
                                         </InputAdornment>
                                     ),
-                                    sx: {
-                                        height: "40px",
-                                        borderRadius: "10px",
-                                        fontSize: "10px",
-                                    }
+                                    sx: { height: "40px", borderRadius: "10px", fontSize: "10px" }
                                 }}
-                                sx={{
-                                    marginBottom: "15px",
-                                    marginTop: "10px"
-                                }}
+                                sx={{ marginBottom: "15px", marginTop: "10px" }}
                             />
                             <TextField
                                 fullWidth
@@ -246,16 +225,9 @@ export const BusinessInfo = () => {
                                             <LanguageOutlinedIcon sx={{ fontSize: "18px", color: "#575756" }} />
                                         </InputAdornment>
                                     ),
-                                    sx: {
-                                        height: "40px",
-                                        borderRadius: "10px",
-                                        fontSize: "10px",
-                                    }
+                                    sx: { height: "40px", borderRadius: "10px", fontSize: "10px" }
                                 }}
-                                sx={{
-                                    marginBottom: "15px",
-                                    
-                                }}
+                                sx={{ marginBottom: "15px" }}
                             />
                             <TextField
                                 fullWidth
@@ -268,77 +240,63 @@ export const BusinessInfo = () => {
                                             <MailOutlinedIcon sx={{ fontSize: "18px", color: "#575756" }} />
                                         </InputAdornment>
                                     ),
-                                    sx: {
-                                        height: "40px",
-                                        borderRadius: "10px",
-                                        fontSize: "10px",
-                                    }
+                                    sx: { height: "40px", borderRadius: "10px", fontSize: "10px" }
                                 }}
-                                sx={{
-                                    marginBottom: "15px",
-                                }}
+                                sx={{ marginBottom: "15px" }}
                             />
-                            <FormControl variant="outlined" fullWidth sx={{ marginBottom: '10px' }} >
+                            <FormControl variant="outlined" fullWidth sx={{ marginBottom: '10px' }}>
                                 <Select
-                                    id="outlined-country"
+                                    id="outlined-currency"
                                     value={currency}
                                     onChange={(e) => setCurrency(e.target.value)}
                                     displayEmpty
-                                    sx={{ borderRadius: '10px', height: '40px',marginBottom:"10px", fontSize: "10px", color: "gray" }}
+                                    sx={{ borderRadius: '10px', height: '40px', marginBottom: "10px", fontSize: "10px", color: "gray" }}
                                     startAdornment={
                                         <InputAdornment position="start">
-                                            <img src="/assets/revenue.svg" alt="icon"
-                                                style={{ width: "16px", height: "16px" }} />
-
+                                            <img src="/assets/revenue.svg" alt="icon" style={{ width: "16px", height: "16px" }} />
                                         </InputAdornment>
                                     }
                                 >
                                     <MenuItem value="" disabled>
-                                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                            {t("currency")}
-                                        </Box>
+                                        {t("currency")}
                                     </MenuItem>
-                                    <MenuItem value="US" sx={{ fontSize: "12px", color: "gray" }}>United States </MenuItem>
-                                    <MenuItem value="CA" sx={{ fontSize: "12px", color: "gray" }}>Canada</MenuItem>
-                                    <MenuItem value="UK" sx={{ fontSize: "12px", color: "gray" }}>United Kingdom</MenuItem>
+                                    <MenuItem value="US">United States</MenuItem>
+                                    <MenuItem value="CA">Canada</MenuItem>
+                                    <MenuItem value="UK">United Kingdom</MenuItem>
                                 </Select>
                             </FormControl>
-
-                            <FormControl variant="outlined" fullWidth sx={{ marginBottom: '10px' }} >
+                            <FormControl variant="outlined" fullWidth sx={{ marginBottom: '10px' }}>
                                 <Select
-                                    id="outlined-country"
+                                    id="outlined-format"
                                     value={format}
                                     onChange={(e) => setFormat(e.target.value)}
                                     displayEmpty
-                                    sx={{ borderRadius: '10px', height: '40px',marginBottom:"10px", fontSize: "10px", color: "gray" }}
+                                    sx={{ borderRadius: '10px', height: '40px', marginBottom: "10px", fontSize: "10px", color: "gray" }}
                                     startAdornment={
                                         <InputAdornment position="start">
-                                            <span className="icon-briefcase" style={{ fontSize: "18px" }} ></span>
+                                            <span className="icon-briefcase" style={{ fontSize: "18px" }}></span>
                                         </InputAdornment>
                                     }
                                 >
                                     <MenuItem value="" disabled>
-                                        <Box sx={{ display: 'flex', alignItems: 'center', fontSize: "12px", color: "gray" }}>
-                                            {t("businessFormat")}
-                                        </Box>
+                                        {t("businessFormat")}
                                     </MenuItem>
-                                    <MenuItem value="ul" sx={{ fontSize: "12px", color: "gray" }}>UL</MenuItem>
-                                    <MenuItem value="uk" sx={{ fontSize: "12px", color: "gray" }}>UK</MenuItem>
+                                    <MenuItem value="ul">UL</MenuItem>
+                                    <MenuItem value="uk">UK</MenuItem>
                                 </Select>
                             </FormControl>
-
-                            {/*  Working Hours */}
                             <Box>
                                 <Grid container spacing={2} alignItems="center" sx={{ marginTop: "40px" }}>
                                     <Typography variant="body1" display="flex" alignItems="center"
-                                        sx={{ fontSize: '15px', color: "gray" }}>
-
-                                        <span className="icon-working-hour" style={{ marginRight: "10px", fontSize: "20px" }}><span className="path1"></span><span className="path2"></span><span className="path3"></span><span className="path4"></span><span className="path5"></span><span className="path6"></span><span className="path7"></span><span className="path8"></span></span>
+                                        sx={{ fontSize: '15px', color: "gray", marginLeft: "20px" }}>
+                                        <span className="icon-working-hour" style={{ marginRight: "10px", fontSize: "20px" }}>
+                                            <span className="path1"></span><span className="path2"></span><span className="path3"></span>
+                                            <span className="path4"></span><span className="path5"></span><span className="path6"></span>
+                                            <span className="path7"></span><span className="path8"></span>
+                                        </span>
                                         {t("workHours")}
                                     </Typography>
-
                                     <Grid item xs={12} display={"flex"} justifyContent={"space-between"}>
-
                                         <Grid item xs={7}>
                                             <Box display="flex" flexWrap="wrap">
                                                 {daysOfWeek.map((day) => (
@@ -355,39 +313,35 @@ export const BusinessInfo = () => {
                                                             fontSize: "14px",
                                                             border: selectedDays.includes(day) ? '1px solid #ef7d00' : '1px solid gray',
                                                             color: selectedDays.includes(day) ? '#ef7d00' : 'gray',
-
                                                         }}
                                                     >
                                                         {day}
                                                     </Button>
                                                 ))}
                                             </Box>
-                                        </Grid>{/* المربعات */}
-
+                                        </Grid>
                                         <Grid item xs={4}>
-                                            <Grid container spacing={2} alignItems="center">
-
-                                                <Grid item xs={3} sx={{ margin: "5px 20px" }}>
+                                            <Grid container spacing={2} alignItems="center" justifyContent="end">
+                                                <Grid item xs={3} display="flex" justifyContent="end" alignItems="center">
                                                     <Box display="flex" alignItems="center"
                                                         sx={{
                                                             backgroundColor: theme.palette.secondaryColor.main,
-                                                            borderRadius: '20px', width: "100px", height: "30px",
-                                                            padding: "0 3px ",
+                                                            borderRadius: '20px',
+                                                            height: "30px",
+                                                            padding: "0 5px",
                                                         }}>
                                                         <IconButton onClick={() => handleDayToggle('prev')} sx={{ color: '#ef7d00' }}>
                                                             <ArrowBackIos sx={{ fontSize: "11px" }} />
                                                         </IconButton>
                                                         <Typography sx={{ width: "60px", textTransform: "capitalize", color: 'white', fontSize: "10px" }}>
-                                                            {t(currentDay)}
+                                                            {t(currentDay.toLowerCase())}
                                                         </Typography>
-
                                                         <IconButton onClick={() => handleDayToggle('next')} sx={{ color: '#ef7d00' }}>
                                                             <ArrowForwardIos sx={{ fontSize: "11px" }} />
                                                         </IconButton>
                                                     </Box>
-                                                </Grid> {/* اليوم الحالي */}
-
-                                                <Box display={"flex"} sx={{ margin: "3px 0 3px 10px" }}>
+                                                </Grid>
+                                                <Box display={"flex"} sx={{ margin: "10px 10px 0 0" }}>
                                                     <Grid item>
                                                         <Typography variant='body1' sx={{ fontSize: '11px', color: "gray", mr: 1 }}>{t("from")}</Typography>
                                                     </Grid>
@@ -399,17 +353,25 @@ export const BusinessInfo = () => {
                                                             size="small"
                                                             sx={{ width: "90px", height: "30px" }}
                                                             inputProps={{ sx: { padding: '2px 10px', fontSize: '12px' } }}
+                                                            SelectProps={{
+                                                                MenuProps: {
+                                                                    PaperProps: {
+                                                                        style: {
+                                                                            maxHeight: 150, // <-- 👈 الارتفاع الثابت للقائمة المنسدلة (يمكنك تعديله)
+                                                                        },
+                                                                    },
+                                                                },
+                                                            }}
                                                         >
-                                                            {['9:00 am', '10:00 am', '11:00 am'].map((time) => (
+                                                            {timeOptions.map((time) => (
                                                                 <MenuItem key={time} value={time} sx={{ color: "gray", fontSize: "12px" }}>
                                                                     <span style={{ fontSize: "10px", color: "gray" }}>{time}</span>
                                                                 </MenuItem>
                                                             ))}
                                                         </TextField>
                                                     </Grid>
-                                                </Box>{/* from */}
-
-                                                <Box display={"flex"} marginTop={"3px"} marginLeft={"24px"}>
+                                                </Box>
+                                                <Box display={"flex"} sx={{ margin: "3px 10px" }}>
                                                     <Grid item>
                                                         <Typography variant='body1' sx={{ fontSize: '11px', color: "gray", mr: 1 }}>{t("to")}</Typography>
                                                     </Grid>
@@ -421,26 +383,33 @@ export const BusinessInfo = () => {
                                                             size="small"
                                                             sx={{ width: "90px", height: "30px" }}
                                                             inputProps={{ sx: { padding: '2px 10px', fontSize: '12px' } }}
+                                                            SelectProps={{
+                                                                MenuProps: {
+                                                                    PaperProps: {
+                                                                        style: {
+                                                                            maxHeight: 150, // <-- 👈 الارتفاع الثابت للقائمة المنسدلة (يمكنك تعديله)
+                                                                        },
+                                                                    },
+                                                                },
+                                                            }}
                                                         >
-                                                            {['5:00 pm', '6:00 pm', '7:00 pm'].map((time) => (
+                                                            {timeOptions.map((time) => (
                                                                 <MenuItem key={time} value={time} sx={{ color: "gray", fontSize: "12px" }}>
                                                                     <span style={{ fontSize: "10px", color: "gray" }}>{time}</span>
                                                                 </MenuItem>
                                                             ))}
                                                         </TextField>
                                                     </Grid>
-                                                </Box> {/* to */}
+                                                </Box>
                                             </Grid>
                                         </Grid>
-
                                     </Grid>
-
                                 </Grid>
                             </Box>
-
                         </Grid>
 
-                        <Grid item xs={12} md={5} sx={{ marginTop: "10px" }}>
+                        <Grid item xs={12} md={5} sx={{ marginTop: "-6px" }}>
+
                             <TextField
                                 fullWidth
                                 placeholder={t("businessPhone")}
@@ -452,24 +421,20 @@ export const BusinessInfo = () => {
                                             <PhoneOutlinedIcon sx={{ fontSize: "18px" }} />
                                         </InputAdornment>
                                     ),
-                                    sx: {
-                                        height: "40px",
-                                        borderRadius: "10px",
-                                        fontSize: "10px"
-                                    }
+                                    sx: { height: "40px", borderRadius: "10px", fontSize: "10px" }
                                 }}
+                                sx={{ marginTop: "15px" }}
                             />
-
                             <Box sx={{ marginTop: "15px", marginBottom: "10px" }}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12} md={6}>
-                                        <FormControl variant="outlined" fullWidth >
+                                        <FormControl variant="outlined" fullWidth>
                                             <Select
                                                 id="outlined-country"
                                                 value={country}
                                                 onChange={(e) => setCountry(e.target.value)}
                                                 displayEmpty
-                                                sx={{ borderRadius: '10px', height: '40px',marginBottom:"10px", fontSize: "10px", color: "gray" }}
+                                                sx={{ borderRadius: '10px', height: '40px', marginBottom: "10px", fontSize: "10px", color: "gray" }}
                                                 startAdornment={
                                                     <InputAdornment position="start">
                                                         <PinDropOutlinedIcon sx={{ fontSize: "18px" }} />
@@ -479,21 +444,20 @@ export const BusinessInfo = () => {
                                                 <MenuItem value="" disabled sx={{ fontSize: "12px", color: "gray" }}>
                                                     {t("country")}
                                                 </MenuItem>
-                                                <MenuItem value="US" sx={{ fontSize: "12px", color: "gray" }}>United States </MenuItem>
+                                                <MenuItem value="US" sx={{ fontSize: "12px", color: "gray" }}>United States</MenuItem>
                                                 <MenuItem value="CA" sx={{ fontSize: "12px", color: "gray" }}>Canada</MenuItem>
                                                 <MenuItem value="UK" sx={{ fontSize: "12px", color: "gray" }}>United Kingdom</MenuItem>
                                             </Select>
                                         </FormControl>
                                     </Grid>
-
                                     <Grid item xs={12} md={6}>
-                                        <FormControl variant="outlined" fullWidth  >
+                                        <FormControl variant="outlined" fullWidth>
                                             <Select
-                                                id="outlined-country"
+                                                id="outlined-city"
                                                 value={city}
                                                 onChange={(e) => setCity(e.target.value)}
                                                 displayEmpty
-                                                sx={{ borderRadius: '10px', height: '40px',marginBottom:"10px", fontSize: "10px", color: "gray" }}
+                                                sx={{ borderRadius: '10px', height: '40px', marginBottom: "10px", fontSize: "10px", color: "gray" }}
                                                 startAdornment={
                                                     <InputAdornment position="start">
                                                         <PinDropOutlinedIcon sx={{ fontSize: "18px" }} />
@@ -511,7 +475,6 @@ export const BusinessInfo = () => {
                                     </Grid>
                                 </Grid>
                             </Box>
-
                             <Button
                                 variant="contained"
                                 sx={{
@@ -519,25 +482,27 @@ export const BusinessInfo = () => {
                                     borderRadius: "10px",
                                     textTransform: "capitalize",
                                     marginBottom: 2,
-                                    width: '100%', fontSize: "11px",
+                                    width: '100%',
+                                    fontSize: "11px",
                                     '&:hover': {
                                         backgroundColor: theme.palette.secondaryColor.main,
                                     },
                                 }}
                             >
-                                <span className="icon-map-1" style={{ fontSize: "18px", marginRight: "5px" }}
-                                ><span className="path1"></span><span className="path2"></span><span className="path3"></span><span className="path4"></span><span className="path5"></span><span className="path6"></span><span className="path7"></span><span className="path8"></span><span className="path9"></span><span className="path10"></span><span className="path11"></span><span className="path12"></span><span className="path13"></span><span className="path14"></span><span className="path15"></span></span>
-
+                                <span className="icon-map-1" style={{ fontSize: "18px", marginRight: "5px" }}>
+                                    <span className="path1"></span><span className="path2"></span><span className="path3"></span>
+                                    <span className="path4"></span><span className="path5"></span><span className="path6"></span>
+                                    <span className="path7"></span><span className="path8"></span><span className="path9"></span>
+                                    <span className="path10"></span><span className="path11"></span><span className="path12"></span>
+                                    <span className="path13"></span><span className="path14"></span><span className="path15"></span>
+                                </span>
                                 {t("pinYourLocation")}
                             </Button>
-
-
-                            <Box sx={{ marginTop: "6px", display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                                {/* Default Mode Section */}
-                                <Grid container direction="column" spacing={1}>
+                            <Box sx={{ marginTop: "6px", display: 'flex', justifyContent: 'space-between', alignItems: "center" }}>
+                                <Grid container direction="column" spacing={1} sx={{ marginLeft: "2px" }}>
                                     <Typography
                                         variant="body2"
-                                        sx={{ fontSize: "14px", fontWeight: "500", color: "#AAAAAA", textAlign: "start", margin: "0 0 5px 5px" }}
+                                        sx={{ fontSize: "14px", fontWeight: "500", color: "#AAAAAA", textAlign: "start", marginBottom: "4px" }}
                                     >
                                         {t("defaultMode")}
                                     </Typography>
@@ -545,14 +510,14 @@ export const BusinessInfo = () => {
                                         value={mode}
                                         exclusive
                                         onChange={handleModeChange}
-                                        sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "space-around", marginLeft: "-14px" }}
+                                        sx={{ display: "flex", justifyContent: "space-between" }}
                                     >
                                         <ToggleButton
                                             value="white"
                                             sx={{
-                                                padding: "10px",
+                                                padding: "12px",
                                                 backgroundColor: mode === "white" ? theme.palette.orangePrimary.main : "transparent",
-                                                border: `1px solid ${design === "white" ? theme.palette.orangePrimary.main : "#AAAAAA"} !important`,
+                                                border: `1px solid ${mode === "white" ? theme.palette.orangePrimary.main : "#AAAAAA"} !important`,
                                                 borderRadius: "8px !important",
                                                 marginRight: "8px",
                                             }}
@@ -564,9 +529,9 @@ export const BusinessInfo = () => {
                                         <ToggleButton
                                             value="dark"
                                             sx={{
-                                                padding: "10px",
+                                                padding: "12px",
                                                 backgroundColor: mode === "dark" ? theme.palette.orangePrimary.main : "transparent",
-                                                border: `1px solid ${design === "dark" ? theme.palette.orangePrimary.main : "#AAAAAA"} !important`,
+                                                border: `1px solid ${mode === "dark" ? theme.palette.orangePrimary.main : "#AAAAAA"} !important`,
                                                 borderRadius: "8px !important",
                                             }}
                                         >
@@ -576,8 +541,6 @@ export const BusinessInfo = () => {
                                         </ToggleButton>
                                     </ToggleButtonGroup>
                                 </Grid>
-
-                                {/* Divider */}
                                 <Divider
                                     orientation="vertical"
                                     flexItem
@@ -588,12 +551,10 @@ export const BusinessInfo = () => {
                                         margin: "auto 20px",
                                     }}
                                 />
-
-                                {/* Menu Design Section */}
-                                <Grid container direction="column" spacing={0.5}>
+                                <Grid container direction="column" spacing={1}>
                                     <Typography
                                         variant="body2"
-                                        sx={{ fontSize: "14px", fontWeight: "500", color: "#AAAAAA", textAlign: "start", margin: "0 0 5px 5px" }}
+                                        sx={{ fontSize: "14px", fontWeight: "500", color: "#AAAAAA", textAlign: "start", marginBottom: "4px" }}
                                     >
                                         {t("menus.design")}
                                     </Typography>
@@ -601,16 +562,16 @@ export const BusinessInfo = () => {
                                         value={design}
                                         exclusive
                                         onChange={handleDesignChange}
-                                        sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "space-around", marginLeft: "-14px" }}
+                                        sx={{ display: "flex", justifyContent: "space-between" }}
                                     >
                                         <ToggleButton
                                             value="grid"
                                             sx={{
-                                                padding: "10px",
+                                                padding: "12px",
                                                 backgroundColor: design === "grid" ? theme.palette.orangePrimary.main : "transparent",
                                                 border: `1px solid ${design === "grid" ? theme.palette.orangePrimary.main : "#AAAAAA"} !important`,
                                                 borderRadius: "8px !important",
-                                                marginRight: "8px",
+                                                marginLeft: "8px",
                                             }}
                                         >
                                             <GridViewIcon
@@ -620,11 +581,10 @@ export const BusinessInfo = () => {
                                         <ToggleButton
                                             value="list"
                                             sx={{
-                                                padding: "10px",
+                                                padding: "12px",
                                                 backgroundColor: design === "list" ? theme.palette.orangePrimary.main : "transparent",
                                                 border: `1px solid ${design === "list" ? theme.palette.orangePrimary.main : "#AAAAAA"} !important`,
                                                 borderRadius: "8px !important",
-                                                marginRight: "8px",
                                             }}
                                         >
                                             <ListIcon
@@ -634,38 +594,23 @@ export const BusinessInfo = () => {
                                     </ToggleButtonGroup>
                                 </Grid>
                             </Box>
-
-
-
                             <Box sx={{ marginTop: "20px" }}>
-                                <Box sx={{
-                                    display: 'flex',
-                                    justifyContent: 'flex-start',
-                                    alignItems: "flex-start",
-                                    textAlign: 'left',
-                                    width: '100%'
-                                }}>
+                                <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: "flex-start", textAlign: 'left', width: '100%' }}>
                                     <FormControlLabel
                                         control={
                                             <Checkbox
-                                                defaultChecked={activeWaiter === 'active' ? true : false}
+                                                checked={activeWaiter === 'active'}
                                                 onChange={() => setActiveWaiter(activeWaiter === 'active' ? 'inactive' : 'active')}
                                                 sx={{
                                                     '& .MuiSvgIcon-root': { fontSize: 22 },
                                                     color: "gray",
-                                                    '&.Mui-checked': {
-                                                        color: theme.palette.orangePrimary.main,
-                                                    }
+                                                    '&.Mui-checked': { color: theme.palette.orangePrimary.main }
                                                 }}
                                             />
                                         }
-
                                         label={
-                                            <Box sx={{
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                            }}>
-                                                <span className="icon-hand-up" style={{ fontSize: "20px", color: 'gray', marginRight: "6px" }} ></span>
+                                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                                <span className="icon-hand-up" style={{ fontSize: "20px", color: 'gray', marginRight: "6px" }}></span>
                                                 <Typography sx={{ fontSize: "14px", color: "gray" }}>
                                                     {t("activeCallWaiter")}
                                                 </Typography>
@@ -674,30 +619,24 @@ export const BusinessInfo = () => {
                                         sx={{
                                             display: 'flex',
                                             alignItems: "center",
-                                            '& .MuiTypography-root': {
-                                                fontSize: "15px",
-                                                color: "gray"
-                                            }
+                                            '& .MuiTypography-root': { fontSize: "15px", color: "gray" }
                                         }}
                                     />
                                 </Box>
-
                                 <Box sx={{ margin: "18px 0px" }}>
-                                    <Typography variant="body1" sx={{ display: "flex", fontSize: "14px", color: "gray" }}  >
-                                        {t("paymentMethod")}</Typography>
-
-                                    <Box display="flex" justifyContent="left"  >
+                                    <Typography variant="body1" sx={{ display: "flex", fontSize: "14px", color: "gray" }}>
+                                        {t("paymentMethod")}
+                                    </Typography>
+                                    <Box display="flex" justifyContent="space-between">
                                         <FormControlLabel
                                             control={
                                                 <Checkbox
+                                                    checked={paymentMethods.includes("cash")}
                                                     onChange={() => setPaymentMethods(paymentMethods.includes("cash") ? paymentMethods.filter(method => method !== "cash") : [...paymentMethods, "cash"])}
-                                                    defaultChecked={paymentMethods.includes("cash")}
                                                     sx={{
                                                         '& .MuiSvgIcon-root': { fontSize: 22 },
                                                         color: "gray",
-                                                        '&.Mui-checked': {
-                                                            color: theme.palette.orangePrimary.main,
-                                                        }
+                                                        '&.Mui-checked': { color: theme.palette.orangePrimary.main }
                                                     }}
                                                 />
                                             }
@@ -711,49 +650,42 @@ export const BusinessInfo = () => {
                                                     <span>{t("cash")}</span>
                                                 </Box>
                                             }
-                                            sx={{
-                                                '& .MuiTypography-root': {
-                                                    fontSize: "13px", color: "gray"
-                                                }
-                                            }}
+                                            sx={{ '& .MuiTypography-root': { fontSize: "13px", color: "gray" } }}
                                         />
                                         <FormControlLabel
                                             control={
                                                 <Checkbox
+                                                    checked={paymentMethods.includes("wallet")}
                                                     onChange={() => setPaymentMethods(paymentMethods.includes("wallet") ? paymentMethods.filter(method => method !== "wallet") : [...paymentMethods, "wallet"])}
-                                                    defaultChecked={paymentMethods.includes("wallet")}
                                                     sx={{
                                                         '& .MuiSvgIcon-root': { fontSize: 22 },
                                                         color: "gray",
-                                                        '&.Mui-checked': {
-                                                            color: theme.palette.orangePrimary.main,
-                                                        }
+                                                        '&.Mui-checked': { color: theme.palette.orangePrimary.main }
                                                     }}
                                                 />
                                             }
                                             label={
                                                 <span style={{ display: 'flex', fontSize: "13px", alignItems: 'center' }}>
-                                                    <span className="icon-wallet" style={{ marginRight: '2px', fontSize: "20px" }} ><span className="path1"></span><span className="path2"></span><span className="path3"></span><span className="path4"></span><span className="path5"></span><span className="path6"></span><span className="path7"></span><span className="path8"></span><span className="path9"></span><span className="path10"></span><span className="path11"></span><span className="path12"></span></span>
+                                                    <span className="icon-wallet" style={{ marginRight: '2px', fontSize: "20px" }}>
+                                                        <span className="path1"></span><span className="path2"></span><span className="path3"></span>
+                                                        <span className="path4"></span><span className="path5"></span><span className="path6"></span>
+                                                        <span className="path7"></span><span className="path8"></span><span className="path9"></span>
+                                                        <span className="path10"></span><span className="path11"></span><span className="path12"></span>
+                                                    </span>
                                                     {t("digitalWaller")}
                                                 </span>
                                             }
-                                            sx={{
-                                                '& .MuiTypography-root': {
-                                                    fontSize: "10px", color: "gray"
-                                                }
-                                            }}
+                                            sx={{ '& .MuiTypography-root': { fontSize: "10px", color: "gray" } }}
                                         />
                                         <FormControlLabel
                                             control={
                                                 <Checkbox
+                                                    checked={paymentMethods.includes("card")}
                                                     onChange={() => setPaymentMethods(paymentMethods.includes("card") ? paymentMethods.filter(method => method !== "card") : [...paymentMethods, "card"])}
-                                                    defaultChecked={paymentMethods.includes("card")}
                                                     sx={{
                                                         '& .MuiSvgIcon-root': { fontSize: 22 },
                                                         color: "gray",
-                                                        '&.Mui-checked': {
-                                                            color: theme.palette.orangePrimary.main,
-                                                        }
+                                                        '&.Mui-checked': { color: theme.palette.orangePrimary.main }
                                                     }}
                                                 />
                                             }
@@ -767,20 +699,15 @@ export const BusinessInfo = () => {
                                                     <span>{t("card")}</span>
                                                 </Box>
                                             }
-                                            sx={{
-                                                '& .MuiTypography-root': {
-                                                    fontSize: "13px", color: "gray",
-                                                }
-                                            }}
+                                            sx={{ '& .MuiTypography-root': { fontSize: "13px", color: "gray" } }}
                                         />
                                     </Box>
-
                                 </Box>
-                                <Box >
-                                    <Typography variant="body1" sx={{ display: "flex", fontSize: "14px", color: "gray" }}  >
-                                        {t("paymentTime")}  </Typography>
-
-                                    <Box display="flex" justifyContent="left"  >
+                                <Box>
+                                    <Typography variant="body1" sx={{ display: "flex", fontSize: "14px", color: "gray" }}>
+                                        {t("paymentTime")}
+                                    </Typography>
+                                    <Box display="flex" justifyContent="left">
                                         <FormControlLabel
                                             control={
                                                 <Radio
@@ -789,18 +716,12 @@ export const BusinessInfo = () => {
                                                     sx={{
                                                         '& .MuiSvgIcon-root': { fontSize: 20 },
                                                         color: "gray",
-                                                        '&.Mui-checked': {
-                                                            color: theme.palette.orangePrimary.main,
-                                                        }
+                                                        '&.Mui-checked': { color: theme.palette.orangePrimary.main }
                                                     }}
                                                 />
                                             }
                                             label={t("beforeServing")}
-                                            sx={{
-                                                '& .MuiTypography-root': {
-                                                    fontSize: "13px", color: "gray"
-                                                }
-                                            }}
+                                            sx={{ '& .MuiTypography-root': { fontSize: "13px", color: "gray" } }}
                                         />
                                         <FormControlLabel
                                             control={
@@ -810,24 +731,16 @@ export const BusinessInfo = () => {
                                                     sx={{
                                                         '& .MuiSvgIcon-root': { fontSize: 20 },
                                                         color: "gray",
-                                                        '&.Mui-checked': {
-                                                            color: theme.palette.orangePrimary.main,
-                                                        }
+                                                        '&.Mui-checked': { color: theme.palette.orangePrimary.main }
                                                     }}
                                                 />
                                             }
                                             label={t("afterServing")}
-                                            sx={{
-                                                '& .MuiTypography-root': {
-                                                    fontSize: "13px", color: "gray"
-                                                }
-                                            }}
+                                            sx={{ '& .MuiTypography-root': { fontSize: "13px", color: "gray" } }}
                                         />
                                     </Box>
-
                                 </Box>
                             </Box>
-
                         </Grid>
                     </Grid>
 
@@ -843,12 +756,7 @@ export const BusinessInfo = () => {
                                 backgroundColor: theme.palette.orangePrimary.main,
                                 textTransform: 'none',
                                 padding: "6px 15px",
-                                // position: "fixed",
-                                // bottom: "30px",
-                                // left: "55%",
-                                '&:hover': {
-                                    backgroundColor: theme.palette.orangePrimary.main,
-                                },
+                                '&:hover': { backgroundColor: theme.palette.orangePrimary.main },
                                 color: "#fff",
                             }}
                             onClick={handleNextClick}
@@ -856,11 +764,11 @@ export const BusinessInfo = () => {
                             {t("next")}
                             <TrendingFlatIcon sx={{ marginLeft: "8px", fontSize: "18px" }} />
                         </Button>
-                    </Grid> {/* الزرار  */}
-
-
+                    </Grid>
                 </Grid>
-            </Box>
-        </Box>
+            </Box >
+        </Box >
     );
 };
+
+export default BusinessInfo;

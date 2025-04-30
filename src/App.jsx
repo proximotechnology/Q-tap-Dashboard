@@ -68,6 +68,7 @@ import { LoginChef } from './Component/DashboardClient/LoginChef';
 import { LoginCashier } from './Component/DashboardClient/LoginCashier';
 import { LoginKitchen } from './Component/DashboardClient/LoginKitchen';
 import { LoginWaiter } from './Component/DashboardClient/LoginWaiter';
+import { AddRole } from './Pages/DashboardClient/Pages/User/AddRole';
 import HomePageAffiliate from './Pages/HomePageAffiliate';
 
 
@@ -168,6 +169,10 @@ function App() {
     {
       path: "add-user",
       element: <AddUsers />, // done
+    },
+    {
+      path: "add-role",
+      element: <AddRole />, // done
     },
     {
       path: "add-Affiliate",

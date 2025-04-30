@@ -1,6 +1,6 @@
 import { Button, Grid, Typography } from '@mui/material';
 import { Box, styled, useTheme } from '@mui/system';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router';
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import DoneIcon from '@mui/icons-material/Done';
@@ -31,28 +31,27 @@ export const Products = () => {
             toast.error(t("plSelectProduct"));
         }
     };
-    // const [menus, setMenus] = useState([]);
+    const [menus, setMenus] = useState([]);
 
-    // const getMenus = async () => {
-    //     try {
-    //         const response = await axios.get('https://highleveltecknology.com/Qtap/api/products', {
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
-    //             }
-    //         });
+    const getMenus = async () => {
+        try {
+            const response = await axios.get('https://highleveltecknology.com/Qtap/api/products', {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
 
-    //         if (response.data.products) {
-    //             setMenus(response.data.products);
-    //             console.log(response.data);
-    //         }
-    //     } catch (error) {
-    //         console.error('Error fetching menus:', error);
-    //     }
-    // };
-    // useEffect(() => {
-    //     getMenus();
-    // }, []);
+            if (response.data.products) {
+                setMenus(response.data.products);
+                console.log(response.data.products);
+            }
+        } catch (error) {
+            console.error('Error fetching menus:', error);
+        }
+    };
+    useEffect(() => {
+        getMenus();
+    }, []);
 
     return (
         <Box marginTop={"50px"} padding={"50px"} flexGrow={1}>
@@ -61,7 +60,7 @@ export const Products = () => {
             </Typography>
             <Divider />
 
-            <Box onClick={handleCardClick}
+            {/* <Box onClick={handleCardClick}
                 sx={{
                     position: 'relative',
                     width: "160px", height: "220px",
@@ -86,7 +85,63 @@ export const Products = () => {
                 <span class="icon-waiter" style={{ color: "white", fontSize: "30px" }}></span>
                 <Typography sx={{ fontSize: "18px", color: "white" }}>{t("digitalMenu")}</Typography>
                 <span class="icon-waiter" style={{ color: "white", fontSize: "140px", opacity: .1, position: "absolute", top: "58%", left: '38%' }}></span>
-            </Box>
+            </Box> */}
+            {menus.map((menu) => (
+                <Box onClick={handleCardClick}
+                    key={menu.id}
+                    sx={{
+                        position: 'relative',
+                        width: "180px", height: "250px",
+                        backgroundImage: "url(/images/card.jpg)",
+                        backgroundSize: "cover",
+                        backgroundPosition: "center center",
+                        borderRadius: "10px", margin: "30px", padding: "20px",
+                        overflow: "hidden"
+                    }}>
+                    {isSelected && (
+                        <DoneIcon
+                            sx={{
+                                color: theme.palette.orangePrimary.main,
+                                fontSize: "26px",
+                                position: "relative",
+                                top: "-10px",
+                                right: "-15px",
+                                float: "right",
+                            }}
+                        />
+                    )}
+                    <Box>
+                        {menu.img && (
+                            <img
+                                src={`https://highleveltecknology.com/Qtap/public/${menu.img}`}
+                                alt={menu.name}
+                                style={{
+                                    width: "70px",
+                                    height: "70px",
+                                    objectFit: "cover",
+                                    borderRadius: "10px",
+                                    marginBottom: "10px"
+                                }}
+                            />
+                        )}
+                        {menu.img && (
+                            <img
+                                src={`https://highleveltecknology.com/Qtap/public/${menu.img}`}
+                                alt={menu.name}
+                                style={{
+                                    width: "100px",
+                                    height: "100px",
+                                    objectFit: "cover",
+                                    position: "absolute",
+                                    bottom: "10px",
+                                    right: "-1%",
+                                    opacity: '.2'
+                                }}
+                            />
+                        )}</Box>
+                    <Typography sx={{ fontSize: "18px", color: "white" }}>{menu.name}</Typography>
+                </Box>
+            ))}
 
             <Grid item xs={12}>
                 <Button

@@ -14,11 +14,9 @@ export const BusinessProvider = ({ children }) => {
         design: 'grid',
         format: '',
         currency: '',
-        workingHours: {
-            selectedDays: ['Sa', 'Su'],
-            currentDay: 'Sunday',
-            fromTime: '9:00 am',
-            toTime: '5:00 pm'
+        workschedules: {
+            "Saturday": ["9:00 am", "7:00 pm"],
+            "Sunday": ["9:00 am", "7:00 pm"],
         },
         callWaiter: 'inactive',
         paymentTime: 'after',
@@ -76,11 +74,9 @@ export const BusinessProvider = ({ children }) => {
             design: 'grid',
             format: '',
             currency: '',
-            workingHours: {
-                selectedDays: ['Sa', 'Su'],
-                currentDay: 'Sunday',
-                fromTime: '9:00 am',
-                toTime: '5:00 pm'
+            workschedules: {
+                "Saturday": ["9:00 am", "7:00 pm"],
+                "Sunday": ["9:00 am", "7:00 pm"],
             },
             callWaiter: 'inactive',
             paymentTime: 'after',
