@@ -506,18 +506,18 @@ export const AddClient = () => {
           mode: branch.default_mode === "white" ? "light" : "dark",
           workSchedules: branch.workschedule?.length
             ? branch.workschedule.reduce((acc, schedule) => {
-                acc[schedule.day] = [schedule.opening_time, schedule.closing_time];
-                return acc;
-              }, {})
+              acc[schedule.day] = [schedule.opening_time, schedule.closing_time];
+              return acc;
+            }, {})
             : {
-                Saturday: ["9am", "7pm"],
-                Sunday: ["9am", "7pm"],
-                Monday: ["9am", "7pm"],
-                Tuesday: ["9am", "7pm"],
-                Wednesday: ["9am", "7pm"],
-                Thursday: ["9am", "7pm"],
-                Friday: ["9am", "7pm"],
-              },
+              Saturday: ["9am", "7pm"],
+              Sunday: ["9am", "7pm"],
+              Monday: ["9am", "7pm"],
+              Tuesday: ["9am", "7pm"],
+              Wednesday: ["9am", "7pm"],
+              Thursday: ["9am", "7pm"],
+              Friday: ["9am", "7pm"],
+            },
           servingWays: {
             dine_in: branch.serving_ways?.some((way) => way.name === "dine_in") || false,
             take_away: branch.serving_ways?.some((way) => way.name === "take_away") || false,
@@ -642,17 +642,21 @@ export const AddClient = () => {
 
     return (
       <Box>
-        <Grid container spacing={1}>
-          <Grid item xs={12} md={5}>
+        <Grid container >
+          <Grid item xs={12} md={6} >
             <PersonalInfoAdmin clientInfoData={clientInfoData} />
           </Grid>
 
-          <Box item sx={{ display: { xs: "none", sm: "block" } }}>
-            <Divider
-              orientation="vertical"
-              sx={{ backgroundColor: "#f4f6fc", width: "1px", marginTop: "30px", height: "90%" }}
-            />
-          </Box>
+
+          <Divider
+            orientation="vertical"
+            sx={{
+              backgroundColor: "#f4f6fc", width: "1px", marginTop: "30px", height: "90%", position: "absolute", display: { xs: "none", md: "block" },
+              left: "50%", // between md=6 and md=6
+              top: "70px",
+            }}
+          />
+
 
           <Grid item xs={12} md={6}>
             <BusinessInfoAdmin clientInfoData={clientInfoData} />

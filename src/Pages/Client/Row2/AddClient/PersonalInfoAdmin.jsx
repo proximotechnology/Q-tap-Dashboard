@@ -140,7 +140,7 @@ import {
     };
   
     return (
-      <Grid container  justifyContent="center" sx={{padding:'0px', marginTop: "10px",marginLeft:'0px', px: { xs: 2, md: 0 } ,width:'100%'}}>
+      <Grid container  justifyContent="center" spacing={0} sx={{padding:'0px', marginTop: "10px",marginLeft:'0px' ,width:'100%'}}>
         <Box>
           <ArrowBackIosOutlinedIcon
             onClick={() => navigate("/client")}

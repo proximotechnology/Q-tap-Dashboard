@@ -302,8 +302,8 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
   };
 
   return (
-    <Grid container sx={{ marginTop: "20px", paddingLeft: "20px" }}>
-      <Grid item xs={12} sx={{ px: { xs: 2, md: 0 } }}>
+    <Grid container spacing={0} sx={{ marginTop: "20px", overflow: 'hidden', padding: '1rem' }} >
+      <Grid item xs={12} >
         <Box display={"flex"} justifyContent={"space-between"}>
           <Box>
             <Typography variant="body2" sx={{ fontSize: "15px" }} color="#3b3a3a" gutterBottom>
@@ -347,9 +347,9 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
         <Divider sx={{ margin: "12px 0px" }} />
       </Grid>
 
-      <Grid item xs={12} md={12} display={"flex"} justifyContent={"space-between"}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={6} sx={{ px: { xs: 2, md: 0 } }}>
+      <Grid item xs={12} md={12} display={"flex"} justifyContent={"space-between"} >
+        <Grid container spacing={1} >
+          <Grid item xs={12} md={6} >
             {/* Business Info Fields */}
             <FormControl variant="outlined" fullWidth>
               <OutlinedInput
@@ -596,8 +596,8 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
               </Button>
             </Box>
           </Grid>
-
-          <Grid item xs={12} md={6} sx={{ px: { xs: 2, md: 0 } }}>
+          {/* part of branch */}
+          <Grid item xs={12} md={6} className="here_the_container" overflow={'hidden'}>
             <Grid
               sx={{
                 display: "flex",
@@ -606,11 +606,10 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                 width: "100%",
               }}
             >
-              <Box sx={{ marginTop: "6px", display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                <Grid container direction="column" spacing={1}>
+              <Box sx={{ marginTop: "6px", display: 'flex', justifyContent: 'space-between', width: '100%', overflow: 'hidden', flexWrap: 'nowrap' }} className="here_section">
+                <Box sx={{ flexGrow: '1', flex: "1 1 auto" }} >
                   <Typography
-                    variant="body2"
-                    sx={{ fontSize: "14px", fontWeight: "500", color: "#AAAAAA", textAlign: "start", margin: "0 0 5px 0px" }}
+                    sx={{ fontSize: "14px", fontWeight: "500", color: "#AAAAAA", textAlign: "start" }}
                   >
                     {t("defaultMode")}
                   </Typography>
@@ -618,7 +617,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                     value={mode}
                     exclusive
                     onChange={handleModeChange}
-                    sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "space-around", marginLeft: "-14px" }}
+                    sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "space-around" }}
                   >
                     <ToggleButton
                       value="white"
@@ -627,7 +626,6 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                         backgroundColor: mode === "white" ? theme.palette.orangePrimary.main : "transparent",
                         border: `1px solid ${mode === "white" ? theme.palette.orangePrimary.main : "#AAAAAA"} !important`,
                         borderRadius: "8px !important",
-                        marginRight: "8px",
                       }}
                     >
                       <WbSunnyIcon
@@ -648,23 +646,22 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                       />
                     </ToggleButton>
                   </ToggleButtonGroup>
-                </Grid>
+                </Box>
 
                 <Divider
                   orientation="vertical"
                   flexItem
                   sx={{
                     height: "40px",
-                    width: "2px",
+                    width: "1px",
                     backgroundColor: theme.palette.orangePrimary.main,
-                    margin: "auto 20px",
+                    margin: "auto 10px", flex: "0 1 auto"
                   }}
                 />
 
-                <Grid container direction="column" spacing={0.5}>
+                <Box sx={{ flexGrow: '1', flex: "1 1 auto" }} >
                   <Typography
-                    variant="body2"
-                    sx={{ fontSize: "14px", fontWeight: "500", color: "#AAAAAA", textAlign: "start", margin: "0 0 5px 0px" }}
+                    sx={{ fontSize: "14px", fontWeight: "500", color: "#AAAAAA", textAlign: "start" }}
                   >
                     {t("menus.design")}
                   </Typography>
@@ -672,7 +669,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                     value={design}
                     exclusive
                     onChange={handleDesignChange}
-                    sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "space-around", marginLeft: "-14px" }}
+                    sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "space-around", }}
                   >
                     <ToggleButton
                       value="grid"
@@ -681,7 +678,6 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                         backgroundColor: design === "grid" ? theme.palette.orangePrimary.main : "transparent",
                         border: `1px solid ${design === "grid" ? theme.palette.orangePrimary.main : "#AAAAAA"} !important`,
                         borderRadius: "8px !important",
-                        marginRight: "8px",
                       }}
                     >
                       <ViewQuiltIcon
@@ -702,7 +698,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                       />
                     </ToggleButton>
                   </ToggleButtonGroup>
-                </Grid>
+                </Box>
               </Box>
               {/* Default Mode and Menu Design
               <Box sx={{ display: "flex", width: "100%" }}>
@@ -776,108 +772,112 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                 <Grid container spacing={2} alignItems="center">
                   <Grid item xs={12} display={"flex"} justifyContent={"space-between"}>
                     <Typography variant="body1" display="flex" alignItems="center" sx={{ fontSize: "12px", color: "gray" }}>
-                      <span className="icon-working-hour" style={{ marginRight: "10px", fontSize: "22px" }}></span>
+                      <span className="icon-working-hour" style={{ fontSize: "22px" }}></span>
                       {t("workHours")}
                     </Typography>
 
-                    <Grid item xs={3}>
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        sx={{
-                          backgroundColor: theme.palette.secondaryColor.main,
-                          borderRadius: "20px",
-                          width: "100px",
-                          height: "30px",
-                        }}
+
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      sx={{
+                        backgroundColor: theme.palette.secondaryColor.main,
+                        borderRadius: "20px",
+                        width: "100px",
+                        height: "30px",
+                      }}
+                    >
+                      <IconButton onClick={() => handleDayToggle("prev")} sx={{ color: theme.palette.orangePrimary.main }}>
+                        <ArrowBackIos sx={{ fontSize: "11px" }} />
+                      </IconButton>
+                      <Typography
+                        sx={{ width: "60px", textTransform: "capitalize", color: "white", fontSize: "10px" }}
                       >
-                        <IconButton onClick={() => handleDayToggle("prev")} sx={{ color: theme.palette.orangePrimary.main }}>
-                          <ArrowBackIos sx={{ fontSize: "11px" }} />
-                        </IconButton>
-                        <Typography
-                          sx={{ width: "60px", textTransform: "capitalize", color: "white", fontSize: "10px" }}
-                        >
-                          {t(workingHours.currentDay)}
-                        </Typography>
-                        <IconButton onClick={() => handleDayToggle("next")} sx={{ color: theme.palette.orangePrimary.main }}>
-                          <ArrowForwardIos sx={{ fontSize: "11px" }} />
-                        </IconButton>
+                        {t(workingHours.currentDay)}
+                      </Typography>
+                      <IconButton onClick={() => handleDayToggle("next")} sx={{ color: theme.palette.orangePrimary.main }}>
+                        <ArrowForwardIos sx={{ fontSize: "11px" }} />
+                      </IconButton>
+                    </Box>
+
+                  </Grid>
+
+                  <Grid item container>
+                    <Grid item xs={6}>
+                      <Box display="flex" flexWrap="wrap">
+                        {daysOfWeek.map((day) => (
+                          <Button
+                            key={day}
+                            onClick={() => handleDayClick(day)}
+                            sx={{
+                              minWidth: "25px",
+                              height: "30px",
+                              width: "30px",
+                              margin: "3px",
+                              borderRadius: "5px",
+                              textTransform: "capitalize",
+                              fontSize: "12px",
+                              border: workingHours.selectedDays.includes(day) ? "1px solid #ef7d00" : "1px solid gray",
+                              color: workingHours.selectedDays.includes(day) ? theme.palette.orangePrimary.main : "gray",
+                            }}
+                          >
+                            {day}
+                          </Button>
+                        ))}
                       </Box>
                     </Grid>
-                  </Grid>
 
-                  <Grid item xs={7}>
-                    <Box display="flex" flexWrap="wrap">
-                      {daysOfWeek.map((day) => (
-                        <Button
-                          key={day}
-                          onClick={() => handleDayClick(day)}
-                          sx={{
-                            minWidth: "25px",
-                            height: "30px",
-                            width: "30px",
-                            margin: "3px",
-                            borderRadius: "5px",
-                            textTransform: "capitalize",
-                            fontSize: "12px",
-                            border: workingHours.selectedDays.includes(day) ? "1px solid #ef7d00" : "1px solid gray",
-                            color: workingHours.selectedDays.includes(day) ? theme.palette.orangePrimary.main : "gray",
-                          }}
-                        >
-                          {day}
-                        </Button>
-                      ))}
-                    </Box>
-                  </Grid>
+                    <Grid item xs={6} padding='1rem'>
+                      <Grid container alignItems="center">
 
-                  <Grid item xs={4} sx={{ marginLeft: "20px" }}>
-                    <Grid container spacing={2} alignItems="center">
-                      <Box display={"flex"}>
-                        <Grid item>
-                          <Typography variant="body1" sx={{ fontSize: "11px", color: "gray", mr: 1 }}>
-                            {t("from")}
-                          </Typography>
+                        <Grid item container sx={{ justifyContent:'space-between' }}>
+                          <Grid item>
+                            <Typography variant="body1" sx={{ fontSize: "11px", color: "gray", mr: 1 }}>
+                              {t("from")}
+                            </Typography>
+                          </Grid>
+                          <Grid item>
+                            <TextField
+                              select
+                              value={workingHours.fromTime}
+                              onChange={(e) => handleTimeChange(e, "from")}
+                              size="small"
+                              sx={{ width: "90px", height: "30px" }}
+                              inputProps={{ sx: { padding: "2px 10px", fontSize: "12px" } }}
+                            >
+                              {["9:00 am", "10:00 am", "11:00 am"].map((time) => (
+                                <MenuItem key={time} value={time} sx={{ color: "gray", fontSize: "12px" }}>
+                                  <span style={{ fontSize: "10px", color: "gray" }}>{time}</span>
+                                </MenuItem>
+                              ))}
+                            </TextField>
+                          </Grid>
                         </Grid>
-                        <Grid item>
-                          <TextField
-                            select
-                            value={workingHours.fromTime}
-                            onChange={(e) => handleTimeChange(e, "from")}
-                            size="small"
-                            sx={{ width: "90px", height: "30px" }}
-                            inputProps={{ sx: { padding: "2px 10px", fontSize: "12px" } }}
-                          >
-                            {["9:00 am", "10:00 am", "11:00 am"].map((time) => (
-                              <MenuItem key={time} value={time} sx={{ color: "gray", fontSize: "12px" }}>
-                                <span style={{ fontSize: "10px", color: "gray" }}>{time}</span>
-                              </MenuItem>
-                            ))}
-                          </TextField>
+
+                        <Grid item container sx={{ justifyContent:'space-between' }}>
+                          <Grid item>
+                            <Typography variant="body1" sx={{ fontSize: "11px", color: "gray", mr: 1 }}>
+                              {t("to")}
+                            </Typography>
+                          </Grid>
+                          <Grid item>
+                            <TextField
+                              select
+                              value={workingHours.toTime}
+                              onChange={(e) => handleTimeChange(e, "to")}
+                              size="small"
+                              sx={{ width: "90px", height: "30px" }}
+                              inputProps={{ sx: { padding: "2px 10px", fontSize: "12px" } }}
+                            >
+                              {["5:00 pm", "6:00 pm", "7:00 pm"].map((time) => (
+                                <MenuItem key={time} value={time} sx={{ color: "gray", fontSize: "12px" }}>
+                                  <span style={{ fontSize: "10px", color: "gray" }}>{time}</span>
+                                </MenuItem>
+                              ))}
+                            </TextField>
+                          </Grid>
                         </Grid>
-                      </Box>
-                      <Box display={"flex"} marginTop={"3px"} marginLeft={"10px"}>
-                        <Grid item>
-                          <Typography variant="body1" sx={{ fontSize: "11px", color: "gray", mr: 1 }}>
-                            {t("to")}
-                          </Typography>
-                        </Grid>
-                        <Grid item>
-                          <TextField
-                            select
-                            value={workingHours.toTime}
-                            onChange={(e) => handleTimeChange(e, "to")}
-                            size="small"
-                            sx={{ width: "90px", height: "30px" }}
-                            inputProps={{ sx: { padding: "2px 10px", fontSize: "12px" } }}
-                          >
-                            {["5:00 pm", "6:00 pm", "7:00 pm"].map((time) => (
-                              <MenuItem key={time} value={time} sx={{ color: "gray", fontSize: "12px" }}>
-                                <span style={{ fontSize: "10px", color: "gray" }}>{time}</span>
-                              </MenuItem>
-                            ))}
-                          </TextField>
-                        </Grid>
-                      </Box>
+                      </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
