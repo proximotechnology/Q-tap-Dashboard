@@ -140,7 +140,7 @@ import {
     };
   
     return (
-      <Grid container  justifyContent="center" spacing={0} sx={{padding:'0px', marginTop: "10px",marginLeft:'0px' ,width:'100%'}}>
+      <Grid container  justifyContent="center" spacing={0} sx={{padding:'0px', marginTop: "20px",marginLeft:'0px' ,width:'100%'}}>
         <Box>
           <ArrowBackIosOutlinedIcon
             onClick={() => navigate("/client")}
@@ -197,7 +197,7 @@ import {
             </Typography>
           </Box>
         </Grid>
-        <Grid item xs={12} md={12}style={{padding:'1rem'}} >
+        <Grid item xs={12} md={8} style={{padding:'1rem'}} >
           <Typography variant="body2" sx={{ fontSize: "15px" }} color="#3b3a3a" gutterBottom>
             {t("personalInfo")}
           </Typography>
