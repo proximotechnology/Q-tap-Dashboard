@@ -7,6 +7,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../utils/helperFunction';
 
 const FeatureSection = ({ section, updateSection, index }) => {
     const [feature, setFeature] = useState('');
@@ -183,7 +184,7 @@ export const Features = forwardRef((props, ref) => {
 
         return axios({
             method: 'post',
-            url: 'https://highleveltecknology.com/Qtap/api/settings/features',
+            url: `${BASE_URL}settings/features`,
             data: formData,
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("adminToken")}`,

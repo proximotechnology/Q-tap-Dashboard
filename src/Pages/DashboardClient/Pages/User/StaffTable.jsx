@@ -9,6 +9,7 @@ import * as XLSX from 'xlsx';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../../../utils/helperFunction';
 
 export const StaffTable = ({ userStaff }) => {
     const theme = useTheme();
@@ -25,7 +26,7 @@ export const StaffTable = ({ userStaff }) => {
 
     const getRestStaff = async () => {
         try {
-            const response = await axios.get(`https://highleveltecknology.com/Qtap/api/restaurant_user_staff/${localStorage.getItem("selectedBranch")}`, {
+            const response = await axios.get(`${BASE_URL}restaurant_user_staff/${localStorage.getItem("selectedBranch")}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
@@ -51,7 +52,7 @@ export const StaffTable = ({ userStaff }) => {
 
     const handleDeleteRestStaff = async (id) => {
         try {
-            const response = await axios.delete(`https://highleveltecknology.com/Qtap/api/restaurant_user_staff/${id}`, {
+            const response = await axios.delete(`${BASE_URL}restaurant_user_staff/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     "Authorization": `Bearer ${localStorage.getItem('clientToken')}`

@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useBranch } from '../../../../../context/BranchContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { BASE_URL } from '../../../../../utils/helperFunction';
 
 const AddRider = ({ open, onClose, getRiderData, editData }) => {
   const { t } = useTranslation();
@@ -30,7 +31,7 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
 
     try {
       const response = await axios.get(
-        `https://highleveltecknology.com/Qtap/api/delivery_area`,
+        `${BASE_URL}delivery_area`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -124,7 +125,7 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
         // Update existing rider
         response = await axios({
           method: 'PUT',
-          url: `https://highleveltecknology.com/Qtap/api/delivery/${editData.id}`,
+          url: `${BASE_URL}delivery/${editData.id}`,
           data: formData,
           headers,
         });
@@ -132,7 +133,7 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
         // Add new rider
         response = await axios({
           method: 'POST',
-          url: 'https://highleveltecknology.com/Qtap/api/delivery',
+          url: `${BASE_URL}delivery`,
           data: formData,
           headers,
         });

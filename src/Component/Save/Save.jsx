@@ -29,6 +29,7 @@ import { useBusinessContext } from '../../context/BusinessContext';
 import { useTranslation } from 'react-i18next';
 import Language from '../dashboard/TopBar/Language';
 import { usePersonalContext } from '../../context/PersonalContext';
+import { BASE_URL } from '../../utils/helperFunction';
 
 export const Save = () => {
   const { businessData, branches, selectedBranch } = useBusinessContext();
@@ -221,7 +222,7 @@ export const Save = () => {
 
     // Send data to API
     try {
-      const response = await fetch('https://highleveltecknology.com/Qtap/api/qtap_clients', {
+      const response = await fetch(`${BASE_URL}qtap_clients`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

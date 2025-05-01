@@ -4,6 +4,7 @@ import { Row1 } from './Row1'
 import { Row2 } from './Row2'
 import { Row3 } from './Row3'
 import axios from 'axios'
+import { BASE_URL } from '../../../../utils/helperFunction'
 
 export const DashboardAffiliate = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -15,7 +16,7 @@ export const DashboardAffiliate = () => {
       setIsLoading(true);
 
       const response = await axios.get(
-        'https://highleveltecknology.com/Qtap/api/get_myinfo',
+        `${BASE_URL}get_myinfo`,
         {
           headers: {
             'Content-Type': 'application/json',

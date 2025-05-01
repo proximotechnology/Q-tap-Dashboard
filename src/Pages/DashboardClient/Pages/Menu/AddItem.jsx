@@ -30,6 +30,7 @@ import { useTranslation } from "react-i18next";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useBranch } from "../../../../context/BranchContext";
+import { BASE_URL } from "../../../../utils/helperFunction";
 
 export const AddItem = () => {
     const { t } = useTranslation();
@@ -85,7 +86,7 @@ export const AddItem = () => {
                 try {
                     setLoading(true); // Set loading to true while fetching
                     const response = await axios.get(
-                        `https://highleveltecknology.com/Qtap/api/meals`,
+                        `${BASE_URL}meals`,
                         {
                             params: { brunch_id: selectedBranch },
                             headers: {
@@ -235,8 +236,8 @@ export const AddItem = () => {
                 });
 
                 const url = isEditing
-                    ? `https://highleveltecknology.com/Qtap/api/meals/${itemId}`
-                    : "https://highleveltecknology.com/Qtap/api/meals";
+                    ? `${BASE_URL}meals/${itemId}`
+                    : `${BASE_URL}meals`;
                 const method = isEditing ? "post" : "post"; // Note: Consider using PUT for updates
 
                 response = await axios({
@@ -250,8 +251,8 @@ export const AddItem = () => {
                 });
             } else {
                 const url = isEditing
-                    ? `https://highleveltecknology.com/Qtap/api/meals/${itemId}`
-                    : "https://highleveltecknology.com/Qtap/api/meals";
+                    ? `${BASE_URL}meals/${itemId}`
+                    : `${BASE_URL}meals`;
                 const method = isEditing ? "put" : "post";
 
                 response = await axios({

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
+import { BASE_URL } from '../utils/helperFunction';
 
 export const AffiliateClientContext = createContext();
 
@@ -9,7 +10,7 @@ export const AffiliateClientProvider = ({ children }) => {
 
     const getAffiliateData = async (id) => {
         try {
-            const response = await axios.get(`https://highleveltecknology.com/Qtap/api/get_affiliate_info/${id}`, {
+            const response = await axios.get(`${BASE_URL}get_affiliate_info/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
@@ -26,7 +27,7 @@ export const AffiliateClientProvider = ({ children }) => {
     };
     const getClientData = async (id) => {
         try {
-            const response = await axios.get(`https://highleveltecknology.com/Qtap/api/get_client_info/${id}`, {
+            const response = await axios.get(`${BASE_URL}get_client_info/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`

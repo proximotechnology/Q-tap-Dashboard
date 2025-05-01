@@ -4,6 +4,7 @@ import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../utils/helperFunction';
 
 const PaymentGatewayForm = forwardRef((props, ref) => {
     const [apiKey, setApiKey] = useState('');
@@ -33,7 +34,7 @@ const PaymentGatewayForm = forwardRef((props, ref) => {
                 },
                 body: JSON.stringify(formData)
             }
-            const response = await fetch('https://highleveltecknology.com/Qtap/api/settings/payment', options);
+            const response = await fetch(`${BASE_URL}settings/payment`, options);
             // console.log("response payment", response);
 
             const data = await response.json();

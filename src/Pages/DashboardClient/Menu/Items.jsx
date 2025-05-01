@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Typography, Card, CardMedia, Grid, useTheme } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { BASE_URL_IMG } from '../../../utils/helperFunction';
 
 const Item = ({ item, onItemSelect, handleAddToCart }) => {
     const theme = useTheme();
@@ -23,7 +24,7 @@ const Item = ({ item, onItemSelect, handleAddToCart }) => {
                     >
                         <CardMedia
                             component="img"
-                            image={`https://highleveltecknology.com/Qtap/public/${item.img}`}
+                            image={`${BASE_URL_IMG}${item.img}`}
                             alt={item.name}
                             sx={{
                                 height: "150px",

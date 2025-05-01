@@ -3,7 +3,7 @@ import { Card, Box, Typography, Button, Divider, useTheme } from '@mui/material'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { OrderContext } from './DeliveredContext';
 import { useTranslation } from 'react-i18next';
-import { formateDate } from '../../../../utils/helperFunction';
+import { BASE_URL, formateDate } from '../../../../utils/helperFunction';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
@@ -30,7 +30,6 @@ export const DeliveredCard = ({ orders, setSelectedOrder, setIsOrderDetailsOpen 
     } 
     */
     const token = localStorage.getItem("clientToken")
-    const BASE_URL = 'https://highleveltecknology.com/Qtap/api/';
     const data = {
       order_id: order?.id,
       status: action,

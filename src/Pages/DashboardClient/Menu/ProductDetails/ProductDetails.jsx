@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { customWidth } from '../utils';
 import Language from '../../../../Component/dashboard/TopBar/Language';
 import { toast } from 'react-toastify';
+import { BASE_URL_IMG } from '../../../../utils/helperFunction';
 
 const ProductDetails = ({
     item,
@@ -209,7 +210,7 @@ const ProductDetails = ({
                             <CardMedia
                                 component="img"
                                 height="300"
-                                src={`https://highleveltecknology.com/Qtap/public/${item.img}`}
+                                src={`${BASE_URL_IMG}${item.img}`}
                                 alt={item.name}
                                 style={{ width: '100%', height: '270px', objectFit: 'cover' }}
                             />

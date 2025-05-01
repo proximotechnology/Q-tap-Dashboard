@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BASE_URL } from '../../../../utils/helperFunction';
 
 const iconsArray = [
     { name: 'Dashboard', icon: <img src="/assets/dashboard.svg" alt="icon" style={{ width: "16px", height: "16px" }} /> },
@@ -60,7 +61,7 @@ export const AddUser = ({ open, onClose }) => {
                 headers: { Authorization: `Bearer ${token}` },
             };
 
-            const response = await axios.post('https://highleveltecknology.com/Qtap/api/restaurant_user_staff', staffData, config)
+            const response = await axios.post(`${BASE_URL}restaurant_user_staff`, staffData, config)
 
 
             if (response.status === 200) {

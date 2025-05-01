@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
+import { BASE_URL } from '../utils/helperFunction';
 
 export const ClientLoginData = createContext();
 
@@ -11,7 +12,7 @@ export const ClientLoginDataProvider = ({ children }) => {
 
     const getAreaData = async () => {
         try {
-            const response = await axios.get('https://highleveltecknology.com/Qtap/api/area', {
+            const response = await axios.get(`${BASE_URL}area`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
@@ -28,7 +29,7 @@ export const ClientLoginDataProvider = ({ children }) => {
     };
     const getClientData = async () => {
         try {
-            const response = await axios.get('https://highleveltecknology.com/Qtap/api/get_info', {
+            const response = await axios.get(`${BASE_URL}get_info`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
@@ -47,7 +48,7 @@ export const ClientLoginDataProvider = ({ children }) => {
 
     const getTableDataRes = async () => {
         try {
-            const response = await axios.get('https://highleveltecknology.com/Qtap/api/tables', {
+            const response = await axios.get(`${BASE_URL}tables`, {
                 headers: {
                     'Content-Type': 'application/json',
                     "Authorization": `Bearer ${localStorage.getItem('clientToken')}`

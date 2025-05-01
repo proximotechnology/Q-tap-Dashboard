@@ -62,7 +62,7 @@
 //   };
 
 //   const getData = () => {
-//     fetch("https://highleveltecknology.com/Qtap/api/qtap_clients", {
+//     fetch("${BASE_URL}qtap_clients", {
 //       method: "GET",
 //       headers: {
 //         "Content-Type": "application/json",
@@ -84,7 +84,7 @@
 //     const newStatus = currentStatus === "active" ? "inactive" : "active";
 //     try {
 //       const response = await fetch(
-//         `https://highleveltecknology.com/Qtap/api/qtap_clients/${clientId}`,
+//         `${BASE_URL}qtap_clients/${clientId}`,
 //         {
 //           method: "POST",
 //           headers: {
@@ -433,6 +433,7 @@ import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined
 import { useNavigate } from "react-router";
 import * as XLSX from "xlsx";
 import { useTranslation } from "react-i18next";
+import { BASE_URL } from "../../../utils/helperFunction";
 
 const exportToExcel = (clients) => {
   const worksheet = XLSX.utils.json_to_sheet(clients);
@@ -467,7 +468,7 @@ export const Row2 = () => {
   const getData = async () => {
     setLoading(true); // Start loading
     try {
-      const response = await fetch("https://highleveltecknology.com/Qtap/api/qtap_clients", {
+      const response = await fetch(`${BASE_URL}qtap_clients`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -502,7 +503,7 @@ export const Row2 = () => {
     const newStatus = currentStatus === "active" ? "inactive" : "active";
     try {
       const response = await fetch(
-        `https://highleveltecknology.com/Qtap/api/active_clients/${clientId}`,
+        `${BASE_URL}active_clients/${clientId}`,
         {
           method: "POST",
           headers: {

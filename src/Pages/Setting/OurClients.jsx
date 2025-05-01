@@ -64,7 +64,7 @@
 
 //             console.log("formData", formData);
 
-//             const response = await fetch('https://highleveltecknology.com/Qtap/api/settings/our-clients', {
+//             const response = await fetch('${BASE_URL}settings/our-clients', {
 //                 method: 'POST',
 //                 headers: {
 //                     'Content-Type': 'application/json',
@@ -196,6 +196,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../utils/helperFunction';
 
 const OurClients = forwardRef((props, ref) => {
     const [clients, setClients] = useState([]);
@@ -259,7 +260,7 @@ const OurClients = forwardRef((props, ref) => {
                 }
             });
 
-            const response = await fetch('https://highleveltecknology.com/Qtap/api/settings/our-clients', {
+            const response = await fetch(`${BASE_URL}settings/our-clients`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem("adminToken")}`,

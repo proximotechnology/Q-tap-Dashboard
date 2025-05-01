@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useBranch } from '../../../../../context/BranchContext';
+import { BASE_URL } from '../../../../../utils/helperFunction';
 
 export const Table1 = () => {
   const { t } = useTranslation();
@@ -35,7 +36,7 @@ export const Table1 = () => {
     try {
       const response = await axios({
         method: 'DELETE',
-        url: `https://highleveltecknology.com/Qtap/api/delivery_area/${id}`,
+        url: `${BASE_URL}delivery_area/${id}`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('clientToken')}`,
         },
@@ -61,7 +62,7 @@ export const Table1 = () => {
 
     try {
       const response = await axios.get(
-        `https://highleveltecknology.com/Qtap/api/delivery_area`,
+        `${BASE_URL}delivery_area`,
         {
           headers: {
             'Content-Type': 'application/json',

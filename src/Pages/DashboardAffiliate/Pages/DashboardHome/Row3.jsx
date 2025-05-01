@@ -3,9 +3,10 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../../../utils/helperFunction';
 
 export const Row3 = ({code}) => {
-    const invitationLink = `https://highleveltecknology.com/Qtap/api/home_affiliate/${code}`;
+    const invitationLink = `${BASE_URL}home_affiliate/${code}`;
 
     const {t} = useTranslation();
     const copyToClipboard = () => {

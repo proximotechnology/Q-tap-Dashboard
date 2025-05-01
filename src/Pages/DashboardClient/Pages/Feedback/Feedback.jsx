@@ -13,6 +13,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../../../utils/helperFunction';
 
 export const Feedback = () => {
     const theme = useTheme();
@@ -59,7 +60,7 @@ export const Feedback = () => {
             // console.log("data formate", dataFormat);
 
 
-            await axios.post(`https://highleveltecknology.com/Qtap/api/feedback`, dataFormat, {
+            await axios.post(`${BASE_URL}feedback`, dataFormat, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`

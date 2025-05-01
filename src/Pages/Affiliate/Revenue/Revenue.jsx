@@ -3,6 +3,7 @@ import { Box, Grid, MenuItem, Paper, Select, Typography, useTheme } from "@mui/m
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import LineChart2 from "../LineChart2";
 import { useTranslation } from "react-i18next";
+import { BASE_URL } from "../../../utils/helperFunction";
 
 export const Revenue = () => {
   const [year, setYear] = React.useState("2025");
@@ -16,7 +17,7 @@ export const Revenue = () => {
   const getRvenueData = async () => {
     try {
       setLoading(true)
-      const response = await fetch(`https://highleveltecknology.com/Qtap/api/Sales/${year}`,
+      const response = await fetch(`${BASE_URL}Sales/${year}`,
         {
           method: "POST",
           headers: {

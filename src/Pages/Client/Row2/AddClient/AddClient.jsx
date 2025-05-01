@@ -93,7 +93,7 @@
 
 // //       console.log('Client allClientData', allClientData);
 
-// //       const response = await axios.post('https://highleveltecknology.com/Qtap/api/qtap_clients', allClientData, {
+// //       const response = await axios.post('${BASE_URL}qtap_clients', allClientData, {
 // //         headers: {
 // //           'Content-Type': 'application/json',
 // //         },
@@ -393,6 +393,7 @@ import { PersonalInfoAdmin } from "./PersonalInfoAdmin";
 import { useClientContext } from "../../../../context/ClientContext";
 import { useTranslation } from "react-i18next";
 import Language from "../../../../Component/dashboard/TopBar/Language";
+import { BASE_URL } from "../../../../utils/helperFunction";
 
 export const AddClient = () => {
   const { t } = useTranslation();
@@ -417,7 +418,7 @@ export const AddClient = () => {
 
     try {
       const response = await axios.get(
-        `https://highleveltecknology.com/Qtap/api/get_client_info/${clientId}`,
+        `${BASE_URL}get_client_info/${clientId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
@@ -587,8 +588,8 @@ export const AddClient = () => {
       };
 
       const url = isEditMode
-        ? `https://highleveltecknology.com/Qtap/api/qtap_clients/${clientId}`
-        : "https://highleveltecknology.com/Qtap/api/qtap_clients";
+        ? `${BASE_URL}qtap_clients/${clientId}`
+        : `${BASE_URL}qtap_clients`;
       const method = isEditMode ? "POST" : "POST";
 
       const response = await axios({

@@ -4,6 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 import AddMenuModal from './AddMenuModal';
+import { BASE_URL, BASE_URL_IMG } from '../../utils/helperFunction';
 
 const Product = () => {
   const [menus, setMenus] = useState([]);
@@ -12,7 +13,7 @@ const Product = () => {
 
   const getMenus = async () => {
     try {
-      const response = await axios.get('https://highleveltecknology.com/Qtap/api/products', {
+      const response = await axios.get(`${BASE_URL}products`, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
@@ -30,7 +31,7 @@ const Product = () => {
 
   const handleDeleteMenu = async (menuId) => {
     try {
-      await axios.delete(`https://highleveltecknology.com/Qtap/api/products/${menuId}`, {
+      await axios.delete(`${BASE_URL}products/${menuId}`, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
@@ -93,7 +94,7 @@ const Product = () => {
             <Box>
               {menu.img && (
                 <img 
-                  src={`https://highleveltecknology.com/Qtap/public/${menu.img}`} 
+                  src={`${BASE_URL_IMG}${menu.img}`} 
                   alt={menu.name}
                   style={{ 
                     width: "70px", 
@@ -106,7 +107,7 @@ const Product = () => {
               )}
               {menu.img && (
                 <img 
-                  src={`https://highleveltecknology.com/Qtap/public/${menu.img}`} 
+                  src={`${BASE_URL_IMG}${menu.img}`} 
                   alt={menu.name}
                   style={{ 
                     width: "120px", 

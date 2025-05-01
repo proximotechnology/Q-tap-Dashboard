@@ -3,6 +3,7 @@ import { Box, TextField, IconButton, Paper, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../utils/helperFunction';
 
 const URLInput = ({ label, setVideoUrl, value }) => {
     const {t} = useTranslation()
@@ -69,7 +70,7 @@ export const Videos = forwardRef((props, ref) => {
             video: validUrls
         };
 
-        fetch('https://highleveltecknology.com/Qtap/api/settings/videos', {
+        fetch(`${BASE_URL}settings/videos`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

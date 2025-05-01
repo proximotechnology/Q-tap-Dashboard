@@ -14,6 +14,7 @@ import { PaymentInfo } from './PaymentInfo';
 import { useTranslation } from 'react-i18next';
 import { AffiliateClientContext } from '../../../context/AffiliateClient';
 import Language from '../../../Component/dashboard/TopBar/Language';
+import { BASE_URL } from '../../../utils/helperFunction';
 
 export const AddUsers = () => {
     const navigate = useNavigate();
@@ -183,7 +184,7 @@ export const AddUsers = () => {
             if (user) {
                 // Update existing user
                 const response = await axios.post(
-                    `https://highleveltecknology.com/Qtap/api/qtap_affiliate/${user.id}`,
+                    `${BASE_URL}qtap_affiliate/${user.id}`,
                     formData,
                     {
                         headers: {
@@ -204,7 +205,7 @@ export const AddUsers = () => {
             } else {
                 // Add new user
                 const response = await axios.post(
-                    'https://highleveltecknology.com/Qtap/api/add_qtap_affiliate',
+                    `${BASE_URL}add_qtap_affiliate`,
                     formData,
                     {
                         headers: {

@@ -5,6 +5,7 @@ import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import AddBundle from './AddBundle';
 import { DiscountModelAdmin } from './DiscountModelAdmin';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../utils/helperFunction';
 
 export const Pricing = () => {
   const [open, setOpen] = useState(false);
@@ -38,7 +39,7 @@ export const Pricing = () => {
   const PricingCard = ({ title, priceMonthly, priceYearly, description, features, id }) => {
     // delete pricing data from api
     const handleDelete = () => {
-      fetch(`https://highleveltecknology.com/Qtap/api/pricing/${id}`, {
+      fetch(`${BASE_URL}pricing/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
@@ -137,7 +138,7 @@ export const Pricing = () => {
   const [pricing, setPricing] = useState([]);
   // get pricing data from api
   useEffect(() => {
-    fetch('https://highleveltecknology.com/Qtap/api/pricing', {
+    fetch(`${BASE_URL}pricing`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

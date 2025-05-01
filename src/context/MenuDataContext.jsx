@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
+import { BASE_URL } from '../utils/helperFunction';
 
 export const MenuDataContext = createContext();
 
@@ -32,7 +33,7 @@ export const MenuDataProvider = ({ children }) => {
     const getMenuData = async (branchNumber) => {
         try {
             const response = await fetchWithRetry(
-                `https://highleveltecknology.com/Qtap/api/menu/${branchNumber}`,
+                `${BASE_URL}menu/${branchNumber}`,
                 {
                     method: 'GET',
                     headers: {

@@ -14,6 +14,7 @@ import FeedbackDetailsModal from './FeedbackDetailsModal';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../utils/helperFunction';
 
 
 export const FeedbackAdmin = () => {
@@ -42,7 +43,7 @@ export const FeedbackAdmin = () => {
     // get data from backend to display in the table
     const getFeedbackData = async () => {
         try {
-            const response = await axios.get('https://highleveltecknology.com/Qtap/api/feedback_client', {
+            const response = await axios.get(`${BASE_URL}feedback_client`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
@@ -63,7 +64,7 @@ export const FeedbackAdmin = () => {
 
     // delete feedback data
     const deleteFeedback = async (id) => {
-        await axios.delete(`https://highleveltecknology.com/Qtap/api/feedback/${id}`, {
+        await axios.delete(`${BASE_URL}feedback/${id}`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
             }
@@ -80,7 +81,7 @@ export const FeedbackAdmin = () => {
         const newStatus = currentStatus === "yes" ? "no" : "yes";
         // console.log('newStatus:', newStatus, currentStatus);
 
-        await axios.put(`https://highleveltecknology.com/Qtap/api/feedback/${id}`, {
+        await axios.put(`${BASE_URL}feedback/${id}`, {
             publish: newStatus
         }, {
             headers: {

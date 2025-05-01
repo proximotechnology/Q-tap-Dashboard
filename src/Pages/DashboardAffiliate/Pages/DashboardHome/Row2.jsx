@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import LineChart1 from '../../../Wallet/Row1/LineChart1'
 import { useTranslation } from 'react-i18next'
 import axios from 'axios'
+import { BASE_URL } from '../../../../utils/helperFunction'
 
 
 export const Row2 = () => {
@@ -28,7 +29,7 @@ export const Row2 = () => {
     try {
 
       const response = await axios.get(
-        `https://highleveltecknology.com/Qtap/api/Sales_clicks/${year}`,
+        `${BASE_URL}Sales_clicks/${year}`,
         {
           headers: {
             'Content-Type': 'application/json',
