@@ -543,7 +543,7 @@ export const BusinessInfo = () => {
           <Box>
             <Grid container alignItems="center" className="here_work_hours_container">
               <Grid item container marginBottom={'5px'} xs={12} display={"flex"} justifyContent={"space-between"} flexWrap={'wrap'}> {/* TODO:FEX STYLE */}
-                <Grid item xs={3}>
+                <Grid item xs={6}>
                   <Typography variant="body1" display="flex" alignItems="center" sx={{ fontSize: "12px", color: "gray" }}>
                     <span style={{ marginRight: "4px", fontSize: "12px" }} className="icon-working-hour">
                       <span className="path1"></span><span className="path2"></span><span className="path3"></span>
@@ -554,7 +554,7 @@ export const BusinessInfo = () => {
                   </Typography>
                 </Grid>
 
-                <Grid item xs={3} style={{ justifyContent:'end' }}>
+                <Grid item xs={6} style={{ justifyContent:'end' }}>
                   <Box display="flex" className="here_button" alignItems="center" sx={{ marginInlineStart:'auto',backgroundColor: theme.palette.secondaryColor.main, borderRadius: "20px", width: "90px", height: "30px" }}>
                     <IconButton onClick={() => handleDayToggle("prev")} sx={{ color: theme.palette.orangePrimary.main }}>
                       <ArrowBackIos sx={{ fontSize: "11px" }} />
