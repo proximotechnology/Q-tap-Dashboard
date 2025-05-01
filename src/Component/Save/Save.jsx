@@ -145,7 +145,7 @@ export const Save = () => {
         UAE: 5,
         SA: 6,
       };
-      return  1;
+      return 1;
       // return currencyMap[country] || 1;
     };
 
@@ -219,16 +219,53 @@ export const Save = () => {
     };
 
     console.log('Full API Data:', fullApiData);
+    /*
+    * section of body data
+    * --------------------- 
+    */
+    const formData = new FormData();
 
+    // Convert all known fields
+    formData.append("name", personalData.fullName?.trim() || '');
+    formData.append("mobile", personalData.phone?.trim() || '');
+    formData.append("email", personalData.email?.trim().toLowerCase() || '');
+    formData.append(
+      "birth_date",
+      personalData.year && personalData.month && personalData.day
+        ? `${personalData.year}-${personalData.month}-${personalData.day}`
+        : ''
+    );
+    formData.append("country", personalData.country || '');
+    formData.append("password", personalData.password || '1');
+    formData.append("user_type", "qtap_clients");
+    formData.append("payment_method", personalData.payment_method || '');
+    formData.append("pricing_id", personalData.pricing_id || '');
+    formData.append("pricing_way", `${personalData.pricing_way}_price`);
+    formData.append("discount_id", personalData.discount_id || '');
+
+    // Append dynamic branches
+    apiBranches.forEach((branch, index) => {
+      formData.append(`brunch${index + 1}`, JSON.stringify(branch));
+    });
+
+    // Append image file (assuming it's stored in personalData.img and is a File object)
+    if (personalData.img instanceof File) {
+      formData.append("img", personalData.img);
+    }
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
     // Send data to API
     try {
       const response = await fetch(`${BASE_URL}qtap_clients`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(fullApiData),
+        // headers: {
+        //   'Content-Type': 'application/json',
+        // },
+        body: formData,
       });
+      const contentType = response.headers.get('content-type');
+      console.log(contentType)
 
       const responseData = await response.json();
       console.log('API Response:', responseData);

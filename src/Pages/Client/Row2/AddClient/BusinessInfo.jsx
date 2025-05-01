@@ -76,7 +76,7 @@ export const BusinessInfo = () => {
   const [fromTime, setFromTime] = useState('');
   const [toTime, setToTime] = useState('');
 
- 
+
 
   // Initialize local state based on workschedules
   useEffect(() => {
@@ -436,7 +436,7 @@ export const BusinessInfo = () => {
       <Grid xs={12} md={6} paddingX='8px'>
         <Grid sx={{ display: "flex", flexDirection: "column", marginTop: "10px", width: "100%" }}>
           <Box sx={{ marginTop: "6px", display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-            <Grid container direction="column" spacing={1}>
+            <Grid container direction="column" className="heres_1"> {/* heres_1 */}
               <Typography
                 variant="body2"
                 sx={{ fontSize: "14px", fontWeight: "500", color: "#AAAAAA", textAlign: "start", margin: "0 0 5px 0px" }}
@@ -447,7 +447,7 @@ export const BusinessInfo = () => {
                 value={mode}
                 exclusive
                 onChange={handleModeChange}
-                sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "space-around", marginLeft: "-14px" }}
+                sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "start" }}
               >
                 <ToggleButton
                   value="white"
@@ -470,6 +470,8 @@ export const BusinessInfo = () => {
                     backgroundColor: mode === "dark" ? theme.palette.orangePrimary.main : "transparent",
                     border: `1px solid ${mode === "dark" ? theme.palette.orangePrimary.main : "#AAAAAA"} !important`,
                     borderRadius: "8px !important",
+                    marginLeft: 'auto !important',
+                    marginRight: 'auto !important',
                   }}
                 >
                   <NightlightIcon
@@ -486,11 +488,11 @@ export const BusinessInfo = () => {
                 height: "40px",
                 width: "2px",
                 backgroundColor: theme.palette.orangePrimary.main,
-                margin: "auto 20px",
+                margin: "auto 10px",
               }}
             />
 
-            <Grid container direction="column" spacing={0.5}>
+            <Grid container direction="column" className="heres_2">
               <Typography
                 variant="body2"
                 sx={{ fontSize: "14px", fontWeight: "500", color: "#AAAAAA", textAlign: "start", margin: "0 0 5px 0px" }}
@@ -501,7 +503,7 @@ export const BusinessInfo = () => {
                 value={design}
                 exclusive
                 onChange={handleDesignChange}
-                sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "space-around", marginLeft: "-14px" }}
+                sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "start" }}
               >
                 <ToggleButton
                   value="grid"
@@ -524,6 +526,8 @@ export const BusinessInfo = () => {
                     backgroundColor: design === "list" ? theme.palette.orangePrimary.main : "transparent",
                     border: `1px solid ${design === "list" ? theme.palette.orangePrimary.main : "#AAAAAA"} !important`,
                     borderRadius: "8px !important",
+                    marginLeft: 'auto !important',
+                    marginRight: 'auto !important',
                   }}
                 >
                   <FormatListBulletedIcon
@@ -537,18 +541,21 @@ export const BusinessInfo = () => {
           <Divider sx={{ backgroundColor: "#f4f6fc", height: "2px", margin: "8px 0px" }} flexItem />
 
           <Box>
-            <Grid container spacing={1.2} alignItems="center">
-              <Grid item xs={12} display={"flex"} justifyContent={"space-between"}>
-                <Typography variant="body1" display="flex" alignItems="center" sx={{ fontSize: "12px", color: "gray" }}>
-                  <span style={{ marginRight: "4px", fontSize: "12px" }} className="icon-working-hour">
-                    <span className="path1"></span><span className="path2"></span><span className="path3"></span>
-                    <span className="path4"></span><span className="path5"></span><span className="path6"></span>
-                    <span className="path7"></span><span className="path8"></span>
-                  </span>
-                  {t("workHours")}
-                </Typography>
+            <Grid container alignItems="center" className="here_work_hours_container">
+              <Grid item container marginBottom={'5px'} xs={12} display={"flex"} justifyContent={"space-between"} flexWrap={'wrap'}> {{/* TODO:FEX STYLE */}}
                 <Grid item xs={3}>
-                  <Box display="flex" alignItems="center" sx={{ backgroundColor: theme.palette.secondaryColor.main, borderRadius: "20px", width: "90px", height: "30px" }}>
+                  <Typography variant="body1" display="flex" alignItems="center" sx={{ fontSize: "12px", color: "gray" }}>
+                    <span style={{ marginRight: "4px", fontSize: "12px" }} className="icon-working-hour">
+                      <span className="path1"></span><span className="path2"></span><span className="path3"></span>
+                      <span className="path4"></span><span className="path5"></span><span className="path6"></span>
+                      <span className="path7"></span><span className="path8"></span>
+                    </span>
+                    {t("workHours")}
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={3} style={{ justifyContent:'end' }}>
+                  <Box display="flex" className="here_button" alignItems="center" sx={{ marginInlineStart:'auto',backgroundColor: theme.palette.secondaryColor.main, borderRadius: "20px", width: "90px", height: "30px" }}>
                     <IconButton onClick={() => handleDayToggle("prev")} sx={{ color: theme.palette.orangePrimary.main }}>
                       <ArrowBackIos sx={{ fontSize: "11px" }} />
                     </IconButton>
@@ -586,9 +593,9 @@ export const BusinessInfo = () => {
                 </Box>
               </Grid>
 
-              <Grid item xs={4} sx={{ marginLeft: "30px" }}>
-                <Grid container spacing={2} alignItems="center" justifyContent="end">
-                  <Box display={"flex"}>
+              <Grid item xs={5} >
+                <Grid container alignItems="end" justifyContent="end">
+                  <Grid container item justifyContent="end">
                     <Grid item>
                       <Typography variant="body1" sx={{ fontSize: "11px", color: "gray", mr: 1 }}>{t("from")}</Typography>
                     </Grid>
@@ -608,8 +615,8 @@ export const BusinessInfo = () => {
                         ))}
                       </TextField>
                     </Grid>
-                  </Box>
-                  <Box display={"flex"} marginTop={"3px"} marginLeft={"10px"}>
+                  </Grid>
+                  <Grid container item justifyContent="end">
                     <Grid item>
                       <Typography variant="body1" sx={{ fontSize: "11px", color: "gray", mr: 1 }}>{t("to")}</Typography>
                     </Grid>
@@ -629,7 +636,7 @@ export const BusinessInfo = () => {
                         ))}
                       </TextField>
                     </Grid>
-                  </Box>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>

@@ -592,14 +592,40 @@ export const AddClient = () => {
         : `${BASE_URL}qtap_clients`;
       const method = isEditMode ? "POST" : "POST";
 
+      console.log("clientData save =>>", allClientData)
+      const formData = new FormData();
+      let headers = {}
+      if (isEditMode) {
+
+        formData.append("name", allClientData.name);
+        formData.append("mobile", allClientData.mobile);
+        formData.append("email", allClientData.email);
+        formData.append("birth_date", allClientData.birth_date);
+        formData.append("Country", allClientData.Country);
+        formData.append("user_type", allClientData.user_type);
+        formData.append("img", allClientData.img); // Assuming this is a File object
+        formData.append("payment_method", allClientData.payment_method);
+        formData.append("brunch1", allClientData.brunch1);
+        headers = {
+           Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+         }
+
+         for (let [key, value] of formData.entries()) {
+          console.log(key, value);
+        }
+      } else {
+         headers = {
+          "Content-Type":"application/json",
+           Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+         }
+      }
+     
       const response = await axios({
         method,
         url,
-        data: allClientData,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
-        },
+        headers,
+        data: isEditMode ? formData : allClientData,
+       
       });
 
       if (response.status === 201 || response.status === 200) {

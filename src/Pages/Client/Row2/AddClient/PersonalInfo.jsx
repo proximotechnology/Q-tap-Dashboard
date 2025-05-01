@@ -67,7 +67,7 @@ export const PersonalInfo = () => {
             <Grid item xs={12} md={3} sx={{ marginRight: "40px" }}>
                 <Box sx={{ textAlign: 'center' }}>
                     <Box sx={{
-                        width: '100%',
+                        width: '150px',
                         height: '100%',
                         borderRadius: '50%',
                         overflow: 'hidden',
@@ -76,7 +76,7 @@ export const PersonalInfo = () => {
                         justifyContent: 'center',
                         alignItems: 'center',
                     }}>
-                        <img src={image ? URL.createObjectURL(image) : "/images/User.jpg"} alt="user" width="170" height="150" />
+                        <img src={image ? URL.createObjectURL(image) : "/images/User.jpg"} alt="user" width="150px" height="150" />
                         <Box sx={{
                             position: 'absolute',
                             bottom: 0,
