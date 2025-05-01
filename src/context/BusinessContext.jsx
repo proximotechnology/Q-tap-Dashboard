@@ -22,7 +22,9 @@ export const BusinessProvider = ({ children }) => {
         paymentTime: 'after',
         tableCount: '',
         paymentMethods: [],
-        servingWays: []
+        servingWays: [],
+        latitude: '',
+        longitude: '',
     });
 
     const [branches, setBranches] = useState([]);
@@ -82,7 +84,9 @@ export const BusinessProvider = ({ children }) => {
             paymentTime: 'after',
             tableCount: '',
             paymentMethods: [],
-            servingWays: []
+            servingWays: [],
+            latitude: '',
+            longitude: '',
         });
         setSelectedBranch(null);
         console.log('Cleared businessData');
