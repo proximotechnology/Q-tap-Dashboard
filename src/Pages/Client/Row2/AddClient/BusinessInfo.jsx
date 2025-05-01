@@ -542,7 +542,7 @@ export const BusinessInfo = () => {
 
           <Box>
             <Grid container alignItems="center" className="here_work_hours_container">
-              <Grid item container marginBottom={'5px'} xs={12} display={"flex"} justifyContent={"space-between"} flexWrap={'wrap'}> {{/* TODO:FEX STYLE */}}
+              <Grid item container marginBottom={'5px'} xs={12} display={"flex"} justifyContent={"space-between"} flexWrap={'wrap'}> {/* TODO:FEX STYLE */}
                 <Grid item xs={3}>
                   <Typography variant="body1" display="flex" alignItems="center" sx={{ fontSize: "12px", color: "gray" }}>
                     <span style={{ marginRight: "4px", fontSize: "12px" }} className="icon-working-hour">
