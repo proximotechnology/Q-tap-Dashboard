@@ -12,6 +12,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { toast } from "react-toastify";
 import { data } from './../DashboardClient/Pages/DashHome/Row2/BarChart';
 import { useTranslation } from "react-i18next";
+import { BASE_URL } from "../../utils/helperFunction";
 
 const initialData = [{ faq: "FAQ 1" }];
 
@@ -52,7 +53,8 @@ export const FAQ = forwardRef((props, ref) => {
     };
 
     // Send to API
-    fetch("https://api.qutap.co/api/settings/faq", {
+
+    fetch(`${BASE_URL}settings/faq`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

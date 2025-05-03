@@ -21,6 +21,7 @@ import { ClientLoginData } from '../../../../context/ClientLoginDataContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../../../utils/helperFunction';
 
 const AddTableModal = ({ open, onClose, onSave, tableData }) => {
   const theme = useTheme();
@@ -60,8 +61,9 @@ const AddTableModal = ({ open, onClose, onSave, tableData }) => {
       };
 
       const url = tableData
-        ? `https://api.qutap.co/api/tables/${tableData.id}` // Update existing table
-        : 'https://api.qutap.co/api/tables'; // Add new table
+
+        ? `${BASE_URL}tables/${tableData.id}` // Update existing table
+        : `${BASE_URL}tables`; // Add new table
 
       const method = tableData ? 'PUT' : 'POST';
 

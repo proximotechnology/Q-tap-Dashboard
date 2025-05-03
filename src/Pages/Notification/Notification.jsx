@@ -5,6 +5,7 @@ import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNone
 import { AddNotification } from './AddNotification';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../utils/helperFunction';
 
 export const Notification = () => {
   const [open, setOpen] = useState(false);
@@ -21,7 +22,8 @@ export const Notification = () => {
 
   // Function to fetch notifications
   const getNotifications = () => {
-    fetch('https://api.qutap.co/api/note', {
+
+    fetch(`${BASE_URL}note`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -39,7 +41,7 @@ export const Notification = () => {
   };
 
   const handleDelete = (id) => {
-    fetch(`https://api.qutap.co/api/note/${id}`, {
+    fetch(`${BASE_URL}note/${id}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('adminToken')}`

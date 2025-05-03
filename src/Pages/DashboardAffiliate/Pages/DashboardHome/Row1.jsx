@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
+import { BASE_URL } from '../../../../utils/helperFunction';
 
 export const Row1 = () => {
     const {t} = useTranslation()
@@ -11,7 +12,8 @@ export const Row1 = () => {
         try {
     
           const response = await axios.get(
-            'https://api.qutap.co/api/get_sales_affiliate',
+
+            `${BASE_URL}get_sales_affiliate`,
             {
               headers: {
                 'Content-Type': 'application/json',

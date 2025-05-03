@@ -29,6 +29,8 @@ import { useBusinessContext } from '../../context/BusinessContext';
 import { useTranslation } from 'react-i18next';
 import Language from '../dashboard/TopBar/Language';
 import { usePersonalContext } from '../../context/PersonalContext';
+import { BASE_URL } from '../../utils/helperFunction';
+import axios from 'axios';
 
 export const Save = () => {
   const { businessData, branches, selectedBranch } = useBusinessContext();
@@ -36,6 +38,7 @@ export const Save = () => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const theme = useTheme();
+  const [isLoading, setIsLoading] = useState(false)
 
   // Business Info State
   const [businessName, setBusinessName] = useState('');
@@ -134,6 +137,7 @@ export const Save = () => {
 
   // Handle Save Button Click
   const handleSave = async () => {
+    setIsLoading(true)
     const getCurrencyId = (country) => {
       const currencyMap = {
         US: 1,
@@ -144,7 +148,7 @@ export const Save = () => {
         UAE: 5,
         SA: 6,
       };
-      return  1;
+      return 1;
       // return currencyMap[country] || 1;
     };
 
@@ -218,16 +222,111 @@ export const Save = () => {
     };
 
     console.log('Full API Data:', fullApiData);
+    console.log('branch API Data:', branches);
+    /*
+    * section of body data
+    * --------------------- 
+    */
+
+    const formData = new FormData();
+
+    // Basic fields
+    formData.append('name', 'al shaeb pizza');
+    formData.append('mobile', '12345617');
+    formData.append('email', 'testc21@gmail.com');
+    formData.append('birth_date', '2000-1-1');
+    formData.append('country', 'egypt');
+    formData.append('password', '1');
+    formData.append('user_type', 'qtap_clients');
+    formData.append('affiliate_code', 'afe75752');
+    formData.append('payment_method', 'wallet');
+    formData.append('pricing_id', '1');
+    formData.append('pricing_way', 'monthly_price');
+
+
+    // Brunch helper
+    const appendBrunchData = (prefix, data) => {
+      // contact_info arrays
+      // Object.entries(data.contact_info).forEach(([key, arr]) => {
+      //   arr.forEach((value, i) => {
+      //     formData.append(`${prefix}[contact_info][${key}][]`, value);
+      //   });
+      // });
+      formData.append(`${prefix}[contact_info][website][]`, data.website);
+      formData.append(`${prefix}[contact_info][business_phone][]`, data.businessPhone);
+      formData.append(`${prefix}[contact_info][business_email][]`, data.businessEmail);
+
+      formData.append(`${prefix}[contact_info][twitter][]`, "");
+      formData.append(`${prefix}[contact_info][instagram][]`, "");
+      formData.append(`${prefix}[contact_info][address][]`, "");
+      formData.append(`${prefix}[contact_info][facebook][]`, "");
+      // work schedule
+      Object.entries(data.workschedules).forEach(([day, times]) => {
+        times.forEach((time, i) => {
+          formData.append(`${prefix}[workschedules][${day}][]`, time);
+        });
+      });
+
+      // serving_ways
+      data.servingWays.forEach(value => {
+        formData.append(`${prefix}[serving_ways][]`, value);
+      });
+
+      // payment_services
+      data.paymentMethods
+        .forEach(value => {
+          formData.append(`${prefix}[payment_services][]`, value);
+        });
+
+      // Other fields
+      formData.append(`${prefix}[tables_number]`, data.tableCount || '');
+      formData.append(`${prefix}[currency_id]`, 1);
+      formData.append(`${prefix}[business_name]`, data.businessName);
+      formData.append(`${prefix}[business_country]`, data.country);
+      formData.append(`${prefix}[business_city]`, data.city);
+
+      if (!data.latitude) { console.log("here the data",data.latitude);throw new Error(`${prefix} no latitude`) }
+      if (!data.longitude) { throw new Error(`${prefix} no latitude`) }
+      formData.append(`${prefix}[latitude]`, data.latitude);
+      formData.append(`${prefix}[longitude]`, data.longitude);
+
+      formData.append(`${prefix}[business_format]`, data.format);
+      formData.append(`${prefix}[menu_design]`, data.design);
+      formData.append(`${prefix}[default_mode]`, data.mode);
+      formData.append(`${prefix}[payment_time]`, data.paymentTime);
+      formData.append(`${prefix}[call_waiter]`, data.callWaiter);
+      if (data.pricing_id) formData.append(`${prefix}[pricing_id]`, data.pricing_id);
+      if (data.payment_method) formData.append(`${prefix}[payment_method]`, data.payment_method);
+      if (data.discount_id) formData.append(`${prefix}[discount_id]`, data.discount_id);
+      console.log(`${prefix}`, " ", data.latitude, " - ", data.longitude)
+    };
+    // Append brunch1 and brunch2
+    try {
+      branches.forEach((branch, index) => { appendBrunchData(`brunch${index + 1}`, branch); })
+    } catch (error) {
+      toast.error(`plz select position of  ${error.message}`);
+      setIsLoading(false)
+      return;
+    }
+
+    // Append image file (assuming it's stored in personalData.img and is a File object)
+    if (personalData.img instanceof File) {
+      formData.append("img", personalData.img);
+    }
 
     // Send data to API
+
     try {
-      const response = await fetch('https://api.qutap.co/api/qtap_clients', {
+
+      const response = await fetch(`${BASE_URL}qtap_clients`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(fullApiData),
+        // headers: {
+        //   'Content-Type': 'application/json',
+        // },
+        body: formData,
       });
+      const contentType = response.headers.get('content-type');
+      console.log(contentType)
 
       const responseData = await response.json();
       console.log('API Response:', responseData);
@@ -245,6 +344,8 @@ export const Save = () => {
     } catch (error) {
       console.error('Network Error:', error);
       toast.error(t("NetworkError"));
+    } finally {
+      setIsLoading(false)
     }
   };
 
@@ -407,22 +508,21 @@ export const Save = () => {
       <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main, borderBottom: 'none', width: '100%', height: '3px' }} />
 
       <Box>
-        <Grid container spacing={1}>
-          <Grid item xs={12} md={5}>
+        <Grid container >
+          <Grid item xs={12} md={5} sx={{ paddingX: { xs: '20px', md: '0px' } }}>
             <PersonalInfo personalData={personalData} onInputChange={handlePersonalChange} />
           </Grid>
           <Box item sx={{ display: { xs: 'none', sm: 'block' } }}>
             <Divider orientation="vertical" sx={{ backgroundColor: '#f4f6fc', width: '1px', marginTop: '30px', height: '90%' }} />
           </Box>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} sx={{ marginTop: "10px", paddingInlineStart: "20px", paddingInlineEnd: { xs: '20px', md: '0px' } }}>
             <BusinessInfo />
           </Grid>
         </Grid>
 
         <Grid container justifyContent="center" sx={{ marginTop: 3 }}>
-          <Button
-            onClick={handleSave}
-            sx={{
+          {isLoading ?
+            <Box sx={{
               width: '160px',
               textTransform: 'capitalize',
               backgroundColor: theme.palette.orangePrimary.main,
@@ -431,9 +531,25 @@ export const Save = () => {
               padding: '5px',
               '&:hover': { backgroundColor: '#ef7d10' },
             }}
-          >
-            <CheckOutlined sx={{ fontSize: '22px', mr: 1 }} /> {t("save")}
-          </Button>
+            >
+              {t("loading")}
+            </Box>
+            :
+            <Button
+              onClick={handleSave}
+              sx={{
+                width: '160px',
+                textTransform: 'capitalize',
+                backgroundColor: theme.palette.orangePrimary.main,
+                color: 'white',
+                borderRadius: '20px',
+                padding: '5px',
+                '&:hover': { backgroundColor: '#ef7d10' },
+              }}
+              disabled={isLoading}
+            >
+              <CheckOutlined sx={{ fontSize: '22px', mr: 1 }} /> {t("save")}
+            </Button>}
         </Grid>
       </Box>
     </Box>

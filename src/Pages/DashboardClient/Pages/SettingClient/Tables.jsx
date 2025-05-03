@@ -20,6 +20,7 @@ import { ClientLoginData } from '../../../../context/ClientLoginDataContext';
 import AddTableModal from './AddTable'; // Ensure this component is created
 import styles from '../SupportClient/supportCard.module.css'
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../../../utils/helperFunction';
 
 const TableCard = ({ table, onDeleteTable, onEditTable }) => {
   const { t } = useTranslation();
@@ -173,8 +174,9 @@ export const Tables = ({ openOldMenu }) => {
   const handleSaveTable = async (tableData) => {
     try {
       const url = editingTable
-        ? `https://api.qutap.co/api/tables/${editingTable.id}`
-        : 'https://api.qutap.co/api/tables';
+
+        ? `${BASE_URL}tables/${editingTable.id}`
+        : `${BASE_URL}tables`;
       const method = editingTable ? 'PUT' : 'POST';
 
       const response = await axios({
@@ -205,7 +207,8 @@ export const Tables = ({ openOldMenu }) => {
 
   const handleDeleteTable = async (id) => {
     try {
-      const response = await axios.delete(`https://api.qutap.co/api/tables/${id}`, {
+
+      const response = await axios.delete(`${BASE_URL}tables/${id}`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('clientToken')}`,

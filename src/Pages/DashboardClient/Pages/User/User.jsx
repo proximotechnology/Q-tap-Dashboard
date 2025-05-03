@@ -3,13 +3,15 @@ import React, { useState } from 'react'
 import UserTable from './UserTable'
 import StaffTable from './StaffTable'
 import axios from 'axios'
+import { BASE_URL } from '../../../../utils/helperFunction'
 
 export const User = () => {
     const [userStaff, setUserStaff] = useState([]);
     // Fetch user staff data
     const getUserStaff = async () => {
         try {
-            const response = await axios.get(`https://api.qutap.co/api/resturant_users/${localStorage.getItem("selectedBranch")}`, {
+
+            const response = await axios.get(`${BASE_URL}resturant_users/${localStorage.getItem("selectedBranch")}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     "Authorization": `Bearer ${localStorage.getItem('clientToken')}`

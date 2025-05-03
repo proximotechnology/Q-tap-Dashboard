@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
+import { BASE_URL } from '../utils/helperFunction';
 
 export const DashboardDataContext = createContext();
 
@@ -38,7 +39,8 @@ export const DashboardDataProvider = ({ children }) => {
     const getSalesDashboard = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://api.qutap.co/api/Sales/${id}`,
+
+                `${BASE_URL}Sales/${id}`,
                 {
                     method: 'POST',
                     headers: {
@@ -60,7 +62,8 @@ export const DashboardDataProvider = ({ children }) => {
     const getSalesVolumeDashboard = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://api.qutap.co/api/Sales_by_days/${id}`,
+
+                `${BASE_URL}Sales_by_days/${id}`,
                 {
                     method: 'POST',
                     headers: {
@@ -82,7 +85,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getPerformanceDashboard = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://api.qutap.co/api/Performance/${id}`,
+                `${BASE_URL}Performance/${id}`,
                 {
                     method: 'POST',
                     headers: {
@@ -104,7 +107,8 @@ export const DashboardDataProvider = ({ children }) => {
     const getDashboard = async () => {
         try {
             const response = await fetchWithRetry(
-                `https://api.qutap.co/api/dashboard`,
+
+                `${BASE_URL}dashboard`,
                 {
                     method: 'POST',
                     headers: {
@@ -125,7 +129,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getDeposits = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://api.qutap.co/api/Deposits/${id}`,
+                `${BASE_URL}Deposits/${id}`,
                 {
                     method: 'GET',
                     headers: {
@@ -145,7 +149,8 @@ export const DashboardDataProvider = ({ children }) => {
     const getWithdrawals = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://api.qutap.co/api/withdraw/${id}`,
+
+                `${BASE_URL}withdraw/${id}`,
                 {
                     method: 'GET',
                     headers: {
@@ -166,7 +171,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getWalletChartTwo = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://api.qutap.co/api/wallet/${id}`,
+                `${BASE_URL}wallet/${id}`,
                 {
                     method: 'POST',
                     headers: {
@@ -202,7 +207,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getSalesClientDashboard = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://api.qutap.co/api/Sales_restaurant/${id}`,
+                `${BASE_URL}Sales_restaurant/${id}`,
                 {
                     method: 'POST',
                     headers: {
@@ -224,7 +229,8 @@ export const DashboardDataProvider = ({ children }) => {
     const getSalesVolumeClientDashboard = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://api.qutap.co/api/Sales_by_days_restaurant/${id}`,
+
+                `${BASE_URL}Sales_by_days_restaurant/${id}`,
                 {
                     method: 'POST',
                     headers: {
@@ -246,7 +252,8 @@ export const DashboardDataProvider = ({ children }) => {
     const getClientDashboard = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://api.qutap.co/api/dashboard/${id}`,
+
+                `${BASE_URL}dashboard/${id}`,
                 {
                     method: 'GET',
                     headers: {
@@ -267,7 +274,8 @@ export const DashboardDataProvider = ({ children }) => {
     const getPerformanceClientDashboard = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://api.qutap.co/api/Performance/${id}`,
+
+                `${BASE_URL}Performance/${id}`,
                 {
                     method: 'POST',
                     headers: {
@@ -288,7 +296,8 @@ export const DashboardDataProvider = ({ children }) => {
     const getWalletData = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://api.qutap.co/api/wallet_restaurant/${localStorage.getItem("selectedBranch")}/${id}`,
+
+                `${BASE_URL}wallet_restaurant/${localStorage.getItem("selectedBranch")}/${id}`,
                 {
                     method: 'GET',
                     headers: {
@@ -310,7 +319,8 @@ export const DashboardDataProvider = ({ children }) => {
     const getCustomerLog = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://api.qutap.co/api/Customer_log/${localStorage.getItem("selectedBranch")}/${id}`,
+
+                `${BASE_URL}Customer_log/${localStorage.getItem("selectedBranch")}/${id}`,
                 {
                     method: 'GET',
                     headers: {
@@ -330,7 +340,8 @@ export const DashboardDataProvider = ({ children }) => {
     // const getWithdrawals = async (id) => {
     //     try {
     //         const response = await fetchWithRetry(
-    //             `https://api.qutap.co/api/withdraw/${id}`,
+
+    //             `${BASE_URL}withdraw/${id}`,
     //             {
     //                 method: 'GET',
     //                 headers: {
@@ -351,7 +362,8 @@ export const DashboardDataProvider = ({ children }) => {
     const getClientWalletChart = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://api.qutap.co/api/Sales_restaurant/${id}`,
+
+                `${BASE_URL}Sales_restaurant/${id}`,
                 {
                     method: 'POST',
                     headers: {

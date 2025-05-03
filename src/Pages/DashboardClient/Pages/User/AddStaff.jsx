@@ -5,6 +5,7 @@ import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { BASE_URL } from '../../../../utils/helperFunction';
 
 export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
     const [role, setRole] = useState('');
@@ -15,7 +16,8 @@ export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
 
     const getRoles = async () => {
         try {
-            const response = await axios.get(`https://api.qutap.co/api/roles`, {
+
+            const response = await axios.get(`${BASE_URL}roles`, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("clientToken")}`
                 },
@@ -47,7 +49,8 @@ export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
                 return;
             }
 
-            const response = await axios.put(`https://api.qutap.co/api/link_user_role/${userId}`, {
+
+            const response = await axios.put(`${BASE_URL}link_user_role/${userId}`, {
                 role_id: role,
                 brunch_id: localStorage.getItem("selectedBranch")
             }, {

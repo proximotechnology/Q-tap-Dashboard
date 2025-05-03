@@ -8,6 +8,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import { Select, MenuItem } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../../../utils/helperFunction';
 
 
 export const DiscountModel = ({ open, handleClose }) => {
@@ -35,7 +36,8 @@ export const DiscountModel = ({ open, handleClose }) => {
 
       const response = await axios({
         method: 'POST',
-        url: 'https://api.qutap.co/api/meals_discount',
+
+        url: `${BASE_URL}meals_discount`,
         data: formData,
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
@@ -67,7 +69,8 @@ export const DiscountModel = ({ open, handleClose }) => {
     try {
       const response = await axios({
         method: 'DELETE',
-        url: `https://api.qutap.co/api/meals_discount/${discountId}`,
+
+        url: `${BASE_URL}meals_discount/${discountId}`,
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
         }
@@ -86,7 +89,8 @@ export const DiscountModel = ({ open, handleClose }) => {
 
   const getDiscounts = async () => {
     try {
-      const response = await axios.get('https://api.qutap.co/api/meals_discount', {
+
+      const response = await axios.get(`${BASE_URL}meals_discount`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
         },
@@ -123,7 +127,8 @@ export const DiscountModel = ({ open, handleClose }) => {
 
     try {
       const response = await axios.put(
-        `https://api.qutap.co/api/meals_discount/${discountToUpdate.id}`,
+
+        `${BASE_URL}meals_discount/${discountToUpdate.id}`,
         {
           code: discountToUpdate.code,
           discount: discountToUpdate.discount,

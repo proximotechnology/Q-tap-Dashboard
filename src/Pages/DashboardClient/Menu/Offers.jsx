@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
+import { BASE_URL } from '../../../utils/helperFunction';
 
 const OfferCard = ({ offer }) => {
     const theme = useTheme();
@@ -205,7 +206,8 @@ const Offers = ({ isItemSelected }) => {
     //======== get offer data
     const getOffers = async () => {
         try {
-            const response = await axios.get('https://api.qutap.co/api/meals_special_offers', {
+
+            const response = await axios.get(`${BASE_URL}meals_special_offers`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
                     // 'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2hpZ2hsZXZlbHRlY2tub2xvZ3kuY29tL1F0YXAvYXBpL2xvZ2luIiwiaWF0IjoxNzQ0NzE5ODU4LCJleHAiOjE3NDQ3NjMwNTgsIm5iZiI6MTc0NDcxOTg1OCwianRpIjoiM29SVzROZFFwNURwZExPdSIsInN1YiI6IjEiLCJwcnYiOiJiODgwNWZkMjFkOTAwNWQ1YjFjMmJkOGZhZjNlZGIwOTEzMjJmMWRiIn0.1D0MLr31LKxhuiSH_VQlsTuj-WN5Rq68P0yVpoowvaw`,

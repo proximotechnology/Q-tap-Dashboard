@@ -22,6 +22,7 @@ import { useNavigate } from "react-router";
 import * as XLSX from "xlsx";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import { BASE_URL, BASE_URL_IMG } from "../../../utils/helperFunction";
 
 export const Users = () => {
   const navigate = useNavigate();
@@ -49,7 +50,8 @@ export const Users = () => {
   const getUsers = async () => {
     try {
       const response = await axios.get(
-        "https://api.qutap.co/api/affiliate",
+
+        `${BASE_URL}affiliate`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
@@ -72,7 +74,8 @@ export const Users = () => {
     try {
       const newStatus = currentStatus === "active" ? "inactive" : "active";
       const response = await axios.post(
-        `https://api.qutap.co/api/qtap_affiliate/${userId}`,
+
+        `${BASE_URL}qtap_affiliate/${userId}`,
         {
           status: newStatus,
         },
@@ -90,7 +93,8 @@ export const Users = () => {
   const handleDeleteUser = async (userId) => {
     try {
       const response = await axios.delete(
-        `https://api.qutap.co/api/affiliate/${userId}`,
+
+        `${BASE_URL}affiliate/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
@@ -294,7 +298,7 @@ export const Users = () => {
                       >
                         {user.img ? (
                           <img
-                            src={`https://highleveltecknology.com/Qtap/public/${user.img}`}
+                            src={`${BASE_URL_IMG}${user.img}`}
                             alt={user.name}
                             style={{
                               width: "22px",

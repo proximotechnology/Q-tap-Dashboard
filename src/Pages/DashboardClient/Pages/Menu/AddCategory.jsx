@@ -6,6 +6,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useBranch } from '../../../../context/BranchContext';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../../../utils/helperFunction';
 
 const CategoryForm = ({ open, handleClose }) => {
   const [name, setName] = useState('');
@@ -49,7 +50,8 @@ const CategoryForm = ({ open, handleClose }) => {
 
       const response = await axios({
         method: 'POST',
-        url: 'https://api.qutap.co/api/meals_categories',
+
+        url: `${BASE_URL}meals_categories`,
         data: formData,
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,

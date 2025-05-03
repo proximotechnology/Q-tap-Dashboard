@@ -9,6 +9,7 @@ import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDiss
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import axios from 'axios';
+import { BASE_URL } from '../../utils/helperFunction';
 
 const FeedbackDetailsModal = ({ open, handleClose, pageId }) => {
     const theme = useTheme();
@@ -21,7 +22,8 @@ const FeedbackDetailsModal = ({ open, handleClose, pageId }) => {
     // get data from backend to display in the table
     const getFeedbackData = async () => {
         try {
-            const response = await axios.get('https://api.qutap.co/api/feedback', {
+
+            const response = await axios.get(`${BASE_URL}feedback`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`

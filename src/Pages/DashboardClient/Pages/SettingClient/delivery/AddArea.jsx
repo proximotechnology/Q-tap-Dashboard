@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useBranch } from '../../../../../context/BranchContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { BASE_URL } from '../../../../../utils/helperFunction';
 
 const AddArea = ({ open, onClose, getDeliveryArea, editData }) => {
   const { t } = useTranslation();
@@ -64,7 +65,8 @@ const AddArea = ({ open, onClose, getDeliveryArea, editData }) => {
         // Update existing delivery area
         response = await axios({
           method: 'PUT',
-          url: `https://api.qutap.co/api/delivery_area/${editData.id}`,
+
+          url: `${BASE_URL}delivery_area/${editData.id}`,
           data: formData,
           headers,
         });
@@ -72,7 +74,8 @@ const AddArea = ({ open, onClose, getDeliveryArea, editData }) => {
         // Add new delivery area
         response = await axios({
           method: 'POST',
-          url: 'https://api.qutap.co/api/delivery_area',
+
+          url: `${BASE_URL}delivery_area`,
           data: formData,
           headers,
         });

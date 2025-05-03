@@ -8,6 +8,7 @@ import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../../../utils/helperFunction';
 
 export const AddFeedback = ({ open, handleCloseModel, onAddFeedback }) => {
     const [clientId, setClientId] = useState(""); // Assuming this is the customer ID
@@ -40,7 +41,8 @@ export const AddFeedback = ({ open, handleCloseModel, onAddFeedback }) => {
 
         try {
             const response = await axios.post(
-                'https://api.qutap.co/api/feedback',
+
+                `${BASE_URL}feedback`,
                 data,
                 {
                     headers: {

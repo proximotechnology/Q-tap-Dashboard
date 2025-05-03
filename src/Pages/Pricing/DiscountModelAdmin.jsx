@@ -9,6 +9,7 @@ import { Select, MenuItem } from '@mui/material';
 import { useBranch } from '../../context/BranchContext';
 import { Dot } from 'recharts';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../utils/helperFunction';
 
 export const DiscountModelAdmin = ({ open, handleClose }) => {
     const [discounts, setDiscounts] = useState([]);
@@ -31,7 +32,8 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
 
             const response = await axios({
                 method: 'POST',
-                url: 'https://api.qutap.co/api/discount',
+
+                url: `${BASE_URL}discount`,
                 data: formData,
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,
@@ -64,7 +66,7 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
         try {
             const response = await axios({
                 method: 'DELETE',
-                url: `https://api.qutap.co/api/discount/${discountId}`,
+                url: `${BASE_URL}discount/${discountId}`,
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,
                 }
@@ -83,7 +85,8 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
 
     const getDiscounts = async () => {
         try {
-            const response = await axios.get('https://api.qutap.co/api/discount', {
+
+            const response = await axios.get(`${BASE_URL}discount`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,
                 },
@@ -117,7 +120,8 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
 
         try {
             const response = await axios.put(
-                `https://api.qutap.co/api/discount/${discountToUpdate.id}`,
+
+                `${BASE_URL}discount/${discountToUpdate.id}`,
                 {
                     code: discountToUpdate.code,
                     discount: discountToUpdate.discount,

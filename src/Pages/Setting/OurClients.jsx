@@ -1,3 +1,4 @@
+
 import { Paper, Typography, Box, IconButton, CircularProgress } from '@mui/material';
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
@@ -5,6 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../utils/helperFunction';
 
 const OurClients = forwardRef((props, ref) => {
     const [clients, setClients] = useState([]);
@@ -68,13 +70,13 @@ const OurClients = forwardRef((props, ref) => {
                     formData.append('title[]', ''); // Handle empty title
                 }
 
-                const response = await fetch('https://api.qutap.co/api/settings/our-clients', {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem("adminToken")}`,
-                    },
-                    body: formData
-                });
+            const response = await fetch(`${BASE_URL}settings/our-clients`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("adminToken")}`,
+                },
+                body: formData
+            });
 
                 const data = await response.json();
 

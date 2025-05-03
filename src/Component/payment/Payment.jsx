@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { usePersonalContext } from '../../context/PersonalContext';
 import { toast } from 'react-toastify';
 import { useBusinessContext } from '../../context/BusinessContext';
+import { BASE_URL } from '../../utils/helperFunction';
 
 export const Payment = () => {
   const navigate = useNavigate();
@@ -42,7 +43,8 @@ export const Payment = () => {
   useEffect(() => {
     setIsLoading(true);
     Promise.all([
-      fetch('https://api.qutap.co/api/pricing', {
+
+      fetch(`${BASE_URL}pricing`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -55,7 +57,8 @@ export const Payment = () => {
         })
         .catch(error => console.error('Error fetching pricing data:', error)),
 
-      fetch('https://api.qutap.co/api/discount', {
+
+      fetch(`${BASE_URL}discount`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

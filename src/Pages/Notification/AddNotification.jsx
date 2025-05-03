@@ -3,6 +3,7 @@ import { Box, Modal, TextField, Button, IconButton, Typography, Divider, useThem
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../utils/helperFunction';
 
 export const AddNotification = ({ open, handleClose, addNotification }) => {
     const [title, setTitle] = useState('');
@@ -22,7 +23,8 @@ export const AddNotification = ({ open, handleClose, addNotification }) => {
             content: content
         };
 
-        fetch('https://api.qutap.co/api/note', {
+
+        fetch(`${BASE_URL}note`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

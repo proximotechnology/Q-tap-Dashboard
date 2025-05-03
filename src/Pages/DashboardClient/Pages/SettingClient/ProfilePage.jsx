@@ -27,6 +27,7 @@ import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import { toast } from 'react-toastify';
 import { ClientLoginData } from '../../../../context/ClientLoginDataContext';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../../../utils/helperFunction';
 
 const ProfilePage = () => {
   const theme = useTheme();
@@ -180,7 +181,8 @@ const ProfilePage = () => {
     // console.log("updatedData", updatedData);
 
     try {
-      const response = await fetch(`https://api.qutap.co/api/clients_update_profile/${qtap_clients.id}`, {
+
+      const response = await fetch(`${BASE_URL}clients_update_profile/${qtap_clients.id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

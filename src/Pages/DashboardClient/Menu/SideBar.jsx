@@ -3,6 +3,7 @@ import { Box, Button, IconButton, List, ListItem, ListItemIcon, ListItemText, Ty
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 import { useTranslation } from 'react-i18next';
 import { Menu, Close } from '@mui/icons-material';
+import { BASE_URL_IMG } from '../../../utils/helperFunction';
 
 const SideBar = ({ setSelectedCategory, allMenuData, selectedCategory }) => {
     // const menuItems = [
@@ -185,7 +186,7 @@ const SideBar = ({ setSelectedCategory, allMenuData, selectedCategory }) => {
                                     justifyContent: "center",
                                 }}>
                                     <img
-                                        src={`https://highleveltecknology.com/Qtap/public/${item.image}`}
+                                        src={`${BASE_URL_IMG}${item.image}`}
                                         alt={item.name}
                                         style={{ width: "20px", height: "20px" }}
                                     />

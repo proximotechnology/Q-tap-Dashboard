@@ -3,6 +3,7 @@ import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import AddIcon from "@mui/icons-material/Add";
 import { toast } from "react-toastify";
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../utils/helperFunction';
 
 const Content = forwardRef((props, ref) => {
 	const [homeContent, setHomeContent] = useState([{ titleEn: '', descriptionEn: '', titleAr: '', descriptionAr: '' }]);
@@ -82,7 +83,7 @@ const Content = forwardRef((props, ref) => {
 		};
 
 		// Send to API
-		fetch("https://api.qutap.co/api/settings/content", {
+		fetch(`${BASE_URL}settings/content`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

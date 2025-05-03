@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BASE_URL } from '../../../../utils/helperFunction';
 
 const iconsArray = [
     { name: 'Dashboard', icon: <img src="/assets/dashboard.svg" alt="icon" style={{ width: "16px", height: "16px" }} /> },
@@ -70,7 +71,8 @@ export const AddRole = ({ open, onClose, onSave, brunchId = "442" }) => {
                 headers: { Authorization: `Bearer ${token}` },
             };
 
-            const roleResponse = await axios.post('https://api.qutap.co/api/roles', roleData, config);
+
+            const roleResponse = await axios.post(`${BASE_URL}roles`, roleData, config);
 
             if (roleResponse.status === 200) {
                 toast.success(t('add role success'));

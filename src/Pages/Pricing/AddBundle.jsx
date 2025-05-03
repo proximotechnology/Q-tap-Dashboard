@@ -5,6 +5,7 @@ import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../utils/helperFunction';
 
 const AddBundle = ({ open, onClose, editData = null }) => {
     const [text, setText] = useState(''); 
@@ -49,8 +50,8 @@ const AddBundle = ({ open, onClose, editData = null }) => {
         };
 
         const url = editData 
-            ? `https://api.qutap.co/api/pricing/${editData.id}`
-            : 'https://api.qutap.co/api/pricing';
+            ? `${BASE_URL}pricing/${editData.id}`
+            : `${BASE_URL}pricing`;
 
         const method = editData ? 'PUT' : 'POST';
 

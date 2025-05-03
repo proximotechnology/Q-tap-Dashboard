@@ -8,6 +8,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from
 import { ClientLoginData } from '../../../../context/ClientLoginDataContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { BASE_URL } from '../../../../utils/helperFunction';
 
 const AddAreaModal = ({ open, onClose }) => {
     const [name, setName] = useState('');
@@ -27,7 +28,8 @@ const AddAreaModal = ({ open, onClose }) => {
             return;
         }
         try {
-            const response = await axios.post(`https://api.qutap.co/api/area`, {
+
+            const response = await axios.post(`${BASE_URL}area`, {
                 brunch_id: selectedBranch,
                 name
             }, {
@@ -56,7 +58,8 @@ const AddAreaModal = ({ open, onClose }) => {
         }
 
         try {
-            const response = await axios.post(`https://api.qutap.co/api/area/${id}`, {
+
+            const response = await axios.post(`${BASE_URL}area/${id}`, {
                 brunch_id: selectedBranch,
                 name
             }, {
@@ -81,7 +84,8 @@ const AddAreaModal = ({ open, onClose }) => {
     //========================================== حذف المنطقة
     const handleDeleteArea = async (id) => {
         try {
-            const response = await axios.delete(`https://api.qutap.co/api/area/${id}`, {
+
+            const response = await axios.delete(`${BASE_URL}area/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     "Authorization": `Bearer ${localStorage.getItem('clientToken')}`

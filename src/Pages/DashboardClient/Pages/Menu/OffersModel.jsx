@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { ContentMenu } from '../../../../context/ContentMenuContext';
 import AddIcon from '@mui/icons-material/Add';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../../../utils/helperFunction';
 
 // New Add Offer Modal Component (unchanged)
 const AddOfferModal = ({ open, handleClose, selectedBranch, contentForMenu, onAddSuccess }) => {
@@ -45,7 +46,8 @@ const AddOfferModal = ({ open, handleClose, selectedBranch, contentForMenu, onAd
         formDataToSend.append("description", formData.description);
 
         try {
-            const response = await axios.post('https://api.qutap.co/api/meals_special_offers', formDataToSend, {
+
+            const response = await axios.post(`${BASE_URL}meals_special_offers`, formDataToSend, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
                     'Content-Type': 'multipart/form-data'
@@ -196,7 +198,8 @@ export const OffersModel = ({ open, handleClose }) => {
 
     const getOffers = async () => {
         try {
-            const response = await axios.get('https://api.qutap.co/api/meals_special_offers', {
+
+            const response = await axios.get(`${BASE_URL}meals_special_offers`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
                 },
@@ -236,7 +239,8 @@ export const OffersModel = ({ open, handleClose }) => {
 
             try {
                 const response = await axios.put(
-                    `https://api.qutap.co/api/meals_special_offers/${offer.id}`,
+
+                    `${BASE_URL}meals_special_offers/${offer.id}`,
                     {
                         discount: offer.discount,
                         before_discount: offer.priceBefore,
@@ -275,7 +279,8 @@ export const OffersModel = ({ open, handleClose }) => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`https://api.qutap.co/api/meals_special_offers/${id}`, {
+
+            await axios.delete(`${BASE_URL}meals_special_offers/${id}`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
                 }

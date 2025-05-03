@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../utils/helperFunction';
 
 const AddMenuModal = ({ open, handleClose, onSuccess }) => {
     const [menuData, setMenuData] = useState({
@@ -41,7 +42,7 @@ const AddMenuModal = ({ open, handleClose, onSuccess }) => {
             }
 
             const response = await axios.post(
-                'https://api.qutap.co/api/products',
+                `${BASE_URL}products`,
                 formData,
                 {
                     headers: {

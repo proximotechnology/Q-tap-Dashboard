@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import DetailsModal from '../DashboardClient/Pages/SupportClient/DetailsModal';
 import styles from '../DashboardClient/Pages/SupportClient/supportCard.module.css'
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../utils/helperFunction';
 
 
 const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onClick }) => {
@@ -115,7 +116,8 @@ const Support = () => {
   const fetchTickets = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('https://api.qutap.co/api/ticket_client', {
+
+      const response = await axios.get(`${BASE_URL}ticket_client`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
         }
@@ -165,7 +167,8 @@ const Support = () => {
       };
 
       const response = await axios.put(
-        `https://api.qutap.co/api/ticket_client/${selectedTicket.id}`,
+
+        `${BASE_URL}ticket_client/${selectedTicket.id}`,
         data,
         {
           headers: {
@@ -205,7 +208,8 @@ const Support = () => {
       // console.log(" dat2a add", data);
 
       const response = await axios.post(
-        'https://api.qutap.co/api/ticket_client',
+
+        `${BASE_URL}ticket_client`,
         data,
         {
           headers: {

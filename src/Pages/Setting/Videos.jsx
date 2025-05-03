@@ -3,6 +3,7 @@ import { Box, TextField, IconButton, Paper, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../utils/helperFunction';
 
 const URLInput = ({ label, setVideoUrl, value }) => {
     const { t } = useTranslation()
@@ -68,7 +69,9 @@ export const Videos = forwardRef((props, ref) => {
         const bundleData = {
             video: validUrls
         };
-        fetch('https://api.qutap.co/api/settings/videos', {
+
+
+        fetch(`${BASE_URL}settings/videos`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

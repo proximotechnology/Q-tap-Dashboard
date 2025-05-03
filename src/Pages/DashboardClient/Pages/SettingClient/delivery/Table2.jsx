@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useBranch } from '../../../../../context/BranchContext';
+import { BASE_URL } from '../../../../../utils/helperFunction';
 
 export const Table2 = () => {
     const { t } = useTranslation();
@@ -37,7 +38,8 @@ export const Table2 = () => {
         try {
             const response = await axios({
                 method: 'DELETE',
-                url: `https://api.qutap.co/api/delivery/${id}`,
+
+                url: `${BASE_URL}delivery/${id}`,
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('clientToken')}`,
                 },
@@ -61,7 +63,8 @@ export const Table2 = () => {
         }
 
         try {
-            const response = await axios.get(`https://api.qutap.co/api/delivery`, {
+
+            const response = await axios.get(`${BASE_URL}delivery`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -85,7 +88,8 @@ export const Table2 = () => {
 
         try {
             const response = await axios.get(
-                `https://api.qutap.co/api/delivery_area`,
+
+                `${BASE_URL}delivery_area`,
                 {
                     headers: {
                         'Content-Type': 'application/json',

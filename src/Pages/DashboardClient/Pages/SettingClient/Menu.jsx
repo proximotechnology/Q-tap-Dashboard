@@ -24,6 +24,7 @@ import { ClientLoginData } from '../../../../context/ClientLoginDataContext';
 import Days from '../Menu/Days';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../../../../utils/helperFunction';
 
 
 
@@ -116,7 +117,8 @@ const Menu = () => {
         };
 
         try {
-            const response = await fetch(`https://api.qutap.co/api/clients_update_menu/${id}`, {
+
+            const response = await fetch(`${BASE_URL}clients_update_menu/${id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

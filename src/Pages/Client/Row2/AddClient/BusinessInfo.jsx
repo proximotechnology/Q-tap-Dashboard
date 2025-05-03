@@ -38,6 +38,7 @@ import { useBusinessContext } from "../../../../context/BusinessContext";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { timeOptions } from "../../../../Component/Business-info/WorkingHoursDays";
+import MapWithPin, { ErrorBoundary } from "../../../../utils/MapWithPin";
 
 const daysOfWeek = ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"];
 const fullDaysOfWeek = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
@@ -47,6 +48,7 @@ export const BusinessInfo = () => {
   const { t } = useTranslation();
   const { businessData, updateBusinessData, branches, selectedBranch, selectBranch } = useBusinessContext();
   const [branchIndex, setBranchIndex] = useState(selectedBranch || 0);
+  const [branchPosition, setBranchPosition] = useState([]);
   const navigate = useNavigate();
   const {
     businessName = '',
@@ -75,8 +77,12 @@ export const BusinessInfo = () => {
   const [currentDay, setCurrentDay] = useState(fullDaysOfWeek[0]); // Default to Saturday
   const [fromTime, setFromTime] = useState('');
   const [toTime, setToTime] = useState('');
-
- 
+  const [isMapOpen, setIsMapOpen] = useState(false);
+  const updateBranchPosition = (pos) => {
+    console.log(pos,'set pos call' , selectedBranch)
+    updateBusinessData({ longitude: pos.lng })
+    updateBusinessData({ latitude: pos.lat })
+  }
 
   // Initialize local state based on workschedules
   useEffect(() => {
@@ -89,6 +95,7 @@ export const BusinessInfo = () => {
     // Update fromTime and toTime based on currentDay
     setFromTime(workschedules[currentDay]?.[0] || '9:00 am');
     setToTime(workschedules[currentDay]?.[1] || '7:00 pm');
+    selectBranch(0)
   }, [workschedules, currentDay]);
 
   const handleBranchClick = (index) => {
@@ -194,8 +201,8 @@ export const BusinessInfo = () => {
   };
 
   return (
-    <Grid container sx={{ marginTop: "20px", paddingLeft: "20px" }}>
-      <Grid item xs={12} spacing={4}>
+    <Grid container sx={{ marginTop: "0px", }}>
+      <Grid item xs={12} >
         <Box display={"flex"} justifyContent={"space-between"}>
           <Box>
             <Typography variant="body2" sx={{ fontSize: "15px" }} color="#3b3a3a" gutterBottom>
@@ -239,7 +246,7 @@ export const BusinessInfo = () => {
         <Divider sx={{ margin: "12px 0px" }} />
       </Grid>
 
-      <Grid xs={12} md={6} paddingX='8px' overflow='hidden'>
+      <Grid xs={12} md={6} sx={{ paddingX: { xs: '0px', md: '8px' } }} overflow='hidden' className="here_section">
         <FormControl variant="outlined" fullWidth>
           <OutlinedInput
             id="outlined-businessName"
@@ -312,7 +319,7 @@ export const BusinessInfo = () => {
         </Box>
 
         <Box display="flex" alignItems="center" marginBottom="10px">
-          <Button
+          {/* <Button
             variant="contained"
             fullWidth
             sx={{
@@ -327,7 +334,10 @@ export const BusinessInfo = () => {
           >
             <span className="icon-map-1" style={{ fontSize: "18px", marginRight: "6px" }}></span>
             {t("pinYourLocation")}
-          </Button>
+          </Button> */}
+          <ErrorBoundary>
+            <MapWithPin setPos={updateBranchPosition} isMapOpen={isMapOpen} setIsMapOpen={setIsMapOpen} />
+          </ErrorBoundary>
         </Box>
 
         <FormControl variant="outlined" sx={{ width: "100%", marginBottom: "10px" }}>
@@ -433,10 +443,10 @@ export const BusinessInfo = () => {
         </Box>
       </Grid>
 
-      <Grid xs={12} md={6} paddingX='8px'>
+      <Grid xs={12} md={6} sx={{ paddingX: { xs: '0px', md: '8px' } }}>
         <Grid sx={{ display: "flex", flexDirection: "column", marginTop: "10px", width: "100%" }}>
           <Box sx={{ marginTop: "6px", display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-            <Grid container direction="column" spacing={1}>
+            <Grid container direction="column" > {/* heres_1 */}
               <Typography
                 variant="body2"
                 sx={{ fontSize: "14px", fontWeight: "500", color: "#AAAAAA", textAlign: "start", margin: "0 0 5px 0px" }}
@@ -447,7 +457,7 @@ export const BusinessInfo = () => {
                 value={mode}
                 exclusive
                 onChange={handleModeChange}
-                sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "space-around", marginLeft: "-14px" }}
+                sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "start" }}
               >
                 <ToggleButton
                   value="white"
@@ -470,6 +480,8 @@ export const BusinessInfo = () => {
                     backgroundColor: mode === "dark" ? theme.palette.orangePrimary.main : "transparent",
                     border: `1px solid ${mode === "dark" ? theme.palette.orangePrimary.main : "#AAAAAA"} !important`,
                     borderRadius: "8px !important",
+                    marginLeft: 'auto !important',
+                    marginRight: 'auto !important',
                   }}
                 >
                   <NightlightIcon
@@ -486,11 +498,11 @@ export const BusinessInfo = () => {
                 height: "40px",
                 width: "2px",
                 backgroundColor: theme.palette.orangePrimary.main,
-                margin: "auto 20px",
+                margin: "auto 10px",
               }}
             />
 
-            <Grid container direction="column" spacing={0.5}>
+            <Grid container direction="column" >
               <Typography
                 variant="body2"
                 sx={{ fontSize: "14px", fontWeight: "500", color: "#AAAAAA", textAlign: "start", margin: "0 0 5px 0px" }}
@@ -501,7 +513,7 @@ export const BusinessInfo = () => {
                 value={design}
                 exclusive
                 onChange={handleDesignChange}
-                sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "space-around", marginLeft: "-14px" }}
+                sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "start" }}
               >
                 <ToggleButton
                   value="grid"
@@ -524,6 +536,8 @@ export const BusinessInfo = () => {
                     backgroundColor: design === "list" ? theme.palette.orangePrimary.main : "transparent",
                     border: `1px solid ${design === "list" ? theme.palette.orangePrimary.main : "#AAAAAA"} !important`,
                     borderRadius: "8px !important",
+                    marginLeft: 'auto !important',
+                    marginRight: 'auto !important',
                   }}
                 >
                   <FormatListBulletedIcon
@@ -537,18 +551,21 @@ export const BusinessInfo = () => {
           <Divider sx={{ backgroundColor: "#f4f6fc", height: "2px", margin: "8px 0px" }} flexItem />
 
           <Box>
-            <Grid container spacing={1.2} alignItems="center">
-              <Grid item xs={12} display={"flex"} justifyContent={"space-between"}>
-                <Typography variant="body1" display="flex" alignItems="center" sx={{ fontSize: "12px", color: "gray" }}>
-                  <span style={{ marginRight: "4px", fontSize: "12px" }} className="icon-working-hour">
-                    <span className="path1"></span><span className="path2"></span><span className="path3"></span>
-                    <span className="path4"></span><span className="path5"></span><span className="path6"></span>
-                    <span className="path7"></span><span className="path8"></span>
-                  </span>
-                  {t("workHours")}
-                </Typography>
-                <Grid item xs={3}>
-                  <Box display="flex" alignItems="center" sx={{ backgroundColor: theme.palette.secondaryColor.main, borderRadius: "20px", width: "90px", height: "30px" }}>
+            <Grid container alignItems="center" >
+              <Grid item container marginBottom={'5px'} xs={12} display={"flex"} justifyContent={"space-between"} flexWrap={'wrap'}> {/* TODO:FEX STYLE */}
+                <Grid item xs={6}>
+                  <Typography variant="body1" display="flex" alignItems="center" sx={{ fontSize: "12px", color: "gray" }}>
+                    <span style={{ marginRight: "4px", fontSize: "12px" }} className="icon-working-hour">
+                      <span className="path1"></span><span className="path2"></span><span className="path3"></span>
+                      <span className="path4"></span><span className="path5"></span><span className="path6"></span>
+                      <span className="path7"></span><span className="path8"></span>
+                    </span>
+                    {t("workHours")}
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={6} style={{ justifyContent: 'end' }}>
+                  <Box display="flex" alignItems="center" sx={{ marginInlineStart: 'auto', backgroundColor: theme.palette.secondaryColor.main, borderRadius: "20px", width: "90px", height: "30px" }}>
                     <IconButton onClick={() => handleDayToggle("prev")} sx={{ color: theme.palette.orangePrimary.main }}>
                       <ArrowBackIos sx={{ fontSize: "11px" }} />
                     </IconButton>
@@ -586,9 +603,9 @@ export const BusinessInfo = () => {
                 </Box>
               </Grid>
 
-              <Grid item xs={4} sx={{ marginLeft: "30px" }}>
-                <Grid container spacing={2} alignItems="center" justifyContent="end">
-                  <Box display={"flex"}>
+              <Grid item xs={5} >
+                <Grid container alignItems="end" justifyContent="end">
+                  <Grid container item justifyContent="end">
                     <Grid item>
                       <Typography variant="body1" sx={{ fontSize: "11px", color: "gray", mr: 1 }}>{t("from")}</Typography>
                     </Grid>
@@ -608,8 +625,8 @@ export const BusinessInfo = () => {
                         ))}
                       </TextField>
                     </Grid>
-                  </Box>
-                  <Box display={"flex"} marginTop={"3px"} marginLeft={"10px"}>
+                  </Grid>
+                  <Grid container item justifyContent="end">
                     <Grid item>
                       <Typography variant="body1" sx={{ fontSize: "11px", color: "gray", mr: 1 }}>{t("to")}</Typography>
                     </Grid>
@@ -629,7 +646,7 @@ export const BusinessInfo = () => {
                         ))}
                       </TextField>
                     </Grid>
-                  </Box>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>

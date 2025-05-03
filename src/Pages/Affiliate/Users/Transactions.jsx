@@ -3,6 +3,7 @@ import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
+import { BASE_URL } from '../../../utils/helperFunction';
 
 
 
@@ -40,7 +41,8 @@ export const Transactions = () => {
     const getTransactions = async () => {
         try {
             const response = await axios.get(
-                "https://api.qutap.co/api/affiliate_transactions",
+
+                `${BASE_URL}affiliate_transactions`,
                 {
                     headers: {
                         "Content-Type": "application/json",

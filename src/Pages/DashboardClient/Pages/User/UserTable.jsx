@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import { useBranch } from '../../../../context/BranchContext';
 import { useTranslation } from 'react-i18next';
 import { AddRole } from './AddRole';
+import { BASE_URL } from '../../../../utils/helperFunction';
 
 export const UserTable = ({ userStaff, getUserStaff }) => {
   const theme = useTheme();
@@ -64,7 +65,8 @@ export const UserTable = ({ userStaff, getUserStaff }) => {
   // Handle delete user staff
   const handleDeleteUserStaff = async (id) => {
     try {
-      const response = await axios.delete(`https://api.qutap.co/api/resturant_users/${id}`, {
+
+      const response = await axios.delete(`${BASE_URL}resturant_users/${id}`, {
         headers: {
           'Content-Type': 'application/json',
           "Authorization": `Bearer ${localStorage.getItem('clientToken')}`

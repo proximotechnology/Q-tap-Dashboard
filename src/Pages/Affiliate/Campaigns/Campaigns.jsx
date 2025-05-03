@@ -15,6 +15,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import styles from './campaignsCard.module.css'
 import { useTranslation } from "react-i18next";
+import { BASE_URL } from "../../../utils/helperFunction";
 
 const Campaigns = () => {
   const [openForm, setOpenForm] = useState(false);
@@ -40,7 +41,7 @@ const Campaigns = () => {
   const getCampaigns = async () => {
     try {
       const response = await axios.get(
-        `https://api.qutap.co/api/campaigns`,
+        `${BASE_URL}campaigns`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
@@ -69,7 +70,8 @@ const Campaigns = () => {
   const handleDeleteCampaign = async (campaignId) => {
     try {
       await axios.delete(
-        `https://api.qutap.co/api/campaigns/${campaignId}`,
+
+        `${BASE_URL}campaigns/${campaignId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
@@ -99,7 +101,8 @@ const Campaigns = () => {
       };
 
       const response = await axios.post(
-        "https://api.qutap.co/api/campaigns",
+
+        `${BASE_URL}campaigns`,
         dataCampaign,
         {
           headers: {
@@ -130,7 +133,8 @@ const Campaigns = () => {
   const handleEditCampaign = async (campaignId) => {
     try {
       const response = await axios.put(
-        `https://api.qutap.co/api/campaigns/${campaignId}`,
+
+        `${BASE_URL}campaigns/${campaignId}`,
         {
           name: name.trim(),
           commission: parseFloat(commission),

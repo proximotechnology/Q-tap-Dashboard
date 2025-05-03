@@ -7,6 +7,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
+import { BASE_URL, BASE_URL_IMG } from '../../utils/helperFunction';
 
 
 export const Products = () => {
@@ -35,7 +36,8 @@ export const Products = () => {
 
     const getMenus = async () => {
         try {
-            const response = await axios.get('https://api.qutap.co/api/products', {
+
+            const response = await axios.get(`${BASE_URL}products`, {
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -113,7 +115,7 @@ export const Products = () => {
                     <Box>
                         {menu.img && (
                             <img
-                                src={`https://highleveltecknology.com/Qtap/public/${menu.img}`}
+                                src={`${BASE_URL_IMG}${menu.img}`}
                                 alt={menu.name}
                                 style={{
                                     width: "70px",
@@ -126,7 +128,7 @@ export const Products = () => {
                         )}
                         {menu.img && (
                             <img
-                                src={`https://highleveltecknology.com/Qtap/public/${menu.img}`}
+                                src={`${BASE_URL_IMG}${menu.img}`}
                                 alt={menu.name}
                                 style={{
                                     width: "100px",

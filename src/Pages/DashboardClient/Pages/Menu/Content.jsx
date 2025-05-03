@@ -11,6 +11,7 @@ import { useBranch } from '../../../../context/BranchContext';
 import { ContentMenu } from '../../../../context/ContentMenuContext';
 import Slider from 'react-slick';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL, BASE_URL_IMG } from '../../../../utils/helperFunction';
 
 
 export const Content = () => {
@@ -77,7 +78,8 @@ export const Content = () => {
     const getContent = async () => {
         try {
             setLoading(true);
-            const response = await axios.get('https://api.qutap.co/api/meals', {
+
+            const response = await axios.get(`${BASE_URL}meals`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
                 },
@@ -101,7 +103,8 @@ export const Content = () => {
     const getCategories = async () => {
         try {
             setLoading(true);
-            const response = await axios.get('https://api.qutap.co/api/meals_categories', {
+
+            const response = await axios.get(`${BASE_URL}meals_categories`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
                 },
@@ -135,7 +138,8 @@ export const Content = () => {
         try {
             const response = await axios({
                 method: 'PUT',
-                url: `https://api.qutap.co/api/meals_categories/${editCategory.id}`,
+
+                url: `${BASE_URL}meals_categories/${editCategory.id}`,
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
                 },
@@ -160,7 +164,7 @@ export const Content = () => {
         try {
             const response = await axios({
                 method: 'DELETE',
-                url: `https://api.qutap.co/api/meals_categories/${categoryId}`,
+                url: `${BASE_URL}meals_categories/${categoryId}`,
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
                 }
@@ -231,7 +235,7 @@ export const Content = () => {
                                             width: "100%", backgroundColor: "#F1F2F2", borderRadius: "30px", height: "45%",
                                             display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center"
                                         }}>
-                                            <img src={`https://highleveltecknology.com/Qtap/public/${item.img}`} alt="item" style={{ width: "100%", height: "100%" }} />
+                                            <img src={`${BASE_URL_IMG}${item.img}`} alt="item" style={{ width: "100%", height: "100%" }} />
                                         </Box>
                                         <CardContent
                                             sx={{ padding: "5px" }}

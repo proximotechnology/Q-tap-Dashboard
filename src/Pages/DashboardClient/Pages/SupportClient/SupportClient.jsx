@@ -15,6 +15,7 @@ import { toast } from 'react-toastify';
 import styles from './supportCard.module.css'
 import { useTranslation } from 'react-i18next';
 import { AddFeedback } from './AddFeedback';
+import { BASE_URL } from '../../../../utils/helperFunction';
 const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onClick }) => {
   const theme = useTheme();
   const statusStyles = {
@@ -172,7 +173,8 @@ const Support = () => {
 
   const getFeedbackData = async () => {
     try {
-      const response = await axios.get('https://api.qutap.co/api/feedback', {
+
+      const response = await axios.get(`${BASE_URL}feedback`, {
         headers: {
           'Content-Type': 'application/json',
           "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
@@ -197,7 +199,8 @@ const Support = () => {
 
   const handleDeleteFeedback = async (id) => {
     try {
-      const response = await axios.delete(`https://api.qutap.co/api/feedback/${id}`, {
+
+      const response = await axios.delete(`${BASE_URL}feedback/${id}`, {
         headers: {
           'Content-Type': 'application/json',
           "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
@@ -229,7 +232,8 @@ const Support = () => {
   const fetchTickets = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('https://api.qutap.co/api/ticket', {
+
+      const response = await axios.get(`${BASE_URL}ticket`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
         }
@@ -285,7 +289,8 @@ const Support = () => {
       console.log(" dat2a add", data);
 
       const response = await axios.post(
-        'https://api.qutap.co/api/ticket',
+
+        `${BASE_URL}ticket`,
         data,
         {
           headers: {
@@ -319,7 +324,8 @@ const Support = () => {
       console.log(" dat2a", data);
 
       const response = await axios.post(
-        `https://api.qutap.co/api/ticket/${selectedTicket.id}`,
+
+        `${BASE_URL}ticket/${selectedTicket.id}`,
         data,
         {
           headers: {

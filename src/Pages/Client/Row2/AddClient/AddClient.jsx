@@ -93,7 +93,8 @@
 
 // //       console.log('Client allClientData', allClientData);
 
-// //       const response = await axios.post('https://api.qutap.co/api/qtap_clients', allClientData, {
+
+// //       const response = await axios.post('${BASE_URL}qtap_clients', allClientData, {
 // //         headers: {
 // //           'Content-Type': 'application/json',
 // //         },
@@ -393,6 +394,7 @@ import { PersonalInfoAdmin } from "./PersonalInfoAdmin";
 import { useClientContext } from "../../../../context/ClientContext";
 import { useTranslation } from "react-i18next";
 import Language from "../../../../Component/dashboard/TopBar/Language";
+import { BASE_URL } from "../../../../utils/helperFunction";
 
 export const AddClient = () => {
   const { t } = useTranslation();
@@ -417,7 +419,7 @@ export const AddClient = () => {
 
     try {
       const response = await axios.get(
-        `https://api.qutap.co/api/get_client_info/${clientId}`,
+        `${BASE_URL}get_client_info/${clientId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
@@ -587,18 +589,45 @@ export const AddClient = () => {
       };
 
       const url = isEditMode
-        ? `https://api.qutap.co/api/qtap_clients/${clientId}`
-        : "https://api.qutap.co/api/qtap_clients";
+
+        ? `${BASE_URL}qtap_clients/${clientId}`
+        : `${BASE_URL}qtap_clients`;
       const method = isEditMode ? "POST" : "POST";
 
+      console.log("clientData save =>>", allClientData)
+      const formData = new FormData();
+      let headers = {}
+      if (isEditMode) {
+
+        formData.append("name", allClientData.name);
+        formData.append("mobile", allClientData.mobile);
+        formData.append("email", allClientData.email);
+        formData.append("birth_date", allClientData.birth_date);
+        formData.append("Country", allClientData.Country);
+        formData.append("user_type", allClientData.user_type);
+        formData.append("img", allClientData.img); // Assuming this is a File object
+        formData.append("payment_method", allClientData.payment_method);
+        formData.append("brunch1", allClientData.brunch1);
+        headers = {
+           Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+         }
+
+         for (let [key, value] of formData.entries()) {
+          console.log(key, value);
+        }
+      } else {
+         headers = {
+          "Content-Type":"application/json",
+           Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+         }
+      }
+     
       const response = await axios({
         method,
         url,
-        data: allClientData,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
-        },
+        headers,
+        data: isEditMode ? formData : allClientData,
+       
       });
 
       if (response.status === 201 || response.status === 200) {

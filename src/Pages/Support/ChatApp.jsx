@@ -12,6 +12,7 @@ import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlin
 import axios from 'axios';
 import Pusher from 'pusher-js';
 import './chat.css';
+import { BASE_URL } from '../../utils/helperFunction';
 
 const ChatApp = () => {
   const [customers, setCustomers] = useState([]);
@@ -24,7 +25,8 @@ const ChatApp = () => {
   const fetchCustomers = useCallback(async () => {
     try {
       const token = localStorage.getItem('adminToken');
-      const response = await axios.get('https://api.qutap.co/api/customer_info', {
+
+      const response = await axios.get(`${BASE_URL}customer_info`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCustomers(response.data.customer_info.map(customer => ({
@@ -41,7 +43,8 @@ const ChatApp = () => {
   const fetchMessages = useCallback(async (customerId) => {
     try {
       const token = localStorage.getItem('adminToken');
-      const response = await axios.get(`https://api.qutap.co/api/chat?customer_id=${customerId}`, {
+
+      const response = await axios.get(`${BASE_URL}chat?customer_id=${customerId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const allMessages = [
@@ -71,7 +74,8 @@ const ChatApp = () => {
         sender_type: 'support',
         message: messageInput,
       };
-      await axios.post('https://api.qutap.co/api/chat', payload, {
+
+      await axios.post(`${BASE_URL}chat`, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMessages(prev => [

@@ -17,6 +17,7 @@ import Language from '../../../../Component/dashboard/TopBar/Language';
 import { toast } from 'react-toastify';
 import { BASE_URL } from '../../../../utils/helperFunction';
 import axios from 'axios';
+import { egyptGovernorates } from '../../../../utils/city';
 const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, totalCart, setCartItems }) => {
 
     const [selectedType, setSelectedType] = useState('Dine In');
@@ -31,36 +32,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
     const [selectedName, setSelectedName] = useState("");
     const [comment, setComment] = useState("");
     const [address, setAddress] = useState("");
-    const egyptGovernorates = [
-        "Cairo",
-        "Giza",
-        "Alexandria",
-        "Qalyubia",
-        "Port Said",
-        "Suez",
-        "Dakahlia",
-        "Sharqia",
-        "Kalyubia",
-        "Kafr El Sheikh",
-        "Gharbia",
-        "Monufia",
-        "Beheira",
-        "Ismailia",
-        "Giza",
-        "Beni Suef",
-        "Faiyum",
-        "Minya",
-        "Asyut",
-        "Sohag",
-        "Qena",
-        "Aswan",
-        "Luxor",
-        "Red Sea",
-        "New Valley",
-        "Matrouh",
-        "North Sinai",
-        "South Sinai"
-    ];
+    
 
     const [table, setTable] = useState([])
 
