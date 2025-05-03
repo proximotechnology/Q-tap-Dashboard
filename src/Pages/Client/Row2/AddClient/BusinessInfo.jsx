@@ -38,6 +38,7 @@ import { useBusinessContext } from "../../../../context/BusinessContext";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { timeOptions } from "../../../../Component/Business-info/WorkingHoursDays";
+import MapWithPin, { ErrorBoundary } from "../../../../utils/MapWithPin";
 
 const daysOfWeek = ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"];
 const fullDaysOfWeek = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
@@ -47,6 +48,7 @@ export const BusinessInfo = () => {
   const { t } = useTranslation();
   const { businessData, updateBusinessData, branches, selectedBranch, selectBranch } = useBusinessContext();
   const [branchIndex, setBranchIndex] = useState(selectedBranch || 0);
+  const [branchPosition, setBranchPosition] = useState([]);
   const navigate = useNavigate();
   const {
     businessName = '',
@@ -75,8 +77,12 @@ export const BusinessInfo = () => {
   const [currentDay, setCurrentDay] = useState(fullDaysOfWeek[0]); // Default to Saturday
   const [fromTime, setFromTime] = useState('');
   const [toTime, setToTime] = useState('');
-
-
+  const [isMapOpen, setIsMapOpen] = useState(false);
+  const updateBranchPosition = (pos) => {
+    console.log(pos,'set pos call' , selectedBranch)
+    updateBusinessData({ longitude: pos.lng })
+    updateBusinessData({ latitude: pos.lat })
+  }
 
   // Initialize local state based on workschedules
   useEffect(() => {
@@ -89,6 +95,7 @@ export const BusinessInfo = () => {
     // Update fromTime and toTime based on currentDay
     setFromTime(workschedules[currentDay]?.[0] || '9:00 am');
     setToTime(workschedules[currentDay]?.[1] || '7:00 pm');
+    selectBranch(0)
   }, [workschedules, currentDay]);
 
   const handleBranchClick = (index) => {
@@ -194,7 +201,7 @@ export const BusinessInfo = () => {
   };
 
   return (
-    <Grid container sx={{ marginTop: "0px",  }}>
+    <Grid container sx={{ marginTop: "0px", }}>
       <Grid item xs={12} >
         <Box display={"flex"} justifyContent={"space-between"}>
           <Box>
@@ -239,7 +246,7 @@ export const BusinessInfo = () => {
         <Divider sx={{ margin: "12px 0px" }} />
       </Grid>
 
-      <Grid xs={12} md={6} sx={{ paddingX:{xs:'0px',md:'8px'} }} overflow='hidden' className="here_section">
+      <Grid xs={12} md={6} sx={{ paddingX: { xs: '0px', md: '8px' } }} overflow='hidden' className="here_section">
         <FormControl variant="outlined" fullWidth>
           <OutlinedInput
             id="outlined-businessName"
@@ -312,7 +319,7 @@ export const BusinessInfo = () => {
         </Box>
 
         <Box display="flex" alignItems="center" marginBottom="10px">
-          <Button
+          {/* <Button
             variant="contained"
             fullWidth
             sx={{
@@ -327,7 +334,10 @@ export const BusinessInfo = () => {
           >
             <span className="icon-map-1" style={{ fontSize: "18px", marginRight: "6px" }}></span>
             {t("pinYourLocation")}
-          </Button>
+          </Button> */}
+          <ErrorBoundary>
+            <MapWithPin setPos={updateBranchPosition} isMapOpen={isMapOpen} setIsMapOpen={setIsMapOpen} />
+          </ErrorBoundary>
         </Box>
 
         <FormControl variant="outlined" sx={{ width: "100%", marginBottom: "10px" }}>
@@ -433,7 +443,7 @@ export const BusinessInfo = () => {
         </Box>
       </Grid>
 
-      <Grid xs={12} md={6} sx={{ paddingX:{xs:'0px',md:'8px'} }}>
+      <Grid xs={12} md={6} sx={{ paddingX: { xs: '0px', md: '8px' } }}>
         <Grid sx={{ display: "flex", flexDirection: "column", marginTop: "10px", width: "100%" }}>
           <Box sx={{ marginTop: "6px", display: 'flex', justifyContent: 'space-between', width: '100%' }}>
             <Grid container direction="column" > {/* heres_1 */}
@@ -554,8 +564,8 @@ export const BusinessInfo = () => {
                   </Typography>
                 </Grid>
 
-                <Grid item xs={6} style={{ justifyContent:'end' }}>
-                  <Box display="flex"  alignItems="center" sx={{ marginInlineStart:'auto',backgroundColor: theme.palette.secondaryColor.main, borderRadius: "20px", width: "90px", height: "30px" }}>
+                <Grid item xs={6} style={{ justifyContent: 'end' }}>
+                  <Box display="flex" alignItems="center" sx={{ marginInlineStart: 'auto', backgroundColor: theme.palette.secondaryColor.main, borderRadius: "20px", width: "90px", height: "30px" }}>
                     <IconButton onClick={() => handleDayToggle("prev")} sx={{ color: theme.palette.orangePrimary.main }}>
                       <ArrowBackIos sx={{ fontSize: "11px" }} />
                     </IconButton>
