@@ -445,14 +445,14 @@ export const Save = () => {
       <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main, borderBottom: 'none', width: '100%', height: '3px' }} />
 
       <Box>
-        <Grid container spacing={1}>
-          <Grid item xs={12} md={5}>
+        <Grid container >
+          <Grid item xs={12} md={5} sx={{ paddingX:{xs:'20px',md:'0px'} }}>
             <PersonalInfo personalData={personalData} onInputChange={handlePersonalChange} />
           </Grid>
           <Box item sx={{ display: { xs: 'none', sm: 'block' } }}>
             <Divider orientation="vertical" sx={{ backgroundColor: '#f4f6fc', width: '1px', marginTop: '30px', height: '90%' }} />
           </Box>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} sx={{ marginTop: "10px" ,paddingInlineStart: "20px",paddingInlineEnd:{xs:'20px',md:'0px'} }}>
             <BusinessInfo />
           </Grid>
         </Grid>

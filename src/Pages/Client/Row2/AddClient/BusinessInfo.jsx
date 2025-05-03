@@ -194,8 +194,8 @@ export const BusinessInfo = () => {
   };
 
   return (
-    <Grid container sx={{ marginTop: "20px", paddingLeft: "20px" }}>
-      <Grid item xs={12} spacing={4}>
+    <Grid container sx={{ marginTop: "0px",  }}>
+      <Grid item xs={12} >
         <Box display={"flex"} justifyContent={"space-between"}>
           <Box>
             <Typography variant="body2" sx={{ fontSize: "15px" }} color="#3b3a3a" gutterBottom>
@@ -239,7 +239,7 @@ export const BusinessInfo = () => {
         <Divider sx={{ margin: "12px 0px" }} />
       </Grid>
 
-      <Grid xs={12} md={6} paddingX='8px' overflow='hidden'>
+      <Grid xs={12} md={6} sx={{ paddingX:{xs:'0px',md:'8px'} }} overflow='hidden' className="here_section">
         <FormControl variant="outlined" fullWidth>
           <OutlinedInput
             id="outlined-businessName"
@@ -433,10 +433,10 @@ export const BusinessInfo = () => {
         </Box>
       </Grid>
 
-      <Grid xs={12} md={6} paddingX='8px'>
+      <Grid xs={12} md={6} sx={{ paddingX:{xs:'0px',md:'8px'} }}>
         <Grid sx={{ display: "flex", flexDirection: "column", marginTop: "10px", width: "100%" }}>
           <Box sx={{ marginTop: "6px", display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-            <Grid container direction="column" className="heres_1"> {/* heres_1 */}
+            <Grid container direction="column" > {/* heres_1 */}
               <Typography
                 variant="body2"
                 sx={{ fontSize: "14px", fontWeight: "500", color: "#AAAAAA", textAlign: "start", margin: "0 0 5px 0px" }}
@@ -492,7 +492,7 @@ export const BusinessInfo = () => {
               }}
             />
 
-            <Grid container direction="column" className="heres_2">
+            <Grid container direction="column" >
               <Typography
                 variant="body2"
                 sx={{ fontSize: "14px", fontWeight: "500", color: "#AAAAAA", textAlign: "start", margin: "0 0 5px 0px" }}
@@ -541,7 +541,7 @@ export const BusinessInfo = () => {
           <Divider sx={{ backgroundColor: "#f4f6fc", height: "2px", margin: "8px 0px" }} flexItem />
 
           <Box>
-            <Grid container alignItems="center" className="here_work_hours_container">
+            <Grid container alignItems="center" >
               <Grid item container marginBottom={'5px'} xs={12} display={"flex"} justifyContent={"space-between"} flexWrap={'wrap'}> {/* TODO:FEX STYLE */}
                 <Grid item xs={6}>
                   <Typography variant="body1" display="flex" alignItems="center" sx={{ fontSize: "12px", color: "gray" }}>
@@ -555,7 +555,7 @@ export const BusinessInfo = () => {
                 </Grid>
 
                 <Grid item xs={6} style={{ justifyContent:'end' }}>
-                  <Box display="flex" className="here_button" alignItems="center" sx={{ marginInlineStart:'auto',backgroundColor: theme.palette.secondaryColor.main, borderRadius: "20px", width: "90px", height: "30px" }}>
+                  <Box display="flex"  alignItems="center" sx={{ marginInlineStart:'auto',backgroundColor: theme.palette.secondaryColor.main, borderRadius: "20px", width: "90px", height: "30px" }}>
                     <IconButton onClick={() => handleDayToggle("prev")} sx={{ color: theme.palette.orangePrimary.main }}>
                       <ArrowBackIos sx={{ fontSize: "11px" }} />
                     </IconButton>

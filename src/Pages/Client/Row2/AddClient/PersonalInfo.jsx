@@ -56,15 +56,15 @@ export const PersonalInfo = () => {
     };
 
     return (
-        <Grid container spacing={2} justifyContent="center" sx={{ marginTop: "10px" }}>
+        <Grid container   sx={{ marginTop: "10px" ,justifyContent:{xs:"start",md:'space-around'}}}>
             <Box>
                 <ArrowBackIosOutlinedIcon
                     onClick={() => navigate('/client')}
-                    sx={{ color: "#4b4a4a", cursor: "pointer" }}
+                    sx={{ color: "#4b4a4a", cursor: "pointer" ,marginInlineStart:{xs:'0px',md:'0px'}}}
                 />
             </Box>
 
-            <Grid item xs={12} md={3} sx={{ marginRight: "40px" }}>
+            <Grid item xs={12} md={3} sx={{ minWidth:'150px' }}>
                 <Box sx={{ textAlign: 'center' }}>
                     <Box sx={{
                         width: '150px',
@@ -75,6 +75,7 @@ export const PersonalInfo = () => {
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
+                        marginX:{xs:'auto',md:'0px'}
                     }}>
                         <img src={image ? URL.createObjectURL(image) : "/images/User.jpg"} alt="user" width="150px" height="150" />
                         <Box sx={{
