@@ -116,7 +116,7 @@ const Menu = () => {
         };
 
         try {
-            const response = await fetch(`https://highleveltecknology.com/Qtap/api/clients_update_menu/${id}`, {
+            const response = await fetch(`https://api.qutap.co/api/clients_update_menu/${id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

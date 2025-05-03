@@ -82,7 +82,7 @@ const Content = forwardRef((props, ref) => {
 		};
 
 		// Send to API
-		fetch("https://highleveltecknology.com/Qtap/api/settings/content", {
+		fetch("https://api.qutap.co/api/settings/content", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

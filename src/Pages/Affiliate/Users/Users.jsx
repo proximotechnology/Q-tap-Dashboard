@@ -49,7 +49,7 @@ export const Users = () => {
   const getUsers = async () => {
     try {
       const response = await axios.get(
-        "https://highleveltecknology.com/Qtap/api/affiliate",
+        "https://api.qutap.co/api/affiliate",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
@@ -72,7 +72,7 @@ export const Users = () => {
     try {
       const newStatus = currentStatus === "active" ? "inactive" : "active";
       const response = await axios.post(
-        `https://highleveltecknology.com/Qtap/api/qtap_affiliate/${userId}`,
+        `https://api.qutap.co/api/qtap_affiliate/${userId}`,
         {
           status: newStatus,
         },
@@ -90,7 +90,7 @@ export const Users = () => {
   const handleDeleteUser = async (userId) => {
     try {
       const response = await axios.delete(
-        `https://highleveltecknology.com/Qtap/api/affiliate/${userId}`,
+        `https://api.qutap.co/api/affiliate/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("adminToken")}`,

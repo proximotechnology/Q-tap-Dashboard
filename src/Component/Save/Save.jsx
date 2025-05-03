@@ -221,7 +221,7 @@ export const Save = () => {
 
     // Send data to API
     try {
-      const response = await fetch('https://highleveltecknology.com/Qtap/api/qtap_clients', {
+      const response = await fetch('https://api.qutap.co/api/qtap_clients', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

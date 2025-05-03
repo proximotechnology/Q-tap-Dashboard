@@ -40,7 +40,7 @@ const Campaigns = () => {
   const getCampaigns = async () => {
     try {
       const response = await axios.get(
-        `https://highleveltecknology.com/Qtap/api/campaigns`,
+        `https://api.qutap.co/api/campaigns`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
@@ -69,7 +69,7 @@ const Campaigns = () => {
   const handleDeleteCampaign = async (campaignId) => {
     try {
       await axios.delete(
-        `https://highleveltecknology.com/Qtap/api/campaigns/${campaignId}`,
+        `https://api.qutap.co/api/campaigns/${campaignId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
@@ -99,7 +99,7 @@ const Campaigns = () => {
       };
 
       const response = await axios.post(
-        "https://highleveltecknology.com/Qtap/api/campaigns",
+        "https://api.qutap.co/api/campaigns",
         dataCampaign,
         {
           headers: {
@@ -130,7 +130,7 @@ const Campaigns = () => {
   const handleEditCampaign = async (campaignId) => {
     try {
       const response = await axios.put(
-        `https://highleveltecknology.com/Qtap/api/campaigns/${campaignId}`,
+        `https://api.qutap.co/api/campaigns/${campaignId}`,
         {
           name: name.trim(),
           commission: parseFloat(commission),

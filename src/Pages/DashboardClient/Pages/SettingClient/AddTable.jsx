@@ -60,8 +60,8 @@ const AddTableModal = ({ open, onClose, onSave, tableData }) => {
       };
 
       const url = tableData
-        ? `https://highleveltecknology.com/Qtap/api/tables/${tableData.id}` // Update existing table
-        : 'https://highleveltecknology.com/Qtap/api/tables'; // Add new table
+        ? `https://api.qutap.co/api/tables/${tableData.id}` // Update existing table
+        : 'https://api.qutap.co/api/tables'; // Add new table
 
       const method = tableData ? 'PUT' : 'POST';
 

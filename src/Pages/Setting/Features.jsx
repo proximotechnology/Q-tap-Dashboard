@@ -13,6 +13,7 @@ const FeatureSection = ({ section, updateSection, index }) => {
     const fileInputRef = useRef(null);
     const { t } = useTranslation();
     const theme = useTheme();
+
     const handleAddFeature = () => {
         if (feature.trim()) {
             updateSection(index, { ...section, features: [...section.features, feature.trim()] });
@@ -127,6 +128,7 @@ export const Features = forwardRef((props, ref) => {
         imgFile: null
     }]);
     const [isSaving, setIsSaving] = useState(false);
+    const { t } = useTranslation();
 
     const addFeat = () => {
         setSections([...sections, {
@@ -138,42 +140,50 @@ export const Features = forwardRef((props, ref) => {
             imgFile: null
         }]);
     };
-    const { t } = useTranslation();
+
     const updateSection = (index, updatedSection) => {
         setSections(sections.map((section, i) => i === index ? updatedSection : section));
     };
 
     const sendRequest = (section) => {
-        // Validate required fields
-        if (!section.titleEn) {
-            toast.error(t("titleEnReq")); // Adjust translation key as needed
-            setIsSaving(false);
-            return;
+        // Validate at least one title (English or Arabic) is provided
+        if (!section.titleEn && !section.titleAr) {
+            toast.error(t("titleEnOrArReq")); // Adjust translation key as needed
+            return Promise.reject(new Error(t("titleEnOrArReq")));
         }
-        if (!section.descriptionEn) {
-            toast.error(t("descEnReq")); // Adjust translation key as needed
-            setIsSaving(false);
-            return;
+
+        // Validate at least one description (English or Arabic) is provided
+        if (!section.descriptionEn && !section.descriptionAr) {
+            toast.error(t("descEnOrArReq")); // Adjust translation key as needed
+            return Promise.reject(new Error(t("descEnOrArReq")));
         }
+
+        // Validate features
         if (section.features.length === 0) {
             toast.error(t("atleastOneFeatureReq"));
-            setIsSaving(false);
-            return;
+            return Promise.reject(new Error(t("atleastOneFeatureReq")));
         }
+
+        // Validate image
         if (!section.imgFile) {
             toast.error(t("imageRequired"));
-            setIsSaving(false);
-            return;
+            return Promise.reject(new Error(t("imageRequired")));
         }
 
         // Create FormData object for multipart/form-data request
         const formData = new FormData();
 
-        // Append only the first title (లవ్‌స్టైల్‌లు Append only the English title as a stringified array
-        formData.append('titles[]', JSON.stringify([section.titleEn]));
+        // Append titles as a stringified array, including only provided titles
+        const titles = [];
+        if (section.titleEn) titles.push(section.titleEn);
+        if (section.titleAr) titles.push(section.titleAr);
+        formData.append('titles[]', JSON.stringify(titles));
 
-        // Append only the English description as a stringified array
-        formData.append('descriptions[]', JSON.stringify([section.descriptionEn]));
+        // Append descriptions as a stringified array, including only provided descriptions
+        const descriptions = [];
+        if (section.descriptionEn) descriptions.push(section.descriptionEn);
+        if (section.descriptionAr) descriptions.push(section.descriptionAr);
+        formData.append('descriptions[]', JSON.stringify(descriptions));
 
         // Append features as a stringified array
         formData.append('features[]', JSON.stringify(section.features));
@@ -183,7 +193,7 @@ export const Features = forwardRef((props, ref) => {
 
         return axios({
             method: 'post',
-            url: 'https://highleveltecknology.com/Qtap/api/settings/features',
+            url: 'https://api.qutap.co/api/settings/features',
             data: formData,
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("adminToken")}`,
@@ -193,16 +203,15 @@ export const Features = forwardRef((props, ref) => {
     };
 
     const handleSave = async () => {
-        
-        const hasInvalidSection = sections.some(section =>
-            !section.titleEn || !section.titleAr ||
-            !section.descriptionEn || !section.descriptionAr ||
-            section.features.length === 0 ||
-            !section.imgFile
-        );
+        // Validate that each section has at least one title, one description, features, and an image
+        const hasInvalidSection = sections.some(section => {
+            const hasTitle = section.titleEn || section.titleAr;
+            const hasDescription = section.descriptionEn || section.descriptionAr;
+            return !hasTitle || !hasDescription || section.features.length === 0 || !section.imgFile;
+        });
 
         if (hasInvalidSection) {
-            toast.error(t("plFillAllField"));
+            toast.error(t("plFillRequiredFields"));
             return;
         }
 
@@ -215,9 +224,6 @@ export const Features = forwardRef((props, ref) => {
                         if (response.data.error) {
                             throw new Error(response.data.error);
                         }
-                    })
-                    .catch(error => {
-                        throw error;
                     });
             }
 

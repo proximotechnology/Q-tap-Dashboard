@@ -183,7 +183,7 @@ export const AddUsers = () => {
             if (user) {
                 // Update existing user
                 const response = await axios.post(
-                    `https://highleveltecknology.com/Qtap/api/qtap_affiliate/${user.id}`,
+                    `https://api.qutap.co/api/qtap_affiliate/${user.id}`,
                     formData,
                     {
                         headers: {
@@ -204,7 +204,7 @@ export const AddUsers = () => {
             } else {
                 // Add new user
                 const response = await axios.post(
-                    'https://highleveltecknology.com/Qtap/api/add_qtap_affiliate',
+                    'https://api.qutap.co/api/add_qtap_affiliate',
                     formData,
                     {
                         headers: {

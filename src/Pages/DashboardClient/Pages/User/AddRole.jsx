@@ -70,7 +70,7 @@ export const AddRole = ({ open, onClose, onSave, brunchId = "442" }) => {
                 headers: { Authorization: `Bearer ${token}` },
             };
 
-            const roleResponse = await axios.post('https://highleveltecknology.com/Qtap/api/roles', roleData, config);
+            const roleResponse = await axios.post('https://api.qutap.co/api/roles', roleData, config);
 
             if (roleResponse.status === 200) {
                 toast.success(t('add role success'));

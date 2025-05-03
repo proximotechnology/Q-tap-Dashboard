@@ -9,7 +9,7 @@ export const AffiliateClientProvider = ({ children }) => {
 
     const getAffiliateData = async (id) => {
         try {
-            const response = await axios.get(`https://highleveltecknology.com/Qtap/api/get_affiliate_info/${id}`, {
+            const response = await axios.get(`https://api.qutap.co/api/get_affiliate_info/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
@@ -26,7 +26,7 @@ export const AffiliateClientProvider = ({ children }) => {
     };
     const getClientData = async (id) => {
         try {
-            const response = await axios.get(`https://highleveltecknology.com/Qtap/api/get_client_info/${id}`, {
+            const response = await axios.get(`https://api.qutap.co/api/get_client_info/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`

@@ -21,7 +21,7 @@ export const Notification = () => {
 
   // Function to fetch notifications
   const getNotifications = () => {
-    fetch('https://highleveltecknology.com/Qtap/api/note', {
+    fetch('https://api.qutap.co/api/note', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ export const Notification = () => {
   };
 
   const handleDelete = (id) => {
-    fetch(`https://highleveltecknology.com/Qtap/api/note/${id}`, {
+    fetch(`https://api.qutap.co/api/note/${id}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('adminToken')}`

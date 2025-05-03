@@ -15,7 +15,7 @@ export const DashboardAffiliate = () => {
       setIsLoading(true);
 
       const response = await axios.get(
-        'https://highleveltecknology.com/Qtap/api/get_myinfo',
+        'https://api.qutap.co/api/get_myinfo',
         {
           headers: {
             'Content-Type': 'application/json',

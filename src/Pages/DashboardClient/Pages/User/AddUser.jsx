@@ -60,7 +60,7 @@ export const AddUser = ({ open, onClose }) => {
                 headers: { Authorization: `Bearer ${token}` },
             };
 
-            const response = await axios.post('https://highleveltecknology.com/Qtap/api/restaurant_user_staff', staffData, config)
+            const response = await axios.post('https://api.qutap.co/api/restaurant_user_staff', staffData, config)
 
 
             if (response.status === 200) {

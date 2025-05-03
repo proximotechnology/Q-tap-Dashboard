@@ -93,7 +93,7 @@
 
 // //       console.log('Client allClientData', allClientData);
 
-// //       const response = await axios.post('https://highleveltecknology.com/Qtap/api/qtap_clients', allClientData, {
+// //       const response = await axios.post('https://api.qutap.co/api/qtap_clients', allClientData, {
 // //         headers: {
 // //           'Content-Type': 'application/json',
 // //         },
@@ -417,7 +417,7 @@ export const AddClient = () => {
 
     try {
       const response = await axios.get(
-        `https://highleveltecknology.com/Qtap/api/get_client_info/${clientId}`,
+        `https://api.qutap.co/api/get_client_info/${clientId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
@@ -587,8 +587,8 @@ export const AddClient = () => {
       };
 
       const url = isEditMode
-        ? `https://highleveltecknology.com/Qtap/api/qtap_clients/${clientId}`
-        : "https://highleveltecknology.com/Qtap/api/qtap_clients";
+        ? `https://api.qutap.co/api/qtap_clients/${clientId}`
+        : "https://api.qutap.co/api/qtap_clients";
       const method = isEditMode ? "POST" : "POST";
 
       const response = await axios({

@@ -59,7 +59,7 @@ export const Feedback = () => {
             // console.log("data formate", dataFormat);
 
 
-            await axios.post(`https://highleveltecknology.com/Qtap/api/feedback`, dataFormat, {
+            await axios.post(`https://api.qutap.co/api/feedback`, dataFormat, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`

@@ -21,7 +21,7 @@ const FeedbackDetailsModal = ({ open, handleClose, pageId }) => {
     // get data from backend to display in the table
     const getFeedbackData = async () => {
         try {
-            const response = await axios.get('https://highleveltecknology.com/Qtap/api/feedback', {
+            const response = await axios.get('https://api.qutap.co/api/feedback', {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`

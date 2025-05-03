@@ -42,7 +42,7 @@ export const Payment = () => {
   useEffect(() => {
     setIsLoading(true);
     Promise.all([
-      fetch('https://highleveltecknology.com/Qtap/api/pricing', {
+      fetch('https://api.qutap.co/api/pricing', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export const Payment = () => {
         })
         .catch(error => console.error('Error fetching pricing data:', error)),
 
-      fetch('https://highleveltecknology.com/Qtap/api/discount', {
+      fetch('https://api.qutap.co/api/discount', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

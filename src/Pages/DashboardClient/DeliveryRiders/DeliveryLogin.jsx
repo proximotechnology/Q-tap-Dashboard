@@ -90,7 +90,7 @@ export const DeliveryLogin = () => {
       setIsLoading(true);
 
       const response = await axios.post(
-        'https://highleveltecknology.com/Qtap/api/login',
+        'https://api.qutap.co/api/login',
         data,
         {
           headers: { 'Content-Type': 'application/json' },

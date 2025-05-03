@@ -38,7 +38,7 @@ export const Pricing = () => {
   const PricingCard = ({ title, priceMonthly, priceYearly, description, features, id }) => {
     // delete pricing data from api
     const handleDelete = () => {
-      fetch(`https://highleveltecknology.com/Qtap/api/pricing/${id}`, {
+      fetch(`https://api.qutap.co/api/pricing/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
@@ -137,7 +137,7 @@ export const Pricing = () => {
   const [pricing, setPricing] = useState([]);
   // get pricing data from api
   useEffect(() => {
-    fetch('https://highleveltecknology.com/Qtap/api/pricing', {
+    fetch('https://api.qutap.co/api/pricing', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

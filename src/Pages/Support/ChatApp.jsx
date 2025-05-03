@@ -24,7 +24,7 @@ const ChatApp = () => {
   const fetchCustomers = useCallback(async () => {
     try {
       const token = localStorage.getItem('adminToken');
-      const response = await axios.get('https://highleveltecknology.com/Qtap/api/customer_info', {
+      const response = await axios.get('https://api.qutap.co/api/customer_info', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCustomers(response.data.customer_info.map(customer => ({
@@ -41,7 +41,7 @@ const ChatApp = () => {
   const fetchMessages = useCallback(async (customerId) => {
     try {
       const token = localStorage.getItem('adminToken');
-      const response = await axios.get(`https://highleveltecknology.com/Qtap/api/chat?customer_id=${customerId}`, {
+      const response = await axios.get(`https://api.qutap.co/api/chat?customer_id=${customerId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const allMessages = [
@@ -71,7 +71,7 @@ const ChatApp = () => {
         sender_type: 'support',
         message: messageInput,
       };
-      await axios.post('https://highleveltecknology.com/Qtap/api/chat', payload, {
+      await axios.post('https://api.qutap.co/api/chat', payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMessages(prev => [

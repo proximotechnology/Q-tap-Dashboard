@@ -30,7 +30,7 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
 
     try {
       const response = await axios.get(
-        `https://highleveltecknology.com/Qtap/api/delivery_area`,
+        `https://api.qutap.co/api/delivery_area`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -124,7 +124,7 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
         // Update existing rider
         response = await axios({
           method: 'PUT',
-          url: `https://highleveltecknology.com/Qtap/api/delivery/${editData.id}`,
+          url: `https://api.qutap.co/api/delivery/${editData.id}`,
           data: formData,
           headers,
         });
@@ -132,7 +132,7 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
         // Add new rider
         response = await axios({
           method: 'POST',
-          url: 'https://highleveltecknology.com/Qtap/api/delivery',
+          url: 'https://api.qutap.co/api/delivery',
           data: formData,
           headers,
         });

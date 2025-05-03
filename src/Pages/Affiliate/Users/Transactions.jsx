@@ -40,7 +40,7 @@ export const Transactions = () => {
     const getTransactions = async () => {
         try {
             const response = await axios.get(
-                "https://highleveltecknology.com/Qtap/api/affiliate_transactions",
+                "https://api.qutap.co/api/affiliate_transactions",
                 {
                     headers: {
                         "Content-Type": "application/json",

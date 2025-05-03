@@ -15,7 +15,7 @@ export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
 
     const getRoles = async () => {
         try {
-            const response = await axios.get(`https://highleveltecknology.com/Qtap/api/roles`, {
+            const response = await axios.get(`https://api.qutap.co/api/roles`, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("clientToken")}`
                 },
@@ -47,7 +47,7 @@ export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
                 return;
             }
 
-            const response = await axios.put(`https://highleveltecknology.com/Qtap/api/link_user_role/${userId}`, {
+            const response = await axios.put(`https://api.qutap.co/api/link_user_role/${userId}`, {
                 role_id: role,
                 brunch_id: localStorage.getItem("selectedBranch")
             }, {

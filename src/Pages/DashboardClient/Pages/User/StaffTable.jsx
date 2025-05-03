@@ -25,7 +25,7 @@ export const StaffTable = ({ userStaff }) => {
 
     const getRestStaff = async () => {
         try {
-            const response = await axios.get(`https://highleveltecknology.com/Qtap/api/restaurant_user_staff/${localStorage.getItem("selectedBranch")}`, {
+            const response = await axios.get(`https://api.qutap.co/api/restaurant_user_staff/${localStorage.getItem("selectedBranch")}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
@@ -51,7 +51,7 @@ export const StaffTable = ({ userStaff }) => {
 
     const handleDeleteRestStaff = async (id) => {
         try {
-            const response = await axios.delete(`https://highleveltecknology.com/Qtap/api/restaurant_user_staff/${id}`, {
+            const response = await axios.delete(`https://api.qutap.co/api/restaurant_user_staff/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     "Authorization": `Bearer ${localStorage.getItem('clientToken')}`

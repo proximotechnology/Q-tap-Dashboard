@@ -27,7 +27,7 @@ const AddAreaModal = ({ open, onClose }) => {
             return;
         }
         try {
-            const response = await axios.post(`https://highleveltecknology.com/Qtap/api/area`, {
+            const response = await axios.post(`https://api.qutap.co/api/area`, {
                 brunch_id: selectedBranch,
                 name
             }, {
@@ -56,7 +56,7 @@ const AddAreaModal = ({ open, onClose }) => {
         }
 
         try {
-            const response = await axios.post(`https://highleveltecknology.com/Qtap/api/area/${id}`, {
+            const response = await axios.post(`https://api.qutap.co/api/area/${id}`, {
                 brunch_id: selectedBranch,
                 name
             }, {
@@ -81,7 +81,7 @@ const AddAreaModal = ({ open, onClose }) => {
     //========================================== حذف المنطقة
     const handleDeleteArea = async (id) => {
         try {
-            const response = await axios.delete(`https://highleveltecknology.com/Qtap/api/area/${id}`, {
+            const response = await axios.delete(`https://api.qutap.co/api/area/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     "Authorization": `Bearer ${localStorage.getItem('clientToken')}`

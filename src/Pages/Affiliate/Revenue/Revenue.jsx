@@ -16,7 +16,7 @@ export const Revenue = () => {
   const getRvenueData = async () => {
     try {
       setLoading(true)
-      const response = await fetch(`https://highleveltecknology.com/Qtap/api/Sales/${year}`,
+      const response = await fetch(`https://api.qutap.co/api/Sales/${year}`,
         {
           method: "POST",
           headers: {

@@ -38,7 +38,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getSalesDashboard = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://highleveltecknology.com/Qtap/api/Sales/${id}`,
+                `https://api.qutap.co/api/Sales/${id}`,
                 {
                     method: 'POST',
                     headers: {
@@ -60,7 +60,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getSalesVolumeDashboard = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://highleveltecknology.com/Qtap/api/Sales_by_days/${id}`,
+                `https://api.qutap.co/api/Sales_by_days/${id}`,
                 {
                     method: 'POST',
                     headers: {
@@ -82,7 +82,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getPerformanceDashboard = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://highleveltecknology.com/Qtap/api/Performance/${id}`,
+                `https://api.qutap.co/api/Performance/${id}`,
                 {
                     method: 'POST',
                     headers: {
@@ -104,7 +104,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getDashboard = async () => {
         try {
             const response = await fetchWithRetry(
-                `https://highleveltecknology.com/Qtap/api/dashboard`,
+                `https://api.qutap.co/api/dashboard`,
                 {
                     method: 'POST',
                     headers: {
@@ -125,7 +125,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getDeposits = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://highleveltecknology.com/Qtap/api/Deposits/${id}`,
+                `https://api.qutap.co/api/Deposits/${id}`,
                 {
                     method: 'GET',
                     headers: {
@@ -145,7 +145,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getWithdrawals = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://highleveltecknology.com/Qtap/api/withdraw/${id}`,
+                `https://api.qutap.co/api/withdraw/${id}`,
                 {
                     method: 'GET',
                     headers: {
@@ -166,7 +166,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getWalletChartTwo = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://highleveltecknology.com/Qtap/api/wallet/${id}`,
+                `https://api.qutap.co/api/wallet/${id}`,
                 {
                     method: 'POST',
                     headers: {
@@ -202,7 +202,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getSalesClientDashboard = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://highleveltecknology.com/Qtap/api/Sales_restaurant/${id}`,
+                `https://api.qutap.co/api/Sales_restaurant/${id}`,
                 {
                     method: 'POST',
                     headers: {
@@ -224,7 +224,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getSalesVolumeClientDashboard = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://highleveltecknology.com/Qtap/api/Sales_by_days_restaurant/${id}`,
+                `https://api.qutap.co/api/Sales_by_days_restaurant/${id}`,
                 {
                     method: 'POST',
                     headers: {
@@ -246,7 +246,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getClientDashboard = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://highleveltecknology.com/Qtap/api/dashboard/${id}`,
+                `https://api.qutap.co/api/dashboard/${id}`,
                 {
                     method: 'GET',
                     headers: {
@@ -267,7 +267,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getPerformanceClientDashboard = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://highleveltecknology.com/Qtap/api/Performance/${id}`,
+                `https://api.qutap.co/api/Performance/${id}`,
                 {
                     method: 'POST',
                     headers: {
@@ -288,7 +288,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getWalletData = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://highleveltecknology.com/Qtap/api/wallet_restaurant/${localStorage.getItem("selectedBranch")}/${id}`,
+                `https://api.qutap.co/api/wallet_restaurant/${localStorage.getItem("selectedBranch")}/${id}`,
                 {
                     method: 'GET',
                     headers: {
@@ -310,7 +310,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getCustomerLog = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://highleveltecknology.com/Qtap/api/Customer_log/${localStorage.getItem("selectedBranch")}/${id}`,
+                `https://api.qutap.co/api/Customer_log/${localStorage.getItem("selectedBranch")}/${id}`,
                 {
                     method: 'GET',
                     headers: {
@@ -330,7 +330,7 @@ export const DashboardDataProvider = ({ children }) => {
     // const getWithdrawals = async (id) => {
     //     try {
     //         const response = await fetchWithRetry(
-    //             `https://highleveltecknology.com/Qtap/api/withdraw/${id}`,
+    //             `https://api.qutap.co/api/withdraw/${id}`,
     //             {
     //                 method: 'GET',
     //                 headers: {
@@ -351,7 +351,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getClientWalletChart = async (id) => {
         try {
             const response = await fetchWithRetry(
-                `https://highleveltecknology.com/Qtap/api/Sales_restaurant/${id}`,
+                `https://api.qutap.co/api/Sales_restaurant/${id}`,
                 {
                     method: 'POST',
                     headers: {

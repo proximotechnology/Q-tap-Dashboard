@@ -40,7 +40,7 @@ export const AddFeedback = ({ open, handleCloseModel, onAddFeedback }) => {
 
         try {
             const response = await axios.post(
-                'https://highleveltecknology.com/Qtap/api/feedback',
+                'https://api.qutap.co/api/feedback',
                 data,
                 {
                     headers: {

@@ -52,7 +52,7 @@ export const FAQ = forwardRef((props, ref) => {
     };
 
     // Send to API
-    fetch("https://highleveltecknology.com/Qtap/api/settings/faq", {
+    fetch("https://api.qutap.co/api/settings/faq", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

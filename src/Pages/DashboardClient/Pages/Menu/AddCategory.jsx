@@ -49,7 +49,7 @@ const CategoryForm = ({ open, handleClose }) => {
 
       const response = await axios({
         method: 'POST',
-        url: 'https://highleveltecknology.com/Qtap/api/meals_categories',
+        url: 'https://api.qutap.co/api/meals_categories',
         data: formData,
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,

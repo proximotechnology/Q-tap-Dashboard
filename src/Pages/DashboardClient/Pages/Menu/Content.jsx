@@ -77,7 +77,7 @@ export const Content = () => {
     const getContent = async () => {
         try {
             setLoading(true);
-            const response = await axios.get('https://highleveltecknology.com/Qtap/api/meals', {
+            const response = await axios.get('https://api.qutap.co/api/meals', {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
                 },
@@ -101,7 +101,7 @@ export const Content = () => {
     const getCategories = async () => {
         try {
             setLoading(true);
-            const response = await axios.get('https://highleveltecknology.com/Qtap/api/meals_categories', {
+            const response = await axios.get('https://api.qutap.co/api/meals_categories', {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
                 },
@@ -135,7 +135,7 @@ export const Content = () => {
         try {
             const response = await axios({
                 method: 'PUT',
-                url: `https://highleveltecknology.com/Qtap/api/meals_categories/${editCategory.id}`,
+                url: `https://api.qutap.co/api/meals_categories/${editCategory.id}`,
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
                 },
@@ -160,7 +160,7 @@ export const Content = () => {
         try {
             const response = await axios({
                 method: 'DELETE',
-                url: `https://highleveltecknology.com/Qtap/api/meals_categories/${categoryId}`,
+                url: `https://api.qutap.co/api/meals_categories/${categoryId}`,
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
                 }

@@ -41,7 +41,7 @@ const AddMenuModal = ({ open, handleClose, onSuccess }) => {
             }
 
             const response = await axios.post(
-                'https://highleveltecknology.com/Qtap/api/products',
+                'https://api.qutap.co/api/products',
                 formData,
                 {
                     headers: {

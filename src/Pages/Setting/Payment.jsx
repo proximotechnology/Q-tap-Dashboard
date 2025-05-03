@@ -33,7 +33,7 @@ const PaymentGatewayForm = forwardRef((props, ref) => {
                 },
                 body: JSON.stringify(formData)
             }
-            const response = await fetch('https://highleveltecknology.com/Qtap/api/settings/payment', options);
+            const response = await fetch('https://api.qutap.co/api/settings/payment', options);
             // console.log("response payment", response);
 
             const data = await response.json();

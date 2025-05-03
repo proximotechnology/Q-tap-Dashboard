@@ -32,7 +32,7 @@ export const MenuDataProvider = ({ children }) => {
     const getMenuData = async (branchNumber) => {
         try {
             const response = await fetchWithRetry(
-                `https://highleveltecknology.com/Qtap/api/menu/${branchNumber}`,
+                `https://api.qutap.co/api/menu/${branchNumber}`,
                 {
                     method: 'GET',
                     headers: {

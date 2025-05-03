@@ -42,7 +42,7 @@ export const FeedbackAdmin = () => {
     // get data from backend to display in the table
     const getFeedbackData = async () => {
         try {
-            const response = await axios.get('https://highleveltecknology.com/Qtap/api/feedback_client', {
+            const response = await axios.get('https://api.qutap.co/api/feedback_client', {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
@@ -63,7 +63,7 @@ export const FeedbackAdmin = () => {
 
     // delete feedback data
     const deleteFeedback = async (id) => {
-        await axios.delete(`https://highleveltecknology.com/Qtap/api/feedback/${id}`, {
+        await axios.delete(`https://api.qutap.co/api/feedback_client/${id}`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
             }
@@ -80,7 +80,7 @@ export const FeedbackAdmin = () => {
         const newStatus = currentStatus === "yes" ? "no" : "yes";
         // console.log('newStatus:', newStatus, currentStatus);
 
-        await axios.put(`https://highleveltecknology.com/Qtap/api/feedback/${id}`, {
+        await axios.put(`https://api.qutap.co/api/feedback_client/${id}`, {
             publish: newStatus
         }, {
             headers: {

@@ -22,7 +22,7 @@ export const AddNotification = ({ open, handleClose, addNotification }) => {
             content: content
         };
 
-        fetch('https://highleveltecknology.com/Qtap/api/note', {
+        fetch('https://api.qutap.co/api/note', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

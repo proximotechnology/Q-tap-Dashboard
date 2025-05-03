@@ -35,7 +35,7 @@ export const Table1 = () => {
     try {
       const response = await axios({
         method: 'DELETE',
-        url: `https://highleveltecknology.com/Qtap/api/delivery_area/${id}`,
+        url: `https://api.qutap.co/api/delivery_area/${id}`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('clientToken')}`,
         },
@@ -61,7 +61,7 @@ export const Table1 = () => {
 
     try {
       const response = await axios.get(
-        `https://highleveltecknology.com/Qtap/api/delivery_area`,
+        `https://api.qutap.co/api/delivery_area`,
         {
           headers: {
             'Content-Type': 'application/json',

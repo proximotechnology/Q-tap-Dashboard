@@ -5,7 +5,7 @@ import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 export const Row3 = ({code}) => {
-    const invitationLink = `https://highleveltecknology.com/Qtap/api/home_affiliate/${code}`;
+    const invitationLink = `https://api.qutap.co/api/home_affiliate/${code}`;
 
     const {t} = useTranslation();
     const copyToClipboard = () => {

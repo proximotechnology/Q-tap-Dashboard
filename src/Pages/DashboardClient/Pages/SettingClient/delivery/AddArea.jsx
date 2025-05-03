@@ -64,7 +64,7 @@ const AddArea = ({ open, onClose, getDeliveryArea, editData }) => {
         // Update existing delivery area
         response = await axios({
           method: 'PUT',
-          url: `https://highleveltecknology.com/Qtap/api/delivery_area/${editData.id}`,
+          url: `https://api.qutap.co/api/delivery_area/${editData.id}`,
           data: formData,
           headers,
         });
@@ -72,7 +72,7 @@ const AddArea = ({ open, onClose, getDeliveryArea, editData }) => {
         // Add new delivery area
         response = await axios({
           method: 'POST',
-          url: 'https://highleveltecknology.com/Qtap/api/delivery_area',
+          url: 'https://api.qutap.co/api/delivery_area',
           data: formData,
           headers,
         });

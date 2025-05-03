@@ -172,7 +172,7 @@ const Support = () => {
 
   const getFeedbackData = async () => {
     try {
-      const response = await axios.get('https://highleveltecknology.com/Qtap/api/feedback', {
+      const response = await axios.get('https://api.qutap.co/api/feedback', {
         headers: {
           'Content-Type': 'application/json',
           "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
@@ -197,7 +197,7 @@ const Support = () => {
 
   const handleDeleteFeedback = async (id) => {
     try {
-      const response = await axios.delete(`https://highleveltecknology.com/Qtap/api/feedback/${id}`, {
+      const response = await axios.delete(`https://api.qutap.co/api/feedback/${id}`, {
         headers: {
           'Content-Type': 'application/json',
           "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
@@ -229,7 +229,7 @@ const Support = () => {
   const fetchTickets = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('https://highleveltecknology.com/Qtap/api/ticket', {
+      const response = await axios.get('https://api.qutap.co/api/ticket', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
         }
@@ -285,7 +285,7 @@ const Support = () => {
       console.log(" dat2a add", data);
 
       const response = await axios.post(
-        'https://highleveltecknology.com/Qtap/api/ticket',
+        'https://api.qutap.co/api/ticket',
         data,
         {
           headers: {
@@ -319,7 +319,7 @@ const Support = () => {
       console.log(" dat2a", data);
 
       const response = await axios.post(
-        `https://highleveltecknology.com/Qtap/api/ticket/${selectedTicket.id}`,
+        `https://api.qutap.co/api/ticket/${selectedTicket.id}`,
         data,
         {
           headers: {

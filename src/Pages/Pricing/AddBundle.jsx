@@ -49,8 +49,8 @@ const AddBundle = ({ open, onClose, editData = null }) => {
         };
 
         const url = editData 
-            ? `https://highleveltecknology.com/Qtap/api/pricing/${editData.id}`
-            : 'https://highleveltecknology.com/Qtap/api/pricing';
+            ? `https://api.qutap.co/api/pricing/${editData.id}`
+            : 'https://api.qutap.co/api/pricing';
 
         const method = editData ? 'PUT' : 'POST';
 

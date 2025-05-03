@@ -64,7 +64,7 @@ export const UserTable = ({ userStaff, getUserStaff }) => {
   // Handle delete user staff
   const handleDeleteUserStaff = async (id) => {
     try {
-      const response = await axios.delete(`https://highleveltecknology.com/Qtap/api/resturant_users/${id}`, {
+      const response = await axios.delete(`https://api.qutap.co/api/resturant_users/${id}`, {
         headers: {
           'Content-Type': 'application/json',
           "Authorization": `Bearer ${localStorage.getItem('clientToken')}`

@@ -12,7 +12,7 @@ const Product = () => {
 
   const getMenus = async () => {
     try {
-      const response = await axios.get('https://highleveltecknology.com/Qtap/api/products', {
+      const response = await axios.get('https://api.qutap.co/api/products', {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
@@ -30,7 +30,7 @@ const Product = () => {
 
   const handleDeleteMenu = async (menuId) => {
     try {
-      await axios.delete(`https://highleveltecknology.com/Qtap/api/products/${menuId}`, {
+      await axios.delete(`https://api.qutap.co/api/products/${menuId}`, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('adminToken')}`

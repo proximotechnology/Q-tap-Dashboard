@@ -35,7 +35,7 @@ const PaymentGatewayForm = () => {
                 },
                 body: JSON.stringify(formData)
             }
-            const response = await fetch('https://highleveltecknology.com/Qtap/api/payment', options);
+            const response = await fetch('https://api.qutap.co/api/payment', options);
             // console.log("response payment", response);
 
             const data = await response.json();

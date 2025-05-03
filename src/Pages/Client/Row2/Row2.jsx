@@ -62,7 +62,7 @@
 //   };
 
 //   const getData = () => {
-//     fetch("https://highleveltecknology.com/Qtap/api/qtap_clients", {
+//     fetch("https://api.qutap.co/api/qtap_clients", {
 //       method: "GET",
 //       headers: {
 //         "Content-Type": "application/json",
@@ -84,7 +84,7 @@
 //     const newStatus = currentStatus === "active" ? "inactive" : "active";
 //     try {
 //       const response = await fetch(
-//         `https://highleveltecknology.com/Qtap/api/qtap_clients/${clientId}`,
+//         `https://api.qutap.co/api/qtap_clients/${clientId}`,
 //         {
 //           method: "POST",
 //           headers: {
@@ -467,7 +467,7 @@ export const Row2 = () => {
   const getData = async () => {
     setLoading(true); // Start loading
     try {
-      const response = await fetch("https://highleveltecknology.com/Qtap/api/qtap_clients", {
+      const response = await fetch("https://api.qutap.co/api/qtap_clients", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -502,7 +502,7 @@ export const Row2 = () => {
     const newStatus = currentStatus === "active" ? "inactive" : "active";
     try {
       const response = await fetch(
-        `https://highleveltecknology.com/Qtap/api/active_clients/${clientId}`,
+        `https://api.qutap.co/api/active_clients/${clientId}`,
         {
           method: "POST",
           headers: {

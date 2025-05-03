@@ -173,8 +173,8 @@ export const Tables = ({ openOldMenu }) => {
   const handleSaveTable = async (tableData) => {
     try {
       const url = editingTable
-        ? `https://highleveltecknology.com/Qtap/api/tables/${editingTable.id}`
-        : 'https://highleveltecknology.com/Qtap/api/tables';
+        ? `https://api.qutap.co/api/tables/${editingTable.id}`
+        : 'https://api.qutap.co/api/tables';
       const method = editingTable ? 'PUT' : 'POST';
 
       const response = await axios({
@@ -205,7 +205,7 @@ export const Tables = ({ openOldMenu }) => {
 
   const handleDeleteTable = async (id) => {
     try {
-      const response = await axios.delete(`https://highleveltecknology.com/Qtap/api/tables/${id}`, {
+      const response = await axios.delete(`https://api.qutap.co/api/tables/${id}`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('clientToken')}`,

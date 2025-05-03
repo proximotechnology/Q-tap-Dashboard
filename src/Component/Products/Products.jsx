@@ -35,7 +35,7 @@ export const Products = () => {
 
     const getMenus = async () => {
         try {
-            const response = await axios.get('https://highleveltecknology.com/Qtap/api/products', {
+            const response = await axios.get('https://api.qutap.co/api/products', {
                 headers: {
                     'Content-Type': 'application/json',
                 }

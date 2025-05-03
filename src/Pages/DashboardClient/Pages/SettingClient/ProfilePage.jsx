@@ -180,7 +180,7 @@ const ProfilePage = () => {
     // console.log("updatedData", updatedData);
 
     try {
-      const response = await fetch(`https://highleveltecknology.com/Qtap/api/clients_update_profile/${qtap_clients.id}`, {
+      const response = await fetch(`https://api.qutap.co/api/clients_update_profile/${qtap_clients.id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

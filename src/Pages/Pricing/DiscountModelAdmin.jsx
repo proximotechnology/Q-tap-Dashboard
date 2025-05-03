@@ -31,7 +31,7 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
 
             const response = await axios({
                 method: 'POST',
-                url: 'https://highleveltecknology.com/Qtap/api/discount',
+                url: 'https://api.qutap.co/api/discount',
                 data: formData,
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,
@@ -64,7 +64,7 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
         try {
             const response = await axios({
                 method: 'DELETE',
-                url: `https://highleveltecknology.com/Qtap/api/discount/${discountId}`,
+                url: `https://api.qutap.co/api/discount/${discountId}`,
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,
                 }
@@ -83,7 +83,7 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
 
     const getDiscounts = async () => {
         try {
-            const response = await axios.get('https://highleveltecknology.com/Qtap/api/discount', {
+            const response = await axios.get('https://api.qutap.co/api/discount', {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,
                 },
@@ -117,7 +117,7 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
 
         try {
             const response = await axios.put(
-                `https://highleveltecknology.com/Qtap/api/discount/${discountToUpdate.id}`,
+                `https://api.qutap.co/api/discount/${discountToUpdate.id}`,
                 {
                     code: discountToUpdate.code,
                     discount: discountToUpdate.discount,

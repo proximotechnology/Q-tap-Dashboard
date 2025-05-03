@@ -28,7 +28,7 @@ export const Row2 = () => {
     try {
 
       const response = await axios.get(
-        `https://highleveltecknology.com/Qtap/api/Sales_clicks/${year}`,
+        `https://api.qutap.co/api/Sales_clicks/${year}`,
         {
           headers: {
             'Content-Type': 'application/json',
