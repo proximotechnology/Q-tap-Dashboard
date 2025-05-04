@@ -206,6 +206,7 @@ const Offers = ({ isItemSelected }) => {
     //======== get offer data
     const getOffers = async () => {
         try {
+
             const response = await axios.get(`${BASE_URL}meals_special_offers`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,

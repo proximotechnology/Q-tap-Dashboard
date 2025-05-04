@@ -31,6 +31,7 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
 
     try {
       const response = await axios.get(
+
         `${BASE_URL}delivery_area`,
         {
           headers: {
@@ -125,6 +126,7 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
         // Update existing rider
         response = await axios({
           method: 'PUT',
+
           url: `${BASE_URL}delivery/${editData.id}`,
           data: formData,
           headers,
@@ -133,6 +135,7 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
         // Add new rider
         response = await axios({
           method: 'POST',
+
           url: `${BASE_URL}delivery`,
           data: formData,
           headers,

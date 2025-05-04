@@ -30,6 +30,7 @@ export const DeliveredCard = ({ orders, setSelectedOrder, setIsOrderDetailsOpen 
     } 
     */
     const token = localStorage.getItem("clientToken")
+    const BASE_URL = 'https://api.qutap.co/api/';
     const data = {
       order_id: order?.id,
       status: action,

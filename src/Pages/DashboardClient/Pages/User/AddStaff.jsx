@@ -16,6 +16,7 @@ export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
 
     const getRoles = async () => {
         try {
+
             const response = await axios.get(`${BASE_URL}roles`, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("clientToken")}`
@@ -47,6 +48,7 @@ export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
                 setIsLoading(false);
                 return;
             }
+
 
             const response = await axios.put(`${BASE_URL}link_user_role/${userId}`, {
                 role_id: role,

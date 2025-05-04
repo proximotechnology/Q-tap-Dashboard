@@ -38,6 +38,7 @@ export const Table2 = () => {
         try {
             const response = await axios({
                 method: 'DELETE',
+
                 url: `${BASE_URL}delivery/${id}`,
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('clientToken')}`,
@@ -62,6 +63,7 @@ export const Table2 = () => {
         }
 
         try {
+
             const response = await axios.get(`${BASE_URL}delivery`, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -86,6 +88,7 @@ export const Table2 = () => {
 
         try {
             const response = await axios.get(
+
                 `${BASE_URL}delivery_area`,
                 {
                     headers: {

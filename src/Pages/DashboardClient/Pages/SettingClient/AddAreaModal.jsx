@@ -28,6 +28,7 @@ const AddAreaModal = ({ open, onClose }) => {
             return;
         }
         try {
+
             const response = await axios.post(`${BASE_URL}area`, {
                 brunch_id: selectedBranch,
                 name
@@ -57,6 +58,7 @@ const AddAreaModal = ({ open, onClose }) => {
         }
 
         try {
+
             const response = await axios.post(`${BASE_URL}area/${id}`, {
                 brunch_id: selectedBranch,
                 name
@@ -82,6 +84,7 @@ const AddAreaModal = ({ open, onClose }) => {
     //========================================== حذف المنطقة
     const handleDeleteArea = async (id) => {
         try {
+
             const response = await axios.delete(`${BASE_URL}area/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',

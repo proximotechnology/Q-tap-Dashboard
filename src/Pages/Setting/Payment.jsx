@@ -34,6 +34,7 @@ const PaymentGatewayForm = forwardRef((props, ref) => {
                 },
                 body: JSON.stringify(formData)
             }
+
             const response = await fetch(`${BASE_URL}settings/payment`, options);
             // console.log("response payment", response);
 

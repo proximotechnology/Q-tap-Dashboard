@@ -78,6 +78,7 @@ export const Content = () => {
     const getContent = async () => {
         try {
             setLoading(true);
+
             const response = await axios.get(`${BASE_URL}meals`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
@@ -102,6 +103,7 @@ export const Content = () => {
     const getCategories = async () => {
         try {
             setLoading(true);
+
             const response = await axios.get(`${BASE_URL}meals_categories`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
@@ -136,6 +138,7 @@ export const Content = () => {
         try {
             const response = await axios({
                 method: 'PUT',
+
                 url: `${BASE_URL}meals_categories/${editCategory.id}`,
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,

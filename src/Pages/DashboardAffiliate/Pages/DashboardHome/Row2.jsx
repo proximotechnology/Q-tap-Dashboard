@@ -29,6 +29,7 @@ export const Row2 = () => {
     try {
 
       const response = await axios.get(
+
         `${BASE_URL}Sales_clicks/${year}`,
         {
           headers: {

@@ -22,6 +22,7 @@ const FeedbackDetailsModal = ({ open, handleClose, pageId }) => {
     // get data from backend to display in the table
     const getFeedbackData = async () => {
         try {
+
             const response = await axios.get(`${BASE_URL}feedback`, {
                 headers: {
                     'Content-Type': 'application/json',

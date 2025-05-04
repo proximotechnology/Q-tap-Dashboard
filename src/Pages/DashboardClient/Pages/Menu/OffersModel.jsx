@@ -46,6 +46,7 @@ const AddOfferModal = ({ open, handleClose, selectedBranch, contentForMenu, onAd
         formDataToSend.append("description", formData.description);
 
         try {
+
             const response = await axios.post(`${BASE_URL}meals_special_offers`, formDataToSend, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
@@ -197,6 +198,7 @@ export const OffersModel = ({ open, handleClose }) => {
 
     const getOffers = async () => {
         try {
+
             const response = await axios.get(`${BASE_URL}meals_special_offers`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
@@ -237,6 +239,7 @@ export const OffersModel = ({ open, handleClose }) => {
 
             try {
                 const response = await axios.put(
+
                     `${BASE_URL}meals_special_offers/${offer.id}`,
                     {
                         discount: offer.discount,
@@ -276,6 +279,7 @@ export const OffersModel = ({ open, handleClose }) => {
 
     const handleDelete = async (id) => {
         try {
+
             await axios.delete(`${BASE_URL}meals_special_offers/${id}`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,

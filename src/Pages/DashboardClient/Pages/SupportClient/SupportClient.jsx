@@ -173,6 +173,7 @@ const Support = () => {
 
   const getFeedbackData = async () => {
     try {
+
       const response = await axios.get(`${BASE_URL}feedback`, {
         headers: {
           'Content-Type': 'application/json',
@@ -198,6 +199,7 @@ const Support = () => {
 
   const handleDeleteFeedback = async (id) => {
     try {
+
       const response = await axios.delete(`${BASE_URL}feedback/${id}`, {
         headers: {
           'Content-Type': 'application/json',
@@ -230,6 +232,7 @@ const Support = () => {
   const fetchTickets = async () => {
     try {
       setLoading(true);
+
       const response = await axios.get(`${BASE_URL}ticket`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
@@ -286,6 +289,7 @@ const Support = () => {
       console.log(" dat2a add", data);
 
       const response = await axios.post(
+
         `${BASE_URL}ticket`,
         data,
         {
@@ -320,6 +324,7 @@ const Support = () => {
       console.log(" dat2a", data);
 
       const response = await axios.post(
+
         `${BASE_URL}ticket/${selectedTicket.id}`,
         data,
         {

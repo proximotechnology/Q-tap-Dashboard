@@ -62,6 +62,7 @@
 //   };
 
 //   const getData = () => {
+
 //     fetch("${BASE_URL}qtap_clients", {
 //       method: "GET",
 //       headers: {
@@ -84,6 +85,7 @@
 //     const newStatus = currentStatus === "active" ? "inactive" : "active";
 //     try {
 //       const response = await fetch(
+
 //         `${BASE_URL}qtap_clients/${clientId}`,
 //         {
 //           method: "POST",
@@ -468,6 +470,7 @@ export const Row2 = () => {
   const getData = async () => {
     setLoading(true); // Start loading
     try {
+
       const response = await fetch(`${BASE_URL}qtap_clients`, {
         method: "GET",
         headers: {

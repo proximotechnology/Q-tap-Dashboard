@@ -12,6 +12,7 @@ export const Row1 = () => {
         try {
     
           const response = await axios.get(
+
             `${BASE_URL}get_sales_affiliate`,
             {
               headers: {

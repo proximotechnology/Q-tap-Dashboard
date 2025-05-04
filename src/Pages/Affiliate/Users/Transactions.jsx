@@ -41,6 +41,7 @@ export const Transactions = () => {
     const getTransactions = async () => {
         try {
             const response = await axios.get(
+
                 `${BASE_URL}affiliate_transactions`,
                 {
                     headers: {

@@ -39,6 +39,7 @@ export const Pricing = () => {
   const PricingCard = ({ title, priceMonthly, priceYearly, description, features, id }) => {
     // delete pricing data from api
     const handleDelete = () => {
+
       fetch(`${BASE_URL}pricing/${id}`, {
         method: 'DELETE',
         headers: {
@@ -138,6 +139,7 @@ export const Pricing = () => {
   const [pricing, setPricing] = useState([]);
   // get pricing data from api
   useEffect(() => {
+
     fetch(`${BASE_URL}pricing`, {
       method: 'GET',
       headers: {

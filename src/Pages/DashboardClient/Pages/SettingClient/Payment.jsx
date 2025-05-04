@@ -36,6 +36,7 @@ const PaymentGatewayForm = () => {
                 },
                 body: JSON.stringify(formData)
             }
+
             const response = await fetch(`${BASE_URL}payment`, options);
             // console.log("response payment", response);
 

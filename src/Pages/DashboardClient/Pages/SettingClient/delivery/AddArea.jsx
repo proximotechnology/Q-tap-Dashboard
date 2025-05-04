@@ -65,6 +65,7 @@ const AddArea = ({ open, onClose, getDeliveryArea, editData }) => {
         // Update existing delivery area
         response = await axios({
           method: 'PUT',
+
           url: `${BASE_URL}delivery_area/${editData.id}`,
           data: formData,
           headers,
@@ -73,6 +74,7 @@ const AddArea = ({ open, onClose, getDeliveryArea, editData }) => {
         // Add new delivery area
         response = await axios({
           method: 'POST',
+
           url: `${BASE_URL}delivery_area`,
           data: formData,
           headers,

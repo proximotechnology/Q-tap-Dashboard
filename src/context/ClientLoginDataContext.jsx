@@ -12,6 +12,7 @@ export const ClientLoginDataProvider = ({ children }) => {
 
     const getAreaData = async () => {
         try {
+
             const response = await axios.get(`${BASE_URL}area`, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -48,6 +49,7 @@ export const ClientLoginDataProvider = ({ children }) => {
 
     const getTableDataRes = async () => {
         try {
+
             const response = await axios.get(`${BASE_URL}tables`, {
                 headers: {
                     'Content-Type': 'application/json',

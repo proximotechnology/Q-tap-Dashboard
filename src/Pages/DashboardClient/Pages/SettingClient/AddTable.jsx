@@ -61,6 +61,7 @@ const AddTableModal = ({ open, onClose, onSave, tableData }) => {
       };
 
       const url = tableData
+
         ? `${BASE_URL}tables/${tableData.id}` // Update existing table
         : `${BASE_URL}tables`; // Add new table
 

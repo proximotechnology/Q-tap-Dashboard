@@ -50,6 +50,7 @@ const CategoryForm = ({ open, handleClose }) => {
 
       const response = await axios({
         method: 'POST',
+
         url: `${BASE_URL}meals_categories`,
         data: formData,
         headers: {

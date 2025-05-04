@@ -43,6 +43,7 @@ export const Payment = () => {
   useEffect(() => {
     setIsLoading(true);
     Promise.all([
+
       fetch(`${BASE_URL}pricing`, {
         method: 'GET',
         headers: {
@@ -55,6 +56,7 @@ export const Payment = () => {
           // console.log("price data register", data);
         })
         .catch(error => console.error('Error fetching pricing data:', error)),
+
 
       fetch(`${BASE_URL}discount`, {
         method: 'GET',

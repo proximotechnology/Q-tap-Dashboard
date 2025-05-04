@@ -116,6 +116,7 @@ const Support = () => {
   const fetchTickets = async () => {
     try {
       setLoading(true);
+
       const response = await axios.get(`${BASE_URL}ticket_client`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
@@ -166,6 +167,7 @@ const Support = () => {
       };
 
       const response = await axios.put(
+
         `${BASE_URL}ticket_client/${selectedTicket.id}`,
         data,
         {
@@ -206,6 +208,7 @@ const Support = () => {
       // console.log(" dat2a add", data);
 
       const response = await axios.post(
+
         `${BASE_URL}ticket_client`,
         data,
         {

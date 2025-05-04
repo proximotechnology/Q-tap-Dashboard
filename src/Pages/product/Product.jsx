@@ -13,6 +13,7 @@ const Product = () => {
 
   const getMenus = async () => {
     try {
+
       const response = await axios.get(`${BASE_URL}products`, {
         headers: {
           'Content-Type': 'application/json',
@@ -31,6 +32,7 @@ const Product = () => {
 
   const handleDeleteMenu = async (menuId) => {
     try {
+
       await axios.delete(`${BASE_URL}products/${menuId}`, {
         headers: {
           'Content-Type': 'application/json',

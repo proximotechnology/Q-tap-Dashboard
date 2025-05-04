@@ -25,6 +25,7 @@ const ChatApp = () => {
   const fetchCustomers = useCallback(async () => {
     try {
       const token = localStorage.getItem('adminToken');
+
       const response = await axios.get(`${BASE_URL}customer_info`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -42,6 +43,7 @@ const ChatApp = () => {
   const fetchMessages = useCallback(async (customerId) => {
     try {
       const token = localStorage.getItem('adminToken');
+
       const response = await axios.get(`${BASE_URL}chat?customer_id=${customerId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -72,6 +74,7 @@ const ChatApp = () => {
         sender_type: 'support',
         message: messageInput,
       };
+
       await axios.post(`${BASE_URL}chat`, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });

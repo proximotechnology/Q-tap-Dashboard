@@ -61,6 +61,7 @@ export const AddUser = ({ open, onClose }) => {
                 headers: { Authorization: `Bearer ${token}` },
             };
 
+
             const response = await axios.post(`${BASE_URL}restaurant_user_staff`, staffData, config)
 
 

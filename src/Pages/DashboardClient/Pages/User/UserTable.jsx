@@ -65,6 +65,7 @@ export const UserTable = ({ userStaff, getUserStaff }) => {
   // Handle delete user staff
   const handleDeleteUserStaff = async (id) => {
     try {
+
       const response = await axios.delete(`${BASE_URL}resturant_users/${id}`, {
         headers: {
           'Content-Type': 'application/json',

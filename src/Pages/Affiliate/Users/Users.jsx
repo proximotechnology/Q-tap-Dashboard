@@ -50,6 +50,7 @@ export const Users = () => {
   const getUsers = async () => {
     try {
       const response = await axios.get(
+
         `${BASE_URL}affiliate`,
         {
           headers: {
@@ -73,6 +74,7 @@ export const Users = () => {
     try {
       const newStatus = currentStatus === "active" ? "inactive" : "active";
       const response = await axios.post(
+
         `${BASE_URL}qtap_affiliate/${userId}`,
         {
           status: newStatus,
@@ -91,6 +93,7 @@ export const Users = () => {
   const handleDeleteUser = async (userId) => {
     try {
       const response = await axios.delete(
+
         `${BASE_URL}affiliate/${userId}`,
         {
           headers: {

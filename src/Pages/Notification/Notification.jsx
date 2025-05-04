@@ -22,6 +22,7 @@ export const Notification = () => {
 
   // Function to fetch notifications
   const getNotifications = () => {
+
     fetch(`${BASE_URL}note`, {
       method: 'GET',
       headers: {

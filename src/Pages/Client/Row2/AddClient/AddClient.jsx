@@ -93,6 +93,7 @@
 
 // //       console.log('Client allClientData', allClientData);
 
+
 // //       const response = await axios.post('${BASE_URL}qtap_clients', allClientData, {
 // //         headers: {
 // //           'Content-Type': 'application/json',
@@ -588,6 +589,7 @@ export const AddClient = () => {
       };
 
       const url = isEditMode
+
         ? `${BASE_URL}qtap_clients/${clientId}`
         : `${BASE_URL}qtap_clients`;
       const method = isEditMode ? "POST" : "POST";

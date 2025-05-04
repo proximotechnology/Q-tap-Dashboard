@@ -43,6 +43,7 @@ export const FeedbackAdmin = () => {
     // get data from backend to display in the table
     const getFeedbackData = async () => {
         try {
+
             const response = await axios.get(`${BASE_URL}feedback_client`, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -64,6 +65,7 @@ export const FeedbackAdmin = () => {
 
     // delete feedback data
     const deleteFeedback = async (id) => {
+
         await axios.delete(`${BASE_URL}feedback/${id}`, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
@@ -80,6 +82,7 @@ export const FeedbackAdmin = () => {
     const publishFeedback = async (id, currentStatus) => {
         const newStatus = currentStatus === "yes" ? "no" : "yes";
         // console.log('newStatus:', newStatus, currentStatus);
+
 
         await axios.put(`${BASE_URL}feedback/${id}`, {
             publish: newStatus

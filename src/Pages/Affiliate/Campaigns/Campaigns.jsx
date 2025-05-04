@@ -70,6 +70,7 @@ const Campaigns = () => {
   const handleDeleteCampaign = async (campaignId) => {
     try {
       await axios.delete(
+
         `${BASE_URL}campaigns/${campaignId}`,
         {
           headers: {
@@ -100,6 +101,7 @@ const Campaigns = () => {
       };
 
       const response = await axios.post(
+
         `${BASE_URL}campaigns`,
         dataCampaign,
         {
@@ -131,6 +133,7 @@ const Campaigns = () => {
   const handleEditCampaign = async (campaignId) => {
     try {
       const response = await axios.put(
+
         `${BASE_URL}campaigns/${campaignId}`,
         {
           name: name.trim(),

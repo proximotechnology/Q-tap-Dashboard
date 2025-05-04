@@ -10,6 +10,7 @@ export const AffiliateClientProvider = ({ children }) => {
 
     const getAffiliateData = async (id) => {
         try {
+
             const response = await axios.get(`${BASE_URL}get_affiliate_info/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -27,6 +28,7 @@ export const AffiliateClientProvider = ({ children }) => {
     };
     const getClientData = async (id) => {
         try {
+
             const response = await axios.get(`${BASE_URL}get_client_info/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',

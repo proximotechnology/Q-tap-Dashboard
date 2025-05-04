@@ -41,6 +41,7 @@ export const AddFeedback = ({ open, handleCloseModel, onAddFeedback }) => {
 
         try {
             const response = await axios.post(
+
                 `${BASE_URL}feedback`,
                 data,
                 {

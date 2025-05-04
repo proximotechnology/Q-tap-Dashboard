@@ -53,6 +53,7 @@ export const FAQ = forwardRef((props, ref) => {
     };
 
     // Send to API
+
     fetch(`${BASE_URL}settings/faq`, {
       method: "POST",
       headers: {

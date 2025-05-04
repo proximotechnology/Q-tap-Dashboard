@@ -181,6 +181,7 @@ const ProfilePage = () => {
     // console.log("updatedData", updatedData);
 
     try {
+
       const response = await fetch(`${BASE_URL}clients_update_profile/${qtap_clients.id}`, {
         method: 'POST',
         headers: {

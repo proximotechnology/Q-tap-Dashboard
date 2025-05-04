@@ -32,6 +32,7 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
 
             const response = await axios({
                 method: 'POST',
+
                 url: `${BASE_URL}discount`,
                 data: formData,
                 headers: {
@@ -84,6 +85,7 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
 
     const getDiscounts = async () => {
         try {
+
             const response = await axios.get(`${BASE_URL}discount`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,
@@ -118,6 +120,7 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
 
         try {
             const response = await axios.put(
+
                 `${BASE_URL}discount/${discountToUpdate.id}`,
                 {
                     code: discountToUpdate.code,

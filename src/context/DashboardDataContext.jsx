@@ -39,6 +39,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getSalesDashboard = async (id) => {
         try {
             const response = await fetchWithRetry(
+
                 `${BASE_URL}Sales/${id}`,
                 {
                     method: 'POST',
@@ -61,6 +62,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getSalesVolumeDashboard = async (id) => {
         try {
             const response = await fetchWithRetry(
+
                 `${BASE_URL}Sales_by_days/${id}`,
                 {
                     method: 'POST',
@@ -105,6 +107,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getDashboard = async () => {
         try {
             const response = await fetchWithRetry(
+
                 `${BASE_URL}dashboard`,
                 {
                     method: 'POST',
@@ -146,6 +149,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getWithdrawals = async (id) => {
         try {
             const response = await fetchWithRetry(
+
                 `${BASE_URL}withdraw/${id}`,
                 {
                     method: 'GET',
@@ -225,6 +229,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getSalesVolumeClientDashboard = async (id) => {
         try {
             const response = await fetchWithRetry(
+
                 `${BASE_URL}Sales_by_days_restaurant/${id}`,
                 {
                     method: 'POST',
@@ -247,6 +252,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getClientDashboard = async (id) => {
         try {
             const response = await fetchWithRetry(
+
                 `${BASE_URL}dashboard/${id}`,
                 {
                     method: 'GET',
@@ -268,6 +274,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getPerformanceClientDashboard = async (id) => {
         try {
             const response = await fetchWithRetry(
+
                 `${BASE_URL}Performance/${id}`,
                 {
                     method: 'POST',
@@ -289,6 +296,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getWalletData = async (id) => {
         try {
             const response = await fetchWithRetry(
+
                 `${BASE_URL}wallet_restaurant/${localStorage.getItem("selectedBranch")}/${id}`,
                 {
                     method: 'GET',
@@ -311,6 +319,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getCustomerLog = async (id) => {
         try {
             const response = await fetchWithRetry(
+
                 `${BASE_URL}Customer_log/${localStorage.getItem("selectedBranch")}/${id}`,
                 {
                     method: 'GET',
@@ -331,6 +340,7 @@ export const DashboardDataProvider = ({ children }) => {
     // const getWithdrawals = async (id) => {
     //     try {
     //         const response = await fetchWithRetry(
+
     //             `${BASE_URL}withdraw/${id}`,
     //             {
     //                 method: 'GET',
@@ -352,6 +362,7 @@ export const DashboardDataProvider = ({ children }) => {
     const getClientWalletChart = async (id) => {
         try {
             const response = await fetchWithRetry(
+
                 `${BASE_URL}Sales_restaurant/${id}`,
                 {
                     method: 'POST',

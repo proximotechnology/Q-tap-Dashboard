@@ -174,6 +174,7 @@ export const Tables = ({ openOldMenu }) => {
   const handleSaveTable = async (tableData) => {
     try {
       const url = editingTable
+
         ? `${BASE_URL}tables/${editingTable.id}`
         : `${BASE_URL}tables`;
       const method = editingTable ? 'PUT' : 'POST';
@@ -206,6 +207,7 @@ export const Tables = ({ openOldMenu }) => {
 
   const handleDeleteTable = async (id) => {
     try {
+
       const response = await axios.delete(`${BASE_URL}tables/${id}`, {
         headers: {
           'Content-Type': 'application/json',

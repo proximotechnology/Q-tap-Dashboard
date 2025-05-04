@@ -23,6 +23,7 @@ export const AddNotification = ({ open, handleClose, addNotification }) => {
             content: content
         };
 
+
         fetch(`${BASE_URL}note`, {
             method: 'POST',
             headers: {

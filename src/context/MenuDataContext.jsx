@@ -33,6 +33,7 @@ export const MenuDataProvider = ({ children }) => {
     const getMenuData = async (branchNumber) => {
         try {
             const response = await fetchWithRetry(
+
                 `${BASE_URL}menu/${branchNumber}`,
                 {
                     method: 'GET',

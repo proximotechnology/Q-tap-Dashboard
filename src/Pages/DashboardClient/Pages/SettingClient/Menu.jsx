@@ -117,6 +117,7 @@ const Menu = () => {
         };
 
         try {
+
             const response = await fetch(`${BASE_URL}clients_update_menu/${id}`, {
                 method: 'POST',
                 headers: {

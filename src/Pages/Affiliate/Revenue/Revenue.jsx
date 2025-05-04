@@ -17,6 +17,7 @@ export const Revenue = () => {
   const getRvenueData = async () => {
     try {
       setLoading(true)
+
       const response = await fetch(`${BASE_URL}Sales/${year}`,
         {
           method: "POST",

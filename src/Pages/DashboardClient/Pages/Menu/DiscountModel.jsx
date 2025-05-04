@@ -36,6 +36,7 @@ export const DiscountModel = ({ open, handleClose }) => {
 
       const response = await axios({
         method: 'POST',
+
         url: `${BASE_URL}meals_discount`,
         data: formData,
         headers: {
@@ -68,6 +69,7 @@ export const DiscountModel = ({ open, handleClose }) => {
     try {
       const response = await axios({
         method: 'DELETE',
+
         url: `${BASE_URL}meals_discount/${discountId}`,
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
@@ -87,6 +89,7 @@ export const DiscountModel = ({ open, handleClose }) => {
 
   const getDiscounts = async () => {
     try {
+
       const response = await axios.get(`${BASE_URL}meals_discount`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
@@ -124,6 +127,7 @@ export const DiscountModel = ({ open, handleClose }) => {
 
     try {
       const response = await axios.put(
+
         `${BASE_URL}meals_discount/${discountToUpdate.id}`,
         {
           code: discountToUpdate.code,

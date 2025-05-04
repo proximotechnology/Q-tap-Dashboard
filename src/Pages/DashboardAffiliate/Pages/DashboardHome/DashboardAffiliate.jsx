@@ -16,6 +16,7 @@ export const DashboardAffiliate = () => {
       setIsLoading(true);
 
       const response = await axios.get(
+
         `${BASE_URL}get_myinfo`,
         {
           headers: {
