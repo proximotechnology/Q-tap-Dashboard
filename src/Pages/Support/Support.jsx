@@ -101,7 +101,7 @@ const Support = () => {
 
   const [selectedRow, setSelectedRow] = useState(null);
   const [openModalRow, setOpenModalRow] = useState(false);
-
+const theme = useTheme();
   const { t } = useTranslation()
 
   const handleRowClick = (row) => {
@@ -251,7 +251,7 @@ const Support = () => {
       <Paper sx={{ padding: "10px 20px", borderRadius: "20px" }}>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={12} sx={{ display: "flex", alignItems: "center" }}>
-            <Typography variant="body1" sx={{ fontSize: "12px", color: "#575756" }}>
+            <Typography variant="body1" sx={{ fontSize: "12px", color:  theme.palette.text.gray }}>
               {t("ticket.one")}
             </Typography>
             <Grid item xs>
@@ -284,7 +284,7 @@ const Support = () => {
                   </Box>
                 )}
                 <IconButton onClick={handleSearchClick}>
-                  <span className="icon-magnifier" style={{ fontSize: "15px", color: "#575756" }} />
+                  <span className="icon-magnifier" style={{ fontSize: "15px", color:  theme.palette.text.gray }} />
                 </IconButton>
               </Box>
             </Grid>

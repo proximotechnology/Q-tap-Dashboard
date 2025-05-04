@@ -163,7 +163,7 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
             }}>
                 <Box sx={{ padding: "20px" }}>
                     <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <Typography variant="body1" sx={{ fontSize: "12px", color: "#575756" }}>
+                        <Typography variant="body1" sx={{ fontSize: "12px", color: theme.palette.text.gray }}>
                             {t("discount.codes")}
                         </Typography>
                         <IconButton onClick={handleClose}>
@@ -175,29 +175,29 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
                     <Box sx={{ marginTop: "10px" }}>
                         <Grid container spacing={2} sx={{ mb: 2, marginTop: "12px" }}>
                             <Grid item xs={6}>
-                                <Typography variant='body2' sx={{ fontSize: "10px", color: "#575756" }}>{t("code")}</Typography>
+                                <Typography variant='body2' sx={{ fontSize: "10px", color: theme.palette.text.gray }}>{t("code")}</Typography>
                                 <TextField
                                     fullWidth
                                     type="text"
                                     value={code}
                                     onChange={(e) => setCode(e.target.value)}
-                                    placeholder="Please enter the code"
+                                    placeholder="Please enter code"
                                     InputProps={{
-                                        sx: { height: 33, lineHeight: "25px", borderRadius: "6px", fontSize: "10px" }
+                                        sx: { height: 33, lineHeight: "25px", borderRadius: "6px", fontSize: "10px", color: theme.palette.text.gray }
                                     }}
                                 />
                             </Grid>
                             <Grid item xs={6}>
-                                <Typography variant='body2' sx={{ fontSize: "10px", color: "#575756" }}>{t("discount.one")}</Typography>
+                                <Typography variant='body2' sx={{ fontSize: "10px", color: theme.palette.text.gray }}>{t("discount.one")}</Typography>
                                 <TextField
                                     fullWidth
                                     type="number"
                                     value={discount}
                                     onChange={(e) => setDiscount(e.target.value)}
-                                    placeholder="Please enter the discount"
+                                    placeholder="Please enter discount"
                                     InputProps={{
                                         endAdornment: <InputAdornment position="end">%</InputAdornment>,
-                                        sx: { height: 33, lineHeight: "25px", borderRadius: "6px", fontSize: "10px" }
+                                        sx: { height: 33, lineHeight: "25px", borderRadius: "6px", fontSize: "10px", color: theme.palette.text.gray }
                                     }}
                                 />
                             </Grid>
@@ -226,55 +226,56 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
                     </Box>
                 </Box>
 
-                <Table sx={{ p: 0, mt: 2, mb: 5, width: '100%', tableLayout: 'fixed', overflowY: "auto", backgroundColor: "white", borderRadius: "10px" }}>
-                    <TableHead>
-                        <TableRow sx={{ backgroundColor: "#EBEDF3" }}>
-                            <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>{t("code")}</TableCell>
-                            <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>{t("discount.one")}</TableCell>
-                            <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>{t("date")}</TableCell>
-                            <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>{t("status")}</TableCell>
-                            <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: "#575756" }}>{t("action")}</TableCell>
+                <Table sx={{ p: 0, mt: 2, mb: 5, width: '100%', tableLayout: 'fixed', overflowY: "auto", borderRadius: "10px" }}>
+                    <TableHead sx={{ backgroundColor: theme.palette.bodyColor.secandary }}>
+                        <TableRow >
+                            <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: theme.palette.text.gray }}>{t("code")}</TableCell>
+                            <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: theme.palette.text.gray }}>{t("discount.one")}</TableCell>
+                            <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: theme.palette.text.gray }}>{t("date")}</TableCell>
+                            <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: theme.palette.text.gray }}>{t("status")}</TableCell>
+                            <TableCell sx={{ fontSize: "10px", padding: '0px', borderBottom: "none", textAlign: "center", color: theme.palette.text.gray }}>{t("action")}</TableCell>
                         </TableRow>
                     </TableHead>
+
                     <TableBody>
                         {discounts.map((discount, index) => (
                             <TableRow key={index} sx={{ height: '36px' }}>
-                                <TableCell sx={{ textAlign: "center", fontSize: "10px", color: "gray", padding: '0px', borderBottom: "none" }}>
+                                <TableCell sx={{ textAlign: "center", fontSize: "10px", color: theme.palette.text.gray, padding: '0px', borderBottom: "none" }}>
                                     {discount.isEditing ? (
                                         <TextField
                                             value={discount.code}
                                             onChange={(e) => handleInputChange(index, "code", e.target.value)}
                                             size="small"
-                                            sx={{ fontSize: "5px", width: "70px", borderRadius:"7px"   }}
+                                            sx={{ fontSize: "5px", width: "70px", borderRadius: "7px" }}
                                         />
                                     ) : (
                                         discount.code
                                     )}
                                 </TableCell>
-                                <TableCell sx={{ textAlign: "center", fontSize: "10px", color: "gray", padding: '0px', borderBottom: "none" }}>
+                                <TableCell sx={{ textAlign: "center", fontSize: "10px", color: theme.palette.text.gray, padding: '0px', borderBottom: "none" }}>
                                     {discount.isEditing ? (
                                         <TextField
                                             value={discount.discount}
                                             onChange={(e) => handleInputChange(index, "discount", e.target.value)}
                                             size="small"
-                                            sx={{ fontSize: "5px", width: "60px", borderRadius:"7px"  }}
+                                            sx={{ fontSize: "5px", width: "60px", borderRadius: "7px" }}
                                         />
                                     ) : (
-                                        discount.discount.split(".")[0]  + '%'
+                                        discount.discount.split(".")[0] + '%'
                                     )}
                                 </TableCell>
 
-                                <TableCell sx={{ textAlign: "center", fontSize: "10px", color: "gray", padding: '0px', borderBottom: "none" }}>
+                                <TableCell sx={{ textAlign: "center", fontSize: "10px", color: theme.palette.text.gray, padding: '0px', borderBottom: "none" }}>
                                     {discount.created_at ? discount.created_at.split('T')[0].split('-').reverse().join('/') : discount.date}
                                 </TableCell>
 
-                                <TableCell sx={{ textAlign: "center", fontSize: "10px", color: "gray", padding: '0px', borderBottom: "none" }}>
+                                <TableCell sx={{ textAlign: "center", fontSize: "10px", color: theme.palette.text.gray, padding: '0px', borderBottom: "none" }}>
                                     {discount.isEditing ? (
                                         <Select
                                             value={discount.status}
                                             onChange={(e) => handleInputChange(index, "status", e.target.value)}
                                             size="small"
-                                            sx={{ fontSize: "10px", width: "70px", borderRadius:"7px" }}
+                                            sx={{ fontSize: "10px", width: "70px", borderRadius: "7px" }}
                                         >
                                             <MenuItem value="active" sx={{ fontSize: "10px" }}>{t("active")}</MenuItem>
                                             <MenuItem value="inactive" sx={{ fontSize: "10px" }}>{t("inactive")}</MenuItem>
@@ -287,7 +288,7 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
                                             borderRadius: '12px',
                                             display: 'inline-block',
                                         }}>
-                                            
+
                                             {discount.status}
                                         </Box>
                                     )}

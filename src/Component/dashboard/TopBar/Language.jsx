@@ -53,7 +53,7 @@ export const Language = () => {
         <Box sx={{ cursor: "pointer", display: "flex", alignItems: "center", marginRight: "20px" }} >
             <Box onClick={handleClick} sx={{ display: "flex", alignItems: "center" }}>
                 {getLanguageIcon()}
-                <KeyboardArrowDownIcon sx={{ fontSize: "15px", color: "#575756" }} />
+                <KeyboardArrowDownIcon sx={{ fontSize: "15px", color: theme.palette.text.gray }} />
             </Box>
 
             <Menu disableScrollLock
@@ -64,13 +64,13 @@ export const Language = () => {
 
             >
                 <MenuItem onClick={() => handleClose('en')} >
-                    <span className="icon-translation" style={{ width: "23px", height: "23px", marginRight: '8px' }}></span>
-                    <span style={{ fontSize: "12px", color: "#575756" }}>English</span>
+                    <span className="icon-translation" style={{ width: "23px", height: "23px", marginRight: '8px',color:"#ff9800" }}></span>
+                    <span style={{ fontSize: "12px", color: theme.palette.text.gray }}>English</span>
                 </MenuItem>
                 <Divider />
                 <MenuItem onClick={() => handleClose('ar')}>
-                    <LanguageOutlinedIcon sx={{ width: "25px", height: "25px", marginRight: '8px' }} />
-                    <span style={{ fontSize: "12px", color: "#575756" }}>Arabic</span>
+                    <LanguageOutlinedIcon sx={{ width: "25px", height: "25px", marginRight: '8px', color:"#ff9800" }} />
+                    <span style={{ fontSize: "12px", color: theme.palette.text.gray }}>Arabic</span>
                 </MenuItem>
             </Menu>
         </Box>

@@ -1,3 +1,4 @@
+import { useTheme } from '@mui/system';
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 
@@ -14,6 +15,7 @@ const CustomTooltip = ({ active, payload }) => {
 
 const LineChart1 = ({ salesData, showLine1, showLine2 }) => {
     // التحقق من وجود البيانات
+    const theme = useTheme();
     if (!salesData) {
         return <div>لا توجد بيانات متاحة</div>;
     }
@@ -32,7 +34,7 @@ const LineChart1 = ({ salesData, showLine1, showLine2 }) => {
                 <CartesianGrid stroke="#eee" strokeDasharray="3 3" />
                 <XAxis
                     dataKey="month_name"
-                    tick={{ fontSize: 9, angle: -45, textAnchor: 'end' }}
+                    tick={{ fontSize: 9, fill: theme.palette.text.gray, angle: -45, textAnchor: 'end' }}
                     tickLine={false}
                     interval={0}
                 />
@@ -41,7 +43,7 @@ const LineChart1 = ({ salesData, showLine1, showLine2 }) => {
                     domain={[0, 50]} // تعديل النطاق ليناسب القيم المحولة (مثل 20k تصبح 20)
                     ticks={[0, 10, 20, 30, 40, 50]}
                     tickFormatter={(tick) => `${tick}k`}
-                    tick={{ fontSize: 9 }}
+                    tick={{ fontSize: 9, fill: theme.palette.text.gray }}
                     tickLine={false}
                 />
                 <Tooltip content={<CustomTooltip />} />

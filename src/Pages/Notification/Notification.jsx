@@ -63,7 +63,7 @@ export const Notification = () => {
     <Box sx={{ padding: "0px 20px" }}>
       <Paper sx={{ borderRadius: "20px", padding: "30px", height: "80vh" }}>
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <Typography sx={{ color: "#575756", fontSize: "15px" }}>{t("history")}</Typography>
+          <Typography sx={{ color: theme.palette.text.gray, fontSize: "15px" }}>{t("history")}</Typography>
           <IconButton onClick={handleOpen}>
             <AddIcon sx={{ fontSize: "35px", fontWeight: "bolder", color: theme.palette.orangePrimary.main, cursor: "pointer" }} />
           </IconButton>
@@ -90,7 +90,8 @@ export const Notification = () => {
                   height: "30px",
                   paddingLeft: "15px",
                   borderRadius: '20px',
-                  backgroundColor: '#EBEDF3',
+                  backgroundColor: theme.palette.bodyColor.secandary,
+                  color: theme.palette.text.gray,
                   boxShadow: "none",
                   overflow: 'hidden',
                   whiteSpace: "nowrap",

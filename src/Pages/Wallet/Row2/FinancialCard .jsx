@@ -101,7 +101,7 @@ const FinancialCard = () => {
                     variant="bady1"
                     sx={{
                       fontSize: "25px",
-                      color: theme.palette.secondaryColor.main,
+                      color: theme.palette.text.black,
                       fontWeight: "bold",
                       display: "flex",
                       alignItems: "center",

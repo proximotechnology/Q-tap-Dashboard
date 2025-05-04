@@ -23,7 +23,7 @@ const FeedbackDetailsModal = ({ open, handleClose, pageId }) => {
     const getFeedbackData = async () => {
         try {
 
-            const response = await axios.get(`${BASE_URL}feedback`, {
+            const response = await axios.get(`${BASE_URL}feedback_client`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
@@ -40,6 +40,8 @@ const FeedbackDetailsModal = ({ open, handleClose, pageId }) => {
     };
     useEffect(() => {
         getFeedbackData();
+        console.log('Feedback data:', feedbackData);
+        
 
     }, []);
 
@@ -60,7 +62,7 @@ const FeedbackDetailsModal = ({ open, handleClose, pageId }) => {
             }}>
 
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Typography variant="body1" sx={{ color: '#575756', fontSize: "13px" }}>
+                    <Typography variant="body1" sx={{ color: theme.palette.text.gray, fontSize: "13px" }}>
                         Details
                     </Typography>
                     <Box>
@@ -74,7 +76,7 @@ const FeedbackDetailsModal = ({ open, handleClose, pageId }) => {
                 </Box>
                 <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main, marginBottom: "10px" }} />
 
-                <Typography variant="body1" sx={{ color: '#575756', fontSize: "12px" }}>
+                <Typography variant="body1" sx={{ color: theme.palette.text.gray, fontSize: "12px" }}>
                     How much you satisfied with the product?
                 </Typography>
 
@@ -87,7 +89,7 @@ const FeedbackDetailsModal = ({ open, handleClose, pageId }) => {
                     ))}
                 </Box>
 
-                <Typography variant="body1" sx={{ mt: 1, color: '#575756', fontSize: "12px" }}>
+                <Typography variant="body1" sx={{ mt: 1, color: theme.palette.text.gray, fontSize: "12px" }}>
                     How happy are you with the product?
                 </Typography>
 
@@ -97,7 +99,7 @@ const FeedbackDetailsModal = ({ open, handleClose, pageId }) => {
                         <SentimentVeryDissatisfiedIcon
                             sx={{
                                 fontSize: 35,
-                                color: feedbackData[pageId]?.emoji === 'sad' ? 'red' : '#AAAAAA'
+                                color: feedbackData[pageId]?.emoji === 'said' ? 'red' : '#AAAAAA'
                             }}
                         />
                         <Typography style={{ fontSize: 9, color: '#AAAAAA' }}>Sad</Typography>
@@ -126,7 +128,7 @@ const FeedbackDetailsModal = ({ open, handleClose, pageId }) => {
                     </Box>
                 </Box>
 
-                <Typography variant="body1" sx={{ mt: 1, color: '#575756', fontSize: "12px" }}>
+                <Typography variant="body1" sx={{ mt: 1, color: theme.palette.text.gray, fontSize: "12px" }}>
                     Does the product help you achieve your goals?
                 </Typography>
 
@@ -142,7 +144,7 @@ const FeedbackDetailsModal = ({ open, handleClose, pageId }) => {
                     </Box>
                 </Box>
                 <Box>
-                    <Typography variant="body1" sx={{ mt: 1, color: '#575756', fontSize: "12px" }}>
+                    <Typography variant="body1" sx={{ mt: 1, color: theme.palette.text.gray, fontSize: "12px" }}>
                         What are the things missing in Q-tap Menus?
                     </Typography>
                     <Typography variant="body2" sx={{ mt: 1, color: 'gray', fontSize: "10px" }}>
@@ -153,7 +155,7 @@ const FeedbackDetailsModal = ({ open, handleClose, pageId }) => {
                 </Box>
                 <Box>
 
-                    <Typography variant="body1" sx={{ mt: 1, color: '#575756', fontSize: "12px" }}>
+                    <Typography variant="body1" sx={{ mt: 1, color: theme.palette.text.gray, fontSize: "12px" }}>
                         Comment
                     </Typography>
                     <Typography variant="body2" sx={{ mt: 1, color: 'gray', fontSize: "10px" }}>

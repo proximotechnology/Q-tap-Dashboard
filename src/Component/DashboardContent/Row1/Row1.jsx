@@ -33,7 +33,7 @@ export const Row1 = () => {
                     <Card sx={{ borderRadius: '20px', height: '250px',backgroundColor:theme.palette.bodyColor.secandary }}>
                         <CardContent sx={{ overflowX: 'auto' }}>
                             <Box display={"flex"} justifyContent={"space-between"}>
-                                <Typography variant="subtitle1" color="#575756">{t("client")}</Typography>
+                                <Typography variant="subtitle1" color={theme.palette.text.gray}>{t("client")}</Typography>
                                 <PersonAddAlt1OutlinedIcon sx={{ color: "#D8E0E0 ", fontSize: '27px' }} />
                             </Box>
                             <Typography variant="body2" sx={{ color: theme.palette.orangePrimary.main, fontSize: "20px" }}>{Client?.number_branches_clients}</Typography>
@@ -47,7 +47,7 @@ export const Row1 = () => {
                     <Card sx={{ borderRadius: '20px', height: '250px',backgroundColor:theme.palette.bodyColor.secandary }}>
                         <CardContent>
                             <Box display={"flex"} justifyContent={"space-between"}>
-                                <Typography variant="subtitle1" color="text.secondary">{t("totalOrders")}</Typography>
+                                <Typography variant="subtitle1" color={theme.palette.text.gray}>{t("totalOrders")}</Typography>
                                 <span class="icon-shopping-bag" style={{ color: theme.palette.text.secondary, fontSize: "22px" }}></span>
                             </Box >
                             <Typography variant="body2" sx={{ color: theme.palette.orangePrimary.main, fontSize: "20px" }}>5.564</Typography>
@@ -62,7 +62,7 @@ export const Row1 = () => {
                     <Card sx={{ borderRadius: '20px', height: '250px' ,backgroundColor:theme.palette.bodyColor.secandary}}>
                         <CardContent>
                             <Box display={"flex"} justifyContent={"space-between"}>
-                                <Typography variant="subtitle1" color="text.secondary">{t("affiliateUsers")}</Typography>
+                                <Typography variant="subtitle1" color={theme.palette.text.gray}>{t("affiliateUsers")}</Typography>
                                 <span class="icon-social" style={{ color: "#D8E0E0", fontSize: "22px" }}></span>
                             </Box >
                             <Typography variant="body2" sx={{ color: theme.palette.orangePrimary.main, fontSize: "20px" }}>{Affiliate_Users?.totalAffiliates}</Typography>
@@ -77,7 +77,7 @@ export const Row1 = () => {
                     <Card sx={{ borderRadius: '20px', height: '250px' ,backgroundColor:theme.palette.bodyColor.secandary}}>
                         <CardContent>
                             <Box display={"flex"} justifyContent={"space-between"}>
-                                <Typography variant="subtitle1" color="text.secondary">{t("performance")}</Typography>
+                                <Typography variant="subtitle1" color={theme.palette.text.gray}>{t("performance")}</Typography>
                                 <TrendingUpIcon sx={{ color: "#d4d0d0 ", padding: "3px", fontSize: '23px', border: "1px solid #d4d0d0", borderRadius: "6px" }} />
                             </Box>
                             <Cart4 />

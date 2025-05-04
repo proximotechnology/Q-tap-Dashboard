@@ -60,7 +60,7 @@ const Cart2 = ({ Total_Orders }) => {
             <XAxis
               type="number"
               tickFormatter={(tick) => `${tick / 1000}k`}
-              tick={{ fontSize: 9 }}
+              tick={{ fontSize: 9, fill: theme.palette.text.gray }}
               axisLine={false}
               tickLine={false}
             />
@@ -68,7 +68,7 @@ const Cart2 = ({ Total_Orders }) => {
             <YAxis
               dataKey="month_name"
               type="category"
-              tick={{ fontSize: 10 }}
+              tick={{ fontSize: 10, fill: theme.palette.text.gray }}
               interval={0}
               axisLine={false}
               tickLine={false}
@@ -84,7 +84,7 @@ const Cart2 = ({ Total_Orders }) => {
               dataKey="total_order"
               fill="#000000"
               background={{
-                fill: '#d3d3d3',
+                fill: ' #d3d3d3',
                 radius: [10, 10, 10, 10]
               }}
               barSize={6.5}
@@ -93,7 +93,6 @@ const Cart2 = ({ Total_Orders }) => {
           </BarChart>
         </ResponsiveContainer>
       </div>
-
 
       {hasMoreOrders && (
         <button

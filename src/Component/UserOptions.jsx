@@ -6,6 +6,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Avatar, Box, Divider, IconButton, List, ListItem, ListItemIcon, ListItemText, Menu, MenuItem, Popover, Typography, useTheme } from "@mui/material";
 
 import { useNavigate } from 'react-router';
+import { Edit, Logout, Settings } from '@mui/icons-material';
 
 
 
@@ -35,8 +36,8 @@ const UserOptions = ({customSX = {}}) => {
             }}>
                 <PersonOutlineOutlinedIcon sx={{ fontSize: "20px", color: "white" }} />
             </IconButton>
-            <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756", marginLeft: "3px" }}>{localStorage.getItem('userName')}</Typography>
-            <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: "#575756" }} />
+            <Typography variant="body1" sx={{ fontSize: "13px", color: theme.palette.text.gray, marginLeft: "3px" }}>{localStorage.getItem('userName')}</Typography>
+            <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: theme.palette.text.gray }} />
         </Box>
             <Popover
                 id={openUserPopover ? 'simple-popover' : undefined}
@@ -86,11 +87,11 @@ const UserOptions = ({customSX = {}}) => {
 
                         <ListItem sx={{ cursor: "pointer" }} oonClick={handleUserClose}>
                             <ListItemIcon>
-                                <img src="/assets/setting.svg" alt="icon" style={{ width: "16px", height: "16px" }} />
+                            <Settings  style={{ fontSize:"20px"}} />
                             </ListItemIcon>
                             <ListItemText primary="Edit Profile"
                                 primaryTypographyProps={{
-                                    sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: "-30px" }
+                                    sx: { color: theme.palette.text.gray, fontSize: '12px', marginLeft: "-30px" }
                                 }} />
                         </ListItem>
 
@@ -100,7 +101,7 @@ const UserOptions = ({customSX = {}}) => {
                             </ListItemIcon>
                             <ListItemText primary="My Subscription"
                                 primaryTypographyProps={{
-                                    sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: "-30px" }
+                                    sx: { color: theme.palette.text.gray, fontSize: '12px', marginLeft: "-30px" }
                                 }} />
                         </ListItem>
 
@@ -110,7 +111,7 @@ const UserOptions = ({customSX = {}}) => {
                             </ListItemIcon>
                             <ListItemText primary="FAQ"
                                 primaryTypographyProps={{
-                                    sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: "-30px" }
+                                    sx: { color: theme.palette.text.gray, fontSize: '12px', marginLeft: "-30px" }
                                 }} />
                         </ListItem>
 
@@ -119,11 +120,11 @@ const UserOptions = ({customSX = {}}) => {
                             navigate('/');
                         }}>
                             <ListItemIcon>
-                                <img src="/assets/logout.svg" alt="icon" style={{ width: "16px", height: "16px" }} />
+                                <Logout  style={{ fontSize:"20px"}} />
                             </ListItemIcon>
                             <ListItemText primary="Logout"
                                 primaryTypographyProps={{
-                                    sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: "-30px" }
+                                    sx: { color: theme.palette.text.gray, fontSize: '12px', marginLeft: "-30px" }
                                 }} />
                         </ListItem>
                     </List>

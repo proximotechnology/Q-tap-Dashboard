@@ -13,6 +13,7 @@ import axios from 'axios';
 import Pusher from 'pusher-js';
 import './chat.css';
 import { BASE_URL } from '../../utils/helperFunction';
+import { useTheme } from '@mui/system';
 
 const ChatApp = () => {
   const [customers, setCustomers] = useState([]);
@@ -20,6 +21,8 @@ const ChatApp = () => {
   const [messages, setMessages] = useState([]);
   const [messageInput, setMessageInput] = useState('');
   const [anchorEl, setAnchorEl] = useState(null);
+  const theme = useTheme();
+  console.log("customers", customers, selectedCustomer, messages);
 
   // Fetch customers from API
   const fetchCustomers = useCallback(async () => {
@@ -69,7 +72,7 @@ const ChatApp = () => {
     try {
       const token = localStorage.getItem('adminToken');
       const payload = {
-        sender_id: localStorage.getItem("adminId") ,
+        sender_id: localStorage.getItem("adminId"),
         receiver_id: selectedCustomer.id,
         sender_type: 'support',
         message: messageInput,
@@ -188,10 +191,10 @@ const ChatApp = () => {
   return (
     <Paper sx={{ height: '70vh', borderRadius: '20px' }}>
       <Box sx={{ display: 'flex', alignItems: 'center', padding: '10px 20px', justifyContent: "start" }}>
-        <Typography variant='body2' sx={{ fontSize: '12px', color: '#363535fa' }}>
+        <Typography variant='body2' sx={{ fontSize: '12px', color: theme.palette.text.gray }}>
           Live Chat
         </Typography>
-        <IconButton title='reload if new customer send message' onClick={fetchCustomers} sx={{ color: '#363535fa' }}>
+        <IconButton title='reload if new customer send message' onClick={fetchCustomers} sx={{ color: theme.palette.text.gray }}>
           <RefreshIcon sx={{ fontSize: '18px' }} />
         </IconButton>
       </Box>
@@ -209,7 +212,6 @@ const ChatApp = () => {
                   padding: '3px 20px',
                   display: 'flex',
                   justifyContent: 'space-between',
-                  '&:hover': { backgroundColor: '#f7f7f7fa' },
                 }}
               >
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -221,7 +223,7 @@ const ChatApp = () => {
                     >
                       <Avatar
                         sx={{
-                          backgroundColor: selectedCustomer?.id === customer.id ? '#ef7d00' : '#AAAAAA',
+                          backgroundColor: selectedCustomer?.id === customer.id ? '#ef7d00' : theme.palette.text.gray,
                           width: 35,
                           height: 35,
                         }}
@@ -231,8 +233,8 @@ const ChatApp = () => {
                     </Badge>
                   </ListItemAvatar>
                   <ListItemText
-                    primary={<Typography sx={{ fontSize: '11px', color: '#575756' }}>{customer.name}</Typography>}
-                    secondary={<Typography sx={{ fontSize: '8px', color: 'gray', marginLeft: '10px' }}>{customer.email}</Typography>}
+                    primary={<Typography sx={{ fontSize: '11px', color: theme.palette.text.gray }}>{customer.name}</Typography>}
+                    secondary={<Typography sx={{ fontSize: '8px', color: theme.palette.text.gray, marginLeft: '10px' }}>{messages && messages.length > 0 ? messages[messages.length - 1].message.slice(0, 25) : customer.email}</Typography>}
                   />
                 </Box>
                 <Typography
@@ -243,10 +245,10 @@ const ChatApp = () => {
                     textAlign: 'right',
                   }}
                 >
-                  <span style={{ color: '#AAAAAA' }}>
+                  <span style={{ color: theme.palette.text.gray }}>
                     {new Date(customer.lastMessageTime).toLocaleDateString()}
                   </span>
-                  <span style={{ color: '#AAAAAA' }}>
+                  <span style={{ color: theme.palette.text.gray }}>
                     {new Date(customer.lastMessageTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </span>
                 </Typography>
@@ -266,10 +268,10 @@ const ChatApp = () => {
             <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <Box sx={{ padding: '0px 20px', flexGrow: 1, overflowY: 'auto' }}>
                 <Box display='flex' justifyContent='space-between'>
-                  <Typography sx={{ color: '#3c3d3d', fontSize: '12px' }}>{selectedCustomer.name}</Typography>
+                  <Typography sx={{ color: theme.palette.text.gray, fontSize: '12px' }}>{selectedCustomer.name}</Typography>
                   <Box>
-                    <LocalPhoneIcon sx={{ fontSize: '20px', color: '#3c3d3d', margin: '0px 13px', cursor: 'pointer' }} />
-                    <PersonOutlineOutlinedIcon sx={{ fontSize: '20px', color: '#3c3d3d', cursor: 'pointer' }} onClick={handleOpenMenu} />
+                    <LocalPhoneIcon sx={{ fontSize: '20px', color: theme.palette.text.gray, margin: '0px 13px', cursor: 'pointer' }} />
+                    <PersonOutlineOutlinedIcon sx={{ fontSize: '20px', color: theme.palette.text.gray, cursor: 'pointer' }} onClick={handleOpenMenu} />
                   </Box>
                 </Box>
                 <Divider />
@@ -291,6 +293,7 @@ const ChatApp = () => {
                         maxWidth: '70%',
                         fontSize: '12px',
                         borderRadius: msg.sender === 'me' ? '30px 30px 0px 30px' : '30px 30px 30px 0px',
+                        overflowWrap: 'break-word',
                       }}
                     >
                       {msg.message}
@@ -320,7 +323,7 @@ const ChatApp = () => {
                     sx: {
                       height: '30px',
                       borderRadius: '20px',
-                      backgroundColor: '#EBEDF3',
+                      backgroundColor: theme.palette.bodyColor.secandaryInput,
                       fontSize: '12px',
                       '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
                       display: 'flex',
@@ -336,9 +339,9 @@ const ChatApp = () => {
           ) : (
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
               <IconButton>
-                <WhatsAppIcon sx={{ color: 'gray', fontSize: '55px' }} />
+                <WhatsAppIcon sx={{ color: theme.palette.text.gray, fontSize: '55px' }} />
               </IconButton>
-              <Typography variant='body1' sx={{ fontSize: '16px', color: 'gray' }}>
+              <Typography variant='body1' sx={{ fontSize: '16px', color: theme.palette.text.gray }}>
                 Select a chat to start messaging.
               </Typography>
             </Box>
@@ -352,31 +355,31 @@ const ChatApp = () => {
           PaperProps={{ sx: { minWidth: '100px' } }}
         >
           <MenuItem>
-            <PersonOutlineOutlinedIcon sx={{ fontSize: 16, color: '#575756', marginRight: '10px' }} />
+            <PersonOutlineOutlinedIcon sx={{ fontSize: 16, color: theme.palette.text.gray, marginRight: '10px' }} />
             <Box>
-              <Typography sx={{ fontSize: '10px', color: '#575756' }}>Name:</Typography>
-              <Typography sx={{ fontSize: '10px', color: 'gray' }}>{selectedCustomer ? selectedCustomer.name : 'Name'}</Typography>
+              <Typography sx={{ fontSize: '10px', color: theme.palette.text.gray }}>Name:</Typography>
+              <Typography sx={{ fontSize: '10px', color: theme.palette.text.gray }}>{selectedCustomer ? selectedCustomer.name : 'Name'}</Typography>
             </Box>
           </MenuItem>
           <MenuItem>
             <LocalPhoneOutlinedIcon sx={{ fontSize: 15, marginRight: '10px' }} />
             <Box>
-              <Typography sx={{ fontSize: '10px', color: '#575756' }}>Mobile:</Typography>
-              <Typography sx={{ fontSize: '10px', color: 'gray' }}>{selectedCustomer ? selectedCustomer.phone : 'Mobile'}</Typography>
+              <Typography sx={{ fontSize: '10px', color: theme.palette.text.gray }}>Mobile:</Typography>
+              <Typography sx={{ fontSize: '10px', color: theme.palette.text.gray }}>{selectedCustomer ? selectedCustomer.phone : 'Mobile'}</Typography>
             </Box>
           </MenuItem>
           <MenuItem>
             <MailOutlineIcon sx={{ fontSize: 15, marginRight: '10px' }} />
             <Box>
-              <Typography sx={{ fontSize: '10px', color: '#575756' }}>Email:</Typography>
-              <Typography sx={{ fontSize: '10px', color: 'gray' }}>{selectedCustomer ? selectedCustomer.email : 'Email'}</Typography>
+              <Typography sx={{ fontSize: '10px', color: theme.palette.text.gray }}>Email:</Typography>
+              <Typography sx={{ fontSize: '10px', color: theme.palette.text.gray }}>{selectedCustomer ? selectedCustomer.email : 'Email'}</Typography>
             </Box>
           </MenuItem>
           <MenuItem>
             <AddLocationAltOutlinedIcon sx={{ fontSize: 15, marginRight: '10px' }} />
             <Box>
-              <Typography sx={{ fontSize: '10px', color: '#575756' }}>Address:</Typography>
-              <Typography sx={{ fontSize: '10px', color: 'gray' }}>{selectedCustomer ? selectedCustomer.address : 'Address'}</Typography>
+              <Typography sx={{ fontSize: '10px', color: theme.palette.text.gray }}>Address:</Typography>
+              <Typography sx={{ fontSize: '10px', color: theme.palette.text.gray }}>{selectedCustomer ? selectedCustomer.address : 'Address'}</Typography>
             </Box>
           </MenuItem>
         </Menu>

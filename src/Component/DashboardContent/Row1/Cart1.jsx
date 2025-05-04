@@ -159,7 +159,7 @@ export const Cart1 = ({ Client }) => {
                             marginRight: '8px',
                         }}
                     />
-                    <Typography variant="body2" color="text.secondary" sx={{ fontSize: "9px" }}>
+                    <Typography variant="body2" color={theme.palette.text.gray} sx={{ fontSize: "9px" }}>
                         {clients[0]?.name}
                     </Typography>
                 </Box>
@@ -176,7 +176,7 @@ export const Cart1 = ({ Client }) => {
                             margin: "5px 8px 5px 0"
                         }}
                     />
-                    <Typography variant="body2" color="text.secondary" sx={{ fontSize: "9px" }}>
+                    <Typography variant="body2" color={theme.palette.text.gray} sx={{ fontSize: "9px" }}>
                         {clients[1]?.name}
                     </Typography>
                 </Box>
@@ -193,7 +193,7 @@ export const Cart1 = ({ Client }) => {
                             marginRight: '8px'
                         }}
                     />
-                    <Typography variant="body2" color="text.secondary" sx={{ fontSize: "9px" }}>
+                    <Typography variant="body2" color={theme.palette.text.gray} sx={{ fontSize: "9px" }}>
                         {clients[2]?.name}
                     </Typography>
                 </Box>

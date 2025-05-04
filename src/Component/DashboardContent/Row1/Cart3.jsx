@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box, useTheme } from "@mui/system";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { PieChart, Pie, Cell } from "recharts";
@@ -9,7 +9,7 @@ const COLORS = ["#AD4181", "#D8E0E0"];
 export const Cart3 = ({ Affiliate_Users }) => {
   const { t } = useTranslation();
   const [affiliates, setAffiliates] = React.useState({});
-
+  const theme = useTheme();
   React.useEffect(() => {
     let isMounted = true; // Flag to prevent setting state if component is unmounted
     const updateAffiliates = () => {
@@ -30,13 +30,13 @@ export const Cart3 = ({ Affiliate_Users }) => {
   // تحويل البيانات إلى تنسيق Pie Chart
   const pieData = affiliates.active_percentage
     ? [
-        { name: "Affiliated", value: parseFloat(affiliates.active_percentage) },
-        { name: "Remaining", value: 100 - parseFloat(affiliates.active_percentage) },
-      ]
+      { name: "Affiliated", value: parseFloat(affiliates.active_percentage) },
+      { name: "Remaining", value: 100 - parseFloat(affiliates.active_percentage) },
+    ]
     : [
-        { name: "Affiliated", value: 0 },
-        { name: "Remaining", value: 100 },
-      ];
+      { name: "Affiliated", value: 0 },
+      { name: "Remaining", value: 100 },
+    ];
 
 
   return (
@@ -62,8 +62,8 @@ export const Cart3 = ({ Affiliate_Users }) => {
           />
           <Typography
             variant="body2"
-            color="text.secondary"
-            sx={{ fontSize: "7px", color: "gray" }}
+            color={theme.palette.text.gray}
+            sx={{ fontSize: "7px" }}
           >
             {t("subscriptions")}
           </Typography>
@@ -88,8 +88,8 @@ export const Cart3 = ({ Affiliate_Users }) => {
           />
           <Typography
             variant="body2"
-            color="text.secondary"
-            sx={{ fontSize: "8px", color: "gray" }}
+            color={theme.palette.text.gray}
+            sx={{ fontSize: "8px" }}
           >
             {t("affiliatedSub")}
           </Typography>

@@ -110,8 +110,8 @@ export const Row3 = () => {
         <Card sx={{ borderRadius: 4, height: '100%', overflow: 'auto' }}>
           <CardContent>
             <Box display="flex" justifyContent="space-between" alignItems="center" width="100%" marginBottom="7px">
-              <Box variant="body2" sx={{ fontSize: '13px', display: 'flex', color: '#575756' }}>
-                <span className="icon-transfer" style={{ fontSize: '22px', color: '#D8E0E0' }}></span>
+              <Box variant="body2" sx={{ fontSize: '13px', display: 'flex' , color: theme.palette.text.gray }}>
+                <span className="icon-transfer" style={{ fontSize: '22px', color: '#D8E0E0', marginRight:"5px" , marginRight:"5px" }}></span>
                 {t('withdrawals')}
               </Box>
               <Box sx={{ display: 'flex', textAlign: 'center', alignItems: 'center' }} gap={1}>
@@ -142,7 +142,7 @@ export const Row3 = () => {
                     </Box>
                   )}
                   <IconButton>
-                    <span className="icon-magnifier" style={{ fontSize: '15px', color: '#575756' }} />
+                    <span className="icon-magnifier" style={{ fontSize: '15px', color: theme.palette.text.gray }} />
                   </IconButton>
                 </Box>
                 <TextField
@@ -150,21 +150,21 @@ export const Row3 = () => {
                   value={withdrawFromDate}
                   onChange={(e) => setWithdrawFromDate(e.target.value)}
                   InputLabelProps={{ shrink: true }}
-                  inputProps={{ style: { fontSize: '12px', padding: '2px 8px', color: 'black' } }}
-                  sx={{ width: '120px', height: '25px', fontSize: '12px', borderRadius: '5px', color: 'black' }}
+                  inputProps={{ style: { fontSize: '12px', padding: '2px 8px', color: theme.palette.text.gray } }}
+                  sx={{ width: '120px', height: '25px', fontSize: '12px', borderRadius: '5px', color: theme.palette.text.gray }}
                 />
                 <TextField
                   type="date"
                   value={withdrawToDate}
                   onChange={(e) => setWithdrawToDate(e.target.value)}
                   InputLabelProps={{ shrink: true }}
-                  inputProps={{ style: { fontSize: '12px', padding: '2px 8px', color: 'black' } }}
-                  sx={{ width: '120px', height: '25px', fontSize: '12px', borderRadius: '5px', color: 'black' }}
+                  inputProps={{ style: { fontSize: '12px', padding: '2px 8px', color: theme.palette.text.gray } }}
+                  sx={{ width: '120px', height: '25px', fontSize: '12px', borderRadius: '5px', color: theme.palette.text.gray }}
                 />
                 <Button
                   sx={{ color: theme.palette.orangePrimary.main, fontSize: '11px', textTransform: 'capitalize' }}
                 >
-                  {t('export')} <KeyboardArrowRightIcon sx={{ color: '#575756', fontSize: '12px' }} />
+                  {t('export')} <KeyboardArrowRightIcon sx={{ color: theme.palette.text.gray, fontSize: '12px' }} />
                 </Button>
               </Box>
             </Box>
@@ -172,19 +172,19 @@ export const Row3 = () => {
             <Table>
               <TableHead sx={{ height: '20px', borderBottom: '1px solid #e7e3e3' }}>
                 <TableRow>
-                  <TableCell sx={{ color: '#575756', borderBottom: 'none', fontSize: '10px', textAlign: 'left', padding: '0px 30px' }}>
+                  <TableCell sx={{ color: theme.palette.text.gray, borderBottom: 'none', fontSize: '10px', textAlign: 'left', padding: '0px 30px' }}>
                     {t('id')}
                   </TableCell>
-                  <TableCell sx={{ color: '#575756', borderBottom: 'none', fontSize: '10px', textAlign: 'center', padding: '0px' }}>
+                  <TableCell sx={{ color: theme.palette.text.gray, borderBottom: 'none', fontSize: '10px', textAlign: 'center', padding: '0px' }}>
                     {t('date')}
                   </TableCell>
-                  <TableCell sx={{ color: '#575756', borderBottom: 'none', fontSize: '10px', textAlign: 'center', padding: '0px' }}>
+                  <TableCell sx={{ color: theme.palette.text.gray, borderBottom: 'none', fontSize: '10px', textAlign: 'center', padding: '0px' }}>
                     {t('time')}
                   </TableCell>
-                  <TableCell sx={{ color: '#575756', borderBottom: 'none', fontSize: '10px', textAlign: 'center', padding: '0px' }}>
+                  <TableCell sx={{ color: theme.palette.text.gray, borderBottom: 'none', fontSize: '10px', textAlign: 'center', padding: '0px' }}>
                     {t('amount')}
                   </TableCell>
-                  <TableCell sx={{ color: '#575756', borderBottom: 'none', fontSize: '10px', textAlign: 'center', padding: '0px' }}>
+                  <TableCell sx={{ color: theme.palette.text.gray, borderBottom: 'none', fontSize: '10px', textAlign: 'center', padding: '0px' }}>
                     {t('status')}
                   </TableCell>
                 </TableRow>
@@ -203,7 +203,7 @@ export const Row3 = () => {
                             textAlign: 'center',
                             justifyContent: 'left',
                             fontSize: '10px',
-                            color: 'gray',
+                            color: theme.palette.text.gray,
                             borderBottom: 'none',
                             height: '35px',
                             width: '25%',
@@ -216,7 +216,7 @@ export const Row3 = () => {
                           sx={{
                             textAlign: 'center',
                             fontSize: '10px',
-                            color: 'gray',
+                            color: theme.palette.text.gray,
                             borderBottom: 'none',
                             height: '35px',
                             padding: '10px 0px 0px 10px',
@@ -229,7 +229,7 @@ export const Row3 = () => {
                           sx={{
                             textAlign: 'center',
                             fontSize: '10px',
-                            color: 'gray',
+                            color: theme.palette.text.gray,
                             borderBottom: 'none',
                             height: '35px',
                             padding: '10px 0px 0px 10px',
@@ -242,7 +242,7 @@ export const Row3 = () => {
                           sx={{
                             textAlign: 'center',
                             fontSize: '10px',
-                            color: '#2e2c2c',
+                            color: theme.palette.text.gray,
                             borderBottom: 'none',
                             height: '35px',
                             padding: '10px 0px 0px 10px',
@@ -295,8 +295,8 @@ export const Row3 = () => {
         <Card sx={{ borderRadius: 4, height: '100%', overflow: 'auto' }}>
           <CardContent>
             <Box display="flex" justifyContent="space-between" alignItems="center" width="100%" marginBottom="7px">
-              <Box variant="body2" sx={{ fontSize: '13px', display: 'flex', color: '#575756' }}>
-                <span className="icon-transfer" style={{ fontSize: '22px', color: '#D8E0E0' }}></span>
+              <Box variant="body2" sx={{ fontSize: '13px', display: 'flex', color: theme.palette.text.gray }}>
+                <span className="icon-transfer" style={{ fontSize: '22px', color: '#D8E0E0', marginRight:"5px" }}></span>
                 {t('deposits')}
               </Box>
               <Box sx={{ display: 'flex', textAlign: 'center', alignItems: 'center' }} gap={1}>
@@ -327,7 +327,7 @@ export const Row3 = () => {
                     </Box>
                   )}
                   <IconButton onClick={handleDepositSearchClick}>
-                    <span className="icon-magnifier" style={{ fontSize: '15px', color: '#575756' }} />
+                    <span className="icon-magnifier" style={{ fontSize: '15px', color: theme.palette.text.gray }} />
                   </IconButton>
                 </Box>
                 <TextField
@@ -335,22 +335,22 @@ export const Row3 = () => {
                   value={depositFromDate}
                   onChange={(e) => setDepositFromDate(e.target.value)}
                   InputLabelProps={{ shrink: true }}
-                  inputProps={{ style: { fontSize: '12px', padding: '2px 8px', color: 'black' } }}
-                  sx={{ width: '120px', height: '25px', fontSize: '12px', borderRadius: '5px', color: 'black' }}
+                  inputProps={{ style: { fontSize: '12px', padding: '2px 8px', color: theme.palette.text.gray } }}
+                  sx={{ width: '120px', height: '25px', fontSize: '12px', borderRadius: '5px', color: theme.palette.text.gray }}
                 />
                 <TextField
                   type="date"
                   value={depositToDate}
                   onChange={(e) => setDepositToDate(e.target.value)}
                   InputLabelProps={{ shrink: true }}
-                  inputProps={{ style: { fontSize: '12px', padding: '2px 8px', color: 'black' } }}
-                  sx={{ width: '120px', height: '25px', fontSize: '12px', borderRadius: '5px', color: 'black' }}
+                  inputProps={{ style: { fontSize: '12px', padding: '2px 8px', color: theme.palette.text.gray } }}
+                  sx={{ width: '120px', height: '25px', fontSize: '12px', borderRadius: '5px', color: theme.palette.text.gray }}
                 />
    
                 <Button
                   sx={{ color: theme.palette.orangePrimary.main, fontSize: '11px', textTransform: 'capitalize' }}
                 >
-                  {t('export')} <KeyboardArrowRightIcon sx={{ color: '#575756', fontSize: '12px' }} />
+                  {t('export')} <KeyboardArrowRightIcon sx={{ color: theme.palette.text.gray, fontSize: '12px' }} />
                 </Button>
               </Box>
             </Box>
@@ -358,19 +358,19 @@ export const Row3 = () => {
             <Table>
               <TableHead sx={{ height: '20px', borderBottom: '1px solid #e7e3e3' }}>
                 <TableRow>
-                  <TableCell sx={{ color: '#575756', borderBottom: 'none', fontSize: '10px', textAlign: 'left', padding: '0px 30px' }}>
+                  <TableCell sx={{ color: theme.palette.text.gray, borderBottom: 'none', fontSize: '10px', textAlign: 'left', padding: '0px 30px' }}>
                     {t('id')}
                   </TableCell>
-                  <TableCell sx={{ color: '#575756', borderBottom: 'none', fontSize: '10px', textAlign: 'center', padding: '0px' }}>
+                  <TableCell sx={{ color: theme.palette.text.gray, borderBottom: 'none', fontSize: '10px', textAlign: 'center', padding: '0px' }}>
                     {t('date')}
                   </TableCell>
-                  <TableCell sx={{ color: '#575756', borderBottom: 'none', fontSize: '10px', textAlign: 'center', padding: '0px' }}>
+                  <TableCell sx={{ color: theme.palette.text.gray, borderBottom: 'none', fontSize: '10px', textAlign: 'center', padding: '0px' }}>
                     {t('time')}
                   </TableCell>
-                  <TableCell sx={{ color: '#575756', borderBottom: 'none', fontSize: '10px', textAlign: 'center', padding: '0px' }}>
+                  <TableCell sx={{ color: theme.palette.text.gray, borderBottom: 'none', fontSize: '10px', textAlign: 'center', padding: '0px' }}>
                     {t('amount')}
                   </TableCell>
-                  <TableCell sx={{ color: '#575756', borderBottom: 'none', fontSize: '10px', textAlign: 'center', padding: '0px' }}>
+                  <TableCell sx={{ color: theme.palette.text.gray, borderBottom: 'none', fontSize: '10px', textAlign: 'center', padding: '0px' }}>
                     {t('status')}
                   </TableCell>
                 </TableRow>
@@ -389,7 +389,7 @@ export const Row3 = () => {
                             textAlign: 'center',
                             justifyContent: 'left',
                             fontSize: '10px',
-                            color: 'gray',
+                            color: theme.palette.text.gray,
                             borderBottom: 'none',
                             height: '35px',
                             width: '25%',
@@ -402,7 +402,7 @@ export const Row3 = () => {
                           sx={{
                             textAlign: 'center',
                             fontSize: '10px',
-                            color: 'gray',
+                            color: theme.palette.text.gray,
                             borderBottom: 'none',
                             height: '35px',
                             padding: '10px 0px 0px 10px',
@@ -415,7 +415,7 @@ export const Row3 = () => {
                           sx={{
                             textAlign: 'center',
                             fontSize: '10px',
-                            color: 'gray',
+                            color: theme.palette.text.gray,
                             borderBottom: 'none',
                             height: '35px',
                             padding: '10px 0px 0px 10px',
@@ -428,7 +428,7 @@ export const Row3 = () => {
                           sx={{
                             textAlign: 'center',
                             fontSize: '10px',
-                            color: '#2e2c2c',
+                            color: theme.palette.text.gray,
                             borderBottom: 'none',
                             height: '35px',
                             padding: '10px 0px 0px 10px',

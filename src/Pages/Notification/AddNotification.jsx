@@ -8,7 +8,7 @@ import { BASE_URL } from '../../utils/helperFunction';
 export const AddNotification = ({ open, handleClose, addNotification }) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const theme = useTheme();
     // add notification to api
     const handleSend = () => {
@@ -32,24 +32,24 @@ export const AddNotification = ({ open, handleClose, addNotification }) => {
             },
             body: JSON.stringify(noteData)
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Clear the form
-                setTitle('');
-                setContent('');
-                // Close the modal
-                handleClose();
-                // Optional: Show success message
-                // toast.success('Notification sent successfully!');   
-            } else {
-                toast.error(t("failedSendNoti"));
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            toast.error(t("errorSendNoti"));
-        });
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Clear the form
+                    setTitle('');
+                    setContent('');
+                    // Close the modal
+                    handleClose();
+                    // Optional: Show success message
+                    // toast.success('Notification sent successfully!');   
+                } else {
+                    toast.error(t("failedSendNoti"));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                toast.error(t("errorSendNoti"));
+            });
     };
 
     return (
@@ -58,7 +58,7 @@ export const AddNotification = ({ open, handleClose, addNotification }) => {
                 <Box
                     sx={{
                         width: '370px',
-                        backgroundColor: 'white',
+                        backgroundColor: theme.palette.bodyColor.secandary,
                         borderRadius: '15px',
                         boxShadow: '0px 0px 10px rgba(0,0,0,0.1)',
                         padding: '20px',
@@ -66,7 +66,7 @@ export const AddNotification = ({ open, handleClose, addNotification }) => {
                     }}
                 >
                     <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <Typography variant='body1' sx={{ fontSize: "14px", color: "#575756" }}>{t("sendNoti")}</Typography>
+                        <Typography variant='body1' sx={{ fontSize: "14px", color: theme.palette.text.gray }}>{t("sendNoti")}</Typography>
                         <IconButton onClick={handleClose}>
                             <span className="icon-close-1" style={{ fontSize: "14px" }}></span>
                         </IconButton>
@@ -86,7 +86,7 @@ export const AddNotification = ({ open, handleClose, addNotification }) => {
                                 borderRadius: "6px",
                                 '& .MuiOutlinedInput-notchedOutline': {
                                     border: 'none',
-                                    borderBottom:".5px solid rgba(0, 0, 0, 0.1)"
+                                    borderBottom: ".5px solid rgba(0, 0, 0, 0.1)"
                                 },
                             },
                         }}
@@ -106,7 +106,7 @@ export const AddNotification = ({ open, handleClose, addNotification }) => {
                                 borderRadius: "6px",
                                 '& .MuiOutlinedInput-notchedOutline': {
                                     border: 'none',
-                                    borderBottom:".5px solid rgba(0, 0, 0, 0.1)"
+                                    borderBottom: ".5px solid rgba(0, 0, 0, 0.1)"
                                 },
                             },
                         }}

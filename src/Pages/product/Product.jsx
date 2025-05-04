@@ -142,9 +142,9 @@ const Product = () => {
           textAlign: "center",
           alignItems: "center",
           cursor: 'pointer',
-          '&:hover': {
-            backgroundColor: '#f5f5f5'
-          }
+          // '&:hover': {
+          //   backgroundColor: '#f5f5f5'
+          // }
         }}>
         <AddIcon sx={{ fontSize: "50px", color: "#464444" }} />
       </Paper>

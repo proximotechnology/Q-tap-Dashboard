@@ -6,6 +6,7 @@ import AddBundle from './AddBundle';
 import { DiscountModelAdmin } from './DiscountModelAdmin';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL } from '../../utils/helperFunction';
+import { Settings } from '@mui/icons-material';
 
 export const Pricing = () => {
   const [open, setOpen] = useState(false);
@@ -126,10 +127,10 @@ export const Pricing = () => {
 
         <Box display="flex" justifyContent="center" mt={3}>
           <IconButton onClick={handleDelete}>
-            <span className="icon-delete" style={{ color: 'black', fontSize: "25px" }} />
+            <span className="icon-delete" style={{ color: theme.palette.text.gray, fontSize: "25px" }} />
           </IconButton>
           <IconButton onClick={() => handleSettingsClick({ id, name: title, monthly_price: priceMonthly, yearly_price: priceYearly, description, feature: JSON.stringify(features) })}>
-            <img src="/assets/setting.svg" alt="icon" style={{ color: 'black', width: "20px", height: "20px" }} />
+            <Settings src="/assets/setting.svg" alt="icon" style={{ color: theme.palette.text.gray,fontSize: "25px" }} />
           </IconButton>
         </Box>
       </Box>
@@ -158,12 +159,12 @@ export const Pricing = () => {
   return (
     <Box sx={{ padding: "0px 20px" }}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", textAlign: "center", }}>
-        <Typography sx={{ fontSize: "14px", color: "#575756" }}>{t("bundle")}</Typography>
+        <Typography sx={{ fontSize: "14px", color: theme.palette.text.gray }}>{t("bundle")}</Typography>
 
         <Box sx={{ display: "flex" }}>
           <Typography onClick={handleDiscountOpen}
             sx={{
-              color: theme.palette.secondaryColor.main, cursor: "pointer", border: "1px solid gray",
+              color: theme.palette.text.gray, cursor: "pointer", border: "1px solid gray",
               padding: "3px 15px", borderRadius: "30px", fontSize: "12px"
             }}>
             <span style={{ color: theme.palette.orangePrimary.main, fontSize: "17px", marginRight: "5px" }}>%</span>

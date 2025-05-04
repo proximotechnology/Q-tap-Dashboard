@@ -10,7 +10,7 @@ const DarkModeSwitch = () => {
     return (
         <Box sx={{ marginInlineEnd: "20px", display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
             <LightModeOutlinedIcon onClick={toggleColorMode}
-                sx={{ fontSize: "20px", fill: mode === 'light' ? '#ff9800' : '#575756' }} />
+                sx={{ fontSize: "20px", fill: mode === 'light' ? '#ff9800' : theme.palette.text.gray }} />
             <Switch
                 checked={mode === 'light'}
                 onChange={toggleColorMode}

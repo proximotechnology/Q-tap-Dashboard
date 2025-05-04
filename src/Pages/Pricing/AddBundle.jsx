@@ -8,8 +8,8 @@ import { useTranslation } from 'react-i18next';
 import { BASE_URL } from '../../utils/helperFunction';
 
 const AddBundle = ({ open, onClose, editData = null }) => {
-    const [text, setText] = useState(''); 
-    const [features, setFeatures] = useState([]); 
+    const [text, setText] = useState('');
+    const [features, setFeatures] = useState([]);
     const [bundleName, setBundleName] = useState('');
     const [monthlyPrice, setMonthlyPrice] = useState('');
     const [yearlyPrice, setYearlyPrice] = useState('');
@@ -17,7 +17,7 @@ const AddBundle = ({ open, onClose, editData = null }) => {
     const [orderLimit, setOrderLimit] = useState('unlimited');
     const theme = useTheme();
 
-    const {t} = useTranslation()
+    const { t } = useTranslation()
     // Populate form when editing
     useEffect(() => {
         if (editData) {
@@ -32,13 +32,13 @@ const AddBundle = ({ open, onClose, editData = null }) => {
     const handleAddFeature = () => {
         if (text.trim()) {
             setFeatures((prevFeatures) => [...prevFeatures, text]);
-            setText(''); 
+            setText('');
         }
     };
 
     const handleSave = () => {
         const token = localStorage.getItem('adminToken');
-        
+
         const bundleData = {
             name: bundleName,
             monthly_price: parseFloat(monthlyPrice),
@@ -49,7 +49,7 @@ const AddBundle = ({ open, onClose, editData = null }) => {
             orders_limit: "10"
         };
 
-        const url = editData 
+        const url = editData
             ? `${BASE_URL}pricing/${editData.id}`
             : `${BASE_URL}pricing`;
 
@@ -63,22 +63,22 @@ const AddBundle = ({ open, onClose, editData = null }) => {
             },
             body: JSON.stringify(bundleData)
         })
-        .then(async response => {
-            const data = await response.json();
-            if (!response.ok) {
-                throw new Error(data.error || 'Failed to save bundle');
-            }
-            return data;
-        })
-        .then(data => {
-            toast.success(editData ? t("bundleUpdateSucc") : t("bundleCreateSucc"));
-            window.location.reload();
-            onClose();
-        })
-        .catch(error => {
-            console.error('Error saving bundle:', error);
-            toast.error(t("plFillAllField"));
-        });
+            .then(async response => {
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to save bundle');
+                }
+                return data;
+            })
+            .then(data => {
+                toast.success(editData ? t("bundleUpdateSucc") : t("bundleCreateSucc"));
+                window.location.reload();
+                onClose();
+            })
+            .catch(error => {
+                console.error('Error saving bundle:', error);
+                toast.error(t("plFillAllField"));
+            });
     };
 
     return (
@@ -100,7 +100,7 @@ const AddBundle = ({ open, onClose, editData = null }) => {
                     }}
                 >
                     <Box display={"flex"} justifyContent={"space-between"} textAlign={"center"} alignItems={"center"}>
-                        <Typography variant="body2" sx={{ color: theme.palette.secondaryColor.main, fontSize: "14px" }}  >
+                        <Typography variant="body2" sx={{ color: theme.palette.text.gray, fontSize: "14px" }}  >
                             {t("newBundle")}
                         </Typography>
                         <IconButton onClick={onClose} >
@@ -112,7 +112,7 @@ const AddBundle = ({ open, onClose, editData = null }) => {
                     <Box sx={{ display: 'flex', gap: '50px', p: "20px 50px" }}>
                         <Box sx={{ flex: 1 }}>
 
-                            <Typography variant='body2' sx={{ marginBottom: "4px", fontSize: "10px", color: "gray" }}>{t("name")}</Typography>
+                            <Typography variant='body2' sx={{ marginBottom: "4px", fontSize: "10px", color: theme.palette.text.gray }}>{t("name")}</Typography>
                             <TextField
                                 fullWidth
                                 variant="outlined"
@@ -127,7 +127,7 @@ const AddBundle = ({ open, onClose, editData = null }) => {
                                 }}
                             />
 
-                            <Typography variant='body2' sx={{ marginBottom: "4px", fontSize: "10px", color: "gray" }}>{t("price.one")}</Typography>
+                            <Typography variant='body2' sx={{ marginBottom: "4px", fontSize: "10px", color: theme.palette.text.gray }}>{t("price.one")}</Typography>
                             <Box sx={{ display: 'flex', gap: '5px', mb: 2, alignItems: 'center' }}>
                                 <TextField
                                     fullWidth
@@ -170,7 +170,7 @@ const AddBundle = ({ open, onClose, editData = null }) => {
                                 </Typography>
                             </Box>
 
-                            <Typography variant='body2' sx={{ marginBottom: "4px", fontSize: "10px", color: "gray" }}>{t("discription")}</Typography>
+                            <Typography variant='body2' sx={{ marginBottom: "4px", fontSize: "10px", color: theme.palette.text.gray }}>{t("discription")}</Typography>
                             <TextField
                                 fullWidth
                                 variant="outlined"
@@ -187,7 +187,7 @@ const AddBundle = ({ open, onClose, editData = null }) => {
                                     }
                                 }}
                             />
-                            <Typography variant='body2' sx={{ marginBottom: "4px", fontSize: "10px", color: "gray" }}>{t("ordersLimit")}</Typography>
+                            <Typography variant='body2' sx={{ marginBottom: "4px", fontSize: "10px", color: theme.palette.text.gray }}>{t("ordersLimit")}</Typography>
 
                             <TextField
                                 select
@@ -210,9 +210,9 @@ const AddBundle = ({ open, onClose, editData = null }) => {
                         </Box>
 
                         <Box sx={{ flex: 1 }}>
-                            <Typography variant='body2' sx={{ marginBottom: "4px", fontSize: "10px", color: "gray" }}>{t("features")}</Typography>
+                            <Typography variant='body2' sx={{ marginBottom: "4px", fontSize: "10px", color: theme.palette.text.gray }}>{t("features")}</Typography>
                             <Box sx={{ border: '1px solid gray', borderRadius: '15px', height: '270px', padding: "10px 12px" }}>
-                                
+
                                 <Box height={"50px"}>
                                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderRadius: '4px' }}>
                                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -220,9 +220,9 @@ const AddBundle = ({ open, onClose, editData = null }) => {
                                             <TextField
                                                 variant="outlined"
                                                 fullWidth
-                                                placeholder="Feature 01" 
-                                                value={text}  
-                                                onChange={(e) => setText(e.target.value)}  
+                                                placeholder="Feature 01"
+                                                value={text}
+                                                onChange={(e) => setText(e.target.value)}
                                                 InputProps={{
                                                     sx: {
                                                         fontSize: '10px',
@@ -246,7 +246,7 @@ const AddBundle = ({ open, onClose, editData = null }) => {
                                 <Box>
                                     {features.map((feature, index) => (
                                         <React.Fragment key={index}>
-                                            <Box sx={{display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                                            <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                                                 <Typography
                                                     sx={{
                                                         fontSize: '10px',

@@ -84,7 +84,7 @@ export const FeedbackAdmin = () => {
         // console.log('newStatus:', newStatus, currentStatus);
 
 
-        await axios.put(`${BASE_URL}feedback/${id}`, {
+        await axios.put(`${BASE_URL}feedback_client/${id}`, {
             publish: newStatus
         }, {
             headers: {
@@ -101,12 +101,12 @@ export const FeedbackAdmin = () => {
                     <Table sx={{ borderCollapse: 'separate', borderSpacing: '0 5px' }}>
                         <TableHead>
                             <TableRow sx={{ height: "20px" }}>
-                                <TableCell sx={{ fontSize: "12px", padding: "0px 10px", borderBottom: "1px solid gray", color: "#575756", textAlign: "left" }}>{t("client")}</TableCell>
-                                <TableCell sx={{ fontSize: "12px", padding: "0px 10px", borderBottom: "1px solid gray", color: "#575756", textAlign: "center" }}>{t("rate")}</TableCell>
-                                <TableCell sx={{ fontSize: "12px", padding: "0px 10px", borderBottom: "1px solid gray", color: "#575756", textAlign: "center" }}>{t("status")}</TableCell>
-                                <TableCell sx={{ fontSize: "12px", padding: "0px 10px", borderBottom: "1px solid gray", color: "#575756", textAlign: "center" }}>{t("goals")}</TableCell>
-                                <TableCell sx={{ fontSize: "12px", padding: "0px 10px", borderBottom: "1px solid gray", color: "#575756", textAlign: "center" }}>{t("details")}</TableCell>
-                                <TableCell sx={{ fontSize: "12px", padding: "0px 10px", borderBottom: "1px solid gray", color: "#575756", textAlign: "right" }}>{t("action")}</TableCell>
+                                <TableCell sx={{ fontSize: "12px", padding: "0px 10px", borderBottom: "1px solid gray", color: theme.palette.text.gray, textAlign: "left" }}>{t("client")}</TableCell>
+                                <TableCell sx={{ fontSize: "12px", padding: "0px 10px", borderBottom: "1px solid gray", color: theme.palette.text.gray, textAlign: "center" }}>{t("rate")}</TableCell>
+                                <TableCell sx={{ fontSize: "12px", padding: "0px 10px", borderBottom: "1px solid gray", color: theme.palette.text.gray, textAlign: "center" }}>{t("status")}</TableCell>
+                                <TableCell sx={{ fontSize: "12px", padding: "0px 10px", borderBottom: "1px solid gray", color: theme.palette.text.gray, textAlign: "center" }}>{t("goals")}</TableCell>
+                                <TableCell sx={{ fontSize: "12px", padding: "0px 10px", borderBottom: "1px solid gray", color: theme.palette.text.gray, textAlign: "center" }}>{t("details")}</TableCell>
+                                <TableCell sx={{ fontSize: "12px", padding: "0px 10px", borderBottom: "1px solid gray", color: theme.palette.text.gray, textAlign: "right" }}>{t("action")}</TableCell>
                             </TableRow>
                         </TableHead>
 
@@ -120,7 +120,7 @@ export const FeedbackAdmin = () => {
                                             padding: "8px",
 
                                             textAlign: "center", alignItems: "center",
-                                            borderBottom: "none", color: "#575756",
+                                            borderBottom: "none", color: theme.palette.text.gray,
                                         }}
                                     >
                                         <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -134,7 +134,7 @@ export const FeedbackAdmin = () => {
                                                 marginRight: '8px',
                                                 width: "25px",
                                                 height: "25px",
-                                                color: "#575756",
+                                                color: theme.palette.text.gray,
                                             }}>
                                                 <PersonOutlineOutlinedIcon sx={{ fontSize: "15px", color: "gray" }} />
                                             </span>
@@ -166,7 +166,7 @@ export const FeedbackAdmin = () => {
                                         textAlign: "center",
                                         borderBottom: "none",
                                     }}>
-                                        {row.emoji === 'sad' ? (<SentimentVeryDissatisfiedIcon sx={{ color: '#E02828', fontSize: "34px" }} />) :
+                                        {row.emoji === 'said' ? (<SentimentVeryDissatisfiedIcon sx={{ color: '#E02828', fontSize: "34px" }} />) :
                                             row.emoji === 'happy' ? (<SentimentSatisfiedAltIcon sx={{ color: '#FFC107', fontSize: "34px" }} />) :
                                                 row.emoji === "very happy" ? (<SentimentSatisfiedAltIcon sx={{ color: '#73CB3C', fontSize: "34px" }} />) : null
 
@@ -233,9 +233,9 @@ export const FeedbackAdmin = () => {
                                                 </span>
                                             </Button>
 
-                                            <IconButton onClick={() => deleteFeedback(row.id)}>
+                                            {/* <IconButton onClick={() => deleteFeedback(row.id)}>
                                                 <span class="icon-delete" style={{ color: '#F44336', fontSize: '20px' }} />
-                                            </IconButton>
+                                            </IconButton> */}
                                         </Box>
                                     </TableCell>
                                 </TableRow>

@@ -66,7 +66,7 @@ export const Row1 = () => {
                     <Box>
                         <Typography
                             variant="h6"
-                            color="#575756"
+                            color={theme.palette.text.gray}
                             fontSize="17px"
                             display="flex"
                             textAlign="center"
@@ -238,7 +238,7 @@ export const Row1 = () => {
                                             marginRight: '8px',
                                         }}
                                     />
-                                    <Typography variant="body2" sx={{ fontSize: '10px', color: 'gray' }}>
+                                    <Typography variant="body2" sx={{ fontSize: '10px', color: theme.palette.text.gray }}>
                                         {clients[0]?.name || 'Free'}
                                     </Typography>
                                 </Box>
@@ -257,7 +257,7 @@ export const Row1 = () => {
                                             marginRight: '8px',
                                         }}
                                     />
-                                    <Typography variant="body2" sx={{ fontSize: '10px', color: 'gray' }}>
+                                    <Typography variant="body2" sx={{ fontSize: '10px', color: theme.palette.text.gray }}>
                                         {clients[1]?.name || 'Starter'}
                                     </Typography>
                                 </Box>
@@ -276,7 +276,7 @@ export const Row1 = () => {
                                             marginRight: '8px',
                                         }}
                                     />
-                                    <Typography variant="body2" sx={{ fontSize: '10px', color: 'gray' }}>
+                                    <Typography variant="body2" sx={{ fontSize: '10px', color: theme.palette.text.gray }}>
                                         {clients[2]?.name || 'Pro'}
                                     </Typography>
                                 </Box>

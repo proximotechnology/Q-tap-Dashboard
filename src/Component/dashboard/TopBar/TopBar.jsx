@@ -36,7 +36,7 @@ export default function TopBar() {
             display: "flex", justifyContent: "space-between", alignItems: "center",
             padding: "30px 60px 0px 60px ",
         }}>
-            <Typography variant="body1" sx={{ fontSize: "20px", color: theme.palette.secondaryColor.main }}>
+            <Typography variant="body1" sx={{ fontSize: "20px", color: theme.palette.text.gray}}>
                 {pageTitles[location.pathname] || 'Dashboard'}
             </Typography>
 

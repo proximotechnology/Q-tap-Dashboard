@@ -55,7 +55,7 @@ export const Row1 = () => {
             <Typography
               variant="body1"
               component="div"
-              sx={{ fontSize: "14px", color: "#575756" }}
+              sx={{ fontSize: "14px", color: theme.palette.text.gray }}
             >
               {t("salesVolume")}
             </Typography>
@@ -68,7 +68,7 @@ export const Row1 = () => {
                 sx={{
                   height: "24px",
                   fontSize: "14px",
-                  color: "#575756",
+                  color: theme.palette.text.gray,
                   ".MuiOutlinedInput-notchedOutline": { border: 0 },
                   ".MuiSelect-icon": { fontSize: "20px" },
                 }}
@@ -76,16 +76,16 @@ export const Row1 = () => {
                   disableScrollLock: true,
                 }}
               >
-                <MenuItem value="2022" sx={{ fontSize: "12px", color: "gray" }}>
+                <MenuItem value="2022" sx={{ fontSize: "12px", color: theme.palette.text.gray }}>
                   2022
                 </MenuItem>
-                <MenuItem value="2023" sx={{ fontSize: "12px", color: "gray" }}>
+                <MenuItem value="2023" sx={{ fontSize: "12px", color: theme.palette.text.gray }}>
                   2023
                 </MenuItem>
-                <MenuItem value="2024" sx={{ fontSize: "12px", color: "gray" }}>
+                <MenuItem value="2024" sx={{ fontSize: "12px", color: theme.palette.text.gray }}>
                   2024
                 </MenuItem>
-                <MenuItem value="2025" sx={{ fontSize: "12px", color: "gray" }}>
+                <MenuItem value="2025" sx={{ fontSize: "12px", color: theme.palette.text.gray }}>
                   2025
                 </MenuItem>
               </Select>
@@ -112,7 +112,7 @@ export const Row1 = () => {
           <Typography
             variant="h6"
             sx={{
-              color: "#575756",
+              color:theme.palette.text.gray,
               marginTop: "8px",
               border: "2px solid #ef7d00",
               padding: "2px 20px",

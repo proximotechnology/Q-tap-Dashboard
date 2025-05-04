@@ -17,23 +17,23 @@ import { CloseSideBarButton } from "../../MobileSideBarButton/SidebarButton";
 
 
 
-export default function SideBar({isOpen , handleToggleSideBar}) {
+export default function SideBar({ isOpen, handleToggleSideBar }) {
     const location = useLocation();
     const navigate = useNavigate();
     const theme = useTheme();
-    const {t} = useTranslation()
+    const { t } = useTranslation()
 
     const Arr1 = [
         {
-    
+
             text: t("dashboard"),
-            icon: <GridViewIcon style={{fontSize:"18px"  ,marginLeft:"-1px"}}></GridViewIcon>,
+            icon: <GridViewIcon style={{ fontSize: "18px", marginLeft: "-1px" }}></GridViewIcon>,
             path: "/dashboard-home"
         },
-    
+
         {
             text: t("client"),
-            icon: <PeopleOutlineIcon style={{fontSize:"20px"  ,marginLeft:"-1px"}}></PeopleOutlineIcon>,
+            icon: <PeopleOutlineIcon style={{ fontSize: "20px", marginLeft: "-1px" }}></PeopleOutlineIcon>,
             path: "/client"
         },
         {
@@ -41,7 +41,7 @@ export default function SideBar({isOpen , handleToggleSideBar}) {
             icon: <span class="icon-wallet1" style={{ width: "34.539", height: "34.544" }}></span>,
             path: "/wallet",
         },
-    
+
         {
             text: t("product"),
             icon: <span class="icon-shopping-bag" style={{ width: "34.539", height: "34.544" }}></span>,
@@ -62,10 +62,10 @@ export default function SideBar({isOpen , handleToggleSideBar}) {
             icon: <span class="icon-social" style={{ width: "35", height: "35" }}></span>,
             path: "/affiliate",
         },
-    
+
         {
             text: t("setting"),
-            icon: <SettingsIcon style={{fontSize:"18px" ,marginLeft:"-1px"}}></SettingsIcon>,
+            icon: <SettingsIcon style={{ fontSize: "18px", marginLeft: "-1px" }}></SettingsIcon>,
             path: "/setting",
         },
         {
@@ -75,11 +75,11 @@ export default function SideBar({isOpen , handleToggleSideBar}) {
         },
         {
             text: t("feedback"),
-            icon: <StarBorderIcon style={{fontSize:"20px" ,marginLeft:"-1px"}}></StarBorderIcon>,
+            icon: <StarBorderIcon style={{ fontSize: "20px", marginLeft: "-1px" }}></StarBorderIcon>,
             path: "/feedback-admin",
         },
     ];
-    
+
     const Arr2 = [
         {
             text: t("logout"),
@@ -96,8 +96,8 @@ export default function SideBar({isOpen , handleToggleSideBar}) {
     return (
         <Box sx={{
             width: {
-                xs:'60%',
-                md:'200px'
+                xs: '60%',
+                md: '200px'
             },
             backgroundColor: theme.palette.bodyColor.secandary,
             color: theme.palette.text.black,
@@ -108,16 +108,16 @@ export default function SideBar({isOpen , handleToggleSideBar}) {
             height: '100vh',
             overflowY: 'auto',
             display: {
-                xs:isOpen? "" :"none",
-                md:'flex'
+                xs: isOpen ? "" : "none",
+                md: 'flex'
             },
             flexDirection: 'column',
             zIndex: 1000
         }}>
             <Box sx={{ display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
-                <img src="/images/logoDash.jpg" alt="Logo" style={{ width: '110px' }} />
+                <img src={localStorage.getItem("themeMode") === "light" ? "/assets/qtapwhite.svg" : "/assets/qtap.svg"} alt="Logo" style={{ width: '110px' }} />
             </Box>
-            <CloseSideBarButton customSX={{top:'50px',insetInlineStart:'80%', padding:'0px',margin:'0px', minWidth: 'unset', display:{xs:"block",md:'none'}}} handleToggleSideBar={handleToggleSideBar} />
+            <CloseSideBarButton customSX={{ top: '50px', insetInlineStart: '80%', padding: '0px', margin: '0px', minWidth: 'unset', display: { xs: "block", md: 'none' } }} handleToggleSideBar={handleToggleSideBar} />
             <SidebarExtraMobileSection />
             <List sx={{ flex: 1, marginTop: '20px' }}>
                 {Arr1.map((item, index) => (
@@ -191,6 +191,7 @@ export default function SideBar({isOpen , handleToggleSideBar}) {
                                 }}
                                 onClick={() => {
                                     localStorage.removeItem("adminToken");
+                                    // localStorage.setItem("themeMode", "light");
                                     navigate(item.path);
                                 }}
                             >

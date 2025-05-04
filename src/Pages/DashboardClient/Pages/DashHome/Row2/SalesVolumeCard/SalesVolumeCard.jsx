@@ -35,7 +35,7 @@ const SalesVolumeCard = () => {
          }}>
             <Grid container justifyContent="space-between" alignItems="center" sx={{ padding: "10px 20px", }} >
                 <Grid item>
-                    <Typography variant="body1" component="div" sx={{ color: theme.palette.text.secondary, fontSize: '13px' }}>
+                    <Typography variant="body1" component="div" sx={{ color: theme.palette.text.gray, fontSize: '13px' }}>
                         {t("salesVolume")}
                     </Typography>
                 </Grid>
@@ -46,7 +46,7 @@ const SalesVolumeCard = () => {
                             onChange={handleYearChange}
                             sx={{
                                 height: '24px',
-                                color: theme.palette.text.secondary, fontSize: '13px',
+                                color: theme.palette.text.gray, fontSize: '13px',
                                 '.MuiOutlinedInput-notchedOutline': { border: 0 },
                                 '.MuiSelect-icon': { fontSize: '20px' },
                             }}
@@ -54,9 +54,9 @@ const SalesVolumeCard = () => {
                                 disableScrollLock: true,
                             }}
                         >
-                            <MenuItem value="30" sx={{ fontSize: "10px", color: theme.palette.text.secondary }}>30d</MenuItem>
-                            <MenuItem value="40" sx={{ fontSize: "10px", color: theme.palette.text.secondary }}>40d</MenuItem>
-                            <MenuItem value="50" sx={{ fontSize: "10px", color: theme.palette.text.secondary }}>50d</MenuItem>
+                            <MenuItem value="30" sx={{ fontSize: "10px", color: theme.palette.text.gray }}>30d</MenuItem>
+                            <MenuItem value="40" sx={{ fontSize: "10px", color: theme.palette.text.gray }}>40d</MenuItem>
+                            <MenuItem value="50" sx={{ fontSize: "10px", color: theme.palette.text.gray }}>50d</MenuItem>
                         </Select>
                     </Box>
                 </Grid>

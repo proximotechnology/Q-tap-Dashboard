@@ -46,7 +46,7 @@ export const BarChart1 = () => {
         }}>
             <Grid container justifyContent="space-between" alignItems="center" sx={{ padding: "10px 20px", }} >
                 <Grid item>
-                    <Typography variant="body1" component="div" sx={{ color: "#575756", fontSize: '13px' }}>
+                    <Typography variant="body1" component="div" sx={{ color: theme.palette.text.gray, fontSize: '13px' }}>
                         {t("sales")}
                     </Typography>
                 </Grid>
@@ -57,7 +57,7 @@ export const BarChart1 = () => {
                             onChange={handleYearChange}
                             sx={{
                                 height: '24px',
-                                color: "#575756", fontSize: '13px',
+                                color: theme.palette.text.gray, fontSize: '13px',
                                 '.MuiOutlinedInput-notchedOutline': { border: 0 },
                                 '.MuiSelect-icon': { fontSize: '20px' },
                             }}
@@ -65,9 +65,9 @@ export const BarChart1 = () => {
                                 disableScrollLock: true,
                             }}
                         >
-                            <MenuItem value="2023" sx={{ fontSize: "10px", color: "gray" }}>2023</MenuItem>
-                            <MenuItem value="2024" sx={{ fontSize: "10px", color: "gray" }}>2024</MenuItem>
-                            <MenuItem value="2025" sx={{ fontSize: "10px", color: "gray" }}>2025</MenuItem>
+                            <MenuItem value="2023" sx={{ fontSize: "10px", color: theme.palette.text.gray }}>2023</MenuItem>
+                            <MenuItem value="2024" sx={{ fontSize: "10px", color: theme.palette.text.gray }}>2024</MenuItem>
+                            <MenuItem value="2025" sx={{ fontSize: "10px", color: theme.palette.text.gray }}>2025</MenuItem>
                         </Select>
                     </Box>
                 </Grid>
@@ -79,12 +79,12 @@ export const BarChart1 = () => {
                         dataKey="month_name"
                         tickLine={false}
                         axisLine={false}
-                        tick={{ fontSize: 9 }}
+                        tick={{ fontSize: 9  , fill: theme.palette.text.gray }}
                     />
 
                     <YAxis
                         tickFormatter={(tick) => `${tick / 1}k`}
-                        tick={{ fontSize: 10 }}
+                        tick={{ fontSize: 10 , fill: theme.palette.text.gray  }}
                         tickLine={false}
                         axisLine={false}
                         interval={0}

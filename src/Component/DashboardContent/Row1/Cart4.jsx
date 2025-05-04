@@ -16,10 +16,10 @@ export const Cart4 = () => {
   // Calculate totals from performanceData
   const { subscriptionsTotal, ordersTotal } = React.useMemo(() => {
     if (!performanceData) return { subscriptionsTotal: 0, ordersTotal: 0 };
-    
+
     let subsTotal = 0;
     let ordsTotal = 0;
-    
+
     Object.entries(performanceData).forEach(([key, value]) => {
       if (key.startsWith('Subscriptions_')) {
         subsTotal += Number(value);
@@ -27,10 +27,10 @@ export const Cart4 = () => {
         ordsTotal += Number(value);
       }
     });
-    
+
     return {
-      subscriptionsTotal: subsTotal/2,
-      ordersTotal: ordsTotal/2
+      subscriptionsTotal: subsTotal / 2,
+      ordersTotal: ordsTotal / 2
     };
   }, [performanceData]);
 
@@ -73,7 +73,7 @@ export const Cart4 = () => {
   return (
     <>
       <Box display={"flex"} justifyContent="center" alignItems="center">
-        <Box sx={{ display: "flex" , marginTop:"10px" }}>
+        <Box sx={{ display: "flex", marginTop: "10px" }}>
           {/* Subscriptions Pie Chart */}
           <PieChart width={120} height={120}>
             <defs>
@@ -93,7 +93,7 @@ export const Cart4 = () => {
               startAngle={90}
               endAngle={-270}
             >
-              <Cell fill="url(#colorGradient)" strokeWidth={.2} cornerRadius={5}/>
+              <Cell fill="url(#colorGradient)" strokeWidth={.2} cornerRadius={5} />
               <Cell fill="#D8E0E0" />
             </Pie>
             <rect
@@ -102,7 +102,7 @@ export const Cart4 = () => {
               width={40}
               height={40}
               fill="url(#colorGradient)"
-              rx={50}strokeWidth={.2} cornerRadius={5}
+              rx={50} strokeWidth={.2} cornerRadius={5}
             />
             <text
               x={65}
@@ -133,7 +133,7 @@ export const Cart4 = () => {
               fill="#D8E0E0"
               paddingAngle={0}
             >
-              <Cell fill="url(#colorGradient2)" strokeWidth={.2} cornerRadius={5}/>
+              <Cell fill="url(#colorGradient2)" strokeWidth={.2} cornerRadius={5} />
               <Cell fill="#D8E0E0" />
             </Pie>
             <rect
@@ -153,13 +153,13 @@ export const Cart4 = () => {
               fontSize="14"
             >
               {Math.floor(ordersTotal)}%
-              </text>
+            </text>
           </PieChart>
         </Box>
       </Box>
-      
+
       <Box display={"flex"} justifyContent={"space-between"} paddingRight={"10px"}>
-        <Box justifyContent="left" sx={{ paddingLeft: "20px" , marginTop:"20px"}}>
+        <Box justifyContent="left" sx={{ paddingLeft: "20px", marginTop: "20px" }}>
           {/* Subscriptions Legend */}
           <Box display={"flex"} textAlign={"center"} alignItems={"center"}>
             <Box
@@ -175,8 +175,8 @@ export const Cart4 = () => {
             />
             <Typography
               variant="body2"
-              color="text.secondary"
-              sx={{ fontSize: "9px", color: "gray" }}
+              color={theme.palette.text.gray}
+              sx={{ fontSize: "9px" }}
             >
               {t("subscriptions")}
             </Typography>
@@ -197,8 +197,8 @@ export const Cart4 = () => {
             />
             <Typography
               variant="body2"
-              color="text.secondary"
-              sx={{ fontSize: "9px", color: "gray" }}
+              color={theme.palette.text.gray}
+              sx={{ fontSize: "9px" }}
             >
               {t("order")}
             </Typography>
@@ -209,7 +209,7 @@ export const Cart4 = () => {
         <Box>
           <Typography
             variant="body2"
-            color="text.secondary"
+            color={theme.palette.text.gray}
             onClick={handleClick}
             sx={{
               cursor: "pointer",
@@ -217,14 +217,13 @@ export const Cart4 = () => {
               textAlign: "end",
               alignItems: "end",
               fontSize: "10px",
-              color: "#575756",
               marginTop: "30px",
               marginLeft: "20px",
             }}
           >
             {selectedYear}{" "}
             <KeyboardArrowDownOutlinedIcon
-              sx={{ fontSize: "12px", marginLeft: "4px", color: "#575756" }}
+              sx={{ fontSize: "12px", marginLeft: "4px", color: theme.palette.text.gray }}
             />
           </Typography>
           <Menu
@@ -236,7 +235,8 @@ export const Cart4 = () => {
             {years.map((year) => (
               <MenuItem
                 key={year}
-                sx={{ fontSize: "10px", color: "gray" }}
+                color={theme.palette.text.gray}
+                sx={{ fontSize: "10px" }}
                 onClick={() => handleClose(year)}
               >
                 {year}
