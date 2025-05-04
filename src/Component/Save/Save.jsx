@@ -15,6 +15,7 @@ import {
   Typography,
   Box,
   useTheme,
+  CircularProgress,
 } from '@mui/material';
 import {
   CheckOutlined,
@@ -528,10 +529,11 @@ export const Save = () => {
               color: 'white',
               borderRadius: '20px',
               padding: '5px',
-              '&:hover': { backgroundColor: '#ef7d10' },
+              display:'flex',
+              justifyContent:'center'
             }}
             >
-              {t("loading")}
+              <CircularProgress size={24} color='inherit'/>{t("loading")} 
             </Box>
             :
             <Button

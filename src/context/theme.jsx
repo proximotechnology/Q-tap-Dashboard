@@ -48,6 +48,12 @@ export const getDesignTokens = (mode) => ({
           pink: '#AD4181', pinkLight: "#ffaed8",
           blue: "#2EA6F7", blueLight: "#aad6f3",
           orange: "#ef7d00", orangeLight: "#f8cb9e"
+        },
+        buttons:{
+          blue:'#222240',
+          blueHover:'#322240',
+          orange:'#E57C00',
+          orangeHover:'#ef7d10'
         }
       }
       : /* darkMode */
@@ -92,6 +98,15 @@ export const getDesignTokens = (mode) => ({
           pink: '#000', pinkLight: "#000",
           blue: "#000", blueLight: "#000",
           orange: "#000", orangeLight: "#000"
+        },
+        buttons:{
+          blue:'#222240',
+          blueHover:'#322240',
+          orange:'#E57C00',
+          orangeHover:'#ef7d10',
+          white:'',
+          gray:'',
+          black:''
         }
       }
     ),

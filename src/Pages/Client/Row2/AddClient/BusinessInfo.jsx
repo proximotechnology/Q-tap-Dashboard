@@ -78,6 +78,7 @@ export const BusinessInfo = () => {
   const [fromTime, setFromTime] = useState('');
   const [toTime, setToTime] = useState('');
   const [isMapOpen, setIsMapOpen] = useState(false);
+  
   const updateBranchPosition = (pos) => {
     console.log(pos,'set pos call' , selectedBranch)
     updateBusinessData({ longitude: pos.lng })

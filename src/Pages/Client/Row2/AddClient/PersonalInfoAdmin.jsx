@@ -27,6 +27,7 @@ import {
   import { useNavigate } from "react-router";
   import { useClientContext } from "../../../../context/ClientContext";
   import { useTranslation } from "react-i18next";
+import { BASE_URL_IMG } from "../../../../utils/helperFunction";
   
   export const PersonalInfoAdmin = ({ clientInfoData }) => {
     const { t } = useTranslation();
@@ -164,7 +165,7 @@ import {
               }}
             >
               <img
-                src={image ? (typeof image === "string" ? image : URL.createObjectURL(image)) : "/images/User.jpg"}
+                src={image ? `${BASE_URL_IMG}${image}`: "/images/User.jpg"}
                 alt="user"
                 width="150"
                 height="150"
