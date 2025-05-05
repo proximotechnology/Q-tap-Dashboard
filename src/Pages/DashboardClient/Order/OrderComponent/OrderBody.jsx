@@ -56,7 +56,7 @@ export const OrderBody = () => {
                     }
                 )
 
-                console.log(res)
+                // console.log(res)
 
                 // each request has its response data :
                 ///-------------------------------------------
@@ -96,7 +96,7 @@ export const OrderBody = () => {
 
 
                     try {
-                        console.log('admin parsed orders', orders)
+                        // console.log('admin parsed orders', orders)
                         /* Admin sees two types of orders: 
                                 1 - those served by the waiter 
                                 2 - those prepared by the chef for delivery. The admin can assign a delivery person to them.
@@ -111,17 +111,18 @@ export const OrderBody = () => {
                             }
                         )
                         let delivryorders = []
-                        console.log('admin fetch', res)
+                        // console.log('admin fetch', res)
                         delivryorders = res.data.prepared_orders.map((item) => item ? { ...parseResponseOrderItem(item, orderPhaseType.DONING) } : undefined)
                         delivryorders = delivryorders.filter(order => order !== undefined);
                         delivryorders = delivryorders.filter(order => order.type === "delivery" && !order.orders_processing.some(item => item.status === 'done'));
-                        console.log('admin parsed delivery', delivryorders)
+                        // console.log('admin parsed delivery', delivryorders)
 
                         setOrders([...delivryorders, ...orders].sort((a, b) => a.id - b.id));
                     }
 
                     catch (error) {
-                        console.log("admin fetch", error)
+                        // console.log("admin fetch", error)
+                        toast.error(t("errorGetingData"))
                     }
                 }
 
@@ -129,8 +130,8 @@ export const OrderBody = () => {
 
             } catch (error) {
 
-                console.log(error)
-
+                // console.log(error)
+                toast.error(t("errorGetingData"))
             }
         }
 
@@ -145,10 +146,14 @@ export const OrderBody = () => {
             cluster: 'eu',
         });
         const channel = pusher.subscribe('notify-channel');
-        console.log("📢 Pusher decleared:")
+        // console.log("📢 Pusher decleared:")
         channel.bind('form-submitted', function (data) {
             // ✅ Show toast or handle state
-            console.log("📢 Received from Pusher:", data);
+            // console.log("📢 Received from Pusher: -", data);
+            const selectedBranch = localStorage.getItem('selectedBranch')
+            if (data.message?.brunch_id != selectedBranch) {
+                return;
+            }
             /**
              * if order new     
              *      1 - show to all the chef
@@ -168,7 +173,7 @@ export const OrderBody = () => {
                 toast.info(`📢 pusher new order add`);
                 if (client?.user?.role === "chef") {
                     setOrders((prev => [...prev, parseResponseOrderItem(data.message, orderPhaseType.ACCEPTING)]))
-                    console.log('pusher new order add update ', orders)
+                    // console.log('pusher new order add update ', orders)
                 }
             }
 
@@ -195,7 +200,10 @@ export const OrderBody = () => {
                 if (client?.user?.role === "waiter") {
                     setOrders((prev => [...prev, parseResponseOrderItem(data.message?.[0], orderPhaseType.SERVRING)]))
                 }
-                if(client?.user?.role === "admin"  && data.message?.[0]?.type === 'delivery') { console.log("admin delivery order here " ,data.message?.[0])}
+                if (client?.user?.role === "admin" && data.message?.[0]?.type === 'delivery') {
+                    //  console.log("admin delivery order here ", data.message?.[0])
+                    setOrders((prev => [...prev, parseResponseOrderItem(data.message?.[0], orderPhaseType.DONING)]))
+                }
             }
 
             if (data.type === 'served_order') {
@@ -203,7 +211,7 @@ export const OrderBody = () => {
                 if (client?.user?.role === "waiter") {
                     removeOrder(data.message.id)
                 } else if (client?.user?.role === "admin") {
-                    console.log('here admin add served order')
+                    // console.log('here admin add served order')
                     setOrders((prev => [...prev, parseResponseOrderItem(data.message?.[0], orderPhaseType.DONING)]))
                 }
             }
