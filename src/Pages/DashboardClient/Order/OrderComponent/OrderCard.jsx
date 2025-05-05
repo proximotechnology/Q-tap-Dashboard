@@ -17,7 +17,7 @@ const OrderCard = ({ order, isSelected, onClick, isAccepted, isPayment, isServed
                 margin: "10px 10%",
                 marginBottom: "15px",
                 borderRadius: "10px",
-                backgroundColor: "white",
+                backgroundColor: theme.palette.bodyColor.whiteGray_lightBlack,
                 cursor: "pointer",
                 transition: "all 0.3s ease-in-out, top 0.1s ease-in-out",
 
@@ -29,7 +29,7 @@ const OrderCard = ({ order, isSelected, onClick, isAccepted, isPayment, isServed
                 <Typography
                     variant="body1"
                     sx={{
-                        backgroundColor: isAccepted || isSelected ? theme.palette.secondaryColor.main : "#9d9d9c",
+                        backgroundColor: isAccepted || isSelected ? theme.palette.secondaryColor.main : theme.palette.bodyColor.gray_lighterBlack,
                         padding: "7px",
                         fontSize: "15px",
                         textAlign: "center",

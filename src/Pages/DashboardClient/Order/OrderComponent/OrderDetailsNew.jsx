@@ -294,7 +294,7 @@ const OrderDetailsNew = ({
     };
 
     return (
-        <Card sx={{ maxWidth: 400, height: "100vh", overflowY: 'auto', zIndex: 1001, width: { xs: '80%', md: "22%" }, backgroundColor: "white", position: "fixed", top: 0, right: 0, }}>
+        <Card sx={{ maxWidth: 400, height: "100vh", overflowY: 'auto', zIndex: 1001, width: { xs: '80%', md: "22%" }, backgroundColor: theme.palette.bodyColor.white_333, position: "fixed", top: 0, right: 0, }}>
             <Button sx={{ position: 'absolute', top: '10px', zIndex: 1000 }} onClick={closeDetails}>close</Button>
             <Alarm />
 
@@ -334,8 +334,8 @@ const OrderDetailsNew = ({
                             >
                                 <Typography variant="body2" sx={{ fontSize: "10px", color: "#AAAAAA" }}>
                                     {order?.quantity[index]} x {item?.name} {order?.size[index] && `(size: ${order.size[index]})`}
-                                    {order?.extras?.detailed?.[index] && order?.extras?.detailed?.[index]?.length > 0 ? <>{" "+t("extras ")}:{order?.extras?.detailed?.[index]?.map((item) => ` + ${item.name}`)}</> : ""}
-                                    {order?.variants?.detailed?.[index] && order?.variants?.detailed?.[index]?.length > 0 ? <>{" "+t("variants ")}:{order?.variants?.detailed?.[index]?.map((item) => ` + ${item.name}`) }</>: ""}
+                                    {order?.extras?.detailed?.[index] && order?.extras?.detailed?.[index]?.length > 0 ? <>{" " + t("extras ")}:{order?.extras?.detailed?.[index]?.map((item) => ` + ${item.name}`)}</> : ""}
+                                    {order?.variants?.detailed?.[index] && order?.variants?.detailed?.[index]?.length > 0 ? <>{" " + t("variants ")}:{order?.variants?.detailed?.[index]?.map((item) => ` + ${item.name}`)}</> : ""}
                                 </Typography>
 
                                 <Box
@@ -604,6 +604,7 @@ const OrderDetailsNew = ({
                     ** ACTION button for each phase  
                     **
                     */}
+                    
                     {order.phase === orderPhaseType.ACCEPTING && (<>
                         <Grid container spacing={2}>
                             <Grid item xs={6}>
@@ -617,6 +618,7 @@ const OrderDetailsNew = ({
                                         fontSize: "11px",
                                         width: "100%",
                                         borderRadius: "20px",
+                                        color: theme.palette.text.black_white,
                                         '&:hover': {
                                             backgroundColor: '#2a2a60',
                                         }
@@ -647,7 +649,7 @@ const OrderDetailsNew = ({
                             </Grid>
                         </Grid>
                     </>)}
-
+                    
                     {order?.phase === orderPhaseType.PAYING && (<>
                         <Grid item xs={12} display={"flex"}>
                             <Button
@@ -661,6 +663,7 @@ const OrderDetailsNew = ({
                                     width: "90%",
                                     padding: 0,
                                     borderRadius: "20px",
+                                    color: theme.palette.text.black_white,
                                     '&:hover': {
                                         backgroundColor: theme.palette.secondaryColor.main,
                                     }
@@ -675,7 +678,7 @@ const OrderDetailsNew = ({
                             </Button>
                         </Grid>
                     </>)}
-
+                    
                     {order?.phase === orderPhaseType.PREPAREING && (<>
                         <Grid item xs={12} display={"flex"}>
                             <Button
@@ -688,6 +691,7 @@ const OrderDetailsNew = ({
                                     fontSize: "11px",
                                     width: "90%",
                                     borderRadius: "20px",
+                                    color: theme.palette.text.black_white,
                                     '&:hover': {
                                         backgroundColor: theme.palette.secondaryColor.main,
                                     }
@@ -702,6 +706,7 @@ const OrderDetailsNew = ({
                             </Button>
                         </Grid>
                     </>)}
+                    
                     {order?.phase === orderPhaseType.SERVRING && (<>
                         <Grid item xs={12} display={"flex"}>
                             <Button
@@ -714,6 +719,7 @@ const OrderDetailsNew = ({
                                     fontSize: "13px",
                                     width: "70%",
                                     borderRadius: "20px",
+                                    color: theme.palette.text.black_white,
                                     '&:hover': {
                                         backgroundColor: '#2a2a60',
                                     }
@@ -724,6 +730,7 @@ const OrderDetailsNew = ({
                             </Button>
                         </Grid>
                     </>)}
+                    
                     {order?.phase === orderPhaseType.DONING && (<>
                         <Grid item xs={12} display={"flex"}>
                             <Button
@@ -736,6 +743,7 @@ const OrderDetailsNew = ({
                                     fontSize: "13px",
                                     width: "70%",
                                     borderRadius: "20px",
+                                    color: theme.palette.text.black_white,
                                     '&:hover': {
                                         backgroundColor: theme.palette.secondaryColor.main,
                                     }
@@ -747,8 +755,8 @@ const OrderDetailsNew = ({
                             </Button>
                         </Grid>
                     </>
-                    )
-                    }
+                    )}
+                    
                     {order?.phase === orderPhaseType.CLOSING && (<>
                         <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", textAlign: "center", }}>
                             <Button
@@ -764,6 +772,7 @@ const OrderDetailsNew = ({
                                     fontSize: "12px",
                                     width: "60%",
                                     borderRadius: "20px",
+                                    color: theme.palette.text.black_white,
                                     '&:hover': {
                                         backgroundColor: theme.palette.secondaryColor.main,
                                     }

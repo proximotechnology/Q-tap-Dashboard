@@ -267,7 +267,7 @@ export const OrderBody = () => {
     return (
         <Box sx={{
             width: { xs: "100%", md: selectedOrder ? "78%" : "100%" }, transition: "width 0.3s ease-in-out",
-            backgroundColor: "#EBEDF3", minHeight: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden'
+            backgroundColor: theme.palette.bodyColor.whiteGray_lightBlack, minHeight: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden'
         }}>
             <Header />
 
@@ -276,8 +276,8 @@ export const OrderBody = () => {
                     <Grid item xs={12} md={4} sx={{ marginBottom: '20px' }}>
                         <Box
                             sx={{
-                                position: "relative", color: "black",
-                                backgroundColor: "white", width: "80%", zIndex: 1000, textTransform: "capitalize",
+                                position: "relative", color: theme.palette.text.white_black,
+                                backgroundColor: theme.palette.bodyColor.white_333, width: "80%", zIndex: 1000, textTransform: "capitalize",
                                 margin: "-20px 10% 5% 10%", height: "45px", borderBottom: "4px solid #ef7d00",
                                 textAlign: "center",
                                 display: "flex",
@@ -311,8 +311,8 @@ export const OrderBody = () => {
                     <Grid item xs={12} md={4} sx={{ marginBottom: '20px' }}>
                         <Box
                             sx={{
-                                position: "relative", color: "black",
-                                backgroundColor: "white", width: "80%", zIndex: 1000, textTransform: "capitalize",
+                                position: "relative", color: theme.palette.text.white_black,
+                                backgroundColor: theme.palette.bodyColor.white_333, width: "80%", zIndex: 1000, textTransform: "capitalize",
                                 margin: "-20px 10% 5% 10%", height: "45px", borderBottom: "4px solid #ef7d00",
                                 textAlign: "center",
                                 display: "flex",
@@ -343,8 +343,8 @@ export const OrderBody = () => {
                     <Grid item xs={12} md={4} sx={{ marginBottom: '20px' }}>
                         <Box
                             sx={{
-                                position: "relative", color: "black",
-                                backgroundColor: "white", width: "80%", zIndex: 1000, textTransform: "capitalize",
+                                position: "relative", color: theme.palette.text.white_black,
+                                backgroundColor: theme.palette.bodyColor.white_333, width: "80%", zIndex: 1000, textTransform: "capitalize",
                                 margin: "-20px 10% 5% 10%", height: "45px", borderBottom: "4px solid #ef7d00",
                                 textAlign: "center",
                                 display: "flex",
