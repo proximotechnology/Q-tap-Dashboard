@@ -1,4 +1,4 @@
-import { AppBar, Button, Divider, IconButton, Toolbar, Typography } from '@mui/material'
+import { AppBar, Button, CircularProgress, Divider, IconButton, Toolbar, Typography } from '@mui/material'
 import { Box, useTheme } from '@mui/system'
 import React, { useState } from 'react'
 
@@ -296,9 +296,11 @@ export const Payment = ({
                                 "&:hover": {
                                     backgroundColor: "#222245",
                                 }
-                            }}>
-                            <img src="/assets/balance.svg" alt="icon" style={{ width: "16px", height: "16px", marginRight: "5px" }} />
-                            {t("pay")}
+                            }}
+                            disabled={isLoading}
+                            >
+                            
+                            {isLoading ? <><CircularProgress size={24} color='inherit'/> {t("loading")}</>: <><img src="/assets/balance.svg" alt="icon" style={{ width: "16px", height: "16px", marginRight: "5px" }} />{t("pay")}</>}
                         </Button>
                         <span class="icon-printer" style={{ width: "25px", height: "22px", marginLeft: "15px" }} ></span>
                     </Box>

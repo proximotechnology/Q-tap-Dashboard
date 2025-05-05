@@ -32,7 +32,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
     const [selectedName, setSelectedName] = useState("");
     const [comment, setComment] = useState("");
     const [address, setAddress] = useState("");
-    
+
 
     const [table, setTable] = useState([])
 
@@ -109,23 +109,31 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
         setTotal(totalCal.toFixed(2))
     }
     const getBranchTable = async () => {
-        const response = await axios.get(
-            `${BASE_URL}tables`,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
-                }
+        try {
+            const response = await axios.get(
+                `${BASE_URL}tables`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+                    }
 
+                }
+            )
+            console.log(response)
+            setTable(response.data.tables)
+        } catch (error) {
+            console.log(error)
+            console.log(error?.response?.data?.error)
+            if (error?.response?.data?.error === 'Unauthorized.' && error?.status === 403){
+                toast.error(t("yourNotAuthorized"))
             }
-        )
-        console.log(response)
-        setTable(response.data.tables)
+        }
     }
     useEffect(() => {
         calculateTotalPrice()
         getBranchTable()
-    },[])
+    }, [])
 
     return (
         <>
@@ -265,7 +273,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
                                                 {t("selectTable")}
                                             </MenuItem>
                                             {table?.map((item) => (<MenuItem value={item?.id} sx={{ fontSize: "11px", color: "#5D5D59", }}>
-                                                 {item?.name +" -size:"+ item?.size}
+                                                {item?.name + " -size:" + item?.size}
                                             </MenuItem>
                                             ))}
                                         </Select>

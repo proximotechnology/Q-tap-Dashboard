@@ -29,7 +29,7 @@ const OrderDetailsNew = ({
     const [delivery, setDelivery] = useState([]);
     const [selectedDelivery, setSelectedDelivery] = useState(null)
     const [selectedDeliveryId, setSelectedDeliveryId] = useState("")
-console.log('OrderDetailsNew ',order)
+    console.log('OrderDetailsNew ', order)
     useEffect(() => {
         const getDelivery = async () => {
             try {
@@ -288,10 +288,10 @@ console.log('OrderDetailsNew ',order)
         closeDetails()
     }
 
-    const getNameById = (id , searchArray) => {
+    const getNameById = (id, searchArray) => {
         const item = searchArray.find(obj => obj.id === id);
         return item ? item.name : 'Not Found';  // Default to 'Not Found' if id doesn't exist
-      };
+    };
 
     return (
         <Card sx={{ maxWidth: 400, height: "100vh", overflowY: 'auto', zIndex: 1001, width: { xs: '80%', md: "22%" }, backgroundColor: "white", position: "fixed", top: 0, right: 0, }}>
@@ -318,48 +318,49 @@ console.log('OrderDetailsNew ',order)
                         <span class="icon-edit" style={{ fontSize: "15px", marginLeft: "12px", color: theme.palette.orangePrimary.main }}></span>
                     </Typography>
                     {/* order details - > meal : name , quantity and price */}
-                    {order?.meal_id?.map((id, index) =>  { 
+                    {order?.meal_id?.map((id, index) => {
                         const item = order?.meals.find(item => item.id == id);
-                        console.log('order',order ,'item',item)
+                        console.log('order', order, 'item', item)
                         return (
-                        <Box
-                            key={index}
-                            sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                                padding: "4px 0",
-                                fontSize: "10px", color: "gray",
-                            }}
-                        >
-                            <Typography variant="body2" sx={{ fontSize: "10px", color: "#AAAAAA" }}>
-                                {order?.quantity[index]} x {item?.name} {order?.size[index] && `(size: ${order.size[index]})`}
-                                {order?.extras?.[index] && order?.extras?.[index]?.length > 0 &&` + ${order.extras[index]}`}
-                                {order?.variants?.[index] && order?.variants?.[index]?.length > 0 && ` + ${order.variants[index]}`}
-                            </Typography>
-
                             <Box
+                                key={index}
                                 sx={{
                                     display: "flex",
                                     alignItems: "center",
+                                    justifyContent: "space-between",
+                                    padding: "4px 0",
+                                    fontSize: "10px", color: "gray",
                                 }}
                             >
+                                <Typography variant="body2" sx={{ fontSize: "10px", color: "#AAAAAA" }}>
+                                    {order?.quantity[index]} x {item?.name} {order?.size[index] && `(size: ${order.size[index]})`}
+                                    {order?.extras?.detailed?.[index] && order?.extras?.detailed?.[index]?.length > 0 ? <>{" "+t("extras ")}:{order?.extras?.detailed?.[index]?.map((item) => ` + ${item.name}`)}</> : ""}
+                                    {order?.variants?.detailed?.[index] && order?.variants?.detailed?.[index]?.length > 0 ? <>{" "+t("variants ")}:{order?.variants?.detailed?.[index]?.map((item) => ` + ${item.name}`) }</>: ""}
+                                </Typography>
+
                                 <Box
                                     sx={{
-                                        height: "15px",
-                                        borderRight: "1px solid #ef7d00",
-                                        margin: "0 6px",
+                                        display: "flex",
+                                        alignItems: "center",
                                     }}
-                                />
-                                <Typography variant="body2" sx={{ fontSize: "10px", color: "#AAAAAA" }}>
-                                    {order?.size[index] && order.size[index] === 'l' ? item?.price_large : ""}
-                                    {order?.size[index] && order.size[index] === 'm' ? item?.price_medium : ""}
-                                    {order?.size[index] && order.size[index] === 's' ? item?.price_small : ""}
-                                    EGP
-                                </Typography>
+                                >
+                                    <Box
+                                        sx={{
+                                            height: "15px",
+                                            borderRight: "1px solid #ef7d00",
+                                            margin: "0 6px",
+                                        }}
+                                    />
+                                    <Typography variant="body2" sx={{ fontSize: "10px", color: "#AAAAAA" }}>
+                                        {order?.size[index] && order.size[index] === 'l' ? item?.price_large : ""}
+                                        {order?.size[index] && order.size[index] === 'm' ? item?.price_medium : ""}
+                                        {order?.size[index] && order.size[index] === 's' ? item?.price_small : ""}
+                                        EGP
+                                    </Typography>
+                                </Box>
                             </Box>
-                        </Box>
-                    )})}
+                        )
+                    })}
                     {/* section 2 */}
                     <Typography variant="subtitle1" fontSize="12px" paddingTop="6px">{t("comment")}</Typography>
                     <Typography variant="body2" fontSize="11px" color="#AAAAAA" padding="0px 8px">{order?.comments}</Typography>
