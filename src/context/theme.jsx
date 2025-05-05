@@ -24,8 +24,10 @@ export const getDesignTokens = (mode) => ({
           dark: ' #181616',
           tableMain: "#ffffff",
           tableSecandary: "#EBEDF3",
-          whiteGray: ' #EBEDF3'
-
+          whiteGray: ' #EBEDF3',
+          whiteGray_lightBlack: "#EBEDF3",
+          white_333: "white",
+          gray_lightBlack40: "#9d9d9c"
         },
         gradient: {
           orange: ' #f7931e',
@@ -35,16 +37,18 @@ export const getDesignTokens = (mode) => ({
           deepOrange: ' #f05a27'
         },
         text: {//theme.palette.text.white
-          white: ' #ffffff', 
+          white: ' #ffffff',
           black: "#000",
-          gray: ' #575756', 
-          blue:'rgb(3, 3, 80)',// login form
+          gray: ' #575756',
+          blue: 'rgb(3, 3, 80)',// login form
           orange: ' #E57C00',
-          fixedGray: ' #575756', 
-          fixedWhite: ' #ffffff', 
+          fixedGray: ' #575756',
+          fixedWhite: ' #ffffff',
           fixedBlack: "#000",
-          red:'red',
-          green:'green'
+          red: 'red',
+          green: 'green',
+          black_white:"black",
+          gray_white:"gray"
 
         },
         chart: {
@@ -52,11 +56,11 @@ export const getDesignTokens = (mode) => ({
           blue: " #2EA6F7", blueLight: " #aad6f3",
           orange: " #ef7d00", orangeLight: " #f8cb9e"
         },
-        buttons:{
-          blue:' #222240',
-          blueHover:' #322240',
-          orange:' #E57C00',
-          orangeHover:' #ef7d10'
+        buttons: {
+          blue: ' #222240',
+          blueHover: ' #322240',
+          orange: ' #E57C00',
+          orangeHover: ' #ef7d10'
         }
       }
       : /* darkMode */
@@ -82,7 +86,11 @@ export const getDesignTokens = (mode) => ({
           dark: ' #000',
           tableMain: " #000",
           tableSecandary: " #000",
-          whiteGray: '#575756'
+          whiteGray: '#575756',
+
+          whiteGray_lightBlack: "#4d4d4d", //EBEDF3
+          white_333: "#333",//white
+          gray_lightBlack40: '#404040'//9d9d9c
         },
         gradient: {
           orange: ' #000',
@@ -98,20 +106,22 @@ export const getDesignTokens = (mode) => ({
           fixedWhite: ' #000', // White text for better contrast
           fixedBlack: " #000",
           orange: ' #E57C00',
+          black_white:"white" ,//theme.palette.text.white_black
+          gray_white:"white"
         },
         chart: {
           pink: ' #AD4181', pinkLight: " #ffaed8",
           blue: " #2EA6F7", blueLight: " #aad6f3",
           orange: " #ef7d00", orangeLight: " #f8cb9e"
         },
-        buttons:{
-          blue:' #222240',
-          blueHover:' #322240',
-          orange:' #E57C00',
-          orangeHover:' #ef7d10',
-          white:'',
-          gray:'',
-          black:''
+        buttons: {
+          blue: ' #222240',
+          blueHover: ' #322240',
+          orange: ' #E57C00',
+          orangeHover: ' #ef7d10',
+          white: '',
+          gray: '',
+          black: ''
         }
       }
     ),
