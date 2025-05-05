@@ -402,7 +402,7 @@ export const OrderBody = () => {
             <Box sx={{ height: '40px' }}>
 
             </Box>
-            <RejectionModal open={modalOpen} onClose={handleModalClose} />
+            <RejectionModal open={modalOpen} onClose={handleModalClose} selectedOrder={selectedOrder} removeOrder={removeOrder}/>
         </Box>
     );
 };

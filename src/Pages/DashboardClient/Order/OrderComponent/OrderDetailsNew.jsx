@@ -29,7 +29,7 @@ const OrderDetailsNew = ({
     const [delivery, setDelivery] = useState([]);
     const [selectedDelivery, setSelectedDelivery] = useState(null)
     const [selectedDeliveryId, setSelectedDeliveryId] = useState("")
-    console.log('OrderDetailsNew ', order)
+    // console.log('OrderDetailsNew ', order)
     useEffect(() => {
         const getDelivery = async () => {
             try {

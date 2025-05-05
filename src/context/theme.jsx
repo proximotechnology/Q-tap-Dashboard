@@ -27,7 +27,7 @@ export const getDesignTokens = (mode) => ({
           whiteGray: ' #EBEDF3',
           whiteGray_lightBlack: "#EBEDF3",
           white_333: "white",
-          gray_lighterBlack: "#9d9d9c"
+          gray_lightBlack40: "#9d9d9c"
         },
         gradient: {
           orange: ' #f7931e',
@@ -47,7 +47,8 @@ export const getDesignTokens = (mode) => ({
           fixedBlack: "#000",
           red: 'red',
           green: 'green',
-          black_white:"black"
+          black_white:"black",
+          gray_white:"gray"
 
         },
         chart: {
@@ -86,10 +87,10 @@ export const getDesignTokens = (mode) => ({
           tableMain: " #000",
           tableSecandary: " #000",
           whiteGray: '#575756',
-          
+
           whiteGray_lightBlack: "#4d4d4d", //EBEDF3
           white_333: "#333",//white
-          gray_lighterBlack: '#404040'//9d9d9c
+          gray_lightBlack40: '#404040'//9d9d9c
         },
         gradient: {
           orange: ' #000',
@@ -105,7 +106,8 @@ export const getDesignTokens = (mode) => ({
           fixedWhite: ' #000', // White text for better contrast
           fixedBlack: " #000",
           orange: ' #E57C00',
-          black_white:"white" //theme.palette.text.white_black
+          black_white:"white" ,//theme.palette.text.white_black
+          gray_white:"white"
         },
         chart: {
           pink: ' #AD4181', pinkLight: " #ffaed8",

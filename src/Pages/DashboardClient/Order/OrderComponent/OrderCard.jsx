@@ -29,7 +29,7 @@ const OrderCard = ({ order, isSelected, onClick, isAccepted, isPayment, isServed
                 <Typography
                     variant="body1"
                     sx={{
-                        backgroundColor: isAccepted || isSelected ? theme.palette.secondaryColor.main : theme.palette.bodyColor.gray_lighterBlack,
+                        backgroundColor: isAccepted || isSelected ? theme.palette.secondaryColor.main : theme.palette.bodyColor.gray_lightBlack40,
                         padding: "7px",
                         fontSize: "15px",
                         textAlign: "center",
