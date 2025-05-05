@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { BASE_URL } from '../../../../utils/helperFunction';
+import { useTheme } from '@mui/system';
 
 export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
     const [role, setRole] = useState('');
@@ -13,7 +14,7 @@ export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
     const [isLoading, setIsLoading] = useState(false);
     const { t } = useTranslation();
     const [rolesData, setRolesData] = useState([]);
-
+    const theme = useTheme();
     const getRoles = async () => {
         try {
 
@@ -85,9 +86,9 @@ export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
                     position: 'relative'
                 }}>
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <Typography variant="body1" sx={{ fontSize: "13px", color: "#424242" }}>{t("userStaff.add")}</Typography>
+                    <Typography variant="body1" sx={{ fontSize: "13px", color: theme.palette.text.gray }}>{t("userStaff.add")}</Typography>
                     <IconButton onClick={onClose} disabled={isLoading}>
-                        <CloseIcon sx={{ fontSize: "20px", color: "gray" }} />
+                        <CloseIcon sx={{ fontSize: "20px", color: theme.palette.text.gray }} />
                     </IconButton>
                 </Box>
                 <Divider
@@ -103,7 +104,7 @@ export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
                     width: "100%",
                     alignTexts: "left",
                 }}>
-                    <Typography variant='body2' sx={{ width: "25%", textAlign: "center" }} color={"#424242"} fontSize={"12px"}>
+                    <Typography variant='body2' sx={{ width: "25%", textAlign: "center" }} color={theme.palette.text.gray_light} fontSize={"12px"}>
                         {t("name")}
                     </Typography>
                     <Box sx={{
@@ -138,7 +139,7 @@ export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
                     width: "100%",
                     alignItems: "flex-start",
                 }}>
-                    <Typography variant='body2' sx={{ width: "25%", textAlign: "center" }} color={"#424242"} fontSize={"12px"}>
+                    <Typography variant='body2' sx={{ width: "25%", textAlign: "center" }} color={theme.palette.text.gray_light} fontSize={"12px"}>
                         {t("role")}
                     </Typography>
                     <Box sx={{
@@ -174,7 +175,7 @@ export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
                                     {t("selectRole")}
                                 </MenuItem>
                                 {rolesData?.map((role) => (
-                                    <MenuItem key={role.id} value={role.id} sx={{ fontSize: "12px", color: "gray" }}>
+                                    <MenuItem key={role.id} value={role.id} sx={{ fontSize: "12px", color: theme.palette.text.gray_light }}>
                                         {role.name}
                                     </MenuItem>
                                 ))}

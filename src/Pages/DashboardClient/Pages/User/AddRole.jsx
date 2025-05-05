@@ -103,11 +103,11 @@ export const AddRole = ({ open, onClose, onSave, brunchId = "442" }) => {
                 }}
             >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Typography variant="body1" sx={{ fontSize: '13px', color: '#424242' }}>
+                    <Typography variant="body1" sx={{ fontSize: '13px', color: theme.palette.text.gray }}>
                         {t('Add Role')}
                     </Typography>
                     <IconButton onClick={onClose}>
-                        <span className="icon-close-1" style={{ fontSize: '15px', color: 'gray' }} />
+                        <span className="icon-close-1" style={{ fontSize: '15px', color: theme.palette.text.gray_light }} />
                     </IconButton>
                 </Box>
                 <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main }} />
@@ -115,7 +115,7 @@ export const AddRole = ({ open, onClose, onSave, brunchId = "442" }) => {
 
 
                 <Box sx={{ marginTop: '20px', display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'flex-start' }}>
-                    <Typography variant="body2" sx={{ width: '25%', textAlign: 'center' }} color="#424242" fontSize="10px">
+                    <Typography variant="body2" sx={{ width: '25%', textAlign: 'center' }} color={theme.palette.text.gray} fontSize="10px">
                         {t('role')}
                     </Typography>
                     <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
@@ -127,7 +127,7 @@ export const AddRole = ({ open, onClose, onSave, brunchId = "442" }) => {
                                         padding: '1px 14px',
                                         textAlign: 'left',
                                         fontSize: '10px',
-                                        color: 'gray',
+                                        color:theme.palette.text.gray_light,
                                         lineHeight: '30px',
                                     },
                                 }}
@@ -137,16 +137,16 @@ export const AddRole = ({ open, onClose, onSave, brunchId = "442" }) => {
                                 onChange={(e) => setRole(e.target.value)}
                                 placeholder="Select Role"
                             >
-                                <MenuItem value="" disabled sx={{ fontSize: '10px', color: 'gray' }}>
+                                <MenuItem value="" disabled sx={{ fontSize: '10px', color: theme.palette.text.gray_light }}>
                                     {t('selectRole')}
                                 </MenuItem>
-                                <MenuItem value="chef" sx={{ fontSize: '10px', color: 'gray' }}>
+                                <MenuItem value="chef" sx={{ fontSize: '10px', color: theme.palette.text.gray_light }}>
                                     {t('Chef')}
                                 </MenuItem>
-                                <MenuItem value="cashier" sx={{ fontSize: '10px', color: 'gray' }}>
+                                <MenuItem value="cashier" sx={{ fontSize: '10px', color: theme.palette.text.gray_light }}>
                                     {t('Cashier')}
                                 </MenuItem>
-                                <MenuItem value="waiter" sx={{ fontSize: '10px', color: 'gray' }}>
+                                <MenuItem value="waiter" sx={{ fontSize: '10px', color: theme.palette.text.gray_light }}>
                                     {t('Waiter')}
                                 </MenuItem>
                             </Select>
@@ -191,7 +191,7 @@ export const AddRole = ({ open, onClose, onSave, brunchId = "442" }) => {
                                 label={
                                     <Box display="flex" alignItems="center">
                                         <Typography>{item.icon}</Typography>
-                                        <Typography variant="body2" sx={{ marginLeft: '6px', fontSize: '11px', color: 'gray' }}>
+                                        <Typography variant="body2" sx={{ marginLeft: '6px', fontSize: '11px', color: theme.palette.text.gray_light }}>
                                             {t(item.name)}
                                         </Typography>
                                     </Box>

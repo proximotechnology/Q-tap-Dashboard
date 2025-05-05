@@ -48,7 +48,8 @@ export const getDesignTokens = (mode) => ({
           red: 'red',
           green: 'green',
           black_white:"black",
-          gray_white:"gray"
+          gray_white:"gray",
+          gray_light:' #575756',
 
         },
         chart: {
@@ -107,7 +108,9 @@ export const getDesignTokens = (mode) => ({
           fixedBlack: " #000",
           orange: ' #E57C00',
           black_white:"white" ,//theme.palette.text.white_black
-          gray_white:"white"
+          gray_white:"white",
+          gray_light:'rgb(191, 191, 188)',
+
         },
         chart: {
           pink: ' #AD4181', pinkLight: " #ffaed8",

@@ -94,17 +94,17 @@ export const AddUser = ({ open, onClose }) => {
                 }}
             >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Typography variant="body1" sx={{ fontSize: '13px', color: '#424242' }}>
+                    <Typography variant="body1" sx={{ fontSize: '13px', color: theme.palette.text.gray }}>
                         {t('userAdd')}
                     </Typography>
                     <IconButton onClick={onClose}>
-                        <span className="icon-close-1" style={{ fontSize: '15px', color: 'gray' }} />
+                        <span className="icon-close-1" style={{ fontSize: '15px', color: theme.palette.text.gray }} />
                     </IconButton>
                 </Box>
                 <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main }} />
 
                 <Box sx={{ marginTop: '20px', display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'left' }}>
-                    <Typography variant="body2" sx={{ width: '22%', textAlign: 'center' }} color="#424242" fontSize="10px">
+                    <Typography variant="body2" sx={{ width: '22%', textAlign: 'center' }} color={theme.palette.text.gray_light} fontSize="10px">
                         {t('name')}
                     </Typography>
                     <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
@@ -128,7 +128,7 @@ export const AddUser = ({ open, onClose }) => {
                 </Box>
 
                 <Box sx={{ marginTop: '20px', display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'flex-start' }}>
-                    <Typography variant="body2" sx={{ width: '22%', textAlign: 'center' }} color="#424242" fontSize="10px">
+                    <Typography variant="body2" sx={{ width: '22%', textAlign: 'center' }} color={theme.palette.text.gray_light} fontSize="10px">
                         {t('pin')}
                     </Typography>
                     <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
