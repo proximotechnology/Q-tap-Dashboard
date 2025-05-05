@@ -6,7 +6,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box, useTheme } from "@mui/system";
 import React, { forwardRef, useImperativeHandle, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import { toast } from "react-toastify";
@@ -20,6 +20,7 @@ export const FAQ = forwardRef((props, ref) => {
   const [data, setData] = useState(initialData);
   const [faqs, setFaqs] = useState([{ question: '', answer: '', questionAr: '', answerAr: '' }]);
   const {t} = useTranslation()
+  const theme = useTheme();
   // دالة لإضافة كائن جديد عند الضغط على زر +
   const addFaq = () => {
     setFaqs([...faqs, { question: '', answer: '', questionAr: '', answerAr: '' }]);
@@ -86,7 +87,7 @@ export const FAQ = forwardRef((props, ref) => {
         <Box key={index}>
           <Typography
             variant="subtitle1"
-            sx={{ fontSize: "10px", color: "gray", marginBottom: "5px" }}
+            sx={{ fontSize: "10px", color: theme.palette.text.gray, marginBottom: "5px" }}
           >
             {item.faq}
           </Typography>
@@ -105,7 +106,7 @@ export const FAQ = forwardRef((props, ref) => {
                       fontSize: "10px",
                       height: "25px",
                       borderRadius: "10px",
-                      backgroundColor: "#EBEDF3",
+                      backgroundColor: theme.palette.bodyColor.secandaryInput,
                     },
                     "& .MuiOutlinedInput-notchedOutline": {
                       border: "none",
@@ -126,7 +127,7 @@ export const FAQ = forwardRef((props, ref) => {
                       fontSize: "10px",
                       height: "40px",
                       borderRadius: "10px",
-                      backgroundColor: "#EBEDF3",
+                      backgroundColor: theme.palette.bodyColor.secandaryInput,
                     },
                     "& .MuiOutlinedInput-notchedOutline": {
                       border: "none",
@@ -147,7 +148,7 @@ export const FAQ = forwardRef((props, ref) => {
                       fontSize: "10px",
                       height: "25px",
                       borderRadius: "10px",
-                      backgroundColor: "#EBEDF3",
+                      backgroundColor: theme.palette.bodyColor.secandaryInput,
                       border: "none",
                     },
                     "& .MuiOutlinedInput-notchedOutline": {
@@ -169,7 +170,7 @@ export const FAQ = forwardRef((props, ref) => {
                       fontSize: "10px",
                       height: "40px",
                       borderRadius: "10px",
-                      backgroundColor: "#EBEDF3",
+                      backgroundColor: theme.palette.bodyColor.secandaryInput,
                       border: "none",
                     },
                     "& .MuiOutlinedInput-notchedOutline": {

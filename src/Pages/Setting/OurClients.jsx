@@ -7,12 +7,13 @@ import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL } from '../../utils/helperFunction';
+import { useTheme } from '@mui/system';
 
 const OurClients = forwardRef((props, ref) => {
     const [clients, setClients] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const { t } = useTranslation();
-
+    const theme = useTheme();
     const validateImage = (file) => {
         const maxSize = 5 * 1024 * 1024; // 5MB
         const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
@@ -141,8 +142,8 @@ const OurClients = forwardRef((props, ref) => {
                                 position: 'absolute',
                                 top: -8,
                                 right: -8,
-                                backgroundColor: '#fff',
-                                '&:hover': { backgroundColor: '#f5f5f5' }
+                                backgroundColor: theme.palette.bodyColor.secandaryInput,
+                                // '&:hover': { backgroundColor: '#E57C00' }
                             }}
                             onClick={() => handleRemoveClient(client.id)}
                         >
@@ -159,7 +160,7 @@ const OurClients = forwardRef((props, ref) => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        backgroundColor: "#eeeeeef1",
+                        backgroundColor:theme.palette.bodyColor.secandaryInput,
                         cursor: isLoading ? "not-allowed" : "pointer",
                         opacity: isLoading ? 0.7 : 1
                     }}

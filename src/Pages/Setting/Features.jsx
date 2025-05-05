@@ -36,7 +36,7 @@ const FeatureSection = ({ section, updateSection, index }) => {
     return (
         <Grid container spacing={2} sx={{ padding: '10px 30px', marginBottom: '10px' }}>
             <Grid item xs={12} md={2} textAlign="center">
-                <Box sx={{ width: '130px', height: '95px', backgroundColor: "#EBEDF3", borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Box sx={{ width: '130px', height: '95px', backgroundColor: theme.palette.bodyColor.secandaryInput, borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     {section.imgFile ? (
                         <img src={URL.createObjectURL(section.imgFile)} alt="Uploaded" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "10px" }} />
                     ) : (
@@ -64,12 +64,12 @@ const FeatureSection = ({ section, updateSection, index }) => {
 
             <Grid item xs={12} md={10}>
                 <Grid container spacing={1}>
-                    <Grid item xs={12}><TextField placeholder={t("titleEn")} fullWidth variant="outlined" size="small" value={section.titleEn} onChange={(e) => updateSection(index, { ...section, titleEn: e.target.value })} sx={{ '& .MuiOutlinedInput-root': { fontSize: "10px", height: "25px", borderRadius: "10px", backgroundColor: "#EBEDF3", border: "none" }, '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }} /></Grid>
-                    <Grid item xs={12}><TextField placeholder={t("descriptionEn")} fullWidth variant="outlined" size="small" value={section.descriptionEn} onChange={(e) => updateSection(index, { ...section, descriptionEn: e.target.value })} sx={{ '& .MuiOutlinedInput-root': { fontSize: "10px", height: "40px", borderRadius: "10px", backgroundColor: "#EBEDF3", border: "none" }, '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }} /></Grid>
-                    <Grid item xs={12}><TextField placeholder={t("titleAr")} fullWidth variant="outlined" size="small" value={section.titleAr} onChange={(e) => updateSection(index, { ...section, titleAr: e.target.value })} sx={{ '& .MuiOutlinedInput-root': { fontSize: "10px", height: "25px", borderRadius: "10px", backgroundColor: "#EBEDF3", border: "none" }, '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }} /></Grid>
-                    <Grid item xs={12}><TextField placeholder={t("descriptionAr")} fullWidth variant="outlined" size="small" value={section.descriptionAr} onChange={(e) => updateSection(index, { ...section, descriptionAr: e.target.value })} sx={{ '& .MuiOutlinedInput-root': { fontSize: "10px", height: "40px", borderRadius: "10px", backgroundColor: "#EBEDF3", border: "none" }, '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }} /></Grid>
+                    <Grid item xs={12}><TextField placeholder={t("titleEn")} fullWidth variant="outlined" size="small" value={section.titleEn} onChange={(e) => updateSection(index, { ...section, titleEn: e.target.value })} sx={{ '& .MuiOutlinedInput-root': { fontSize: "10px", height: "25px", borderRadius: "10px", backgroundColor: theme.palette.bodyColor.secandaryInput, border: "none" }, '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }} /></Grid>
+                    <Grid item xs={12}><TextField placeholder={t("descriptionEn")} fullWidth variant="outlined" size="small" value={section.descriptionEn} onChange={(e) => updateSection(index, { ...section, descriptionEn: e.target.value })} sx={{ '& .MuiOutlinedInput-root': { fontSize: "10px", height: "40px", borderRadius: "10px", backgroundColor: theme.palette.bodyColor.secandaryInput, border: "none" }, '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }} /></Grid>
+                    <Grid item xs={12}><TextField placeholder={t("titleAr")} fullWidth variant="outlined" size="small" value={section.titleAr} onChange={(e) => updateSection(index, { ...section, titleAr: e.target.value })} sx={{ '& .MuiOutlinedInput-root': { fontSize: "10px", height: "25px", borderRadius: "10px", backgroundColor: theme.palette.bodyColor.secandaryInput, border: "none" }, '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }} /></Grid>
+                    <Grid item xs={12}><TextField placeholder={t("descriptionAr")} fullWidth variant="outlined" size="small" value={section.descriptionAr} onChange={(e) => updateSection(index, { ...section, descriptionAr: e.target.value })} sx={{ '& .MuiOutlinedInput-root': { fontSize: "10px", height: "40px", borderRadius: "10px", backgroundColor: theme.palette.bodyColor.secandaryInput, border: "none" }, '& .MuiOutlinedInput-notchedOutline': { border: 'none' } }} /></Grid>
                     <Grid item xs={12} md={6}>
-                        <Box sx={{ backgroundColor: "#EBEDF3", borderRadius: "8px", minHeight: "70px", padding: "0px 20px" }}>
+                        <Box sx={{ backgroundColor: theme.palette.bodyColor.secandaryInput, borderRadius: "8px", minHeight: "70px", padding: "0px 20px" }}>
                             <Box sx={{ height: "36px", display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                     <DoneOutlinedIcon sx={{ fontSize: "12px", color: theme.palette.orangePrimary.main }} />
@@ -91,7 +91,7 @@ const FeatureSection = ({ section, updateSection, index }) => {
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <Box sx={{ backgroundColor: "#EBEDF3", borderRadius: "8px", minHeight: "70px", padding: "0px 20px" }}>
+                        <Box sx={{ backgroundColor: theme.palette.bodyColor.secandaryInput, borderRadius: "8px", minHeight: "70px", padding: "0px 20px" }}>
                             <Box sx={{ height: "36px", display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                     <DoneOutlinedIcon sx={{ fontSize: "12px", color: theme.palette.orangePrimary.main }} />

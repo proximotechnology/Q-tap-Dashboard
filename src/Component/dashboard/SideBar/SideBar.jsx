@@ -115,7 +115,18 @@ export default function SideBar({ isOpen, handleToggleSideBar }) {
             zIndex: 1000
         }}>
             <Box sx={{ display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
-                <img src={localStorage.getItem("themeMode") === "light" ? "/assets/qtapwhite.svg" : "/assets/qtap.svg"} alt="Logo" style={{ width: '110px' }} />
+                <img
+                    src={
+                        localStorage.getItem("themeMode") !== null
+                            ? (localStorage.getItem("themeMode") === "dark"
+                                ? "/assets/qtap.svg"
+                                : "/assets/qtapwhite.svg")
+                            : "/assets/qtap.svg"
+                    }
+                    alt="Logo"
+                    style={{ width: '110px' }}
+                />
+
             </Box>
             <CloseSideBarButton customSX={{ top: '50px', insetInlineStart: '80%', padding: '0px', margin: '0px', minWidth: 'unset', display: { xs: "block", md: 'none' } }} handleToggleSideBar={handleToggleSideBar} />
             <SidebarExtraMobileSection />

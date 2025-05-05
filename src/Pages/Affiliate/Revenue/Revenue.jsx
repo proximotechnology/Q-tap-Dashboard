@@ -28,10 +28,11 @@ export const Revenue = () => {
         }
       )
       const data = await response.json();
-      // console.log("data", data);
+      console.log("data", data);
       if (response.ok) {
         setRevenueData(data);
         setLoading(false)
+
       }
     } catch (error) {
       console.log("error", error);
@@ -71,7 +72,7 @@ export const Revenue = () => {
           <Box display={"flex"} justifyContent="space-between">
             <Typography
               variant="body1"
-              sx={{ fontSize: "18px", color: "#575756" }}
+              sx={{ fontSize: "18px", color: theme.palette.text.gray }}
             >
               {t("Revenue")}
             </Typography>
@@ -87,20 +88,20 @@ export const Revenue = () => {
                   ".MuiSelect-icon": { fontSize: "20px" },
                 }}
               >
-                <MenuItem value="2023" sx={{ fontSize: "10px", color: "gray" }}>
+                <MenuItem value="2023" sx={{ fontSize: "10px", color: theme.palette.text.gray }}>
                   2023
                 </MenuItem>
-                <MenuItem value="2024" sx={{ fontSize: "10px", color: "gray" }}>
+                <MenuItem value="2024" sx={{ fontSize: "10px", color: theme.palette.text.gray }}>
                   2024
                 </MenuItem>
-                <MenuItem value="2025" sx={{ fontSize: "10px", color: "gray" }}>
+                <MenuItem value="2025" sx={{ fontSize: "10px", color: theme.palette.text.gray }}>
                   2025
                 </MenuItem>
               </Select>
             </Box>
           </Box>
           <span
-            style={{ color: "#D8E0E0", fontSize: "8px", marginTop: "-5px" }}
+            style={{ color: "rgb(175, 175, 173)", fontSize: "8px", marginTop: "-5px" }}
           >
             {t("affiliateMarketing")}
           </span>
@@ -109,7 +110,7 @@ export const Revenue = () => {
             variant="body1"
             sx={{ fontSize: "28px", marginTop: "15px", color: theme.palette.orangePrimary.main }}
           >
-            200.234 <span style={{ fontSize: "15px", color: "gray" }}>EGP</span>
+            200.234 <span style={{ fontSize: "15px", color: theme.palette.text.gray }}>EGP</span>
           </Typography>
         </Grid>
 
@@ -152,16 +153,16 @@ export const Revenue = () => {
               fontSize: "14px",
               alignItems: "center",
               display: "flex",
-              color: "#575756",
+              color: theme.palette.text.gray,
             }}
           >
-            <PersonOutlinedIcon sx={{ fontSize: "18px", color: "#575756", marginBottom: "5px" }} />{" "}
+            <PersonOutlinedIcon sx={{ fontSize: "18px", color: theme.palette.text.gray, marginBottom: "5px" }} />{" "}
             {t("users")}
           </Typography>
           <Typography
             variant="body2"
             sx={{
-              color: "#575756",
+              color: theme.palette.text.gray,
               marginBottom: "10px",
               fontSize: "20px",
               border: "1px solid #575756",

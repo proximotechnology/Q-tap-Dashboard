@@ -4,9 +4,11 @@ import AddIcon from '@mui/icons-material/Add';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL } from '../../utils/helperFunction';
+import { useTheme } from '@mui/system';
 
 const URLInput = ({ label, setVideoUrl, value }) => {
     const { t } = useTranslation()
+    const theme = useTheme()
     return (
         <Box
             display="flex"
@@ -15,7 +17,7 @@ const URLInput = ({ label, setVideoUrl, value }) => {
             width="100%"
             mb={1}
         >
-            <Typography textAlign="center" variant="body2" mb={1} sx={{ fontSize: "11px", color: "#575756" }}>
+            <Typography textAlign="center" variant="body2" mb={1} sx={{ fontSize: "11px", color: theme.palette.text.gray }}>
                 {label}
             </Typography>
             <TextField
@@ -27,7 +29,7 @@ const URLInput = ({ label, setVideoUrl, value }) => {
                 InputProps={{
                     sx: {
                         borderRadius: '20px',
-                        backgroundColor: '#EBEDF3',
+                        backgroundColor: theme.palette.bodyColor.secandaryInput,
                         height: '25px',
                         fontSize: '10px',
                         padding: '0 10px',
@@ -65,7 +67,7 @@ export const Videos = forwardRef((props, ref) => {
             return;
         }
         console.log(validUrls);
-        
+
         const bundleData = {
             video: validUrls
         };

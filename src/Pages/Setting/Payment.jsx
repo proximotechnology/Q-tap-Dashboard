@@ -5,6 +5,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL } from '../../utils/helperFunction';
+import { useTheme } from '@mui/system';
 
 const PaymentGatewayForm = forwardRef((props, ref) => {
     const [apiKey, setApiKey] = useState('');
@@ -63,6 +64,7 @@ const PaymentGatewayForm = forwardRef((props, ref) => {
         savePayment: handleSave,
     }));
     const {t} = useTranslation()
+    const theme = useTheme();
     return (
         <Paper elevation={3} style={{ padding: '20px 30px', borderRadius: "10px", marginTop: '16px' }}>
             <Box
@@ -76,7 +78,7 @@ const PaymentGatewayForm = forwardRef((props, ref) => {
                     sx={{
                         textAlign: "left",
                         fontSize: "15px",
-                        color: "#575756",
+                        color: theme.palette.text.gray,
                         margin: "10px 0px 15px 0px"
                     }}
                 >
@@ -101,7 +103,13 @@ const PaymentGatewayForm = forwardRef((props, ref) => {
                         margin: "0 auto"
                     }}>
                     <img
-                        src="/images/Payment.png"
+                        src={
+                            localStorage.getItem("themeMode") !== null
+                                ? (localStorage.getItem("themeMode") === "dark"
+                                    ? "/assets/icons/icons/paymob.svg"
+                                    : "/assets/paymob.svg")
+                                : "/assets/icons/icons/paymob.svg"
+                        }
                         alt="Paymob Logo"
                         style={{
                             display: 'block',

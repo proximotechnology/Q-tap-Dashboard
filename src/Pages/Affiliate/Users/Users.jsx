@@ -23,6 +23,7 @@ import * as XLSX from "xlsx";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { BASE_URL, BASE_URL_IMG } from "../../../utils/helperFunction";
+import { Settings } from "@mui/icons-material";
 
 export const Users = () => {
   const navigate = useNavigate();
@@ -142,6 +143,7 @@ export const Users = () => {
   const filteredUsers = allUsers.filter(user =>
     user.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+  console.log("filteredUsers", filteredUsers);
   return (
     <Box>
       <Paper sx={{ padding: "15px", borderRadius: 5, minHeight: "60vh", maxHeight: "82vh" }}>
@@ -154,7 +156,7 @@ export const Users = () => {
         >
           <Typography
             variant="h5"
-            color="#575756"
+            color={theme.palette.text.gray}
             sx={{ display: "flex", fontSize: "14px", alignItems: "center" }}
           >
             <Box sx={{ fill: "#D8E0E0" }}>
@@ -204,7 +206,7 @@ export const Users = () => {
             <IconButton onClick={handleSearchClick}>
               <span
                 className="icon-magnifier"
-                style={{ fontSize: "15px", color: "#575756" }}
+                style={{ fontSize: "15px", color: theme.palette.text.gray }}
               />
             </IconButton>
             <Button
@@ -216,7 +218,7 @@ export const Users = () => {
               }}
             >
               {t("add")}
-              <AddIcon sx={{ color: "#575756", fontSize: "12px" }} />
+              <AddIcon sx={{ color: theme.palette.text.gray, fontSize: "12px" }} />
             </Button>
             <Button
               onClick={exportToExcel}
@@ -228,7 +230,7 @@ export const Users = () => {
             >
               {t("export")}{" "}
               <ArrowForwardIosOutlinedIcon
-                sx={{ color: "#575756", fontSize: "10px" }}
+                sx={{ color: theme.palette.text.gray, fontSize: "10px" }}
               />
             </Button>
           </Box>
@@ -238,14 +240,14 @@ export const Users = () => {
           <Table sx={{ borderCollapse: "separate", borderSpacing: "0 5px" }}>
             <TableHead>
               <TableRow sx={{ height: "20px" }}>
-              {[t("name"), t("id"), t("email"), t("status"), ""].map((header) => (
+                {[t("name"), t("id"), t("email"), t("status"), ""].map((header) => (
                   <TableCell
                     key={header}
                     sx={{
                       fontSize: "10px",
                       padding: "0px 10px",
                       borderBottom: "none",
-                      color: "#575756",
+                      color: theme.palette.text.gray,
                     }}
                   >
                     {header}
@@ -260,7 +262,7 @@ export const Users = () => {
                   key={user.id}
                   sx={{
                     height: "20px",
-                    backgroundColor: index % 2 === 0 ? "#EBEDF3" : "white",
+                    backgroundColor: index % 2 === 0 ? theme.palette.bodyColor.secandaryInput : "",
                     "& td:first-of-type": {
                       borderTopLeftRadius: "20px",
                       borderBottomLeftRadius: "20px",
@@ -365,7 +367,7 @@ export const Users = () => {
                   <TableCell sx={{ padding: "0px 8px", borderBottom: "none" }}>
                     <IconButton onClick={(e) => handleClick(e, user)}>
                       <DragHandleIcon
-                        sx={{ color: "gray", fontSize: "16px" }}
+                        sx={{ color: theme.palette.text.gray, fontSize: "16px" }}
                       />
                     </IconButton>
                   </TableCell>
@@ -394,15 +396,13 @@ export const Users = () => {
             sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
           >
             <IconButton>
-              <img
-                src="/assets/setting.svg"
-                alt="icon"
-                style={{ width: "16px", height: "16px" }}
+              <Settings
+                style={{ width: "16px", height: "16px" , color: theme.palette.text.gray }}
               />
             </IconButton>
             <Typography
               variant="body2"
-              sx={{ color: "#575756", fontSize: "10px" }}
+              sx={{ color: theme.palette.text.gray, fontSize: "10px" }}
             >
               Edit
             </Typography>
@@ -415,11 +415,11 @@ export const Users = () => {
             sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
           >
             <IconButton>
-              <span className="icon-delete" style={{ fontSize: "15px" }}></span>
+              <span className="icon-delete" style={{ fontSize: "15px", color: theme.palette.text.gray }}></span>
             </IconButton>
             <Typography
               variant="body2"
-              sx={{ color: "#575756", fontSize: "10px" }}
+              sx={{ color: theme.palette.text.gray, fontSize: "10px" }}
             >
               Delete
             </Typography>

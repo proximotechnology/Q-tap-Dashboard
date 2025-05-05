@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { AffiliateClientContext } from '../../../context/AffiliateClient';
 import Language from '../../../Component/dashboard/TopBar/Language';
 import { BASE_URL } from '../../../utils/helperFunction';
+import { Logout, Print, Settings } from '@mui/icons-material';
 
 export const AddUsers = () => {
     const navigate = useNavigate();
@@ -36,7 +37,7 @@ export const AddUsers = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [selectedImage, setSelectedImage] = useState(null);
     const [selectedOption, setSelectedOption] = useState(user?.campaign || 'Winter Campaign');
-    
+
 
     // Payment Info States
     const [bankName, setBankName] = useState(user?.bank_name || '');
@@ -45,9 +46,9 @@ export const AddUsers = () => {
     const [paymentOption, setPaymentOption] = useState(user?.payment_way ? (
         user.payment_way === 'bank_account' ? 'Bank' :
             user.payment_way === 'digital_wallet' ? 'D.Wallet' :
-            user.payment_way === 'credit_card' ? 'Card' :null
+                user.payment_way === 'credit_card' ? 'Card' : null
     ) : 'Bank');
-    const [addressBank, setAddressBank] =useState(user?.address ||"")
+    const [addressBank, setAddressBank] = useState(user?.address || "")
 
     const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -63,8 +64,8 @@ export const AddUsers = () => {
     useEffect(() => {
         if (user) {
             getAffiliateData(user.id); // Fetch data for the specific user
-            console.log("affiliate" , affiliates);
-            
+            console.log("affiliate", affiliates);
+
         }
     }, [user]);
 
@@ -89,7 +90,7 @@ export const AddUsers = () => {
                 setAccountNumber(affiliateData.affiliate?.payment_info?.bank_account_number || accountNumber);
                 setAccountName(affiliateData.affiliate?.payment_info?.bank_account_name || accountName);
                 setAddressBank(affiliateData.affiliate?.payment_info?.address || addressBank);
-                
+
                 setPaymentOption(affiliateData.affiliate?.payment_info?.payment_way ? (
                     affiliateData.affiliate?.payment_way === 'bank_account' ? 'Bank' :
                         affiliateData.affiliate?.payment_way === 'digital_wallet' ? 'D.Wallet' :
@@ -99,7 +100,7 @@ export const AddUsers = () => {
         }
     }, [affiliates, user]);
 
- 
+
 
     const handlePrint = () => {
         window.print();
@@ -236,7 +237,7 @@ export const AddUsers = () => {
     };
 
     return (
-        <Box sx={{ backgroundColor: "white", height: "100%" }}>
+        <Box sx={{ backgroundColor: theme.palette.bodyColor.secandary, height: "100vh" }}>
             <Box
                 sx={{
                     display: "flex",
@@ -249,10 +250,11 @@ export const AddUsers = () => {
                 }}
             >
                 <Box>
-                    <img src="/images/qtap.PNG" alt='logo' width={"140px"} />
+                    <img src={localStorage.getItem("themeMode") === "light" ? "/assets/qtapwhite.svg" : "/assets/qtap.svg"} alt="Logo" style={{ width: '140px' }} />
+
                 </Box>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                   <Language/>
+                    <Language />
                     <Box
                         aria-describedby={openUserPopover ? 'simple-popover' : undefined}
                         onClick={handleUserClick}
@@ -261,7 +263,7 @@ export const AddUsers = () => {
                         <IconButton color="inherit" sx={{ backgroundColor: theme.palette.orangePrimary.main, borderRadius: '30%', padding: '5px', '&:hover': { backgroundColor: theme.palette.orangePrimary.main } }}>
                             <PersonOutlineOutlinedIcon sx={{ fontSize: "20px", color: "white" }} />
                         </IconButton>
-                        <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>User01</Typography>
+                        <Typography variant="body1" sx={{ fontSize: "13px", color: theme.palette.text.gray }}>User01</Typography>
                         <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: "#575756" }} />
                     </Box>
                     <Popover
@@ -277,8 +279,8 @@ export const AddUsers = () => {
                                     <PersonOutlineOutlinedIcon sx={{ fontSize: "22px", color: "white" }} />
                                 </Box>
                                 <Box>
-                                    <Typography variant="h6" sx={{ fontSize: "14px" }}>User01</Typography>
-                                    <Typography variant="body2" sx={{ fontSize: "12px" }} color="textSecondary">Mail@mail.com</Typography>
+                                    <Typography variant="h6" sx={{ fontSize: "14px", color: theme.palette.text.gray }}>User01</Typography>
+                                    <Typography variant="body2" sx={{ fontSize: "12px", color: theme.palette.text.gray }} color="textSecondary">Mail@mail.com</Typography>
                                 </Box>
                             </Box>
                             <Divider />
@@ -304,20 +306,20 @@ export const AddUsers = () => {
                                     <span style={{ color: "white", fontSize: "12px", textTransform: "capitalize" }}>Home</span>
                                 </Box>
                                 <Box sx={{ cursor: "pointer", display: "flex", alignItems: "center", padding: "8px 16px" }} onClick={handleUserClose}>
-                                    <img src="/assets/setting.svg" alt="icon" style={{ width: "16px", height: "16px", marginRight: "10px" }} />
-                                    <Typography sx={{ color: '#5D5D5C', fontSize: '12px' }}>Edit Profile</Typography>
+                                    <Settings style={{ fontSize: "20px", height: "16px", color: theme.palette.text.gray, marginRight: "10px" }} />
+                                    <Typography sx={{ color: theme.palette.text.gray, fontSize: '12px' }}>Edit Profile</Typography>
                                 </Box>
                                 <Box sx={{ cursor: "pointer", display: "flex", alignItems: "center", padding: "8px 16px" }} onClick={handleUserClose}>
-                                    <span className="icon-price-tag" style={{ fontSize: "20px", marginRight: "10px" }}></span>
-                                    <Typography sx={{ color: '#5D5D5C', fontSize: '12px' }}>My Subscription</Typography>
+                                    <span className="icon-price-tag" style={{ fontSize: "20px", color: theme.palette.text.gray, marginRight: "10px" }}></span>
+                                    <Typography sx={{ color: theme.palette.text.gray, fontSize: '12px' }}>My Subscription</Typography>
                                 </Box>
                                 <Box sx={{ cursor: "pointer", display: "flex", alignItems: "center", padding: "8px 16px" }} onClick={handleUserClose}>
-                                    <HelpOutlineOutlinedIcon sx={{ fontSize: "20px", marginRight: "10px" }} />
-                                    <Typography sx={{ color: '#5D5D5C', fontSize: '12px' }}>FAQ</Typography>
+                                    <HelpOutlineOutlinedIcon sx={{ fontSize: "20px", color: theme.palette.text.gray, marginRight: "10px" }} />
+                                    <Typography sx={{ color: theme.palette.text.gray, fontSize: '12px' }}>FAQ</Typography>
                                 </Box>
                                 <Box sx={{ cursor: "pointer", display: "flex", alignItems: "center", padding: "8px 16px" }} onClick={handleUserClose}>
-                                    <img src="/assets/logout.svg" alt="icon" style={{ width: "16px", height: "16px", marginRight: "10px" }} />
-                                    <Typography sx={{ color: '#5D5D5C', fontSize: '12px' }}>Logout</Typography>
+                                    <Logout style={{ fontSize: "20px", height: "16px", color: theme.palette.text.gray, marginRight: "10px" }} />
+                                    <Typography sx={{ color: theme.palette.text.gray, fontSize: '12px' }}>Logout</Typography>
                                 </Box>
                             </Box>
                         </Box>
@@ -326,11 +328,11 @@ export const AddUsers = () => {
             </Box>
             <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main, borderBottom: "none", width: "100%", height: "3px" }} />
             <Box display={"flex"} justifyContent={"space-between"} padding={"20px 100px 0px 80px"}>
-                <ArrowBackIosOutlinedIcon onClick={() => navigate('/affiliate')} sx={{ color: "#4b4a4a", cursor: "pointer" }} />
+                <ArrowBackIosOutlinedIcon onClick={() => navigate('/affiliate')} sx={{ color: theme.palette.text.gray, cursor: "pointer" }} />
                 <Box>
-                    <IconButton><span className="icon-delete" style={{ fontSize: "23px" }}></span></IconButton>
+                    <IconButton><span className="icon-delete" style={{ fontSize: "23px", color: theme.palette.text.gray }}></span></IconButton>
                     <IconButton onClick={handlePrint}>
-                        <img src="/assets/print.svg" alt="icon" style={{ width: "22px", height: "22px" }} />
+                        <Print style={{ width: "22px", height: "22px", color: theme.palette.text.gray }} />
                     </IconButton>
                 </Box>
             </Box>
@@ -376,9 +378,9 @@ export const AddUsers = () => {
                             setAccountNumber={setAccountNumber}
                             accountName={accountName}
                             setAccountName={setAccountName}
-                            setAddressBank ={setAddressBank}
-                            addressBank ={addressBank}
-                            
+                            setAddressBank={setAddressBank}
+                            addressBank={addressBank}
+
                             errors={errors}
                         />
                     </Grid>

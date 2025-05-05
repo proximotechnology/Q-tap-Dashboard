@@ -36,49 +36,49 @@ export const PaymentInfo = ({
       case "Bank":
         return (
           <>
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("name")}</Typography>
+            <Typography variant='body2' sx={{ fontSize: "8px", color: theme.palette.text.gray }}>{t("name")}</Typography>
             <TextField
               fullWidth
               variant="outlined"
               sx={{ mb: 2 }}
-              InputProps={{ sx: { borderRadius: "5px", height: "30px", fontSize: "12px", color: "gray", width: "85%" } }}
+              InputProps={{ sx: { borderRadius: "5px", height: "30px", fontSize: "12px", color: theme.palette.text.gray, width: "85%" } }}
               value={accountName}
               onChange={(e) => setAccountName(e.target.value)}
               error={!!errors.bankName}
             />
 
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("iban")}</Typography>
+            <Typography variant='body2' sx={{ fontSize: "8px", color: theme.palette.text.gray }}>{t("iban")}</Typography>
             <TextField
               fullWidth
               variant="outlined"
               sx={{ mb: 2 }}
-              InputProps={{ sx: { borderRadius: "5px", height: "30px", fontSize: "12px", color: "gray", width: "85%" } }}
+              InputProps={{ sx: { borderRadius: "5px", height: "30px", fontSize: "12px", color: theme.palette.text.gray, width: "85%" } }}
               value={accountNumber}
               onChange={(e) => setAccountNumber(e.target.value)}
               error={!!errors.accountNumber}
             />
 
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("Bank")}</Typography>
+            <Typography variant='body2' sx={{ fontSize: "8px", color: theme.palette.text.gray }}>{t("Bank")}</Typography>
             <TextField
               value={bankName}
               onChange={(e) => setBankName(e.target.value)}
               select
               fullWidth
-              InputProps={{ sx: { borderRadius: "5px", fontSize: "12px", color: "gray", height: "30px", width: "85%" } }}
+              InputProps={{ sx: { borderRadius: "5px", fontSize: "12px", color: theme.palette.text.gray, height: "30px", width: "85%" } }}
             >
-              <MenuItem value="nbe" sx={{ fontSize: "11px", color: "gray", padding: "0px 20px" }}>NBE</MenuItem>
+              <MenuItem value="nbe" sx={{ fontSize: "11px", color: theme.palette.text.gray, padding: "0px 20px" }}>NBE</MenuItem>
               <Divider sx={{ width: "90%", marginLeft: "10px" }} />
-              <MenuItem value="cib" sx={{ fontSize: "11px", color: "gray", padding: "0px 20px" }}>CIB</MenuItem>
+              <MenuItem value="cib" sx={{ fontSize: "11px", color: theme.palette.text.gray, padding: "0px 20px" }}>CIB</MenuItem>
               <Divider sx={{ width: "90%", marginLeft: "10px" }} />
-              <MenuItem value="fab" sx={{ fontSize: "11px", color: "gray", padding: "0px 20px" }}>FAB</MenuItem>
+              <MenuItem value="fab" sx={{ fontSize: "11px", color: theme.palette.text.gray, padding: "0px 20px" }}>FAB</MenuItem>
             </TextField>
 
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray", marginTop: "8px" }}>{t("address")}</Typography>
+            <Typography variant='body2' sx={{ fontSize: "8px", color: theme.palette.text.gray, marginTop: "8px" }}>{t("address")}</Typography>
             <TextField
               fullWidth
               variant="outlined"
               sx={{ mb: 2 }}
-              InputProps={{ sx: { borderRadius: "5px", height: "30px", fontSize: "12px", color: "gray", width: "85%" } }}
+              InputProps={{ sx: { borderRadius: "5px", height: "30px", fontSize: "12px", color: theme.palette.text.gray, width: "85%" } }}
               value={addressBank}
               onChange={(e) => setAddressBank(e.target.value)}
               error={!!errors.addressBank}
@@ -88,83 +88,83 @@ export const PaymentInfo = ({
       case "D.Wallet":
         return (
           <>
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("name")}</Typography>
+            <Typography variant='body2' sx={{ fontSize: "8px", color: theme.palette.text.gray }}>{t("name")}</Typography>
             <TextField
               fullWidth
               variant="outlined"
               sx={{ mb: 2 }}
-              InputProps={{ sx: { borderRadius: "5px", height: "30px", fontSize: "12px", color: "gray", width: "85%" } }}
+              InputProps={{ sx: { borderRadius: "5px", height: "30px", fontSize: "12px", color: theme.palette.text.gray, width: "85%" } }}
               value={accountName}
               onChange={(e) => setAccountName(e.target.value)}
               error={!!errors.bankName}
             />
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("walletNo")}</Typography>
+            <Typography variant='body2' sx={{ fontSize: "8px", color: theme.palette.text.gray }}>{t("walletNo")}</Typography>
             <TextField
               fullWidth
               variant="outlined"
               sx={{ mb: 2 }}
-              InputProps={{ sx: { borderRadius: "5px", height: "30px", fontSize: "12px", color: "gray", width: "85%" } }}
+              InputProps={{ sx: { borderRadius: "5px", height: "30px", fontSize: "12px", color: theme.palette.text.gray, width: "85%" } }}
               value={accountNumber}
               onChange={(e) => setAccountNumber(e.target.value)}
               error={!!errors.accountNumber}
             />
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("courier")}</Typography>
+            <Typography variant='body2' sx={{ fontSize: "8px", color: theme.palette.text.gray }}>{t("courier")}</Typography>
             <TextField
               select
               fullWidth
-              InputProps={{ sx: { borderRadius: "5px", fontSize: "12px", color: "gray", height: "30px", width: "85%" } }}
+              InputProps={{ sx: { borderRadius: "5px", fontSize: "12px", color: theme.palette.text.gray, height: "30px", width: "85%" } }}
             >
-              <MenuItem value="afaf" sx={{ fontSize: "11px", color: "gray", padding: "0px 20px" }}>Afaf</MenuItem>
+              <MenuItem value="afaf" sx={{ fontSize: "11px", color: theme.palette.text.gray, padding: "0px 20px" }}>Afaf</MenuItem>
               <Divider sx={{ width: "90%", marginLeft: "10px" }} />
-              <MenuItem value="ahmed" sx={{ fontSize: "11px", color: "gray", padding: "0px 20px" }}>Ahmed</MenuItem>
+              <MenuItem value="ahmed" sx={{ fontSize: "11px", color: theme.palette.text.gray, padding: "0px 20px" }}>Ahmed</MenuItem>
               <Divider sx={{ width: "90%", marginLeft: "10px" }} />
-              <MenuItem value="shimaa" sx={{ fontSize: "11px", color: "gray", padding: "0px 20px" }}>Shimaa</MenuItem>
+              <MenuItem value="shimaa" sx={{ fontSize: "11px", color: theme.palette.text.gray, padding: "0px 20px" }}>Shimaa</MenuItem>
             </TextField>
           </>
         );
       case "Card":
         return (
           <>
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("name")}</Typography>
+            <Typography variant='body2' sx={{ fontSize: "8px", color: theme.palette.text.gray }}>{t("name")}</Typography>
             <TextField
               fullWidth
               variant="outlined"
               sx={{ mb: 2 }}
-              InputProps={{ sx: { borderRadius: "5px", height: "30px", fontSize: "12px", color: "gray", width: "85%" } }}
+              InputProps={{ sx: { borderRadius: "5px", height: "30px", fontSize: "12px", color: theme.palette.text.gray, width: "85%" } }}
               value={accountName}
               onChange={(e) => setAccountName(e.target.value)}
               error={!!errors.bankName}
             />
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("cardNo")}</Typography>
+            <Typography variant='body2' sx={{ fontSize: "8px", color: theme.palette.text.gray }}>{t("cardNo")}</Typography>
             <TextField
               fullWidth
               variant="outlined"
               sx={{ mb: 2 }}
-              InputProps={{ sx: { borderRadius: "5px", height: "30px", fontSize: "12px", color: "gray", width: "85%" } }}
+              InputProps={{ sx: { borderRadius: "5px", height: "30px", fontSize: "12px", color: theme.palette.text.gray, width: "85%" } }}
               value={accountNumber}
               onChange={(e) => setAccountNumber(e.target.value)}
               error={!!errors.accountNumber}
             />
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray" }}>{t("Bank")}</Typography>
+            <Typography variant='body2' sx={{ fontSize: "8px", color: theme.palette.text.gray }}>{t("Bank")}</Typography>
             <TextField
               value={bankName}
               onChange={(e) => setBankName(e.target.value)}
               select
               fullWidth
-              InputProps={{ sx: { borderRadius: "5px", fontSize: "12px", color: "gray", height: "30px", width: "85%" } }}
+              InputProps={{ sx: { borderRadius: "5px", fontSize: "12px", color: theme.palette.text.gray, height: "30px", width: "85%" } }}
             >
-              <MenuItem value="nbe" sx={{ fontSize: "11px", color: "gray", padding: "0px 20px" }}>NBE</MenuItem>
+              <MenuItem value="nbe" sx={{ fontSize: "11px", color: theme.palette.text.gray, padding: "0px 20px" }}>NBE</MenuItem>
               <Divider sx={{ width: "90%", marginLeft: "10px" }} />
-              <MenuItem value="cib" sx={{ fontSize: "11px", color: "gray", padding: "0px 20px" }}>CIB</MenuItem>
+              <MenuItem value="cib" sx={{ fontSize: "11px", color: theme.palette.text.gray, padding: "0px 20px" }}>CIB</MenuItem>
               <Divider sx={{ width: "90%", marginLeft: "10px" }} />
-              <MenuItem value="fab" sx={{ fontSize: "11px", color: "gray", padding: "0px 20px" }}>FAB</MenuItem>
+              <MenuItem value="fab" sx={{ fontSize: "11px", color: theme.palette.text.gray, padding: "0px 20px" }}>FAB</MenuItem>
             </TextField>
-            <Typography variant='body2' sx={{ fontSize: "8px", color: "gray", marginTop: "8px" }}>{t("address")}</Typography>
+            <Typography variant='body2' sx={{ fontSize: "8px", color: theme.palette.text.gray, marginTop: "8px" }}>{t("address")}</Typography>
             <TextField
               fullWidth
               variant="outlined"
               sx={{ mb: 2 }}
-              InputProps={{ sx: { borderRadius: "5px", height: "30px", fontSize: "12px", color: "gray", width: "85%" } }}
+              InputProps={{ sx: { borderRadius: "5px", height: "30px", fontSize: "12px", color: theme.palette.text.gray, width: "85%" } }}
               value={addressBank}
               onChange={(e) => setAddressBank(e.target.value)}
               error={!!errors.addressBank}
@@ -178,7 +178,7 @@ export const PaymentInfo = ({
 
   return (
     <Box padding={"0px 50px"}>
-      <Typography variant="body2" sx={{ fontSize: "12px" }} color="#575756" gutterBottom>
+      <Typography variant="body2" sx={{ fontSize: "12px" }} color={theme.palette.text.gray} gutterBottom>
         {t("paymentInfo")}
       </Typography>
       <Divider sx={{ borderRadius: "30px", width: "18%", borderBottom: "4px solid #ef7d00", marginBottom: "18px" }} />
@@ -208,7 +208,7 @@ export const PaymentInfo = ({
             <Typography
               sx={{
                 marginTop: "5px",
-                fontSize: "10px", color: "gray"
+                fontSize: "10px", color: theme.palette.text.gray
               }}
             >
               {t(option.label)}

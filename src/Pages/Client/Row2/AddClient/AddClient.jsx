@@ -395,6 +395,7 @@ import { useClientContext } from "../../../../context/ClientContext";
 import { useTranslation } from "react-i18next";
 import Language from "../../../../Component/dashboard/TopBar/Language";
 import { BASE_URL } from "../../../../utils/helperFunction";
+import { Logout, Settings } from "@mui/icons-material";
 
 export const AddClient = () => {
   const { t } = useTranslation();
@@ -609,25 +610,25 @@ export const AddClient = () => {
         formData.append("payment_method", allClientData.payment_method);
         formData.append("brunch1", allClientData.brunch1);
         headers = {
-           Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
-         }
+          Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+        }
 
-         for (let [key, value] of formData.entries()) {
+        for (let [key, value] of formData.entries()) {
           console.log(key, value);
         }
       } else {
-         headers = {
-          "Content-Type":"application/json",
-           Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
-         }
+        headers = {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+        }
       }
-     
+
       const response = await axios({
         method,
         url,
         headers,
         data: isEditMode ? formData : allClientData,
-       
+
       });
 
       if (response.status === 201 || response.status === 200) {
@@ -677,14 +678,14 @@ export const AddClient = () => {
           </Grid>
 
 
-          <Divider
+         <Divider
             orientation="vertical"
             sx={{
               backgroundColor: "#f4f6fc", width: "1px", marginTop: "30px", height: "90%", position: "absolute", display: { xs: "none", md: "block" },
               left: "50%", // between md=6 and md=6
               top: "70px",
             }}
-          />
+          /> 
 
 
           <Grid item xs={12} md={6}>
@@ -716,7 +717,7 @@ export const AddClient = () => {
   };
 
   return (
-    <Box sx={{ backgroundColor: "white", height: "100%" }}>
+    <Box sx={{ backgroundColor: theme.palette.bodyColor.secandaryInput, height: "100%" }}>
       <Box
         sx={{
           display: "flex",
@@ -729,7 +730,17 @@ export const AddClient = () => {
         }}
       >
         <Box>
-          <img src="/images/qtap.PNG" alt="logo" width={"140px"} />
+          <img
+            src={
+              localStorage.getItem("themeMode") !== null
+                ? (localStorage.getItem("themeMode") === "dark"
+                  ? "/assets/qtap.svg"
+                  : "/assets/qtapwhite.svg")
+                : "/assets/qtap.svg"
+            }
+            alt="Logo"
+            style={{ width: '110px' }}
+          />
         </Box>
 
         <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -752,10 +763,10 @@ export const AddClient = () => {
             >
               <PersonOutlineOutlinedIcon sx={{ fontSize: "20px", color: "white" }} />
             </IconButton>
-            <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>
+            <Typography variant="body1" sx={{ fontSize: "13px", color: theme.palette.text.gray }}>
               {localStorage.getItem("userName")}
             </Typography>
-            <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: "#575756" }} />
+            <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: theme.palette.text.gray }} />
           </Box>
           <Popover
             id={openUserPopover ? "simple-popover" : undefined}
@@ -819,41 +830,41 @@ export const AddClient = () => {
 
                 <ListItem sx={{ cursor: "pointer" }} onClick={handleUserClose}>
                   <ListItemIcon>
-                    <img src="/assets/setting.svg" alt="icon" style={{ width: "16px", height: "16px" }} />
+                    <Settings style={{ fontSize: "20px", color: theme.palette.text.gray }} />
                   </ListItemIcon>
                   <ListItemText
                     primary="Edit Profile"
-                    primaryTypographyProps={{ sx: { color: "#5D5D5C", fontSize: "12px", marginLeft: "-30px" } }}
+                    primaryTypographyProps={{ sx: { color: theme.palette.text.gray, fontSize: "12px", marginLeft: "-30px" } }}
                   />
                 </ListItem>
 
                 <ListItem sx={{ cursor: "pointer" }} onClick={handleUserClose}>
                   <ListItemIcon>
-                    <span className="icon-price-tag" style={{ fontSize: "20px" }}></span>
+                    <span className="icon-price-tag" style={{ fontSize: "20px", color: theme.palette.text.gray }}></span>
                   </ListItemIcon>
                   <ListItemText
                     primary="My Subscription"
-                    primaryTypographyProps={{ sx: { color: "#5D5D5C", fontSize: "12px", marginLeft: "-30px" } }}
+                    primaryTypographyProps={{ sx: { color: theme.palette.text.gray, fontSize: "12px", marginLeft: "-30px" } }}
                   />
                 </ListItem>
 
                 <ListItem sx={{ cursor: "pointer" }} onClick={handleUserClose}>
                   <ListItemIcon>
-                    <HelpOutlineOutlinedIcon sx={{ fontSize: "20px" }} />
+                    <HelpOutlineOutlinedIcon sx={{ fontSize: "20px", color: theme.palette.text.gray }} />
                   </ListItemIcon>
                   <ListItemText
                     primary="FAQ"
-                    primaryTypographyProps={{ sx: { color: "#5D5D5C", fontSize: "12px", marginLeft: "-30px" } }}
+                    primaryTypographyProps={{ sx: { color: theme.palette.text.gray, fontSize: "12px", marginLeft: "-30px" } }}
                   />
                 </ListItem>
 
                 <ListItem sx={{ cursor: "pointer" }} onClick={handleUserClose}>
                   <ListItemIcon>
-                    <img src="/assets/logout.svg" alt="icon" style={{ width: "16px", height: "16px" }} />
+                    <Logout style={{ fontSize: "20px", color: theme.palette.text.gray }} />
                   </ListItemIcon>
                   <ListItemText
                     primary="Logout"
-                    primaryTypographyProps={{ sx: { color: "#5D5D5C", fontSize: "12px", marginLeft: "-30px" } }}
+                    primaryTypographyProps={{ sx: { color: theme.palette.text.gray, fontSize: "12px", marginLeft: "-30px" } }}
                   />
                 </ListItem>
               </List>

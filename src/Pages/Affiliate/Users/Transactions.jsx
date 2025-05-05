@@ -78,7 +78,7 @@ export const Transactions = () => {
             <Box>
                 <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                     <Typography variant="body1"
-                        sx={{ fontSize: "13px", color: "#575756", display: "flex", alignItems: "center" }}
+                        sx={{ fontSize: "13px", color: theme.palette.text.gray, display: "flex", alignItems: "center" }}
                     >
                         <span class="icon-transfer" style={{ fontSize: "22px", color: "#D8E0E0", marginRight: "10px" }} ></span>
                         {t("transactions")}
@@ -95,7 +95,7 @@ export const Transactions = () => {
                 </Box>
 
 
-                <TableContainer sx={{ mt: 1 , whiteSpace:'nowrap' }}>
+                <TableContainer sx={{ mt: 1, whiteSpace: 'nowrap' }}>
                     <Table>
                         <TableHead>
                             <TableRow sx={{ height: "25px" }}>
@@ -104,7 +104,7 @@ export const Transactions = () => {
                                         key={header}
                                         sx={{
                                             fontSize: "12px", padding: "0px 10px", textAlign: "left",
-                                            borderBottom: "1px solid #bbb9b9fa", color: "#575756"
+                                            borderBottom: "1px solid #bbb9b9fa", color: theme.palette.text.gray
                                         }}
                                     >
                                         {header}
@@ -116,7 +116,7 @@ export const Transactions = () => {
                         <TableBody >
                             {transData?.map((row, index) => (
                                 <TableRow key={index}>
-                                    <TableCell sx={{ padding: "0px", textAlign: "left", border: "none", color: "#575756" }}>
+                                    <TableCell sx={{ padding: "0px", textAlign: "left", border: "none", color: theme.palette.text.gray }}>
                                         <Box sx={{ display: "flex", alignItems: "center" }}>
                                             <Avatar sx={{ mr: 1 }}>
                                                 <PersonOutlineOutlinedIcon sx={{ fontSize: "25px" }} />

@@ -32,7 +32,7 @@ import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import NightlightIcon from "@mui/icons-material/Nightlight";
 import ViewQuiltIcon from "@mui/icons-material/ViewQuilt";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import { ArrowForwardIos, ArrowBackIos } from "@mui/icons-material";
+import { ArrowForwardIos, ArrowBackIos, Settings, Print } from "@mui/icons-material";
 import { useClientContext } from "../../../../context/ClientContext";
 import { useTranslation } from "react-i18next";
 
@@ -303,20 +303,20 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
 
   return (
     <Grid container spacing={0} sx={{ marginTop: "20px", overflow: 'hidden', padding: '1rem' }} >
-      <Grid item xs={12} >
+      <Grid item xs={12} md={12} >
         <Box display={"flex"} justifyContent={"space-between"}>
           <Box>
-            <Typography variant="body2" sx={{ fontSize: "15px" }} color="#3b3a3a" gutterBottom>
+            <Typography variant="body2" sx={{ fontSize: "15px" }} color={theme.palette.text.gray} gutterBottom>
               {t("busnessInfo")}
             </Typography>
             <Divider sx={{ width: "100%", borderBottom: "4px solid #ef7d00", marginBottom: "18px" }} />
           </Box>
           <Box>
             <IconButton>
-              <span className="icon-delete" style={{ fontSize: "23px" }}></span>
+              <span className="icon-delete" style={{ fontSize: "23px" , color:theme.palette.text.gray }}></span>
             </IconButton>
             <IconButton onClick={handlePrint}>
-              <img src="/assets/print.svg" alt="icon" style={{ width: "22px", height: "22px" }} />
+              <Print style={{ fontSize: "23px" , color:theme.palette.text.gray }} />
             </IconButton>
           </Box>
         </Box>
@@ -348,8 +348,8 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
       </Grid>
 
       <Grid item xs={12} md={12} display={"flex"} justifyContent={"space-between"} >
-        <Grid container  >
-          <Grid item xs={12} md={6} >
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={5.5} >
             {/* Business Info Fields */}
             <FormControl variant="outlined" fullWidth>
               <OutlinedInput
@@ -597,7 +597,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
             </Box>
           </Grid>
           {/* part of branch */}
-          <Grid item xs={12} md={6} className="here_the_container" overflow={'hidden'} sx={{  paddingInlineStart:{xs:'0px',md:'8px'}}}>
+          <Grid item xs={12} md={5.5} className="here_the_container" overflow={'hidden'} sx={{  paddingInlineStart:{xs:'0px',md:'8px'}}}>
             <Grid
               sx={{
                 display: "flex",
@@ -605,7 +605,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                 width: "100%",
               }}
             >
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', overflow: 'hidden', flexWrap: 'nowrap' }} className="here_section">
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', overflow: 'hidden' }} className="here_section">
                 <Box sx={{ flexGrow: '1', flex: "1 1 auto" }} >
                   <Typography
                     sx={{ fontSize: "14px", fontWeight: "500", color: "#AAAAAA", textAlign: "start" }}
@@ -616,7 +616,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                     value={mode}
                     exclusive
                     onChange={handleModeChange}
-                    sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "space-around" }}
+                    sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "space-between" }}
                   >
                     <ToggleButton
                       value="white"
@@ -668,7 +668,7 @@ export const BusinessInfoAdmin = ({ clientInfoData }) => {
                     value={design}
                     exclusive
                     onChange={handleDesignChange}
-                    sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "space-around", }}
+                    sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "space-between", }}
                   >
                     <ToggleButton
                       value="grid"

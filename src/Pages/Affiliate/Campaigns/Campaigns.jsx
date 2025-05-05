@@ -181,7 +181,7 @@ const Campaigns = () => {
         >
           <Typography
             variant="body1"
-            sx={{ fontSize: "14px", color: "#575756" }}
+            sx={{ fontSize: "14px", color: theme.palette.text.gray }}
           >
             {t("campaigns")}
           </Typography>
@@ -212,11 +212,11 @@ const Campaigns = () => {
             <Typography
               variant="body2"
               gutterBottom
-              sx={{ color: "#575756", fontSize: "11px", marginBottom: "10px" }}
+              sx={{ color: theme.palette.text.gray, fontSize: "11px", marginBottom: "10px" }}
             >
               {editingCampaign ? t("editCampaign") : t("newCampaign")}
             </Typography>
-            <Typography variant="body2" sx={{ fontSize: "9px", color: "gray" }}>
+            <Typography variant="body2" sx={{ fontSize: "9px", color: theme.palette.text.gray }}>
               {t("name")}
             </Typography>
             <TextField
@@ -233,7 +233,7 @@ const Campaigns = () => {
                 },
               }}
             />
-            <Typography variant="body2" sx={{ fontSize: "9px", color: "gray" }}>
+            <Typography variant="body2" sx={{ fontSize: "9px", color: theme.palette.text.gray }}>
               {t("commission")}
             </Typography>
             <TextField
@@ -256,7 +256,7 @@ const Campaigns = () => {
                 },
               }}
             />
-            <Typography variant="body2" sx={{ fontSize: "9px", color: "gray" }}>
+            <Typography variant="body2" sx={{ fontSize: "9px", color: theme.palette.text.gray }}>
               {t("limit")}
             </Typography>
             <TextField
@@ -377,7 +377,7 @@ const Campaigns = () => {
               <IconButton sx={{ color: "white" }}>
                 <span
                   className="icon-delete"
-                  style={{ fontSize: "15px" }}
+                  style={{ fontSize: "15px" , color:"white" }}
                   onClick={() => handleDeleteCampaign(campaign.id)}
                 ></span>
               </IconButton>

@@ -4,11 +4,12 @@ import AddIcon from "@mui/icons-material/Add";
 import { toast } from "react-toastify";
 import { useTranslation } from 'react-i18next';
 import { BASE_URL } from '../../utils/helperFunction';
+import { useTheme } from '@mui/system';
 
 const Content = forwardRef((props, ref) => {
 	const [homeContent, setHomeContent] = useState([{ titleEn: '', descriptionEn: '', titleAr: '', descriptionAr: '' }]);
 	const [productContent, setProductContent] = useState([{ titleEn: '', descriptionEn: '', titleAr: '', descriptionAr: '' }]);
-
+	const theme = useTheme();
 	const addHomeSection = () => {
 		setHomeContent([...homeContent, { titleEn: '', descriptionEn: '', titleAr: '', descriptionAr: '' }]);
 	};
@@ -28,13 +29,13 @@ const Content = forwardRef((props, ref) => {
 		newContent[index][field] = value;
 		setProductContent(newContent);
 	}
-	const {t} = useTranslation()
+	const { t } = useTranslation()
 	const handleSave = () => {
 		// Filter out empty content and validate
 		const validHomeContent = homeContent.filter(content => {
 			const hasEnglishContent = content.titleEn.trim() !== '' && content.descriptionEn.trim() !== '';
 			const hasArabicContent = content.titleAr.trim() !== '' && content.descriptionAr.trim() !== '';
-			
+
 			return hasEnglishContent || hasArabicContent;
 		});
 
@@ -110,7 +111,7 @@ const Content = forwardRef((props, ref) => {
 
 	return (
 		<Box>
-			<Typography variant="body1" sx={{ fontSize: "15px", marginLeft: "30px", color: "#575756", marginBottom: '10px' }}>
+			<Typography variant="body1" sx={{ fontSize: "15px", marginLeft: "30px", color: theme.palette.text.gray, marginBottom: '10px' }}>
 				{t("home")}
 			</Typography>
 
@@ -131,7 +132,7 @@ const Content = forwardRef((props, ref) => {
 											fontSize: "10px",
 											height: "25px",
 											borderRadius: "10px",
-											backgroundColor: "#EBEDF3",
+											backgroundColor: theme.palette.bodyColor.secandaryInput,
 										},
 										'& .MuiOutlinedInput-notchedOutline': {
 											border: 'none',
@@ -152,7 +153,7 @@ const Content = forwardRef((props, ref) => {
 											fontSize: "10px",
 											height: "40px",
 											borderRadius: "10px",
-											backgroundColor: "#EBEDF3",
+											backgroundColor: theme.palette.bodyColor.secandaryInput,
 										},
 										'& .MuiOutlinedInput-notchedOutline': {
 											border: 'none',
@@ -173,7 +174,7 @@ const Content = forwardRef((props, ref) => {
 											fontSize: "10px",
 											height: "25px",
 											borderRadius: "10px",
-											backgroundColor: "#EBEDF3",
+											backgroundColor: theme.palette.bodyColor.secandaryInput,
 										},
 										'& .MuiOutlinedInput-notchedOutline': {
 											border: 'none',
@@ -194,7 +195,7 @@ const Content = forwardRef((props, ref) => {
 											fontSize: "10px",
 											height: "40px",
 											borderRadius: "10px",
-											backgroundColor: "#EBEDF3",
+											backgroundColor: theme.palette.bodyColor.secandaryInput,
 										},
 										'& .MuiOutlinedInput-notchedOutline': {
 											border: 'none',
@@ -213,7 +214,7 @@ const Content = forwardRef((props, ref) => {
 				</IconButton>
 			</Box>
 
-			<Typography variant="body1" sx={{ fontSize: "15px", marginLeft: "30px", color: "#575756", marginBottom: '10px' }}>
+			<Typography variant="body1" sx={{ fontSize: "15px", marginLeft: "30px", color: theme.palette.text.gray, marginBottom: '10px' }}>
 				{t("product")}
 			</Typography>
 
@@ -234,7 +235,7 @@ const Content = forwardRef((props, ref) => {
 											fontSize: "10px",
 											height: "25px",
 											borderRadius: "10px",
-											backgroundColor: "#EBEDF3",
+											backgroundColor: theme.palette.bodyColor.secandaryInput,
 										},
 										'& .MuiOutlinedInput-notchedOutline': {
 											border: 'none',
@@ -255,7 +256,7 @@ const Content = forwardRef((props, ref) => {
 											fontSize: "10px",
 											height: "40px",
 											borderRadius: "10px",
-											backgroundColor: "#EBEDF3",
+											backgroundColor: theme.palette.bodyColor.secandaryInput,
 										},
 										'& .MuiOutlinedInput-notchedOutline': {
 											border: 'none',
@@ -276,7 +277,7 @@ const Content = forwardRef((props, ref) => {
 											fontSize: "10px",
 											height: "25px",
 											borderRadius: "10px",
-											backgroundColor: "#EBEDF3",
+											backgroundColor: theme.palette.bodyColor.secandaryInput,
 										},
 										'& .MuiOutlinedInput-notchedOutline': {
 											border: 'none',
@@ -297,7 +298,7 @@ const Content = forwardRef((props, ref) => {
 											fontSize: "10px",
 											height: "40px",
 											borderRadius: "10px",
-											backgroundColor: "#EBEDF3",
+											backgroundColor: theme.palette.bodyColor.secandaryInput,
 										},
 										'& .MuiOutlinedInput-notchedOutline': {
 											border: 'none',
