@@ -104,7 +104,7 @@ export const Payment = ({
 
     return (
         <>
-            <Box sx={{ overflowY: "auto", width: customWidth.itemSectionWidth, boxShadow: 3, bgcolor: 'white', position: 'fixed', right: 0, top: 0, height: '100vh' }}>
+            <Box sx={{ overflowY: "auto", width: customWidth.itemSectionWidth, boxShadow: 3, bgcolor: theme.palette.bodyColor.white_333, position: 'fixed', right: 0, top: 0, height: '100vh' }}>
                 <AppBar position="sticky" color="inherit">
                     <Toolbar>
                         <IconButton edge="start" color="inherit" aria-label="cart">
@@ -137,18 +137,18 @@ export const Payment = ({
                                 <Box sx={{ paddingLeft: "10px", marginTop: "15px" }}>
                                     <Typography
                                         variant="h1"
-                                        sx={{ fontSize: '11px', fontWeight: '900', color: '#575756' }}>
+                                        sx={{ fontSize: '11px', fontWeight: '900', color: theme.palette.text.gray_white }}>
                                         {item.name}
                                     </Typography>
 
-                                    <Typography variant="body2" sx={{ marginTop: '2px', fontSize: '9px', color: "gray" }}>
+                                    <Typography variant="body2" sx={{ marginTop: '2px', fontSize: '9px', color: theme.palette.text.gray_white }}>
                                         <span style={{ color: theme.palette.orangePrimary.main }}>{t("option")} | </span>
                                         {selectedItemOptions[item.id] && selectedItemOptions[item.id].length > 0
                                             ? selectedItemOptions[item.id].map(option => option.name).join(', ')
                                             : 'No options selected'}
 
                                     </Typography>
-                                    <Typography variant="body2" sx={{ marginTop: '2px', fontSize: '9px', color: "gray" }} >
+                                    <Typography variant="body2" sx={{ marginTop: '2px', fontSize: '9px', color: theme.palette.text.gray_white }} >
                                         <span style={{ color: theme.palette.orangePrimary.main }}>{t("extra.one")} |</span>
                                         {selectedItemExtra[item.id] && selectedItemExtra[item.id].length > 0
                                             ? selectedItemExtra[item.id].map(extra => extra.name).join(', ')
@@ -173,10 +173,10 @@ export const Payment = ({
                                         >
                                             {item.selectedSize ? item.selectedSize : 'S'} {/* desplay size if no selectedsize display small */}
                                         </Button>
-                                        <span style={{ fontSize: "10px", color: "#575756", marginLeft: "10px" }}> <span style={{ color: theme.palette.orangePrimary.main }}>x</span> {item.quantity}</span>
+                                        <span style={{ fontSize: "10px", color: theme.palette.text.gray_white, marginLeft: "10px" }}> <span style={{ color: theme.palette.orangePrimary.main }}>x</span> {item.quantity}</span>
                                     </Box>
                                     <Typography variant="h6" sx={{ marginTop: "5px", fontSize: '13px', fontWeight: "bold", color: theme.palette.orangePrimary.main }}>
-                                        {item.price * item.quantity} <span style={{ fontSize: "8px", fontWeight: "400", color: '#575756' }}>EGP</span>
+                                        {item.price * item.quantity} <span style={{ fontSize: "8px", fontWeight: "400", color: theme.palette.text.gray_white }}>EGP</span>
                                     </Typography>
                                 </Box>
                             </Box>
@@ -186,7 +186,7 @@ export const Payment = ({
                     <Divider sx={{ margin: "10px 0px" }} />
                     <Box>
                         <Box  >
-                            <Typography color="#262624" fontSize="12px"  >{t("dineMethod")}</Typography>
+                            <Typography color={theme.palette.text.dGray27_white} fontSize="12px"  >{t("dineMethod")}</Typography>
                             <Typography color="textSecondary" fontSize="11px" margin={"5px 10px"} display={"flex"}>{t(selectedType)} ,
                                 <span class="icon-scooter" style={{ fontSize: "18px", marginLeft: "7px", color: theme.palette.orangePrimary.main }}></span>
                             </Typography>
@@ -223,9 +223,9 @@ export const Payment = ({
 
                     <Box>
                         <Box display={"flex"} textAlign={"center"} alignItems={"center"} justifyContent={"space-between"} >
-                            <Typography color="#262624" fontSize="12px"  >{t("paymentMethod")}</Typography>
+                            <Typography color={theme.palette.text.dGray27_white} fontSize="12px"  >{t("paymentMethod")}</Typography>
                             <Typography>
-                                <span style={{ color: "#262624", fontSize: "10px", borderBottom: "1px solid #262624" }}>{t("change")}</span>
+                                <span style={{ color: theme.palette.text.dGray27_white, fontSize: "10px", borderBottom: "1px solid #262624" }}>{t("change")}</span>
                             </Typography>
                         </Box>
                         <Typography color="textSecondary" fontSize="11px" margin={"5px 10px"} display={"flex"} alignItems={"center"}>
@@ -235,7 +235,7 @@ export const Payment = ({
                     </Box>
                     <Divider sx={{ margin: "10px 0px" }} />
                     <Box>
-                        <Typography color="#262624" fontSize="12px" >{t("comments")}</Typography>
+                        <Typography color={theme.palette.text.dGray27_white} fontSize="12px" >{t("comments")}</Typography>
                         <Typography color="textSecondary" fontSize="11px" margin={"5px 10px"} display={"flex"} alignItems={"center"}>
                             - {comment}
                         </Typography>
@@ -244,24 +244,24 @@ export const Payment = ({
 
                     <Box display={"flex"} justifyContent={"space-between"} marginBottom={"50px"}>
                         <Box sx={{ width: "100%" }}>
-                            <Typography variant="h6" sx={{ fontSize: '9px', color: 'gray' }}>
+                            <Typography variant="h6" sx={{ fontSize: '9px', color: theme.palette.text.gray_white }}>
                                 {t("subTotal")} <span style={{ color: '#3A3A38' }}>{subTotal} EGP</span>
                             </Typography>
 
-                            <Typography variant="h6" sx={{ fontSize: '9px', color: 'gray' }}>
-                                {t("tax")} <span style={{ color: '#3A3A38' }}>{tax} EGP</span>
+                            <Typography variant="h6" sx={{ fontSize: '9px', color: theme.palette.text.gray_white }}>
+                                {t("tax")} <span style={{ color: theme.palette.text.gray_white }}>{tax} EGP</span>
                             </Typography>
 
-                            <Typography variant="h6" sx={{ fontSize: '9px', color: 'gray' }}>
-                                {t("discounts")} <span style={{ color: '#3A3A38' }}>{discount} EGP</span>
+                            <Typography variant="h6" sx={{ fontSize: '9px', color: theme.palette.text.gray_white }}>
+                                {t("discounts")} <span style={{ color: theme.palette.text.gray_white }}>{discount} EGP</span>
                             </Typography>
                         </Box>
                         <Box sx={{ width: "100%", textAlign: "left", marginLeft: "70px" }}>
-                            <Typography variant="h6" sx={{ fontSize: '10px', fontWeight: "bold", color: '#3A3A38' }}>
+                            <Typography variant="h6" sx={{ fontSize: '10px', fontWeight: "bold", color: theme.palette.text.gray_white }}>
                                 {t("totalPrice")}
                             </Typography>
                             <Typography variant="h6" sx={{ fontSize: '18px', fontWeight: "bold", color: theme.palette.orangePrimary.main }}>
-                                {total} <span style={{ fontSize: "10px", fontWeight: "400", color: '#575756' }}>EGP</span>
+                                {total} <span style={{ fontSize: "10px", fontWeight: "400", color: theme.palette.text.gray_white }}>EGP</span>
                             </Typography>
                         </Box>
 
@@ -273,16 +273,16 @@ export const Payment = ({
 
                 <Box
                     sx={{
-                        position: "fixed", bottom: 0, backgroundColor: "white", height: "40px", width: customWidth.buttonSectionWidth, padding: "20px",
+                        position: "fixed", bottom: 0, backgroundColor: theme.palette.bodyColor.white_lightBlack, height: "40px", width: customWidth.buttonSectionWidth, padding: "20px",
                         boxShadow: 3, borderRadius: "30px 30px 0px 0px",
                         display: "flex", justifyContent: "space-between", textAlign: "center", alignItems: "center"
                     }}>
                     <Box sx={{ display: "flex", width: "100%" }}>
-                        <Typography variant="body2" sx={{ cursor: "pointer", color: "#262624", fontSize: "12px", fontWeight: "bold" }}>
+                        <Typography variant="body2" sx={{ cursor: "pointer", color: theme.palette.text.dGray27_white, fontSize: "12px", fontWeight: "bold" }}>
                             <span class="icon-close" style={{ fontSize: "12px", marginRight: "5px" }}></span>
                             {t("cancel")}</Typography>
 
-                        <Typography variant="body2" sx={{ cursor: "pointer", marginLeft: "25px", color: "#262624", fontSize: "12px", fontWeight: "bold" }}>
+                        <Typography variant="body2" sx={{ cursor: "pointer", marginLeft: "25px", color: theme.palette.text.dGray27_white, fontSize: "12px", fontWeight: "bold" }}>
                             <span class="icon-edit" style={{ fontSize: "15px", color: theme.palette.orangePrimary.main, marginRight: "5px" }}></span>
                             {t("edit")}</Typography>
                     </Box>

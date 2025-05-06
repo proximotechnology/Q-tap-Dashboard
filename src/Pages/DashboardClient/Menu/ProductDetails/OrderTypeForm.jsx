@@ -137,7 +137,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
 
     return (
         <>
-            <Box sx={{ overflowY: "auto", width: customWidth.itemSectionWidth, boxShadow: 3, bgcolor: 'white', position: 'fixed', right: 0, top: 0, height: '100vh' }}>
+            <Box sx={{ overflowY: "auto", width: customWidth.itemSectionWidth, boxShadow: 3, bgcolor: theme.palette.bodyColor.white_333, position: 'fixed', right: 0, top: 0, height: '100vh' }}>
                 <AppBar position="sticky" color="inherit">
                     <Toolbar>
                         <IconButton edge="start" color="inherit" aria-label="cart">
@@ -191,7 +191,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
                                 </Button>
                                 <Typography variant='body2' sx={{
                                     fontSize: "11px", marginTop: "6px", textAlign: "center",
-                                    color: selectedType === type.type ? '#30302D' : '#949493',
+                                    color: selectedType === type.type ? theme.palette.orangePrimary.main : theme.palette.text.dGray27_white,
                                     textTransform: "capitalize"
                                 }}>
                                     {t(type.type)} </Typography>
@@ -205,7 +205,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
                     {selectedType && (
                         <Box width="100%" maxWidth="400px"  >
 
-                            <Typography variant='body2' sx={{ fontSize: "11px", marginBottom: "3px", color: "#444442" }}>{t("name")}</Typography>
+                            <Typography variant='body2' sx={{ fontSize: "11px", marginBottom: "3px", color: theme.palette.text.gray_white }}>{t("name")}</Typography>
                             <TextField
                                 fullWidth
                                 variant="outlined"
@@ -216,11 +216,11 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
                                 InputProps={{
                                     sx: {
                                         borderRadius: "5px",
-                                        height: "35px", fontSize: "11px", color: "#5D5D59", width: "100%"
+                                        height: "35px", fontSize: "11px", color: theme.palette.text.gray_white, width: "100%"
                                     }
                                 }}
                             />
-                            <Typography variant='body2' sx={{ fontSize: "11px", marginBottom: "3px", color: "#444442" }}>{t("mobileNumber")}</Typography>
+                            <Typography variant='body2' sx={{ fontSize: "11px", marginBottom: "3px", color: theme.palette.text.gray_white }}>{t("mobileNumber")}</Typography>
                             <PhoneInput
                                 country={'eg'}
                                 value={phone}
@@ -240,8 +240,8 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
                             {selectedType === 'Dine In' && (
                                 <>
                                     <Box display={"flex"} justifyContent={"space-between"}>
-                                        <Typography variant='body2' sx={{ fontSize: "11px", marginBottom: "3px", color: "#444442" }}>{t("table.one")}</Typography>
-                                        <Typography variant='body2' sx={{ fontSize: "10px", marginBottom: "3px", color: "gray" }}>4 {t("seats")}</Typography>
+                                        <Typography variant='body2' sx={{ fontSize: "11px", marginBottom: "3px", color: theme.palette.text.gray_white }}>{t("table.one")}</Typography>
+                                        <Typography variant='body2' sx={{ fontSize: "10px", marginBottom: "3px", color:theme.palette.text.gray_white }}>4 {t("seats")}</Typography>
                                     </Box>
 
                                     <FormControl fullWidth variant="outlined">
@@ -258,7 +258,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
                                                 },
                                                 disableScrollLock: true,
                                             }}
-                                            sx={{ marginBottom: "15px", borderRadius: "5px", height: "35px", fontSize: "11px", color: "#5D5D59", width: "100%" }}
+                                            sx={{ marginBottom: "15px", borderRadius: "5px", height: "35px", fontSize: "11px", color: theme.palette.text.gray_white, width: "100%" }}
                                             input={
                                                 <OutlinedInput
                                                     startAdornment={
@@ -269,10 +269,10 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
                                                 />
                                             }
                                         >
-                                            <MenuItem value="" disabled sx={{ fontSize: "11px", color: "#5D5D59", }}>
+                                            <MenuItem value="" disabled sx={{ fontSize: "11px", color: theme.palette.text.gray_white, }}>
                                                 {t("selectTable")}
                                             </MenuItem>
-                                            {table?.map((item) => (<MenuItem value={item?.id} sx={{ fontSize: "11px", color: "#5D5D59", }}>
+                                            {table?.map((item) => (<MenuItem value={item?.id} sx={{ fontSize: "11px", color: theme.palette.text.gray_white, }}>
                                                 {item?.name + " -size:" + item?.size}
                                             </MenuItem>
                                             ))}
@@ -283,7 +283,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
 
                             {selectedType === 'Delivery' && (
                                 <>
-                                    <Typography variant='body2' sx={{ fontSize: "11px", marginBottom: "3px", color: "#444442" }}>{t("city")}</Typography>
+                                    <Typography variant='body2' sx={{ fontSize: "11px", marginBottom: "3px", color: theme.palette.text.gray_white }}>{t("city")}</Typography>
                                     <FormControl fullWidth variant="outlined">
                                         <Select
                                             value={selectedCity}
@@ -298,15 +298,15 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
                                                 },
                                                 disableScrollLock: true,
                                             }}
-                                            sx={{ marginBottom: "15px", borderRadius: "5px", height: "35px", fontSize: "11px", color: "#5D5D59", width: "100%" }}
+                                            sx={{ marginBottom: "15px", borderRadius: "5px", height: "35px", fontSize: "11px", color: theme.palette.text.gray_white, width: "100%" }}
                                         >
-                                            <MenuItem value="" disabled sx={{ fontSize: "11px", color: "#5D5D59", }}>
+                                            <MenuItem value="" disabled sx={{ fontSize: "11px", color: theme.palette.text.gray_white, }}>
                                                 {t("plSelectCity")}
                                             </MenuItem>
-                                            {egyptGovernorates.map(item => <MenuItem value={item} sx={{ fontSize: "11px", color: "#5D5D59", }}>{t(item)}</MenuItem>)}
+                                            {egyptGovernorates.map(item => <MenuItem value={item} sx={{ fontSize: "11px", color: theme.palette.text.gray_white, }}>{t(item)}</MenuItem>)}
                                         </Select>
                                     </FormControl>
-                                    <Typography variant='body2' sx={{ fontSize: "11px", marginBottom: "3px", color: "#444442" }}>{t("address")}</Typography>
+                                    <Typography variant='body2' sx={{ fontSize: "11px", marginBottom: "3px", color: theme.palette.text.gray_white }}>{t("address")}</Typography>
                                     <TextField
                                         fullWidth
                                         variant="outlined"
@@ -318,7 +318,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
                                         InputProps={{
                                             sx: {
                                                 borderRadius: "5px",
-                                                height: "35px", fontSize: "11px", color: "#5D5D59", width: "100%"
+                                                height: "35px", fontSize: "11px", color: theme.palette.text.gray_white, width: "100%"
                                             }
                                         }}
                                     />
@@ -339,14 +339,14 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
                                 <> </>
                             )}
 
-                            <Typography variant='body2' sx={{ fontSize: "11px", marginBottom: "3px", color: "#444442" }}>{t("comments")}</Typography>
+                            <Typography variant='body2' sx={{ fontSize: "11px", marginBottom: "3px", color: theme.palette.text.gray_white }}>{t("comments")}</Typography>
                             <TextField
                                 value={comment}
                                 onChange={(e) => setComment(e.target.value)}
                                 InputProps={{
                                     sx: {
                                         borderRadius: "5px",
-                                        height: "55px", marginBottom: "110px", fontSize: "11px", color: "#5D5D59", width: "100%"
+                                        height: "55px", marginBottom: "110px", fontSize: "11px", color: theme.palette.text.gray_white, width: "100%"
                                     }
                                 }}
                                 fullWidth
@@ -361,38 +361,38 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
 
                 <Box
                     sx={{
-                        position: "fixed", bottom: 0, backgroundColor: "white", width: customWidth.buttonSectionWidth
+                        position: "fixed", bottom: 0, backgroundColor: theme.palette.bodyColor.white_lightBlack, width: customWidth.buttonSectionWidth
                         , padding: "20px",
                         boxShadow: 3, borderRadius: "30px 30px 0px 0px", display: "flex", justifyContent: "space-between",
                     }}>
                     <Box sx={{ width: "100%" }}>
-                        <Typography variant="h6" sx={{ fontSize: '9px', color: 'gray' }}>
-                            {t("subTotal")} <span style={{ color: '#3A3A38' }}>{subTotal} EGP</span>
+                        <Typography variant="h6" sx={{ fontSize: '9px', color: theme.palette.text.gray_white}}>
+                            {t("subTotal")} <span style={{ color: theme.palette.text.gray_white }}>{subTotal} EGP</span>
                         </Typography>
 
-                        <Typography variant="h6" sx={{ fontSize: '9px', color: 'gray' }}>
-                            {t("tax")} <span style={{ color: '#3A3A38' }}>{tax} EGP</span>
+                        <Typography variant="h6" sx={{ fontSize: '9px', color: theme.palette.text.gray_white }}>
+                            {t("tax")} <span style={{ color: theme.palette.text.gray_white }}>{tax} EGP</span>
                         </Typography>
 
-                        <Typography variant="h6" sx={{ fontSize: '9px', color: 'gray' }}>
-                            {t("discounts")} <span style={{ color: '#3A3A38' }}>{discount} EGP</span>
+                        <Typography variant="h6" sx={{ fontSize: '9px', color: theme.palette.text.gray_white }}>
+                            {t("discounts")} <span style={{ color: theme.palette.text.gray_white }}>{discount} EGP</span>
                         </Typography>
 
                         <Divider sx={{ margin: "3px 30px 3px 0px" }} />
-                        <Typography variant="h6" sx={{ fontSize: '10px', fontWeight: "bold", color: '#3A3A38' }}>
+                        <Typography variant="h6" sx={{ fontSize: '10px', fontWeight: "bold", color: theme.palette.text.gray_white }}>
                             {t("totalPrice")}
                         </Typography>
                         <Typography variant="h6" sx={{ fontSize: '18px', fontWeight: "bold", color: theme.palette.orangePrimary.main }}>
-                            {totalCart} <span style={{ fontSize: "10px", fontWeight: "400", color: '#575756' }}>EGP</span>
+                            {totalCart} <span style={{ fontSize: "10px", fontWeight: "400", color: theme.palette.text.gray_white }}>EGP</span>
                         </Typography>
                     </Box>
                     <Box sx={{ width: "100%" }}>
                         <RadioGroup defaultValue="cash" onChange={handleChange} >
-                            <FormControlLabel sx={{ color: 'gray' }} value="cash"
+                            <FormControlLabel sx={{ color: theme.palette.text.gray_white }} value="cash"
                                 control={
                                     <Radio size="small"
                                         sx={{
-                                            color: selectedValue === 'cash' ? theme.palette.orangePrimary.main : 'gray',
+                                            color: selectedValue === 'cash' ? theme.palette.orangePrimary.main : theme.palette.text.gray_white,
                                             fontSize: "8px",
                                             '&.Mui-checked': { color: theme.palette.orangePrimary.main },
                                             '& .MuiSvgIcon-root': { fontSize: 13 },
@@ -405,12 +405,12 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
                                         <Typography sx={{ fontSize: '10px' }}>{t("cashOrCard")}</Typography>
                                     </Box>}
                             />
-                            <FormControlLabel sx={{ color: 'gray' }} value="wallet"
+                            <FormControlLabel sx={{ color: theme.palette.text.gray_white }} value="wallet"
                                 control={
                                     <Radio size="small"
                                         sx={{
                                             marginTop: "-10px",
-                                            color: selectedValue === 'wallet' ? theme.palette.orangePrimary.main : 'gray',
+                                            color: selectedValue === 'wallet' ? theme.palette.orangePrimary.main : theme.palette.text.gray_white,
                                             fontSize: "8px",
                                             '&.Mui-checked': { color: theme.palette.orangePrimary.main },
                                             '& .MuiSvgIcon-root': { fontSize: 13 },

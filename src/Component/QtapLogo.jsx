@@ -70,7 +70,7 @@ const QtapLogo = () => {
 
 
                 <Divider />
-                <Typography variant="body1" sx={{ fontSize: "11px", width: "70%", color: theme.palette.text.fixedWhite }} >
+                <Typography variant="body1" sx={{ fontSize: "11px", width: "70%", color: `${theme.palette.text.fixedWhite} !important` }} >
                     {t("qtapLogoPageParagraph")}
                 </Typography>
             </TextOverlay>

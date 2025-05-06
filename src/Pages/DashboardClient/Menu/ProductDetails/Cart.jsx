@@ -107,7 +107,7 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, setCartItems 
     return (
 
         <>
-            <Box sx={{ overflowY: "auto", width: customWidth.itemSectionWidth, boxShadow: 3, bgcolor: 'white', position: 'fixed', right: 0, top: 0, height: '100vh' }}>
+            <Box sx={{ overflowY: "auto", width: customWidth.itemSectionWidth, boxShadow: 3, bgcolor: theme.palette.bodyColor.white_333, position: 'fixed', right: 0, top: 0, height: '100vh' }}>
                 <Box sx={{ position: "fixed", top: 0, width: customWidth.itemSectionWidth, zIndex: 1201, }}>
 
                     <AppBar position="static" color="inherit">
@@ -160,7 +160,7 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, setCartItems 
                                         <Box>
                                             <Typography
                                                 variant="h1"
-                                                sx={{ fontSize: '11px', fontWeight: '900', color: '#575756' }}>
+                                                sx={{ fontSize: '11px', fontWeight: '900', color: theme.palette.text.gray_white }}>
                                                 {item.name}  <span style={{ color: theme.palette.orangePrimary.main }}>{item.selectedSize}</span>
                                             </Typography>
 
@@ -171,7 +171,7 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, setCartItems 
                                                 {item.description}
                                             </Typography>
 
-                                            <Typography variant="body2" sx={{ marginTop: '2px', fontSize: '9px', color: "#575756" }}>
+                                            <Typography variant="body2" sx={{ marginTop: '2px', fontSize: '9px', color: theme.palette.text.gray_white }}>
                                                 <span style={{ color: theme.palette.orangePrimary.main }}>{t("option")} | </span>
                                                 {/* {selectedItemOptions[item.id] && selectedItemOptions[item.id].length > 0
                                                 ? selectedItemOptions[item.id].map(option => option.name).join(', ')
@@ -182,7 +182,7 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, setCartItems 
 
                                             </Typography>
 
-                                            <Typography variant="body2" sx={{ marginTop: '2px', fontSize: '9px', color: "#575756" }}>
+                                            <Typography variant="body2" sx={{ marginTop: '2px', fontSize: '9px', color: theme.palette.text.gray_white }}>
                                                 <span style={{ color: theme.palette.orangePrimary.main }}>{t("extra.one")} |</span>
                                                 {/* {selectedItemExtra[item.id] && selectedItemExtra[item.id].length > 0
                                                 ? selectedItemExtra[item.id].map(extra => extra.name).join(', ')
@@ -199,7 +199,7 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, setCartItems 
                                             <AddCircleOutlinedIcon
                                                 onClick={() => {handleCartItemQuantityChange(item,1) }} // TODO: create function to increase the quantity
                                                 sx={{ fontSize: "18px", color: "black", cursor: "pointer" }} />
-                                            <Typography sx={{ fontSize: "11px", padding: "0px 8px", color: "#272725" }}> {item.quantity}</Typography>
+                                            <Typography sx={{ fontSize: "11px", padding: "0px 8px", color: theme.palette.text.Gray27_white }}> {item.quantity}</Typography>
                                             <RemoveCircleOutlinedIcon
                                                 onClick={() => {handleCartItemQuantityChange(item,-1) }}  // TODO: create function to decrease the quantity
 
@@ -219,11 +219,11 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, setCartItems 
 
                         <Box
                             sx={{//position: "fixed",bottom: '0px',
-                                backgroundColor: "white", height: "fit-content", width: customWidth.buttonSectionWidth, padding: "20px",
+                                backgroundColor: theme.palette.bodyColor.white_lightBlack, height: "fit-content", width: customWidth.buttonSectionWidth, padding: "20px",
                                 boxShadow: 3, borderRadius: "30px 30px 0px 0px", display: "flex", justifyContent: "space-between",
                             }}>
                             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <Typography variant="h6" sx={{ fontSize: '11px', fontWeight: "bold", color: '#3A3A38' }}>
+                                <Typography variant="h6" sx={{ fontSize: '11px', fontWeight: "bold", color: theme.palette.text.dGray27_white }}>
                                     {t("totalPrice")}
                                 </Typography>
                                 <Typography variant="h6" sx={{ fontSize: '18px', fontWeight: "bold", color: theme.palette.orangePrimary.main }}>

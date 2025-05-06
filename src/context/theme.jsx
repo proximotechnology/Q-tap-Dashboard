@@ -22,12 +22,13 @@ export const getDesignTokens = (mode) => ({
           secandary: " #ffffff",//
           secandaryInput: " #EBEDF3",//
           dark: ' #181616',
-          tableMain: "#ffffff",
+          tableMain: " #ffffff",
           tableSecandary: "#EBEDF3",
           whiteGray: ' #EBEDF3',
           whiteGray_lightBlack: "#EBEDF3",
           white_333: "white",
-          gray_lightBlack40: "#9d9d9c"
+          gray_lightBlack40: " #9d9d9c",
+          white_lightBlack:" #ffffff"
         },
         gradient: {
           orange: ' #f7931e',
@@ -48,7 +49,8 @@ export const getDesignTokens = (mode) => ({
           red: 'red',
           green: 'green',
           black_white:"black",
-          gray_white:"gray"
+          gray_white:"#575756",
+          dGray27_white:" #272725",
 
         },
         chart: {
@@ -79,18 +81,21 @@ export const getDesignTokens = (mode) => ({
         bgColor: {
           main: " #000",
         },
-        bodyColor: {//theme.palette.
+        bodyColor: {// theme.palette.bodyColor.
           main: ' #121212',
           secandary: " #2d2c2c",//
           secandaryInput: " #2d2c2c",//
           dark: ' #000',
           tableMain: " #000",
           tableSecandary: " #000",
-          whiteGray: '#575756',
+          whiteGray: ' #575756',
 
-          whiteGray_lightBlack: "#4d4d4d", //EBEDF3
-          white_333: "#333",//white
-          gray_lightBlack40: '#404040'//9d9d9c
+          whiteGray_lightBlack: " #4d4d4d", // #EBEDF3
+          white_lightBlack:" #4d4d4d",
+          
+          gray_lightBlack40: ' #404040',// #9d9d9c
+          white_333: " #333333",
+          
         },
         gradient: {
           orange: ' #000',
@@ -99,15 +104,20 @@ export const getDesignTokens = (mode) => ({
           yellow: ' #000',
           deepOrange: ' #000'
         },
-        text: {//theme.palette.text.white
-          white: ' #000', // White text for better contrast
-          gray: ' #fff', // Lighter gray text for secondary content //#D8E0E0
-          black: " #fff",
-          fixedWhite: ' #000', // White text for better contrast
-          fixedBlack: " #000",
+        text: {// theme.palette.text.
+          white: ' #000000', // White text for better contrast
+          gray: ' #FFFFFF', // Lighter gray text for secondary content //#D8E0E0
+          black: " #FFFFFF",
+          fixedGray: ' #575756',
+          fixedWhite: ' #FFFFFF', // White text for better contrast
+          fixedBlack: " #000000",
           orange: ' #E57C00',
-          black_white:"white" ,//theme.palette.text.white_black
-          gray_white:"white"
+
+          black_white:" #FFFFFF" ,//theme.palette.text.white_black
+          gray_white:" #FFFFFF", // #575756
+          dGray27_white:" #FFFFFF",// #272725
+          blue:'blue'
+
         },
         chart: {
           pink: ' #AD4181', pinkLight: " #ffaed8",
