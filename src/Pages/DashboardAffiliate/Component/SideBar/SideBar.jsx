@@ -31,7 +31,7 @@ export default function SideBar({ isOpen }) {
         <Box
             sx={{
                 width: { xs: '60%', md: '200px' },
-                backgroundColor: '#fff',
+                backgroundColor: theme.palette.bodyColor.secandary,
                 padding: '25px 20px',
                 position: 'fixed',
                 top: 0,
@@ -40,11 +40,17 @@ export default function SideBar({ isOpen }) {
                 display: { xs: isOpen ? 'block' : 'none', md: "block" },
                 zIndex: 1000
             }}>
-            <Box sx={{ display: "felx", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
-                <img src="/images/logoDash.jpg" alt="Logo" style={{ width: '110px' }} />
+            <Box sx={{ display: "felx", justifyContent: "center", textAlign: "center", alignItems: "center" , margin:"10px 0px"}}>
+                <img src={
+                    localStorage.getItem("themeMode") !== null
+                        ? (localStorage.getItem("themeMode") === "dark"
+                            ? "/assets/qtap.svg"
+                            : "/assets/qtapwhite.svg")
+                        : "/assets/qtap.svg"
+                } alt="Logo" style={{ width: '110px' }} />
             </Box>
             <SidebarExtraMobileSection />
-            <List >
+            <List sx={{ padding: 0, marginTop: "40px" }}>
                 {Arr1.map((item, index) => (
                     <Tooltip
                         ListItem
@@ -57,13 +63,12 @@ export default function SideBar({ isOpen }) {
                                 sx={{
                                     justifyContent: "center",
                                     px: 2,
-
                                     color:
                                         location.pathname === item.path
                                             ? theme.palette.mode === "dark"
                                                 ? grey[600]
                                                 : theme.palette.orangePrimary.main
-                                            : "gray",
+                                            : theme.palette.text.gray_light,
 
                                 }}
                                 onClick={() => { navigate(item.path); }}
@@ -76,13 +81,13 @@ export default function SideBar({ isOpen }) {
                                         color:
                                             location.pathname === item.path
                                                 ? theme.palette.orangePrimary.main
-                                                : "gray",
+                                                : theme.palette.text.gray_light,
 
                                     }}
                                 >
                                     {React.cloneElement(item.icon, {
                                         fontSize: "small",
-                                        color: location.pathname === item.path ? theme.palette.orangePrimary.main : "gray",
+                                        color: location.pathname === item.path ? theme.palette.orangePrimary.main : theme.palette.text.gray_light,
                                     })}
                                 </ListItemIcon>
 

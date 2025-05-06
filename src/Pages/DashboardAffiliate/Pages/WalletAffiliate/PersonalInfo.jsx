@@ -6,7 +6,7 @@ import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
-import { Box } from '@mui/system';
+import { Box, useTheme } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 
 export const PersonalInfo = () => {
@@ -21,10 +21,11 @@ export const PersonalInfo = () => {
 
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const {t} = useTranslation();
+    const { t } = useTranslation();
+    const theme = useTheme();
     return (
         <Grid container spacing={2} justifyContent="center" >
-            
+
             <Grid item xs={12} md={3} sx={{ marginRight: "40px" }}>
                 <Box sx={{ textAlign: 'center' }}>
                     <Box sx={{
@@ -52,17 +53,17 @@ export const PersonalInfo = () => {
                             <EditOutlinedIcon sx={{ color: "white", fontSize: '20px' }} />
                         </Box>
                     </Box>
-                    <Typography variant="body2" sx={{ fontSize: "15px", color: "#3b3a3a", marginTop: "8px" }}>
+                    <Typography variant="body2" sx={{ fontSize: "15px", color: theme.palette.text.gray, marginTop: "8px" }}>
                         User01
                     </Typography>
                 </Box>
 
             </Grid>
             <Grid item xs={12} md={6}>
-                <Typography variant="body2" sx={{ fontSize: "14px" }} color="#3b3a3a" gutterBottom>
+                <Typography variant="body2" sx={{ fontSize: "14px" }} color={theme.palette.text.gray} gutterBottom>
                     {t("personalInfo")}
                 </Typography>
-                <Divider sx={{ borderRadius:"30px",width: "28%", borderBottom: "4px solid #ef7d00", marginBottom: "18px" }} />
+                <Divider sx={{ borderRadius: "30px", width: "28%", borderBottom: "4px solid #ef7d00", marginBottom: "18px" }} />
 
                 <FormControl variant="outlined" fullWidth >
                     <OutlinedInput
@@ -76,7 +77,7 @@ export const PersonalInfo = () => {
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
                         placeholder={t("fullName")}
-                        sx={{ borderRadius: '6px',width:"85%",marginBottom: "18px", height: '30px', fontSize: "10px" }}
+                        sx={{ borderRadius: '6px', width: "85%", marginBottom: "18px", height: '30px', fontSize: "10px" }}
                     />
                 </FormControl>
 
@@ -92,7 +93,7 @@ export const PersonalInfo = () => {
                         required
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        sx={{  borderRadius: '6px',width:"85%",marginBottom: "18px", height: '30px', fontSize: "10px"  }}
+                        sx={{ borderRadius: '6px', width: "85%", marginBottom: "18px", height: '30px', fontSize: "10px" }}
                     />
                 </FormControl>
 
@@ -109,13 +110,13 @@ export const PersonalInfo = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder={t("email")}
-                        sx={{ borderRadius: '6px',width:"85%",marginBottom: "18px", height: '30px', fontSize: "10px" }}
+                        sx={{ borderRadius: '6px', width: "85%", marginBottom: "18px", height: '30px', fontSize: "10px" }}
                     />
                 </FormControl>
 
-                <Grid container alignItems="center" sx={{ marginBottom: "18px" ,width:"85%"}}>
+                <Grid container alignItems="center" sx={{ marginBottom: "18px", width: "85%" }}>
                     <Grid item xs={12} sm={12} md={12} lg={12}>
-                        <Grid container alignItems="center" sx={{ color: "grey" }} >
+                        <Grid container alignItems="center" sx={{ color: theme.palette.text.gray }} >
                             <CalendarMonthOutlinedIcon sx={{ marginRight: 1, fontSize: "15px" }} />
                             <Typography variant="body1" sx={{ fontSize: "10px" }}>{t("dateOfBirth")}</Typography>
                         </Grid>
@@ -197,20 +198,20 @@ export const PersonalInfo = () => {
                         value={country}
                         onChange={(e) => setCountry(e.target.value)}
                         displayEmpty
-                        sx={{ borderRadius: '6px',width:"85%",marginBottom: "18px", height: '30px', fontSize: "10px"  }}
+                        sx={{ borderRadius: '6px', width: "85%", marginBottom: "18px", height: '30px', fontSize: "10px" }}
 
                         startAdornment={
                             <InputAdornment position="start">
-                                <img src="/assets/location.svg" alt="location icon" style={{ width: "16px",height:"16px" }} />
+                                <img src="/assets/location.svg" alt="location icon" style={{ width: "16px", height: "16px" }} />
                             </InputAdornment>
                         }
                     >
-                        <MenuItem value="" disabled sx={{fontSize:"12px" , color:"gray"}} >
+                        <MenuItem value="" disabled sx={{ fontSize: "12px", color: "gray" }} >
                             {t("country")}
                         </MenuItem>
-                        <MenuItem value="US" sx={{fontSize:"12px" , color:"gray"}}>United States</MenuItem>
-                        <MenuItem value="CA" sx={{fontSize:"12px" , color:"gray"}}>Canada</MenuItem>
-                        <MenuItem value="UK" sx={{fontSize:"12px" , color:"gray"}}>United Kingdom</MenuItem>
+                        <MenuItem value="US" sx={{ fontSize: "12px", color: "gray" }}>United States</MenuItem>
+                        <MenuItem value="CA" sx={{ fontSize: "12px", color: "gray" }}>Canada</MenuItem>
+                        <MenuItem value="UK" sx={{ fontSize: "12px", color: "gray" }}>United Kingdom</MenuItem>
                     </Select>
                 </FormControl>
 
@@ -226,7 +227,7 @@ export const PersonalInfo = () => {
                             </InputAdornment>
                         }
                         placeholder={t("password")}
-                        sx={{ borderRadius: '6px',width:"85%",marginBottom: "18px", height: '30px', fontSize: "10px"  }}
+                        sx={{ borderRadius: '6px', width: "85%", marginBottom: "18px", height: '30px', fontSize: "10px" }}
                     />
                 </FormControl>
 
@@ -241,9 +242,9 @@ export const PersonalInfo = () => {
                                 <span class="icon-padlock" style={{ fontSize: "18px" }} />
                             </InputAdornment>
                         }
-                    
+
                         placeholder={t("confirmPass")}
-                        sx={{ borderRadius: '6px',width:"85%",marginBottom: "18px", height: '30px', fontSize: "10px"  }}
+                        sx={{ borderRadius: '6px', width: "85%", marginBottom: "18px", height: '30px', fontSize: "10px" }}
 
                     />
                 </FormControl>

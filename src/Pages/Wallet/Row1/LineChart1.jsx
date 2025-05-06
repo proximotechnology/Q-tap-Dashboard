@@ -2,11 +2,14 @@ import { useTheme } from '@mui/system';
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 
-const CustomTooltip = ({ active, payload }) => {
+const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
         return (
             <div style={{ backgroundColor: '#666', fontSize: '12px', color: '#fff', padding: '5px', borderRadius: '5px' }}>
-                {`${payload[0].value}K`}
+                <p>{`Month: ${label}`}</p>
+                {payload.map((entry, index) => (
+                    <p key={index}>{`${entry.name}: ${entry.value}`}</p>
+                ))}
             </div>
         );
     }
@@ -14,19 +17,25 @@ const CustomTooltip = ({ active, payload }) => {
 };
 
 const LineChart1 = ({ salesData, showLine1, showLine2 }) => {
-    // التحقق من وجود البيانات
     const theme = useTheme();
-    if (!salesData) {
+
+    // Check if salesData exists and has the required arrays
+    if (!salesData || !salesData.clicksPerMonth || !salesData.usersCountByMonth) {
         return <div>لا توجد بيانات متاحة</div>;
     }
 
-    // تحويل البيانات إلى مصفوفة وتحويل total_revenue إلى وحدات الآلاف (k)
-    const chartData = Object.values(salesData).map((item) => ({
-        month_name: item.month_name,
-        total_revenue: item.total_revenue / 1000, // تحويل إلى آلاف
+    // Merge clicksPerMonth and usersCountByMonth into a single array for the chart
+    const chartData = salesData.clicksPerMonth.map((clickItem, index) => ({
+        month_name: clickItem.month_name,
+        clicks_count: clickItem.clicks_count,
+        users_count: salesData.usersCountByMonth[index]?.users_count || 0,
     }));
 
-    // console.log('salesData', salesData, 'chartData', chartData);
+    // Determine the maximum value for YAxis domain
+    const maxClicks = Math.max(...chartData.map(item => item.clicks_count), 0);
+    const maxUsers = Math.max(...chartData.map(item => item.users_count), 0);
+    const maxValue = Math.max(maxClicks, maxUsers);
+    const yAxisMax = Math.ceil(maxValue / 10) * 10; // Round up to nearest 10
 
     return (
         <ResponsiveContainer width="100%" height={180}>
@@ -40,9 +49,9 @@ const LineChart1 = ({ salesData, showLine1, showLine2 }) => {
                 />
                 <YAxis
                     style={{ fontSize: 10 }}
-                    domain={[0, 50]} // تعديل النطاق ليناسب القيم المحولة (مثل 20k تصبح 20)
-                    ticks={[0, 10, 20, 30, 40, 50]}
-                    tickFormatter={(tick) => `${tick}k`}
+                    domain={[0, yAxisMax || 50]} // Dynamic domain based on data
+                    ticks={Array.from({ length: Math.ceil(yAxisMax / 10) + 1 }, (_, i) => i * 10)}
+                    tickFormatter={(tick) => `${tick}`}
                     tick={{ fontSize: 9, fill: theme.palette.text.gray }}
                     tickLine={false}
                 />
@@ -50,8 +59,9 @@ const LineChart1 = ({ salesData, showLine1, showLine2 }) => {
                 {showLine1 && (
                     <Line
                         type="linear"
-                        dataKey="total_revenue"
-                        stroke="#707070" // لون مختلف للخط الأول
+                        dataKey="clicks_count"
+                        name="Clicks"
+                        stroke="#2DA0F6"
                         strokeWidth={2}
                         dot={{ fill: 'url(#lineChartGradient2)', r: 5, stroke: 'none', zIndex: 10 }}
                     />
@@ -59,8 +69,9 @@ const LineChart1 = ({ salesData, showLine1, showLine2 }) => {
                 {showLine2 && (
                     <Line
                         type="linear"
-                        dataKey="total_revenue"
-                        stroke="#707070" // لون مختلف للخط الثاني
+                        dataKey="users_count"
+                        name="Users"
+                        stroke="#AD4081"
                         strokeWidth={2}
                         dot={{ fill: 'url(#lineChartGradient1)', r: 5, stroke: 'none', zIndex: 10 }}
                     />
@@ -80,10 +91,10 @@ const LineChart1 = ({ salesData, showLine1, showLine2 }) => {
     );
 };
 
-// إضافة قيم افتراضية
+// Default props
 LineChart1.defaultProps = {
     showLine1: true,
-    showLine2: false, // تعيين false افتراضيًا لتجنب عرض خطين متطابقين
+    showLine2: true, // Set to true to show both lines by default
 };
 
 export default LineChart1;

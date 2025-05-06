@@ -1,6 +1,6 @@
 import React from 'react';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { Box } from '@mui/system';
+import { Box, useTheme } from '@mui/system';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL } from '../../../../utils/helperFunction';
@@ -8,7 +8,7 @@ import { BASE_URL } from '../../../../utils/helperFunction';
 export const Row3 = ({code}) => {
 
     const invitationLink = `${BASE_URL}home_affiliate/${code}`;
-
+    const theme = useTheme();
     const {t} = useTranslation();
     const copyToClipboard = () => {
         navigator.clipboard.writeText(invitationLink)
@@ -24,7 +24,7 @@ export const Row3 = ({code}) => {
         <Box item xs={12} sx={{ flexGrow: 1, padding: '0px 20px 20px 20px' }}>
             <Box sx={{ display: "flex", marginBottom: "10px", color: "#555" }}>
                 <span className="icon-link" style={{ marginRight: "6px", fontSize: "15px" }}></span>
-                <Typography variant='body2' sx={{ fontSize: "13px", color: "#575756" }}>{t("invitationLink")}</Typography>
+                <Typography variant='body2' sx={{ fontSize: "13px", color:theme.palette.text.gray }}>{t("invitationLink")}</Typography>
             </Box>
 
             <Box display={"flex"}>
@@ -38,7 +38,8 @@ export const Row3 = ({code}) => {
                         borderRadius: "10px",
                         border: "none",
                         fontSize: "12px",
-                        color: 'gray',
+                        color: theme.palette.text.gray_light,
+                        backgroundColor: theme.palette.bodyColor.secandary,
                         outline: "none",
                         marginRight: "10px",
                     }}

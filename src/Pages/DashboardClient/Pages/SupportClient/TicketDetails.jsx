@@ -60,7 +60,7 @@ const TicketDetails = ({
       <Box
         sx={{
           padding: '30px 40px',
-          backgroundColor: '#fff',
+          backgroundColor: theme.palette.bodyColor.secandaryInput,
           border: 'none !important',
           borderRadius: '10px',
           maxWidth: '800px',
@@ -295,7 +295,7 @@ const TicketDetails = ({
                 multiline
                 rows={9}
                 size="small"
-                sx={{ backgroundColor: '#f7f7f7' }}
+                sx={{ backgroundColor: theme.palette.bodyColor.secandaryInput }}
                 InputProps={{
                   style: {
                     fontSize: '12px',

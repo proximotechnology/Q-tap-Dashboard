@@ -46,7 +46,7 @@ export const Customers = () => {
     if (customerLog?.users_logs?.length === 0) {
       setCustomers([]);
       console.log(customerLog);
-      
+
     } else {
       setCustomers(customerLog?.Deposits || []);
     }
@@ -63,7 +63,7 @@ export const Customers = () => {
       >
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <span class="icon-show" style={{ fontSize: "30px", color: "#D8E0E0", marginRight: "6px" }} ></span>
-          <Typography variant='body1' sx={{ fontSize: "14px", color: "#575756" }}>{t("log")}</Typography>
+          <Typography variant='body1' sx={{ fontSize: "14px", color: theme.palette.text.gray }}>{t("log")}</Typography>
         </Box>
 
         <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -103,7 +103,7 @@ export const Customers = () => {
             onClick={handleExport}
           >
             {t("export")}
-            <ArrowForwardIosIcon sx={{ fontSize: "11px", color: "black" }} />
+            <ArrowForwardIosIcon sx={{ fontSize: "11px", color: theme.palette.text.gray, marginLeft:"1px" }} />
           </Button>
         </Box>
 
@@ -121,7 +121,7 @@ export const Customers = () => {
         <Table sx={{ borderCollapse: 'separate', borderSpacing: '0 5px' }}>
           <TableHead>
             <TableRow sx={{ height: "25px", borderBottom: "2px solid #f0f0f0" }}>
-              {[t("dineMethod"), t("name"),  t("mobileNumber"), t("note"), t("visitTime")].map((header) => (
+              {[t("dineMethod"), t("name"), t("mobileNumber"), t("note"), t("visitTime")].map((header) => (
                 <TableCell
                   key={header}
                   sx={{ fontSize: "11px", padding: "4px", width: `${100 / 6}%`, textAlign: "left", paddingTop: "10px" }}
@@ -136,7 +136,7 @@ export const Customers = () => {
               <TableRow
                 key={index}
                 sx={{
-                  backgroundColor: index % 2 === 0 ? ' #EBEDF3' : 'white',
+                  backgroundColor: index % 2 === 0 ? theme.palette.bodyColor.secandaryInput : '',
                   height: "30px",
                   borderRadius: '20px',
                   '&:nth-of-type(odd)': {
@@ -155,17 +155,17 @@ export const Customers = () => {
                   },
                 }}
               >
-                <TableCell sx={{ fontSize: '10px', padding: "3px 20px", width: `${100 / 7}%`, textAlign: "left", borderBottom: "none" }}>{t(row?.type)}</TableCell>
-                <TableCell sx={{ fontSize: '10px', padding: "3px", width: `${100 / 7}%`, textAlign: "left", borderBottom: "none" }}>{row?.name}</TableCell>
-                {/* <TableCell sx={{ fontSize: '10px', padding: "3px", width: `${100 / 7}%`, textAlign: "left", borderBottom: "none" }}>{row?.email}</TableCell> */}
-                <TableCell sx={{ fontSize: '10px', padding: "3px", width: `${100 / 7}%`, textAlign: "left", borderBottom: "none" }}>
+                <TableCell sx={{ fontSize: '10px', padding: "3px 20px", width: `${100 / 7}%`, textAlign: "left", borderBottom: "none", color: theme.palette.text.gray_light }}>{t(row?.type)}</TableCell>
+                <TableCell sx={{ fontSize: '10px', padding: "3px", width: `${100 / 7}%`, textAlign: "left", borderBottom: "none", color: theme.palette.text.gray_light }}>{row?.name}</TableCell>
+                {/* <TableCell sx={{ fontSize: '10px', padding: "3px", width: `${100 / 7}%`, textAlign: "left", borderBottom: "none" , color:theme.palette.text.gray_light }}>{row?.email}</TableCell> */}
+                <TableCell sx={{ fontSize: '10px', padding: "3px", width: `${100 / 7}%`, textAlign: "left", borderBottom: "none", color: theme.palette.text.gray_light }}>
                   {row?.phone == null ? "N/P" : row?.phone}
                 </TableCell>
-                <TableCell sx={{ fontSize: '10px', padding: "3px", width: `${100 / 7}%`, textAlign: "left", borderBottom: "none", display: 'flex', alignItems: "center", justifyContent: "start" }}>
+                <TableCell sx={{ fontSize: '10px', padding: "3px", width: `${100 / 7}%`, textAlign: "left", borderBottom: "none", color: theme.palette.text.gray_light, display: 'flex', alignItems: "center", justifyContent: "start" }}>
                   <RemoveRedEyeOutlinedIcon sx={{ fontSize: "16px", color: "#d3cfcf", marginRight: "5px" }} />
                   {row?.comments}
                 </TableCell>
-                <TableCell sx={{ fontSize: '10px', padding: "3px 20px 0px 0px", width: `${100 / 7}%`, textAlign: "left", borderBottom: "none" }}>
+                <TableCell sx={{ fontSize: '10px', padding: "3px 20px 0px 0px", width: `${100 / 7}%`, textAlign: "left", borderBottom: "none", color: theme.palette.text.gray_light }}>
                   {new Date(row?.updated_at).toLocaleString('en-US', {
                     weekday: 'short',
                     year: 'numeric',

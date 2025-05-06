@@ -16,6 +16,7 @@ import styles from './supportCard.module.css'
 import { useTranslation } from 'react-i18next';
 import { AddFeedback } from './AddFeedback';
 import { BASE_URL } from '../../../../utils/helperFunction';
+import { Settings } from '@mui/icons-material';
 const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onClick }) => {
   const theme = useTheme();
   const statusStyles = {
@@ -367,7 +368,7 @@ const Support = () => {
         <Grid container spacing={2} alignItems="center">
           {/* the header */}
           <Grid item xs={12} sx={{ display: "flex" }}>
-            <Typography variant="body1" sx={{ fontSize: "12px", color: "#575756" }}>{t("ticket.many")}</Typography>
+            <Typography variant="body1" sx={{ fontSize: "12px", color: theme.palette.text.gray }}>{t("ticket.many")}</Typography>
             <Grid item xs sx={{ flexGrow: 1 }}>
               <Box sx={{
                 display: 'flex',
@@ -398,7 +399,7 @@ const Support = () => {
                   </Box>
                 )}
                 <IconButton onClick={handleSearchClick}>
-                  <span className="icon-magnifier" style={{ fontSize: "15px", color: "#575756" }} />
+                  <span className="icon-magnifier" style={{ fontSize: "15px", color: theme.palette.text.gray_light }} />
                 </IconButton>
               </Box>
             </Grid>
@@ -439,7 +440,7 @@ const Support = () => {
       <Paper sx={{ borderRadius: "10px", marginTop: "25px", paddingBottom: "30px", overflowX: 'auto' }}>
 
         <Box sx={{ padding: "30px 30px 0px 30px ", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>
+          <Typography variant="body1" sx={{ fontSize: "13px", color: theme.palette.text.gray_light }}>
             {t("feedbacks.many")}
           </Typography>
 
@@ -481,7 +482,7 @@ const Support = () => {
               <Typography
                 sx={{
                   fontSize: '12px',
-                  color: '#575756',
+                  color: theme.palette.text.gray_light,
                 }}
               >
                 {question.comment}
@@ -489,10 +490,10 @@ const Support = () => {
 
               <Box sx={{ display: 'flex', gap: 1 }}>
                 <IconButton size="small" onClick={() => handleDelete(index)} >
-                  <span className='icon-delete' style={{ fontSize: "20px" }}></span>
+                  <span className='icon-delete' style={{ fontSize: "18px", color: theme.palette.text.gray_light }}></span>
                 </IconButton>
                 <IconButton size="small" >
-                  <img src="/assets/setting.svg" alt="setting icon" style={{ width: "15px", height: "15px" }} />
+                  <Settings style={{ fontSize: "18px", color: theme.palette.text.gray_light }} />
                 </IconButton>
               </Box>
             </Box>
@@ -500,7 +501,7 @@ const Support = () => {
         </Box>
         <Table sx={{ mt: 2, mb: 5, width: "100%", tableLayout: "fixed" }}>
           <TableHead>
-            <TableRow sx={{ backgroundColor: "#D8E0E0" }}>
+            <TableRow sx={{ backgroundColor: theme.palette.bodyColor.secandaryInput }}>
               {[
                 t("customer"),
                 t("mobileNumber"),
@@ -517,7 +518,7 @@ const Support = () => {
                     padding: "2px",
                     borderBottom: "none",
                     textAlign: "center",
-                    color: "#575756",
+                    color: theme.palette.text.gray,
                   }}
                 >
                   {header}

@@ -10,6 +10,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL } from '../../../../utils/helperFunction';
+import { Settings } from '@mui/icons-material';
 
 export const StaffTable = ({ userStaff }) => {
     const theme = useTheme();
@@ -120,7 +121,7 @@ export const StaffTable = ({ userStaff }) => {
             >
                 <Box sx={{ display: "flex", alignItem: "center" }}>
                     <span class="icon-manager" style={{ fontSize: "25px", color: "#D8E0E0", marginRight: "10px" }}></span>
-                    <Typography variant='body1' sx={{ fontSize: "16px", color: "#575756" }}>Staff</Typography>
+                    <Typography variant='body1' sx={{ fontSize: "16px", color: theme.palette.text.gray }}>Staff</Typography>
                 </Box>
 
 
@@ -157,7 +158,7 @@ export const StaffTable = ({ userStaff }) => {
                         <IconButton onClick={handleSearchClick}>
                             <span
                                 className="icon-magnifier"
-                                style={{ fontSize: "15px", color: "#575756" }}
+                                style={{ fontSize: "15px", color: theme.palette.text.gray }}
                             />
                         </IconButton>
 
@@ -190,7 +191,7 @@ export const StaffTable = ({ userStaff }) => {
                                 key={header}
                                 sx={{
                                     fontSize: "12px", padding: header === t("name") ? "3px 0 0 20px" : "3px", width: `${100 / 5}%`, textAlign: "left",
-                                    color: "#575756"
+                                    color: theme.palette.text.gray
                                 }}
                             >
                                 {header}
@@ -204,7 +205,7 @@ export const StaffTable = ({ userStaff }) => {
                         <TableRow
                             key={row.id}
                             sx={{
-                                backgroundColor: index % 2 == 0 ? '#EBEDF3' : 'white',
+                                backgroundColor: index % 2 == 0 ? theme.palette.bodyColor.secandaryInput : '',
                                 height: "20px",
                                 borderRadius: '20px',
                                 '& td:first-of-type': {
@@ -217,11 +218,11 @@ export const StaffTable = ({ userStaff }) => {
                                 },
                             }}
                         >
-                            <TableCell sx={{ color: "#575756", fontSize: '11px', padding: "0px 20px", width: `${100 / 4}%`, textAlign: "Left", borderBottom: "none" }}>
+                            <TableCell sx={{ color: theme.palette.text.gray_light, fontSize: '11px', padding: "0px 20px", width: `${100 / 4}%`, textAlign: "Left", borderBottom: "none" }}>
                                 {row.name}
                             </TableCell>
 
-                            <TableCell sx={{ color: "#575756", fontSize: '11px', padding: "0px 2px", width: `${100 / 5}%`, textAlign: "Left", borderBottom: "none" }}>
+                            <TableCell sx={{ color: theme.palette.text.gray_light, fontSize: '11px', padding: "0px 2px", width: `${100 / 5}%`, textAlign: "Left", borderBottom: "none" }}>
                                 {row.role}
                             </TableCell>
 
@@ -230,7 +231,7 @@ export const StaffTable = ({ userStaff }) => {
                             </TableCell>
 
 
-                            <TableCell sx={{ color: "#575756", fontSize: '11px', padding: "0px 2px", width: `${100 / 5}%`, textAlign: "Left", borderBottom: "none" }}>
+                            <TableCell sx={{ color: theme.palette.text.gray_light, fontSize: '11px', padding: "0px 2px", width: `${100 / 5}%`, textAlign: "Left", borderBottom: "none" }}>
                                 <Button sx={{
                                     color: "white", textTransform: "capitalize", fontSize: "10px", padding: "3px 25px", borderRadius: "20px",
                                     backgroundColor: row.status === "active" ? "rgb(69, 201, 131)" : "#f05e5e",
@@ -242,10 +243,10 @@ export const StaffTable = ({ userStaff }) => {
 
                             <TableCell sx={{ padding: "0px 2px", width: `${100 / 5}%`, textAlign: "left", borderBottom: "none" }}>
                                 <IconButton onClick={() => handleDeleteRestStaff(row.id)}>
-                                    <span class="icon-delete" style={{ fontSize: "16px", color: "black" }} />
+                                    <span class="icon-delete" style={{ fontSize: "17px", color: theme.palette.text.gray_light }} />
                                 </IconButton>
                                 <IconButton >
-                                    <img src="/assets/setting.svg" alt="icon" style={{ width: "18px", height: "18px" }} />
+                                    <Settings style={{ fontSize: "17px", color: theme.palette.text.gray_light }} />
                                 </IconButton>
 
                             </TableCell>

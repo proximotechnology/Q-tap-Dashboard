@@ -99,9 +99,9 @@ export const UserTable = ({ userStaff, getUserStaff }) => {
   return (
     <Paper sx={{ padding: "15px 30px 50px 30px", borderRadius: "20px", overflow: 'auto' }}>
       <Box display="flex" justifyContent="space-between" alignItems="center" width="100%" padding="5px 0">
-        <Box sx={{ display: "flex", alignItems: "center"}}>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
           <img src="/assets/Clients.svg" alt="icon" style={{ color: "#D8E0E0", width: "25px", height: "25px", marginRight: "10px" }} />
-          <Typography variant="body1" sx={{ fontSize: "16px", color: "#575756" }}>{t("users")}</Typography>
+          <Typography variant="body1" sx={{ fontSize: "16px", color: theme.palette.text.gray }}>{t("users")}</Typography>
         </Box>
 
 
@@ -138,7 +138,7 @@ export const UserTable = ({ userStaff, getUserStaff }) => {
           <IconButton onClick={handleSearchClick}>
             <span
               className="icon-magnifier"
-              style={{ fontSize: "15px", color: "#575756" }}
+              style={{ fontSize: "15px", color: theme.palette.text.gray }}
             />
           </IconButton>
 
@@ -172,9 +172,9 @@ export const UserTable = ({ userStaff, getUserStaff }) => {
 
       <Table sx={{ whiteSpace: 'nowrap' }}>
         <TableHead>
-          <TableRow sx={{ height: "20px", borderBottom: "2px solid #f0f0f0" }}>
+          <TableRow sx={{ height: "20px", borderBottom: `2px solid ${theme.palette.bodyColor.secandaryInput}` }}>
             {[t("userName"), t("created"), t("pin"), t("status")].map((header) => (
-              <TableCell key={header} sx={{ fontSize: "12px", padding: "3px", width: `${100 / 6}%`, textAlign: "center", color: "#575756" }}>
+              <TableCell key={header} sx={{ fontSize: "12px", padding: "3px", width: `${100 / 6}%`, textAlign: "center", color: theme.palette.text.gray }}>
                 {header}
               </TableCell>
             ))}
@@ -186,32 +186,32 @@ export const UserTable = ({ userStaff, getUserStaff }) => {
             <TableRow
               key={row.id}
               sx={{
-                backgroundColor: index % 2 == 0 ? '#EBEDF3' : 'white',
+                backgroundColor: index % 2 == 0 ? theme.palette.bodyColor.secandaryInput : '',
                 height: "20px",
                 borderRadius: '20px',
                 '& td:first-of-type': { borderTopLeftRadius: '20px', borderBottomLeftRadius: '20px' },
                 '& td:last-of-type': { borderTopRightRadius: '20px', borderBottomRightRadius: '20px' },
               }}
             >
-              <TableCell sx={{ color: "#575756", fontSize: '11px', padding: "0px 2px", textAlign: "center", borderBottom: "none" }}>
+              <TableCell sx={{ color: theme.palette.text.gray_light, fontSize: '11px', padding: "0px 2px", textAlign: "center", borderBottom: "none" }}>
                 <span style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                   {/* <PersonOutlineOutlinedIcon sx={{ padding: "5px", fontSize: "25px", backgroundColor: "white", borderRadius: "50%", mr: 1 }} /> */}
                   {row.name}
                 </span>
               </TableCell>
-              <TableCell sx={{ color: "#575756", fontSize: '11px', padding: "0px 2px", textAlign: "center", borderBottom: "none" }}>
+              <TableCell sx={{ color: theme.palette.text.gray_light, fontSize: '11px', padding: "0px 2px", textAlign: "center", borderBottom: "none" }}>
                 {new Date(row.updated_at).toISOString().split('T')[0].split('-').reverse().join('.')}
               </TableCell>
-              <TableCell sx={{ color: "#575756", fontSize: '11px', padding: "0px 2px", textAlign: "center", borderBottom: "none" }}>
+              <TableCell sx={{ color: theme.palette.text.gray_light, fontSize: '11px', padding: "0px 2px", textAlign: "center", borderBottom: "none" }}>
                 {visiblePasswords[row.id] ? row.pin : '******'}
                 <IconButton onClick={() => handleToggleVisibility(row.id)} sx={{ color: "gray", fontSize: "16px", marginLeft: "2px" }}>
                   {visiblePasswords[row.id] ? <VisibilityOutlinedIcon sx={{ fontSize: "18px" }} /> : <VisibilityOffOutlinedIcon sx={{ fontSize: "18px" }} />}
                 </IconButton>
               </TableCell>
-              {/* <TableCell sx={{ color: "#575756", fontSize: '11px', padding: "0px 2px", textAlign: "center", borderBottom: "none" }}>
+              {/* <TableCell sx={{ color: theme.palette.text.gray_light, fontSize: '11px', padding: "0px 2px", textAlign: "center", borderBottom: "none" }}>
                 {row.access || ''}
               </TableCell> */}
-              <TableCell sx={{ color: "#575756", fontSize: '11px', padding: "0px 2px", textAlign: "center", borderBottom: "none" }}>
+              <TableCell sx={{ color: theme.palette.text.gray_light, fontSize: '11px', padding: "0px 2px", textAlign: "center", borderBottom: "none" }}>
                 <Button sx={{
                   color: "white", textTransform: "capitalize", fontSize: "10px",
                   padding: "3px 25px", borderRadius: "20px",

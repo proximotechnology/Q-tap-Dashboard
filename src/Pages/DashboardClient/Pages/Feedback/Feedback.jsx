@@ -92,9 +92,9 @@ export const Feedback = () => {
                 width="100%"
                 padding="10px 0"
             >
-                <Box sx={{ display: "flex" }}>
+                <Box sx={{ display: "flex" , alignItems: "center" }}>
                     <StarIcon sx={{ fontSize: "25px", color: "rgb(214, 213, 213)", marginRight: "5px" }} />
-                    <Typography variant='body1' sx={{ fontSize: "15px", color: "#575756" }}>
+                    <Typography variant='body1' sx={{ fontSize: "15px", color: theme.palette.text.gray }}>
                         {t("tellUsAboutYourExperiment")}
                     </Typography>
                 </Box>

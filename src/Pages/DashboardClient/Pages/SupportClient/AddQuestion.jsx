@@ -36,7 +36,7 @@ export const AddQuestion = ({ open, handleCloseModel, onAddQuestion }) => {
                 }}
             >
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>
+                    <Typography variant="body1" sx={{ fontSize: "13px", color:theme.palette.text.gray }}>
                         {t("addQuestion")}
                     </Typography>
                     <IconButton onClick={handleCloseModel}>
@@ -50,7 +50,7 @@ export const AddQuestion = ({ open, handleCloseModel, onAddQuestion }) => {
                     }}
                 />
                 <Grid item xs={10} sx={{ margin: "20px 0px" }}>
-                    <Typography variant="body2" sx={{ fontSize: "10px", color: "#575756", marginBottom: "3px" }}>
+                    <Typography variant="body2" sx={{ fontSize: "10px", color:theme.palette.text.gray, marginBottom: "3px" }}>
                         {t("question")}
                     </Typography>
                     <TextField
@@ -64,7 +64,7 @@ export const AddQuestion = ({ open, handleCloseModel, onAddQuestion }) => {
                 </Grid>
 
                 <Grid item xs={10} sx={{ margin: "20px 0px" }}>
-                    <Typography variant="body2" sx={{ fontSize: "10px", color: "#575756", marginBottom: "6px" }}>
+                    <Typography variant="body2" sx={{ fontSize: "10px", color:theme.palette.text.gray, marginBottom: "6px" }}>
                         {t("answer")}
                     </Typography>
                     <Box sx={{ display: "flex", alignItems: "center" }} gap={1}>

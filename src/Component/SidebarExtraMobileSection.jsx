@@ -11,13 +11,12 @@ const SidebarExtraMobileSection = ({ customSX = {} }) => {
     return (
         <Box sx={{ display: { xs: 'flex', sm: 'none' }, ...customSX }}>
             <Grid container>
-                <Grid item xs={12} justifyContent={'center'}>
-                <UserOptions customSX={{ justifyContent:'center' }} />
-                </Grid>
-                <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                    <Language />
+                <Grid item xs={12} justifyContent={'space-between'} display={'flex'} alignItems={'center'} padding={"10px 0px"}>
                     <DarkModeSwitch />
+                    <Language />
                 </Grid>
+                    <UserOptions customSX={{ justifyContent: 'center' }} />
+
 
 
             </Grid>

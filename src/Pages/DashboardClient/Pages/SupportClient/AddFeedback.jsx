@@ -85,7 +85,7 @@ export const AddFeedback = ({ open, handleCloseModel, onAddFeedback }) => {
                 }}
             >
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>
+                    <Typography variant="body1" sx={{ fontSize: "13px", color: theme.palette.text.gray }}>
                         {t("addFeedback")}
                     </Typography>
                     <IconButton onClick={handleCloseModel}>
@@ -96,7 +96,7 @@ export const AddFeedback = ({ open, handleCloseModel, onAddFeedback }) => {
 
                 <Grid container spacing={2} sx={{ margin: "20px 0px" }}>
                     <Grid item xs={6}>
-                        <Typography variant="body2" sx={{ fontSize: "10px", color: "#575756", marginBottom: "3px" }}>
+                        <Typography variant="body2" sx={{ fontSize: "10px", color: theme.palette.text.gray, marginBottom: "3px" }}>
                             {t("clientId")}
                         </Typography>
                         <TextField
@@ -109,7 +109,7 @@ export const AddFeedback = ({ open, handleCloseModel, onAddFeedback }) => {
                         />
                     </Grid>
                     <Grid item xs={6}>
-                        <Typography variant="body2" sx={{ fontSize: "10px", color: "#575756", marginBottom: "3px" }}>
+                        <Typography variant="body2" sx={{ fontSize: "10px", color: theme.palette.text.gray, marginBottom: "3px" }}>
                             {t("rate")}
                         </Typography>
                         <Box sx={{ display: 'flex', gap: 1 }}>
@@ -129,7 +129,7 @@ export const AddFeedback = ({ open, handleCloseModel, onAddFeedback }) => {
                         </Box>
                     </Grid>
                     <Grid item xs={6}>
-                        <Typography variant="body2" sx={{ fontSize: "10px", color: "#575756", marginBottom: "3px" }}>
+                        <Typography variant="body2" sx={{ fontSize: "10px", color: theme.palette.text.gray, marginBottom: "3px" }}>
                             {t("status")}
                         </Typography>
                         <Select
@@ -138,19 +138,19 @@ export const AddFeedback = ({ open, handleCloseModel, onAddFeedback }) => {
                             fullWidth
                             sx={{ height: '30px', fontSize: "10px" }}
                         >
-                            <MenuItem value="sad">
-                                <SentimentVeryDissatisfiedIcon sx={{ color: 'red', verticalAlign: 'middle' }} /> {t("sad")}
+                            <MenuItem value="said">
+                                {t("sad")}
                             </MenuItem>
                             <MenuItem value="happy">
-                                <SentimentSatisfiedAltIcon sx={{ color: 'rgb(229, 124, 0)', verticalAlign: 'middle' }} /> {t("happy")}
+                                {t("happy")}
                             </MenuItem>
                             <MenuItem value="very happy">
-                                <SentimentSatisfiedAltIcon sx={{ color: 'green', verticalAlign: 'middle' }} /> {t("veryHappy")}
+                                {t("veryHappy")}
                             </MenuItem>
                         </Select>
                     </Grid>
                     <Grid item xs={6}>
-                        <Typography variant="body2" sx={{ fontSize: "10px", color: "#575756", marginBottom: "3px" }}>
+                        <Typography variant="body2" sx={{ fontSize: "10px", color: theme.palette.text.gray, marginBottom: "3px" }}>
                             {t("yourGoals")}
                         </Typography>
                         <TextField
@@ -163,7 +163,7 @@ export const AddFeedback = ({ open, handleCloseModel, onAddFeedback }) => {
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography variant="body2" sx={{ fontSize: "10px", color: "#575756", marginBottom: "3px" }}>
+                        <Typography variant="body2" sx={{ fontSize: "10px", color: theme.palette.text.gray, marginBottom: "3px" }}>
                             {t("missingQTapMenus")}
                         </Typography>
                         <TextField
@@ -176,7 +176,7 @@ export const AddFeedback = ({ open, handleCloseModel, onAddFeedback }) => {
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography variant="body2" sx={{ fontSize: "10px", color: "#575756", marginBottom: "3px" }}>
+                        <Typography variant="body2" sx={{ fontSize: "10px", color: theme.palette.text.gray, marginBottom: "3px" }}>
                             {t("comment")}
                         </Typography>
                         <TextField

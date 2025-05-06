@@ -1,5 +1,5 @@
 import { Button, Card, CardContent, Grid, MenuItem, Select, Typography } from '@mui/material'
-import { Box } from '@mui/system'
+import { Box, useTheme } from '@mui/system'
 import React, { useEffect, useState } from 'react'
 import LineChart1 from '../../../Wallet/Row1/LineChart1'
 import { useTranslation } from 'react-i18next'
@@ -13,6 +13,7 @@ export const Row2 = () => {
   const [chartData, setChartData] = useState(null)
   const [showClick, setShowClick] = useState(true)
   const [showSales, setShowSales] = useState(true)
+  const theme = useTheme();
 
   const handleToggleUser = () => {
     setShowSales(!showSales)
@@ -70,7 +71,7 @@ export const Row2 = () => {
         <CardContent>
           <Grid container justifyContent="space-between" alignItems="center"  >
             <Grid item>
-              <Typography variant="body1" sx={{ fontSize: "13px", color: "#3a3939" }}>{t("clicks&sales")}</Typography>
+              <Typography variant="body1" sx={{ fontSize: "13px", color: theme.palette.text.gray }}>{t("clicks&sales")}</Typography>
             </Grid>
             <Grid item>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -83,14 +84,14 @@ export const Row2 = () => {
                   sx={{
                     height: '24px',
                     fontSize: '12px',
-                    color: "#3a3939",
+                    color: theme.palette.text.gray,
                     '.MuiOutlinedInput-notchedOutline': { border: 0 },
                     '.MuiSelect-icon': { fontSize: '18px' },
                   }}
                 >
-                  <MenuItem value="2023" sx={{ fontSize: "12px", color: "gray" }}>2023</MenuItem>
-                  <MenuItem value="2024" sx={{ fontSize: "12px", color: "gray" }}>2024</MenuItem>
-                  <MenuItem value="2025" sx={{ fontSize: "12px", color: "gray" }}>2025</MenuItem>
+                  <MenuItem value="2023" sx={{ fontSize: "12px", color: theme.palette.text.gray }}>2023</MenuItem>
+                  <MenuItem value="2024" sx={{ fontSize: "12px", color: theme.palette.text.gray }}>2024</MenuItem>
+                  <MenuItem value="2025" sx={{ fontSize: "12px", color: theme.palette.text.gray }}>2025</MenuItem>
                 </Select>
                 <span class="icon-social" style={{ fontSize: "25px", color: "#D8E0E0" }} ></span>
               </Box>
@@ -98,7 +99,7 @@ export const Row2 = () => {
 
           </Grid>
 
-          <Box sx={{ display: "flex",flexWrap: {xs:'wrap',sm:'nowrap'}  }}>
+          <Box sx={{ display: "flex", flexWrap: { xs: 'wrap', sm: 'nowrap' } }}>
             <Box sx={{ borderRadius: "20px", width: "90%" }}>
               <LineChart1 salesData={chartData} showLine1={showClick} showLine2={showSales} />
             </Box>  {/* LineChart */}
@@ -114,7 +115,7 @@ export const Row2 = () => {
                   <Button
                     onClick={handleToggleClick}
                   >
-                    <Typography variant="body2" color="text.secondary" sx={{ fontSize: "9px" }} >{t("clicks")}</Typography>
+                    <Typography variant="body2" color={theme.palette.text.gray_light} sx={{ fontSize: "9px" }} >{t("clicks")}</Typography>
                   </Button>
                 </Box>
                 <Box display={"flex"} textAlign={"center"} alignItems={"center"} marginTop="5px">
@@ -126,7 +127,7 @@ export const Row2 = () => {
                     onClick={handleToggleUser}
                     sx={{ margin: 0, padding: '0 !important', }}
                   >
-                    <Typography variant="body2" color="text.secondary" sx={{ fontSize: "9px" }}>{t("sales")}</Typography>
+                    <Typography variant="body2" color={theme.palette.text.gray_light} sx={{ fontSize: "9px" }}>{t("sales")}</Typography>
                   </Button>
                 </Box>
               </Box>
