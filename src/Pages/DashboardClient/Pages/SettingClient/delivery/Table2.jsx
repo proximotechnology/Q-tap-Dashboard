@@ -126,8 +126,8 @@ export const Table2 = () => {
     return (
         <Box sx={{ maxWidth: '100%', padding: '10px' }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography variant="body2" sx={{ fontSize: '15px', color: '#575756', display: 'flex' }}>
-                    <span className="icon-rider" style={{ fontSize: '25px', color: '#D8E0E0', marginRight: '6px' }}></span>
+                <Typography variant="body2" sx={{ fontSize: '15px', color: theme.palette.bodyColor.gray_white, display: 'flex' }}>
+                    <span className="icon-rider" style={{ fontSize: '25px', color: theme.palette.bodyColor.gray_white, marginRight: '6px' }}></span>
                     {t('deliveryRiders')}
                 </Typography>
                 <Box display="flex" alignItems="center">
@@ -153,7 +153,7 @@ export const Table2 = () => {
                                 </Box>
                             )}
                             <IconButton onClick={handleSearchClick}>
-                                <span className="icon-magnifier" style={{ fontSize: '15px', color: '#575756' }} />
+                                <span className="icon-magnifier" style={{ fontSize: '15px', color: theme.palette.bodyColor.gray_white }} />
                             </IconButton>
                         </Box>
                     </Grid>
@@ -195,7 +195,7 @@ export const Table2 = () => {
                         <TableRow
                             key={index}
                             sx={{
-                                backgroundColor: index % 2 === 0 ? '#EBEDF3' : 'white',
+                                backgroundColor: index % 2 == 0 ? theme.palette.bodyColor.secandaryInput : '',
                                 height: '25px',
                                 borderRadius: '20px',
                                 '&:nth-of-type(odd)': { borderRadius: '20px' },
@@ -206,7 +206,7 @@ export const Table2 = () => {
                         >
                             <TableCell
                                 sx={{
-                                    color: theme.palette.secondaryColor.main,
+                                    color: theme.palette.bodyColor.black_white,
                                     fontSize: '11px',
                                     padding: '2px 20px',
                                     width: `${100 / 6}%`,
@@ -218,7 +218,7 @@ export const Table2 = () => {
                             </TableCell>
                             <TableCell
                                 sx={{
-                                    color: theme.palette.secondaryColor.main,
+                                    color: theme.palette.bodyColor.black_white,
                                     fontSize: '11px',
                                     padding: '2px',
                                     width: `${100 / 6}%`,
@@ -230,7 +230,7 @@ export const Table2 = () => {
                             </TableCell>
                             <TableCell
                                 sx={{
-                                    color: theme.palette.secondaryColor.main,
+                                    color: theme.palette.bodyColor.black_white,
                                     fontSize: '11px',
                                     padding: '2px',
                                     width: `${100 / 6}%`,
@@ -280,7 +280,7 @@ export const Table2 = () => {
                                 sx={{ padding: '2px', width: `${100 / 6}%`, textAlign: 'center', borderBottom: 'none' }}
                             >
                                 <IconButton size="small" onClick={() => handleEdit(row)}>
-                                    <span className="icon-edit" style={{ color: 'black', fontSize: '18px' }} />
+                                    <span className="icon-edit" style={{ color: theme.palette.orangePrimary.main, fontSize: '18px' }} />
                                 </IconButton>
                                 <IconButton size="small" color="error" onClick={() => handleDelete(row.id)}>
                                     <span className="icon-delete" style={{ fontSize: '18px' }} />

@@ -53,7 +53,7 @@ export default function TopBar() {
         "/feedback": t("feedback"),
         "/transaction":
             <IconButton onClick={() => navigate('/wallet-client')} >
-                <ArrowBackIosIcon sx={{ fontSize: "23px", color: "black" }} />
+                <ArrowBackIosIcon sx={{ fontSize: "23px", color: theme.palette.text.black_white }} />
             </IconButton>,
     };
 
@@ -134,16 +134,16 @@ export default function TopBar() {
     return (
         <Box sx={{
             display: "flex", justifyContent: "space-between", alignItems: "center",
-            padding: "30px 30px 0px 30px"
+            padding: "30px 30px 0px 30px",flexWrap:'wrap'
         }}>
             <Typography variant="body1" sx={{
                 fontSize: "18px", color: theme.palette.text.black, width: "3%",
-                borderBottom: `2px solid ${theme.palette.orangePrimary.main}`
+                borderBottom: `2px solid ${theme.palette.orangePrimary.main}`,width:'fit-content'
             }}>
                 {pageTitles[location.pathname] || 'Dashboard'}
             </Typography>
 
-            <Box sx={{ display: "flex", alignItems: "center", gap: "7px" }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: "7px" ,flexWrap:'wrap'}}>
 
                 <Button onClick={BranchOpen}
                     sx={{

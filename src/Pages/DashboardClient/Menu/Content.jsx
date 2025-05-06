@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Container, Grid, Typography } from '@mui/material';
+import { Box, Container, Grid, Typography, useTheme } from '@mui/material';
 import Offers from './Offers';
 import Item from './Items';
 import ProductDetails from './ProductDetails/ProductDetails';
@@ -78,7 +78,7 @@ const Content = ({ allMenuData, selectedCategory }) => {
             meal.categories_id === allMenuData.find(cat => cat.name === selectedCategory)?.id &&
             meal.name.toLowerCase().includes(searchQuery.toLowerCase())
           );
-
+          const theme = useTheme()
     return (
         <Container>
             <TopBar 
@@ -99,7 +99,7 @@ const Content = ({ allMenuData, selectedCategory }) => {
                 >
                     <Typography 
                         variant="h5" 
-                        sx={{ fontSize: '15px', fontWeight: 'bold', marginBottom: '20px', color: '#575756' }}
+                        sx={{ fontSize: '15px', fontWeight: 'bold', marginBottom: '20px', color: theme.palette.text.gray_white }}
                     >
                         <span style={{ padding: '2px 0px', borderBottom: '2px solid #ef7d00' }}>
                             {t("item.many")}

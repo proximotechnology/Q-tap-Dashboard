@@ -76,7 +76,7 @@ const SideBar = ({ setSelectedCategory, allMenuData, selectedCategory }) => {
                 height: '100vh',
                 overflowY: 'auto',
                 zIndex: 1201,
-                bgcolor: "white",
+                bgcolor:theme.palette.bodyColor.white_333,
                 width: '100px'
             }}>
                 <Button
@@ -114,13 +114,13 @@ const SideBar = ({ setSelectedCategory, allMenuData, selectedCategory }) => {
                     <Typography variant='body2' sx={{ fontSize: "10px", color: "white" }}>{t("categories")}</Typography>
                 </Box>
 
-                <List sx={{ padding: "10px 12px" }}>
+                <List sx={{ padding: "10px 12px", }}>
                     {/* Popular Button */}
                     <ListItem
                         onClick={() => handleCategoryClick('Popular')}
                         sx={{
                             flexDirection: 'column',
-                            background: selectedCategory === 'Popular' ? theme.palette.orangePrimary.main : theme.palette.secondaryColor.main,
+                            background: selectedCategory === 'Popular' ? theme.palette.orangePrimary.main :theme.palette.bodyColor.white_lightBlack,
                             mb: 2,
                             paddingBottom: "5px",
                             width: "100%",
@@ -167,7 +167,7 @@ const SideBar = ({ setSelectedCategory, allMenuData, selectedCategory }) => {
                                 onClick={() => handleCategoryClick(item.name)}
                                 sx={{
                                     flexDirection: 'column',
-                                    background: isActive ? theme.palette.orangePrimary.main : '#F9F9FF',
+                                    background: isActive ? theme.palette.orangePrimary.main : theme.palette.bodyColor.white_lightBlack ,
                                     mb: 2,
                                     paddingBottom: "5px",
                                     width: "100%",

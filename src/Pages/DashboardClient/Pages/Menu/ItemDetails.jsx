@@ -115,7 +115,7 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
     return (
         <Paper sx={{ marginTop: "-20px", marginBottom: "30px", borderRadius: "10px", padding: "20px 50px" }}>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <Typography variant="body1" fontSize={"15px"} color={"#575756"}>{t("item.details")}</Typography>
+                <Typography variant="body1" fontSize={"15px"} color={theme.palette.text.gray_white}>{t("item.details")}</Typography>
             </Box>
             <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main }} />
             <Box>
@@ -123,7 +123,7 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
                     <Grid item xs={12} md={7} marginTop={"15px"}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
-                                <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>{t("item.name")}</Typography>
+                                <Typography variant='body2' sx={{ fontSize: "10px", color:theme.palette.text.gray_white }}>{t("item.name")}</Typography>
                                 <TextField
                                     variant="outlined"
                                     fullWidth
@@ -133,7 +133,7 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>{t("brief")}</Typography>
+                                <Typography variant='body2' sx={{ fontSize: "10px", color: theme.palette.text.gray_white }}>{t("brief")}</Typography>
                                 <TextField
                                     variant="outlined"
                                     fullWidth
@@ -143,7 +143,7 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>{t("discription")}</Typography>
+                                <Typography variant='body2' sx={{ fontSize: "10px", color: theme.palette.text.gray_white }}>{t("discription")}</Typography>
                                 <TextField
                                     variant="outlined"
                                     multiline
@@ -155,7 +155,7 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>{t("ingredients")}</Typography>
+                                <Typography variant='body2' sx={{ fontSize: "10px", color: theme.palette.text.gray_white }}>{t("ingredients")}</Typography>
                                 <TextField
                                     variant="outlined"
                                     multiline
@@ -167,7 +167,7 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>{t("calories")}</Typography>
+                                <Typography variant='body2' sx={{ fontSize: "10px", color: theme.palette.text.gray_white }}>{t("calories")}</Typography>
                                 <TextField
                                     value={calories}
                                     onChange={(e) => setCalories(e.target.value)}
@@ -175,12 +175,12 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
                                     fullWidth
                                     InputProps={{
                                         sx: { height: '35px', fontSize: "10px" },
-                                        endAdornment: <Typography sx={{ fontSize: "10px", color: "gray" }}>{t("kcal")}</Typography>,
+                                        endAdornment: <Typography sx={{ fontSize: "10px", color: theme.palette.text.gray_white }}>{t("kcal")}</Typography>,
                                     }}
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>{t("time")}</Typography>
+                                <Typography variant='body2' sx={{ fontSize: "10px", color: theme.palette.text.gray_white }}>{t("time")}</Typography>
                                 <TextField
                                     value={time}
                                     onChange={(e) => setTime(e.target.value)}
@@ -188,12 +188,12 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
                                     fullWidth
                                     InputProps={{
                                         sx: { height: '35px', fontSize: "10px" },
-                                        endAdornment: <Typography sx={{ fontSize: "10px", color: "gray" }}>{t("min")}</Typography>,
+                                        endAdornment: <Typography sx={{ fontSize: "10px", color: theme.palette.text.gray_white }}>{t("min")}</Typography>,
                                     }}
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>{t("tax")}</Typography>
+                                <Typography variant='body2' sx={{ fontSize: "10px", color: theme.palette.text.gray_white }}>{t("tax")}</Typography>
                                 <TextField
                                     value={tax}
                                     onChange={(e) => setTax(e.target.value)}
@@ -201,7 +201,7 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
                                     fullWidth
                                     InputProps={{
                                         sx: { height: '35px', fontSize: "10px" },
-                                        endAdornment: <Typography sx={{ fontSize: "10px", color: "gray" }}>%</Typography>,
+                                        endAdornment: <Typography sx={{ fontSize: "10px", color: theme.palette.text.gray_white }}>%</Typography>,
                                     }}
                                 />
                             </Grid>
@@ -241,7 +241,7 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
                             justifyContent="center"
                             alignItems="center"
                         >
-                            <Typography variant="body2" sx={{ fontSize: "8px", color: "gray", margin: "5px" }}>{t("item.image")}</Typography>
+                            <Typography variant="body2" sx={{ fontSize: "8px", color: theme.palette.text.gray_white, margin: "5px" }}>{t("item.image")}</Typography>
                             <Button
                                 onClick={handleImageUpload}
                                 variant="contained"
@@ -258,7 +258,7 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
                 </Grid>
                 <Grid item xs={12} alignItems="center" marginTop={"30px"}>
                     <Grid display="flex" alignItems="center">
-                        <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>{t("size.many")}</Typography>
+                        <Typography variant='body2' sx={{ fontSize: "10px", color: theme.palette.text.gray_white }}>{t("size.many")}</Typography>
                         <Grid container spacing={1} alignItems="center">
                             <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
                                 <Box
@@ -279,7 +279,7 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
                                     S
                                 </Box>
                                 <Grid item xs={3}>
-                                    <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>{t("price.one")}</Typography>
+                                    <Typography variant='body2' sx={{ fontSize: "10px", color: theme.palette.text.gray_white }}>{t("price.one")}</Typography>
                                     <TextField
                                         value={priceSmall}
                                         onChange={(e) => setPriceSmall(e.target.value)}
@@ -289,7 +289,7 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
                                         type="number"
                                         InputProps={{
                                             sx: { height: '30px', fontSize: "10px", width: "100px" },
-                                            endAdornment: <Typography sx={{ fontSize: "9px", color: "gray" }}>EGP</Typography>,
+                                            endAdornment: <Typography sx={{ fontSize: "9px", color: theme.palette.text.gray_white }}>EGP</Typography>,
                                         }}
                                     />
                                 </Grid>
@@ -312,7 +312,7 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
                                     M
                                 </Box>
                                 <Grid item xs={3} alignItems="center">
-                                    <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>{t("price.one")}</Typography>
+                                    <Typography variant='body2' sx={{ fontSize: "10px", color: theme.palette.text.gray_white }}>{t("price.one")}</Typography>
                                     <TextField
                                         value={priceMedium}
                                         onChange={(e) => setPriceMedium(e.target.value)}
@@ -321,7 +321,7 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
                                         fullWidth
                                         InputProps={{
                                             sx: { height: '30px', fontSize: "10px", width: "100px" },
-                                            endAdornment: <Typography sx={{ fontSize: "10px", color: "gray" }}>EGP</Typography>,
+                                            endAdornment: <Typography sx={{ fontSize: "10px", color: theme.palette.text.gray_white }}>EGP</Typography>,
                                         }}
                                     />
                                 </Grid>
@@ -346,7 +346,7 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
                                     L
                                 </Box>
                                 <Grid item xs={3} alignItems="center">
-                                    <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>{t("price.one")}</Typography>
+                                    <Typography variant='body2' sx={{ fontSize: "10px", color: theme.palette.text.gray_white }}>{t("price.one")}</Typography>
                                     <TextField
                                         value={priceLarge}
                                         onChange={(e) => setPriceLarge(e.target.value)}
@@ -356,7 +356,7 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
                                         type="number"
                                         InputProps={{
                                             sx: { height: '30px', fontSize: "10px", width: "100px" },
-                                            endAdornment: <Typography sx={{ fontSize: "9px", color: "gray" }}>EGP</Typography>,
+                                            endAdornment: <Typography sx={{ fontSize: "9px", color: theme.palette.text.gray_white }}>EGP</Typography>,
                                         }}
                                     />
                                 </Grid>
@@ -364,7 +364,7 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
                         </Grid>
                     </Grid>
                     <Grid item xs={6} marginTop={"20px"} marginBottom={"20px"}>
-                        <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>{t("price.one")}</Typography>
+                        <Typography variant='body2' sx={{ fontSize: "10px", color: theme.palette.text.gray_white }}>{t("price.one")}</Typography>
                         <TextField
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
@@ -373,12 +373,12 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
                             type="number"
                             InputProps={{
                                 sx: { height: '35px', fontSize: "10px" },
-                                endAdornment: <Typography sx={{ fontSize: "10px", color: "gray" }}>EGP</Typography>,
+                                endAdornment: <Typography sx={{ fontSize: "10px", color: theme.palette.text.gray_white }}>EGP</Typography>,
                             }}
                         />
                     </Grid>
                     <Grid item xs={3}>
-                        <Typography variant='body2' sx={{ fontSize: "10px", color: "gray" }}>{t("discount.one")}</Typography>
+                        <Typography variant='body2' sx={{ fontSize: "10px", color: theme.palette.text.gray_white }}>{t("discount.one")}</Typography>
                         <TextField
                             value={discountCode} // عرض الرمز النصي
                             onChange={handleDiscountChange} // التحقق من الرمز

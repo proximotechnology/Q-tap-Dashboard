@@ -82,8 +82,8 @@ const ProductDetails = ({
 
         const extrasEqual = JSON.stringify(extras1) === JSON.stringify(extras2);
         const optionsEqual = JSON.stringify(options1) === JSON.stringify(options2);
-        return  extrasEqual &  optionsEqual
-    }   
+        return extrasEqual & optionsEqual
+    }
     /* this call by the button  */
     const addItemToCart = (newItem) => {
         console.log('new', newItem)
@@ -121,7 +121,7 @@ const ProductDetails = ({
             localStorage.setItem('cartItems', JSON.stringify(updatedCart));
         }
         setQuantity(0)
-       
+
     };
     //TODO: delete this section get item quantity from property in the  cartItems
     const [itemCount, setItemCount] = useState([]); // TODO: what this do 
@@ -183,9 +183,11 @@ const ProductDetails = ({
 
     return (
         <>
-            <Box sx={{ overflowY: "auto", width: customWidth.itemSectionWidth, boxShadow: 3, bgcolor: 'white', position: 'fixed', right: 0, top: 0, height: '100vh' }}>
+            <Box sx={{ overflowY: "auto", width: customWidth.itemSectionWidth, boxShadow: 3, bgcolor: theme.palette.bodyColor.white_333, position: 'fixed', right: 0, top: 0, height: '100vh' }}>
                 <Box sx={{ position: "fixed", top: 0, width: customWidth.itemSectionWidth, zIndex: 1201 }}>
-                    <AppBar position="static" color="inherit" sx={{ boxShadow: "none" }}>
+                    <AppBar position="static" color="inherit"
+                        sx={{ boxShadow: "none", bgcolor: theme.palette.bodyColor.white_333, backgroundImage: 'none' }}
+                        className='hers'>
                         <Toolbar>
                             <IconButton onClick={toggleCart} edge="start" color="inherit" aria-label="cart">
                                 <ShoppingCartOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "25px" }} />
@@ -217,14 +219,14 @@ const ProductDetails = ({
                             <Box sx={{ position: 'relative', top: '-40px', marginRight: "50px", float: "right" }}>
                                 {activeItemId === item.id && (
                                     <Box sx={{
-                                        background: "white", width: "40px", color: "#575756", borderRadius: "10px", boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+                                        background: theme.palette.bodyColor.white_333, width: "40px", color: theme.palette.text.gray_white, borderRadius: "10px", boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
                                         justifyContent: "center", textAlign: "center", alignItems: "center", padding: "5px 2px",
                                     }}>
                                         <AddCircleOutlinedIcon
                                             onClick={() => setQuantity(quantity + 1)}
                                             sx={{ fontSize: "18px", color: theme.palette.orangePrimary.main, cursor: "pointer" }}
                                         />
-                                        <Typography sx={{ fontSize: "11px", padding: "4px 0px", color: "#272725" }}>
+                                        <Typography sx={{ fontSize: "11px", padding: "4px 0px", color: theme.palette.text.gray27_white }}>
                                             {quantity}
                                         </Typography>
                                         <RemoveCircleOutlinedIcon
@@ -235,7 +237,7 @@ const ProductDetails = ({
                                 )}
                             </Box>
                             <Box sx={{ zIndex: "5000", padding: "15px 20px" }}>
-                                <Typography variant="h6" sx={{ fontSize: "18px", fontWeight: 'bold', color: '#40403D' }}>{item.name}</Typography>
+                                <Typography variant="h6" sx={{ fontSize: "18px", fontWeight: 'bold', color: theme.palette.text.gray_white }}>{item.name}</Typography>
                                 <Typography variant="body2" color="textSecondary" sx={{ fontSize: "11px" }}>{item.Description}</Typography>
                                 <Box width={"100%"}>
                                     <Divider sx={{ width: "100%", height: "1px", color: "gray" }} />
@@ -265,10 +267,10 @@ const ProductDetails = ({
                         </Box>
                     </AppBar>
                 </Box>
-
-                <Box sx={{ position: "relative", top: "430px", padding: "15px 20px" }}>
+                {/* size sections */}
+                <Box sx={{ position: "relative", top: "430px", padding: "15px 20px", bgcolor: theme.palette.bodyColor.white_333 }}>
                     <Box display="flex" alignItems="center" gap={2} sx={{ padding: "20px 0px" }}>
-                        <Typography variant="h6" sx={{ fontSize: '11px', fontWeight: "bold", color: '#3A3A38' }}>
+                        <Typography variant="h6" sx={{ fontSize: '11px', fontWeight: "bold", color: theme.palette.text.gray_white }}>
                             {t("size.one")}
                         </Typography>
                         {sizes.map((size) => (
@@ -294,7 +296,7 @@ const ProductDetails = ({
                                     variant="body2"
                                     sx={{
                                         fontSize: '10px',
-                                        color: selectedSize[item.id] === size.label ? theme.palette.orangePrimary.main : '#575756',
+                                        color: selectedSize[item.id] === size.label ? theme.palette.orangePrimary.main : theme.palette.text.gray_white,
                                     }}
                                 >
                                     {size.price} EGP
@@ -304,8 +306,8 @@ const ProductDetails = ({
                     </Box>
 
                     <Box>
-                        <Typography variant="h6" sx={{ fontSize: "10px", fontWeight: 'bold', color: '#40403D' }}>
-                            {t("yourOptions")} <span style={{ fontSize: "8px", fontWeight: '300', color: "black" }}>({t("required")})</span>
+                        <Typography variant="h6" sx={{ fontSize: "10px", fontWeight: 'bold', color: theme.palette.text.gray_white }}>
+                            {t("yourOptions")} <span style={{ fontSize: "8px", fontWeight: '300', color: theme.palette.text.black_white }}>({t("required")})</span>
                         </Typography>
                         {activeItemId === item.id && (
                             <Box display="flex" flexWrap="wrap" gap={1}>
@@ -342,7 +344,7 @@ const ProductDetails = ({
                     </Box>
 
                     <Box sx={{ marginTop: "15px" }}>
-                        <Typography variant="h6" sx={{ fontSize: "10px", fontWeight: 'bold', color: '#40403D' }}>
+                        <Typography variant="h6" sx={{ fontSize: "10px", fontWeight: 'bold', color: theme.palette.text.gray_white }}>
                             {t("extra.one")}
                         </Typography>
                         {activeItemId === item.id && (
@@ -380,7 +382,7 @@ const ProductDetails = ({
                     </Box>
 
                     <Box sx={{ marginTop: "15px" }}>
-                        <Typography variant="h6" sx={{ fontSize: "10px", fontWeight: 'bold', color: '#40403D' }}>
+                        <Typography variant="h6" sx={{ fontSize: "10px", fontWeight: 'bold', color: theme.palette.text.gray_white }}>
                             {t("ingrediants")}
                         </Typography>
                         <Box display="flex" flexWrap="wrap" gap={1}>
@@ -393,7 +395,7 @@ const ProductDetails = ({
                                         width: "22%",
                                         height: "20px",
                                         backgroundColor: "#E0E6E6",
-                                        color: "white",
+                                        color: theme.palette.text.fixedBlack,
                                         border: "none",
                                         borderRadius: "8px",
                                         padding: "0 10px",
@@ -411,20 +413,20 @@ const ProductDetails = ({
                     </Box>
 
                     <Box sx={{ marginTop: "15px", marginBottom: "70px" }}>
-                        <Typography variant="h6" sx={{ fontSize: "10px", fontWeight: 'bold', color: '#40403D' }}>
+                        <Typography variant="h6" sx={{ fontSize: "10px", fontWeight: 'bold', color: theme.palette.text.gray_white }}>
                             {t("discription")}
                         </Typography>
-                        <Typography variant="body2" sx={{ fontSize: "8px", color: 'gray', width: "70%" }}>
+                        <Typography variant="body2" sx={{ fontSize: "8px", color: theme.palette.text.gray_white, width: "70%" }}>
                             {item.Description}
                         </Typography>
                     </Box>
                 </Box>
-
+                {/* price section */}
                 <Box
                     sx={{
                         position: "fixed",
                         bottom: 0,
-                        backgroundColor: "white",
+                        backgroundColor: theme.palette.bodyColor.whiteGray_lightBlack,
                         height: "80px",
                         width: customWidth.buttonSectionWidth,
                         padding: "20px",
@@ -435,11 +437,11 @@ const ProductDetails = ({
                     }}
                 >
                     <Box>
-                        <Typography variant="h6" sx={{ fontSize: '11px', fontWeight: "bold", color: '#3A3A38' }}>
+                        <Typography variant="h6" sx={{ fontSize: '11px', fontWeight: "bold", color: theme.palette.text.black_white }}>
                             {t("price.one")}
                         </Typography>
                         <Typography variant="h6" sx={{ fontSize: '18px', fontWeight: "bold", color: theme.palette.orangePrimary.main }}>
-                            {getTotalPrice()} <span style={{ fontSize: "10px", fontWeight: "400", color: '#575756' }}>EGP</span>
+                            {getTotalPrice()} <span style={{ fontSize: "10px", fontWeight: "400", color: theme.palette.text.gray_white }}>EGP</span>
                         </Typography>
                     </Box>
                     <Button

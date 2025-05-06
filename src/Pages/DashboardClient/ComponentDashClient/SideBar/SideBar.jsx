@@ -124,7 +124,7 @@ export default function SideBar({isOpen}) {
                                             ? theme.palette.mode === "dark"
                                                 ? grey[600]
                                                 : theme.palette.orangePrimary.main
-                                            : "gray",
+                                            : theme.palette.text.gray_white,
                                     // textAlign: item.path === "/order" ? "center" : "",
                                     '&:hover': {
                                         backgroundColor: item.path === "/order" ? theme.palette.orangePrimary.main : "inherit",
@@ -142,16 +142,14 @@ export default function SideBar({isOpen}) {
                                         marginRight: item.path === "/order" ? "3px" : "10px",
                                         color: item.path === "/order" ? "white" :
                                             location.pathname === item.path
-                                                ? theme.palette.mode === "dark"
-                                                    ? grey[50]
-                                                    : theme.palette.orangePrimary.main
-                                                : "gray",
+                                                ?  theme.palette.orangePrimary.main
+                                                : theme.palette.text.gray_white,
                                         marginLeft: item.path === "/order" ? "10px" : ""
                                     }}
                                 >
                                     {React.cloneElement(item.icon, {
                                         fontSize: "small",
-                                        color: location.pathname === item.path ? theme.palette.orangePrimary.main : "#AAAAAA",
+                                        color: location.pathname === item.path ? theme.palette.orangePrimary.main : theme.palette.text.gray_white,
                                     })}
                                 </ListItemIcon>
 
@@ -159,6 +157,12 @@ export default function SideBar({isOpen}) {
                                 <ListItemText
                                     primary={t(item.text)}
                                     primaryTypographyProps={{ fontSize: "12px" }}
+                                    sx={{ 
+                                        color: item.path === "/order" ? "white" :
+                                            location.pathname === item.path
+                                                ?  theme.palette.orangePrimary.main
+                                                : theme.palette.text.gray_white,
+                                     }}
                                 />
 
                                 {/* النقطة الحمراء فقط عند مسار "/order" */}
@@ -197,9 +201,7 @@ export default function SideBar({isOpen}) {
                                     px: 2,
                                     color:
                                         location.pathname === item.path
-                                            ? theme.palette.mode === "dark"
-                                                ? grey[600]
-                                                : theme.palette.orangePrimary.main
+                                            ? theme.palette.text.gray_white
                                             : "gray",
 
                                 }}
@@ -232,7 +234,7 @@ export default function SideBar({isOpen}) {
                                         fontSize: "12px",
                                         style: {
                                             color: item.text.toLowerCase() === "help" ?
-                                                "#D8E0E0" : "inherit",
+                                                "#D8E0E0" : theme.palette.text.gray_white,
                                         }
                                     }}
                                 />

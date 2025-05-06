@@ -19,6 +19,7 @@ const Item = ({ item, onItemSelect, handleAddToCart }) => {
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'center',
+                            background :theme.palette.bodyColor.white_333
                         }}
                         onClick={() => onItemSelect(item.id)}
                     >
@@ -38,7 +39,7 @@ const Item = ({ item, onItemSelect, handleAddToCart }) => {
                                 <Box>
                                     <Typography
                                         variant="h1"
-                                        sx={{ fontSize: '12px', fontWeight: '900', color: '#575756' }}
+                                        sx={{ fontSize: '12px', fontWeight: '900', color: theme.palette.text.gray_white }}
                                     >
                                         {item.name}
                                     </Typography>

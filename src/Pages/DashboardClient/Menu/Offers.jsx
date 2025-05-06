@@ -239,7 +239,7 @@ const Offers = ({ isItemSelected }) => {
             position: "relative", left: "2%"
         }}>
             <Typography variant='h5'
-                sx={{ fontSize: "15px", fontWeight: "bold", marginBottom: "20px", color: "#575756" }}>
+                sx={{ fontSize: "15px", fontWeight: "bold", marginBottom: "20px", color: theme.palette.text.gray_white }}>
                 <span style={{ padding: "2px 0px", borderBottom: "2px solid #ef7d00", }}>{t("special")}</span> {t("offers")}
             </Typography>
 

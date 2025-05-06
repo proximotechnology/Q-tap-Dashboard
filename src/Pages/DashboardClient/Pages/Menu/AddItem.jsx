@@ -305,7 +305,7 @@ export const AddItem = () => {
 
     // Main content
     return (
-        <Box sx={{ backgroundColor: "#f4f6fc" }}>
+        <Box sx={{ backgroundColor: theme.palette.bodyColor.white_333 ,marginBottom:"-33px"}}>  {/* TODO: fix white space here */}
             <AppBar
                 position="static"
                 style={{
@@ -545,6 +545,7 @@ export const AddItem = () => {
                             borderRadius: "20px",
                             textTransform: "capitalize",
                             "&:hover": { backgroundColor: theme.palette.orangePrimary.main },
+                            margin:'5px'
                         }}
                         disabled={loading}
                     >

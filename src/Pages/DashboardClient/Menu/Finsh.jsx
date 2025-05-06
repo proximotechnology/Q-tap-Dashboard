@@ -15,7 +15,7 @@ export const Finsh = () => {
     return (
         
         <Box sx={{ overflowY: "auto", width: customWidth.itemSectionWidth,
-            boxShadow: '3', bgcolor: 'white', position: 'fixed', right: 0, top: 0, height: '100vh' }}>
+            boxShadow: '3', bgcolor: theme.palette.bodyColor.white_333, position: 'fixed', right: 0, top: 0, height: '100vh' }}>
             <AppBar position="sticky" color="inherit">
                 <Toolbar>
                     <Box sx={{ flexGrow: 1 }} />

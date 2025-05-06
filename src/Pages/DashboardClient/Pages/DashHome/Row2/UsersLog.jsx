@@ -17,13 +17,13 @@ export const UsersLog = ({ users_logs }) => {
         <TableContainer component={Paper} sx={{ borderRadius: "20px", boxShadow: 'none', minHeight: "50vh", maxHeight: "62vh", overflow: 'auto' }}>
             <Grid container justifyContent="space-between" alignItems="center" sx={{ padding: "20px 20px 0px 20px" }}>
                 <Grid item>
-                    <Typography variant="body1" component="div" sx={{ fontSize: '13px', color: "#575756" }}>
+                    <Typography variant="body1" component="div" sx={{ fontSize: '13px', color: theme.palette.text.gray_white }}>
                         {t("usersLog")}
                     </Typography>
                 </Grid>
                 <Grid item>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <img src="/assets/Clients.svg" alt="icon" style={{ color: "#D8E0E0", width: "18px", height: "18px" }} />
+                        <img src="/assets/Clients.svg" alt="icon" style={{ color: theme.palette.text.gray_white , width: "18px", height: "18px" }} />
                     </Box>
                 </Grid>
                 <Divider
@@ -58,7 +58,7 @@ export const UsersLog = ({ users_logs }) => {
                                 borderRadius: '20px',
                                 overflow: 'hidden',
                                 margin: '2px 0px',
-                                backgroundColor: index % 2 === 0 ? '#EBEDF3' : '#ffffff',
+                                backgroundColor: index % 2 == 0 ? theme.palette.bodyColor.secandaryInput : '',
                                 '& td:first-of-type': {
                                     borderTopLeftRadius: '20px',
                                     borderBottomLeftRadius: '20px',
@@ -76,6 +76,7 @@ export const UsersLog = ({ users_logs }) => {
                                         padding: '0px 8px',
                                         display: 'flex',
                                         alignItems: 'center',
+                                        color:theme.palette.text.black_white
                                     }}
                                 >
                                     <Box

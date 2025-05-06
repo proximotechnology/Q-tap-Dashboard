@@ -231,7 +231,7 @@ export const Tables = ({ openOldMenu }) => {
   return (
     <Paper style={{ padding: '20px 30px', borderRadius: '10px', marginTop: '16px' }}>
       <Box sx={{ maxWidth: '100%', padding: '6px' }}>
-        <Typography variant="body1" sx={{ textAlign: 'left', fontSize: '13px', color: '#4b4a4a' }}>
+        <Typography variant="body1" sx={{ textAlign: 'left', fontSize: '13px', color: theme.palette.bodyColor.gray_white }}>
           {t("table.add")}
         </Typography>
 

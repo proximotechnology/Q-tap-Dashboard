@@ -20,7 +20,7 @@ export const Done = () => {
     };
     return (
         <>
-        <Box sx={{ overflowY: "auto", width: customWidth.itemSectionWidth, boxShadow: 3, bgcolor: 'white', position: 'fixed', right: 0, top: 0, height: '100vh' }}>
+        <Box sx={{ overflowY: "auto", width: customWidth.itemSectionWidth, boxShadow: 3, bgcolor: theme.palette.bodyColor.white_333, position: 'fixed', right: 0, top: 0, height: '100vh' }}>
             <AppBar position="sticky" color="inherit">
                 <Toolbar>
                     <Box sx={{ flexGrow: 1 }} />
@@ -39,7 +39,7 @@ export const Done = () => {
                 <div style={{width:"250px" , height:"250px"}}>  
                     <Lottie animationData={done} loop={true} /> 
                     <Typography onClick={toggleFinsh}
-                    variant='body2' sx={{ cursor:"pointer",fontSize:"15px",fontWeight:"bold" , color:"gray"}}>{t("done")}</Typography>
+                    variant='body2' sx={{ cursor:"pointer",fontSize:"15px",fontWeight:"bold" , color:theme.palette.text.gray_white}}>{t("done")}</Typography>
                 </div>
             </Box>
 

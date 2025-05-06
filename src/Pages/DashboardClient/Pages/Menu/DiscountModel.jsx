@@ -173,7 +173,7 @@ export const DiscountModel = ({ open, handleClose }) => {
       }}>
         <Box sx={{ padding: "20px" }}>
           <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <Typography variant="body1" sx={{ fontSize: "12px", color: "#575756" }}>
+            <Typography variant="body1" sx={{ fontSize: "12px", color: theme.palette.text.gray_white }}>
               {t("discount.codes")}
             </Typography>
             <IconButton onClick={handleClose}>
@@ -185,7 +185,7 @@ export const DiscountModel = ({ open, handleClose }) => {
           <Box sx={{ marginTop: "10px" }}>
             <Grid container spacing={2} sx={{ mb: 2, marginTop: "12px" }}>
               <Grid item xs={6}>
-                <Typography variant='body2' sx={{ fontSize: "11px", color: "#575756" }}>{t("code")}</Typography>
+                <Typography variant='body2' sx={{ fontSize: "11px", color: theme.palette.text.gray_white }}>{t("code")}</Typography>
                 <TextField
                   fullWidth
                   
@@ -198,7 +198,7 @@ export const DiscountModel = ({ open, handleClose }) => {
                 />
               </Grid>
               <Grid item xs={6}>
-                <Typography variant='body2' sx={{ fontSize: "11px", color: "#575756" }}>{t("discount.one")}</Typography>
+                <Typography variant='body2' sx={{ fontSize: "11px", color: theme.palette.text.gray_white }}>{t("discount.one")}</Typography>
                 <TextField
                   fullWidth
                   type="number"

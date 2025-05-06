@@ -55,9 +55,9 @@ export const Login = () => {
     // Send data to API
     // change of api 2.2
     // if (userType === 'qtap_clients') {
-      localStorage.setItem("clientEmail", email);
-      localStorage.setItem("clientPassword", password);
-      navigate('/logo-cient');
+    localStorage.setItem("clientEmail", email);
+    localStorage.setItem("clientPassword", password);
+    navigate('/logo-cient');
     // } else {
     //   try {
     //     setIsLoading(true);
@@ -119,14 +119,14 @@ export const Login = () => {
   };
 
   return (
-    <Box>
+    <Box style={{ color:'black' }}>
       <FormControl variant="outlined" fullWidth margin="normal">
         <OutlinedInput
           placeholder={t("email")}
           onChange={(e) => setEmail(e.target.value)}
           startAdornment={
             <InputAdornment position="start">
-              <MailOutlinedIcon sx={{ fontSize: '18px' }} />
+              <MailOutlinedIcon sx={{ fontSize: '18px' , color: theme.palette.text.fixedGray,}} />
             </InputAdornment>
           }
           required
@@ -150,7 +150,7 @@ export const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           startAdornment={
             <InputAdornment position="start">
-              <span className="icon-padlock" style={{ fontSize: '18px' }} />
+              <span className="icon-padlock" style={{ fontSize: '18px' , color: theme.palette.text.fixedGray,}} />
             </InputAdornment>
           }
           required
@@ -179,19 +179,19 @@ export const Login = () => {
         />
       </FormControl>
 
-      
+
 
       <Typography
         variant="body2"
         sx={{
-          color: theme.palette.text.blue,
+          color: theme.palette.text.fixedBlack,
           fontSize: '10px',
           cursor: 'pointer',
           margin: '5px 0px',
         }}
         onClick={() => navigate('/reset')}
       >
-        <span style={{ borderBottom: `1px solid ${theme.palette.text.blue}` }}>{t("resetPassword")}</span>
+        <span style={{ borderBottom: `1px solid ${theme.palette.text.fixedBlack}` }}>{t("resetPassword")}</span>
       </Typography>
 
       {apiError && (
@@ -210,6 +210,7 @@ export const Login = () => {
           bgcolor: theme.palette.bluePrimary.main,
           borderRadius: '50px',
           textTransform: 'capitalize',
+          color: theme.palette.text.fixedWhite,
           '&:hover': {
             backgroundColor: theme.palette.secondaryColor.main,
           },
@@ -217,7 +218,7 @@ export const Login = () => {
         onClick={handleSubmit}
       >
         {/* {isLoading ? <CircularProgress size={24} /> : t("logIn")} */}
-        { t("logIn")}
+        {t("logIn")}
       </Button>
 
       <FormControlLabel

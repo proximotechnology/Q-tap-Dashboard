@@ -42,10 +42,10 @@ const SignUp = () => {
     const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
 
     const theme = useTheme()
-    const  isValidPassword = (password)=> {
+    const isValidPassword = (password) => {
         const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
         return regex.test(password);
-      }
+    }
     // call api to register
     const handleSignUp = async () => {
 
@@ -57,7 +57,7 @@ const SignUp = () => {
             setApiError(t("fieldAreRequired"));
             return;
         }
-        if(!isValidPassword(password)){
+        if (!isValidPassword(password)) {
             setApiError(t("passTooShortOrDontHaveNumber"));
             return;
         }
@@ -73,7 +73,7 @@ const SignUp = () => {
             setApiError(t("countryFieldIsRequired"));
             return;
         }
-       
+
 
         // if (!user_type) {
         //     setApiError(t("userTypeRequired"));
@@ -89,26 +89,26 @@ const SignUp = () => {
             confirmPassword,
             birth_date: `${year}-${month}-${day}`,
             country,
-            user_type :"qtap_clients"
+            user_type: "qtap_clients"
         };
 
         // Store data in PersonalContext if user is affiliate
         // if (user_type === "qtap_clients") {
-            const personalContextData = {
-                fullName,
-                phone,
-                email,
-                month,
-                day,
-                year,
-                country,
-                password,
-                confirmPassword,
-                 user_type :"qtap_clients"
-            };
-            updatePersonalData(personalContextData);
-            navigate("/product")
-            return;
+        const personalContextData = {
+            fullName,
+            phone,
+            email,
+            month,
+            day,
+            year,
+            country,
+            password,
+            confirmPassword,
+            user_type: "qtap_clients"
+        };
+        updatePersonalData(personalContextData);
+        navigate("/product")
+        return;
         // }
 
 
@@ -152,14 +152,19 @@ const SignUp = () => {
                     id="outlined-fullname"
                     startAdornment={
                         <InputAdornment position="start">
-                            <PersonOutlinedIcon sx={{ fontSize: "16px" }} />
+                            <PersonOutlinedIcon sx={{ color: theme.palette.text.fixedGray,fontSize: "16px" }} />
                         </InputAdornment>
                     }
                     required
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder={t("fullName")}
-                    sx={{ borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
+                    sx={{
+                        color: theme.palette.text.fixedGray,
+                        borderRadius: '50px',
+                        marginTop: "10px",
+                        height: '33px', fontSize: "10px"
+                    }}
                 />
             </FormControl>
 
@@ -168,19 +173,19 @@ const SignUp = () => {
                     id="outlined-phone"
                     endAdornment={
                         <InputAdornment position="end">
-                            <Typography sx={{ fontSize: "10px", color: theme.palette.text.fixedBlack }} >{t("verify")}</Typography>
+                            <Typography sx={{color: theme.palette.text.fixedGray, fontSize: "10px", color: theme.palette.text.fixedBlack }} >{t("verify")}</Typography>
                         </InputAdornment>
                     }
                     startAdornment={
                         <InputAdornment position="start">
-                            <PhoneOutlinedIcon sx={{ fontSize: "16px" }} />
+                            <PhoneOutlinedIcon sx={{color: theme.palette.text.fixedGray, fontSize: "16px" }} />
                         </InputAdornment>
                     }
                     placeholder={t("mobileNumber")}
                     required
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    sx={{ borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
+                    sx={{color: theme.palette.text.fixedGray, borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
                 />
             </FormControl>
 
@@ -190,14 +195,14 @@ const SignUp = () => {
                     type="email"
                     startAdornment={
                         <InputAdornment position="start">
-                            <EmailOutlinedIcon sx={{ fontSize: "16px" }} />
+                            <EmailOutlinedIcon sx={{color: theme.palette.text.fixedGray, fontSize: "16px" }} />
                         </InputAdornment>
                     }
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={t("email")}
-                    sx={{ borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
+                    sx={{color: theme.palette.text.fixedGray, borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
                 />
             </FormControl>
 
@@ -271,7 +276,7 @@ const SignUp = () => {
                                 {t("year")}
                             </MenuItem>
                             {Array.from({ length: 2025 - 2000 + 1 }, (_, i) => (
-                                <MenuItem key={i + 2000} value={i + 2000} sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>
+                                <MenuItem key={i + 2000} value={i + 2000} sx={{ fontSize: "10px", color: theme.palette.text.fixedWhite }}>
                                     {i + 2000}
                                 </MenuItem>
                             ))}
@@ -287,10 +292,10 @@ const SignUp = () => {
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
                     displayEmpty
-                    sx={{ borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px", color: theme.palette.text.fixedGray }}
+                    sx={{color: theme.palette.text.fixedGray, borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px",}}
                     startAdornment={
                         <InputAdornment position="start">
-                            <span class="icon-map" style={{ fontSize: "14px" }}></span>
+                            <span class="icon-map" style={{ color: theme.palette.text.fixedGray,fontSize: "14px" }}></span>
                         </InputAdornment>
                     }
                 >
@@ -332,7 +337,7 @@ const SignUp = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     startAdornment={
                         <InputAdornment position="start">
-                            <span class="icon-padlock" style={{ fontSize: "18px" }}></span>
+                            <span class="icon-padlock" style={{color: theme.palette.text.fixedGray, fontSize: "18px" }}></span>
                         </InputAdornment>
                     }
                     endAdornment={
@@ -342,16 +347,16 @@ const SignUp = () => {
                                 onClick={handleClickShowPassword}
                                 edge="end"
                             >
-                                {showPassword ? <VisibilityOffOutlinedIcon sx={{ fontSize: "18px" }} />
+                                {showPassword ? <VisibilityOffOutlinedIcon sx={{ color: theme.palette.text.fixedGray,fontSize: "18px" }} />
                                     :
-                                    <span class="icon-show" style={{ fontSize: "16px" }}></span>
+                                    <span class="icon-show" style={{ color: theme.palette.text.fixedGray,fontSize: "16px" }}></span>
                                 }
 
                             </IconButton>
                         </InputAdornment>
                     }
                     placeholder={t("password")}
-                    sx={{ borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
+                    sx={{color: theme.palette.text.fixedGray, borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
                 />
             </FormControl>
 
@@ -364,7 +369,7 @@ const SignUp = () => {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     startAdornment={
                         <InputAdornment position="start">
-                            <span class="icon-padlock" style={{ fontSize: "18px" }}></span>
+                            <span class="icon-padlock" style={{ color: theme.palette.text.fixedGray,fontSize: "18px" }}></span>
 
                         </InputAdornment>
                     }
@@ -375,15 +380,15 @@ const SignUp = () => {
                                 onClick={handleClickShowConfirmPassword}
                                 edge="end"
                             >
-                                {showPassword ? <VisibilityOffOutlinedIcon sx={{ fontSize: "18px" }} />
+                                {showPassword ? <VisibilityOffOutlinedIcon sx={{ color: theme.palette.text.fixedGray,fontSize: "18px" }} />
                                     :
-                                    <span class="icon-show" style={{ fontSize: "16px" }}></span>
+                                    <span class="icon-show" style={{color: theme.palette.text.fixedGray, fontSize: "16px" }}></span>
                                 }
                             </IconButton>
                         </InputAdornment>
                     }
                     placeholder={t("confirmPass")}
-                    sx={{ borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
+                    sx={{color: theme.palette.text.fixedGray, borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
                 />
             </FormControl>
 
