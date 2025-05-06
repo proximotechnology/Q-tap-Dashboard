@@ -69,7 +69,7 @@ export const WalletAffiliate = () => {
                     }}
                 >
                     <Typography sx={{ display: "flex", fontSize: "13px", color: "#4A4A49", marginBottom: "10px" }}>
-                        <span style={{ color: "gray", fontSize: "22px", marginRight: "5px" }} class="icon-price-tag"></span> 
+                        <span style={{ color: theme.palette.text.gray, fontSize: "22px", marginRight: "5px" }} class="icon-price-tag"></span> 
                         {t("currentBalance")}
                     </Typography>
 
@@ -136,12 +136,12 @@ export const WalletAffiliate = () => {
                             fontSize: "14px",
                             width: "60%",
                             color: "white",
-                            backgroundColor: theme.palette.secondaryColor.main,
+                            backgroundColor: theme.palette.secondaryColor.secondary,
                             borderRadius: "20px",
                             textTransform: "capitalize",
                             marginTop: "30px",
                             "&:hover": {
-                                backgroundColor: "#222245",
+                                backgroundColor: theme.palette.buttons.blueHover,
                             }
                         }}
                     >

@@ -25,10 +25,10 @@ export const TableTransaction = () => {
         XLSX.utils.book_append_sheet(workbook, worksheet, "Transactions");
         XLSX.writeFile(workbook, "transactions.xlsx");
     };
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const theme = useTheme();
     return (
-        <Card Card sx={{ borderRadius: 4, height: "100%",overflowX:'auto' }}>
+        <Card Card sx={{ borderRadius: 4, height: "100%", overflowX: 'auto' }}>
             <CardContent>
                 <Box
                     display="flex"
@@ -53,12 +53,12 @@ export const TableTransaction = () => {
                             placeholder={t("from")}
                             style={{ padding: "2px", marginRight: '5px', width: "85px" }}
                             InputProps={{
-                                startAdornment: <CalendarMonthOutlinedIcon sx={{ color: "gray", fontSize: "12px", marginRight: "10px" }} />,
-                                endAdornment: <ArrowDropDownIcon sx={{ color: "gray", fontSize: "18px", }} />,
-                                style: { fontSize: '8px', color: "gray", borderRadius: "6px", padding: "0px 5px", height: "25px" },
+                                startAdornment: <CalendarMonthOutlinedIcon sx={{ color: theme.palette.text.gray_light, fontSize: "12px", marginRight: "10px" }} />,
+                                endAdornment: <ArrowDropDownIcon sx={{ color: theme.palette.text.gray_light, fontSize: "18px", }} />,
+                                style: { fontSize: '8px', color: theme.palette.text.gray_light, borderRadius: "6px", padding: "0px 5px", height: "25px" },
                             }}
                             InputLabelProps={{
-                                style: { fontSize: '10px' },
+                                style: { fontSize: '10px', color: theme.palette.text.gray_light },
                             }}
                         />
 
@@ -69,12 +69,12 @@ export const TableTransaction = () => {
                             placeholder={t("to")}
                             style={{ padding: "2px", marginRight: '5px', width: "85px" }}
                             InputProps={{
-                                startAdornment: <CalendarMonthOutlinedIcon sx={{ color: "gray", fontSize: "12px", marginRight: "10px" }} />,
-                                endAdornment: <ArrowDropDownIcon sx={{ color: "gray", fontSize: "18px", }} />,
-                                style: { fontSize: '8px', color: "gray", borderRadius: "6px", padding: "0px 5px", height: "25px" },
+                                startAdornment: <CalendarMonthOutlinedIcon sx={{ color: theme.palette.text.gray_light, fontSize: "12px", marginRight: "10px" }} />,
+                                endAdornment: <ArrowDropDownIcon sx={{ color: theme.palette.text.gray_light, fontSize: "18px", }} />,
+                                style: { fontSize: '8px', color: theme.palette.text.gray_light, borderRadius: "6px", padding: "0px 5px", height: "25px" },
                             }}
                             InputLabelProps={{
-                                style: { fontSize: '10px' },
+                                style: { fontSize: '10px', color: theme.palette.text.gray_light },
                             }}
                         />
                         <Button
@@ -142,16 +142,16 @@ export const TableTransaction = () => {
 
                                 <TableRow key={index}>
                                     <TableCell sx={{
-                                        display: "flex", textAlign: "center", justifyContent: "left", color: "gray",
+                                        display: "flex", textAlign: "center", justifyContent: "left", color: theme.palette.text.gray_light,
                                         borderBottom: "none", height: "30px", padding: "15px 0px 0px 10px"
                                     }}>
                                         <MinimizeOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "15px" }} />
                                         <Typography sx={{ fontSize: "11px", borderBottom: "1px solid #9d9d9c" }}> {transaction.id}</Typography>
                                     </TableCell>
 
-                                    <TableCell sx={{ fontSize: "11px", textAlign: "center", color: "gray", borderBottom: "none", height: "30px", padding: "10px 0px 0px 10px" }}>{transaction.date}</TableCell>
-                                    <TableCell sx={{ fontSize: "11px", textAlign: "center", color: "gray", borderBottom: "none", height: "30px", padding: "10px 0px 0px 10px" }}>{transaction.time}</TableCell>
-                                    <TableCell sx={{ fontSize: "12px", textAlign: "center", color: "#575756", borderBottom: "none", height: "30px", padding: "10px 0px 0px 10px" }}>{transaction.amount}</TableCell>
+                                    <TableCell sx={{ fontSize: "11px", textAlign: "center", color: theme.palette.text.gray_light, borderBottom: "none", height: "30px", padding: "10px 0px 0px 10px" }}>{transaction.date}</TableCell>
+                                    <TableCell sx={{ fontSize: "11px", textAlign: "center", color: theme.palette.text.gray_light, borderBottom: "none", height: "30px", padding: "10px 0px 0px 10px" }}>{transaction.time}</TableCell>
+                                    <TableCell sx={{ fontSize: "12px", textAlign: "center", color: theme.palette.text.gray_light, borderBottom: "none", height: "30px", padding: "10px 0px 0px 10px" }}>{transaction.amount}</TableCell>
                                     <TableCell sx={{ fontSize: "11px", textAlign: "center", color: "black", borderBottom: "none", height: "30px", padding: "10px 0px 0px 10px" }}>
                                         <Typography
                                             sx={{

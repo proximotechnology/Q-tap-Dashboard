@@ -12,10 +12,11 @@ import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
 import { PaymentInfo } from '../../../Affiliate/AddUser/PaymentInfo';
 import { useTranslation } from 'react-i18next';
 import Language from '../../../../Component/dashboard/TopBar/Language';
+import { Logout, Settings } from '@mui/icons-material';
 
 export const AddAffiliate = () => {
     const theme = useTheme();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
     const [anchorElUser, setAnchorElUser] = useState(null);
@@ -29,7 +30,7 @@ export const AddAffiliate = () => {
         setAnchorElUser(null);
     };
     return (
-        <Box sx={{ backgroundColor: "white", height: "100vh" }}>
+        <Box sx={{ backgroundColor: theme.palette.bodyColor.secandary, height: "100vh" }}>
             <Box
                 sx={{
                     display: "flex",
@@ -41,7 +42,13 @@ export const AddAffiliate = () => {
                     height: "70px",
                 }}>
                 <Box>
-                    <img src="/images/qtap.PNG" alt='logo' width={"140px"} />
+                    <img src={
+                        localStorage.getItem("themeMode") !== null
+                            ? (localStorage.getItem("themeMode") === "dark"
+                                ? "/assets/qtap.svg"
+                                : "/assets/qtapwhite.svg")
+                            : "/assets/qtap.svg"
+                    } alt='logo' width={"140px"} />
                 </Box>
 
                 {/* header */}
@@ -58,10 +65,10 @@ export const AddAffiliate = () => {
                                 backgroundColor: theme.palette.orangePrimary.main,
                             }
                         }}>
-                            <PersonOutlineOutlinedIcon sx={{ fontSize: "20px", color: "white" }} />
+                            <PersonOutlineOutlinedIcon sx={{ fontSize: "20px" , color:theme.palette.text.gray, color: "white" }} />
                         </IconButton>
-                        <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>User01</Typography>
-                        <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: "#575756" }} />
+                        <Typography variant="body1" sx={{ fontSize: "13px", color: theme.palette.text.gray }}>User01</Typography>
+                        <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: theme.palette.text.gray }} />
                     </Box>
                     <Popover
                         id={openUserPopover ? 'simple-popover' : undefined}
@@ -79,8 +86,8 @@ export const AddAffiliate = () => {
                                     <PersonOutlineOutlinedIcon sx={{ fontSize: "22px" }} />
                                 </Avatar>
                                 <Box>
-                                    <Typography variant="h6" sx={{ fontSize: "14px" }}>User01</Typography>
-                                    <Typography variant="body2" sx={{ fontSize: "12px" }} color="textSecondary">Mail@mail.com</Typography>
+                                    <Typography variant="h6" sx={{ fontSize: "14px" }} color={theme.palette.text.gray}>User01</Typography>
+                                    <Typography variant="body2" sx={{ fontSize: "12px" }} color={theme.palette.text.gray_light}>Mail@mail.com</Typography>
                                 </Box>
                             </Box>
                             <Divider />
@@ -111,41 +118,41 @@ export const AddAffiliate = () => {
 
                                 <ListItem sx={{ cursor: "pointer" }} oonClick={handleUserClose}>
                                     <ListItemIcon>
-                                        <img src="/assets/setting.svg" alt="icon" style={{ width: "16px", height: "16px" }} />
+                                        <Settings style={{ fontSize: "20px" , color:theme.palette.text.gray }} />
                                     </ListItemIcon>
                                     <ListItemText primary="Edit Profile"
                                         primaryTypographyProps={{
-                                            sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: "-30px" }
+                                            sx: { color:theme.palette.text.gray, fontSize: '12px', marginLeft: "-30px" }
                                         }} />
                                 </ListItem>
 
                                 <ListItem sx={{ cursor: "pointer" }} onClick={handleUserClose}>
                                     <ListItemIcon>
-                                        <span class="icon-price-tag" style={{ fontSize: "20px" }}></span>
+                                        <span class="icon-price-tag" style={{ fontSize: "20px" , color:theme.palette.text.gray }}></span>
                                     </ListItemIcon>
                                     <ListItemText primary="My Subscription"
                                         primaryTypographyProps={{
-                                            sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: "-30px" }
+                                            sx: { color:theme.palette.text.gray, fontSize: '12px', marginLeft: "-30px" }
                                         }} />
                                 </ListItem>
 
                                 <ListItem sx={{ cursor: "pointer" }} onClick={handleUserClose}>
                                     <ListItemIcon>
-                                        <HelpOutlineOutlinedIcon sx={{ fontSize: "20px" }} />
+                                        <HelpOutlineOutlinedIcon sx={{ fontSize: "20px" , color:theme.palette.text.gray }} />
                                     </ListItemIcon>
                                     <ListItemText primary="FAQ"
                                         primaryTypographyProps={{
-                                            sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: "-30px" }
+                                            sx: { color:theme.palette.text.gray, fontSize: '12px', marginLeft: "-30px" }
                                         }} />
                                 </ListItem>
 
                                 <ListItem sx={{ cursor: "pointer" }} onClick={handleUserClose}>
                                     <ListItemIcon>
-                                        <img src="/assets/logout.svg" alt="icon" style={{ width: "16px", height: "16px" }} />
+                                        <Logout style={{ fontSize: "20px" , color:theme.palette.text.gray }} />
                                     </ListItemIcon>
                                     <ListItemText primary="Logout"
                                         primaryTypographyProps={{
-                                            sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: "-30px" }
+                                            sx: { color:theme.palette.text.gray, fontSize: '12px', marginLeft: "-30px" }
                                         }} />
                                 </ListItem>
                             </List>
@@ -159,7 +166,7 @@ export const AddAffiliate = () => {
             <Box padding={"20px 100px 10px 60px"}>
                 <ArrowBackIosOutlinedIcon
                     onClick={() => navigate('/wallet-affiliate')}
-                    sx={{ color: "#4b4a4a", cursor: "pointer" }} />
+                    sx={{ color: theme.palette.text.gray, cursor: "pointer" }} />
             </Box>
 
             <Box >
