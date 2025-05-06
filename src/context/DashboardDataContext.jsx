@@ -52,7 +52,7 @@ export const DashboardDataProvider = ({ children }) => {
             );
             if (response.data) {
                 setSalesData(response.data);
-                // console.log('Fetched sales data:', response.data);
+                console.log('Fetched sales data:', response.data);
             }
         } catch (error) {
             console.error('Error fetching sales data:', error);

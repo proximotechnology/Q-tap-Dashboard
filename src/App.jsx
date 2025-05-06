@@ -42,7 +42,6 @@ import { AddUsers } from './Pages/Affiliate/AddUser/AddUser';
 import HomeAffiliate from './Pages/DashboardAffiliate/Pages/DashboardHome/HomeAffiliate';
 import { DashboardAffiliate } from './Pages/DashboardAffiliate/Pages/DashboardHome/DashboardAffiliate';
 import { WalletAffiliate } from './Pages/DashboardAffiliate/Pages/WalletAffiliate/WalletAffiliate';
-import { AddAffiliate } from './Pages/DashboardAffiliate/Pages/WalletAffiliate/AddAffiliate';
 import { DeliveryLogin } from './Pages/DashboardClient/DeliveryRiders/DeliveryLogin';
 import { Delivered } from './Pages/DashboardClient/DeliveryRiders/Delivered';
 import MenuClient from './Pages/DashboardClient/Menu/MenuClient';
@@ -70,6 +69,7 @@ import { LoginKitchen } from './Component/DashboardClient/LoginKitchen';
 import { LoginWaiter } from './Component/DashboardClient/LoginWaiter';
 import { AddRole } from './Pages/DashboardClient/Pages/User/AddRole';
 import HomePageAffiliate from './Pages/HomePageAffiliate';
+import { AddAffiliate } from './Pages/DashboardAffiliate/Pages/WalletAffiliate/AddAffiliate';
 
 
 function App() {

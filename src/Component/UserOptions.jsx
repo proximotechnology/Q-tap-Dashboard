@@ -117,6 +117,7 @@ const UserOptions = ({customSX = {}}) => {
 
                         <ListItem sx={{ cursor: "pointer" }} onClick={() => {
                             localStorage.removeItem("adminToken");
+                            localStorage.removeItem("affiliateToken");
                             navigate('/');
                         }}>
                             <ListItemIcon>
