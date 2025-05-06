@@ -21,7 +21,7 @@ export const getDesignTokens = (mode) => ({
         bodyColor: {
           main: '#EBEDF3',
           secandary: "#ffffff",//
-          secandaryInput: "#EBEDF3",//
+          secandaryInput: " #EBEDF3",//
           dark: '#181616',
           tableMain: "#ffffff",
           tableSecandary: "#EBEDF3",
@@ -69,7 +69,7 @@ export const getDesignTokens = (mode) => ({
       : /* darkMode */
       {
         orangePrimary: {
-          main: "#E57C00", //theme.palette.orangePrimary.main
+          main: " #E57C00", //theme.palette.orangePrimary.main
           icon: "#000",
           secondary: "#000"
         },
@@ -83,10 +83,11 @@ export const getDesignTokens = (mode) => ({
         bgColor: {
           main: "#000",
         },
-        bodyColor: {//theme.palette.
+        bodyColor: {// theme.palette.bodyColor.
+          //#f4f6fc
           main: '#121212',
-          secandary: "#2d2c2c",//
-          secandaryInput: "#2d2c2c",//
+          secandary: " #2d2c2c",//
+          secandaryInput: " #2d2c2c",//
           dark: '#000',
           tableMain: "#000",
           tableSecandary: "#000",

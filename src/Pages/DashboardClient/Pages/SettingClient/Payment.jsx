@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { BASE_URL } from '../../../../utils/helperFunction';
 
 const PaymentGatewayForm = () => {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const theme = useTheme();
     const [apiKey, setApiKey] = useState('');
     const [token1, setToken1] = useState('');
@@ -75,8 +75,8 @@ const PaymentGatewayForm = () => {
                     sx={{
                         textAlign: "left",
                         fontSize: "15px",
-                        color: "#575756",
-                        margin:"10px 0px 15px 0px"
+                        color: theme.palette.bodyColor.gray_white,
+                        margin: "10px 0px 15px 0px"
                     }}
                 >
                     {t("paymentGatway")}
@@ -84,7 +84,7 @@ const PaymentGatewayForm = () => {
 
                 <Divider
                     sx={{
-                        backgroundColor: 'gray',
+                        backgroundColor: theme.palette.bodyColor.gray_white,
                         height: '1px',
                         margin: '8px 0px',
                     }}
@@ -109,7 +109,7 @@ const PaymentGatewayForm = () => {
                             width: "180px"
                         }}
                     />
-                    <Typography variant='body2' sx={{ fontSize: "11px", color: "#4b4a4a", marginBottom: "5px" }}>API_KEY</Typography>
+                    <Typography variant='body2' sx={{ fontSize: "11px", color: theme.palette.bodyColor.gray_white, marginBottom: "5px" }}>API_KEY</Typography>
                     <TextField
                         value={apiKey}
                         onChange={(e) => setApiKey(e.target.value)}
@@ -127,7 +127,7 @@ const PaymentGatewayForm = () => {
                         }}
                     />
 
-                    <Typography variant='body2' sx={{ fontSize: "11px", color: "#4b4a4a", marginBottom: "5px" }}>Token1</Typography>
+                    <Typography variant='body2' sx={{ fontSize: "11px", color: theme.palette.bodyColor.gray_white, marginBottom: "5px" }}>Token1</Typography>
                     <TextField
                         value={token1}
                         onChange={(e) => setToken1(e.target.value)}
@@ -145,7 +145,7 @@ const PaymentGatewayForm = () => {
                         }}
                     />
 
-                    <Typography variant='body2' sx={{ fontSize: "11px", color: "#4b4a4a", marginBottom: "5px" }}>Token2</Typography>
+                    <Typography variant='body2' sx={{ fontSize: "11px", color: theme.palette.bodyColor.gray_white, marginBottom: "5px" }}>Token2</Typography>
                     <TextField
                         value={token2}
                         onChange={(e) => setToken2(e.target.value)}
@@ -163,7 +163,7 @@ const PaymentGatewayForm = () => {
                         }}
                     />
 
-                    <Typography variant='body2' sx={{ fontSize: "11px", color: "#4b4a4a", marginBottom: "5px" }}>Ifram</Typography>
+                    <Typography variant='body2' sx={{ fontSize: "11px", color:theme.palette.bodyColor.gray_white, marginBottom: "5px" }}>Ifram</Typography>
                     <TextField
                         value={iframe}
                         onChange={(e) => setIframe(e.target.value)}

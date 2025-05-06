@@ -347,7 +347,7 @@ const Menu = () => {
                             <Grid container spacing={1}>
                                 <Typography
                                     variant="h3"
-                                    sx={{ fontSize: '13px', width: '100%', fontWeight: '500', color: 'gray' }}
+                                    sx={{ fontSize: '13px', width: '100%', fontWeight: '500', color: theme.palette.bodyColor.gray_white }}
                                 >
                                     {t("defaultMode")}
                                 </Typography>
@@ -361,7 +361,7 @@ const Menu = () => {
                                         sx={{
                                             padding: '5px 8px',
                                             backgroundColor: mode === 'white' ? theme.palette.orangePrimary.main : 'AAAAAA',
-                                            color: mode === 'white' ? '#FFFFFF' : 'gray',
+                                            color: mode === 'white' ? '#FFFFFF' : theme.palette.bodyColor.gray_white,
                                         }}
                                     >
                                         <WbSunnyIcon
@@ -374,7 +374,7 @@ const Menu = () => {
                                         sx={{
                                             padding: '5px 8px',
                                             backgroundColor: mode === 'dark' ? theme.palette.orangePrimary.main : 'inherit',
-                                            color: mode === 'dark' ? '#FFFFFF' : 'gray',
+                                            color: mode === 'dark' ? '#FFFFFF' : theme.palette.bodyColor.gray_white,
                                         }}
                                     >
                                         <NightlightIcon
@@ -393,7 +393,7 @@ const Menu = () => {
                             <Grid container spacing={1}>
                                 <Typography
                                     variant="h6"
-                                    sx={{ fontSize: '13px', width: '100%', fontWeight: '500', color: 'gray' }}
+                                    sx={{ fontSize: '13px', width: '100%', fontWeight: '500', color: theme.palette.text.gray_white }}
                                 >
                                     {t("menus.design")}
                                 </Typography>
@@ -436,7 +436,7 @@ const Menu = () => {
                         <Box sx={{ width: '100%' }}>
                             <Typography
                                 variant="body1"
-                                sx={{ display: 'flex', fontSize: '15px', color: 'gray', alignItems: 'center' }}
+                                sx={{ display: 'flex', fontSize: '15px', color: theme.palette.bodyColor.gray_white, alignItems: 'center' }}
                             >
                                 <span className="icon-waiter" style={{ fontSize: '18px', marginRight: '10px' }}></span>{' '}
                                 {t("servingWay")}
@@ -449,7 +449,7 @@ const Menu = () => {
                                             onChange={() => handleServingWayChange('dine_in')}
                                             sx={{
                                                 '& .MuiSvgIcon-root': { fontSize: 22 },
-                                                color: 'gray',
+                                                color: theme.palette.bodyColor.gray_white,
                                                 '&.Mui-checked': {
                                                     color: theme.palette.orangePrimary.main,
                                                 },
@@ -460,7 +460,7 @@ const Menu = () => {
                                     sx={{
                                         '& .MuiTypography-root': {
                                             fontSize: '13px',
-                                            color: 'gray',
+                                            color: theme.palette.bodyColor.gray_white,
                                         },
                                     }}
                                 />
@@ -471,7 +471,7 @@ const Menu = () => {
                                             onChange={() => handleServingWayChange('take_away')}
                                             sx={{
                                                 '& .MuiSvgIcon-root': { fontSize: 22 },
-                                                color: 'gray',
+                                                color: theme.palette.bodyColor.gray_white,
                                                 '&.Mui-checked': {
                                                     color: theme.palette.orangePrimary.main,
                                                 },
@@ -482,7 +482,7 @@ const Menu = () => {
                                     sx={{
                                         '& .MuiTypography-root': {
                                             fontSize: '13px',
-                                            color: 'gray',
+                                            color: theme.palette.bodyColor.gray_white,
                                         },
                                     }}
                                 />
@@ -493,7 +493,7 @@ const Menu = () => {
                                             onChange={() => handleServingWayChange('delivery')}
                                             sx={{
                                                 '& .MuiSvgIcon-root': { fontSize: 22 },
-                                                color: 'gray',
+                                                color: theme.palette.bodyColor.gray_white,
                                                 '&.Mui-checked': {
                                                     color: theme.palette.orangePrimary.main,
                                                 },
@@ -504,7 +504,7 @@ const Menu = () => {
                                     sx={{
                                         '& .MuiTypography-root': {
                                             fontSize: '13px',
-                                            color: 'gray',
+                                            color: theme.palette.bodyColor.gray_white,
                                         },
                                     }}
                                 />
@@ -531,7 +531,7 @@ const Menu = () => {
                                         onChange={(e) => setCallWaiter(e.target.checked ? 'active' : 'inactive')}
                                         sx={{
                                             '& .MuiSvgIcon-root': { fontSize: 22 },
-                                            color: 'gray',
+                                            color: theme.palette.bodyColor.gray_white,
                                             '&.Mui-checked': {
                                                 color: theme.palette.orangePrimary.main,
                                             },
@@ -544,7 +544,7 @@ const Menu = () => {
                                             className="icon-hand-up"
                                             style={{ fontSize: 16, color: theme.palette.secondaryColor.main, marginRight: '10px' }}
                                         ></span>
-                                        <Typography sx={{ fontSize: '15px', color: 'gray' }}>
+                                        <Typography sx={{ fontSize: '15px', color: theme.palette.bodyColor.gray_white }}>
                                             {t("activeCallWaiter")}
                                         </Typography>
                                     </Box>
@@ -554,7 +554,7 @@ const Menu = () => {
                                     alignItems: 'center',
                                     '& .MuiTypography-root': {
                                         fontSize: '15px',
-                                        color: 'gray',
+                                        color: theme.palette.bodyColor.gray_white,
                                     },
                                 }}
                             />
@@ -567,7 +567,7 @@ const Menu = () => {
 
                         {/* Payment Method */}
                         <Box sx={{ width: '100%' }}>
-                            <Typography variant="body1" sx={{ display: 'flex', fontSize: '15px', color: 'gray' }}>
+                            <Typography variant="body1" sx={{ display: 'flex', fontSize: '15px', color: theme.palette.bodyColor.gray_white }}>
                                 {t("paymentMethod")}
                             </Typography>
                             <Box display="flex" justifyContent="space-between">
@@ -578,7 +578,7 @@ const Menu = () => {
                                             onChange={() => handlePaymentServiceChange('cash')}
                                             sx={{
                                                 '& .MuiSvgIcon-root': { fontSize: 22, borderRadius: '10px' },
-                                                color: 'gray',
+                                                color: theme.palette.bodyColor.gray_white,
                                                 '&.Mui-checked': {
                                                     color: theme.palette.orangePrimary.main,
                                                 },
@@ -598,7 +598,7 @@ const Menu = () => {
                                     sx={{
                                         '& .MuiTypography-root': {
                                             fontSize: '11px',
-                                            color: 'gray',
+                                            color: theme.palette.bodyColor.gray_white,
                                         },
                                     }}
                                 />
@@ -609,7 +609,7 @@ const Menu = () => {
                                             onChange={() => handlePaymentServiceChange('wallet')}
                                             sx={{
                                                 '& .MuiSvgIcon-root': { fontSize: 22 },
-                                                color: 'gray',
+                                                color: theme.palette.bodyColor.gray_white,
                                                 '&.Mui-checked': {
                                                     color: theme.palette.orangePrimary.main,
                                                 },
@@ -641,7 +641,7 @@ const Menu = () => {
                                     sx={{
                                         '& .MuiTypography-root': {
                                             fontSize: '11px',
-                                            color: 'gray',
+                                            color: theme.palette.bodyColor.gray_white,
                                         },
                                     }}
                                 />
@@ -652,7 +652,7 @@ const Menu = () => {
                                             onChange={() => handlePaymentServiceChange('card')}
                                             sx={{
                                                 '& .MuiSvgIcon-root': { fontSize: 22 },
-                                                color: 'gray',
+                                                color: theme.palette.bodyColor.gray_white,
                                                 '&.Mui-checked': {
                                                     color: theme.palette.orangePrimary.main,
                                                 },
@@ -672,7 +672,7 @@ const Menu = () => {
                                     sx={{
                                         '& .MuiTypography-root': {
                                             fontSize: '11px',
-                                            color: 'gray',
+                                            color: theme.palette.bodyColor.gray_white,
                                         },
                                     }}
                                 />
@@ -686,7 +686,7 @@ const Menu = () => {
 
                         {/* Payment Time */}
                         <Box sx={{ width: '100%' }}>
-                            <Typography variant="body1" sx={{ display: 'flex', fontSize: '15px', color: 'gray' }}>
+                            <Typography variant="body1" sx={{ display: 'flex', fontSize: '15px', color: theme.palette.bodyColor.gray_white }}>
                                 {t("paymentTime")}
                             </Typography>
                             <Box display="flex" justifyContent="left">
@@ -697,7 +697,7 @@ const Menu = () => {
                                             onChange={() => setPaymentTime('before')}
                                             sx={{
                                                 '& .MuiSvgIcon-root': { fontSize: 22 },
-                                                color: 'gray',
+                                                color: theme.palette.bodyColor.gray_white,
                                                 '&.Mui-checked': {
                                                     color: theme.palette.orangePrimary.main,
                                                 },
@@ -708,7 +708,7 @@ const Menu = () => {
                                     sx={{
                                         '& .MuiTypography-root': {
                                             fontSize: '13px',
-                                            color: 'gray',
+                                            color: theme.palette.bodyColor.gray_white,
                                         },
                                     }}
                                 />
@@ -719,7 +719,7 @@ const Menu = () => {
                                             onChange={() => setPaymentTime('after')}
                                             sx={{
                                                 '& .MuiSvgIcon-root': { fontSize: 22 },
-                                                color: 'gray',
+                                                color: theme.palette.bodyColor.gray_white,
                                                 '&.Mui-checked': {
                                                     color: theme.palette.orangePrimary.main,
                                                 },
@@ -730,7 +730,7 @@ const Menu = () => {
                                     sx={{
                                         '& .MuiTypography-root': {
                                             fontSize: '13px',
-                                            color: 'gray',
+                                            color: theme.palette.bodyColor.gray_white,
                                         },
                                     }}
                                 />
@@ -769,7 +769,7 @@ const Menu = () => {
                             <span className="path7"></span>
                             <span className="path8"></span>
                         </span>
-                        <Typography variant="h6" sx={{ fontSize: '13px', color: 'gray', marginLeft: '5px' }}>
+                        <Typography variant="h6" sx={{ fontSize: '13px', color: theme.palette.bodyColor.gray_white, marginLeft: '5px' }}>
                             {t("workHours")}
                         </Typography>
                     </Box>
@@ -836,13 +836,13 @@ const Menu = () => {
                                                 name="endTime"
                                                 value={times[item.day]?.endTime || '5:00 pm'}
                                                 onChange={handleTimeChange(item.day)}
-                                                sx={{ fontSize: '10px', color: 'gray' }}
+                                                sx={{ fontSize: '10px', color: theme.palette.bodyColor.gray_white }}
                                                 MenuProps={{
                                                     disableScrollLock: true,
                                                 }}
                                             >
                                                 {['5:00 pm', '6:00 pm', '7:00 pm', '8:00 pm', '9:00 pm'].map((time) => (
-                                                    <MenuItem key={time} value={time} sx={{ fontSize: '13px', color: 'gray' }}>
+                                                    <MenuItem key={time} value={time} sx={{ fontSize: '13px', color: theme.palette.bodyColor.gray_white }}>
                                                         {time}
                                                     </MenuItem>
                                                 ))}
@@ -860,13 +860,13 @@ const Menu = () => {
                                                 name="startTime"
                                                 value={times[item.day]?.startTime || '9:00 am'}
                                                 onChange={handleTimeChange(item.day)}
-                                                sx={{ fontSize: '10px', color: 'gray' }}
+                                                sx={{ fontSize: '10px', color: theme.palette.bodyColor.gray_white }}
                                                 MenuProps={{
                                                     disableScrollLock: true,
                                                 }}
                                             >
                                                 {['7:00 am', '8:00 am', '9:00 am', '10:00 am', '11:00 am'].map((time) => (
-                                                    <MenuItem key={time} value={time} sx={{ fontSize: '13px', color: 'gray' }}>
+                                                    <MenuItem key={time} value={time} sx={{ fontSize: '13px', color: theme.palette.bodyColor.gray_white }}>
                                                         {time}
                                                     </MenuItem>
                                                 ))}

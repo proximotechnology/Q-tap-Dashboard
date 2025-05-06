@@ -65,12 +65,12 @@ export const VariantsTable = ({ updateVariants, initialVariants, limitVariants, 
             }} >
 
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>
+                <Typography variant="body1" sx={{ fontSize: "13px", color: theme.palette.text.gray_white }}>
                     {t("variant.one")}
                 </Typography>
                 <Box sx={{ display: "flex" }}>
                     <Box sx={{ display: "flex", alignItems: "center", marginRight: "15px" }}>
-                        <Typography sx={{ fontSize: "10px", color: "gray", marginRight: "5px" }}>{t("limit")}</Typography>
+                        <Typography sx={{ fontSize: "10px", color: theme.palette.text.gray_white, marginRight: "5px" }}>{t("limit")}</Typography>
                         <TextField
                             value={limitVariants}
                             onChange={(e) => setLimitVariants(e.target.value)}
@@ -104,7 +104,7 @@ export const VariantsTable = ({ updateVariants, initialVariants, limitVariants, 
                 <TableBody>
                     {allVariants.map((variant, index) => (
                         <TableRow key={index} sx={{ height: '36px' }}>
-                            <TableCell sx={{ textAlign: "left", fontSize: "11px", color: "gray" }}>
+                            <TableCell sx={{ textAlign: "left", fontSize: "11px", color: theme.palette.text.gray_white}}>
                                 {variant.isEditing ? (
                                     <TextField
                                         value={variant.price}
@@ -117,7 +117,7 @@ export const VariantsTable = ({ updateVariants, initialVariants, limitVariants, 
 
                                 )}
                             </TableCell>
-                            <TableCell sx={{ textAlign: "left", fontSize: "11px", color: "gray" }}>
+                            <TableCell sx={{ textAlign: "left", fontSize: "11px", color: theme.palette.text.gray_white }}>
                                 {variant.isEditing ? (
                                     <TextField
                                         value={variant.name}

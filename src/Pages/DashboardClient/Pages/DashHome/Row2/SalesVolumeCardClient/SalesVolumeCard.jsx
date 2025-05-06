@@ -29,7 +29,7 @@ const SalesVolumeCardClient = () => {
         }
     }, [year]);
     return (
-        <Paper sx={{ borderRadius: "20px", marginTop: "20px", padding: "10px", backgroundColor: theme.palette.bodyColor.secandary }}>
+        <Paper sx={{ borderRadius: "20px", marginTop: "20px", padding: "10px", }}>
             <Grid container justifyContent="space-between" alignItems="center" sx={{ padding: "10px 20px", }} >
                 <Grid item>
                     <Typography variant="body1" component="div" sx={{ color: theme.palette.text.secondary, fontSize: '13px' }}>

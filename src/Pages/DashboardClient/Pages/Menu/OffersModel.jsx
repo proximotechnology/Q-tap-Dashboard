@@ -80,11 +80,11 @@ const AddOfferModal = ({ open, handleClose, selectedBranch, contentForMenu, onAd
                     position: 'relative'
                 }}>
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>
+                    <Typography variant="body1" sx={{ fontSize: "13px", color: theme.palette.text.gray_white }}>
                         {t("addNewOffer")}
                     </Typography>
                     <IconButton onClick={handleClose}>
-                        <span class="icon-close-1" style={{ fontSize: "12px", color: "gray" }} />
+                        <span class="icon-close-1" style={{ fontSize: "12px", color: theme.palette.text.gray_white }} />
                     </IconButton>
                 </Box>
 
@@ -313,11 +313,11 @@ export const OffersModel = ({ open, handleClose }) => {
                         position: 'relative'
                     }}>
                     <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>
+                        <Typography variant="body1" sx={{ fontSize: "13px", color: theme.palette.text.gray_white }}>
                             {t("specialOffers")}
                         </Typography>
                         <IconButton onClick={handleClose}>
-                            <span class="icon-close-1" style={{ fontSize: "12px", color: "gray" }} />
+                            <span class="icon-close-1" style={{ fontSize: "12px", color: theme.palette.text.gray_white }} />
                         </IconButton>
                     </Box>
 

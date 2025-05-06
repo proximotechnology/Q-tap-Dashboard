@@ -95,9 +95,9 @@ const CategoryForm = ({ open, handleClose }) => {
 
   return (
     <Dialog open={open} disableScrollLock>
-      <DialogContent sx={{ width: "400px", backgroundColor: 'white', borderRadius: "20px" }}>
+      <DialogContent sx={{ width: "400px", backgroundColor: theme.palette.bodyColor.white_lightBlack, borderRadius: "20px" }}>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography variant="body1" fontSize={"13px"} color={"#575756"}>{t("category.add")}</Typography>
+          <Typography variant="body1" fontSize={"13px"} color={theme.palette.text.gray_white}>{t("category.add")}</Typography>
           <IconButton onClick={handleClose}>
             <span className="icon-close-1" style={{ fontSize: "11px" }}></span>
           </IconButton>
@@ -106,21 +106,21 @@ const CategoryForm = ({ open, handleClose }) => {
         <Box display="flex" flexDirection="column" gap={2} sx={{ marginBottom: 2 }}>
           <Box display="flex" justifyContent="space-between" gap={2}>
             <Box flex={1}>
-              <Typography variant="body2" align="left" sx={{ marginBottom: '4px', color: "#575756", fontSize: "10px" }}>{t("name")}</Typography>
+              <Typography variant="body2" align="left" sx={{ marginBottom: '4px', color: theme.palette.text.gray_white, fontSize: "10px" }}>{t("name")}</Typography>
               <TextField
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 fullWidth
-                sx={{ height: '40px', '& .MuiInputBase-root': { height: '35px' } }}
+                sx={{ height: '40px', '& .MuiInputBase-root': { height: '35px' } ,color:theme.palette.text.gray_white}}
               />
             </Box>
             <Box flex={1}>
-              <Typography variant="body2" align="left" sx={{ marginBottom: '4px', color: "#575756", fontSize: "10px" }}>{t("discription")}</Typography>
+              <Typography variant="body2" align="left" sx={{ marginBottom: '4px', color:theme.palette.text.gray_white, fontSize: "10px" }}>{t("discription")}</Typography>
               <TextField
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 fullWidth
-                sx={{ height: '40px', '& .MuiInputBase-root': { height: '35px' } }}
+                sx={{ height: '40px', '& .MuiInputBase-root': { height: '35px' },color:theme.palette.text.gray_white }}
               />
             </Box>
           </Box>

@@ -107,18 +107,18 @@ const AddTableModal = ({ open, onClose, onSave, tableData }) => {
         }}
       >
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Typography variant="body1" sx={{ fontSize: '13px', color: '#424242' }}>
+          <Typography variant="body1" sx={{ fontSize: '13px', color: theme.palette.bodyColor.gray_white }}>
             {tableData ? t("table.edit") : t("table.add")}
           </Typography>
           <IconButton onClick={onClose}>
-            <CloseIcon sx={{ fontSize: '20px', color: 'gray' }} />
+            <CloseIcon sx={{ fontSize: '20px', color: theme.palette.bodyColor.gray_white }} />
           </IconButton>
         </Box>
         <Divider sx={{ backgroundColor: '#FF6600', height: '1px' }} />
 
         {/* Name Field */}
         <Box sx={{ marginTop: '20px', display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'left' }}>
-          <Typography variant="body2" sx={{ width: '25%', textAlign: 'center' }} color="#424242" fontSize="12px">
+          <Typography variant="body2" sx={{ width: '25%', textAlign: 'center' }} color={theme.palette.bodyColor.gray_white} fontSize="12px">
             {t("name")}
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
@@ -132,7 +132,7 @@ const AddTableModal = ({ open, onClose, onSave, tableData }) => {
                   padding: '0px 14px',
                   textAlign: 'left',
                   fontSize: '12px',
-                  color: 'gray',
+                  color: theme.palette.bodyColor.gray_white,
                 },
               }}
               fullWidth
@@ -143,7 +143,7 @@ const AddTableModal = ({ open, onClose, onSave, tableData }) => {
 
         {/* Size Field */}
         <Box sx={{ marginTop: '20px', display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'left' }}>
-          <Typography variant="body2" sx={{ width: '25%', textAlign: 'center' }} color="#424242" fontSize="12px">
+          <Typography variant="body2" sx={{ width: '25%', textAlign: 'center' }} color={theme.palette.bodyColor.gray_white} fontSize="12px">
             {t("size.one")}
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
@@ -155,7 +155,7 @@ const AddTableModal = ({ open, onClose, onSave, tableData }) => {
                 '& .MuiInputBase-input': {
                   height: '35px',
                   padding: '0px 14px',
-                  color: 'gray',
+                  color: theme.palette.bodyColor.gray_white,
                   textAlign: 'left',
                   fontSize: '12px',
                 },
@@ -168,7 +168,7 @@ const AddTableModal = ({ open, onClose, onSave, tableData }) => {
 
         {/* Area Field */}
         <Box sx={{ marginTop: '20px', display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'flex-start' }}>
-          <Typography variant="body2" sx={{ width: '25%', textAlign: 'center' }} color="#424242" fontSize="12px">
+          <Typography variant="body2" sx={{ width: '25%', textAlign: 'center' }} color={theme.palette.bodyColor.gray_white} fontSize="12px">
             {t("area")}
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
@@ -180,7 +180,7 @@ const AddTableModal = ({ open, onClose, onSave, tableData }) => {
                     padding: '0px 14px',
                     textAlign: 'left',
                     fontSize: '12px',
-                    color: 'gray',
+                    color: theme.palette.bodyColor.gray_white,
                     lineHeight: '35px',
                   },
                 }}

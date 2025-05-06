@@ -63,7 +63,7 @@ export const ExtrasTable = ({ updateExtras, initialExtras, variants }) => {
     return (
         <Paper sx={{ borderRadius: "10px", padding: "20px 30px", marginTop: "-20px" ,overflowX:'auto' }}>
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <Typography variant="body1" sx={{ fontSize: "13px", color: "#575756" }}>
+                <Typography variant="body1" sx={{ fontSize: "13px", color: theme.palette.text.gray_white }}>
                     {t("extra.many")}
                 </Typography>
                 <Button onClick={handleExtrasOpen}>
@@ -87,7 +87,7 @@ export const ExtrasTable = ({ updateExtras, initialExtras, variants }) => {
                 <TableBody>
                     {allExtras.map((extra, index) => (
                         <TableRow key={index} sx={{ height: '36px' }}>
-                            <TableCell sx={{ textAlign: "left", fontSize: "11px", color: "gray" }}>
+                            <TableCell sx={{ textAlign: "left", fontSize: "11px", color: theme.palette.text.gray_white }}>
                                 {extra.isEditing ? (
                                     <TextField
                                         value={extra.price}
@@ -100,7 +100,7 @@ export const ExtrasTable = ({ updateExtras, initialExtras, variants }) => {
                                     `${parseFloat(extra.price).toFixed(2)} EGP`
                                 )}
                             </TableCell>
-                            <TableCell sx={{ textAlign: "left", fontSize: "11px", color: "gray" }}>
+                            <TableCell sx={{ textAlign: "left", fontSize: "11px", color: theme.palette.text.gray_white }}>
                                 {extra.isEditing ? (
                                     <TextField
                                         value={extra.name}
@@ -113,7 +113,7 @@ export const ExtrasTable = ({ updateExtras, initialExtras, variants }) => {
                                     extra.name
                                 )}
                             </TableCell>
-                            <TableCell sx={{ textAlign: "center", fontSize: "10px", color: "gray", padding: '3px 10px', width: '25%' }}>
+                            <TableCell sx={{ textAlign: "center", fontSize: "10px", color: theme.palette.text.gray_white, padding: '3px 10px', width: '25%' }}>
                                 <FormControl size="small" sx={{ minWidth: 110 }}>
                                     <Select
                                         value={extra.variants_id || ''}
@@ -125,7 +125,7 @@ export const ExtrasTable = ({ updateExtras, initialExtras, variants }) => {
                                             height: '32px',
                                             lineHeight: "30px",
                                             borderRadius: "10px",
-                                            color: "gray",
+                                            color: theme.palette.text.gray_white,
                                             '& .MuiSelect-select': {
                                                 padding: '5px',
                                                 fontSize: "10px",

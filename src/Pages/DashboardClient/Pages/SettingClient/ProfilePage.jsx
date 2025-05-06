@@ -275,7 +275,7 @@ const ProfilePage = () => {
 
           {/* Personal Info Column */}
           <Grid item xs={12} sm={12} md={3} lg={3} justifyContent="center" alignItems="center">
-            <Typography variant="body2" sx={{ fontSize: '13px' }} color="#3b3a3a" gutterBottom>
+            <Typography variant="body2" sx={{ fontSize: '13px' }} color={theme.palette.text.gray_white} gutterBottom>
               {t("personalInfo")}
             </Typography>
             <Divider
@@ -358,7 +358,7 @@ const ProfilePage = () => {
               <Grid item xs={12} sm={12} md={12} lg={12}>
                 <Grid container alignItems="center" sx={{ color: 'grey', marginTop: '5px' }}>
                   <CalendarMonthOutlinedIcon sx={{ marginRight: 1, fontSize: '15px' }} />
-                  <Typography variant="body1" sx={{ fontSize: '12px' }}>
+                  <Typography variant="body1" sx={{ fontSize: '12px' ,color:theme.palette.text.gray_white}}>
                     {t("dateOfBirth")}
                   </Typography>
                 </Grid>
@@ -515,7 +515,7 @@ const ProfilePage = () => {
 
           {/* Business Info Column */}
           <Grid item xs={12} sm={12} md={3} lg={3} justifyContent="center" alignItems="center">
-            <Typography variant="body2" sx={{ fontSize: '13px' }} color="#3b3a3a" gutterBottom>
+            <Typography variant="body2" sx={{ fontSize: '13px' }} color={theme.palette.text.gray_white} gutterBottom>
               {t("busnessInfo")}
             </Typography>
             <Divider
@@ -590,7 +590,7 @@ const ProfilePage = () => {
                   value={businessCountry}
                   onChange={(e) => setBusinessCountry(e.target.value)}
                   displayEmpty
-                  sx={{ borderRadius: '6px', height: '33px', fontSize: '10px', color: 'gray' }}
+                  sx={{ borderRadius: '6px', height: '33px', fontSize: '10px', color: theme.palette.text.gray_white }}
                   startAdornment={
                     <InputAdornment position="start">
                       <img src="/assets/location.svg" alt="location icon" style={{ width: '18px', height: '16px' }} />
@@ -598,16 +598,16 @@ const ProfilePage = () => {
                   }
                   MenuProps={{ disableScrollLock: true }}
                 >
-                  <MenuItem value="" disabled sx={{ fontSize: '12px', color: 'gray' }}>
+                  <MenuItem value="" disabled sx={{ fontSize: '12px', color: theme.palette.text.gray_white }}>
                     {t("country")}
                   </MenuItem>
-                  <MenuItem value="US" sx={{ fontSize: '12px', color: 'gray' }}>
+                  <MenuItem value="US" sx={{ fontSize: '12px', color: theme.palette.text.gray_white }}>
                     United States
                   </MenuItem>
-                  <MenuItem value="CA" sx={{ fontSize: '12px', color: 'gray' }}>
+                  <MenuItem value="CA" sx={{ fontSize: '12px', color: theme.palette.text.gray_white }}>
                     Canada
                   </MenuItem>
-                  <MenuItem value="UK" sx={{ fontSize: '12px', color: 'gray' }}>
+                  <MenuItem value="UK" sx={{ fontSize: '12px', color: theme.palette.text.gray_white }}>
                     United Kingdom
                   </MenuItem>
                 </Select>
@@ -619,7 +619,7 @@ const ProfilePage = () => {
                   value={businessCity}
                   onChange={(e) => setBusinessCity(e.target.value)}
                   displayEmpty
-                  sx={{ borderRadius: '6px', height: '33px', fontSize: '10px', color: 'gray' }}
+                  sx={{ borderRadius: '6px', height: '33px', fontSize: '10px', color: theme.palette.text.gray_white }}
                   startAdornment={
                     <InputAdornment position="start">
                       <img src="/assets/location.svg" alt="location icon" style={{ width: '18px', height: '16px' }} />
@@ -627,16 +627,16 @@ const ProfilePage = () => {
                   }
                   MenuProps={{ disableScrollLock: true }}
                 >
-                  <MenuItem value="" disabled sx={{ fontSize: '12px', color: 'gray' }}>
+                  <MenuItem value="" disabled sx={{ fontSize: '12px', color: theme.palette.text.gray_white }}>
                     {t("city")}
                   </MenuItem>
-                  <MenuItem value="NY" sx={{ fontSize: '12px', color: 'gray' }}>
+                  <MenuItem value="NY" sx={{ fontSize: '12px', color: theme.palette.text.gray_white}}>
                     New York
                   </MenuItem>
-                  <MenuItem value="LA" sx={{ fontSize: '12px', color: 'gray' }}>
+                  <MenuItem value="LA" sx={{ fontSize: '12px', color: theme.palette.text.gray_white }}>
                     Los Angeles
                   </MenuItem>
-                  <MenuItem value="CHI" sx={{ fontSize: '12px', color: 'gray' }}>
+                  <MenuItem value="CHI" sx={{ fontSize: '12px', color: theme.palette.text.gray_white }}>
                     Chicago
                   </MenuItem>
                 </Select>
@@ -794,7 +794,7 @@ const ProfilePage = () => {
 
             <Divider sx={{ width: '100%', borderBottom: '1px solid #9d9d9c', marginBottom: '18px' }} />
 
-            <Typography variant="body2" sx={{ fontSize: '10px', color: 'gray', display: 'flex' }}>
+            <Typography variant="body2" sx={{ fontSize: '10px', color: theme.palette.text.gray_white, display: 'flex' }}>
               <span className="icon-price-tag" style={{ fontSize: '17px', marginRight: '6px' }} /> {t("bundle")}
             </Typography>
 
@@ -804,7 +804,7 @@ const ProfilePage = () => {
                 sx={{
                   border: '1px solid gray',
                   textTransform: 'capitalize',
-                  color: 'gray',
+                  color: theme.palette.text.gray_white,
                   padding: '1px 20px',
                   borderRadius: '6px',
                   fontSize: '11px',
