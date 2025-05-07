@@ -15,16 +15,19 @@ import { DashboardDataContext } from "../../../context/DashboardDataContext";
 
 export const Row1 = () => {
   const [year, setYear] = React.useState("2025");
-  const { t } = useTranslation()
-  const theme = useTheme()
+  const { t } = useTranslation();
+  const theme = useTheme();
   const handleYearChange = (event) => {
     setYear(event.target.value);
   };
-  const { salesData, getSalesDashboard } = React.useContext(DashboardDataContext);
+  const { salesData, getSalesDashboard } =
+    React.useContext(DashboardDataContext);
 
   React.useEffect(() => {
     getSalesDashboard(year);
   }, [year]);
+  console.log("salesData in row1", salesData);
+  
 
   return (
     <Paper
@@ -34,11 +37,16 @@ export const Row1 = () => {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        overflowX: 'auto'
+        overflow: "hidden",
       }}
     >
-      <Grid width={"80%"} >
-        <Grid container justifyContent="space-between" alignItems="center" sx={{ margin: "20px 5px" }}>
+      <Grid width={"80%"}>
+        <Grid
+          container
+          justifyContent="space-between"
+          alignItems="center"
+          sx={{ margin: "20px 5px 10px 5px " }}
+        >
           <Grid
             item
             sx={{
@@ -76,16 +84,28 @@ export const Row1 = () => {
                   disableScrollLock: true,
                 }}
               >
-                <MenuItem value="2022" sx={{ fontSize: "12px", color: theme.palette.text.gray }}>
+                <MenuItem
+                  value="2022"
+                  sx={{ fontSize: "12px", color: theme.palette.text.gray }}
+                >
                   2022
                 </MenuItem>
-                <MenuItem value="2023" sx={{ fontSize: "12px", color: theme.palette.text.gray }}>
+                <MenuItem
+                  value="2023"
+                  sx={{ fontSize: "12px", color: theme.palette.text.gray }}
+                >
                   2023
                 </MenuItem>
-                <MenuItem value="2024" sx={{ fontSize: "12px", color: theme.palette.text.gray }}>
+                <MenuItem
+                  value="2024"
+                  sx={{ fontSize: "12px", color: theme.palette.text.gray }}
+                >
                   2024
                 </MenuItem>
-                <MenuItem value="2025" sx={{ fontSize: "12px", color: theme.palette.text.gray }}>
+                <MenuItem
+                  value="2025"
+                  sx={{ fontSize: "12px", color: theme.palette.text.gray }}
+                >
                   2025
                 </MenuItem>
               </Select>
@@ -112,15 +132,22 @@ export const Row1 = () => {
           <Typography
             variant="h6"
             sx={{
-              color:theme.palette.text.gray,
+              color: theme.palette.text.gray,
               marginTop: "8px",
               border: "2px solid #ef7d00",
               padding: "2px 20px",
               borderRadius: "30px",
-              width: "140px", height: "40px",
+              width: "140px",
+              height: "40px",
             }}
           >
-            501,420 <span style={{ fontSize: "20px", opacity: '0.5' }}>£</span>
+            {(() => {
+              const sum = Object.values(salesData)
+                .map((order) => order.total_revenue || 0)
+                .reduce((acc, curr) => acc + curr, 0);
+              return sum > 0 ? sum : 0;
+            })()}{" "}
+            <span style={{ fontSize: "20px", opacity: "0.5" }}>£</span>
           </Typography>
 
           <Grid
@@ -153,7 +180,8 @@ export const Row1 = () => {
               <Box
                 component="span"
                 sx={{
-                  backgroundImage: "linear-gradient(to right,rgb(135, 195, 241), #1C7FCB)",
+                  backgroundImage:
+                    "linear-gradient(to right,rgb(135, 195, 241), #1C7FCB)",
                   width: "25px",
                   borderRadius: "20px",
                   height: "10px",
@@ -178,7 +206,8 @@ export const Row1 = () => {
               <Box
                 component="span"
                 sx={{
-                  backgroundImage: "linear-gradient(to right,rgb(250, 160, 214), #8A2C5E)",
+                  backgroundImage:
+                    "linear-gradient(to right,rgb(250, 160, 214), #8A2C5E)",
                   width: "25px",
                   borderRadius: "20px",
                   height: "10px",

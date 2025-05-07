@@ -50,7 +50,17 @@ export const Row1 = () => {
                                 <Typography variant="subtitle1" color={theme.palette.text.gray}>{t("totalOrders")}</Typography>
                                 <span class="icon-shopping-bag" style={{ color: theme.palette.text.secondary, fontSize: "22px" }}></span>
                             </Box >
-                            <Typography variant="body2" sx={{ color: theme.palette.orangePrimary.main, fontSize: "20px" }}>5.564</Typography>
+                            <Typography variant="body2" sx={{ color: theme.palette.orangePrimary.main, fontSize: "20px" }}>
+                            {(() => {
+                                const orders = Total_Orders && typeof Total_Orders === 'object' && Total_Orders !== null 
+                                    ? Object.values(Total_Orders) 
+                                    : [];
+                                const sum = orders
+                                    .map(order => order.total_order || 0)
+                                    .reduce((acc, curr) => acc + curr, 0);
+                                return sum > 0 ? sum : 0;
+                            })()}                     
+                             </Typography>
 
                             <Cart2 Total_Orders={Total_Orders} />
 

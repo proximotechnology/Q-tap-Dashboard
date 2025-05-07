@@ -341,7 +341,7 @@ const Menu = () => {
                             sx={{
                                 display: 'flex',
                                 justifyContent: 'space-between',
-                                width: '80%',
+                                width: '100%',
                             }}
                         >
                             <Grid container spacing={1}>
@@ -355,11 +355,18 @@ const Menu = () => {
                                     value={mode}
                                     exclusive
                                     onChange={(e) => setMode(e.target.value)}
+                                    sx={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        width: '90%',
+                                    }}
                                 >
                                     <ToggleButton
                                         value="white"
                                         sx={{
                                             padding: '5px 8px',
+                                            border: '1px solid rgb(223, 223, 223) !important', // Use !important to override MUI defaults
+                                            borderRadius: '5px !important', // Ensure border radius is applied
                                             backgroundColor: mode === 'white' ? theme.palette.orangePrimary.main : 'AAAAAA',
                                             color: mode === 'white' ? '#FFFFFF' : theme.palette.bodyColor.gray_white,
                                         }}
@@ -373,6 +380,8 @@ const Menu = () => {
                                         value="dark"
                                         sx={{
                                             padding: '5px 8px',
+                                            border: '1px solid rgb(223, 223, 223) !important', // Use !important to override MUI defaults
+                                            borderRadius: '5px !important', // Ensure border radius is applied
                                             backgroundColor: mode === 'dark' ? theme.palette.orangePrimary.main : 'inherit',
                                             color: mode === 'dark' ? '#FFFFFF' : theme.palette.bodyColor.gray_white,
                                         }}
@@ -397,11 +406,18 @@ const Menu = () => {
                                 >
                                     {t("menus.design")}
                                 </Typography>
-                                <ToggleButtonGroup value={design} exclusive onChange={handleDesignChange}>
+                                <ToggleButtonGroup value={design} exclusive onChange={handleDesignChange}
+                                        sx={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        width: '90%',
+                                    }}>
                                     <ToggleButton
                                         value="grid"
                                         sx={{
                                             padding: '5px 8px',
+                                            border: '1px solid rgb(223, 223, 223) !important', // Use !important to override MUI defaults
+                                            borderRadius: '5px !important', // Ensure border radius is applied
                                             backgroundColor: design === 'grid' ? theme.palette.orangePrimary.main : 'inherit',
                                             color: design === 'grid' ? theme.palette.orangePrimary.main : 'inherit',
                                         }}
@@ -415,6 +431,8 @@ const Menu = () => {
                                         value="list"
                                         sx={{
                                             padding: '5px 8px',
+                                            border: '1px solid rgb(223, 223, 223) !important', // Use !important to override MUI defaults
+                                            borderRadius: '5px !important', // Ensure border radius is applied
                                             backgroundColor: design === 'list' ? theme.palette.orangePrimary.main : 'inherit',
                                             color: design === 'list' ? theme.palette.orangePrimary.main : 'inherit',
                                         }}

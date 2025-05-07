@@ -223,7 +223,7 @@ const ChatApp = () => {
                     >
                       <Avatar
                         sx={{
-                          backgroundColor: selectedCustomer?.id === customer.id ? '#ef7d00' : theme.palette.text.gray,
+                          backgroundColor: selectedCustomer?.id === customer.id ? '#ef7d00' : theme.palette.text.gray_light,
                           width: 35,
                           height: 35,
                         }}
@@ -233,8 +233,8 @@ const ChatApp = () => {
                     </Badge>
                   </ListItemAvatar>
                   <ListItemText
-                    primary={<Typography sx={{ fontSize: '11px', color: theme.palette.text.gray }}>{customer.name}</Typography>}
-                    secondary={<Typography sx={{ fontSize: '8px', color: theme.palette.text.gray, marginLeft: '10px' }}>{messages && messages.length > 0 ? messages[messages.length - 1].message.slice(0, 25) : customer.email}</Typography>}
+                    primary={<Typography sx={{ fontSize: '11px', color: theme.palette.text.gray_light }}>{customer.name}</Typography>}
+                    secondary={<Typography sx={{ fontSize: '8px', color: theme.palette.text.gray_light, marginLeft: '10px' }}>{messages && messages.length > 0 ? messages[messages.length - 1].message.slice(0, 25) : customer.email}</Typography>}
                   />
                 </Box>
                 <Typography
@@ -245,10 +245,10 @@ const ChatApp = () => {
                     textAlign: 'right',
                   }}
                 >
-                  <span style={{ color: theme.palette.text.gray }}>
+                  <span style={{ color: theme.palette.text.gray_light }}>
                     {new Date(customer.lastMessageTime).toLocaleDateString()}
                   </span>
-                  <span style={{ color: theme.palette.text.gray }}>
+                  <span style={{ color: theme.palette.text.gray_light }}>
                     {new Date(customer.lastMessageTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </span>
                 </Typography>
@@ -268,10 +268,10 @@ const ChatApp = () => {
             <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <Box sx={{ padding: '0px 20px', flexGrow: 1, overflowY: 'auto' }}>
                 <Box display='flex' justifyContent='space-between'>
-                  <Typography sx={{ color: theme.palette.text.gray, fontSize: '12px' }}>{selectedCustomer.name}</Typography>
+                  <Typography sx={{ color: theme.palette.text.gray_light, fontSize: '12px' }}>{selectedCustomer.name}</Typography>
                   <Box>
-                    <LocalPhoneIcon sx={{ fontSize: '20px', color: theme.palette.text.gray, margin: '0px 13px', cursor: 'pointer' }} />
-                    <PersonOutlineOutlinedIcon sx={{ fontSize: '20px', color: theme.palette.text.gray, cursor: 'pointer' }} onClick={handleOpenMenu} />
+                    <LocalPhoneIcon sx={{ fontSize: '20px', color: theme.palette.text.gray_light, margin: '0px 13px', cursor: 'pointer' }} />
+                    <PersonOutlineOutlinedIcon sx={{ fontSize: '20px', color: theme.palette.text.gray_light, cursor: 'pointer' }} onClick={handleOpenMenu} />
                   </Box>
                 </Box>
                 <Divider />

@@ -80,6 +80,8 @@ export const LoginAffiliate = () => {
             toast.error(t("someThingGoWrong"))
           } else if (loginUserType === 'qtap_affiliates') {
             localStorage.setItem('affiliateToken', response.data.token);
+            localStorage.setItem('userName', response.data.user.name);
+            localStorage.setItem('userEmail', response.data.user.email);
             navigate('/dashboard-affiliate');
           }
           /* this part modified since the logic of client login change*/

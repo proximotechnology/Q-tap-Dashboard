@@ -1,7 +1,7 @@
 import { Button, Card, CardContent, Grid, MenuItem, Select, Typography } from '@mui/material'
 import { Box, useTheme } from '@mui/system'
 import React, { useEffect, useState } from 'react'
-import LineChart1 from '../../../Wallet/Row1/LineChart1'
+import LineChart1 from './LineChart1'
 import { useTranslation } from 'react-i18next'
 import axios from 'axios'
 import { BASE_URL } from '../../../../utils/helperFunction'
