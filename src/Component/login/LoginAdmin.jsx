@@ -165,7 +165,7 @@ export const LoginAdmin = () => {
                     cursor: 'pointer',
                     margin: '5px 0px',
                 }}
-                onClick={() => navigate('/reset')}
+                onClick={() => navigate('/reset-admin')}
             >
                 <span style={{ borderBottom: `1px solid ${theme.palette.text.blue}` }}>{t("resetPassword")}</span>
             </Typography>

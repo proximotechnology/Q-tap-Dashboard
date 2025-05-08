@@ -154,7 +154,7 @@ export const PersonalInfoAdmin = ({ clientInfoData }) => {
           <Box
             sx={{
               width: "150px",
-              height: "100%",
+              height: "150px",
               borderRadius: "50%",
               overflow: "hidden",
               position: "relative",
@@ -167,9 +167,9 @@ export const PersonalInfoAdmin = ({ clientInfoData }) => {
             <img
               src={image ? `${BASE_URL_IMG}${image}` : "/images/User.jpg"}
               alt="user"
-              width="150"
-              height="150"
+              style={{ width: "110%", height: "110%"}}
             />
+
             <Box
               sx={{
                 position: "absolute",

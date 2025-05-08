@@ -1,12 +1,12 @@
 
-import QtapLogo from '../QtapLogo'
 import { PasswordReset } from './PasswordReset'
 import React from 'react'
 import { Box, Grid} from "@mui/material";
-import Language from '../dashboard/TopBar/Language';
+import { Language } from '../../../../Component/dashboard/TopBar/Language';
+import QtapLogo from '../../../../Component/QtapLogo';
 
 
-export const PasswordResetPage = () => {
+export const PasswordResetPageAffiliate = () => {
  
    
 
@@ -31,7 +31,7 @@ export const PasswordResetPage = () => {
               style={{ width: "20px", height: "20px", marginRight: "30px" }}
             />
 
-                            <Language/>
+                            <Language />
                         </Box>
 
                         <Box display="flex" flexDirection="column" justifyContent="center"

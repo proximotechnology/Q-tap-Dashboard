@@ -77,7 +77,7 @@ const Financial = ({
           </Box>
         ) : (
           <Box sx={{ fontSize: "35px", marginTop: "8px", color: theme.palette.orangePrimary.main }}>
-            {allData.Revenue}
+            {allData.balance}
             <span style={{ color: "gray", fontSize: "14px" }}> EGP</span>
           </Box>
         )}

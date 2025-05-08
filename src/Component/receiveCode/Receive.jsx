@@ -6,31 +6,31 @@ import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { BASE_URL } from './../../utils/helperFunction';
+import { BASE_URL } from '../../utils/helperFunction';
 
-export const Reset = () => {
+export const Receive = () => {
     const navigate = useNavigate();
     const theme = useTheme();
     const { t } = useTranslation();
-    const [email, setEmail] = useState('');
+    const [otp, setOtp] = useState('');
     const [isLoading, setIsLoading] = useState(false); // Added for loading state
 
     const handleSend = async () => {
         try {
-            if (email === '') {
-                toast.error('Please enter your email');
-                return; // Stop execution if email is empty
+            if (otp === '') {
+                toast.error('Please enter your otp');
+                return; // Stop execution if otp is empty
             }
 
             const data = {
-                email: email,
+                otp: otp,
                 user_type: 'qtap_clients', // qtap_affiliate or qtap_clients
             };
 
             console.log('Request data:', data);
             setIsLoading(true); // Set loading state
 
-            const response = await axios.post(`${BASE_URL}sendOTP`, data, {
+            const response = await axios.post(`${BASE_URL}receiveOTP`, data, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -39,12 +39,14 @@ export const Reset = () => {
             console.log('Response:', response);
 
             if (response.status === true) {
-                toast.success('Email sent successfully check your email');
-                navigate('/receive-code');
+                toast.success('otp sent successfully check your otp');
+                navigate('/reset-password');
+            }else{
+                toast.error('otp not true');
             }
         } catch (error) {
-            console.error('Error sending email:', error);
-            toast.error('Failed to send email. Please try again.');
+            console.error('Error sending otp:', error);
+            toast.error('Failed to send otp. Please try again.');
         } finally {
             setIsLoading(false); // Reset loading state
         }
@@ -89,10 +91,10 @@ export const Reset = () => {
             </Typography>
 
             <TextField
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
                 variant="outlined"
-                placeholder={t('email')}
+                placeholder={t('enter otp')}
                 fullWidth
                 InputProps={{
                     startAdornment: (

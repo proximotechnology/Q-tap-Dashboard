@@ -1,11 +1,12 @@
 import React  from 'react'
 import { Reset } from './Reset'
-import QtapLogo from '../QtapLogo'
 import { Box,Grid } from "@mui/material";
-import Language from '../dashboard/TopBar/Language';
+import QtapLogo from '../../../../Component/QtapLogo';
+import Language from '../../../../Component/dashboard/TopBar/Language';
 
 
-export const ResetPage = () => {
+
+export const ResetPageAdmin = () => {
   return (
     <Box>
       <Box >

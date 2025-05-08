@@ -35,9 +35,9 @@ export const HomePage = () => {
             }}
           >
             <img
-              src="/assets/helplogo.svg"
+              src="/images/help.jpg"
               alt="icon"
-              style={{ width: "25px", height: "25px", marginRight: "30px" }}
+              style={{ width: "20px", height: "20px", marginRight: "30px" }}
             />
             <Language />
            

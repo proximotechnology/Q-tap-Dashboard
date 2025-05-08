@@ -22,6 +22,8 @@ export const PersonalInfo = () => {
     const {t} = useTranslation()
     const navigate = useNavigate();
     const { personalData, updatePersonalData, clearPersonalData, setPersonalData } = usePersonalContext();
+    console.log(personalData);
+    
     const [fullName, setFullName] = useState(personalData.fullName || '');
     const [phone, setPhone] = useState(personalData.phone || '');
     const [email, setEmail] = useState(personalData.email || '');
@@ -68,7 +70,7 @@ export const PersonalInfo = () => {
                 <Box sx={{ textAlign: 'center' }}>
                     <Box sx={{
                         width: '150px',
-                        height: '100%',
+                        height: '150px',
                         borderRadius: '50%',
                         overflow: 'hidden',
                         position: 'relative',
@@ -77,7 +79,7 @@ export const PersonalInfo = () => {
                         alignItems: 'center',
                         marginX:{xs:'auto',md:'0px'}
                     }}>
-                        <img src={image ? URL.createObjectURL(image) : "/images/User.jpg"} alt="user" width="150px" height="150" />
+                        <img src={image ? URL.createObjectURL(image) : "/images/User.jpg"} alt="user" style={{ width: "110%", height: "110%"}} />
                         <Box sx={{
                             position: 'absolute',
                             bottom: 0,

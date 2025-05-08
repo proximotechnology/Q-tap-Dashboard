@@ -175,7 +175,7 @@ export const AddAffiliate = () => {
             formData.append('bank_account_name', accountName);
             formData.append('address', addressBank);
 
-            const url = `${BASE_URL}qtap_affiliate`;
+            const url = `${BASE_URL}qtap_affiliate/${localStorage.getItem('affiliateId')}`;
             const method = 'post';
 
             const response = await axios({

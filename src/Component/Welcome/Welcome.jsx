@@ -58,7 +58,7 @@ export const Welcome = () => {
         <Box sx={{
           position: "absolute", right: "50px", top: "40px", cursor: "pointer", display: "flex", alignItems: "center"
         }}>
-          <img src="/assets/helplogo.svg" alt="icon" style={{ width: "25px", height: "25px", marginRight: "30px" }} />
+          <img src="/assets/help.jpg" alt="icon" style={{ width: "25px", height: "25px", marginRight: "30px" }} />
 
           <Language/>
         </Box>

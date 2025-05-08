@@ -33,20 +33,20 @@ export const BranchesPage = () => {
                     sx={{
                         position: 'absolute',
                         top: "calc(1rem + 7px)",
-                        insetInlineEnd : '1rem',
+                        insetInlineEnd: '1rem',
                         cursor: 'pointer',
                         display: 'flex',
                         alignItems: 'center',
-                        zIndex:10000
+                        zIndex: 10000
                     }}
                 >
                     <img
-                        src="/assets/helplogo.svg"
+                        src="/images/help.jpg"
                         alt="icon"
-                        style={{ width: '25px', height: '25px', marginRight: '30px' }}
+                        style={{ width: "20px", height: "20px", marginRight: "30px" }}
                     />
 
-                    <Language/>
+                    <Language />
                 </Box>
 
                 <Branches />

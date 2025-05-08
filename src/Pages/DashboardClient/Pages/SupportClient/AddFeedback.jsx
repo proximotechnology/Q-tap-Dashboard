@@ -17,6 +17,7 @@ export const AddFeedback = ({ open, handleCloseModel, onAddFeedback }) => {
     const [yourGoals, setYourGoals] = useState("");
     const [missingQTapMenus, setMissingQTapMenus] = useState("");
     const [comment, setComment] = useState("");
+    const [phone, setPhone] = useState("");
     const { t } = useTranslation();
     const theme = useTheme();
 
@@ -25,24 +26,26 @@ export const AddFeedback = ({ open, handleCloseModel, onAddFeedback }) => {
     };
 
     const handleSave = async () => {
-        if (!clientId || star === 0 || !emoji || !yourGoals || !missingQTapMenus || !comment) {
+        if (star === 0 || !emoji || !yourGoals || !missingQTapMenus || !comment || !phone) {
             toast.error(t("plFillAllField"));
             return;
         }
 
         const data = {
-            client_id: clientId,
+            brunch_id: localStorage.getItem("selectedBranch"),
             star: star.toString(),
             emoji: emoji === "sad" ? "said" : emoji, // Map "sad" to "said" as per API example
             your_goals: yourGoals,
             "missing_Q-tap_Menus": missingQTapMenus,
             comment: comment,
+            phone: phone
         };
+        // console.log("data feedback_restaurant", data);
 
         try {
             const response = await axios.post(
 
-                `${BASE_URL}feedback`,
+                `${BASE_URL}feedback_restaurant`,
                 data,
                 {
                     headers: {
@@ -61,6 +64,7 @@ export const AddFeedback = ({ open, handleCloseModel, onAddFeedback }) => {
                 setYourGoals("");
                 setMissingQTapMenus("");
                 setComment("");
+                setPhone("");
                 handleCloseModel();
             }
         } catch (error) {
@@ -95,19 +99,7 @@ export const AddFeedback = ({ open, handleCloseModel, onAddFeedback }) => {
                 <Divider sx={{ backgroundColor: '#FF6600', height: '1px' }} />
 
                 <Grid container spacing={2} sx={{ margin: "20px 0px" }}>
-                    <Grid item xs={6}>
-                        <Typography variant="body2" sx={{ fontSize: "10px", color: theme.palette.text.gray, marginBottom: "3px" }}>
-                            {t("clientId")}
-                        </Typography>
-                        <TextField
-                            variant="outlined"
-                            fullWidth
-                            placeholder={t("typeHere")}
-                            value={clientId}
-                            onChange={(e) => setClientId(e.target.value)}
-                            InputProps={{ sx: { height: '30px', fontSize: "10px" } }}
-                        />
-                    </Grid>
+
                     <Grid item xs={6}>
                         <Typography variant="body2" sx={{ fontSize: "10px", color: theme.palette.text.gray, marginBottom: "3px" }}>
                             {t("rate")}
@@ -130,6 +122,38 @@ export const AddFeedback = ({ open, handleCloseModel, onAddFeedback }) => {
                     </Grid>
                     <Grid item xs={6}>
                         <Typography variant="body2" sx={{ fontSize: "10px", color: theme.palette.text.gray, marginBottom: "3px" }}>
+                            {t("phone")}
+                        </Typography>
+                        <TextField
+                            type='number'
+                            variant="outlined"
+                            fullWidth
+                            placeholder={t("phone")}
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            InputProps={{ sx: { height: '30px', fontSize: "10px" } }}
+                        />
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Typography variant="body2" sx={{ fontSize: "10px", color: theme.palette.text.gray, marginBottom: "3px" }}>
+                            {t("yourGoals")}
+                        </Typography>
+                        <Select
+                            value={yourGoals}
+                            onChange={(e) => setYourGoals(e.target.value)}
+                            fullWidth
+                            sx={{ height: '30px', fontSize: "10px" }}
+                        >
+                            <MenuItem value="yes">
+                                {t("yes")}
+                            </MenuItem>
+                            <MenuItem value="no">
+                                {t("no")}
+                            </MenuItem>
+                        </Select>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Typography variant="body2" sx={{ fontSize: "10px", color: theme.palette.text.gray, marginBottom: "3px" }}>
                             {t("status")}
                         </Typography>
                         <Select
@@ -149,19 +173,7 @@ export const AddFeedback = ({ open, handleCloseModel, onAddFeedback }) => {
                             </MenuItem>
                         </Select>
                     </Grid>
-                    <Grid item xs={6}>
-                        <Typography variant="body2" sx={{ fontSize: "10px", color: theme.palette.text.gray, marginBottom: "3px" }}>
-                            {t("yourGoals")}
-                        </Typography>
-                        <TextField
-                            variant="outlined"
-                            fullWidth
-                            placeholder={t("typeHere")}
-                            value={yourGoals}
-                            onChange={(e) => setYourGoals(e.target.value)}
-                            InputProps={{ sx: { height: '30px', fontSize: "10px" } }}
-                        />
-                    </Grid>
+
                     <Grid item xs={12}>
                         <Typography variant="body2" sx={{ fontSize: "10px", color: theme.palette.text.gray, marginBottom: "3px" }}>
                             {t("missingQTapMenus")}

@@ -18,7 +18,11 @@ export const ProductsPage = () => {
                     position: "absolute", top: "30px", insetInlineEnd: "1rem",
                     cursor: "pointer", display: "flex", alignItems: "center",zIndex:'10000'
                 }}>
-                    <img src="/assets/helplogo.svg" alt="icon" style={{ width: "25px", height: "25px", marginRight: "30px" }} />
+                                <img
+              src="/images/help.jpg"
+              alt="icon"
+              style={{ width: "20px", height: "20px", marginRight: "30px" }}
+            />
 
                   <Language/>
                 </Box>

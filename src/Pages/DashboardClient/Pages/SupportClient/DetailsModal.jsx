@@ -9,7 +9,6 @@ const DetailsModal = ({ open, onClose, rowData }) => {
     const theme = useTheme();
     if (!rowData) return null;
     
-    const { id, client, star, satisfied } = rowData;
     
     return (
         <Modal open={open} onClose={onClose}>
@@ -44,15 +43,15 @@ const DetailsModal = ({ open, onClose, rowData }) => {
                     color: "#575756", fontSize: "12px", marginTop: "10px",
                     marginBottom: "15px"
                 }}>
-                    {t("orderId")} :<span style={{ color: theme.palette.orangePrimary.main, marginLeft: "20px", }}> #{id}</span>
+                    {t("orderId")} :<span style={{ color: theme.palette.orangePrimary.main, marginLeft: "20px", }}> #{rowData.id}</span>
                 </Typography>
 
                 <Typography variant="body1" sx={{ color: "#575756", fontSize: "12px", marginBottom: "15px" }}>
-                    {t("name")} :<span style={{ color: "#949493", marginLeft: "20px", }}>{client.name}</span>
+                    {t("name")} :<span style={{ color: "#949493", marginLeft: "20px", }}>{rowData.brunch.business_name}</span>
                 </Typography>
 
                 <Typography variant="body1" sx={{ color: "#575756", fontSize: "12px", marginBottom: "15px" }}>
-                    {t("mobileNumber")} :<span style={{ color: "#949493", marginLeft: "20px", }}>{client.mobile}</span>
+                    {t("mobileNumber")} :<span style={{ color: "#949493", marginLeft: "20px", }}>{rowData.brunch.business_name}</span>
                 </Typography>
 
 
@@ -63,7 +62,7 @@ const DetailsModal = ({ open, onClose, rowData }) => {
                     <Box sx={{ display: 'flex', gap: 1 }}>
                         {Array.from({ length: 5 }).map((_, index) => (
                             <IconButton key={index} disableRipple sx={{ padding:"0px"}}>
-                                {index < star ? (
+                                {index < rowData.star ? (
                                     <StarIcon sx={{ fontSize: "22px", color: theme.palette.orangePrimary.main }} />
                                 ) : (
                                     <StarOutlineIcon sx={{ fontSize: "22px", color: theme.palette.orangePrimary.main }} />
@@ -80,7 +79,7 @@ const DetailsModal = ({ open, onClose, rowData }) => {
                     <Box sx={{ display: 'flex', }}>
                         {Array.from({ length: 10 }).map((_, index) => (
                             <IconButton key={index} disableRipple  sx={{ padding:"3px"}}>
-                                {index < star ? (
+                                {index < rowData.star ? (
                                     <Box sx={{
                                         width: "22px", height: "22px", borderRadius: "50%", justifyContent: "center",
                                         alignItems: "center", backgroundColor: "#575756",

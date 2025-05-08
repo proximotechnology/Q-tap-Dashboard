@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { usePersonalContext } from '../../context/PersonalContext';
 import { useTranslation } from 'react-i18next';
+import { egyptGovernorates } from './../../utils/city';
 
 
 const SignUp = () => {
@@ -152,7 +153,7 @@ const SignUp = () => {
                     id="outlined-fullname"
                     startAdornment={
                         <InputAdornment position="start">
-                            <PersonOutlinedIcon sx={{ color: theme.palette.text.fixedGray,fontSize: "16px" }} />
+                            <PersonOutlinedIcon sx={{ color: theme.palette.text.fixedGray, fontSize: "16px" }} />
                         </InputAdornment>
                     }
                     required
@@ -173,19 +174,19 @@ const SignUp = () => {
                     id="outlined-phone"
                     endAdornment={
                         <InputAdornment position="end">
-                            <Typography sx={{color: theme.palette.text.fixedGray, fontSize: "10px", color: theme.palette.text.fixedBlack }} >{t("verify")}</Typography>
+                            <Typography sx={{ color: theme.palette.text.fixedGray, fontSize: "10px", color: theme.palette.text.fixedBlack }} >{t("verify")}</Typography>
                         </InputAdornment>
                     }
                     startAdornment={
                         <InputAdornment position="start">
-                            <PhoneOutlinedIcon sx={{color: theme.palette.text.fixedGray, fontSize: "16px" }} />
+                            <PhoneOutlinedIcon sx={{ color: theme.palette.text.fixedGray, fontSize: "16px" }} />
                         </InputAdornment>
                     }
                     placeholder={t("mobileNumber")}
                     required
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    sx={{color: theme.palette.text.fixedGray, borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
+                    sx={{ color: theme.palette.text.fixedGray, borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
                 />
             </FormControl>
 
@@ -195,14 +196,14 @@ const SignUp = () => {
                     type="email"
                     startAdornment={
                         <InputAdornment position="start">
-                            <EmailOutlinedIcon sx={{color: theme.palette.text.fixedGray, fontSize: "16px" }} />
+                            <EmailOutlinedIcon sx={{ color: theme.palette.text.fixedGray, fontSize: "16px" }} />
                         </InputAdornment>
                     }
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={t("email")}
-                    sx={{color: theme.palette.text.fixedGray, borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
+                    sx={{ color: theme.palette.text.fixedGray, borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
                 />
             </FormControl>
 
@@ -249,19 +250,38 @@ const SignUp = () => {
                             value={day}
                             onChange={(e) => setDay(e.target.value)}
                             displayEmpty
-                            sx={{ borderRadius: '50px', height: '33px', fontSize: "10px", color: theme.palette.text.fixedGray, marginRight: "5px" }}
+                            sx={{
+                                borderRadius: '50px',
+                                height: '33px',
+                                fontSize: "10px",
+                                color: theme.palette.text.fixedGray,
+                                marginRight: "5px"
+                            }}
                         >
-                            <MenuItem value="" disabled sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>
+                            <MenuItem
+                                value=""
+                                disabled
+                                sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}
+                            >
                                 {t("day")}
                             </MenuItem>
-                            {[...Array(31).keys()].map((i) => (
-                                <MenuItem key={i + 1} value={i + 1} sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >
-                                    {String(i + 1).padStart(2, '0')}
-                                </MenuItem>
-                            ))}
+
+                            {[...Array(31).keys()].map((i) => {
+                                const dayStr = String(i + 1).padStart(2, '0');
+                                return (
+                                    <MenuItem
+                                        key={dayStr}
+                                        value={dayStr}
+                                        sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}
+                                    >
+                                        {dayStr}
+                                    </MenuItem>
+                                );
+                            })}
                         </Select>
                     </FormControl>
                 </Grid>
+
 
                 <Grid item xs={4}>
                     <FormControl fullWidth>
@@ -276,7 +296,7 @@ const SignUp = () => {
                                 {t("year")}
                             </MenuItem>
                             {Array.from({ length: 2025 - 2000 + 1 }, (_, i) => (
-                                <MenuItem key={i + 2000} value={i + 2000} sx={{ fontSize: "10px", color: theme.palette.text.fixedWhite }}>
+                                <MenuItem key={i + 2000} value={i + 2000} sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>
                                     {i + 2000}
                                 </MenuItem>
                             ))}
@@ -292,16 +312,21 @@ const SignUp = () => {
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
                     displayEmpty
-                    sx={{color: theme.palette.text.fixedGray, borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px",}}
+                    sx={{ color: theme.palette.text.fixedGray, borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px", }}
                     startAdornment={
                         <InputAdornment position="start">
-                            <span class="icon-map" style={{ color: theme.palette.text.fixedGray,fontSize: "14px" }}></span>
+                            <span class="icon-map" style={{ color: theme.palette.text.fixedGray, fontSize: "14px" }}></span>
                         </InputAdornment>
                     }
                 >
                     <MenuItem value="" disabled >
                         {t("country")}
                     </MenuItem>
+                    {egyptGovernorates.map((governorate) => (
+                        <MenuItem key={governorate} value={governorate} sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >
+                            {governorate}
+                        </MenuItem>
+                    ))}
                     <MenuItem value="US" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >United States</MenuItem>
                     <MenuItem value="CA" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >Canada</MenuItem>
                     <MenuItem value="UK" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >United Kingdom</MenuItem>
@@ -337,7 +362,7 @@ const SignUp = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     startAdornment={
                         <InputAdornment position="start">
-                            <span class="icon-padlock" style={{color: theme.palette.text.fixedGray, fontSize: "18px" }}></span>
+                            <span class="icon-padlock" style={{ color: theme.palette.text.fixedGray, fontSize: "18px" }}></span>
                         </InputAdornment>
                     }
                     endAdornment={
@@ -347,16 +372,16 @@ const SignUp = () => {
                                 onClick={handleClickShowPassword}
                                 edge="end"
                             >
-                                {showPassword ? <VisibilityOffOutlinedIcon sx={{ color: theme.palette.text.fixedGray,fontSize: "18px" }} />
+                                {showPassword ? <VisibilityOffOutlinedIcon sx={{ color: theme.palette.text.fixedGray, fontSize: "18px" }} />
                                     :
-                                    <span class="icon-show" style={{ color: theme.palette.text.fixedGray,fontSize: "16px" }}></span>
+                                    <span class="icon-show" style={{ color: theme.palette.text.fixedGray, fontSize: "16px" }}></span>
                                 }
 
                             </IconButton>
                         </InputAdornment>
                     }
                     placeholder={t("password")}
-                    sx={{color: theme.palette.text.fixedGray, borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
+                    sx={{ color: theme.palette.text.fixedGray, borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
                 />
             </FormControl>
 
@@ -369,7 +394,7 @@ const SignUp = () => {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     startAdornment={
                         <InputAdornment position="start">
-                            <span class="icon-padlock" style={{ color: theme.palette.text.fixedGray,fontSize: "18px" }}></span>
+                            <span class="icon-padlock" style={{ color: theme.palette.text.fixedGray, fontSize: "18px" }}></span>
 
                         </InputAdornment>
                     }
@@ -380,15 +405,15 @@ const SignUp = () => {
                                 onClick={handleClickShowConfirmPassword}
                                 edge="end"
                             >
-                                {showPassword ? <VisibilityOffOutlinedIcon sx={{ color: theme.palette.text.fixedGray,fontSize: "18px" }} />
+                                {showPassword ? <VisibilityOffOutlinedIcon sx={{ color: theme.palette.text.fixedGray, fontSize: "18px" }} />
                                     :
-                                    <span class="icon-show" style={{color: theme.palette.text.fixedGray, fontSize: "16px" }}></span>
+                                    <span class="icon-show" style={{ color: theme.palette.text.fixedGray, fontSize: "16px" }}></span>
                                 }
                             </IconButton>
                         </InputAdornment>
                     }
                     placeholder={t("confirmPass")}
-                    sx={{color: theme.palette.text.fixedGray, borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
+                    sx={{ color: theme.palette.text.fixedGray, borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
                 />
             </FormControl>
 

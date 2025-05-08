@@ -18,9 +18,9 @@ export const Row1 = () => {
   const { walletChartClientData, getClientWalletChart } = React.useContext(DashboardDataContext);
   // Fetch financial data
   React.useEffect(() => {
-      getClientWalletChart(year);
+    getClientWalletChart(year);
   }, [year]);
-  // console.log("allData WALLET", allData);
+  console.log("allData WALLET", walletChartClientData);
 
 
   return (
@@ -110,7 +110,13 @@ export const Row1 = () => {
               zIndex: 1,
             }}
           >
-            0.00 <span style={{ fontSize: "20px", opacity: '0.5' }}>£</span>
+            {(() => {
+              const sum = Object.values(walletChartClientData)
+                .map((order) => order.total_revenue || 0)
+                .reduce((acc, curr) => acc + curr, 0);
+              return sum > 0 ? sum : 0;
+            })()}{" "}
+            <span style={{ fontSize: "20px", opacity: '0.5' }}>£</span>
           </Typography>
 
 

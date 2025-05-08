@@ -70,6 +70,13 @@ import { LoginWaiter } from './Component/DashboardClient/LoginWaiter';
 import { AddRole } from './Pages/DashboardClient/Pages/User/AddRole';
 import HomePageAffiliate from './Pages/HomePageAffiliate';
 import { AddAffiliate } from './Pages/DashboardAffiliate/Pages/WalletAffiliate/AddAffiliate';
+import { ReceivePage } from './Component/receiveCode/ReceivePage';
+import { ResetPageAffiliate } from './Pages/DashboardAffiliate/ResetPasswordAffiliate/reset/ResetPageAffiliate';
+import { ReceivePageAffiliate } from './Pages/DashboardAffiliate/ResetPasswordAffiliate/receiveCode/ReceivePageAffiliate';
+import { PasswordResetPageAffiliate } from './Pages/DashboardAffiliate/ResetPasswordAffiliate/PasswordReset/PasswordResetPageAffiliate';
+import { ResetPageAdmin } from './Pages/DashboardHome/ResetPasswordAdmin/reset/ResetPageAdmin';
+import { ReceivePageAdmin } from './Pages/DashboardHome/ResetPasswordAdmin/receiveCode/ReceivePageAdmin';
+import { PasswordResetPageAdmin } from './Pages/DashboardHome/ResetPasswordAdmin/PasswordReset/PasswordResetPageAdmin';
 
 
 function App() {
@@ -77,7 +84,7 @@ function App() {
     {
       path: "/",
       element: <HomePage />, // done
-    },{
+    }, {
       path: "/affiliate-login",
       element: <HomePageAffiliate />, // done
     },
@@ -87,11 +94,39 @@ function App() {
     },
     {
       path: "/reset",
-      element: <ResetPage />, //  done
+      element: <ResetPage />, //  done client reset pass
+    },
+    {
+      path: "/receive-code",
+      element: <ReceivePage />,// done client reset pass
     },
     {
       path: "/reset-password",
-      element: <PasswordResetPage />,// done
+      element: <PasswordResetPage />,// done client reset pass
+    },
+    {
+      path: "/reset-affiliate",
+      element: <ResetPageAffiliate />, //  done  affiliate reset pass
+    },
+    {
+      path: "/receive-code-affiliate",
+      element: <ReceivePageAffiliate />,// done  affiliate reset pass
+    },
+    {
+      path: "/reset-password-affiliate",
+      element: <PasswordResetPageAffiliate />,// done  affiliate reset pass
+    },
+    {
+      path: "/reset-admin",
+      element: <ResetPageAdmin />, //  done  admin reset pass
+    },
+    {
+      path: "/receive-code-admin",
+      element: <ReceivePageAdmin />,// done  admin reset pass
+    },
+    {
+      path: "/reset-password-admin",
+      element: <PasswordResetPageAdmin />,// done  admin reset pass
     },
     {
       path: "/product",
@@ -336,7 +371,7 @@ function App() {
           // Handle chat type
           {
             localStorage.getItem("adminToken") &&
-            toast.success(`💬 New Message: ${data?.message?.message}`);
+              toast.success(`💬 New Message: ${data?.message?.message}`);
           }
           // Add logic to update chat UI or state
           break;

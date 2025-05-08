@@ -1,11 +1,11 @@
 import React  from 'react'
-import { Reset } from './Reset'
-import QtapLogo from '../QtapLogo'
+import { Receive } from './Receive'
 import { Box,Grid } from "@mui/material";
-import Language from '../dashboard/TopBar/Language';
+import QtapLogo from '../../../../Component/QtapLogo';
+import Language from '../../../../Component/dashboard/TopBar/Language';
 
 
-export const ResetPage = () => {
+export const ReceivePageAdmin = () => {
   return (
     <Box>
       <Box >
@@ -37,7 +37,7 @@ export const ResetPage = () => {
                 </Box>
 
 
-                <Reset sx={{ width: "100%" }} />
+                <Receive sx={{ width: "100%" }} />
               </Box>
 
             </Box>

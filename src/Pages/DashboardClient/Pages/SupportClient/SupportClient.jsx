@@ -27,7 +27,6 @@ const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onC
 
   // Format the date
   const formattedDate = new Date(created_at).toLocaleDateString();
-  console.log(status, "askjflj ");
 
   const { t } = useTranslation();
   return (
@@ -168,6 +167,34 @@ const Support = () => {
     setOpenModalRow(false);
   };
 
+  //========================================== get question data 
+
+  const [questionData, setQuestionData] = useState([]);
+
+  const getQuestionData = async () => {
+    try {
+
+      const response = await axios.get(`${BASE_URL}faq_qtap`, {
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
+        }
+      })
+
+      if (response.data) {
+        setQuestionData(response.data);
+      }
+      // console.log("question data response ", response.data);
+
+    } catch (error) {
+      console.log("error question data ", error);
+
+    }
+
+  }
+  useEffect(() => {
+    getQuestionData();
+  }, [])
   //========================================== get feedback data 
 
   const [feedbackData, setFeedbackData] = useState([]);
@@ -175,7 +202,7 @@ const Support = () => {
   const getFeedbackData = async () => {
     try {
 
-      const response = await axios.get(`${BASE_URL}feedback`, {
+      const response = await axios.get(`${BASE_URL}feedback_restaurant`, {
         headers: {
           'Content-Type': 'application/json',
           "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
@@ -196,12 +223,34 @@ const Support = () => {
   useEffect(() => {
     getFeedbackData();
   }, [])
+  //========================================== handle delete Question
+
+  const handleDeleteQuestion = async (id) => {
+    try {
+
+      const response = await axios.delete(`${BASE_URL}faq_qtap/${id}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
+        }
+      })
+
+      if (response.data) {
+        toast.success(t("Question deleted Success"));
+        getQuestionData();
+      }
+    } catch (error) {
+      console.log("error delete Question ", error);
+      toast.error(t("Question deleted Error"));
+
+    }
+  }
   //========================================== handle delete feedback
 
   const handleDeleteFeedback = async (id) => {
     try {
 
-      const response = await axios.delete(`${BASE_URL}feedback/${id}`, {
+      const response = await axios.delete(`${BASE_URL}feedback_restaurant/${id}`, {
         headers: {
           'Content-Type': 'application/json',
           "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
@@ -287,7 +336,7 @@ const Support = () => {
         brunch_id: localStorage.getItem("selectedBranch")
       };
 
-      console.log(" dat2a add", data);
+      // console.log(" dat2a add", data);
 
       const response = await axios.post(
 
@@ -322,7 +371,7 @@ const Support = () => {
 
       };
 
-      console.log(" dat2a", data);
+      // console.log(" dat2a", data);
 
       const response = await axios.post(
 
@@ -463,15 +512,15 @@ const Support = () => {
             </Typography>
           </Box>
         </Box>
-        <AddQuestion open={openQuestionModal} handleCloseModel={handleCloseQuestionModal} onAddQuestion={addQuestion} />
+        <AddQuestion open={openQuestionModal} handleCloseModel={handleCloseQuestionModal} onAddQuestion={addQuestion} getQuestionData={getQuestionData} />
         <AddFeedback open={openFeedbackModal} handleCloseModel={handleCloseFeedbackModal} onAddFeedback={addFeedback} />
         <Divider sx={{
           width: "94%", height: "2px", background: "linear-gradient(45deg, #FDB913, #F2672E)", borderRadius: "50px",
           margin: "5px 30px",
         }} />
 
-        <Box sx={{ width: '100%', padding: "0px 30px ", display: 'flex', flexDirection: 'column', gap: 1 }}>
-          {feedbackData.slice(0, 3).map((question, index) => (
+        <Box sx={{ width: '100%', minHeight: "40px", maxHeight: "150px", overflowY: 'auto', padding: "0px 30px ", display: 'flex', flexDirection: 'column', gap: 1 }}>
+          {questionData.map((question, index) => (
             <Box
               key={index}
               sx={{
@@ -485,11 +534,11 @@ const Support = () => {
                   color: theme.palette.text.gray_light,
                 }}
               >
-                {question.comment}
+                {question.question}
               </Typography>
 
               <Box sx={{ display: 'flex', gap: 1 }}>
-                <IconButton size="small" onClick={() => handleDelete(index)} >
+                <IconButton size="small" onClick={() => handleDeleteQuestion(question.id)} >
                   <span className='icon-delete' style={{ fontSize: "18px", color: theme.palette.text.gray_light }}></span>
                 </IconButton>
                 <IconButton size="small" >
@@ -545,7 +594,7 @@ const Support = () => {
                     whiteSpace: "nowrap",
                   }}
                 >
-                  {discount.client.name}
+                  {discount.brunch?.business_name}
                 </TableCell>
                 <TableCell
                   sx={{
@@ -559,7 +608,7 @@ const Support = () => {
                     whiteSpace: "nowrap",
                   }}
                 >
-                  {discount.client.mobile}
+                  +{discount.phone}
                 </TableCell>
                 <TableCell
                   sx={{

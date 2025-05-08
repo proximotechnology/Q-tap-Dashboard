@@ -17,7 +17,11 @@ export const PaymentPage = () => {
           position: "absolute", top: "calc(1rem + 7px)", insetInlineEnd: "1rem",
           cursor: "pointer", display: "flex", alignItems: "center",zIndex:'9999'
         }}>
-          <img src="/assets/helplogo.svg" alt="icon" style={{ width: "25px", height: "25px", marginRight: "30px" }} />
+                      <img
+              src="/images/help.jpg"
+              alt="icon"
+              style={{ width: "20px", height: "20px", marginRight: "30px" }}
+            />
 
           <Language/>
         </Box>

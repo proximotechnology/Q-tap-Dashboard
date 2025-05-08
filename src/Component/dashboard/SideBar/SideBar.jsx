@@ -116,13 +116,14 @@ export default function SideBar({ isOpen, handleToggleSideBar }) {
         }}>
             <Box sx={{ display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
                 <img
-                    src={
-                        localStorage.getItem("themeMode") !== null
-                            ? (localStorage.getItem("themeMode") === "dark"
-                                ? "/assets/qtap.svg"
-                                : "/assets/qtapwhite.svg")
-                            : "/assets/qtap.svg"
-                    }
+                    // src={
+                    //     localStorage.getItem("themeMode") !== null
+                    //         ? (localStorage.getItem("themeMode") === "dark"
+                    //             ? "/assets/qtap.svg"
+                    //             : "/assets/qtapwhite.svg")
+                    //         : "/assets/qtap.svg"
+                    // }
+                    src={"/assets/qtap.svg"}
                     alt="Logo"
                     style={{ width: '110px' }}
                 />

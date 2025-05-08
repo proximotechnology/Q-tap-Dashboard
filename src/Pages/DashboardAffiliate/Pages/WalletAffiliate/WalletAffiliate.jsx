@@ -2,9 +2,9 @@ import { Button, Card, CardContent, Grid, Slider, Typography, Paper } from '@mui
 import { Box, useTheme } from '@mui/system'
 import React from 'react'
  
-import { TableTransaction } from '../../../DashboardClient/Pages/WalletClient/Transaction/TableTransaction';
 import {useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
+import { TableTransaction } from './TableTransaction';
 
 
 const marks = [

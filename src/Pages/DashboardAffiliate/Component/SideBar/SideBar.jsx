@@ -1,10 +1,11 @@
 
 import React from "react";
-import { Box, List, ListItemButton, ListItemIcon, ListItemText, Tooltip, useTheme } from "@mui/material";
+import { Box, Divider, List, ListItemButton, ListItemIcon, ListItemText, Tooltip, useTheme } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { grey } from "@mui/material/colors";
 import { useTranslation } from "react-i18next";
 import SidebarExtraMobileSection from "../../../../Component/SidebarExtraMobileSection";
+import { Logout, Message } from "@mui/icons-material";
 
 
 const Arr1 = [
@@ -40,14 +41,8 @@ export default function SideBar({ isOpen }) {
                 display: { xs: isOpen ? 'block' : 'none', md: "block" },
                 zIndex: 1000
             }}>
-            <Box sx={{ display: "felx", justifyContent: "center", textAlign: "center", alignItems: "center" , margin:"10px 0px"}}>
-                <img src={
-                    localStorage.getItem("themeMode") !== null
-                        ? (localStorage.getItem("themeMode") === "dark"
-                            ? "/assets/qtap.svg"
-                            : "/assets/qtapwhite.svg")
-                        : "/assets/qtap.svg"
-                } alt="Logo" style={{ width: '110px' }} />
+            <Box sx={{ display: "felx", justifyContent: "center", textAlign: "center", alignItems: "center", margin: "10px 0px" }}>
+                <img src={"/assets/qtap.svg"} alt="Logo" style={{ width: '110px' }} />
             </Box>
             <SidebarExtraMobileSection />
             <List sx={{ padding: 0, marginTop: "40px" }}>
@@ -102,8 +97,46 @@ export default function SideBar({ isOpen }) {
                         </Box>
                     </Tooltip>
                 ))}
-            </List>
 
+            </List>
+            <Box sx={{ marginTop: "auto", textAlign: "center", marginTop: "400px" }}>
+            <Divider sx={{ height: "1px", backgroundColor: "rgb(221, 221, 221)" , width:"80%"}} />
+
+                <ListItemButton
+                    sx={{
+                        justifyContent: "start",
+                        color: theme.palette.text.gray,
+                        borderRadius: "5px",
+
+                    }}
+                    onClick={() => {
+                        navigate('/affiliate-login');
+                        localStorage.removeItem("affiliateToken");
+                    }}
+                >
+                    <Logout sx={{ color: "rgb(186, 185, 185)", fontSize: "17px" }} />
+                    <ListItemText
+                        primary={t("Logout")}
+                        primaryTypographyProps={{ fontSize: "14px", color: "rgb(186, 185, 185)", textAlign: "start" , marginLeft: "10px"}}
+                    />
+                </ListItemButton>
+                <ListItemButton
+                    sx={{
+                        justifyContent: "start",
+                        color: theme.palette.text.gray,
+                        borderRadius: "5px",
+
+                    }}
+                    onClick={() => {
+                    }}
+                >
+                    <Message sx={{ color: "rgb(186, 185, 185)", fontSize: "17px" }} />
+                    <ListItemText
+                        primary={t("help")}
+                        primaryTypographyProps={{ fontSize: "14px", color: "rgb(186, 185, 185)", textAlign: "start" , marginLeft: "10px"}}
+                    />
+                </ListItemButton>
+            </Box>
         </Box>
     );
 }

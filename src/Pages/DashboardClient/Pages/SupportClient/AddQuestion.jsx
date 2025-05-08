@@ -3,23 +3,62 @@ import { IconButton, Modal, Typography, Divider, Grid, TextField, Button } from 
 import { Box, useTheme } from '@mui/system';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { BASE_URL } from '../../../../utils/helperFunction';
 
-export const AddQuestion = ({ open, handleCloseModel, onAddQuestion }) => {
-    const [inputValue, setInputValue] = useState("");
+export const AddQuestion = ({ open, handleCloseModel, getQuestionData }) => {
+    const [question, setQuestion] = useState("");
+    const [answer, setAnswer] = useState("");
+
     const theme = useTheme();
-    const {t} = useTranslation();
-    const handleInputChange = (e) => {
-        setInputValue(e.target.value);
+    const { t } = useTranslation();
+
+    const handleQuestionChange = (e) => {
+        setQuestion(e.target.value);
     };
 
-    const handleSave = () => {
-        if (inputValue.trim() !== "") {
-            onAddQuestion(inputValue); 
-            setInputValue(""); 
-            handleCloseModel(); 
+    const handleAnswerChange = (e) => {
+        setAnswer(e.target.value);
+    };
+
+    const handleSave = async () => {
+        if (!question || !answer) {
+            toast.error(t("plFillAllField"));
+            return;
+        }
+
+        const data = {
+            question: question,
+            answer: answer,
+        };
+
+        try {
+            const response = await axios.post(
+                `${BASE_URL}faq_qtap`,
+                data,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+                    },
+                }
+            );
+
+            if (response.data) {
+                // Pass only the question string (or adjust based on what addQuestion expects)
+                toast.success(t("question add success"));
+                setQuestion("");
+                setAnswer("");
+                getQuestionData()
+                handleCloseModel()
+
+            }
+        } catch (error) {
+            console.error('Error adding question:', error);
+            toast.error(error.response?.data?.message || t("question added error"));
         }
     };
-
     return (
         <Modal disableScrollLock open={open} onClose={handleCloseModel}>
             <Box
@@ -36,7 +75,7 @@ export const AddQuestion = ({ open, handleCloseModel, onAddQuestion }) => {
                 }}
             >
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <Typography variant="body1" sx={{ fontSize: "13px", color:theme.palette.text.gray }}>
+                    <Typography variant="body1" sx={{ fontSize: "13px", color: theme.palette.text.gray }}>
                         {t("addQuestion")}
                     </Typography>
                     <IconButton onClick={handleCloseModel}>
@@ -50,62 +89,33 @@ export const AddQuestion = ({ open, handleCloseModel, onAddQuestion }) => {
                     }}
                 />
                 <Grid item xs={10} sx={{ margin: "20px 0px" }}>
-                    <Typography variant="body2" sx={{ fontSize: "10px", color:theme.palette.text.gray, marginBottom: "3px" }}>
+                    <Typography variant="body2" sx={{ fontSize: "10px", color: theme.palette.text.gray, marginBottom: "3px" }}>
                         {t("question")}
                     </Typography>
                     <TextField
                         variant="outlined"
                         fullWidth
                         placeholder={t("typeHere")}
-                        value={inputValue}
-                        onChange={handleInputChange}
+                        value={question}
+                        onChange={handleQuestionChange}
                         InputProps={{ sx: { height: '30px', fontSize: "10px" } }}
                     />
                 </Grid>
 
                 <Grid item xs={10} sx={{ margin: "20px 0px" }}>
-                    <Typography variant="body2" sx={{ fontSize: "10px", color:theme.palette.text.gray, marginBottom: "6px" }}>
+                    <Typography variant="body2" sx={{ fontSize: "10px", color: theme.palette.text.gray, marginBottom: "3px" }}>
                         {t("answer")}
                     </Typography>
-                    <Box sx={{ display: "flex", alignItems: "center" }} gap={1}>
-                        <Typography variant="body2" sx={{ fontSize: "10px", color: "#AAAAAA" }}>
-                            {t("from")}
-                        </Typography>
-                        <Box
-                            sx={{
-                                width: "22px",
-                                height: "22px",
-                                border: "1px solid #AAAAAA",
-                                fontSize: "9px",
-                                color: "#AAAAAA",
-                                borderRadius: "50%",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                            }}
-                        >
-                            1
-                        </Box>
-                        <Typography variant="body2" sx={{ fontSize: "10px", color: "#AAAAAA" }}>
-                            {t("to")}
-                        </Typography>
-                        <Box
-                            sx={{
-                                width: "22px",
-                                height: "22px",
-                                border: "1px solid #AAAAAA",
-                                fontSize: "9px",
-                                color: "#AAAAAA",
-                                borderRadius: "50%",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                            }}
-                        >
-                            10
-                        </Box>
-                    </Box>
+                    <TextField
+                        variant="outlined"
+                        fullWidth
+                        placeholder={t("typeHere")}
+                        value={answer}
+                        onChange={handleAnswerChange}
+                        InputProps={{ sx: { height: '30px', fontSize: "10px" } }}
+                    />
                 </Grid>
+
                 <Box
                     sx={{
                         marginTop: "50px",

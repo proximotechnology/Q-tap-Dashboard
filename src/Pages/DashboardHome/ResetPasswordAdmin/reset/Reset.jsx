@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { BASE_URL } from './../../utils/helperFunction';
+import { BASE_URL } from '../../../../utils/helperFunction';
 
 export const Reset = () => {
     const navigate = useNavigate();
@@ -24,7 +24,7 @@ export const Reset = () => {
 
             const data = {
                 email: email,
-                user_type: 'qtap_clients', // qtap_affiliate or qtap_clients
+                user_type: 'qtap_admins', // qtap_affiliate or qtap_clients
             };
 
             console.log('Request data:', data);
@@ -40,7 +40,7 @@ export const Reset = () => {
 
             if (response.status === true) {
                 toast.success('Email sent successfully check your email');
-                navigate('/receive-code');
+                navigate('/receive-code-admin');
             }
         } catch (error) {
             console.error('Error sending email:', error);

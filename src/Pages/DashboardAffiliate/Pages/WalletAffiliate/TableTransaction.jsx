@@ -10,7 +10,7 @@ import {
 import MinimizeOutlinedIcon from '@mui/icons-material/MinimizeOutlined';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import { BASE_URL } from '../../../../../utils/helperFunction';
+import { BASE_URL } from '../../../../utils/helperFunction';
 
 export const TableTransaction = () => {
     const [transData, settransData] = useState([]);
@@ -18,18 +18,18 @@ export const TableTransaction = () => {
         try {
             const response = await axios.get(
 
-                `${BASE_URL}clients_transactions`,
+                `${BASE_URL}affiliate_transactions/${localStorage.getItem("affiliateId")}`,
                 {
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${localStorage.getItem("clientToken")}`,
+                        Authorization: `Bearer ${localStorage.getItem("affiliateToken")}`,
                     },
                 }
             );
 
             if (response.data.success) {
-                settransData(response?.data?.clients_transactions);
-                console.log("Fetched transactions:", response?.data.clients_transactions);
+                settransData(response?.data?.transactions);
+                // console.log("Fetched transactions:", response?.data.transactions);
 
             }
         } catch (error) {

@@ -731,13 +731,7 @@ export const AddClient = () => {
       >
         <Box>
           <img
-            src={
-              localStorage.getItem("themeMode") !== null
-                ? (localStorage.getItem("themeMode") === "dark"
-                  ? "/assets/qtap.svg"
-                  : "/assets/qtapwhite.svg")
-                : "/assets/qtap.svg"
-            }
+            src={"/assets/qtap.svg"}
             alt="Logo"
             style={{ width: '110px' }}
           />

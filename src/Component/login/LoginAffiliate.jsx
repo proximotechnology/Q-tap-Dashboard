@@ -82,6 +82,8 @@ export const LoginAffiliate = () => {
             localStorage.setItem('affiliateToken', response.data.token);
             localStorage.setItem('userName', response.data.user.name);
             localStorage.setItem('userEmail', response.data.user.email);
+            localStorage.setItem('affiliateId', response.data.user.id);
+
             navigate('/dashboard-affiliate');
           }
           /* this part modified since the logic of client login change*/
@@ -186,7 +188,7 @@ export const LoginAffiliate = () => {
           cursor: 'pointer',
           margin: '5px 0px',
         }}
-        onClick={() => navigate('/reset')}
+        onClick={() => navigate('/reset-affiliate')}
       >
         <span style={{ borderBottom: `1px solid ${theme.palette.text.blue}` }}>{t("resetPassword")}</span>
       </Typography>

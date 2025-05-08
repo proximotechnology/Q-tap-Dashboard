@@ -275,7 +275,7 @@ export const DashboardDataProvider = ({ children }) => {
         try {
             const response = await fetchWithRetry(
 
-                `${BASE_URL}Performance/${id}`,
+                `${BASE_URL}Performance_restaurant/${id}`,
                 {
                     method: 'POST',
                     headers: {

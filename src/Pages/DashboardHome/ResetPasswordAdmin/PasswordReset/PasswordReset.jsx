@@ -16,7 +16,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { BASE_URL } from '../../utils/helperFunction';
+import { BASE_URL } from '../../../../utils/helperFunction';
 
 export const PasswordReset = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -50,7 +50,7 @@ export const PasswordReset = () => {
                 password,
                 password_confirmation: confirmPassword,
                 otp,
-                user_type: 'qtap_clients', // qtap_affiliate or qtap_clients
+                user_type: 'qtap_admins', // qtap_affiliate or qtap_clients
             };
 
             console.log('Request data:', data);
@@ -66,7 +66,7 @@ export const PasswordReset = () => {
 
             if (response.status === true) {
                 toast.success(t('passwordChangedSuccess'));
-                navigate('/');
+                navigate('/admin');
             }
         } catch (error) {
             console.error('Error sending data:', error);
