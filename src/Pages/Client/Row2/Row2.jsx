@@ -21,6 +21,7 @@ import { useNavigate } from "react-router";
 import * as XLSX from "xlsx";
 import { useTranslation } from "react-i18next";
 import { BASE_URL } from "../../../utils/helperFunction";
+import { Dashboard, Settings } from "@mui/icons-material";
 
 const exportToExcel = (clients) => {
   const worksheet = XLSX.utils.json_to_sheet(clients);
@@ -421,17 +422,13 @@ export const Row2 = () => {
                       }}
                     >
                       <IconButton onClick={handleDashboardClick}>
-                        <img
-                          src="/assets/dashboard.svg"
-                          alt="icon"
-                          style={{ cursor: "pointer", width: "16px", height: "16px" }}
+                        <Dashboard
+                          style={{ cursor: "pointer", color:theme.palette.text.gray_light , fontSize:"20px" }}
                         />
                       </IconButton>
                       <IconButton onClick={() => handleEditClient(row)}>
-                        <img
-                          src="/assets/setting.svg"
-                          alt="icon"
-                          style={{ cursor: "pointer", width: "16px", height: "16px" }}
+                        <Settings
+                          style={{ cursor: "pointer", color:theme.palette.text.gray_light , fontSize:"20px" }}
                         />
                       </IconButton>
                     </TableCell>

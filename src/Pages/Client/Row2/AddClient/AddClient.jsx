@@ -1,3 +1,4 @@
+
 import {
   Avatar,
   Button,
@@ -23,14 +24,17 @@ import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
 import { useNavigate, useLocation } from "react-router";
 import { PersonalInfoAdmin } from "./PersonalInfoAdmin";
 import { BusinessInfoAdmin } from "./BusinessInfoAdmin";
-import { BASE_URL } from "../../../../utils/helperFunction";
+import { BASE_URL, BASE_URL_IMG } from "../../../../utils/helperFunction";
 import { toast } from "react-toastify";
 import { Logout, Settings } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
 
 export const AddClient = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const theme = useTheme()
+  const theme = useTheme();
+    const { t, i18n } = useTranslation();
+  
   const { clientData, isEditMode } = location.state || {};
 
   const [anchorElLanguage, setAnchorElLanguage] = useState(null);
@@ -71,6 +75,15 @@ export const AddClient = () => {
     setAnchorElUser(null);
   };
 
+  const formatTimeTo24Hour = (time) => {
+    if (!time) return "09:00";
+    const [timePart, period] = time.toLowerCase().split(" ");
+    let [hours, minutes] = timePart.split(":").map(Number);
+    if (period === "pm" && hours !== 12) hours += 12;
+    if (period === "am" && hours === 12) hours = 0;
+    return `${hours.toString().padStart(2, "0")}:${minutes ? minutes.toString().padStart(2, "0") : "00"}`;
+  };
+
   const fetchClientInfo = async (id) => {
     setLoading(true);
     try {
@@ -91,6 +104,9 @@ export const AddClient = () => {
           birth_date: result.qtap_clients.birth_date,
           country: result.qtap_clients.country,
           payment_method: result.qtap_clients.payment_method,
+          img: result.qtap_clients.img,
+          imgPreview: result.qtap_clients.img ? `${BASE_URL_IMG}${result.qtap_clients.img}` : null,
+          imgFile: null,
         });
         setBusinessInfo(
           result.qtap_clients.brunchs.map((branch) => ({
@@ -109,11 +125,13 @@ export const AddClient = () => {
             contact_info: branch.contact_info[0] || {},
             serving_ways: branch.serving_ways,
             payment_services: branch.payment_services,
+            currentDay: "Sunday", // Initialize currentDay
           }))
         );
       }
     } catch (error) {
       console.error("Error fetching client info:", error);
+      toast.error("Failed to fetch client info.");
     } finally {
       setLoading(false);
     }
@@ -131,74 +149,123 @@ export const AddClient = () => {
       return;
     }
 
-    const payload = {
-      name: personalInfo.name,
-      mobile: personalInfo.mobile,
-      email: personalInfo.email,
-      birth_date: personalInfo.birth_date,
-      country: personalInfo.country,
-      status: clientInfo.status,
-      user_type: clientInfo.user_type,
-      img: clientInfo.img,
-      payment_method: personalInfo.payment_method,
-      brunchs: businessInfo.map((branch) => ({
-        id: branch.id,
-        business_name: branch.business_name,
-        business_country: branch.business_country,
-        business_city: branch.business_city,
-        latitude: branch.latitude,
-        longitude: branch.longitude,
-        business_format: branch.business_format,
-        menu_design: branch.menu_design,
-        default_mode: branch.default_mode,
-        payment_time: branch.payment_time,
-        call_waiter: branch.call_waiter,
-        workschedule: branch.workschedule.map((schedule) => ({
-          day: schedule.day,
-          opening_time: schedule.opening_time,
-          closing_time: schedule.closing_time,
-        })),
-        contact_info: [
-          {
-            business_email: branch.contact_info.business_email,
-            business_phone: branch.contact_info.business_phone,
-            website: branch.contact_info.website,
-            facebook: branch.contact_info.facebook,
-            twitter: branch.contact_info.twitter,
-            instagram: branch.contact_info.instagram,
-            address: branch.contact_info.address,
-          },
-        ],
-        serving_ways: branch.serving_ways.map((way) => ({
-          name: way.name,
-          tables_number: way.tables_number,
-        })),
-        payment_services: branch.payment_services.map((service) => ({
-          name: service.name,
-        })),
+    const formData = new FormData();
+    formData.append("name", personalInfo.name || "");
+    formData.append("mobile", personalInfo.mobile || "");
+    formData.append("email", personalInfo.email || "");
+    formData.append("birth_date", personalInfo.birth_date || "");
+    formData.append("country", personalInfo.country || "");
+    formData.append("status", clientInfo.status || "");
+    formData.append("user_type", clientInfo.user_type || "");
+    formData.append("payment_method", personalInfo.payment_method || "");
+
+    if (personalInfo.imgFile) {
+      formData.append("img", personalInfo.imgFile);
+    }
+
+    const branches = businessInfo.map((branch) => ({
+      id: branch.id,
+      business_name: branch.business_name,
+      business_country: branch.business_country,
+      business_city: branch.business_city,
+      latitude: parseFloat(branch.latitude) || 0,
+      longitude: parseFloat(branch.longitude) || 0,
+      business_format: branch.business_format,
+      menu_design: branch.menu_design,
+      default_mode: branch.default_mode,
+      payment_time: branch.payment_time,
+      call_waiter: branch.call_waiter,
+      workschedule: branch.workschedule.map((schedule) => ({
+        day: schedule.day,
+        opening_time: formatTimeTo24Hour(schedule.opening_time),
+        closing_time: formatTimeTo24Hour(schedule.closing_time),
       })),
-    };
-    console.log("payload", payload)
+      contact_info: [
+        {
+          business_email: branch.contact_info.business_email || "",
+          business_phone: branch.contact_info.business_phone || "",
+          website: branch.contact_info.website || "",
+          facebook: branch.contact_info.facebook || "",
+          twitter: branch.contact_info.twitter || "",
+          instagram: branch.contact_info.instagram || "",
+          address: branch.contact_info.address || "",
+        },
+      ],
+      serving_ways: branch.serving_ways.map((way) => ({
+        name: way.name,
+        tables_number: way.tables_number !== null ? parseInt(way.tables_number) : null,
+      })),
+      payment_services: branch.payment_services.map((service) => ({
+        name: service.name,
+      })),
+    }));
+
+    // Primary approach: Send brunchs as a JSON string
+    // Server must parse this with json_decode($request->brunchs, true) in PHP
+    formData.append("brunchs", JSON.stringify(branches));
+
+    // Alternative approach: Send brunchs as individual array elements
+    // Uncomment this block if server cannot parse JSON string
+    branches.forEach((branch, index) => {
+      formData.append(`brunchs[${index}][id]`, branch.id);
+      formData.append(`brunchs[${index}][business_name]`, branch.business_name);
+      formData.append(`brunchs[${index}][business_country]`, branch.business_country);
+      formData.append(`brunchs[${index}][business_city]`, branch.business_city);
+      formData.append(`brunchs[${index}][latitude]`, branch.latitude);
+      formData.append(`brunchs[${index}][longitude]`, branch.longitude);
+      formData.append(`brunchs[${index}][business_format]`, branch.business_format);
+      formData.append(`brunchs[${index}][menu_design]`, branch.menu_design);
+      formData.append(`brunchs[${index}][default_mode]`, branch.default_mode);
+      formData.append(`brunchs[${index}][payment_time]`, branch.payment_time);
+      formData.append(`brunchs[${index}][call_waiter]`, branch.call_waiter);
+      branch.workschedule.forEach((schedule, sIndex) => {
+        formData.append(`brunchs[${index}][workschedule][${sIndex}][day]`, schedule.day);
+        formData.append(`brunchs[${index}][workschedule][${sIndex}][opening_time]`, schedule.opening_time);
+        formData.append(`brunchs[${index}][workschedule][${sIndex}][closing_time]`, schedule.closing_time);
+      });
+      branch.contact_info.forEach((contact, cIndex) => {
+        formData.append(`brunchs[${index}][contact_info][${cIndex}][business_email]`, contact.business_email);
+        formData.append(`brunchs[${index}][contact_info][${cIndex}][business_phone]`, contact.business_phone);
+        formData.append(`brunchs[${index}][contact_info][${cIndex}][website]`, contact.website);
+        formData.append(`brunchs[${index}][contact_info][${cIndex}][facebook]`, contact.facebook);
+        formData.append(`brunchs[${index}][contact_info][${cIndex}][twitter]`, contact.twitter);
+        formData.append(`brunchs[${index}][contact_info][${cIndex}][instagram]`, contact.instagram);
+        formData.append(`brunchs[${index}][contact_info][${cIndex}][address]`, contact.address);
+      });
+      branch.serving_ways.forEach((way, wIndex) => {
+        formData.append(`brunchs[${index}][serving_ways][${wIndex}][name]`, way.name);
+        if (way.tables_number !== null) {
+          formData.append(`brunchs[${index}][serving_ways][${wIndex}][tables_number]`, way.tables_number);
+        }
+      });
+      branch.payment_services.forEach((service, pIndex) => {
+        formData.append(`brunchs[${index}][payment_services][${pIndex}][name]`, service.name);
+      });
+    });
+
     try {
       const response = await fetch(`${BASE_URL}qtap_clients/${clientData.id}`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
         },
-        body: JSON.stringify(payload),
+        body: formData,
       });
       const result = await response.json();
-      console.log('result', result);
+      console.log("result", result);
 
-      if (result.status == "success") {
+      if (result.status === "success") {
         toast.success("Client updated successfully!");
         navigate("/client");
       } else {
-        toast.error("Failed to update client.");
+        const errorMessages = result.errors
+          ? Object.values(result.errors).flat().join("; ")
+          : result.message || result.error || "Unknown error";
+        toast.error(`Failed to update client: ${errorMessages}`);
       }
     } catch (error) {
       console.error("Error updating client:", error);
+      toast.error("An error occurred while updating client.");
     }
   };
 
@@ -395,7 +462,7 @@ export const AddClient = () => {
                   <ListItemText
                     primary="Logout"
                     primaryTypographyProps={{
-                      sx: { color: theme.palette.text.gray, fontSize: "12x" },
+                      sx: { color: theme.palette.text.gray, fontSize: "12px" },
                     }}
                   />
                 </ListItem>
@@ -461,7 +528,7 @@ export const AddClient = () => {
                 },
               }}
             >
-              <CheckOutlinedIcon sx={{ fontSize: "22px", mr: 1 }} /> Save
+              <CheckOutlinedIcon sx={{ fontSize: "22px", mr: 1 }} />{t("save")}
             </Button>
           </Grid>
         </Box>

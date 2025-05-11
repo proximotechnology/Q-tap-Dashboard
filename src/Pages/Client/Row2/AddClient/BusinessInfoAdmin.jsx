@@ -35,6 +35,7 @@ import ViewQuiltIcon from "@mui/icons-material/ViewQuilt";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import { ArrowForwardIos, ArrowBackIos, Print } from "@mui/icons-material";
 import { timeOptions } from "../../../../Component/Business-info/WorkingHoursDays";
+import { useTranslation } from 'react-i18next';
 
 const daysOfWeek = ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"];
 
@@ -50,6 +51,7 @@ export const BusinessInfoAdmin = ({
 
   const currentBranch = businessInfo[selectedBranchIndex] || {};
   const theme = useTheme()
+  const { t, i18n } = useTranslation();
   const handleChange = (field, value) => {
     setBusinessInfo((prev) =>
       prev.map((branch, index) =>
@@ -240,7 +242,7 @@ export const BusinessInfoAdmin = ({
               color={theme.palette.text.gray}
               gutterBottom
             >
-              Business Info
+              {t("busnessInfo")}
             </Typography>
             <Divider
               sx={{ width: "100%", borderBottom: "4px solid #ef7d00", marginBottom: "18px" }}
@@ -277,7 +279,7 @@ export const BusinessInfoAdmin = ({
               }}
             >
               <StorefrontOutlinedIcon sx={{ marginRight: "5px", fontSize: "20px" }} />
-              Branch {index + 1} Info
+              {t("branch")} {index + 1} {t("info")}
             </Button>
           ))}
         </Box>
@@ -572,7 +574,7 @@ export const BusinessInfoAdmin = ({
             sx={{ fontSize: "14px", color: theme.palette.text.gray_light, display: "flex" }}
           >
             <SellOutlinedIcon sx={{ color: theme.palette.text.gray_light, fontSize: "20px", marginRight: "6px" }} />{" "}
-            Bundle
+            {t("bundle")}
           </Typography>
 
           <Box display="flex" alignItems="center" justifyContent="flex-start" mb={2}>
@@ -589,7 +591,7 @@ export const BusinessInfoAdmin = ({
               <CheckOutlinedIcon
                 sx={{ fontSize: "20px", marginRight: "6px", color: "#ef7d00" }}
               />{" "}
-              Pro
+              {t("pro")}
             </Button>
 
             <Button
@@ -606,7 +608,7 @@ export const BusinessInfoAdmin = ({
                 },
               }}
             >
-              Change Bundle
+              {t("changeBundle")}
             </Button>
           </Box>
         </Grid>
@@ -621,25 +623,36 @@ export const BusinessInfoAdmin = ({
             }}
           >
             <Box sx={{ display: "flex", width: "100%" }}>
-              <Grid container spacing={1}>
+              <Grid container spacing={1} marginLeft={"2px"} >
                 <Typography
                   variant="h3"
-                  sx={{ fontSize: "13px", width: "100%", fontWeight: "500", color: theme.palette.text.gray }}
+                  sx={{ fontSize: "14px", width: "100%", fontWeight: "500", color: theme.palette.text.gray, marginBottom: "6px" }}
                 >
-                  Default Mode
+                  {t("defaultMode")}
                 </Typography>
                 <ToggleButtonGroup
                   value={currentBranch.default_mode || "white"}
                   exclusive
                   onChange={handleModeChange}
+                  sx={{
+                    backgroundColor: "transparent",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    width: "100%"
+                  }}
                 >
                   <ToggleButton
                     value="white"
                     sx={{
                       padding: "5px 8px",
-                      backgroundColor:
-                        currentBranch.default_mode === "white" ? "#E57C00" : "inherit",
+                      border: "1px solid !important", // Adds border
+                      borderColor: currentBranch.default_mode === "white" ? "#E57C00 !important" : theme.palette.text.gray_light,
+                      borderRadius: "8px !important",
+                      backgroundColor: currentBranch.default_mode === "white" ? "#E57C00" : "inherit",
                       color: currentBranch.default_mode === "white" ? "#FFFFFF" : theme.palette.text.gray_light,
+                      "&:hover": {
+                        backgroundColor: currentBranch.default_mode === "white" ? "#E57C00" : theme.palette.action.hover,
+                      },
                     }}
                   >
                     <WbSunnyIcon
@@ -649,14 +662,18 @@ export const BusinessInfoAdmin = ({
                       }}
                     />
                   </ToggleButton>
-
                   <ToggleButton
                     value="dark"
                     sx={{
                       padding: "5px 8px",
-                      backgroundColor:
-                        currentBranch.default_mode === "dark" ? "#E57C00" : "inherit",
+                      border: "1px solid !important", // Adds border
+                      borderColor: currentBranch.default_mode === "dark" ? "#E57C00 !important" : theme.palette.text.gray_light,
+                      borderRadius: "8px !important",
+                      backgroundColor: currentBranch.default_mode === "dark" ? "#E57C00" : "inherit",
                       color: currentBranch.default_mode === "dark" ? "#FFFFFF" : theme.palette.text.gray_light,
+                      "&:hover": {
+                        backgroundColor: currentBranch.default_mode === "dark" ? "#E57C00" : theme.palette.action.hover,
+                      },
                     }}
                   >
                     <NightlightIcon
@@ -673,32 +690,43 @@ export const BusinessInfoAdmin = ({
                 orientation="vertical"
                 flexItem
                 sx={{
-                  height: "50px",
-                  marginRight: "25px",
+                  height: "60px",
+                  margin: "0 25px",
                   width: "1px",
                   backgroundColor: "orange",
                 }}
               />
 
-              <Grid container spacing={1}>
+              <Grid container spacing={1} >
                 <Typography
                   variant="h6"
-                  sx={{ fontSize: "13px", width: "100%", fontWeight: "500", color: theme.palette.text.gray }}
+                  sx={{ fontSize: "14px", width: "100%", fontWeight: "500", color: theme.palette.text.gray, marginBottom: "6px" }}
                 >
-                  Menu Design
+                  {t("menus.design")}
                 </Typography>
                 <ToggleButtonGroup
                   value={currentBranch.menu_design || "grid"}
                   exclusive
                   onChange={handleDesignChange}
+                  sx={{
+                    backgroundColor: "transparent",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    width: "100%"
+                  }}
                 >
                   <ToggleButton
                     value="grid"
                     sx={{
-                      padding: "5px 8px",
-                      backgroundColor:
-                        currentBranch.menu_design === "grid" ? "#E57C00" : "inherit",
+                      padding: "7px 8px",
+                      border: "1px solid !important", // Adds border
+                      borderColor: currentBranch.menu_design === "grid" ? "#E57C00 !important" : theme.palette.text.gray_light,
+                      borderRadius: "8px !important",
+                      backgroundColor: currentBranch.menu_design === "grid" ? "#E57C00" : "inherit",
                       color: currentBranch.menu_design === "grid" ? "#FFFFFF" : theme.palette.text.gray_light,
+                      "&:hover": {
+                        backgroundColor: currentBranch.menu_design === "grid" ? "#E57C00" : theme.palette.action.hover,
+                      },
                     }}
                   >
                     <ViewQuiltIcon
@@ -711,10 +739,15 @@ export const BusinessInfoAdmin = ({
                   <ToggleButton
                     value="list"
                     sx={{
-                      padding: "5px 8px",
-                      backgroundColor:
-                        currentBranch.menu_design === "list" ? "#E57C00" : "inherit",
+                      padding: "6px 8px",
+                      border: "1px solid !important", // Adds border
+                      borderColor: currentBranch.menu_design === "list" ? "#E57C00 !important" : theme.palette.text.gray_light,
+                      borderRadius: "8px !important",
+                      backgroundColor: currentBranch.menu_design === "list" ? "#E57C00" : "inherit",
                       color: currentBranch.menu_design === "list" ? "#FFFFFF" : theme.palette.text.gray_light,
+                      "&:hover": {
+                        backgroundColor: currentBranch.menu_design === "list" ? "#E57C00" : theme.palette.action.hover,
+                      },
                     }}
                   >
                     <FormatListBulletedIcon
@@ -739,7 +772,7 @@ export const BusinessInfoAdmin = ({
                     variant="body1"
                     display="flex"
                     alignItems="center"
-                    sx={{ fontSize: "12px", color: theme.palette.text.gray }}
+                    sx={{ fontSize: "14px", color: theme.palette.text.gray , marginLeft:"3px" }}
                   >
                     <span
                       className="icon-working-hour"
@@ -754,7 +787,7 @@ export const BusinessInfoAdmin = ({
                       <span className="path7"></span>
                       <span className="path8"></span>
                     </span>
-                    Working Hours
+                    {t("workHours")}
                   </Typography>
 
                   <Grid item xs={3}>
@@ -833,15 +866,15 @@ export const BusinessInfoAdmin = ({
                   </Box>
                 </Grid>
 
-                <Grid item xs={3} sx={{ marginLeft: "" }}>
-                  <Grid container spacing={2} alignItems="center">
+                <Grid item xs={3} sx={{ marginRight: "20px" }}>
+                  <Grid container spacing={2} alignItems="center" display={"flex"}>
                     <Box display="flex">
                       <Grid item>
                         <Typography
                           variant="body1"
                           sx={{ fontSize: "11px", color: theme.palette.text.gray_light, mr: 1 }}
                         >
-                          From:
+                          {t("from")}
                         </Typography>
                       </Grid>
                       <Grid item>
@@ -869,13 +902,13 @@ export const BusinessInfoAdmin = ({
                         </TextField>
                       </Grid>
                     </Box>
-                    <Box display="flex" marginTop="3px" marginLeft="10px">
+                    <Box display="flex" marginTop="3px" marginLeft="14px">
                       <Grid item>
                         <Typography
                           variant="body1"
                           sx={{ fontSize: "11px", color: theme.palette.text.gray_light, mr: 1 }}
                         >
-                          To:
+                          {t("to")}
                         </Typography>
                       </Grid>
                       <Grid item>
@@ -907,6 +940,8 @@ export const BusinessInfoAdmin = ({
                 </Grid>
               </Grid>
             </Box>
+
+
             <Divider
               sx={{ backgroundColor: "#f4f6fc", height: "2px", margin: "8px 0px" }}
               flexItem
@@ -915,13 +950,13 @@ export const BusinessInfoAdmin = ({
             <Box>
               <Typography
                 variant="body1"
-                sx={{ display: "flex", fontSize: "12px", color: theme.palette.text.gray_light }}
+                sx={{ display: "flex", fontSize: "12px", color: theme.palette.text.gray_light, margin: "3px 6px 3px 0" }}
               >
                 <span
                   className="icon-waiter"
-                  style={{ fontSize: "20px", marginRight: "6px" }}
+                  style={{ fontSize: "22px", marginRight: "6px" }}
                 ></span>
-                Serving Ways
+                {t("servingWay")}
               </Typography>
               <Box display="flex" flexWrap="wrap" justifyContent={"space-between"}>
                 {[
@@ -951,6 +986,33 @@ export const BusinessInfoAdmin = ({
                 ))}
               </Box>
             </Box>
+            <Divider
+              sx={{ backgroundColor: "#f4f6fc", height: "2px", margin: "8px 0px" }}
+              flexItem
+            />
+            <Box>
+
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={currentBranch.call_waiter === "active"}
+                    onChange={(e) => handleCallWaiterChange(e.target.checked)}
+                    sx={{
+                      color: theme.palette.text.gray_light,
+                      "&.Mui-checked": {
+                        color: "#ef7d00",
+                      },
+                    }} />
+                }
+                label={
+                  <Typography sx={{ fontSize: "15px", color: "rgb(142, 141, 141)", }}>
+                    <span class="icon-hand-up" style={{ fontSize: "22px" }}></span>
+                    {t("activeCallWaiter")}
+                  </Typography>
+                }
+              />
+            </Box>
+
 
             <Divider
               sx={{ backgroundColor: "#f4f6fc", height: "2px", margin: "8px 0px" }}
@@ -960,13 +1022,13 @@ export const BusinessInfoAdmin = ({
             <Box>
               <Typography
                 variant="body1"
-                sx={{ display: "flex", fontSize: "12px", color: theme.palette.text.gray_light }}
+                sx={{ display: "flex", fontSize: "12px", color: theme.palette.text.gray_light, margin: "3px 6px 3px 0" }}
               >
                 <span
                   className="icon-payment"
-                  style={{ fontSize: "20px", marginRight: "6px" }}
+                  style={{ fontSize: "22px", marginRight: "6px" }}
                 ></span>
-                Payment Services
+                {t("paymentMethod")}
               </Typography>
               <Box display="flex" flexWrap="wrap" justifyContent={"space-between"}>
                 {[
@@ -1012,14 +1074,14 @@ export const BusinessInfoAdmin = ({
               >
                 <span
                   className="icon-clock"
-                  style={{ fontSize: "20px", marginRight: "6px" }}
+                  style={{ fontSize: "22px", marginRight: "6px" }}
                 ></span>
-                Payment Time
+                {t("paymentTime")}
               </Typography>
               <Box display="flex" flexWrap="wrap">
                 {[
-                  { time: "before", label: "Before" },
-                  { time: "after", label: "After" },
+                  { time: "before", label: t("beforeServing") },
+                  { time: "after", label: t("afterServing") },
                 ].map((option) => (
                   <FormControlLabel
                     key={option.time}
@@ -1035,7 +1097,7 @@ export const BusinessInfoAdmin = ({
                         }} />
                     }
                     label={
-                      <Typography sx={{ fontSize: "12px", color: theme.palette.text.gray_light }}>
+                      <Typography sx={{ fontSize: "14px", color: theme.palette.text.gray_light }}>
                         {option.label}
                       </Typography>
                     }
@@ -1044,41 +1106,8 @@ export const BusinessInfoAdmin = ({
               </Box>
             </Box>
 
-            <Divider
-              sx={{ backgroundColor: "#f4f6fc", height: "2px", margin: "8px 0px" }}
-              flexItem
-            />
 
-            <Box>
-              <Typography
-                variant="body1"
-                sx={{ display: "flex", fontSize: "12px", color: theme.palette.text.gray_light }}
-              >
-                <span
-                  className="icon-waiter"
-                  style={{ fontSize: "20px", marginRight: "6px" }}
-                ></span>
-                Call Waiter
-              </Typography>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={currentBranch.call_waiter === "active"}
-                    onChange={(e) => handleCallWaiterChange(e.target.checked)}
-                    sx={{
-                      color: theme.palette.text.gray_light,
-                      "&.Mui-checked": {
-                        color: "#ef7d00",
-                      },
-                    }} />
-                }
-                label={
-                  <Typography sx={{ fontSize: "12px", color: theme.palette.text.gray_light }}>
-                    Enable Call Waiter
-                  </Typography>
-                }
-              />
-            </Box>
+
           </Grid>
         </Grid>
       </Grid>

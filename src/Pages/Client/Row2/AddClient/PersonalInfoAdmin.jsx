@@ -9,7 +9,7 @@ import {
   Select,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Box, useTheme } from "@mui/system";
 import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
@@ -24,18 +24,42 @@ import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import { useNavigate } from "react-router";
 import { BASE_URL_IMG } from "../../../../utils/helperFunction";
+import { useTranslation } from "react-i18next";
 
 export const PersonalInfoAdmin = ({ personalInfo, setPersonalInfo, clientData }) => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const theme = useTheme()
+  const theme = useTheme();
+  const { t, i18n } = useTranslation();
+  const fileInputRef = useRef(null);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
 
   const handleChange = (field, value) => {
     setPersonalInfo((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file && file.size <= 2 * 1024 * 1024 && ["image/jpeg", "image/png"].includes(file.type)) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPersonalInfo((prev) => ({
+          ...prev,
+          imgPreview: reader.result, // For UI preview
+          imgFile: file, // For upload
+        }));
+      };
+      reader.readAsDataURL(file);
+    } else {
+      alert("Please upload a JPEG/PNG image smaller than 2MB.");
+    }
+  };
+
+  const handleEditImage = () => {
+    fileInputRef.current.click();
   };
 
   return (
@@ -61,12 +85,16 @@ export const PersonalInfoAdmin = ({ personalInfo, setPersonalInfo, clientData })
               alignItems: "center",
             }}
           >
-            {clientData.img ? (
-              <img src={`${BASE_URL_IMG}${clientData.img}`} alt="user" width="120%" height={"120%"} style={{ backgroundSize: "cover" }} />
-            ) : (
-              <img src="/images/User.jpg" alt="user" width="100%" />
-            )}
-
+            <img
+              src={
+                personalInfo.imgPreview ||
+                (personalInfo.img ? `${BASE_URL_IMG}${personalInfo.img}` : "/images/User.jpg")
+              }
+              alt="user"
+              width="120%"
+              height="120%"
+              style={{ objectFit: "cover" }}
+            />
             <Box
               sx={{
                 position: "absolute",
@@ -78,11 +106,20 @@ export const PersonalInfoAdmin = ({ personalInfo, setPersonalInfo, clientData })
                 justifyContent: "center",
                 alignItems: "center",
                 color: "white",
+                cursor: "pointer",
               }}
+              onClick={handleEditImage}
             >
               <EditOutlinedIcon sx={{ color: "white", fontSize: "20px" }} />
             </Box>
           </Box>
+          <input
+            type="file"
+            accept="image/jpeg,image/png"
+            style={{ display: "none" }}
+            ref={fileInputRef}
+            onChange={handleImageChange}
+          />
           <Typography
             variant="body2"
             sx={{ fontSize: "15px", color: theme.palette.text.gray, marginTop: "8px" }}
@@ -94,7 +131,7 @@ export const PersonalInfoAdmin = ({ personalInfo, setPersonalInfo, clientData })
 
       <Grid item xs={12} md={6}>
         <Typography variant="body2" sx={{ fontSize: "15px" }} color={theme.palette.text.gray} gutterBottom>
-          Personal Info
+          {t("personalInfo")}
         </Typography>
         <Divider
           sx={{ width: "35%", borderBottom: "4px solid #ef7d00", marginBottom: "18px" }}
@@ -161,7 +198,7 @@ export const PersonalInfoAdmin = ({ personalInfo, setPersonalInfo, clientData })
             <Grid container alignItems="center" sx={{ color: theme.palette.text.gray_light, marginTop: "5px" }}>
               <CalendarMonthOutlinedIcon sx={{ marginRight: 1, fontSize: "18px" }} />
               <Typography variant="body1" sx={{ fontSize: "13px", color: theme.palette.text.gray }}>
-                Date of Birth:
+                {t("dateOfBirth")}
               </Typography>
             </Grid>
           </Grid>
