@@ -8,10 +8,8 @@ import {
   OutlinedInput,
   Select,
   Typography,
-  Snackbar,
-  Alert,
 } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Box, useTheme } from "@mui/system";
 import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
@@ -25,123 +23,47 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import { useNavigate } from "react-router";
-import { useClientContext } from "../../../../context/ClientContext";
-import { useTranslation } from "react-i18next";
 import { BASE_URL_IMG } from "../../../../utils/helperFunction";
+import { useTranslation } from "react-i18next";
 
-export const PersonalInfoAdmin = ({ clientInfoData }) => {
-  const { t } = useTranslation();
+export const PersonalInfoAdmin = ({ personalInfo, setPersonalInfo, clientData }) => {
   const navigate = useNavigate();
-  const { clientData, updatePersonalData } = useClientContext();
-  const [fullName, setFullName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [month, setMonth] = useState("");
-  const [day, setDay] = useState("");
-  const [year, setYear] = useState("");
-  const [country, setCountry] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [website, setWebsite] = useState("");
-  const [image, setImage] = useState("");
-  const [successOpen, setSuccessOpen] = useState(false);
-  const [errorOpen, setErrorOpen] = useState(false);
   const theme = useTheme();
-  // Initialize state with clientInfoData
-  useEffect(() => {
-    if (clientInfoData) {
-      setFullName(clientInfoData.name || "");
-      setPhone(clientInfoData.mobile || "");
-      setEmail(clientInfoData.email || "");
-      setYear(clientInfoData.birth_date?.split("-")[0] || "");
-      setMonth(clientInfoData.birth_date?.split("-")[1] || "");
-      setDay(clientInfoData.birth_date?.split("-")[2] || "");
-      setCountry(clientInfoData.country || "");
-      setImage(clientInfoData.img || "");
-      const contactInfo = clientInfoData.brunchs?.[0]?.contact_info?.[0] || {};
-      setWebsite(contactInfo.website ? contactInfo.website.split(",")[0].trim() : "");
-    }
-  }, [clientInfoData]);
+  const { t, i18n } = useTranslation();
+  const fileInputRef = useRef(null);
 
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
+
+  const handleChange = (field, value) => {
+    setPersonalInfo((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleClickShowConfirmPassword = () => {
-    setShowConfirmPassword(!showConfirmPassword);
-  };
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file && file.type.startsWith("image/")) {
-      setImage(file);
-      updatePersonalData({ img: file });
-      setSuccessOpen(true);
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file && file.size <= 2 * 1024 * 1024 && ["image/jpeg", "image/png"].includes(file.type)) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPersonalInfo((prev) => ({
+          ...prev,
+          imgPreview: reader.result, // For UI preview
+          imgFile: file, // For upload
+        }));
+      };
+      reader.readAsDataURL(file);
     } else {
-      setErrorOpen(true);
+      alert("Please upload a JPEG/PNG image smaller than 2MB.");
     }
   };
 
-  const handleCloseSnackbar = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setSuccessOpen(false);
-    setErrorOpen(false);
-  };
-
-  const handleInputChange = (field, value) => {
-    try {
-      setFieldValue(field, value);
-      updatePersonalData({ [field]: value });
-      // setSuccessOpen(true);
-    } catch (error) {
-      console.error("Error updating field:", error);
-      // setErrorOpen(true);
-    }
-  };
-
-  const setFieldValue = (field, value) => {
-    switch (field) {
-      case "fullName":
-        setFullName(value);
-        break;
-      case "phone":
-        setPhone(value);
-        break;
-      case "email":
-        setEmail(value);
-        break;
-      case "month":
-        setMonth(value);
-        break;
-      case "day":
-        setDay(value);
-        break;
-      case "year":
-        setYear(value);
-        break;
-      case "country":
-        setCountry(value);
-        break;
-      case "password":
-        setPassword(value);
-        break;
-      case "confirmPassword":
-        setConfirmPassword(value);
-        break;
-      case "website":
-        setWebsite(value);
-        break;
-      default:
-        break;
-    }
+  const handleEditImage = () => {
+    fileInputRef.current.click();
   };
 
   return (
-    <Grid container justifyContent="center" spacing={0} sx={{ padding: '0px', marginTop: "20px", marginLeft: '0px', width: '100%' }}>
+    <Grid container spacing={2} justifyContent="center" sx={{ marginTop: "10px" }}>
       <Box>
         <ArrowBackIosOutlinedIcon
           onClick={() => navigate("/client")}
@@ -149,60 +71,71 @@ export const PersonalInfoAdmin = ({ clientInfoData }) => {
         />
       </Box>
 
-      <Grid item xs={12} md={2} style={{ minWidth: '150px', padding: '1rem' }} sx={{ marginRight: "40px" }}>
+      <Grid item xs={12} md={3} sx={{ marginRight: "40px" }}>
         <Box sx={{ textAlign: "center" }}>
           <Box
             sx={{
-              width: "150px",
-              height: "150px",
+              width: "100%",
+              height: "100%",
               borderRadius: "50%",
               overflow: "hidden",
               position: "relative",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              marginX: 'auto'
             }}
           >
             <img
-              src={image ? `${BASE_URL_IMG}${image}` : "/images/User.jpg"}
+              src={
+                personalInfo.imgPreview ||
+                (personalInfo.img ? `${BASE_URL_IMG}${personalInfo.img}` : "/images/User.jpg")
+              }
               alt="user"
-              style={{ width: "110%", height: "110%"}}
+              width="120%"
+              height="120%"
+              style={{ objectFit: "cover" }}
             />
-
             <Box
               sx={{
                 position: "absolute",
                 bottom: 0,
                 width: "100%",
                 height: "18%",
-                backgroundColor: "#4b4a4a",
+                backgroundColor: "gray",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
                 color: "white",
+                cursor: "pointer",
               }}
+              onClick={handleEditImage}
             >
               <EditOutlinedIcon sx={{ color: "white", fontSize: "20px" }} />
-              <input
-                accept="image/*"
-                style={{ display: "block", position: "absolute", top: 0, left: 0, width: "100%", height: "100%", opacity: 0 }}
-                id="raised-button-file"
-                type="file"
-                onChange={handleImageChange}
-              />
             </Box>
           </Box>
-          <Typography variant="body2" sx={{ fontSize: "15px", color: theme.palette.text.gray, marginTop: "8px" }}>
-            {fullName}
+          <input
+            type="file"
+            accept="image/jpeg,image/png"
+            style={{ display: "none" }}
+            ref={fileInputRef}
+            onChange={handleImageChange}
+          />
+          <Typography
+            variant="body2"
+            sx={{ fontSize: "15px", color: theme.palette.text.gray, marginTop: "8px" }}
+          >
+            {personalInfo.name || "User01"}
           </Typography>
         </Box>
       </Grid>
-      <Grid item xs={12} md={7} style={{ padding: '1rem' }} >
+
+      <Grid item xs={12} md={6}>
         <Typography variant="body2" sx={{ fontSize: "15px" }} color={theme.palette.text.gray} gutterBottom>
           {t("personalInfo")}
         </Typography>
-        <Divider sx={{ width: "35%", borderBottom: "4px solid #ef7d00", marginBottom: "18px" }} />
+        <Divider
+          sx={{ width: "35%", borderBottom: "4px solid #ef7d00", marginBottom: "18px" }}
+        />
 
         <FormControl variant="outlined" fullWidth>
           <OutlinedInput
@@ -211,9 +144,9 @@ export const PersonalInfoAdmin = ({ clientInfoData }) => {
                 <PersonOutlinedIcon sx={{ fontSize: "20px" }} />
               </InputAdornment>
             }
-            value={fullName}
-            onChange={(e) => handleInputChange("fullName", e.target.value)}
-            placeholder={t("fullName")}
+            value={personalInfo.name || ""}
+            onChange={(e) => handleChange("name", e.target.value)}
+            placeholder="Full Name"
             sx={{ borderRadius: "10px", marginBottom: "18px", height: "33px", fontSize: "12px" }}
           />
         </FormControl>
@@ -225,12 +158,13 @@ export const PersonalInfoAdmin = ({ clientInfoData }) => {
                 <PhoneOutlinedIcon sx={{ fontSize: "20px" }} />
               </InputAdornment>
             }
-            value={phone}
-            onChange={(e) => handleInputChange("phone", e.target.value)}
-            placeholder={t("mobileNumber")}
+            value={personalInfo.mobile || ""}
+            onChange={(e) => handleChange("mobile", e.target.value)}
+            placeholder="Mobile Number"
             sx={{ borderRadius: "10px", marginBottom: "18px", height: "33px", fontSize: "12px" }}
           />
         </FormControl>
+
         <FormControl variant="outlined" fullWidth>
           <OutlinedInput
             startAdornment={
@@ -238,9 +172,9 @@ export const PersonalInfoAdmin = ({ clientInfoData }) => {
                 <MailOutlinedIcon sx={{ fontSize: "20px" }} />
               </InputAdornment>
             }
-            value={email}
-            onChange={(e) => handleInputChange("email", e.target.value)}
-            placeholder={t("email")}
+            value={personalInfo.email || ""}
+            onChange={(e) => handleChange("email", e.target.value)}
+            placeholder="Email"
             sx={{ borderRadius: "10px", marginBottom: "18px", height: "33px", fontSize: "12px" }}
           />
         </FormControl>
@@ -252,18 +186,18 @@ export const PersonalInfoAdmin = ({ clientInfoData }) => {
                 <LanguageOutlinedIcon sx={{ fontSize: "18px" }} />
               </InputAdornment>
             }
-            value={website}
-            onChange={(e) => handleInputChange("website", e.target.value)}
+            value={personalInfo.website || ""}
+            onChange={(e) => handleChange("website", e.target.value)}
             placeholder="Website"
             sx={{ borderRadius: "10px", height: "35px", fontSize: "12px", marginBottom: "18px" }}
           />
         </FormControl>
 
-        <Grid container spacing={2} alignItems="center" sx={{ marginBottom: "18px" }}>
-          <Grid item xs={12}>
-            <Grid container alignItems="center" sx={{ color: theme.palette.text.gray, marginTop: "5px" }}>
+        <Grid container alignItems="center" sx={{ marginBottom: "18px" }}>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
+            <Grid container alignItems="center" sx={{ color: theme.palette.text.gray_light, marginTop: "5px" }}>
               <CalendarMonthOutlinedIcon sx={{ marginRight: 1, fontSize: "18px" }} />
-              <Typography variant="body1" sx={{ fontSize: "13px" }}>
+              <Typography variant="body1" sx={{ fontSize: "13px", color: theme.palette.text.gray }}>
                 {t("dateOfBirth")}
               </Typography>
             </Grid>
@@ -271,14 +205,29 @@ export const PersonalInfoAdmin = ({ clientInfoData }) => {
           <Grid item xs={4}>
             <FormControl fullWidth>
               <Select
-                id="outlined-month"
-                value={month}
-                onChange={(e) => handleInputChange("month", e.target.value)}
+                value={
+                  personalInfo.birth_date
+                    ? personalInfo.birth_date.split("-")[1]
+                    : ""
+                }
+                onChange={(e) => {
+                  const newMonth = e.target.value;
+                  const newBirthDate = personalInfo.birth_date
+                    ? `${personalInfo.birth_date.split("-")[0]}-${newMonth}-${personalInfo.birth_date.split("-")[2]}`
+                    : `2000-${newMonth}-01`;
+                  handleChange("birth_date", newBirthDate);
+                }}
                 displayEmpty
-                sx={{ borderRadius: "10px", height: "33px", fontSize: "12px", color: "gray", marginRight: "5px" }}
+                sx={{
+                  borderRadius: "10px",
+                  height: "33px",
+                  fontSize: "12px",
+                  color: theme.palette.text.gray_light,
+                  marginRight: "5px",
+                }}
               >
                 <MenuItem value="" disabled>
-                  {t("month")}
+                  Month
                 </MenuItem>
                 {[...Array(12).keys()].map((i) => (
                   <MenuItem key={i + 1} value={String(i + 1).padStart(2, "0")}>
@@ -288,17 +237,33 @@ export const PersonalInfoAdmin = ({ clientInfoData }) => {
               </Select>
             </FormControl>
           </Grid>
+
           <Grid item xs={4}>
             <FormControl fullWidth>
               <Select
-                id="outlined-day"
-                value={day}
-                onChange={(e) => handleInputChange("day", e.target.value)}
+                value={
+                  personalInfo.birth_date
+                    ? personalInfo.birth_date.split("-")[2]
+                    : ""
+                }
+                onChange={(e) => {
+                  const newDay = e.target.value;
+                  const newBirthDate = personalInfo.birth_date
+                    ? `${personalInfo.birth_date.split("-")[0]}-${personalInfo.birth_date.split("-")[1]}-${newDay}`
+                    : `2000-01-${newDay}`;
+                  handleChange("birth_date", newBirthDate);
+                }}
                 displayEmpty
-                sx={{ borderRadius: "10px", height: "33px", fontSize: "12px", color: "gray", marginRight: "5px" }}
+                sx={{
+                  borderRadius: "10px",
+                  height: "33px",
+                  fontSize: "12px",
+                  color: theme.palette.text.gray_light,
+                  marginRight: "5px",
+                }}
               >
                 <MenuItem value="" disabled>
-                  {t("day")}
+                  Day
                 </MenuItem>
                 {[...Array(31).keys()].map((i) => (
                   <MenuItem key={i + 1} value={String(i + 1).padStart(2, "0")}>
@@ -308,21 +273,31 @@ export const PersonalInfoAdmin = ({ clientInfoData }) => {
               </Select>
             </FormControl>
           </Grid>
+
           <Grid item xs={4}>
             <FormControl fullWidth>
               <Select
-                id="outlined-year"
-                value={year}
-                onChange={(e) => handleInputChange("year", e.target.value)}
+                value={
+                  personalInfo.birth_date
+                    ? personalInfo.birth_date.split("-")[0]
+                    : ""
+                }
+                onChange={(e) => {
+                  const newYear = e.target.value;
+                  const newBirthDate = personalInfo.birth_date
+                    ? `${newYear}-${personalInfo.birth_date.split("-")[1]}-${personalInfo.birth_date.split("-")[2]}`
+                    : `${newYear}-01-01`;
+                  handleChange("birth_date", newBirthDate);
+                }}
                 displayEmpty
-                sx={{ borderRadius: "10px", height: "33px", fontSize: "12px", color: "gray" }}
+                sx={{ borderRadius: "10px", height: "33px", fontSize: "12px", color: theme.palette.text.gray_light }}
               >
                 <MenuItem value="" disabled>
-                  {t("year")}
+                  Year
                 </MenuItem>
-                {Array.from({ length: 2025 - 1980 + 1 }, (_, i) => (
-                  <MenuItem key={i + 1980} value={i + 1980}>
-                    {i + 1980}
+                {Array.from({ length: 2025 - 1900 + 1 }, (_, i) => (
+                  <MenuItem key={i + 1900} value={i + 1900}>
+                    {i + 1900}
                   </MenuItem>
                 ))}
               </Select>
@@ -332,11 +307,16 @@ export const PersonalInfoAdmin = ({ clientInfoData }) => {
 
         <FormControl variant="outlined" fullWidth>
           <Select
-            id="outlined-country"
-            value={country}
-            onChange={(e) => handleInputChange("country", e.target.value)}
+            value={personalInfo.country || ""}
+            onChange={(e) => handleChange("country", e.target.value)}
             displayEmpty
-            sx={{ marginBottom: "18px", borderRadius: "10px", height: "33px", fontSize: "12px", color: "gray" }}
+            sx={{
+              marginBottom: "18px",
+              borderRadius: "10px",
+              height: "33px",
+              fontSize: "12px",
+              color: theme.palette.text.gray_light,
+            }}
             startAdornment={
               <InputAdornment position="start">
                 <PinDropOutlinedIcon sx={{ fontSize: "20px" }} />
@@ -344,12 +324,13 @@ export const PersonalInfoAdmin = ({ clientInfoData }) => {
             }
           >
             <MenuItem value="" disabled>
-              {t("country")}
+              Country
             </MenuItem>
             <MenuItem value="US">United States</MenuItem>
             <MenuItem value="CA">Canada</MenuItem>
             <MenuItem value="UK">United Kingdom</MenuItem>
-            <MenuItem value="egypt">Egypt</MenuItem>
+            <MenuItem value="Giza">Giza</MenuItem>
+            <MenuItem value="Egypt">Egypt</MenuItem>
           </Select>
         </FormControl>
 
@@ -357,8 +338,8 @@ export const PersonalInfoAdmin = ({ clientInfoData }) => {
           <OutlinedInput
             id="outlined-password"
             type={showPassword ? "text" : "password"}
-            value={password}
-            onChange={(e) => handleInputChange("password", e.target.value)}
+            value={personalInfo.password || ""}
+            onChange={(e) => handleChange("password", e.target.value)}
             startAdornment={
               <InputAdornment position="start">
                 <LockOutlinedIcon sx={{ fontSize: "20px" }} />
@@ -366,12 +347,20 @@ export const PersonalInfoAdmin = ({ clientInfoData }) => {
             }
             endAdornment={
               <InputAdornment position="end">
-                <IconButton onClick={handleClickShowPassword} edge="end">
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  edge="end"
+                >
+                  {showPassword ? (
+                    <VisibilityOff sx={{ fontSize: "20px" }} />
+                  ) : (
+                    <Visibility sx={{ fontSize: "20px" }} />
+                  )}
                 </IconButton>
               </InputAdornment>
             }
-            placeholder={t("password")}
+            placeholder="Password"
             sx={{ borderRadius: "10px", marginBottom: "18px", height: "33px", fontSize: "12px" }}
           />
         </FormControl>
@@ -380,8 +369,8 @@ export const PersonalInfoAdmin = ({ clientInfoData }) => {
           <OutlinedInput
             id="outlined-confirm-password"
             type={showConfirmPassword ? "text" : "password"}
-            value={confirmPassword}
-            onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
+            value={personalInfo.confirmPassword || ""}
+            onChange={(e) => handleChange("confirmPassword", e.target.value)}
             startAdornment={
               <InputAdornment position="start">
                 <LockOutlinedIcon sx={{ fontSize: "20px" }} />
@@ -389,40 +378,24 @@ export const PersonalInfoAdmin = ({ clientInfoData }) => {
             }
             endAdornment={
               <InputAdornment position="end">
-                <IconButton onClick={handleClickShowConfirmPassword} edge="end">
-                  {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                <IconButton
+                  aria-label="toggle confirm password visibility"
+                  onClick={handleClickShowConfirmPassword}
+                  edge="end"
+                >
+                  {showConfirmPassword ? (
+                    <VisibilityOff sx={{ fontSize: "20px" }} />
+                  ) : (
+                    <Visibility sx={{ fontSize: "20px" }} />
+                  )}
                 </IconButton>
               </InputAdornment>
             }
-            placeholder={t("confirmPass")}
-            sx={{ marginBottom: "18px", borderRadius: "10px", height: "33px", fontSize: "12px" }}
+            placeholder="Confirm Password"
+            sx={{ borderRadius: "10px", height: "33px", fontSize: "12px" }}
           />
         </FormControl>
       </Grid>
-
-      {/* <Snackbar
-          open={successOpen}
-          autoHideDuration={3000}
-          onClose={handleCloseSnackbar}
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        >
-         <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: "100%" }}>
-            {t("updateSucc")}
-          </Alert> 
-        </Snackbar> */}
-
-      <Snackbar
-        open={errorOpen}
-        autoHideDuration={3000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: "100%" }}>
-          {t("updateFaildTryAgain")}
-        </Alert>
-      </Snackbar>
     </Grid>
   );
 };
-
-export default PersonalInfoAdmin;
