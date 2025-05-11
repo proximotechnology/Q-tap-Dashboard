@@ -25,7 +25,7 @@ export const Row1 = () => {
 
   return (
 
-    <Paper sx={{ height: "270px", borderRadius: "20px", display: "flex", alignItems: "center", overflow: 'auto' }}>
+    <Paper sx={{ height: "270px", borderRadius: "20px", display: "flex", alignItems: "center", overflow: 'hidden' }}>
       <Grid width={"80%"} >
         <Grid container justifyContent="space-between" alignItems="center"  >
           <Grid item sx={{
@@ -114,7 +114,7 @@ export const Row1 = () => {
               const sum = Object.values(walletChartClientData)
                 .map((order) => order.total_revenue || 0)
                 .reduce((acc, curr) => acc + curr, 0);
-              return sum > 0 ? sum : 0;
+                return sum > 0 ? (Number.isInteger(sum) ? sum : sum.toFixed(1)) : 0;
             })()}{" "}
             <span style={{ fontSize: "20px", opacity: '0.5' }}>£</span>
           </Typography>

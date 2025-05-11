@@ -75,8 +75,8 @@ export const PersonalInfoAdmin = ({ personalInfo, setPersonalInfo, clientData })
         <Box sx={{ textAlign: "center" }}>
           <Box
             sx={{
-              width: "100%",
-              height: "100%",
+              width: { xs: "100%", lg: "150px" },
+              height: { xs: "100%", lg: "150px" },
               borderRadius: "50%",
               overflow: "hidden",
               position: "relative",

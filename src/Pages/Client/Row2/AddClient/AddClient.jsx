@@ -28,6 +28,7 @@ import { BASE_URL, BASE_URL_IMG } from "../../../../utils/helperFunction";
 import { toast } from "react-toastify";
 import { Logout, Settings } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
+import Language from "../../../../Component/dashboard/TopBar/Language";
 
 export const AddClient = () => {
   const navigate = useNavigate();
@@ -287,40 +288,7 @@ export const AddClient = () => {
         </Box>
 
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Box
-            sx={{
-              cursor: "pointer",
-              display: "flex",
-              marginRight: "20px",
-              alignItems: "center",
-            }}
-            onClick={handleLanguageClick}
-          >
-            {getLanguageIcon()}
-            <KeyboardArrowDownIcon sx={{ fontSize: "18px", color: theme.palette.text.gray_light }} />
-            <Menu
-              anchorEl={anchorElLanguage}
-              open={openLanguage}
-              onClose={() => setAnchorElLanguage(null)}
-              sx={{ padding: "2px" }}
-            >
-              <MenuItem onClick={() => handleLanguageClose("ar")}>
-                <span
-                  className="icon-translation"
-                  style={{ color: "#ef7d00", marginRight: "8px", fontSize: "20px" }}
-                ></span>
-                <span style={{ fontSize: "12px", color: theme.palette.text.gray }}>Arabic</span>
-              </MenuItem>
-              <Divider />
-              <MenuItem onClick={() => handleLanguageClose("en")}>
-                <LanguageOutlinedIcon
-                  sx={{ color: "#ef7d00", marginRight: "8px", fontSize: "20px" }}
-                />
-                <span style={{ fontSize: "12px", color: theme.palette.text.gray }}>English</span>
-              </MenuItem>
-            </Menu>
-          </Box>
-
+            <Language />
           <Box
             aria-describedby={openUserPopover ? "simple-popover" : undefined}
             onClick={handleUserClick}

@@ -41,10 +41,10 @@ export const Language = () => {
 
     const getLanguageIcon = () => {
         if (selectedLanguage === 'ar') {
-            return <LanguageOutlinedIcon sx={{ width: "22px", color: theme.palette.orangePrimary.main, height: "22px", }} />
+            return <span className="icon-translation" style={{ width: "22px", color: theme.palette.orangePrimary.main, height: "22px", }}></span>
 
         } else if (selectedLanguage === 'en') {
-            return <span className="icon-translation" style={{ width: "22px", color: theme.palette.orangePrimary.main, height: "22px", }}></span>
+            return <LanguageOutlinedIcon sx={{ width: "22px", color: theme.palette.orangePrimary.main, height: "22px", }} />
         }
         return <LanguageOutlinedIcon sx={{ fontSize: "22px", color: theme.palette.orangePrimary.main, marginRight: '1px' }} />;
     };
@@ -64,12 +64,14 @@ export const Language = () => {
 
             >
                 <MenuItem onClick={() => handleClose('en')} >
-                    <span className="icon-translation" style={{ width: "23px", height: "23px", marginRight: '8px',color:"#ff9800" }}></span>
+                    <LanguageOutlinedIcon sx={{ width: "25px", height: "25px", marginRight: '8px', color: "#ff9800" }} />
+
                     <span style={{ fontSize: "12px", color: theme.palette.text.gray }}>English</span>
                 </MenuItem>
                 <Divider />
                 <MenuItem onClick={() => handleClose('ar')}>
-                    <LanguageOutlinedIcon sx={{ width: "25px", height: "25px", marginRight: '8px', color:"#ff9800" }} />
+                    <span className="icon-translation" style={{ width: "23px", height: "23px", marginRight: '8px', color: "#ff9800" }}></span>
+
                     <span style={{ fontSize: "12px", color: theme.palette.text.gray }}>Arabic</span>
                 </MenuItem>
             </Menu>

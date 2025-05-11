@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram, faFacebookF, faXTwitter, faTiktok } from "@fortawesome/free-brands-svg-icons";
 import { useTranslation } from 'react-i18next';
 import Language from '../dashboard/TopBar/Language';
+import ModeCommentIcon from '@mui/icons-material/ModeComment';
 
 export const Welcome = () => {
   const theme = useTheme();
@@ -58,9 +59,9 @@ export const Welcome = () => {
         <Box sx={{
           position: "absolute", right: "50px", top: "40px", cursor: "pointer", display: "flex", alignItems: "center"
         }}>
-          <img src="/assets/help.jpg" alt="icon" style={{ width: "25px", height: "25px", marginRight: "30px" }} />
+          <ModeCommentIcon sx={{ fontSize: "22px", color: "#E57C00" , marginRight:"25px" }} />
 
-          <Language/>
+          <Language />
         </Box>
 
       </Box>
@@ -74,9 +75,9 @@ export const Welcome = () => {
         }}
       >
 
-        <img src="/assets/qtapwhite.svg" alt="qtap" style={{ width: "200px", height: "60px", marginBottom: "60px" }} />
+        <img src="/assets/qtapwhite.svg" alt="qtap" style={{ width: "200px", height: "60px", marginBottom: "40px" }} />
 
-        {!sessionStorage.getItem("paymentUrl") ? <Typography variant="body2" sx={{ fontSize: "16px", maxWidth: "400px", lineHeight: 2, mb: 2 }}>
+        {!sessionStorage.getItem("paymentUrl") ? <Typography variant="body2" sx={{ fontSize: "16px", maxWidth: "400px", lineHeight: 2, mb: 8 }}>
           {t("welcomeP1")}
         </Typography> : (<>
           <Typography variant="body2" sx={{ fontSize: "16px", width: "400px", lineHeight: 2, mb: 2 }}>
@@ -121,7 +122,7 @@ export const Welcome = () => {
         </Typography>
 
 
-        <Typography variant="body2" sx={{ fontSize: "13px", mb: 3 ,overflowWrap:'anywhere'}}>
+        <Typography variant="body2" sx={{ fontSize: "13px", mb: 3, overflowWrap: 'anywhere' }}>
           <a href="mailto:your-email@example.com" style={{ color: theme.palette.text.white }}>
             sales@qtap.com</a>
 
