@@ -60,7 +60,7 @@ export const OrderBody = () => {
 
                 // each request has its response data :
                 ///-------------------------------------------
-                // chef data.new_orders
+                // chef data.new_orders ==> updata: it now inside data direct
                 // cashier data.accepted_orders
                 // admin data.served_orders
                 // admin data.delivery_riders\
@@ -68,8 +68,8 @@ export const OrderBody = () => {
                 let orders = []
 
                 if (loginclient.user.role === 'chef') {
-
-                    orders = res.data.new_orders.map((item) => parseResponseOrderItem(item, orderPhaseType.ACCEPTING))
+                    console.log("chef", res.data)
+                    orders = res.data.map((item) => parseResponseOrderItem(item, orderPhaseType.ACCEPTING))
                     const savedOrder = localStorage.getItem('chefAcceptedOrder')
                     const parsedSavedOrder = savedOrder ? JSON.parse(savedOrder) : []
                     setOrders([...orders, ...parsedSavedOrder])
@@ -130,7 +130,7 @@ export const OrderBody = () => {
 
             } catch (error) {
 
-                // console.log(error)
+                console.log("error fetchdata", error)
                 toast.error(t("errorGetingData"))
             }
         }
@@ -180,7 +180,7 @@ export const OrderBody = () => {
             if (data.type === 'accepted_order') {
 
                 toast.info(`📢 pusher accepted_order`);
-                if (client?.user?.role === "chef") {
+                if (client?.user?.role === "chef" &&  client?.user?.id !== data?.message?.[0]?.orders_processing?.[0]?.user?.id) {
                     removeOrder(data?.message?.[0].id)
                 } else if (client?.user?.role === "cashier") {
                     setOrders((prev => [...prev, parseResponseOrderItem(data.message?.[0], orderPhaseType.PAYING)]))
@@ -402,7 +402,7 @@ export const OrderBody = () => {
             <Box sx={{ height: '40px' }}>
 
             </Box>
-            <RejectionModal open={modalOpen} onClose={handleModalClose} selectedOrder={selectedOrder} removeOrder={removeOrder}/>
+            <RejectionModal open={modalOpen} onClose={handleModalClose} selectedOrder={selectedOrder} removeOrder={removeOrder} />
         </Box>
     );
 };
