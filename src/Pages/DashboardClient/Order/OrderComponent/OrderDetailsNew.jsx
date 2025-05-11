@@ -78,18 +78,17 @@ const OrderDetailsNew = ({
     const chefAcceptOrderRequest = async () => {
         setIsLoading(true)
         if (isLoading) return;
-        const data = {
-            "order_id": order.id,
-            "status": "accepted",
-            "note": "test"
-        }
-        console.log('accept order')
         if (preparingTime === '') {
             toast.error("please enter Preparing Time")
             setIsLoading(false)
             return;
         }
-
+        const data = {
+            "order_id": order.id,
+            "status": "accepted",
+            "note": "test",
+            time:preparingTime
+        }
         try {
             setIsLoading(true)
             const res = await axios.post(`${BASE_URL}${orderEndPoint.chef.action.accept}`,
@@ -102,7 +101,6 @@ const OrderDetailsNew = ({
 
                 }
             )
-            console.log('add res', res)
             toast.done('success')
             // save order to localstorage
             const chefAcceptedOrder = localStorage.getItem('chefAcceptedOrder')
@@ -113,7 +111,6 @@ const OrderDetailsNew = ({
 
             const fnorder = JSON.stringify([...chefAcceptedOrderLocal, order])
             localStorage.setItem('chefAcceptedOrder', fnorder)
-
             updateOrderPhase(order.id, orderPhaseType.PREPAREING)
 
             // console.log('accept order', res)
@@ -604,7 +601,7 @@ const OrderDetailsNew = ({
                     ** ACTION button for each phase  
                     **
                     */}
-                    
+
                     {order.phase === orderPhaseType.ACCEPTING && (<>
                         <Grid container spacing={2}>
                             <Grid item xs={6}>
@@ -649,7 +646,7 @@ const OrderDetailsNew = ({
                             </Grid>
                         </Grid>
                     </>)}
-                    
+
                     {order?.phase === orderPhaseType.PAYING && (<>
                         <Grid item xs={12} display={"flex"}>
                             <Button
@@ -678,7 +675,7 @@ const OrderDetailsNew = ({
                             </Button>
                         </Grid>
                     </>)}
-                    
+
                     {order?.phase === orderPhaseType.PREPAREING && (<>
                         <Grid item xs={12} display={"flex"}>
                             <Button
@@ -706,7 +703,7 @@ const OrderDetailsNew = ({
                             </Button>
                         </Grid>
                     </>)}
-                    
+
                     {order?.phase === orderPhaseType.SERVRING && (<>
                         <Grid item xs={12} display={"flex"}>
                             <Button
@@ -730,7 +727,7 @@ const OrderDetailsNew = ({
                             </Button>
                         </Grid>
                     </>)}
-                    
+
                     {order?.phase === orderPhaseType.DONING && (<>
                         <Grid item xs={12} display={"flex"}>
                             <Button
@@ -756,7 +753,7 @@ const OrderDetailsNew = ({
                         </Grid>
                     </>
                     )}
-                    
+
                     {order?.phase === orderPhaseType.CLOSING && (<>
                         <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", textAlign: "center", }}>
                             <Button

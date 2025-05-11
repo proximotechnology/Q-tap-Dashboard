@@ -180,7 +180,7 @@ export const OrderBody = () => {
             if (data.type === 'accepted_order') {
 
                 toast.info(`📢 pusher accepted_order`);
-                if (client?.user?.role === "chef") {
+                if (client?.user?.role === "chef" &&  client?.user?.id !== data?.message?.[0]?.orders_processing?.[0]?.user?.id) {
                     removeOrder(data?.message?.[0].id)
                 } else if (client?.user?.role === "cashier") {
                     setOrders((prev => [...prev, parseResponseOrderItem(data.message?.[0], orderPhaseType.PAYING)]))
