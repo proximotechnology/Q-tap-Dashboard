@@ -46,8 +46,10 @@ export const FAQ = forwardRef((props, ref) => {
     // Filter out empty FAQs
     const validFaqs = faqs.filter(
       (faq) =>
-        (faq.question.trim() !== "" && faq.answer.trim() !== "") ||
-        (faq.questionAr.trim() !== "" && faq.answerAr.trim() !== "")
+        faq.question.trim() !== "" &&
+        faq.answer.trim() !== "" &&
+        faq.questionAr.trim() !== "" &&
+        faq.answerAr.trim() !== ""
     );
 
     if (validFaqs.length === 0) {
