@@ -377,9 +377,9 @@ function App() {
           break;
 
         case 'add_order':
-          // Handle add_order type
-          toast.warn(`🛒 New Order: ${data?.message?.orderId}`);
-          // Add logic to update order UI or state
+          // // Handle add_order type
+          // toast.warn(`🛒 New Order: ${data?.message?.orderId}`);
+          // // Add logic to update order UI or state
           break;
 
         default:

@@ -61,7 +61,7 @@ export const PersonalInfo = () => {
         <Grid container   sx={{ marginTop: "10px" ,justifyContent:{xs:"start",md:'space-around'}}}>
             <Box>
                 <ArrowBackIosOutlinedIcon
-                    onClick={() => navigate('/client')}
+                    onClick={() => navigate('/payment')}
                     sx={{ color: "#4b4a4a", cursor: "pointer" ,marginInlineStart:{xs:'0px',md:'0px'}}}
                 />
             </Box>

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import {
   Box,
@@ -22,6 +21,7 @@ import { useNavigate } from "react-router";
 import * as XLSX from "xlsx";
 import { useTranslation } from "react-i18next";
 import { BASE_URL } from "../../../utils/helperFunction";
+import { Dashboard, Settings } from "@mui/icons-material";
 
 const exportToExcel = (clients) => {
   const worksheet = XLSX.utils.json_to_sheet(clients);
@@ -33,30 +33,26 @@ const exportToExcel = (clients) => {
 export const Row2 = () => {
   const theme = useTheme();
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const handleDashboardClick = () => {
     navigate("/dashboard-home");
   };
 
   const handleEditClient = (client) => {
-    // Navigate to /add-client with full client data for editing
     navigate("/add-client", { state: { clientData: client, isEditMode: true } });
-    console.log( "client", client);
-    
+    console.log("client", client);
   };
 
   const handleAddClient = () => {
-    // Navigate to /add-client without any preloaded data for a new client
     navigate("/add-client", { state: { isEditMode: false } });
   };
 
   const getData = async () => {
-    setLoading(true); // Start loading
+    setLoading(true);
     try {
-
       const response = await fetch(`${BASE_URL}qtap_clients`, {
         method: "GET",
         headers: {
@@ -69,12 +65,12 @@ export const Row2 = () => {
     } catch (error) {
       console.error("Error fetching clients:", error);
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    let isMounted = true; // Flag to prevent setting state if component is unmounted
+    let isMounted = true;
     const fetchData = async () => {
       if (isMounted) {
         await getData();
@@ -82,48 +78,40 @@ export const Row2 = () => {
     };
     fetchData();
     return () => {
-      isMounted = false; // Cleanup to prevent multiple requests
+      isMounted = false;
     };
   }, []);
 
   const updateClientStatus = async (clientId, currentStatus) => {
-    // console.log(clientId, "clientid ::::");
-    
     const newStatus = currentStatus === "active" ? "inactive" : "active";
     try {
-      const response = await fetch(
-        `${BASE_URL}active_clients/${clientId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
-          },
-          // body: JSON.stringify({
-          //   status: newStatus,
-          // }),
-        }
-      );
+      const response = await fetch(`${BASE_URL}active_clients/${clientId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+        },
+      });
       const data = await response.json();
-      getData(); // Refresh data after update
+      getData();
       return data;
     } catch (error) {
       console.error("Error updating status:", error);
     }
   };
-  // New states for search functionality
+
   const [showSearch, setShowSearch] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearchClick = () => {
     setShowSearch(!showSearch);
-    setSearchQuery(''); // Reset search query when toggling
+    setSearchQuery("");
   };
 
-  // Filter tickets based on search query
-  const filterClients = data?.qtap_clients?.filter(client =>
+  const filterClients = data?.qtap_clients?.filter((client) =>
     client.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
   return (
     <Box sx={{ padding: "0 20px", marginTop: "20px" }}>
       <Paper sx={{ padding: "20px", borderRadius: 5, height: "360px" }}>
@@ -153,46 +141,42 @@ export const Row2 = () => {
           </Typography>
 
           <Box sx={{ display: "flex" }}>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "center",
-            }}
-          >
-            {showSearch && (
-              <Box sx={{ width: showSearch ? "100%" : "20%" }}>
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search by name..."
-                  style={{
-                    width: "100%",
-                    padding: "6px 8px",
-                    borderRadius: "6px",
-                    border: "1px solid rgba(0, 0, 0, 0.23)",
-                    fontSize: "12px",
-                    outline: "none",
-                    backgroundColor: "#fff",
-                    "&:hover": {
-                      borderColor: "rgba(0, 0, 0, 0.87)",
-                    },
-                  }}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "center",
+              }}
+            >
+              {showSearch && (
+                <Box sx={{ width: showSearch ? "100%" : "20%" }}>
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search by name..."
+                    style={{
+                      width: "100%",
+                      padding: "6px 8px",
+                      borderRadius: "6px",
+                      border: "1px solid rgba(0, 0, 0, 0.23)",
+                      fontSize: "12px",
+                      outline: "none",
+                      backgroundColor: "#fff",
+                    }}
+                  />
+                </Box>
+              )}
+              <IconButton onClick={handleSearchClick}>
+                <span
+                  className="icon-magnifier"
+                  style={{ fontSize: "15px", color: theme.palette.text.gray }}
                 />
-              </Box>
-            )}
-            <IconButton onClick={handleSearchClick}>
-              <span
-                className="icon-magnifier"
-                style={{ fontSize: "15px", color: theme.palette.text.gray }}
-              />
-            </IconButton>
-            
-          </Box>
+              </IconButton>
+            </Box>
 
             {/* <Button
-              onClick={handleAddClient} // Updated to handleAddClient
+              onClick={handleAddClient}
               sx={{
                 color: theme.palette.orangePrimary.main,
                 textTransform: "capitalize",
@@ -242,7 +226,10 @@ export const Row2 = () => {
             },
           }}
         >
-          <Table size="small" sx={{ borderCollapse: "separate", borderSpacing: "0 5px" ,whiteSpace:"nowrap"}}>
+          <Table
+            size="small"
+            sx={{ borderCollapse: "separate", borderSpacing: "0 5px", whiteSpace: "nowrap" }}
+          >
             <TableHead>
               <TableRow>
                 <TableCell
@@ -258,32 +245,32 @@ export const Row2 = () => {
                 >
                   {t("business")}
                 </TableCell>
-
-                {[t("data"), t("city"), t("bundle"), t("status"), ""].map(
-                  (header) => (
-                    <TableCell
-                      key={header}
-                      sx={{
-                        color: theme.palette.text.gray,
-                        fontSize: "12px",
-                        padding: "0px",
-                        borderBottom: "none",
-                        width: `${100 / 6}%`,
-                        textAlign: "center",
-                        paddingLeft:{xs:"2px"}
-                      }}
-                    >
-                      {header}
-                    </TableCell>
-                  )
-                )}
+                {[t("data"), t("city"), t("bundle"), t("status"), ""].map((header) => (
+                  <TableCell
+                    key={header}
+                    sx={{
+                      color: theme.palette.text.gray,
+                      fontSize: "12px",
+                      padding: "0px",
+                      borderBottom: "none",
+                      width: `${100 / 6}%`,
+                      textAlign: "center",
+                      paddingLeft: { xs: "2px" },
+                    }}
+                  >
+                    {header}
+                  </TableCell>
+                ))}
               </TableRow>
             </TableHead>
 
             <TableBody>
               {loading ? (
                 <TableRow>
-                  <TableCell colSpan={6} sx={{ textAlign: "center", padding: "100px 20px"}}>
+                  <TableCell
+                    colSpan={6}
+                    sx={{ textAlign: "center", padding: "100px 20px" }}
+                  >
                     <CircularProgress sx={{ color: theme.palette.orangePrimary.main }} />
                   </TableCell>
                 </TableRow>
@@ -292,7 +279,8 @@ export const Row2 = () => {
                   <TableRow
                     key={row.id}
                     sx={{
-                      backgroundColor: index % 2 === 0 ? theme.palette.bodyColor.whiteGray : "",
+                      backgroundColor:
+                        index % 2 === 0 ? theme.palette.bodyColor.whiteGray : "",
                       height: "5px",
                       borderRadius: "20px",
                       "& td:first-of-type": {
@@ -386,20 +374,24 @@ export const Row2 = () => {
                         borderBottom: "none",
                         lineHeight: "1",
                         cursor: "pointer",
-
                       }}
                     >
                       <span
                         style={{
-                          backgroundColor: row.status === "Confirm Payment" ? theme.palette.secondaryColor.main : null,
-                          borderRadius: row.status === "Confirm Payment" ? "20px" : "0px",
+                          backgroundColor:
+                            row.status === "Confirm Payment"
+                              ? theme.palette.secondaryColor.main
+                              : null,
+                          borderRadius:
+                            row.status === "Confirm Payment" ? "20px" : "0px",
                           color:
                             row.status === "active"
                               ? theme.palette.orangePrimary.main
                               : row.status === "inactive"
                               ? "gray"
                               : "white",
-                          padding: row.status === "Confirm Payment" ? "5px 9px" : "12px",
+                          padding:
+                            row.status === "Confirm Payment" ? "5px 9px" : "12px",
                           fontSize: row.status === "Confirm Payment" ? "10px" : "11px",
                         }}
                       >
@@ -408,7 +400,10 @@ export const Row2 = () => {
                             display: "inline-block",
                             width: "6px",
                             height: "6px",
-                            backgroundColor: row.status === "active" ? theme.palette.orangePrimary.main : "gray",
+                            backgroundColor:
+                              row.status === "active"
+                                ? theme.palette.orangePrimary.main
+                                : "gray",
                             borderRadius: "50%",
                             marginRight: "5px",
                           }}
@@ -427,17 +422,13 @@ export const Row2 = () => {
                       }}
                     >
                       <IconButton onClick={handleDashboardClick}>
-                        <img
-                          src="/assets/dashboard.svg"
-                          alt="icon"
-                          style={{ cursor: "pointer", width: "16px", height: "16px" }}
+                        <Dashboard
+                          style={{ cursor: "pointer", color:theme.palette.bodyColor.gray_lightBlack50 , fontSize:"20px" }}
                         />
                       </IconButton>
                       <IconButton onClick={() => handleEditClient(row)}>
-                        <img
-                          src="/assets/setting.svg"
-                          alt="icon"
-                          style={{ cursor: "pointer", width: "16px", height: "16px" }}
+                        <Settings
+                          style={{ cursor: "pointer", color:theme.palette.bodyColor.gray_lightBlack50 , fontSize:"20px" }}
                         />
                       </IconButton>
                     </TableCell>
@@ -445,7 +436,10 @@ export const Row2 = () => {
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={6} sx={{ textAlign: "center", padding: "20px" }}>
+                  <TableCell
+                    colSpan={6}
+                    sx={{ textAlign: "center", padding: "20px" }}
+                  >
                     No clients found
                   </TableCell>
                 </TableRow>

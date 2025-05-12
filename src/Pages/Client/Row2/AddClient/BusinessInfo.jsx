@@ -96,12 +96,13 @@ export const BusinessInfo = () => {
     // Update fromTime and toTime based on currentDay
     setFromTime(workschedules[currentDay]?.[0] || '9:00 am');
     setToTime(workschedules[currentDay]?.[1] || '7:00 pm');
-    selectBranch(0)
-  }, [workschedules, currentDay]);
+    selectBranch(branchIndex)
+  }, [workschedules, currentDay, branchIndex]);
 
   const handleBranchClick = (index) => {
     setBranchIndex(index);
     selectBranch(index);
+    updateBusinessData(branches[index]);
   };
 
   const handleModeChange = (event, newMode) => {
@@ -764,5 +765,3 @@ export const BusinessInfo = () => {
 };
 
 export default BusinessInfo;
-
-
