@@ -11,7 +11,9 @@ import {
 } from "@mui/material";
 import LineChart1 from "./LineChart1";
 import { useTranslation } from "react-i18next";
-import { DashboardDataContext } from "../../../context/DashboardDataContext";
+import { useDispatch, useSelector } from "react-redux";
+
+import { getSalesDashboard } from '../../../store/adminSlice'
 
 export const Row1 = () => {
   const [year, setYear] = React.useState("2025");
@@ -20,14 +22,14 @@ export const Row1 = () => {
   const handleYearChange = (event) => {
     setYear(event.target.value);
   };
-  const { salesData, getSalesDashboard } =
-    React.useContext(DashboardDataContext);
+
+  const salesData = useSelector((state) => state.admins?.salesData);
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
-    getSalesDashboard(year);
+    dispatch(getSalesDashboard(year));
   }, [year]);
-  console.log("salesData in row1", salesData);
-  
+
 
   return (
     <Paper

@@ -29,6 +29,7 @@ import { toast } from "react-toastify";
 import { Logout, Settings } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import Language from "../../../../Component/dashboard/TopBar/Language";
+import { Loader } from "../../../../Component/componetUi/Loader";
 
 export const AddClient = () => {
   const navigate = useNavigate();
@@ -446,7 +447,7 @@ export const AddClient = () => {
 
       {loading ? (
         <Box sx={{ display: "flex", justifyContent: "center", padding: "20px" }}>
-          <Typography>Loading...</Typography>
+          <Loader />
         </Box>
       ) : (
         <Box>

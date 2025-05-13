@@ -5,13 +5,17 @@ import React, { useState } from "react";
 import { PieChart, Pie, Cell } from "recharts";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import { useTranslation } from "react-i18next";
-import { DashboardDataContext } from "../../../context/DashboardDataContext";
+import { getPerformanceDashboard } from "../../../store/adminSlice";
+import { useDispatch, useSelector } from "react-redux";
+
 export const Cart4 = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedYear, setSelectedYear] = useState("2024-2025");
   const { t } = useTranslation();
   const theme = useTheme();
-  const { performanceData, getPerformanceDashboard } = React.useContext(DashboardDataContext);
+
+  const performanceData = useSelector((state) => state.admins?.performanceData);
+  const dispatch = useDispatch();
 
   // Calculate totals from performanceData
   const { subscriptionsTotal, ordersTotal } = React.useMemo(() => {
@@ -59,9 +63,9 @@ export const Cart4 = () => {
   const years = ["2021-2022", "2022-2023", "2023-2024", "2024-2025"];
   React.useEffect(() => {
     let isMounted = true; // Flag to prevent setting state if component is unmounted
-    const fetchPerformanceDashboard = async () => {
+    const fetchPerformanceDashboard = () => {
       if (isMounted) {
-        await getPerformanceDashboard(selectedYear);
+        dispatch(getPerformanceDashboard(selectedYear));
       }
     };
     fetchPerformanceDashboard();

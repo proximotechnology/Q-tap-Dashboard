@@ -21,7 +21,8 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import MinimizeOutlinedIcon from '@mui/icons-material/MinimizeOutlined';
 import { useTranslation } from 'react-i18next';
-import { DashboardDataContext } from '../../../context/DashboardDataContext';
+import { getDeposits, getWithdrawals } from '../../../store/adminSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Add the formatDateTime function
 const formatDateTime = (updatedAt) => {
@@ -58,8 +59,9 @@ export const Row3 = () => {
   const [depositToDate, setDepositToDate] = React.useState('2025-06-28');
 
   // Context data
-  const { depositsData, getDeposits, withdrawalsData, getWithdrawals } = React.useContext(DashboardDataContext);
-
+  // const { depositsData, getDeposits, withdrawalsData, getWithdrawals } = React.useContext(DashboardDataContext);
+  const depositsData = useSelector((state) => state.admins?.depositsData);
+  const dispatch = useDispatch();
   // // Fetch withdrawals data
   // React.useEffect(() => {
   //   if (!withdrawalsData || withdrawalsData.length === 0) {
@@ -71,7 +73,7 @@ export const Row3 = () => {
 
   // Fetch deposits data
   React.useEffect(() => {
-    getDeposits(`${depositFromDate}/${depositToDate}`);
+    dispatch(getDeposits(`${depositFromDate}/${depositToDate}`));
   }, [depositFromDate, depositToDate]);
 
   React.useEffect(() => {
@@ -80,7 +82,7 @@ export const Row3 = () => {
     } else {
       setDeposits(depositsData?.Deposits || []);
     }
-  }, [depositFromDate , depositToDate, depositsData]);
+  }, [depositFromDate, depositToDate, depositsData]);
 
   // // Handle search toggle for withdrawals
   // const handleWithdrawalSearchClick = () => {
@@ -110,8 +112,8 @@ export const Row3 = () => {
         <Card sx={{ borderRadius: 4, height: '100%', overflow: 'auto' }}>
           <CardContent>
             <Box display="flex" justifyContent="space-between" alignItems="center" width="100%" marginBottom="7px">
-              <Box variant="body2" sx={{ fontSize: '13px', display: 'flex' , color: theme.palette.text.gray }}>
-                <span className="icon-transfer" style={{ fontSize: '22px', color: '#D8E0E0', marginRight:"5px" , marginRight:"5px" }}></span>
+              <Box variant="body2" sx={{ fontSize: '13px', display: 'flex', color: theme.palette.text.gray }}>
+                <span className="icon-transfer" style={{ fontSize: '22px', color: '#D8E0E0', marginRight: "5px", marginRight: "5px" }}></span>
                 {t('withdrawals')}
               </Box>
               <Box sx={{ display: 'flex', textAlign: 'center', alignItems: 'center' }} gap={1}>
@@ -296,7 +298,7 @@ export const Row3 = () => {
           <CardContent>
             <Box display="flex" justifyContent="space-between" alignItems="center" width="100%" marginBottom="7px">
               <Box variant="body2" sx={{ fontSize: '13px', display: 'flex', color: theme.palette.text.gray }}>
-                <span className="icon-transfer" style={{ fontSize: '22px', color: '#D8E0E0', marginRight:"5px" }}></span>
+                <span className="icon-transfer" style={{ fontSize: '22px', color: '#D8E0E0', marginRight: "5px" }}></span>
                 {t('deposits')}
               </Box>
               <Box sx={{ display: 'flex', textAlign: 'center', alignItems: 'center' }} gap={1}>
@@ -346,7 +348,7 @@ export const Row3 = () => {
                   inputProps={{ style: { fontSize: '12px', padding: '2px 8px', color: theme.palette.text.gray } }}
                   sx={{ width: '120px', height: '25px', fontSize: '12px', borderRadius: '5px', color: theme.palette.text.gray }}
                 />
-   
+
                 <Button
                   sx={{ color: theme.palette.orangePrimary.main, fontSize: '11px', textTransform: 'capitalize' }}
                 >

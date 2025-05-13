@@ -1,7 +1,6 @@
-// AddUsers.jsx
 import { Button, Divider, Grid, IconButton, Menu, MenuItem, Popover, Typography, Alert, Snackbar, CircularProgress, useTheme } from '@mui/material';
 import { Box } from '@mui/system';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
@@ -12,10 +11,12 @@ import { toast } from 'react-toastify';
 import { PersonalInfo } from './PersonalInfo';
 import { PaymentInfo } from './PaymentInfo';
 import { useTranslation } from 'react-i18next';
-import { AffiliateClientContext } from '../../../context/AffiliateClient';
 import Language from '../../../Component/dashboard/TopBar/Language';
 import { BASE_URL } from '../../../utils/helperFunction';
 import { Logout, Print, Settings } from '@mui/icons-material';
+import { getAffiliateData } from '../../../store/affiliateSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { Loader } from '../../../Component/componetUi/Loader';
 
 export const AddUsers = () => {
     const navigate = useNavigate();
@@ -23,37 +24,30 @@ export const AddUsers = () => {
     const location = useLocation();
     const { t } = useTranslation();
     const user = location.state?.user; // Get user data from navigation state
-    const { affiliates, getAffiliateData } = useContext(AffiliateClientContext);
+    const { data, isLoading, error } = useSelector((state) => state.affiliates);
+    const dispatch = useDispatch();
 
     // Personal Info States
-    const [fullName, setFullName] = useState(user?.name || '');
-    const [phone, setPhone] = useState(user?.mobile || '');
-    const [email, setEmail] = useState(user?.email || '');
-    const [month, setMonth] = useState(user?.birth_date ? user.birth_date.split('-')[1] : '');
-    const [day, setDay] = useState(user?.birth_date ? user.birth_date.split('-')[2] : '');
-    const [year, setYear] = useState(user?.birth_date ? user.birth_date.split('-')[0] : '');
-    const [country, setCountry] = useState(user?.country || '');
+    const [fullName, setFullName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
+    const [month, setMonth] = useState('');
+    const [day, setDay] = useState('');
+    const [year, setYear] = useState('');
+    const [country, setCountry] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [selectedImage, setSelectedImage] = useState(null);
-    const [selectedOption, setSelectedOption] = useState(user?.campaign || 'Winter Campaign');
-
+    const [selectedOption, setSelectedOption] = useState('Winter Campaign');
 
     // Payment Info States
-    const [bankName, setBankName] = useState(user?.bank_name || '');
-    const [accountNumber, setAccountNumber] = useState(user?.bank_account_number || '');
-    const [accountName, setAccountName] = useState(user?.bank_account_name || '');
-    const [paymentOption, setPaymentOption] = useState(user?.payment_way ? (
-        user.payment_way === 'bank_account' ? 'Bank' :
-            user.payment_way === 'digital_wallet' ? 'D.Wallet' :
-                user.payment_way === 'credit_card' ? 'Card' : null
-    ) : 'Bank');
-    const [addressBank, setAddressBank] = useState(user?.address || "")
+    const [bankName, setBankName] = useState('');
+    const [accountNumber, setAccountNumber] = useState('');
+    const [accountName, setAccountName] = useState('');
+    const [paymentOption, setPaymentOption] = useState('Bank');
+    const [addressBank, setAddressBank] = useState('');
 
     const [anchorElUser, setAnchorElUser] = useState(null);
-
-
-    // Add error states
     const [errors, setErrors] = useState({});
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -63,49 +57,45 @@ export const AddUsers = () => {
     // Fetch affiliate data when editing an existing user
     useEffect(() => {
         if (user) {
-            getAffiliateData(user.id); // Fetch data for the specific user
-            console.log("affiliate", affiliates);
-
+            dispatch(getAffiliateData(user.id)); // Fetch data for the specific user
         }
-    }, [user]);
+    }, [user, dispatch]);
 
     // Sync local state with fetched affiliate data
     useEffect(() => {
-        if (user && affiliates.length > 0) {
-            const affiliateData = affiliates.find(aff => aff.id === user.id) || affiliates[0]; // Fallback to first item if no match
-            if (affiliateData) {
-
-                setFullName(affiliateData.affiliate?.name || fullName);
-                setPhone(affiliateData.affiliate?.mobile || phone);
-                setEmail(affiliateData.affiliate?.email || email);
-                if (affiliateData.affiliate?.birth_date) {
-                    const [y, m, d] = affiliateData.affiliate?.birth_date.split('-');
-                    setYear(y);
-                    setMonth(m);
-                    setDay(d);
-                }
-                setCountry(affiliateData.affiliate?.country || country);
-                setSelectedOption(affiliateData.affiliate?.campaign || selectedOption);
-                setBankName(affiliateData.affiliate?.payment_info?.bank_name || bankName);
-                setAccountNumber(affiliateData.affiliate?.payment_info?.bank_account_number || accountNumber);
-                setAccountName(affiliateData.affiliate?.payment_info?.bank_account_name || accountName);
-                setAddressBank(affiliateData.affiliate?.payment_info?.address || addressBank);
-
-                setPaymentOption(affiliateData.affiliate?.payment_info?.payment_way ? (
-                    affiliateData.affiliate?.payment_way === 'bank_account' ? 'Bank' :
-                        affiliateData.affiliate?.payment_way === 'digital_wallet' ? 'D.Wallet' :
-                            affiliateData.affiliate?.payment_way === 'credit_card' ? 'Card' : "Bank"
-                ) : paymentOption);
+        if (user && data?.affiliate) {
+            setFullName(data.affiliate?.name || '');
+            setPhone(data.affiliate?.mobile || '');
+            setEmail(data.affiliate?.email || '');
+            if (data.affiliate?.birth_date) {
+                const [y, m, d] = data.affiliate.birth_date.split('-');
+                setYear(y);
+                setMonth(m);
+                setDay(d);
             }
+            setCountry(data.affiliate?.country || '');
+            setSelectedOption(data.affiliate?.campaign || 'Winter Campaign');
+            setBankName(data.affiliate?.payment_info?.bank_name || '');
+            setAccountNumber(data.affiliate?.payment_info?.bank_account_number || '');
+            setAccountName(data.affiliate?.payment_info?.bank_account_name || '');
+            setAddressBank(data.affiliate?.payment_info?.address || '');
+            setPaymentOption(data.affiliate?.payment_info?.payment_way ? (
+                data.affiliate.payment_info.payment_way === 'bank_account' ? 'Bank' :
+                data.affiliate.payment_info.payment_way === 'digital_wallet' ? 'D.Wallet' :
+                data.affiliate.payment_info.payment_way === 'credit_card' ? 'Card' : 'Bank'
+            ) : 'Bank');
         }
-    }, [affiliates, user]);
+    }, [data, user]);
 
-
+    // Determine if data is ready
+    const isDataReady = () => {
+        if (!user) return true; // For new users, no data fetching is needed
+        return !isLoading && data?.affiliate; // For existing users, ensure data is loaded and affiliate exists
+    };
 
     const handlePrint = () => {
         window.print();
     };
-
 
     const openUserPopover = Boolean(anchorElUser);
 
@@ -131,10 +121,10 @@ export const AddUsers = () => {
             newErrors.birthDate = t("birthRequired");
         }
         if (!country) newErrors.country = t("countryRequired");
-        if (!user && !password) { // Only require password for new user
+        if (!user && !password) {
             newErrors.password = t("passwordRequired");
         }
-        if (!user && password !== confirmPassword) { // Only check for new user
+        if (!user && password !== confirmPassword) {
             newErrors.confirmPassword = t("PasswordsDoNotMatch");
         }
         if (!bankName.trim()) newErrors.bankName = 'Bank name is required';
@@ -183,9 +173,7 @@ export const AddUsers = () => {
             formData.append('bank_account_name', accountName);
 
             if (user) {
-                // Update existing user
                 const response = await axios.post(
-
                     `${BASE_URL}qtap_affiliate/${user.id}`,
                     formData,
                     {
@@ -205,9 +193,7 @@ export const AddUsers = () => {
                     toast.error(response.data.message);
                 }
             } else {
-                // Add new user
                 const response = await axios.post(
-
                     `${BASE_URL}add_qtap_affiliate`,
                     formData,
                     {
@@ -236,6 +222,12 @@ export const AddUsers = () => {
         }
     };
 
+    // Render Loader if data is not ready
+    if (!isDataReady()) {
+        return <Loader />;
+    }
+
+    // Main content
     return (
         <Box sx={{ backgroundColor: theme.palette.bodyColor.secandary, height: "100vh" }}>
             <Box
@@ -250,8 +242,7 @@ export const AddUsers = () => {
                 }}
             >
                 <Box>
-                    <img src={localStorage.getItem("themeMode") === "light" ? "/assets/qtapwhite.svg" : "/assets/qtap.svg"} alt="Logo" style={{ width: '140px' }} />
-
+                    <img src={localStorage.getItem("themeMode") === "light" ? "/assets/qtap.svg" : "/assets/qtapwhite.svg"} alt="Logo" style={{ width: '140px' }} />
                 </Box>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                     <Language />
@@ -380,7 +371,6 @@ export const AddUsers = () => {
                             setAccountName={setAccountName}
                             setAddressBank={setAddressBank}
                             addressBank={addressBank}
-
                             errors={errors}
                         />
                     </Grid>

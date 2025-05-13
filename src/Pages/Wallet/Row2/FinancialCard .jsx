@@ -5,25 +5,23 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useTranslation } from 'react-i18next';
 import { DashboardDataContext } from "../../../context/DashboardDataContext";
-import { all } from "axios";
+import { getWalletChartTwo } from "../../../store/adminSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const FinancialCard = () => {
   const { t } = useTranslation();
   const theme = useTheme();
   const [year, setYear] = React.useState('2025');
   const [allData, setAllData] = React.useState([]);
-  const { walletChartTwoData, getWalletChartTwo } = React.useContext(DashboardDataContext);
-  // Fetch financial data
+  const walletChartTwoData = useSelector((state) => state.admins?.walletChartTwoData);
+  const dispatch = useDispatch();  // Fetch financial data
   React.useEffect(() => {
     if (walletChartTwoData.length === 0) {
-      getWalletChartTwo(year);
+      dispatch(getWalletChartTwo(year));
     } else {
       setAllData(walletChartTwoData);
     }
   }, [year, walletChartTwoData]);
-  // console.log("walletChartTwoData", walletChartTwoData);
-
-
 
   return (
 

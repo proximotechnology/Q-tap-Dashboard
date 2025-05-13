@@ -7,18 +7,21 @@ import { Cart3 } from './Cart3';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import { Cart4 } from './Cart4';
 import { useTranslation } from 'react-i18next';
-import { DashboardDataContext } from '../../../context/DashboardDataContext';
+import { getDashboard } from '../../../store/adminSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const Row1 = () => {
     const { t } = useTranslation();
     const theme = useTheme();
-    const { dashboardData, getDashboard } = React.useContext(DashboardDataContext);
-    const { Affiliate_Users, Client, Total_Orders} = dashboardData;
+    const dashboardData = useSelector((state) => state.admins?.dashboardData);
+    const dispatch = useDispatch();
+
+    const { Affiliate_Users, Client, Total_Orders } = dashboardData;
     React.useEffect(() => {
         let isMounted = true; // Flag to prevent setting state if component is unmounted
         const fetchDashboardData = async () => {
             if (isMounted) {
-                await getDashboard();
+                dispatch(getDashboard());
             }
         };
         fetchDashboardData();
@@ -30,7 +33,7 @@ export const Row1 = () => {
         <Box sx={{ flexGrow: 1, padding: '0px 20px 20px 20px' }}>
             <Grid className="mainContainer" container spacing={3}>
                 <Grid item xs={12} md={6} lg={3} >
-                    <Card sx={{ borderRadius: '20px', height: '250px',backgroundColor:theme.palette.bodyColor.secandary }}>
+                    <Card sx={{ borderRadius: '20px', height: '250px', backgroundColor: theme.palette.bodyColor.secandary }}>
                         <CardContent sx={{ overflowX: 'auto' }}>
                             <Box display={"flex"} justifyContent={"space-between"}>
                                 <Typography variant="subtitle1" color={theme.palette.text.gray}>{t("client")}</Typography>
@@ -44,23 +47,23 @@ export const Row1 = () => {
                 </Grid>
 
                 <Grid item xs={12} md={6} lg={3}>
-                    <Card sx={{ borderRadius: '20px', height: '250px',backgroundColor:theme.palette.bodyColor.secandary }}>
+                    <Card sx={{ borderRadius: '20px', height: '250px', backgroundColor: theme.palette.bodyColor.secandary }}>
                         <CardContent>
                             <Box display={"flex"} justifyContent={"space-between"}>
                                 <Typography variant="subtitle1" color={theme.palette.text.gray}>{t("totalOrders")}</Typography>
                                 <span class="icon-shopping-bag" style={{ color: theme.palette.text.secondary, fontSize: "22px" }}></span>
                             </Box >
                             <Typography variant="body2" sx={{ color: theme.palette.orangePrimary.main, fontSize: "20px" }}>
-                            {(() => {
-                                const orders = Total_Orders && typeof Total_Orders === 'object' && Total_Orders !== null 
-                                    ? Object.values(Total_Orders) 
-                                    : [];
-                                const sum = orders
-                                    .map(order => order.total_order || 0)
-                                    .reduce((acc, curr) => acc + curr, 0);
-                                return sum > 0 ? sum : 0;
-                            })()}                     
-                             </Typography>
+                                {(() => {
+                                    const orders = Total_Orders && typeof Total_Orders === 'object' && Total_Orders !== null
+                                        ? Object.values(Total_Orders)
+                                        : [];
+                                    const sum = orders
+                                        .map(order => order.total_order || 0)
+                                        .reduce((acc, curr) => acc + curr, 0);
+                                    return sum > 0 ? sum : 0;
+                                })()}
+                            </Typography>
 
                             <Cart2 Total_Orders={Total_Orders} />
 
@@ -69,7 +72,7 @@ export const Row1 = () => {
                 </Grid>
 
                 <Grid item xs={12} md={6} lg={3}>
-                    <Card sx={{ borderRadius: '20px', height: '250px' ,backgroundColor:theme.palette.bodyColor.secandary}}>
+                    <Card sx={{ borderRadius: '20px', height: '250px', backgroundColor: theme.palette.bodyColor.secandary }}>
                         <CardContent>
                             <Box display={"flex"} justifyContent={"space-between"}>
                                 <Typography variant="subtitle1" color={theme.palette.text.gray}>{t("affiliateUsers")}</Typography>
@@ -84,7 +87,7 @@ export const Row1 = () => {
 
 
                 <Grid item xs={12} md={6} lg={3}>
-                    <Card sx={{ borderRadius: '20px', height: '250px' ,backgroundColor:theme.palette.bodyColor.secandary}}>
+                    <Card sx={{ borderRadius: '20px', height: '250px', backgroundColor: theme.palette.bodyColor.secandary }}>
                         <CardContent>
                             <Box display={"flex"} justifyContent={"space-between"}>
                                 <Typography variant="subtitle1" color={theme.palette.text.gray}>{t("performance")}</Typography>

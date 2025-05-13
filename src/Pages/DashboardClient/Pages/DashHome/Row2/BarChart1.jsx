@@ -5,7 +5,8 @@ import { data } from './BarChart';
 import { Box, useTheme } from '@mui/system';
 import { Grid, Select, MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { DashboardDataContext } from '../../../../../context/DashboardDataContext';
+import { getSalesDashboard } from '../../../../../store/adminSlice'
+import { useDispatch, useSelector } from 'react-redux';
 const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
         return (
@@ -25,13 +26,14 @@ export const BarChart1 = () => {
     const handleYearChange = (event) => {
         setYear(event.target.value);
     };
-    const { salesData, getSalesDashboard } = React.useContext(DashboardDataContext);
+    const salesData = useSelector((state) => state.admins?.salesData);
+    const dispatch = useDispatch();
 
     React.useEffect(() => {
         let isMounted = true; // Flag to prevent setting state if component is unmounted
-        const fetchSalesDashboard = async () => {
+        const fetchSalesDashboard = () => {
             if (isMounted) {
-                await getSalesDashboard(year);
+                dispatch(getSalesDashboard(year));
             }
         };
         fetchSalesDashboard();
@@ -40,9 +42,10 @@ export const BarChart1 = () => {
         };
     }, [year]);
     return (
-        <Paper sx={{ height: "220px", borderRadius: "20px",backgroundColor:theme.palette.bodyColor.secandary,
-        padding:"0px 20px",
-            
+        <Paper sx={{
+            height: "220px", borderRadius: "20px", backgroundColor: theme.palette.bodyColor.secandary,
+            padding: "0px 20px",
+
         }}>
             <Grid container justifyContent="space-between" alignItems="center" sx={{ padding: "10px 20px", }} >
                 <Grid item>
@@ -79,12 +82,12 @@ export const BarChart1 = () => {
                         dataKey="month_name"
                         tickLine={false}
                         axisLine={false}
-                        tick={{ fontSize: 9  , fill: theme.palette.text.gray }}
+                        tick={{ fontSize: 9, fill: theme.palette.text.gray }}
                     />
 
                     <YAxis
                         tickFormatter={(tick) => `${tick / 1}k`}
-                        tick={{ fontSize: 10 , fill: theme.palette.text.gray  }}
+                        tick={{ fontSize: 10, fill: theme.palette.text.gray }}
                         tickLine={false}
                         axisLine={false}
                         interval={0}

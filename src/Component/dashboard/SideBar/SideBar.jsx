@@ -123,9 +123,9 @@ export default function SideBar({ isOpen, handleToggleSideBar }) {
                     //             : "/assets/qtapwhite.svg")
                     //         : "/assets/qtap.svg"
                     // }
-                    src={"/assets/qtap.svg"}
+                    src={"/images/qtap.png"}
                     alt="Logo"
-                    style={{ width: '110px' }}
+                    style={{ width: '130px'  }}
                 />
 
             </Box>

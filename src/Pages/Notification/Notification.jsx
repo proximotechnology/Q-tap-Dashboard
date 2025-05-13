@@ -90,7 +90,7 @@ export const Notification = () => {
                   height: "30px",
                   paddingLeft: "15px",
                   borderRadius: '20px',
-                  backgroundColor: theme.palette.bodyColor.secandary,
+                  backgroundColor: theme.palette.bodyColor.secandaryInput,
                   color: theme.palette.text.gray,
                   boxShadow: "none",
                   overflow: 'hidden',
@@ -100,11 +100,11 @@ export const Notification = () => {
               >
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <NotificationsNoneOutlinedIcon sx={{ marginRight: '20px', color: "gray", fontSize: "20px" }} />
-                  <Typography variant="body2" sx={{ color: "#AAAAAA", marginRight: '10px', fontSize: "12px", whiteSpace: 'nowrap',overflow: 'hidden',textOverflow: 'ellipsis',maxWidth:'30%' }}>
+                  <Typography variant="body2" sx={{ color: "#AAAAAA", marginRight: '10px', fontSize: "12px", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '30%' }}>
                     {notification.title}
                   </Typography>
                   <Divider orientation="vertical" flexItem sx={{ marginRight: '10px' }} />
-                  <Typography variant="body2" sx={{ color: "#AAAAAA", marginRight: '10px', fontSize: "12px" ,width:"80%", whiteSpace: 'nowrap',overflow: 'hidden',textOverflow: 'ellipsis',maxWidth:'20vw'}}>
+                  <Typography variant="body2" sx={{ color: "#AAAAAA", marginRight: '10px', fontSize: "12px", width: "80%", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '20vw' }}>
                     {notification.content}
                   </Typography>
                   {/* <Divider orientation="vertical" flexItem sx={{ marginRight: '10px' }} />

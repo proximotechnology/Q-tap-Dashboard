@@ -3,51 +3,61 @@ import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
 import { Paper, Typography, Box, useTheme } from '@mui/material';
 import { PieChart, Pie, Cell } from 'recharts';
 import { useTranslation } from 'react-i18next';
-import { DashboardDataContext } from '../../../context/DashboardDataContext';
+import { getDashboard } from '../../../store/adminSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { Loader } from './../../../Component/componetUi/Loader';
 
 export const Row1 = () => {
     const { t } = useTranslation();
     const theme = useTheme();
-    const COLORS = [theme.palette.orangePrimary.main, '#AD4181', '#2EA6F7'];
+    const dispatch = useDispatch();
+    const dashboardData = useSelector((state) => state.admins?.dashboardData);
+    const { Client } = dashboardData || {};
     const [clients, setClients] = React.useState([]);
-    const { dashboardData, getDashboard } = React.useContext(DashboardDataContext);
-    const { Client } = dashboardData;
 
+    // Define colors and gradients similar to Cart1
+    const COLORS = [
+        { gradientId: 'gradientFree', start: 'rgb(255, 194, 133)', end: theme.palette.orangePrimary.main, stroke: theme.palette.orangePrimary.main },
+        { gradientId: 'gradientStarter', start: 'rgb(255, 174, 216)', end: '#AD4181', stroke: '#AD4181' },
+        { gradientId: 'gradientPro', start: 'rgb(170, 214, 243)', end: '#2EA6F7', stroke: '#2EA6F7' },
+    ];
+    const GRADIENT_STYLES = [
+        { start: theme.palette.orangePrimary.main, end: 'rgb(248, 203, 158)' },
+        { start: '#AD4181', end: 'rgb(255, 174, 216)' },
+        { start: '#2EA6F7', end: 'rgb(170, 214, 243)' },
+    ];
+
+    // Fetch and process clients
     React.useEffect(() => {
-        if (!Client) {
-            getDashboard();
-        } else if (Client) {
-            const clientArray = Object.values(Client).filter((client) => client.id !== 11);
-            setClients(clientArray);
-        } else {
-            setClients([]);
-        }
-    }, [Client, getDashboard]);
+        let isMounted = true;
+        const processClients = async () => {
+            if (!Client) {
+                dispatch(getDashboard());
+            }
+            if (isMounted && Client) {
+                // Filter valid client objects, exclude test client (id === 11), and limit to 3
+                const clientArray = Object.values(Client)
+                    .filter(item => typeof item === 'object' && item.id && item.id !== 11 && item.percentage != null)
+                    .slice(0, 3);
+                setClients(clientArray);
+            } else if (isMounted) {
+                setClients([]);
+            }
+        };
+        processClients();
+        return () => {
+            isMounted = false;
+        };
+    }, [Client, dispatch]);
 
-    // Prepare chart data
-    const freeData = clients[0]
-        ? [
-            { name: 'Free', value: parseFloat(clients[0].percentage) || 0 },
-            { name: 'Remaining', value: 100 - (parseFloat(clients[0].percentage) || 0) },
-        ]
-        : [{ name: 'Free', value: 0 }, { name: 'Remaining', value: 100 }];
+    // Generate pie chart data for each client
+    const pieData = clients.map(client => [
+        { name: client.name, value: parseFloat(client.percentage) || 0 },
+        { name: 'Remaining', value: 100 - (parseFloat(client.percentage) || 0) },
+    ]);
 
-    const starterData = clients[1]
-        ? [
-            { name: 'Starter', value: parseFloat(clients[1].percentage) || 0 },
-            { name: 'Remaining', value: 100 - (parseFloat(clients[1].percentage) || 0) },
-        ]
-        : [{ name: 'Starter', value: 0 }, { name: 'Remaining', value: 100 }];
-
-    const proData = clients[2]
-        ? [
-            { name: 'Pro', value: parseFloat(clients[2].percentage) || 0 },
-            { name: 'Remaining', value: 100 - (parseFloat(clients[2].percentage) || 0) },
-        ]
-        : [{ name: 'Pro', value: 0 }, { name: 'Remaining', value: 100 }];
-
-    // Check if data is ready for charts: At least one client with a valid percentage
-    const isDataReady = clients.length > 0 && clients.some((client) => client?.percentage != null);
+    // Check if data is ready
+    const isDataReady = clients.length > 0 && clients.every(client => client.percentage != null);
 
     return (
         <Box sx={{ padding: '0 20px' }}>
@@ -62,24 +72,20 @@ export const Row1 = () => {
                         flexDirection: { xs: 'column', sm: 'row' },
                     }}
                 >
-                    {/* Client Title and Number (Always Visible) */}
+                    {/* Client Title and Number */}
                     <Box>
                         <Typography
                             variant="h6"
                             color={theme.palette.text.gray}
                             fontSize="17px"
                             display="flex"
-                            textAlign="center"
                             alignItems="center"
                         >
-                            <Box component="span">
-                                <PersonAddAltOutlinedIcon
-                                    sx={{ marginRight: 1, fontSize: '35px', color: '#D8E0E0' }}
-                                />
-                            </Box>
+                            <PersonAddAltOutlinedIcon
+                                sx={{ marginRight: 1, fontSize: '35px', color: '#D8E0E0' }}
+                            />
                             {t('client')}
                         </Typography>
-
                         <Typography
                             variant="h3"
                             sx={{
@@ -92,123 +98,49 @@ export const Row1 = () => {
                         </Typography>
                     </Box>
 
-                    {/* Charts Section (Conditional) */}
+                    {/* Charts Section */}
                     {isDataReady ? (
                         <Box display="flex" justifyContent="center" alignItems="center">
-                            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' } }} gap={2}>
-                                {clients[0] && (
-                                    <PieChart width={110} height={110}>
-                                        <defs>
-                                            <linearGradient id="gradientFree" x1="0" y1="0" x2="100%" y2="0">
-                                                <stop offset="0%" stopColor="rgb(255, 194, 133)" />
-                                                <stop offset="100%" stopColor={theme.palette.orangePrimary.main} />
-                                            </linearGradient>
-                                        </defs>
-                                        <Pie
-                                            data={freeData}
-                                            cx={50}
-                                            cy={50}
-                                            innerRadius={33}
-                                            outerRadius={48}
-                                            fill="#D8E0E0"
-                                            paddingAngle={0}
-                                        >
-                                            <Cell
-                                                fill="url(#gradientFree)"
-                                                stroke={theme.palette.orangePrimary.main}
-                                                strokeWidth={0.2}
-                                                cornerRadius={5}
-                                            />
-                                            <Cell fill="#D8E0E0" />
-                                        </Pie>
-                                        <text
-                                            x={55}
-                                            y={57}
-                                            textAnchor="middle"
-                                            dominantBaseline="middle"
-                                            fill={COLORS[0]}
-                                            fontSize="18"
-                                        >
-                                            {clients[0]?.percentage ? `${parseInt(clients[0].percentage)}%` : '0%'}
-                                        </text>
-                                    </PieChart>
-                                )}
-
-                                {clients[1] && (
-                                    <PieChart width={110} height={110}>
-                                        <defs>
-                                            <linearGradient id="gradientStarter" x1="0" y1="0" x2="100%" y2="0">
-                                                <stop offset="0%" stopColor="rgb(255, 174, 216)" />
-                                                <stop offset="100%" stopColor="#AD4181" />
-                                            </linearGradient>
-                                        </defs>
-                                        <Pie
-                                            data={starterData}
-                                            cx={50}
-                                            cy={50}
-                                            innerRadius={33}
-                                            outerRadius={48}
-                                            fill="#D8E0E0"
-                                            paddingAngle={0}
-                                        >
-                                            <Cell
-                                                fill="url(#gradientStarter)"
-                                                stroke="#AD4181"
-                                                strokeWidth={0.2}
-                                                cornerRadius={5}
-                                            />
-                                            <Cell fill="#d3d3d3" />
-                                        </Pie>
-                                        <text
-                                            x={55}
-                                            y={57}
-                                            textAnchor="middle"
-                                            dominantBaseline="middle"
-                                            fill={COLORS[1]}
-                                            fontSize="18"
-                                        >
-                                            {clients[1]?.percentage ? `${parseInt(clients[1].percentage)}%` : '0%'}
-                                        </text>
-                                    </PieChart>
-                                )}
-
-                                {clients[2] && (
-                                    <PieChart width={110} height={110}>
-                                        <defs>
-                                            <linearGradient id="gradientPro" x1="0" y1="0" x2="100%" y2="0">
-                                                <stop offset="0%" stopColor="rgb(170, 214, 243)" />
-                                                <stop offset="100%" stopColor="#2EA6F7" />
-                                            </linearGradient>
-                                        </defs>
-                                        <Pie
-                                            data={proData}
-                                            cx={50}
-                                            cy={50}
-                                            innerRadius={33}
-                                            outerRadius={48}
-                                            fill="#D8E0E0"
-                                            paddingAngle={0}
-                                        >
-                                            <Cell
-                                                fill="url(#gradientPro)"
-                                                stroke="#2EA6F7"
-                                                strokeWidth={2}
-                                                cornerRadius={5}
-                                            />
-                                            <Cell fill="#d3d3d3" />
-                                        </Pie>
-                                        <text
-                                            x={55}
-                                            y={57}
-                                            textAnchor="middle"
-                                            dominantBaseline="middle"
-                                            fill={COLORS[2]}
-                                            fontSize="18"
-                                        >
-                                            {clients[2]?.percentage ? `${parseInt(clients[2].percentage)}%` : '0%'}
-                                        </text>
-                                    </PieChart>
-                                )}
+                            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 2 }}>
+                                {clients.map((client, index) => (
+                                    <Box key={client.id}>
+                                        <PieChart width={110} height={110}>
+                                            <defs>
+                                                <linearGradient id={COLORS[index].gradientId} x1="0" y1="0" x2="100%" y2="0">
+                                                    <stop offset="0%" stopColor={COLORS[index].start} />
+                                                    <stop offset="100%" stopColor={COLORS[index].end} />
+                                                </linearGradient>
+                                            </defs>
+                                            <Pie
+                                                data={pieData[index]}
+                                                cx={50}
+                                                cy={50}
+                                                innerRadius={33}
+                                                outerRadius={48}
+                                                fill="#D8E0E0"
+                                                paddingAngle={0}
+                                            >
+                                                <Cell
+                                                    fill={`url(#${COLORS[index].gradientId})`}
+                                                    stroke={COLORS[index].stroke}
+                                                    strokeWidth={0.2}
+                                                    cornerRadius={5}
+                                                />
+                                                <Cell fill="#D8E0E0" />
+                                            </Pie>
+                                            <text
+                                                x={55}
+                                                y={57}
+                                                textAnchor="middle"
+                                                dominantBaseline="middle"
+                                                fill={COLORS[index].stroke}
+                                                fontSize="18"
+                                            >
+                                                {`${parseInt(client.percentage)}%`}
+                                            </text>
+                                        </PieChart>
+                                    </Box>
+                                ))}
                             </Box>
                         </Box>
                     ) : (
@@ -218,19 +150,19 @@ export const Row1 = () => {
                             alignItems="center"
                             sx={{ minWidth: '330px', height: '110px' }}
                         >
-                            <Typography>Loading...</Typography>
+                            <Loader />
                         </Box>
                     )}
 
-                    {/* Legend Section (Conditional) */}
+                    {/* Legend Section */}
                     {isDataReady ? (
                         <Box sx={{ marginRight: { xs: '0px', sm: '70px' } }}>
-                            {clients[0] && (
-                                <Box display="flex" textAlign="center" alignItems="center">
+                            {clients.map((client, index) => (
+                                <Box key={client.id} display="flex" alignItems="center" margin="4px 0px">
                                     <Box
                                         component="span"
                                         sx={{
-                                            background: `linear-gradient(to right,${theme.palette.orangePrimary.main},rgb(248, 203, 158))`,
+                                            background: `linear-gradient(to right, ${GRADIENT_STYLES[index].start}, ${GRADIENT_STYLES[index].end})`,
                                             width: '22px',
                                             borderRadius: '20px',
                                             height: '10px',
@@ -238,54 +170,17 @@ export const Row1 = () => {
                                             marginRight: '8px',
                                         }}
                                     />
-                                    <Typography variant="body2" sx={{ fontSize: '10px', color: theme.palette.text.gray }}>
-                                        {clients[0]?.name || 'Free'}
+                                    <Typography
+                                        variant="body2"
+                                        sx={{ fontSize: '10px', color: theme.palette.text.gray }}
+                                    >
+                                        {client.name}
                                     </Typography>
                                 </Box>
-                            )}
-
-                            {clients[1] && (
-                                <Box display="flex" textAlign="center" alignItems="center" margin="4px 0px">
-                                    <Box
-                                        component="span"
-                                        sx={{
-                                            background: 'linear-gradient(to right, #AD4181,rgb(255, 174, 216))',
-                                            width: '22px',
-                                            borderRadius: '20px',
-                                            height: '10px',
-                                            display: 'inline-block',
-                                            marginRight: '8px',
-                                        }}
-                                    />
-                                    <Typography variant="body2" sx={{ fontSize: '10px', color: theme.palette.text.gray }}>
-                                        {clients[1]?.name || 'Starter'}
-                                    </Typography>
-                                </Box>
-                            )}
-
-                            {clients[2] && (
-                                <Box display="flex" textAlign="center" alignItems="center">
-                                    <Box
-                                        component="span"
-                                        sx={{
-                                            background: 'linear-gradient(to right, #2EA6F7,rgb(170, 214, 243))',
-                                            width: '22px',
-                                            borderRadius: '20px',
-                                            height: '10px',
-                                            display: 'inline-block',
-                                            marginRight: '8px',
-                                        }}
-                                    />
-                                    <Typography variant="body2" sx={{ fontSize: '10px', color: theme.palette.text.gray }}>
-                                        {clients[2]?.name || 'Pro'}
-                                    </Typography>
-                                </Box>
-                            )}
+                            ))}
                         </Box>
                     ) : (
-                        <Box
-                            sx={{ marginRight: { xs: '0px', sm: '70px' }, minWidth: '100px', height: '60px' }}
-                        ></Box>
+                        <Box sx={{ marginRight: { xs: '0px', sm: '70px' }, minWidth: '100px', height: '60px' }} />
                     )}
                 </Box>
             </Paper>

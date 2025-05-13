@@ -2,25 +2,24 @@ import React from 'react'
 import { Box, Grid, MenuItem, Paper, Select, Typography, useTheme } from '@mui/material'
 import SalesVolumeChart from './SalesVolumeChart';
 import { useTranslation } from 'react-i18next';
-import { DashboardDataContext } from '../../../../../../context/DashboardDataContext';
-
+import { getSalesVolumeDashboard } from '../../../../../../store/adminSlice'
+import { useDispatch, useSelector } from 'react-redux';
 const SalesVolumeCard = () => {
     const [year, setYear] = React.useState('30');
     const { t } = useTranslation()
     const theme = useTheme()
-
     const handleYearChange = (event) => {
         setYear(event.target.value);
     };
-    const { salesVolumeData, getSalesVolumeDashboard } = React.useContext(DashboardDataContext);
+    const salesVolumeData = useSelector((state) => state.admins?.salesVolumeData);
+    const dispatch = useDispatch();
+
 
     React.useEffect(() => {
         let isMounted = true; // Flag to prevent setting state if component is unmounted
-        const fetchSalesVolumeData = async () => {
+        const fetchSalesVolumeData = () => {
             if (isMounted) {
-                await getSalesVolumeDashboard(year);
-                console.log("salesVolumeData", salesVolumeData);
-
+                dispatch(getSalesVolumeDashboard(year));
             }
         };
         fetchSalesVolumeData();

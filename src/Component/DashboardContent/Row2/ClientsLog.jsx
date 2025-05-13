@@ -3,13 +3,14 @@ import { Box, useTheme } from '@mui/system';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import CircleIcon from '@mui/icons-material/Circle';
 import { useTranslation } from 'react-i18next';
-import { DashboardDataContext } from '../../../context/DashboardDataContext';
 import React from 'react';
+import { getDashboard } from '../../../store/adminSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Add the formatDateTime function
 const formatDateTime = (updatedAt) => {
     if (!updatedAt) return { time: '', date: '' };
-    
+
     const date = new Date(updatedAt);
     const time = date.toLocaleTimeString('en-US', {
         hour: '2-digit',
@@ -17,13 +18,14 @@ const formatDateTime = (updatedAt) => {
         hour12: true
     });
     const formattedDate = `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear()}`;
-    
+
     return { time, date: formattedDate };
 };
 
 export const ClientsLog = () => {
     const { t } = useTranslation();
-    const { dashboardData, getDashboard } = React.useContext(DashboardDataContext);
+    const dashboardData = useSelector((state) => state.admins?.dashboardData);
+    const dispatch = useDispatch();
     const { Clients_Log } = dashboardData || {};
     const theme = useTheme()
 
@@ -31,7 +33,7 @@ export const ClientsLog = () => {
         let isMounted = true; // Flag to prevent setting state if component is unmounted
         const fetchDashboardData = async () => {
             if (isMounted) {
-                await getDashboard();
+                dispatch(getDashboard());
             }
         };
         fetchDashboardData();
@@ -50,13 +52,13 @@ export const ClientsLog = () => {
     })) || [];
 
     return (
-        <TableContainer component={Paper} sx={{ 
-            borderRadius: "20px", 
-            boxShadow: 'none', 
-            minHeight: "50vh", 
-            maxHeight: "62vh", 
-            whiteSpace: "nowrap" ,
-            backgroundColor:theme.palette.bodyColor.secandary
+        <TableContainer component={Paper} sx={{
+            borderRadius: "20px",
+            boxShadow: 'none',
+            minHeight: "50vh",
+            maxHeight: "62vh",
+            whiteSpace: "nowrap",
+            backgroundColor: theme.palette.bodyColor.secandary
         }}>
             <Grid container justifyContent="space-between" alignItems="center" sx={{ padding: "20px 20px 0px 20px" }}>
                 <Grid item>
@@ -115,7 +117,7 @@ export const ClientsLog = () => {
                                 >
                                     <TableCell sx={{ textAlign: 'center', border: 'none', padding: '0px', fontSize: '11px', color: '#222240', paddingX: '1px' }}>
                                         <Box sx={{ padding: '0px 8px', display: 'flex', alignItems: 'center' }}>
-                                            <Box sx={{ 
+                                            <Box sx={{
                                                 padding: '0px 3px',
                                                 alignItems: 'center',
                                                 backgroundColor: 'white',
