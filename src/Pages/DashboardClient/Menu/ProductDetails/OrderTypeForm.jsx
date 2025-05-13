@@ -18,6 +18,7 @@ import { toast } from 'react-toastify';
 import { BASE_URL } from '../../../../utils/helperFunction';
 import axios from 'axios';
 import { egyptGovernorates } from '../../../../utils/city';
+import MapWithPin from '../../../../utils/MapWithPin';
 const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, totalCart, setCartItems }) => {
 
     const [selectedType, setSelectedType] = useState('Dine In');
@@ -125,7 +126,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
         } catch (error) {
             console.log(error)
             console.log(error?.response?.data?.error)
-            if (error?.response?.data?.error === 'Unauthorized.' && error?.status === 403){
+            if (error?.response?.data?.error === 'Unauthorized.' && error?.status === 403) {
                 toast.error(t("yourNotAuthorized"))
             }
         }
@@ -134,7 +135,8 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
         calculateTotalPrice()
         getBranchTable()
     }, [])
-
+    const [isMapOpen, setIsMapOpen] = useState(false)
+    const updateBranchPosition = () => { }
     return (
         <>
             <Box sx={{ overflowY: "auto", width: customWidth.itemSectionWidth, boxShadow: 3, bgcolor: theme.palette.bodyColor.white_333, position: 'fixed', right: 0, top: 0, height: '100vh' }}>
@@ -241,7 +243,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
                                 <>
                                     <Box display={"flex"} justifyContent={"space-between"}>
                                         <Typography variant='body2' sx={{ fontSize: "11px", marginBottom: "3px", color: theme.palette.text.gray_white }}>{t("table.one")}</Typography>
-                                        <Typography variant='body2' sx={{ fontSize: "10px", marginBottom: "3px", color:theme.palette.text.gray_white }}>4 {t("seats")}</Typography>
+                                        <Typography variant='body2' sx={{ fontSize: "10px", marginBottom: "3px", color: theme.palette.text.gray_white }}>4 {t("seats")}</Typography>
                                     </Box>
 
                                     <FormControl fullWidth variant="outlined">
@@ -323,14 +325,15 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
                                         }}
                                     />
                                     <Box sx={{ display: "flex", marginBottom: "20px", textAlign: "center", alignItems: "center", justifyContent: "center" }}>
-                                        <Button sx={{
+                                        {/* <Button sx={{
                                             backgroundColor: theme.palette.secondaryColor.main, color: "white", height: "32px", width: "100%", borderRadius: "20px", fontSize: "10px", textTransform: "capitalize",
                                             "&:hover": {
                                                 backgroundColor: "#222243",
                                             }
                                         }}>
                                             <span class="icon-map-1" style={{ fontSize: "17px", marginRight: "5px" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span><span class="path14"></span><span class="path15"></span></span>
-                                            {t("pinYourLocation")}</Button>
+                                            {t("pinYourLocation")}</Button> */}
+                                        <MapWithPin setPos={updateBranchPosition} isMapOpen={isMapOpen} setIsMapOpen={setIsMapOpen} />
                                     </Box>
                                 </>
                             )}
@@ -362,11 +365,11 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
                 <Box
                     sx={{
                         position: "fixed", bottom: 0, backgroundColor: theme.palette.bodyColor.white_lightBlack, width: customWidth.buttonSectionWidth
-                        , padding: "20px",
+                        , padding: "20px",zIndex:'999',
                         boxShadow: 3, borderRadius: "30px 30px 0px 0px", display: "flex", justifyContent: "space-between",
                     }}>
                     <Box sx={{ width: "100%" }}>
-                        <Typography variant="h6" sx={{ fontSize: '9px', color: theme.palette.text.gray_white}}>
+                        <Typography variant="h6" sx={{ fontSize: '9px', color: theme.palette.text.gray_white }}>
                             {t("subTotal")} <span style={{ color: theme.palette.text.gray_white }}>{subTotal} EGP</span>
                         </Typography>
 

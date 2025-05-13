@@ -36,6 +36,7 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import { ArrowForwardIos, ArrowBackIos, Print } from "@mui/icons-material";
 import { timeOptions } from "../../../../Component/Business-info/WorkingHoursDays";
 import { useTranslation } from 'react-i18next';
+import MapWithPin from "../../../../utils/MapWithPin";
 
 const daysOfWeek = ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"];
 
@@ -230,7 +231,8 @@ export const BusinessInfoAdmin = ({
   const handlePrint = () => {
     window.print();
   };
-
+  const [isMapOpen, setIsMapOpen] = useState(false)
+  const updateBranchPosition = () => { }
   return (
     <Grid container sx={{ marginTop: "20px", paddingLeft: "20px" }}>
       <Grid item xs={12}>
@@ -403,7 +405,7 @@ export const BusinessInfoAdmin = ({
           </Box>
 
           <Box display="flex" alignItems="center" marginBottom="10px">
-            <Button
+            {/* <Button
               variant="contained"
               fullWidth
               sx={{
@@ -439,7 +441,8 @@ export const BusinessInfoAdmin = ({
                 <span className="path15"></span>
               </span>
               Pin Your Location
-            </Button>
+            </Button> */}
+            <MapWithPin setPos={updateBranchPosition} isMapOpen={isMapOpen} setIsMapOpen={setIsMapOpen} />
           </Box>
 
           <FormControl variant="outlined" sx={{ width: "100%", marginBottom: "10px" }}>
@@ -772,7 +775,7 @@ export const BusinessInfoAdmin = ({
                     variant="body1"
                     display="flex"
                     alignItems="center"
-                    sx={{ fontSize: "14px", color: theme.palette.text.gray , marginLeft:"3px" }}
+                    sx={{ fontSize: "14px", color: theme.palette.text.gray, marginLeft: "3px" }}
                   >
                     <span
                       className="icon-working-hour"

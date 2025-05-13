@@ -28,6 +28,7 @@ import { toast } from 'react-toastify';
 import { ClientLoginData } from '../../../../context/ClientLoginDataContext';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL } from '../../../../utils/helperFunction';
+import MapWithPin from '../../../../utils/MapWithPin';
 
 const ProfilePage = () => {
   const theme = useTheme();
@@ -150,7 +151,7 @@ const ProfilePage = () => {
       toast.error(t("password not match"));
       return; // Stop further execution
     }
-    
+
     const updatedData = {
       brunch_id: selectedBranch,
       name: fullName,
@@ -217,6 +218,9 @@ const ProfilePage = () => {
   useEffect(() => {
     getClientData();
   }, [])
+  const [isMapOpen, setIsMapOpen] = useState(false)
+  const updateBranchPosition = () => { }
+ 
 
   return (
     <Paper elevation={3} style={{ padding: '20px 30px', borderRadius: '10px', marginTop: '16px' }}>
@@ -358,7 +362,7 @@ const ProfilePage = () => {
               <Grid item xs={12} sm={12} md={12} lg={12}>
                 <Grid container alignItems="center" sx={{ color: 'grey', marginTop: '5px' }}>
                   <CalendarMonthOutlinedIcon sx={{ marginRight: 1, fontSize: '15px' }} />
-                  <Typography variant="body1" sx={{ fontSize: '12px' ,color:theme.palette.text.gray_white}}>
+                  <Typography variant="body1" sx={{ fontSize: '12px', color: theme.palette.text.gray_white }}>
                     {t("dateOfBirth")}
                   </Typography>
                 </Grid>
@@ -630,7 +634,7 @@ const ProfilePage = () => {
                   <MenuItem value="" disabled sx={{ fontSize: '12px', color: theme.palette.text.gray_white }}>
                     {t("city")}
                   </MenuItem>
-                  <MenuItem value="NY" sx={{ fontSize: '12px', color: theme.palette.text.gray_white}}>
+                  <MenuItem value="NY" sx={{ fontSize: '12px', color: theme.palette.text.gray_white }}>
                     New York
                   </MenuItem>
                   <MenuItem value="LA" sx={{ fontSize: '12px', color: theme.palette.text.gray_white }}>
@@ -644,7 +648,7 @@ const ProfilePage = () => {
             </Box>
 
             <Box display="flex" alignItems="center" marginBottom="10px">
-              <Button
+              {/* <Button
                 variant="contained"
                 fullWidth
                 sx={{
@@ -659,7 +663,8 @@ const ProfilePage = () => {
               >
                 <span className="icon-map-1" style={{ fontSize: '20px', marginRight: '10px' }}></span>
                 {t("pinYourLocation")}
-              </Button>
+              </Button> */}
+              <MapWithPin setPos={updateBranchPosition} isMapOpen={isMapOpen} setIsMapOpen={setIsMapOpen} />
             </Box>
 
             <FormControl variant="outlined" sx={{ width: '100%', marginBottom: '10px' }}>

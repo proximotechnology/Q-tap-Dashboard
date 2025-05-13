@@ -21,7 +21,7 @@ export default function HomeClient() {
                 display: "flex", flexDirection: "row",
                 backgroundColor: theme.palette.bodyColor.main,
                 color: '#000',
-                width:"100%" , minHeight:"125vh",
+                width:"100%" , minHeight:"100vh",
                 paddingRight:"0px !important",
             
             }}

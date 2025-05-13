@@ -73,7 +73,7 @@ const MapWithPin = ({ setPos ,isMapOpen,setIsMapOpen }) => {
   };
 
   return (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '100%', zIndex:'50' }}>
       <Button
         variant="contained"
         fullWidth

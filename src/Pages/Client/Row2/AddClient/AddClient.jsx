@@ -270,7 +270,7 @@ export const AddClient = () => {
   };
 
   return (
-    <Box sx={{ backgroundColor: theme.palette.bodyColor.secandary, height: "100%" }}>
+    <Box sx={{ backgroundColor: theme.palette.bodyColor.secandary, height: "100%" , minHeight:'100vh' }}>
       <Box
         sx={{
           display: "flex",

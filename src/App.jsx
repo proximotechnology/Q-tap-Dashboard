@@ -376,11 +376,11 @@ function App() {
           // Add logic to update chat UI or state
           break;
 
-        case 'add_order':
-          // Handle add_order type
-          toast.warn(`🛒 New Order: ${data?.message?.orderId}`);
-          // Add logic to update order UI or state
-          break;
+        // case 'add_order':
+        //   // Handle add_order type
+        //   // toast.warn(`🛒 New Order: ${data?.message?.orderId}`);
+        //   // Add logic to update order UI or state
+        //   break;
 
         default:
           console.warn('Unknown data type received:', data);
