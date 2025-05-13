@@ -20,7 +20,7 @@ export const Row1 = () => {
   React.useEffect(() => {
     getClientWalletChart(year);
   }, [year]);
-  console.log("allData WALLET", walletChartClientData);
+  // console.log("allData WALLET", walletChartClientData);
 
 
   return (

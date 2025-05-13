@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Box, Typography, TextField, IconButton, Divider, MenuItem, FormControl, Select, Button, CircularProgress } from '@mui/material';
+import { Modal, Box, Typography, IconButton, Divider, MenuItem, FormControl, Select, Button, CircularProgress } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import { useTranslation } from 'react-i18next';
@@ -10,70 +10,82 @@ import { useTheme } from '@mui/system';
 
 export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
     const [role, setRole] = useState('');
-    const [name, setName] = useState('');
+    const [userId, setUserId] = useState(''); // Changed from name to userId for clarity
     const [isLoading, setIsLoading] = useState(false);
     const { t } = useTranslation();
     const [rolesData, setRolesData] = useState([]);
+    const selectedBranch = localStorage.getItem("selectedBranch");
     const theme = useTheme();
+
     const getRoles = async () => {
         try {
-
             const response = await axios.get(`${BASE_URL}roles`, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("clientToken")}`
                 },
                 params: {
-                    brunch_id: localStorage.getItem("selectedBranch")
+                    brunch_id: selectedBranch
                 }
             });
-            if (response.data) {
+
+            if (response.data?.roles) {
                 setRolesData(response.data.roles);
+            } else {
+                console.warn("No roles found in response:", response.data);
+                setRolesData([]);
             }
         } catch (e) {
-            console.log("error fetching roles");
+            console.error("Error fetching roles:", e);
+            toast.error(t("errorFetchingRoles"));
         }
     };
 
     useEffect(() => {
-        getRoles();
-    }, []);
+        if (open) {
+            getRoles();
+        }
+    }, [selectedBranch, open]); // Removed rolesData, added open for conditional fetch
 
     const handleSave = async () => {
-        console.log("Button clicked!");
-
+        console.log("Clicked on add staff");
         setIsLoading(true);
+
         try {
-            const userId = userStaff?.find((user) => user.name === name)?.id;
             if (!userId || !role) {
-                toast.error("enter exist user");
+                toast.error(t("pleaseSelectUserAndRole"));
                 setIsLoading(false);
                 return;
             }
 
+            console.log("Submitting:", { role_id: role, user_id: userId, brunch_id: selectedBranch });
 
             const response = await axios.put(`${BASE_URL}link_user_role/${userId}`, {
                 role_id: role,
-                brunch_id: localStorage.getItem("selectedBranch")
+                brunch_id: selectedBranch
             }, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("clientToken")}`
                 }
             });
 
-            if (response.data) {
-                onClose(); // Close the modal on successful save
-                toast.success("add user staff")
+            if (response.status === 200) {
+                onSave?.(); // Call onSave if provided
+                onClose(); // Close the modal
+                toast.success(t("userStaffAdded"));
+            } else {
+                throw new Error("Unexpected response status");
             }
         } catch (e) {
-            console.log("error linking user role:", e);
-            toast.error("user not found")
+            console.error("Error linking user role:", e);
+            const errorMessage = e.response?.data?.message || t("errorLinkingUserRole");
+            toast.error(errorMessage);
         } finally {
             setIsLoading(false);
         }
     };
 
     return (
-        <Modal open={open} onClose={onClose}>
+        <Modal open={open} onClose={onClose} aria-labelledby="add-staff-modal">
             <Box
                 sx={{
                     width: 400,
@@ -84,10 +96,13 @@ export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
                     mx: 'auto',
                     mt: '20vh',
                     position: 'relative'
-                }}>
+                }}
+            >
                 <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <Typography variant="body1" sx={{ fontSize: "13px", color: theme.palette.text.gray }}>{t("userStaff.add")}</Typography>
-                    <IconButton onClick={onClose} disabled={isLoading}>
+                    <Typography id="add-staff-modal" variant="body1" sx={{ fontSize: "13px", color: theme.palette.text.gray }}>
+                        {t("userStaff.add")}
+                    </Typography>
+                    <IconButton onClick={onClose} disabled={isLoading} aria-label="close">
                         <CloseIcon sx={{ fontSize: "20px", color: theme.palette.text.gray }} />
                     </IconButton>
                 </Box>
@@ -97,38 +112,50 @@ export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
                         height: '1px',
                     }}
                 />
+
                 <Box sx={{
                     marginTop: "20px",
                     display: "flex",
                     flexDirection: "column",
                     width: "100%",
-                    alignTexts: "left",
+                    alignItems: "flex-start",
                 }}>
                     <Typography variant='body2' sx={{ width: "25%", textAlign: "center" }} color={theme.palette.text.gray_light} fontSize={"12px"}>
-                        {t("name")}
+                        {t("userName")}
                     </Typography>
                     <Box sx={{
                         display: "flex",
                         justifyContent: "center",
                         width: "100%",
                     }}>
-                        <TextField
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            sx={{
-                                width: "90%",
-                                '& .MuiInputBase-input': {
-                                    height: "35px",
-                                    padding: "0px 14px",
-                                    textAlign: "left",
-                                    fontSize: "12px",
-                                    color: "gray",
-                                }
-                            }}
-                            fullWidth
-                            placeholder={t("tableName")}
-                            disabled={isLoading}
-                        />
+                        <FormControl sx={{ width: "90%" }}>
+                            <Select
+                                value={userId}
+                                onChange={(e) => setUserId(e.target.value)}
+                                displayEmpty
+                                disabled={isLoading}
+                                sx={{
+                                    '& .MuiInputBase-input': {
+                                        height: "35px",
+                                        padding: "1px 14px",
+                                        textAlign: "left",
+                                        fontSize: "12px",
+                                        color: "gray",
+                                        lineHeight: "35px"
+                                    }
+                                }}
+                                aria-label={t("selectUser")}
+                            >
+                                <MenuItem value="" disabled sx={{ fontSize: "12px", color: "gray" }}>
+                                    {t("selectUser")}
+                                </MenuItem>
+                                {userStaff?.map((user) => (
+                                    <MenuItem key={user.id} value={user.id} sx={{ fontSize: "12px", color: theme.palette.text.gray_light }}>
+                                        {user.name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
                     </Box>
                 </Box>
 
@@ -149,12 +176,12 @@ export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
                     }}>
                         <FormControl sx={{ width: "90%" }}>
                             <Select
+                                value={role}
+                                onChange={(e) => setRole(e.target.value)}
+                                displayEmpty
+                                disabled={isLoading}
                                 sx={{
                                     '& .MuiInputBase-input': {
-                                        height: "35px",
-                                        padding: "1px 14px",
-                                        textAlign: "left",
-                                        fontSize: "12px",
                                         height: "35px",
                                         padding: "1px 14px",
                                         textAlign: "left",
@@ -162,14 +189,8 @@ export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
                                         color: "gray",
                                         lineHeight: "35px"
                                     }
-
                                 }}
-                                fullWidth
-                                displayEmpty
-                                value={role}
-                                onChange={(e) => setRole(e.target.value)}
-                                placeholder={t("selectRole")}
-                                disabled={isLoading}
+                                aria-label={t("selectRole")}
                             >
                                 <MenuItem value="" disabled sx={{ fontSize: "12px", color: "gray" }}>
                                     {t("selectRole")}
@@ -202,6 +223,7 @@ export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
                             textTransform: "capitalize",
                         }}
                         disabled={isLoading}
+                        aria-label={t("save")}
                     >
                         {isLoading ? (
                             <CircularProgress size={24} color="inherit" />
@@ -214,6 +236,6 @@ export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
                     </Button>
                 </Box>
             </Box>
-        </Modal >
+        </Modal>
     );
 };

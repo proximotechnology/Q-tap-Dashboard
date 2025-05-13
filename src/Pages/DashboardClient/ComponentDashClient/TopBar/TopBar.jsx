@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next";
 import DarkModeSwitch from "../../../../Component/DarkModeSwitch";
 import Language from "../../../../Component/dashboard/TopBar/Language";
 
-const styles =  (theme) =>({
+const styles = (theme) => ({
     button: {
         background: `linear-gradient(90deg, #E67D00,${theme.palette.secondaryColor.main} )`,//${theme.palette.secondaryColor.main}
         display: 'flex',
@@ -36,9 +36,9 @@ const styles =  (theme) =>({
 });
 
 export default function TopBar() {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const theme = useTheme();
-    
+
 
     const pageTitles = {
         '/dashboard-client': t("dashboard"),
@@ -61,7 +61,7 @@ export default function TopBar() {
     const [mode, setMode] = useState('light');
     const { branches, setBranches, selectedBranch, setSelectedBranch } = useBranch();
     const [branch, setBranch] = useState(null);
-
+    const lang = localStorage.getItem("i18nextLng")
     // Load branches and selected branch from localStorage on component mount
     useEffect(() => {
         const storedBranches = localStorage.getItem('branches');
@@ -129,21 +129,26 @@ export default function TopBar() {
     const toggleIcon = () => {
         setIsLocked(!isLocked);
     };
+    const clientName = localStorage.getItem("clientName")
+    const clientEmail = localStorage.getItem("clientEmail")
+    const clientToken = localStorage.getItem("clientToken")
+    console.log(clientEmail, clientName, clientToken);
 
+    const url = `http://localhost:3000/en/?clientName=${encodeURIComponent(clientName)}&clientToken=${encodeURIComponent(clientToken)}&clientEmail=${encodeURIComponent(clientEmail)}`;
 
     return (
         <Box sx={{
             display: "flex", justifyContent: "space-between", alignItems: "center",
-            padding: "30px 30px 0px 30px",flexWrap:'wrap'
+            padding: "30px 30px 0px 30px", flexWrap: 'wrap'
         }}>
             <Typography variant="body1" sx={{
                 fontSize: "18px", color: theme.palette.text.black, width: "3%",
-                borderBottom: `2px solid ${theme.palette.orangePrimary.main}`,width:'fit-content'
+                borderBottom: `2px solid ${theme.palette.orangePrimary.main}`, width: 'fit-content'
             }}>
                 {pageTitles[location.pathname] || 'Dashboard'}
             </Typography>
 
-            <Box sx={{ display: "flex", alignItems: "center", gap: "7px" ,flexWrap:'wrap'}}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: "7px", flexWrap: 'wrap' }}>
 
                 <Button onClick={BranchOpen}
                     sx={{
@@ -208,7 +213,7 @@ export default function TopBar() {
                 </IconButton>
 
 
-                <Box sx={{ display:{xs:'none',sm:'flex'} }}>
+                <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
                     <DarkModeSwitch />
                 </Box>
 
@@ -257,9 +262,18 @@ export default function TopBar() {
                         </Box>
                         <Divider />
 
-                        <List>
+                        <List sx={{}}>
+
                             <Box
-                                onClick={() => navigate('/')}
+                                onClick={() => {
+                                    try {
+                                        window.location.href = url;
+                                        handleUserClose();
+                                    } catch (error) {
+                                        console.error('Navigation failed:', error);
+                                        alert('Failed to navigate to the home page. Please try again.');
+                                    }
+                                }}
                                 sx={{
                                     cursor: "pointer",
                                     backgroundColor: theme.palette.secondaryColor.main,
@@ -277,51 +291,55 @@ export default function TopBar() {
 
                                 <span class="icon-home-icon-silhouette" style={{ color: theme.palette.orangePrimary.main, marginRight: "5px", fontSize: "15px" }} ></span>
                                 <span style={{ color: "white", fontSize: "12px", textTransform: "capitalize" }}>
-                                    Home
+                                    {t("home")}
                                 </span>
                             </Box>
 
-                            <ListItem sx={{ cursor: "pointer" }} oonClick={handleUserClose}>
-                                <ListItemIcon>
+                            <ListItem sx={{ cursor: "pointer" }} onClick={() => {
+                                handleUserClose()
+                                navigate("/setting-client")
+                            }}>
+                                <ListItemIcon sx={{ marginLeft: lang == 'ar' ? "-30px" : '0px' }}>
                                     <img src="/assets/setting.svg" alt="icon" style={{ width: "16px", height: "16px" }} />
                                 </ListItemIcon>
                                 <ListItemText primary="Edit Profile"
                                     primaryTypographyProps={{
-                                        sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: "-30px" }
+                                        sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: lang == 'en' ? "-30px" : '', textAlign: lang == "ar" ? "start" : '' }
                                     }} />
                             </ListItem>
 
                             <ListItem sx={{ cursor: "pointer" }} onClick={handleUserClose}>
-                                <ListItemIcon>
+                                <ListItemIcon sx={{ marginLeft: lang == 'ar' ? "-30px" : '0px' }}>
                                     <span class="icon-price-tag" style={{ fontSize: "20px" }}></span>
                                 </ListItemIcon>
                                 <ListItemText primary="My Subscription"
                                     primaryTypographyProps={{
-                                        sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: "-30px" }
+                                        sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: lang == 'en' ? "-30px" : '', textAlign: lang == "ar" ? "start" : '' }
                                     }} />
                             </ListItem>
 
                             <ListItem sx={{ cursor: "pointer" }} onClick={handleUserClose}>
-                                <ListItemIcon>
+                                <ListItemIcon sx={{ marginLeft: lang == 'ar' ? "-30px" : '0px' }}>
                                     <HelpOutlineOutlinedIcon sx={{ fontSize: "20px" }} />
                                 </ListItemIcon>
                                 <ListItemText primary="FAQ"
                                     primaryTypographyProps={{
-                                        sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: "-30px" }
+                                        sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: lang == 'en' ? "-30px" : '', textAlign: lang == "ar" ? "start" : '' }
                                     }} />
                             </ListItem>
 
                             <ListItem sx={{ cursor: "pointer" }} onClick={() => {
                                 localStorage.removeItem("clientToken");
                                 navigate('/');
-                            }}>                                <ListItemIcon>
+                            }}>
+                                <ListItemIcon sx={{ marginLeft: lang == 'ar' ? "-30px" : '0px' }}>
                                     <img src="/assets/logout.svg" alt="icon" style={{ width: "16px", height: "16px" }} />
                                 </ListItemIcon>
                                 <ListItemText
 
                                     primary="Logout"
                                     primaryTypographyProps={{
-                                        sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: "-30px" }
+                                        sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: lang == 'en' ? "-30px" : '', textAlign: lang == "ar" ? "start" : '' }
                                     }} />
                             </ListItem>
                         </List>

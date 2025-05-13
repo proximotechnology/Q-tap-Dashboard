@@ -20,7 +20,7 @@ const SalesVolumeCardClient = () => {
             if (isMounted) {
                 await getSalesVolumeClientDashboard(year);
                 console.log("salesVolumeClientData", salesVolumeClientData);
-                
+
             }
         };
         fetchsalesVolumeClientData();
@@ -76,7 +76,11 @@ const SalesVolumeCardClient = () => {
                     <span class="icon-wallet1" style={{ fontSize: '26px' }} ></span>
                     <Typography variant="h5"
                         sx={{ fontSize: "20px", color: theme.palette.text.default, marginTop: '8px', border: `2px solid${theme.palette.orangePrimary.main}`, padding: "3px 25px", borderRadius: "20px" }}>
-                        501,420
+                        {(() => {
+                            const sum = salesVolumeClientData?.weeks?.map((order) => order.total_revenue || 0)
+                                .reduce((acc, curr) => acc + curr, 0);
+                            return sum > 0 ? (Number.isInteger(sum) ? sum : sum.toFixed(1)) : 0;
+                        })()}{" "}
                     </Typography>
                     <Typography variant="body2" color={theme.palette.text.default}>
                         EGP

@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Box, List, ListItemButton, ListItemIcon, ListItemText, Tooltip, useTheme } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { grey } from "@mui/material/colors";
@@ -73,15 +73,15 @@ const Arr2 = [
     },
 ];
 
-export default function SideBar({isOpen}) {
+export default function SideBar({ isOpen }) {
     const { t } = useTranslation();
-    
+    const lang = localStorage.getItem("i18nextLng")
     const location = useLocation();
     const navigate = useNavigate();
     const theme = useTheme();
     return (
         <Box sx={{
-            width: {xs:'60%',md:'200px'},
+            width: { xs: '60%', md: '200px' },
             backgroundColor: theme.palette.bodyColor.secandary,
             padding: '25px 20px',
             position: 'fixed',
@@ -89,7 +89,7 @@ export default function SideBar({isOpen}) {
             insetInlineStart: 0,
             height: '100vh',
             zIndex: 1000,
-            display:{xs:isOpen?'block':'none', md:'block'}
+            display: { xs: isOpen ? 'block' : 'none', md: 'block' }
         }}>
             <Box sx={{ display: "felx", justifyContent: "center", textAlign: "center", alignItems: "center", marginTop: "18px" }}>
                 <img src="/images/logoDash.jpg" alt="Logo" style={{ width: '110px' }} />
@@ -142,9 +142,9 @@ export default function SideBar({isOpen}) {
                                         marginRight: item.path === "/order" ? "3px" : "10px",
                                         color: item.path === "/order" ? "white" :
                                             location.pathname === item.path
-                                                ?  theme.palette.orangePrimary.main
+                                                ? theme.palette.orangePrimary.main
                                                 : theme.palette.text.gray_white,
-                                        marginLeft: item.path === "/order" ? "10px" : ""
+                                        marginLeft: item.path === "/order" ? "10px" : "",
                                     }}
                                 >
                                     {React.cloneElement(item.icon, {
@@ -157,12 +157,14 @@ export default function SideBar({isOpen}) {
                                 <ListItemText
                                     primary={t(item.text)}
                                     primaryTypographyProps={{ fontSize: "12px" }}
-                                    sx={{ 
+                                    sx={{
                                         color: item.path === "/order" ? "white" :
                                             location.pathname === item.path
-                                                ?  theme.palette.orangePrimary.main
+                                                ? theme.palette.orangePrimary.main
                                                 : theme.palette.text.gray_white,
-                                     }}
+                                        textAlign: lang == 'ar' ? "start" : '',
+                                        marginRight: lang == 'ar' ? "10px" : ''
+                                    }}
                                 />
 
                                 {/* النقطة الحمراء فقط عند مسار "/order" */}
@@ -186,7 +188,7 @@ export default function SideBar({isOpen}) {
                 ))}
             </List>
 
-            <List sx={{  marginTop:'clamp(10px, 5vw, 10vh)' }}>
+            <List sx={{ marginTop: 'clamp(10px, 5vw, 10vh)' }}>
                 {Arr2.map((item, index) => (
                     <Tooltip
                         ListItem
@@ -235,6 +237,8 @@ export default function SideBar({isOpen}) {
                                         style: {
                                             color: item.text.toLowerCase() === "help" ?
                                                 "#D8E0E0" : theme.palette.text.gray_white,
+                                            textAlign: lang == 'ar' ? "start" : '',
+                                            marginRight: lang == 'ar' ? "10px" : ''
                                         }
                                     }}
                                 />

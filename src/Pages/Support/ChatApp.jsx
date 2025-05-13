@@ -234,7 +234,8 @@ const ChatApp = () => {
                   </ListItemAvatar>
                   <ListItemText
                     primary={<Typography sx={{ fontSize: '11px', color: theme.palette.text.gray_light }}>{customer.name}</Typography>}
-                    secondary={<Typography sx={{ fontSize: '8px', color: theme.palette.text.gray_light, marginLeft: '10px' }}>{messages && messages.length > 0 ? messages[messages.length - 1].message.slice(0, 25) : customer.email}</Typography>}
+                    secondary={<Typography sx={{ fontSize: '8px', color: theme.palette.text.gray_light, marginLeft: '10px' }}></Typography>}
+                  // secondary={<Typography sx={{ fontSize: '8px', color: theme.palette.text.gray_light, marginLeft: '10px' }}>{messages && messages.length > 0 ? messages[messages.length - 1].message.slice(0, 25) : customer.email}</Typography>}
                   />
                 </Box>
                 <Typography
