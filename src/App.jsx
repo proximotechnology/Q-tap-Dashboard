@@ -77,6 +77,8 @@ import { PasswordResetPageAffiliate } from './Pages/DashboardAffiliate/ResetPass
 import { ResetPageAdmin } from './Pages/DashboardHome/ResetPasswordAdmin/reset/ResetPageAdmin';
 import { ReceivePageAdmin } from './Pages/DashboardHome/ResetPasswordAdmin/receiveCode/ReceivePageAdmin';
 import { PasswordResetPageAdmin } from './Pages/DashboardHome/ResetPasswordAdmin/PasswordReset/PasswordResetPageAdmin';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 
 
 function App() {
@@ -395,33 +397,34 @@ function App() {
   }, []);
 
   return (
-    <ClientProvider>
-      <MenuDataProvider>
-        <DashboardDataProvider>
-          <AffiliateClientProvider>
-            <ClientLoginDataProvider>
-              <RegisterClientProvider>
-                <ContentMenuProvider>
-                  <BranchProvider>
-                    <PersonalProvider>
-                      <BusinessProvider>
-                        <div style={{ minHeight: "100vh" }}>
-                          <div className="w-100 ">
-                            <RouterProvider router={routes}></RouterProvider>
+    <Provider store={store}>
+      <ClientProvider>
+        <MenuDataProvider>
+          <DashboardDataProvider>
+            <AffiliateClientProvider>
+              <ClientLoginDataProvider>
+                <RegisterClientProvider>
+                  <ContentMenuProvider>
+                    <BranchProvider>
+                      <PersonalProvider>
+                        <BusinessProvider>
+                          <div style={{ minHeight: "100vh" }}>
+                            <div className="w-100 ">
+                              <RouterProvider router={routes}></RouterProvider>
+                            </div>
+                            <ToastContainer />
                           </div>
-                          <ToastContainer />
-                        </div>
-                      </BusinessProvider>
-                    </PersonalProvider>
-                  </BranchProvider>
-                </ContentMenuProvider>
-              </RegisterClientProvider>
-            </ClientLoginDataProvider>
-          </AffiliateClientProvider>
-        </DashboardDataProvider>
-      </MenuDataProvider>
-    </ClientProvider>
-
+                        </BusinessProvider>
+                      </PersonalProvider>
+                    </BranchProvider>
+                  </ContentMenuProvider>
+                </RegisterClientProvider>
+              </ClientLoginDataProvider>
+            </AffiliateClientProvider>
+          </DashboardDataProvider>
+        </MenuDataProvider>
+      </ClientProvider>
+    </Provider>
   );
 }
 
