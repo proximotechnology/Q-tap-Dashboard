@@ -28,7 +28,7 @@ export const Revenue = () => {
         }
       )
       const data = await response.json();
-      console.log("data", data);
+      // console.log("data", data);
       if (response.ok) {
         setRevenueData(data);
         setLoading(false)
@@ -110,7 +110,13 @@ export const Revenue = () => {
             variant="body1"
             sx={{ fontSize: "28px", marginTop: "15px", color: theme.palette.orangePrimary.main }}
           >
-            200.234 <span style={{ fontSize: "15px", color: theme.palette.text.gray }}>EGP</span>
+            {(() => {
+              const sum = Object.values(revenueData)
+                .map((order) => order.total_revenue || 0)
+                .reduce((acc, curr) => acc + curr, 0);
+              return sum > 0 ? (Number.isInteger(sum) ? sum : sum.toFixed(1)) : 0;
+            })()}{" "}
+            <span style={{ fontSize: "15px", color: theme.palette.text.gray }}>EGP</span>
           </Typography>
         </Grid>
 
@@ -170,7 +176,7 @@ export const Revenue = () => {
               borderRadius: "30px",
             }}
           >
-            50,000
+            50,000?!
           </Typography>
           <Box marginTop="20px" justifyContent="left">
             <Box display={"flex"} textAlign={"center"} alignItems={"center"}>

@@ -17,7 +17,7 @@ import GridViewIcon from '@mui/icons-material/GridView';
 import ListIcon from '@mui/icons-material/List';
 import { toast } from 'react-toastify';
 import { timeOptions } from './WorkingHoursDays';
-
+import { egyptGovernorates } from '../../utils/city';
 // تحديد الأيام بأحرف مختصرة للعرض
 const daysOfWeek = ['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr'];
 // تحديد الأيام الكاملة للـ context
@@ -444,6 +444,7 @@ export const BusinessInfo = () => {
                                                 <MenuItem value="" disabled sx={{ fontSize: "12px", color: "gray" }}>
                                                     {t("country")}
                                                 </MenuItem>
+                                                <MenuItem value="egypt" sx={{ fontSize: "12px", color: "gray" }}>Egypt</MenuItem>
                                                 <MenuItem value="US" sx={{ fontSize: "12px", color: "gray" }}>United States</MenuItem>
                                                 <MenuItem value="CA" sx={{ fontSize: "12px", color: "gray" }}>Canada</MenuItem>
                                                 <MenuItem value="UK" sx={{ fontSize: "12px", color: "gray" }}>United Kingdom</MenuItem>
@@ -467,6 +468,9 @@ export const BusinessInfo = () => {
                                                 <MenuItem value="" disabled sx={{ fontSize: "12px", color: "gray" }}>
                                                     {t("city")}
                                                 </MenuItem>
+                                                {egyptGovernorates.map((city) => (
+                                                    <MenuItem value={city} sx={{ fontSize: "12px", color: "gray" }}>{city}</MenuItem>
+                                                ))}
                                                 <MenuItem value="NY" sx={{ fontSize: "12px", color: "gray" }}>New York</MenuItem>
                                                 <MenuItem value="LA" sx={{ fontSize: "12px", color: "gray" }}>Los Angeles</MenuItem>
                                                 <MenuItem value="CHI" sx={{ fontSize: "12px", color: "gray" }}>Chicago</MenuItem>

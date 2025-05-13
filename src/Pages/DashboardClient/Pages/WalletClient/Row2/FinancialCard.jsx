@@ -17,7 +17,7 @@ const Financial = ({
   iconColor,
 }) => {
   const theme = useTheme();
-  console.log("alldata", allData);
+  // console.log("alldata", allData);
 
   return (
     <Paper

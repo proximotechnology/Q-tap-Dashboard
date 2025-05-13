@@ -423,12 +423,12 @@ export const Row2 = () => {
                     >
                       <IconButton onClick={handleDashboardClick}>
                         <Dashboard
-                          style={{ cursor: "pointer", color:theme.palette.text.gray_light , fontSize:"20px" }}
+                          style={{ cursor: "pointer", color:theme.palette.bodyColor.gray_lightBlack50 , fontSize:"20px" }}
                         />
                       </IconButton>
                       <IconButton onClick={() => handleEditClient(row)}>
                         <Settings
-                          style={{ cursor: "pointer", color:theme.palette.text.gray_light , fontSize:"20px" }}
+                          style={{ cursor: "pointer", color:theme.palette.bodyColor.gray_lightBlack50 , fontSize:"20px" }}
                         />
                       </IconButton>
                     </TableCell>

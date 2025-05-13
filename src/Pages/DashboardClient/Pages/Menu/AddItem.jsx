@@ -167,9 +167,9 @@ export const AddItem = () => {
                 !itemData.priceMedium ||
                 !itemData.priceLarge ||
                 !itemData.price ||
-                !itemData.discount ||
+                !itemData.discount 
                 // !itemData.image ||
-                !limitVariants
+                // !limitVariants
             ) {
                 toast.error(t("plFillAllField"));
                 return;

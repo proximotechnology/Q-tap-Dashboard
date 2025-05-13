@@ -19,7 +19,7 @@ const iconsArray = [
     { name: 'Setting', icon: <img src="/assets/setting.svg" alt="icon" style={{ width: "16px", height: "16px" }} /> },
 ];
 
-export const AddRole = ({ open, onClose, onSave, brunchId = "442" }) => {
+export const AddRole = ({ open, onClose, onSave }) => {
     const theme = useTheme();
     const { t } = useTranslation();
     const [role, setRole] = useState('');
@@ -64,7 +64,8 @@ export const AddRole = ({ open, onClose, onSave, brunchId = "442" }) => {
             customers_log: checkedItems['Customers Log'] ? '1' : '0',
             brunch_id: localStorage.getItem("selectedBranch"),
         };
-
+        console.log(roleData);
+        
         try {
             const token = localStorage.getItem('clientToken');
             const config = {

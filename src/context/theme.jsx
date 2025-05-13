@@ -29,6 +29,7 @@ export const getDesignTokens = (mode) => ({
           whiteGray_lightBlack: "#EBEDF3",
           white_333: "white",
           gray_lightBlack40: "#9d9d9c",
+          gray_lightBlack50: "rgb(176, 176, 176)",
           white_lightBlack:"#ffffff"
         },
         gradient: {
@@ -97,6 +98,7 @@ export const getDesignTokens = (mode) => ({
           white_lightBlack:"#4d4d4d",
           
           gray_lightBlack40: '#404040',// #9d9d9c
+          gray_lightBlack50: 'rgb(226, 225, 225)',// #9d9d9c
           white_333: "#333333",
           
         },

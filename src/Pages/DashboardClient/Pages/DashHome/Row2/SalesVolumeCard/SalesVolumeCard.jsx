@@ -20,7 +20,7 @@ const SalesVolumeCard = () => {
             if (isMounted) {
                 await getSalesVolumeDashboard(year);
                 console.log("salesVolumeData", salesVolumeData);
-                
+
             }
         };
         fetchSalesVolumeData();
@@ -29,10 +29,11 @@ const SalesVolumeCard = () => {
         }
     }, [year]);
     return (
-        <Paper sx={{ borderRadius: "20px", marginTop: "20px", backgroundColor: theme.palette.bodyColor.secandary,
-         padding:"10px 15px",
+        <Paper sx={{
+            borderRadius: "20px", marginTop: "20px", backgroundColor: theme.palette.bodyColor.secandary,
+            padding: "10px 15px",
 
-         }}>
+        }}>
             <Grid container justifyContent="space-between" alignItems="center" sx={{ padding: "10px 20px", }} >
                 <Grid item>
                     <Typography variant="body1" component="div" sx={{ color: theme.palette.text.gray, fontSize: '13px' }}>
@@ -79,7 +80,11 @@ const SalesVolumeCard = () => {
                     <span class="icon-wallet1" style={{ fontSize: '26px' }} ></span>
                     <Typography variant="h5"
                         sx={{ fontSize: "20px", color: theme.palette.text.default, marginTop: '8px', border: `2px solid${theme.palette.orangePrimary.main}`, padding: "3px 25px", borderRadius: "20px" }}>
-                        501,420
+                        {(() => {
+                            const sum = salesVolumeData?.data?.map((order) => order.total_revenue || 0)
+                                .reduce((acc, curr) => acc + curr, 0);
+                            return sum > 0 ? (Number.isInteger(sum) ? sum : sum.toFixed(1)) : 0;
+                        })()}{" "}
                     </Typography>
                     <Typography variant="body2" color={theme.palette.text.default}>
                         EGP

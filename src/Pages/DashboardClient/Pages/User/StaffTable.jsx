@@ -16,7 +16,7 @@ export const StaffTable = ({ userStaff }) => {
     const theme = useTheme();
     const { t } = useTranslation();
     const [modalOpen, setModalOpen] = useState(false);
-    console.log("userStaff in stafftable", userStaff);
+    // console.log("userStaff in stafftable", userStaff);
 
 
 
@@ -26,30 +26,35 @@ export const StaffTable = ({ userStaff }) => {
     const selectedBranch = localStorage.getItem("selectedBranch")
 
     const getRestStaff = async () => {
-        try {
+        const fetchWithRetry = async (retries, delay) => {
+            try {
+                const response = await axios.get(`${BASE_URL}restaurant_user_staff/${localStorage.getItem("selectedBranch")}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
+                    }
+                });
 
-            const response = await axios.get(`${BASE_URL}restaurant_user_staff/${localStorage.getItem("selectedBranch")}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
+                if (response.data) {
+                    setRestStaff(response.data.restaurant_user_staff || []);
                 }
-
-            })
-
-            if (response.data) {
-                setRestStaff(response.data.restaurant_user_staff);
+                console.log("RestStaff data response ", response.data);
+            } catch (error) {
+                if (error.response?.status === 429 && retries > 0) {
+                    console.log(`Retrying... attempts left: ${retries}`);
+                    setTimeout(() => fetchWithRetry(retries - 1, delay * 2), delay);
+                } else {
+                    console.log("error RestStaff data ", error);
+                }
             }
-            console.log("RestStaff data response ", response.data);
+        };
 
-        } catch (error) {
-            console.log("error RestStaff data ", error);
+        fetchWithRetry(3, 1000); // Retry up to 3 times with an initial delay of 1 second
+    };
 
-        }
-
-    }
     useEffect(() => {
         getRestStaff();
-    }, [selectedBranch])
+    }, [selectedBranch]);
     //========================================== handle delete RestStaff
 
     const handleDeleteRestStaff = async (id) => {
@@ -95,7 +100,7 @@ export const StaffTable = ({ userStaff }) => {
 
     const handleExport = () => {
 
-        const dataToExport = staffData.map((row) => ({
+        const dataToExport = RestStaff.map((row) => ({
             "Name": row.name,
             "Role": row.role,
             "Orders": row.orders,
