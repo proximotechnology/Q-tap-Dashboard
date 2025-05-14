@@ -58,18 +58,9 @@ export const Row3 = () => {
   const [depositFromDate, setDepositFromDate] = React.useState('2024-03-20');
   const [depositToDate, setDepositToDate] = React.useState('2025-06-28');
 
-  // Context data
-  // const { depositsData, getDeposits, withdrawalsData, getWithdrawals } = React.useContext(DashboardDataContext);
   const depositsData = useSelector((state) => state.admins?.depositsData);
   const dispatch = useDispatch();
-  // // Fetch withdrawals data
-  // React.useEffect(() => {
-  //   if (!withdrawalsData || withdrawalsData.length === 0) {
-  //     getWithdrawals(`${withdrawFromDate}/${withdrawToDate}`);
-  //   } else {
-  //     setWithdrawals(withdrawalsData?.Withdrawals || []);
-  //   }
-  // }, [withdrawalsData, getWithdrawals, withdrawFromDate, withdrawToDate]);
+ 
 
   // Fetch deposits data
   React.useEffect(() => {

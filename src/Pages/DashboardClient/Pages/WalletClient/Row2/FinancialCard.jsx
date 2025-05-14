@@ -4,7 +4,8 @@ import StraightIcon from "@mui/icons-material/Straight";
 import SouthIcon from "@mui/icons-material/South";
 import financialData from "./FinancialData";
 import { useTranslation } from "react-i18next";
-import { DashboardDataContext } from "../../../../../context/DashboardDataContext";
+import { fetchWalletData, selectWallet } from "../../../../../store/clientDashBoardSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Financial = ({
   allData,
@@ -94,16 +95,19 @@ const FinancialCard = () => {
   const { t } = useTranslation()
   const [year, setYear] = React.useState('2025');
   const [allData, setAllData] = React.useState([]);
-  const { walletClientData, getWalletData } = React.useContext(DashboardDataContext);
+  const dispatch = useDispatch()
+
+  const walletClientData = useSelector(selectWallet)
   // Fetch financial data
   React.useEffect(() => {
     if (walletClientData.length === 0) {
-      getWalletData(year);
+      dispatch(fetchWalletData(year));
+
     } else {
       setAllData(walletClientData);
     }
-  }, [year, walletClientData]);
-  // console.log("walletClientData", allData);
+  }, [dispatch, year, walletClientData]);
+ 
 
 
   return (

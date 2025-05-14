@@ -61,7 +61,6 @@ import { AffiliateClientProvider } from './context/AffiliateClient';
 import Pusher from "pusher-js";
 import { toast } from "react-toastify";
 import { useEffect } from 'react';
-import { DashboardDataProvider } from './context/DashboardDataContext';
 import { MenuDataProvider } from './context/MenuDataContext';
 import { LoginChef } from './Component/DashboardClient/LoginChef';
 import { LoginCashier } from './Component/DashboardClient/LoginCashier';
@@ -400,7 +399,6 @@ function App() {
     <Provider store={store}>
       <ClientProvider>
         <MenuDataProvider>
-          <DashboardDataProvider>
             <AffiliateClientProvider>
               <ClientLoginDataProvider>
                 <RegisterClientProvider>
@@ -421,7 +419,6 @@ function App() {
                 </RegisterClientProvider>
               </ClientLoginDataProvider>
             </AffiliateClientProvider>
-          </DashboardDataProvider>
         </MenuDataProvider>
       </ClientProvider>
     </Provider>

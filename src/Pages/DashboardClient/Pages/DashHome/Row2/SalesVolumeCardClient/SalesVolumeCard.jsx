@@ -1,8 +1,9 @@
 import React from 'react'
 import { Box, Grid, MenuItem, Paper, Select, Typography, useTheme } from '@mui/material'
 import { useTranslation } from 'react-i18next';
-import { DashboardDataContext } from '../../../../../../context/DashboardDataContext';
 import SalesVolumeChartClient from './SalesVolumeChart';
+import { fetchSalesByDays, selectSalesByDays } from '../../../../../../store/clientDashBoardSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const SalesVolumeCardClient = () => {
     const [year, setYear] = React.useState('30');
@@ -12,22 +13,12 @@ const SalesVolumeCardClient = () => {
     const handleYearChange = (event) => {
         setYear(event.target.value);
     };
-    const { salesVolumeClientData, getSalesVolumeClientDashboard } = React.useContext(DashboardDataContext);
-
+    const dispatch = useDispatch()
+    const salesVolumeClientData = useSelector(selectSalesByDays)
     React.useEffect(() => {
-        let isMounted = true; // Flag to prevent setting state if component is unmounted
-        const fetchsalesVolumeClientData = async () => {
-            if (isMounted) {
-                await getSalesVolumeClientDashboard(year);
-                console.log("salesVolumeClientData", salesVolumeClientData);
-
-            }
-        };
-        fetchsalesVolumeClientData();
-        return () => {
-            isMounted = false; // Cleanup to prevent multiple requests
-        }
-    }, [year]);
+        dispatch(fetchSalesByDays(year))
+    }, [dispatch,year]);
+    
     return (
         <Paper sx={{ borderRadius: "20px", marginTop: "20px", padding: "10px", }}>
             <Grid container justifyContent="space-between" alignItems="center" sx={{ padding: "10px 20px", }} >

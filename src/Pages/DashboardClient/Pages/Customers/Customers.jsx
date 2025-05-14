@@ -9,12 +9,18 @@ import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { logData } from './CustomersData';
 import { useTranslation } from 'react-i18next';
-import { DashboardDataContext } from '../../../../context/DashboardDataContext';
+//redux
+import { fetchCustomerLog, selectCustomerLog } from '../../../../store/clientDashBoardSlice';
+import { useSelector, useDispatch } from 'react-redux';
+
 export const Customers = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch()
+
   const [fromDate, setFromDate] = useState('2025-01-01')
   const [toDate, setToDate] = useState('2025-04-28')
-  const [customers, setCustomers] = React.useState([]);
+
+  const customerLog = useSelector(selectCustomerLog)
 
   const theme = useTheme();
   const handleExport = () => {
@@ -35,22 +41,15 @@ export const Customers = () => {
     URL.revokeObjectURL(url);
   };
 
-  const { customerLog, getCustomerLog } = React.useContext(DashboardDataContext);
-
 
   React.useEffect(() => {
-    getCustomerLog(`${fromDate}/${toDate}`);
-  }, [fromDate, toDate]);
-
-  React.useEffect(() => {
-    if (customerLog?.users_logs?.length === 0) {
-      setCustomers([]);
-      console.log(customerLog);
-
-    } else {
-      setCustomers(customerLog?.Deposits || []);
+    const selectedBranch = localStorage.getItem("selectedBranch")
+    if ([fromDate, fromDate, selectedBranch].every(Boolean)) {
+      console.log(`api call  ${selectedBranch}/${fromDate}/${toDate}`)
+      dispatch(fetchCustomerLog({ branchId: selectedBranch, dateFormate: `${fromDate}/${toDate}` }))
     }
-  }, [fromDate, toDate, customerLog]);
+  }, [dispatch, fromDate, toDate]);
+  
 
   return (
     <Paper sx={{ padding: "15px 30px 50px 30px", borderRadius: "20px", whiteSpace: 'nowrap', overflowX: 'auto' }} >
@@ -103,7 +102,7 @@ export const Customers = () => {
             onClick={handleExport}
           >
             {t("export")}
-            <ArrowForwardIosIcon sx={{ fontSize: "11px", color: theme.palette.text.gray, marginLeft:"1px" }} />
+            <ArrowForwardIosIcon sx={{ fontSize: "11px", color: theme.palette.text.gray, marginLeft: "1px" }} />
           </Button>
         </Box>
 

@@ -4,7 +4,8 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recha
 import { Box, useTheme } from '@mui/system';
 import { Grid, Select, MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { DashboardDataContext } from '../../../../../context/DashboardDataContext';
+import { fetchSales, selectSales } from '../../../../../store/clientDashBoardSlice';
+import { useDispatch, useSelector } from 'react-redux';
 const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
         return (
@@ -21,22 +22,16 @@ export const BarChartClientDashboard = () => {
     const [year, setYear] = React.useState('2025');
     const { t } = useTranslation()
     const theme = useTheme();
+    const dispatch = useDispatch()
+    const salesClientData = useSelector(selectSales)
+    
     const handleYearChange = (event) => {
         setYear(event.target.value);
     };
-    const { salesClientData, getSalesClientDashboard } = React.useContext(DashboardDataContext);
 
+   
     React.useEffect(() => {
-        let isMounted = true; // Flag to prevent setting state if component is unmounted
-        const fetchSalesDashboard = async () => {
-            if (isMounted) {
-                await getSalesClientDashboard(year);
-            }
-        };
-        fetchSalesDashboard();
-        return () => {
-            isMounted = false; // Cleanup to prevent multiple requests
-        };
+        dispatch(fetchSales(year))
     }, [year]);
     return (
         <Paper sx={{ height: "220px", borderRadius: "20px", }}>

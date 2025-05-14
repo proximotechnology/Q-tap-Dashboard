@@ -4,7 +4,6 @@ import { financialData } from "./financialData";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useTranslation } from 'react-i18next';
-import { DashboardDataContext } from "../../../context/DashboardDataContext";
 import { getWalletChartTwo } from "../../../store/adminSlice";
 import { useDispatch, useSelector } from "react-redux";
 

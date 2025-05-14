@@ -5,21 +5,27 @@ import React, { useState } from "react";
 import { PieChart, Pie, Cell } from "recharts";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import { useTranslation } from "react-i18next";
-import { DashboardDataContext } from "../../../../../context/DashboardDataContext";
+//redux
+import { fetchPerformanceData, selectPerformance } from "../../../../../store/clientDashBoardSlice";
+import { useSelector, useDispatch } from "react-redux";
+
 export const Cart3 = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedYear, setSelectedYear] = useState("2024-2025");
   const { t } = useTranslation();
   const theme = useTheme();
-  const { performanceClientData, getPerformanceClientDashboard } = React.useContext(DashboardDataContext);
 
+  //redux
+  const dispatch = useDispatch()
+  const performanceClientData = useSelector(selectPerformance)
+  console.log("preformance",performanceClientData)
   // Calculate totals from performanceClientData
   const { subscriptionsTotal, ordersTotal } = React.useMemo(() => {
     if (!performanceClientData) return { subscriptionsTotal: 0, ordersTotal: 0 };
-    
+
     let subsTotal = 0;
     let ordsTotal = 0;
-    
+
     Object.entries(performanceClientData).forEach(([key, value]) => {
       if (key.startsWith('Subscriptions_')) {
         subsTotal += Number(value);
@@ -27,10 +33,10 @@ export const Cart3 = () => {
         ordsTotal += Number(value);
       }
     });
-    
+
     return {
-      subscriptionsTotal: subsTotal/2,
-      ordersTotal: ordsTotal/2
+      subscriptionsTotal: subsTotal / 2,
+      ordersTotal: ordsTotal / 2
     };
   }, [performanceClientData]);
 
@@ -57,23 +63,15 @@ export const Cart3 = () => {
   };
 
   const years = ["2021-2022", "2022-2023", "2023-2024", "2024-2025"];
-  React.useEffect(() => {
-    let isMounted = true; // Flag to prevent setting state if component is unmounted
-    const fetchPerformanceDashboard = async () => {
-      if (isMounted) {
-        await getPerformanceClientDashboard(selectedYear);
-      }
-    };
-    fetchPerformanceDashboard();
-    return () => {
-      isMounted = false; // Cleanup to prevent multiple requests
-    };
-  }, [selectedYear]);
+ 
 
+  React.useEffect(() => {
+    dispatch(fetchPerformanceData(selectedYear))
+  }, [dispatch,selectedYear]);
   return (
     <>
       <Box display={"flex"} justifyContent="center" alignItems="center">
-        <Box sx={{ display: "flex" , marginTop:"10px" }}>
+        <Box sx={{ display: "flex", marginTop: "10px" }}>
           {/* Subscriptions Pie Chart */}
           <PieChart width={120} height={120}>
             <defs>
@@ -93,7 +91,7 @@ export const Cart3 = () => {
               startAngle={90}
               endAngle={-270}
             >
-              <Cell fill="url(#colorGradient)" strokeWidth={.2} cornerRadius={5}/>
+              <Cell fill="url(#colorGradient)" strokeWidth={.2} cornerRadius={5} />
               <Cell fill="#D8E0E0" />
             </Pie>
             <rect
@@ -102,7 +100,7 @@ export const Cart3 = () => {
               width={40}
               height={40}
               fill="url(#colorGradient)"
-              rx={50}strokeWidth={.2} cornerRadius={5}
+              rx={50} strokeWidth={.2} cornerRadius={5}
             />
             <text
               x={65}
@@ -133,7 +131,7 @@ export const Cart3 = () => {
               fill="#D8E0E0"
               paddingAngle={0}
             >
-              <Cell fill="url(#colorGradient2)" strokeWidth={.2} cornerRadius={5}/>
+              <Cell fill="url(#colorGradient2)" strokeWidth={.2} cornerRadius={5} />
               <Cell fill="#D8E0E0" />
             </Pie>
             <rect
@@ -153,13 +151,13 @@ export const Cart3 = () => {
               fontSize="14"
             >
               {Math.floor(ordersTotal)}%
-              </text>
+            </text>
           </PieChart>
         </Box>
       </Box>
-      
+
       <Box display={"flex"} justifyContent={"space-between"} paddingRight={"10px"}>
-        <Box justifyContent="left" sx={{ paddingLeft: "20px" , marginTop:"20px"}}>
+        <Box justifyContent="left" sx={{ paddingLeft: "20px", marginTop: "20px" }}>
           {/* Subscriptions Legend */}
           <Box display={"flex"} textAlign={"center"} alignItems={"center"}>
             <Box
