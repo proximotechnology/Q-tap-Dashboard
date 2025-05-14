@@ -6,7 +6,7 @@ import { PieChart, Pie, Cell } from "recharts";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import { useTranslation } from "react-i18next";
 //redux
-import { fetchPerformanceData, selectPerformance } from "../../../../../store/clientDashBoardSlice";
+import { fetchPerformanceData, selectPerformance } from "../../../../../store/client/clientDashBoardSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 export const Cart3 = () => {

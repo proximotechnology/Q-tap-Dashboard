@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import LineChart1 from './lineChart1';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSales, selectSalesByDays } from '../../../../../store/clientDashBoardSlice';
+import { fetchSales, selectSalesByDays } from '../../../../../store/client/clientDashBoardSlice';
 export const Row1 = () => {
   const [year, setYear] = React.useState('2025');
   const navigate = useNavigate();

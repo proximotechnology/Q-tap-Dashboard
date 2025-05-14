@@ -1,0 +1,200 @@
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { BASE_URL } from '../../utils/helperFunction';
+
+
+
+// Helper function to get the authorization header
+const getAuthHeader = () => {
+    const clientToken = localStorage.getItem('clientToken');
+    return clientToken ? { 'Authorization': `Bearer ${clientToken}` } : {};
+};
+
+// Async Thunk for fetching area data using Axios with Authorization
+export const fetchAreaData = createAsyncThunk(
+    'data/fetchArea',
+    async () => {
+        try {
+            const response = await axios.get(`${BASE_URL}area`, {
+                headers: getAuthHeader(),
+            });
+            return response.data;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+);
+
+// Async Thunk for fetching get_info data using Axios with Authorization
+export const fetchGetInfoData = createAsyncThunk(
+    'data/fetchGetInfo',
+    async () => {
+        try {
+            const response = await axios.get(`${BASE_URL}get_info`, {
+                headers: getAuthHeader(),
+            });
+            console.log('slic', response)
+            return response.data;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+);
+
+// Async Thunk for fetching tables data using Axios with Authorization
+export const fetchTablesData = createAsyncThunk(
+    'data/fetchTables',
+    async () => {
+        try {
+            const response = await axios.get(`${BASE_URL}tables`, {
+                headers: getAuthHeader(),
+            });
+            return response.data;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+);
+
+const dataSlice = createSlice({
+    name: 'data',
+    initialState: {
+        area: {
+            data: [],
+            loading: 'idle',
+            error: null,
+        },
+        info: {
+            data: null,
+            loading: 'idle',
+            error: null,
+        },
+        tables: {
+            data: [],
+            loading: 'idle',
+            error: null,
+        },
+    },
+    reducers: {
+        createArea: (state, action) => {
+            // Assuming action.payload is the new area object
+            console.log('Current data type:', typeof state.area.data, state.area.data);
+            console.log('Raw data:', JSON.parse(JSON.stringify(state.area.data)));
+            state.area.data.areas.push(action.payload);
+        },
+        deleteArea: (state, action) => {
+            // Assuming action.payload is the ID of the area to delete
+            state.area.data.areas = state.area.data.areas.filter(
+                (area) => area.id !== action.payload
+            );
+        },
+        updateArea: (state, action) => {
+            // Assuming action.payload is the updated area object
+            const index = state.area.data.areas.findIndex(
+                (area) => area.id === action.payload.id
+            );
+            if (index !== -1) {
+                state.area.data.tables[index] = action.payload;
+            }
+        },
+        createTable: (state, action) => {
+            // Assuming action.payload is the new area object
+            state.tables.data.tables.push(action.payload);
+        },
+        deleteTable: (state, action) => {
+            // Assuming action.payload is the ID of the area to delete
+            console.log('Raw data:', JSON.parse(JSON.stringify(state.tables.data)));
+            state.tables.data.tables = state.tables.data.tables.filter(
+                (area) => area.id !== action.payload
+            );
+        },
+        updateTable: (state, action) => {
+            // Assuming action.payload is the updated area object
+            const index = state.tables.data.tables.findIndex(
+                (area) => area.id === action.payload.id
+            );
+            if (index !== -1) {
+                state.tables.data.tables[index] = action.payload;
+            }
+        },
+        updateBranchMenu: (state, action) => {
+            const branches = state.info.data?.qtap_clients?.brunchs;
+            if (!Array.isArray(branches)) return;
+            const index = branches.findIndex(branch => branch.brunch_id === action.payload?.id);
+            if (index === -1) return;
+            // Handle serving_ways specifically
+            const updatedBranch = {
+                ...action.payload,
+
+            };
+            branches[index] = updatedBranch
+        }
+    },
+    extraReducers: (builder) => {
+        // Reducers for fetchAreaData
+        builder.addCase(fetchAreaData.pending, (state) => {
+            state.area.loading = 'loading';
+        });
+        builder.addCase(fetchAreaData.fulfilled, (state, action) => {
+            state.area.loading = 'succeeded';
+            state.area.data = action.payload;
+        });
+        builder.addCase(fetchAreaData.rejected, (state, action) => {
+            state.area.loading = 'failed';
+            state.area.error = action.error.message;
+        });
+
+        // Reducers for fetchGetInfoData
+        builder.addCase(fetchGetInfoData.pending, (state) => {
+            state.info.loading = 'loading';
+        });
+        builder.addCase(fetchGetInfoData.fulfilled, (state, action) => {
+            state.info.loading = 'succeeded';
+            state.info.data = action.payload;
+        });
+        builder.addCase(fetchGetInfoData.rejected, (state, action) => {
+            state.info.loading = 'failed';
+            state.info.error = action.error.message;
+        });
+
+        // Reducers for fetchTablesData
+        builder.addCase(fetchTablesData.pending, (state) => {
+            state.tables.loading = 'loading';
+        });
+        builder.addCase(fetchTablesData.fulfilled, (state, action) => {
+            state.tables.loading = 'succeeded';
+            state.tables.data = action.payload;
+        });
+        builder.addCase(fetchTablesData.rejected, (state, action) => {
+            state.tables.loading = 'failed';
+            state.tables.error = action.error.message;
+        });
+    },
+});
+
+// Export the async thunks and the reducer
+export const { createArea, deleteArea, updateArea, createTable, deleteTable, updateTable, updateBranchMenu } = dataSlice.actions;
+export default dataSlice.reducer;
+
+// Selector functions to easily access the state
+export const selectAreaData = (state) => state.clientLogin.area.data;
+export const selectAreaLoading = (state) => state.clientLogin.area.loading;
+export const selectAreaError = (state) => state.clientLogin.area.error;
+
+export const selectGetInfoData = (state) => state.clientLogin.info.data;
+export const selectGetInfoLoading = (state) => state.clientLogin.info.loading;
+export const selectGetInfoError = (state) => state.clientLogin.info.error;
+
+export const selectTablesData = (state) => state.clientLogin.tables.data;
+export const selectTablesLoading = (state) => state.clientLogin.tables.loading;
+export const selectTablesError = (state) => state.clientLogin.tables.error;
+/* 
+   const dispatch = useDispatch()//fetchGetInfoData
+    const data = useSelector(selectGetInfoData)
+    const qtap_clients = data?.qtap_clients;
+    console.log("menu",data)
+     useEffect(() => {
+           dispatch(fetchGetInfoData) 
+    }, [dispatch])
+    
+    */

@@ -4,7 +4,7 @@ import StraightIcon from "@mui/icons-material/Straight";
 import SouthIcon from "@mui/icons-material/South";
 import financialData from "./FinancialData";
 import { useTranslation } from "react-i18next";
-import { fetchWalletData, selectWallet } from "../../../../../store/clientDashBoardSlice";
+import { fetchWalletData, selectWallet } from "../../../../../store/client/clientDashBoardSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const Financial = ({

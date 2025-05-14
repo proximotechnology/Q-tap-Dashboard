@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, Grid, MenuItem, Paper, Select, Typography, useTheme } from '@mui/material'
 import { useTranslation } from 'react-i18next';
 import SalesVolumeChartClient from './SalesVolumeChart';
-import { fetchSalesByDays, selectSalesByDays } from '../../../../../../store/clientDashBoardSlice';
+import { fetchSalesByDays, selectSalesByDays } from '../../../../../../store/client/clientDashBoardSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const SalesVolumeCardClient = () => {

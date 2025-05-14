@@ -20,11 +20,12 @@ import StraightIcon from '@mui/icons-material/Straight';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import NightlightIcon from '@mui/icons-material/Nightlight';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
-import { ClientLoginData } from '../../../../context/ClientLoginDataContext';
 import Days from '../Menu/Days';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL } from '../../../../utils/helperFunction';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectGetInfoData, updateBranchMenu } from '../../../../store/client/clientLoginSlic';
 
 
 
@@ -42,8 +43,13 @@ const ImageBox = styled(Box)(({ imageUrl }) => ({
 }));
 
 const Menu = () => {
-    const { clientData, getClientData } = useContext(ClientLoginData);
-    const { qtap_clients } = clientData;
+    const dispatch = useDispatch()
+
+    const data = useSelector(selectGetInfoData)
+    console.log("clientData redux", data)
+    const qtap_clients = data?.qtap_clients;
+
+
     const theme = useTheme();
     const selectedBranch = localStorage.getItem('selectedBranch');
 
@@ -72,9 +78,7 @@ const Menu = () => {
         existBranch?.workschedule?.filter((day) => day.day) || []
     );
 
-    useEffect(() => {
-        getClientData();
-    }, [])
+
     // Helper function to format API time (e.g., "9am" to "9:00 am")
     const formatTime = (time) => {
         if (!time) return '9:00 am'; // Default fallback
@@ -129,7 +133,10 @@ const Menu = () => {
 
             if (response.ok) {
                 toast.success(t("menus.updateSucc"));
-                getClientData();
+                console.log("response updata", response)
+                console.log("updatedData", updatedData)
+                dispatch(updateBranchMenu(updatedData))//TODO: UPDATA Should return new object
+
             } else {
                 toast.error(t("menus.updateErr"));
             }
@@ -354,7 +361,10 @@ const Menu = () => {
                                 <ToggleButtonGroup
                                     value={mode}
                                     exclusive
-                                    onChange={(e) => setMode(e.target.value)}
+                                    onChange={(e, newValue) => { // Get value from second parameter
+                                        console.log("toggle mode", newValue);
+                                        setMode(newValue);
+                                    }}
                                     sx={{
                                         display: 'flex',
                                         justifyContent: 'space-between',
@@ -407,7 +417,7 @@ const Menu = () => {
                                     {t("menus.design")}
                                 </Typography>
                                 <ToggleButtonGroup value={design} exclusive onChange={handleDesignChange}
-                                        sx={{
+                                    sx={{
                                         display: 'flex',
                                         justifyContent: 'space-between',
                                         width: '90%',

@@ -4,7 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recha
 import { Box, useTheme } from '@mui/system';
 import { Grid, Select, MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { fetchSales, selectSales } from '../../../../../store/clientDashBoardSlice';
+import { fetchSales, selectSales } from '../../../../../store/client/clientDashBoardSlice';
 import { useDispatch, useSelector } from 'react-redux';
 const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {

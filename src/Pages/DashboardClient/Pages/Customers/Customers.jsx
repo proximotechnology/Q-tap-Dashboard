@@ -10,7 +10,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from
 import { logData } from './CustomersData';
 import { useTranslation } from 'react-i18next';
 //redux
-import { fetchCustomerLog, selectCustomerLog } from '../../../../store/clientDashBoardSlice';
+import { fetchCustomerLog, selectCustomerLog } from '../../../../store/client/clientDashBoardSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
 export const Customers = () => {

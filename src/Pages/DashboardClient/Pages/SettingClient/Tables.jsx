@@ -16,11 +16,12 @@ import ChairAltOutlinedIcon from '@mui/icons-material/ChairAltOutlined';
 import { QRCodeSVG } from 'qrcode.react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { ClientLoginData } from '../../../../context/ClientLoginDataContext';
 import AddTableModal from './AddTable'; // Ensure this component is created
 import styles from '../SupportClient/supportCard.module.css'
 import { useTranslation } from 'react-i18next';
 import { BASE_URL } from '../../../../utils/helperFunction';
+import { useDispatch, useSelector } from 'react-redux';
+import { createTable, deleteTable, fetchAreaData, fetchTablesData, selectTablesData, updateTable } from '../../../../store/client/clientLoginSlic';
 
 const TableCard = ({ table, onDeleteTable, onEditTable }) => {
   const { t } = useTranslation();
@@ -158,9 +159,10 @@ const TableCard = ({ table, onDeleteTable, onEditTable }) => {
 export const Tables = ({ openOldMenu }) => {
   const theme = useTheme();
   const { t } = useTranslation();
+  const dispatch = useDispatch()
+
   const [modalOpen, setModalOpen] = useState(false);
   const [editingTable, setEditingTable] = useState(null);
-  const { tableDataRes, getTableDataRes } = useContext(ClientLoginData);
 
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -169,35 +171,6 @@ export const Tables = ({ openOldMenu }) => {
   const handleCloseModal = () => {
     setModalOpen(false);
     setEditingTable(null); // Reset editing table state
-  };
-
-  const handleSaveTable = async (tableData) => {
-    try {
-      const url = editingTable
-
-        ? `${BASE_URL}tables/${editingTable.id}`
-        : `${BASE_URL}tables`;
-      const method = editingTable ? 'PUT' : 'POST';
-
-      const response = await axios({
-        method,
-        url,
-        data: tableData,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('clientToken')}`,
-        },
-      });
-
-      if (response.data) {
-        toast.success(editingTable ? t("table.updateSucc") : t("table.addSucc"));
-        getTableDataRes(); // Refresh table data
-        handleCloseModal();
-      }
-    } catch (error) {
-      console.error('Error saving table:', error);
-      toast.error(t("table.saveErr"));
-    }
   };
 
   const handleEditTable = (table) => {
@@ -217,16 +190,21 @@ export const Tables = ({ openOldMenu }) => {
 
       if (response.data) {
         toast.success(t("table.deleteSucc"));
-        getTableDataRes(); // Refresh table data
+        dispatch(deleteTable(id))
       }
     } catch (error) {
       console.error('Error deleting table:', error);
       toast.error(t("table.deleteErr"));
     }
   };
+
+  const data = useSelector(selectTablesData)
+  const tableDataRes = data.tables
+
   useEffect(() => {
-    getTableDataRes(); // Fetch table data when component mounts
-  }, [])
+      dispatch(fetchAreaData())
+      dispatch(fetchTablesData())
+    }, [dispatch]);
 
   return (
     <Paper style={{ padding: '20px 30px', borderRadius: '10px', marginTop: '16px' }}>
@@ -244,7 +222,7 @@ export const Tables = ({ openOldMenu }) => {
           }}
         />
         <Grid container spacing={2} sx={{ marginTop: '10px' }}>
-          {tableDataRes.map((table, index) => (
+          {tableDataRes?.map((table, index) => (
             <Grid item key={index}>
               <TableCard table={table} onDeleteTable={() => handleDeleteTable(table.id)} onEditTable={handleEditTable} />
             </Grid>
@@ -270,7 +248,6 @@ export const Tables = ({ openOldMenu }) => {
             <AddTableModal
               open={modalOpen}
               onClose={handleCloseModal}
-              onSave={handleSaveTable}
               tableData={editingTable} // Pass table data for editing
             />
           </Grid>

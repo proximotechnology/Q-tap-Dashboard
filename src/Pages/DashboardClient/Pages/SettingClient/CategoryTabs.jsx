@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Typography } from '@mui/material';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import CreditCardOutlinedIcon from '@mui/icons-material/CreditCardOutlined';
@@ -11,9 +11,13 @@ import { Tables } from './Tables';
 import { Delivery } from './delivery/Delivery';
 import RoomServiceOutlinedIcon from '@mui/icons-material/RoomServiceOutlined';
 import { useTranslation } from 'react-i18next';
+import { fetchGetInfoData } from '../../../../store/client/clientLoginSlic';
+import { useDispatch } from 'react-redux';
 //TODO: navigate button styling
 const CategoryTabs = () => {
     const { t } = useTranslation();
+    const dispatch = useDispatch()
+
     const theme = useTheme();
     const [buttons, setButtons] = useState([
         {
@@ -62,7 +66,9 @@ const CategoryTabs = () => {
         }));
         setButtons(updatedButtons);
     };
-
+    useEffect(() => {
+        dispatch(fetchGetInfoData())
+    }, [dispatch])
     const activeContent = buttons.find(button => button.selected)?.content;
 
     return (

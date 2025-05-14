@@ -1,25 +1,23 @@
-
-
-import React, { useContext, useEffect, useState } from 'react';
+import  {  useState } from 'react';
 import { Box, Modal, TextField, Button, Typography, IconButton, Divider } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { ClientLoginData } from '../../../../context/ClientLoginDataContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { BASE_URL } from '../../../../utils/helperFunction';
+import { useDispatch, useSelector } from "react-redux";
+import { selectAreaData,  createArea, deleteArea, updateArea } from "../../../../store/client/clientLoginSlic"
 
 const AddAreaModal = ({ open, onClose }) => {
     const [name, setName] = useState('');
     const [editingAreaId, setEditingAreaId] = useState(null); // حالة لحفظ ID المنطقة التي يتم تعديلها
     const selectedBranch = localStorage.getItem("selectedBranch");
-    const { areaData, getAreaData } = useContext(ClientLoginData);
-    const { areas } = areaData;
 
-    useEffect(() => {
-        getAreaData(); // جلب بيانات المناطق عند فتح المودال
-    }, []);
+    const dispatch = useDispatch() //
+    const areaData = useSelector(selectAreaData)
+    const { areas } = areaData;
+    
 
     //========================================== حفظ منطقة جديدة
     const handleSaveArea = async () => {
@@ -41,7 +39,8 @@ const AddAreaModal = ({ open, onClose }) => {
 
             if (response.data) {
                 toast.success("Area added successfully!");
-                getAreaData();
+                console.log("Area added successfully!", response.data)
+                dispatch(createArea(response.data?.area));
                 setName('');
             }
         } catch (error) {
@@ -71,7 +70,8 @@ const AddAreaModal = ({ open, onClose }) => {
 
             if (response.data) {
                 toast.success("Area updated successfully!");
-                getAreaData();
+                dispatch(updateArea(response.data.area));
+                console.log("Area updated successfully", response.data)
                 setName('');
                 setEditingAreaId(null); // إعادة تعيين ID التعديل بعد التحديث
             }
@@ -94,7 +94,8 @@ const AddAreaModal = ({ open, onClose }) => {
 
             if (response.data) {
                 toast.success("Area deleted successfully!");
-                getAreaData();
+                console.log("Area deleted successfully!", response.data);
+                dispatch(deleteArea(id));
             }
         } catch (error) {
             console.log("Error deleting area", error);
@@ -192,15 +193,15 @@ const AddAreaModal = ({ open, onClose }) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {areas?.filter(area => area.brunch_id == selectedBranch).map((row) => (
+                            {areas?.filter(area => { console.log(area.brunch_id, "==", selectedBranch, "res ", area.brunch_id !== Number(selectedBranch)); return area.brunch_id == Number(selectedBranch) }).map((row) => (
                                 <TableRow key={row.id} sx={{ height: "30px" }}>
                                     <TableCell align="center" sx={{ padding: "0px", fontSize: "10px", color: "gray" }}>{row.name}</TableCell>
                                     <TableCell align="center" sx={{ padding: "0px" }}>
                                         <IconButton onClick={() => handleUpdateClick(row)} size="small">
-                                        <span class="icon-edit" style={{ fontSize: "18px" }} />
+                                            <span class="icon-edit" style={{ fontSize: "18px" }} />
                                         </IconButton>
                                         <IconButton onClick={() => handleDeleteArea(row.id)} size="small" color='error'>
-                                        <span class="icon-delete" style={{ fontSize: "18px" }} />
+                                            <span class="icon-delete" style={{ fontSize: "18px" }} />
                                         </IconButton>
                                     </TableCell>
                                 </TableRow>
@@ -214,4 +215,3 @@ const AddAreaModal = ({ open, onClose }) => {
 };
 
 export default AddAreaModal;
- 

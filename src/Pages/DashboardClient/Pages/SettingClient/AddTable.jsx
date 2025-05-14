@@ -17,18 +17,23 @@ import CloseIcon from '@mui/icons-material/Close';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import AddAreaModal from './AddAreaModal';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
-import { ClientLoginData } from '../../../../context/ClientLoginDataContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL } from '../../../../utils/helperFunction';
+import { useDispatch, useSelector } from "react-redux";
+import { selectAreaData, createTable, updateTable } from "../../../../store/client/clientLoginSlic"
 
-const AddTableModal = ({ open, onClose, onSave, tableData }) => {
+
+const AddTableModal = ({ open, onClose, tableData }) => {
   const theme = useTheme();
   const { t } = useTranslation();
   const selectedBranch = localStorage.getItem('selectedBranch');
-  const { areaData, getAreaData, getTableDataRes } = useContext(ClientLoginData);
+
+  const dispatch = useDispatch() //
+  const areaData = useSelector(selectAreaData)
   const { areas } = areaData;
+  
   const [areaMenu, setAreaMenu] = useState('');
   const [size, setSize] = useState('');
   const [name, setName] = useState('');
@@ -37,6 +42,7 @@ const AddTableModal = ({ open, onClose, onSave, tableData }) => {
   const handleOpen = () => setModalOpen(true);
   const handleCloseAreaModal = () => setModalOpen(false);
 
+  
   // Pre-fill form fields when editing
   useEffect(() => {
     if (tableData) {
@@ -79,7 +85,13 @@ const AddTableModal = ({ open, onClose, onSave, tableData }) => {
 
       if (response.data) {
         toast.success(tableData ? t("table.updateSucc") : t("table.addSucc"));
-        getTableDataRes(); // Refresh table data
+        if (!tableData) { //
+          dispatch(createTable(response.data.table))
+        }
+        else {
+          dispatch(updateTable(response.data.tables))
+        }
+
         onClose(); // Close the modal
       }
     } catch (error) {
@@ -87,9 +99,7 @@ const AddTableModal = ({ open, onClose, onSave, tableData }) => {
       toast.error(t("table.saveErr"));
     }
   };
-  useEffect(() => {
-    getTableDataRes(); // Fetch table data when component mounts
-  }, [])
+
 
 
   return (

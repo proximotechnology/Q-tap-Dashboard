@@ -25,11 +25,12 @@ import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import TableBarIcon from '@mui/icons-material/TableBar';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import { toast } from 'react-toastify';
-import { ClientLoginData } from '../../../../context/ClientLoginDataContext';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL, BASE_URL_IMG } from '../../../../utils/helperFunction';
 import { egyptGovernorates } from './../../../../utils/city';
 import MapWithPin from '../../../../utils/MapWithPin';
+import { useSelector } from 'react-redux';
+import { selectGetInfoData } from '../../../../store/client/clientLoginSlic';
 
 const ProfilePage = () => {
   const theme = useTheme();
@@ -62,12 +63,14 @@ const ProfilePage = () => {
   const [callWaiter, setCallWaiter] = useState('');
 
   // Context and localStorage Data
-  const { clientData, getClientData } = useContext(ClientLoginData);
+
   const allClientData = localStorage.getItem('allClientData');
   // const selectedBranch = localStorage.getItem('selectedBranch');
   const parsedClientData = allClientData ? JSON.parse(allClientData) : null;
   const user = parsedClientData?.user;
-  const qtap_clients = clientData?.qtap_clients;
+  const data = useSelector(selectGetInfoData)
+  const qtap_clients = data?.qtap_clients;
+  
   const [selectedBranch, setSelectedBranch] = useState(localStorage.getItem('selectedBranch') || '');
 
   const [logoImage, setLogoImage] = useState(qtap_clients?.img || null);
@@ -219,12 +222,10 @@ const ProfilePage = () => {
     }
   };
 
-  useEffect(() => {
-    getClientData();
-  }, [])
+
   const [isMapOpen, setIsMapOpen] = useState(false)
   const updateBranchPosition = () => { }
- 
+
 
   return (
     <Paper elevation={3} style={{ padding: '20px 30px', borderRadius: '10px', marginTop: '16px' }}>
@@ -906,7 +907,6 @@ export default ProfilePage;
 // import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 // import TableBarIcon from '@mui/icons-material/TableBar';
 // import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
-// import { ClientLoginData } from '../../../../context/ClientLoginDataContext';
 // import { useTranslation } from 'react-i18next';
 // import { BASE_URL, BASE_URL_IMG } from '../../../../utils/helperFunction';
 // import { toast } from 'react-toastify';
@@ -914,7 +914,6 @@ export default ProfilePage;
 // const ProfilePage = () => {
 //   const theme = useTheme();
 //   const { t } = useTranslation();
-//   const { clientData, getClientData } = useContext(ClientLoginData);
 
 //   // Personal Info State
 //   const [fullName, setFullName] = useState('');

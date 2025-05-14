@@ -55,7 +55,6 @@ import { BusinessProvider } from './context/BusinessContext';
 import { BranchProvider } from './context/BranchContext';
 import { ContentMenuProvider } from './context/ContentMenuContext';
 import { RegisterClientProvider } from './context/RegisterClientContext';
-import { ClientLoginDataProvider } from './context/ClientLoginDataContext';
 import { ClientProvider } from './context/ClientContext';
 import { AffiliateClientProvider } from './context/AffiliateClient';
 import Pusher from "pusher-js";
@@ -400,7 +399,6 @@ function App() {
       <ClientProvider>
         <MenuDataProvider>
             <AffiliateClientProvider>
-              <ClientLoginDataProvider>
                 <RegisterClientProvider>
                   <ContentMenuProvider>
                     <BranchProvider>
@@ -417,7 +415,6 @@ function App() {
                     </BranchProvider>
                   </ContentMenuProvider>
                 </RegisterClientProvider>
-              </ClientLoginDataProvider>
             </AffiliateClientProvider>
         </MenuDataProvider>
       </ClientProvider>
