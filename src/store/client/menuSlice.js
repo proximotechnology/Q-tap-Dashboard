@@ -48,4 +48,4 @@ const menuSlice = createSlice({
 
 export default menuSlice.reducer;
 
-export const selectMenuData = (state) => state.menu.data.data;
+export const selectMenuData = (state) => state?.menu?.data;

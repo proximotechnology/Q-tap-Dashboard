@@ -29,7 +29,6 @@ import { useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useBranch } from "../../../../context/BranchContext";
 import { BASE_URL } from "../../../../utils/helperFunction";
 
 export const AddItem = () => {
@@ -41,8 +40,7 @@ export const AddItem = () => {
     const categoryId = searchParams.get("categoryId");
     const itemId = searchParams.get("itemId");
     const selectedBranch = localStorage.getItem("selectedBranch");
-    // const { discountContent } = useBranch();
-    // console.log('discountContent',discountContent);
+
   
 
     // State for data

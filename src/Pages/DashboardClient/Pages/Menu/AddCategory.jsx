@@ -4,7 +4,6 @@ import CheckIcon from '@mui/icons-material/Check';
 import StraightIcon from '@mui/icons-material/Straight';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useBranch } from '../../../../context/BranchContext';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL } from '../../../../utils/helperFunction';
 
@@ -15,7 +14,7 @@ const CategoryForm = ({ open, handleClose }) => {
   const [image, setImage] = useState(null);
   const [cover, setCover] = useState(null);
   const [categories, setCategories] = useState([]);
-  const { selectedBranch } = useBranch();
+  const selectedBranch = localStorage.getItem("selectedBranch")
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
   const handleImageChange = (e) => {
@@ -111,16 +110,16 @@ const CategoryForm = ({ open, handleClose }) => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 fullWidth
-                sx={{ height: '40px', '& .MuiInputBase-root': { height: '35px' } ,color:theme.palette.text.gray_white}}
+                sx={{ height: '40px', '& .MuiInputBase-root': { height: '35px' }, color: theme.palette.text.gray_white }}
               />
             </Box>
             <Box flex={1}>
-              <Typography variant="body2" align="left" sx={{ marginBottom: '4px', color:theme.palette.text.gray_white, fontSize: "10px" }}>{t("discription")}</Typography>
+              <Typography variant="body2" align="left" sx={{ marginBottom: '4px', color: theme.palette.text.gray_white, fontSize: "10px" }}>{t("discription")}</Typography>
               <TextField
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 fullWidth
-                sx={{ height: '40px', '& .MuiInputBase-root': { height: '35px' },color:theme.palette.text.gray_white }}
+                sx={{ height: '40px', '& .MuiInputBase-root': { height: '35px' }, color: theme.palette.text.gray_white }}
               />
             </Box>
           </Box>
@@ -221,11 +220,12 @@ const CategoryForm = ({ open, handleClose }) => {
               </label>
             </Box>
             <Typography variant="body2" sx={{ fontSize: "8px", color: "#9d9d9c", marginTop: '4px', textAlign: 'center' }}>
-            {t("category.iconSize")}
+              {t("category.iconSize")}
             </Typography>
           </Box>
           <Button
             onClick={handleAdd}
+            disabled={isLoading}
             variant="contained" color="warning" fullWidth
             sx={{ width: "40%", fontSize: "11px", borderRadius: "20px", marginTop: 2, textTransform: "capitalize" }}>
             {/* <CheckIcon sx={{ fontSize: "16px", marginRight: "5px" }} /> */}

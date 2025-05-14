@@ -13,15 +13,12 @@ import {
   TextField,
   Card,
   CardContent,
-  MenuItem,
-  Select,
 } from '@mui/material';
 import React from 'react';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import MinimizeOutlinedIcon from '@mui/icons-material/MinimizeOutlined';
 import { useTranslation } from 'react-i18next';
-import { getDeposits, getWithdrawals } from '../../../store/adminSlice';
+import { getDeposits } from '../../../store/adminSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 // Add the formatDateTime function
@@ -46,7 +43,6 @@ export const Row3 = () => {
   const theme = useTheme();
 
   // State for withdrawals
-  const [withdrawals, setWithdrawals] = React.useState([]);
   const [withdrawalSearchQuery, setWithdrawalSearchQuery] = React.useState('');
   const [showWithdrawalSearch, setShowWithdrawalSearch] = React.useState(false);
   const [withdrawFromDate, setWithdrawFromDate] = React.useState('2024-03-20');

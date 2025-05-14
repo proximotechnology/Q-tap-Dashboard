@@ -11,14 +11,11 @@ import {
   Typography,
   useTheme,
   CircularProgress,
-  Radio,
-  RadioGroup,
 } from '@mui/material';
 import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
-import { useBranch } from '../../context/BranchContext';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { BASE_URL } from '../../utils/helperFunction';

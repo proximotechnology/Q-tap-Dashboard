@@ -5,12 +5,13 @@ import StraightOutlinedIcon from '@mui/icons-material/StraightOutlined';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import { useBranch } from '../../../../context/BranchContext';
+import { useSelector } from 'react-redux';
+import { selectDiscounts } from '../../../../store/client/DiscountMenuSlice';
 
 export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData }) => {
     const { t } = useTranslation();
     const theme = useTheme();
-    const { discountContent } = useBranch();
+    const discountContent = useSelector(selectDiscounts)
 
     const [name, setName] = useState(initialData.name || '');
     const [brief, setBrief] = useState(initialData.brief || '');

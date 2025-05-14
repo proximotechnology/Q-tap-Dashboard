@@ -52,7 +52,6 @@ import { ProductsPage } from './Component/Products/ProductsPage';
 import { ToastContainer } from 'react-toastify';
 import { PersonalProvider } from './context/PersonalContext';
 import { BusinessProvider } from './context/BusinessContext';
-import { BranchProvider } from './context/BranchContext';
 import { ContentMenuProvider } from './context/ContentMenuContext';
 import { RegisterClientProvider } from './context/RegisterClientContext';
 import { ClientProvider } from './context/ClientContext';
@@ -400,7 +399,7 @@ function App() {
         <AffiliateClientProvider>
           <RegisterClientProvider>
             <ContentMenuProvider>
-              <BranchProvider>
+              
                 <PersonalProvider>
                   <BusinessProvider>
                     <div style={{ minHeight: "100vh" }}>
@@ -411,7 +410,7 @@ function App() {
                     </div>
                   </BusinessProvider>
                 </PersonalProvider>
-              </BranchProvider>
+              
             </ContentMenuProvider>
           </RegisterClientProvider>
         </AffiliateClientProvider>

@@ -1,7 +1,6 @@
 import { Button, Divider, FormControl, IconButton, MenuItem, Modal, Select, TextField, Typography, useTheme } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import { Box, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
-import { useBranch } from '../../../../context/BranchContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { ContentMenu } from '../../../../context/ContentMenuContext';
@@ -186,7 +185,7 @@ const AddOfferModal = ({ open, handleClose, selectedBranch, contentForMenu, onAd
 };
 
 export const OffersModel = ({ open, handleClose }) => {
-    const { selectedBranch } = useBranch();
+    const selectedBranch = localStorage.getItem("selectedBranch")
     const theme = useTheme();
     const { contentForMenu } = useContext(ContentMenu);
     const { t } = useTranslation();

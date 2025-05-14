@@ -2,7 +2,9 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { BASE_URL } from "./helperFunction";
 
-export const handleClientLogin = async ({pin,setIsLoading,setBranches,setSelectedBranch,navigate ,t , role,navurl,brunch_id}) => {
+export const handleClientLogin = async ({pin,setIsLoading,
+    // setBranches,setSelectedBranch,
+    navigate ,t , role,navurl,brunch_id}) => {
         const data = {
             email: localStorage.getItem('clientEmail'),
             password: localStorage.getItem('clientPassword'),
@@ -31,10 +33,10 @@ export const handleClientLogin = async ({pin,setIsLoading,setBranches,setSelecte
 
                 //   Store branches in both context and localStorage
                 if (response?.data?.brunches && response.data.brunches.length > 0) {
-                    setBranches(response.data.brunches);
+                    // setBranches(response.data.brunches);
                     localStorage.setItem('branches', JSON.stringify(response.data.brunches));
                     // Set and store the first branch as default
-                    setSelectedBranch(response.data.brunches[0].id);
+                    // setSelectedBranch(response.data.brunches[0].id);
                     localStorage.setItem('selectedBranch', response.data.brunches[0].id);
                 }
             }

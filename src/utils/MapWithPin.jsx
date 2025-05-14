@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, useMapEvents, useMap, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { Button, useTheme } from '@mui/material';
@@ -20,19 +20,16 @@ const MapWithPin = ({ setPos, isMapOpen, setIsMapOpen, currentPos = {} }) => {
   const [userPosition, setUserPosition] = useState(null);
   const [position, setPosition] = useState(null);
 
-  console.log("currentPos", currentPos)
+ 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   useEffect(() => {
-    console.log("currentPos", currentPos)
     if (currentPos.latitude && currentPos.longitude) {
       setPosition({
         lat: Number(currentPos.latitude), lng: Number(currentPos.longitude)
       })
-      console.log("currentPos set", currentPos)
     }
   }, [currentPos])
-  useEffect(() => { console.log("new position", position) }, [position])
 
   const Markers = () => {
     useMapEvents({
@@ -45,11 +42,11 @@ const MapWithPin = ({ setPos, isMapOpen, setIsMapOpen, currentPos = {} }) => {
     return position ? <Marker position={position} /> : null;
   };
   // Function to handle map centering
-  function CenterMap({ center }) {
-    const map = useMap();
-    map.setView(center, 13);
-    return null;
-  }
+  // function CenterMap({ center }) {
+  //   const map = useMap();
+  //   map.setView(center, 13);
+  //   return null;
+  // }
 
   const getUserLocation = () => {
     if (isMapOpen) {

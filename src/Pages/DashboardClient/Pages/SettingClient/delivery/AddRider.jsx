@@ -4,7 +4,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
 import { FormControl, Select, MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useBranch } from '../../../../../context/BranchContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { BASE_URL } from '../../../../../utils/helperFunction';
@@ -15,11 +14,10 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [countryCode, setCountryCode] = useState('+20');
   const [pin, setPin] = useState('');
-  const [orders, setOrders] = useState('');
   const [status, setStatus] = useState('Available');
   const [deliveryAreasId, setDeliveryAreasId] = useState('');
   const [deliveryAreas, setDeliveryAreas] = useState([]);
-  const { selectedBranch } = useBranch();
+  const selectedBranch = localStorage.getItem("selectedBranch")
 
   // Fetch delivery areas
   const getDeliveryArea = async () => {
@@ -99,7 +97,7 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
 
   const handleSubmit = async () => {
     try {
-      if (!name || !phoneNumber || !pin  || !status || !deliveryAreasId) {
+      if (!name || !phoneNumber || !pin || !status || !deliveryAreasId) {
         toast.error(t('plFillAllField'));
         return;
       }
@@ -110,10 +108,10 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
         name,
         phone: `${countryCode}${phoneNumber}`,
         pin,
-        status_rider:status,
+        status_rider: status,
       };
-      console.log('formData' , formData);
-      
+      console.log('formData', formData);
+
 
       const token = localStorage.getItem('clientToken');
       const headers = {
@@ -141,11 +139,18 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
           headers,
         });
       }
+      if (response.data.success === false) {
+        console.log(response);
+        if (response.data.message.pin)
 
-      if (response.data) {
+          toast.error(response.data.message.pin[0]);
+        else
+          toast.error(t(editData ? 'updating rider failed' : 'adding rider failed'));
+      }
+      else if (response.data) {
         toast.success(t(editData ? 'rider updated successfully' : 'rider added successfully'));
         console.log(response);
-        
+
         onClose();
         getRiderData();
       }

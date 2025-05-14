@@ -4,7 +4,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
 import { FormControl, Select, MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useBranch } from '../../../../../context/BranchContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { BASE_URL } from '../../../../../utils/helperFunction';
@@ -17,7 +16,7 @@ const AddArea = ({ open, onClose, getDeliveryArea, editData }) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [countryCode, setCountryCode] = useState('+20');
   const [cost, setCost] = useState('');
-  const { selectedBranch } = useBranch();
+  const selectedBranch = localStorage.getItem("selectedBranch")
 
   // Populate form with edit data when editData changes
   useEffect(() => {

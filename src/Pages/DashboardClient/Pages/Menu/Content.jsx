@@ -7,9 +7,7 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import { useNavigate } from 'react-router';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useBranch } from '../../../../context/BranchContext';
 import { ContentMenu } from '../../../../context/ContentMenuContext';
-import Slider from 'react-slick';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL, BASE_URL_IMG } from '../../../../utils/helperFunction';
 
@@ -19,8 +17,10 @@ export const Content = () => {
     const navigate = useNavigate();
     const [items, setItems] = useState([]);
     const [categories, setCategories] = useState([]);
-    const { selectedBranch } = useBranch();
+    const selectedBranch = localStorage.getItem("selectedBranch")
+
     const { setContentForMenu, setCategoriesId } = useContext(ContentMenu);
+    
     const [openEditDialog, setOpenEditDialog] = useState(false);
     const [editCategory, setEditCategory] = useState(null);
     const [editName, setEditName] = useState('');

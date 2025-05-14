@@ -176,25 +176,44 @@ const dataSlice = createSlice({
 export const { createArea, deleteArea, updateArea, createTable, deleteTable, updateTable, updateBranchMenu } = dataSlice.actions;
 export default dataSlice.reducer;
 
-// Selector functions to easily access the state
+/*\
+*  \ 
+****| AreaData
+*  / 
+\*/
 export const selectAreaData = (state) => state.clientLogin.area.data;
 export const selectAreaLoading = (state) => state.clientLogin.area.loading;
 export const selectAreaError = (state) => state.clientLogin.area.error;
 
+/*\
+*  \ 
+****| GetInfoData
+*  / 
+**/
 export const selectGetInfoData = (state) => state.clientLogin.info.data;
 export const selectGetInfoLoading = (state) => state.clientLogin.info.loading;
 export const selectGetInfoError = (state) => state.clientLogin.info.error;
-
+/*\
+*  \ 
+****| Branch
+*  / 
+**/
+export const selectBranch = (index) => (state) => {
+    return state.clientLogin?.info?.data?.qtap_clients?.brunchs?.[index] || null;
+};
+export const selectAllBranch = (index)=>(state) => {
+    return state.clientLogin?.info?.data?.qtap_clients?.brunchs ?? [];
+}
+export const selectBranchById = (branchId) => (state) => {
+    return state.clientLogin?.info?.data?.qtap_clients?.brunchs?.find(
+        (branch) => branch.id === branchId
+    ) || null;
+};
+/*\
+*  \ 
+****| Tables
+*  / 
+**/
 export const selectTablesData = (state) => state.clientLogin.tables.data;
 export const selectTablesLoading = (state) => state.clientLogin.tables.loading;
 export const selectTablesError = (state) => state.clientLogin.tables.error;
-/* 
-   const dispatch = useDispatch()//fetchGetInfoData
-    const data = useSelector(selectGetInfoData)
-    const qtap_clients = data?.qtap_clients;
-    console.log("menu",data)
-     useEffect(() => {
-           dispatch(fetchGetInfoData) 
-    }, [dispatch])
-    
-    */

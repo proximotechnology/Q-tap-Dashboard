@@ -6,7 +6,6 @@ import LoginIcon from '@mui/icons-material/Login';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useBranch } from '../../../../../context/BranchContext';
 import { BASE_URL } from '../../../../../utils/helperFunction';
 
 export const Table2 = () => {
@@ -15,7 +14,7 @@ export const Table2 = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const [riderData, setRiderData] = useState([]);
     const [deliveryAreas, setDeliveryAreas] = useState([]);
-    const { selectedBranch } = useBranch();
+    const selectedBranch = localStorage.getItem("selectedBranch")
     const [showSearch, setShowSearch] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [editData, setEditData] = useState(null);

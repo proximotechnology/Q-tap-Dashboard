@@ -6,8 +6,6 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import DoneIcon from '@mui/icons-material/Done';
 import { Select, MenuItem } from '@mui/material';
-import { useBranch } from '../../context/BranchContext';
-import { Dot } from 'recharts';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL } from '../../utils/helperFunction';
 
@@ -15,7 +13,6 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
     const [discounts, setDiscounts] = useState([]);
     const [code, setCode] = useState('');
     const [discount, setDiscount] = useState('');
-    const { setDiscountContent } = useBranch();
     const { t } = useTranslation();
     const theme = useTheme();
     const handleAdd = async () => {
@@ -94,7 +91,6 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
 
             if (response.data) {
                 setDiscounts(response.data.discounts || []);
-                setDiscountContent(response.data.discounts || []);
                 // console.log("response discount", response.data.discounts);
             }
         } catch (error) {

@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Box, IconButton, MenuItem, Typography, Popover, Button, Menu, useTheme } from "@mui/material";
-import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
-import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import Switch from '@mui/material/Switch';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Avatar, List, ListItem, ListItemIcon, ListItemText, Divider } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 
 import { useLocation, useNavigate } from "react-router";
-import { useBranch } from "../../../../context/BranchContext";
 import { useTranslation } from "react-i18next";
 import DarkModeSwitch from "../../../../Component/DarkModeSwitch";
 import Language from "../../../../Component/dashboard/TopBar/Language";
+import { useSelector } from "react-redux";
+import { selectAllBranch, selectBranch } from "../../../../store/client/clientLoginSlic";
 
 const styles = (theme) => ({
     button: {
@@ -59,27 +57,25 @@ export default function TopBar() {
 
     const navigate = useNavigate();
     const [mode, setMode] = useState('light');
-    const { branches, setBranches, selectedBranch, setSelectedBranch } = useBranch();
     const [branch, setBranch] = useState(null);
     const lang = localStorage.getItem("i18nextLng")
+    const branches = useSelector(selectAllBranch(0))
     // Load branches and selected branch from localStorage on component mount
+    const selectedBranch = localStorage.getItem("selectedBranch")
+    
     useEffect(() => {
         const storedBranches = localStorage.getItem('branches');
         const storedSelectedBranch = localStorage.getItem('selectedBranch');
-
         if (storedBranches) {
             const parsedBranches = JSON.parse(storedBranches);
-            setBranches(parsedBranches);
 
             // If no branch is selected, set the first one as default
             if (!storedSelectedBranch && parsedBranches.length > 0) {
-                setSelectedBranch(parsedBranches[0].id);
                 localStorage.setItem('selectedBranch', parsedBranches[0].id);
             } else if (storedSelectedBranch) {
-                setSelectedBranch(storedSelectedBranch);
             }
         }
-    }, [setBranches, setSelectedBranch]);
+    }, []);
 
     const handleToggleMode = () => {
         setMode(prevMode => prevMode === 'light' ? 'dark' : 'light');
@@ -91,7 +87,6 @@ export default function TopBar() {
 
     const BranchClose = (branchId, index) => {
         if (branchId) {
-            setSelectedBranch(branchId);
             localStorage.setItem('selectedBranch', branchId);
             localStorage.setItem('branchNumber', index)
         }

@@ -6,8 +6,6 @@ import ModeCommentIcon from '@mui/icons-material/ModeComment';
 import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import Language from "../dashboard/TopBar/Language";
-import { useBranch } from "../../context/BranchContext";
-import { handleClientLogin } from "../../utils/clientLogin";
 
 const ImageContainer = styled(Box)({
     backgroundImage: 'url(/images/logoClient.jpg)',
@@ -45,9 +43,6 @@ const TextOverlay = styled(Box)({
 export const LoginKitchen = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const [pin, setPin] = useState()
-    const [isLoading, setIsLoading] = useState(false);
-    const { setBranches, setSelectedBranch } = useBranch();
     
 
     return (

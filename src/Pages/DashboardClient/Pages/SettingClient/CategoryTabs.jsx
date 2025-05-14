@@ -66,9 +66,7 @@ const CategoryTabs = () => {
         }));
         setButtons(updatedButtons);
     };
-    useEffect(() => {
-        dispatch(fetchGetInfoData())
-    }, [dispatch])
+ 
     const activeContent = buttons.find(button => button.selected)?.content;
 
     return (

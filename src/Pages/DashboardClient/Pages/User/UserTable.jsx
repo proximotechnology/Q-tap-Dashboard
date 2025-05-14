@@ -8,7 +8,6 @@ import * as XLSX from 'xlsx';
 import { AddUser } from './AddUser';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useBranch } from '../../../../context/BranchContext';
 import { useTranslation } from 'react-i18next';
 import { AddRole } from './AddRole';
 import { BASE_URL } from '../../../../utils/helperFunction';
@@ -19,8 +18,7 @@ export const UserTable = ({ userStaff, getUserStaff }) => {
   const [addUserModalOpen, setAddUserModalOpen] = useState(false);
   const [addRoleModalOpen, setAddRoleModalOpen] = useState(false);
 
-  const { selectedBranch } = useBranch(); // Use selectedBranch from context
-
+  const selectedBranch = localStorage.getItem("selectedBranch")
   const { t } = useTranslation();
   const handleToggleVisibility = (rowId) => {
     setVisiblePasswords((prev) => ({

@@ -3,23 +3,23 @@ import React, { useState, useEffect } from 'react';
 import { Box, Grid, TextField, Button, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useBranch } from '../../../../context/BranchContext';
 import DoneIcon from '@mui/icons-material/Done';
 import { Select, MenuItem } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL } from '../../../../utils/helperFunction';
+import { useDispatch, useSelector } from 'react-redux';
+import { addDiscounts, deleteDiscounts, selectDiscounts } from '../../../../store/client/DiscountMenuSlice';
 
 
 export const DiscountModel = ({ open, handleClose }) => {
-  const [discounts, setDiscounts] = useState([]);
   const [code, setCode] = useState('');
   const [discount, setDiscount] = useState('');
-  const { selectedBranch, discountContent, setDiscountContent } = useBranch();
-  const {t} = useTranslation();
+  const selectedBranch = localStorage.getItem("selectedBranch")
+  const { t } = useTranslation();
   const theme = useTheme();
-  // console.log("selectedBranch discount", selectedBranch, discountContent);
-
+  const dipatch = useDispatch()
+// TODO: UPDATA
   const handleAdd = async () => {
     try {
       if (!code || !discount) {
@@ -46,15 +46,8 @@ export const DiscountModel = ({ open, handleClose }) => {
       });
 
       if (response.data) {
-        toast.success(t("discount.addSucc"));
-        const today = new Date().toLocaleDateString();
-        const newDiscount = {
-          code,
-          discount: `${discount}%`,
-          date: today,
-          status: 'active'
-        };
-        setDiscounts([...discounts, newDiscount]);
+        toast.success(t("discount.addSucc"))    
+        dipatch(addDiscounts(response.data.data))
         setCode('');
         setDiscount('');
       }
@@ -78,49 +71,48 @@ export const DiscountModel = ({ open, handleClose }) => {
 
       if (response.data) {
         toast.success(t("discount.deleteSucc"));
-        const updatedDiscounts = discounts.filter((_, i) => i !== index);
-        setDiscounts(updatedDiscounts);
+        console.log(response.data)
+        dipatch(deleteDiscounts(discountId))
       }
     } catch (error) {
       console.error('Error deleting discount:', error);
       toast.error(t("discount.deleteErr"));
     }
   };
+  const discounts = useSelector(selectDiscounts)
+  console.log("discounts==============",discounts)
+  // const getDiscounts = async () => {
+  //   try {
 
-  const getDiscounts = async () => {
-    try {
+  //     const response = await axios.get(`${BASE_URL}meals_discount`, {
+  //       headers: {
+  //         'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+  //       },
+  //       params: {
+  //         brunch_id: selectedBranch
+  //       }
+  //     });
 
-      const response = await axios.get(`${BASE_URL}meals_discount`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
-        },
-        params: {
-          brunch_id: selectedBranch
-        }
-      });
-
-      if (response.data) {
-        setDiscounts(response.data.discounts || []);
-        setDiscountContent(response.data.discounts || []);
-        // localStorage.setItem("dicountId", response.data.discount || []);
-        console.log("response discount", response.data.discounts);
-      }
-    } catch (error) {
-      console.error('Error fetching discounts:', error);
-      // toast.error('Error fetching discounts');
-    }
-  };
+  //     if (response.data) {
+  //       setDiscounts(response.data.discounts || []);
+  //       setDiscountContent(response.data.discounts || []);
+  //       // localStorage.setItem("dicountId", response.data.discount || []);
+  //       console.log("response discount", response.data.discounts);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching discounts:', error);
+  //     // toast.error('Error fetching discounts');
+  //   }
+  // };
 
   const handleEditToggle = (index) => {
     const updatedDiscounts = [...discounts];
     updatedDiscounts[index].isEditing = !updatedDiscounts[index].isEditing;
-    setDiscounts(updatedDiscounts);
   };
 
   const handleInputChange = (index, field, value) => {
     const updatedDiscounts = [...discounts];
     updatedDiscounts[index][field] = value;
-    setDiscounts(updatedDiscounts);
   };
   const handleUpdate = async (index) => {
     const discountToUpdate = discounts[index];
@@ -145,7 +137,6 @@ export const DiscountModel = ({ open, handleClose }) => {
       if (response.data) {
         toast.success(t("discount.updateSucc"));
         discountToUpdate.isEditing = false; // إيقاف وضع التعديل بعد الحفظ
-        setDiscounts([...discounts]);
       }
     } catch (error) {
       console.error('Error updating discount:', error);
@@ -153,11 +144,7 @@ export const DiscountModel = ({ open, handleClose }) => {
     }
   };
 
-  useEffect(() => {
-    if (selectedBranch) {
-      getDiscounts();
-    }
-  }, [selectedBranch]);
+
 
   return (
     <Modal open={open} onClose={handleClose} disableScrollLock>
@@ -188,7 +175,7 @@ export const DiscountModel = ({ open, handleClose }) => {
                 <Typography variant='body2' sx={{ fontSize: "11px", color: theme.palette.text.gray_white }}>{t("code")}</Typography>
                 <TextField
                   fullWidth
-                  
+
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
                   placeholder={t("plEnterOnlyDigits")}
@@ -230,7 +217,7 @@ export const DiscountModel = ({ open, handleClose }) => {
                   },
                 }}
               >
-                <AddIcon sx={{ margin: "0 2px 2px 0", fontSize: "11px", color: "white", "& path": { stroke: "white", strokeWidth: 3 } }} /> {t("add")} 
+                <AddIcon sx={{ margin: "0 2px 2px 0", fontSize: "11px", color: "white", "& path": { stroke: "white", strokeWidth: 3 } }} /> {t("add")}
               </Button>
             </Box>
           </Box>
@@ -256,7 +243,7 @@ export const DiscountModel = ({ open, handleClose }) => {
                       onChange={(e) => handleInputChange(index, "code", e.target.value)}
                       size="small"
                       sx={{ width: "70px", height: "30px", "& .MuiInputBase-root": { height: "30px", fontSize: "10px" } }}
-                      
+
                     />
                   ) : (
                     discount.code

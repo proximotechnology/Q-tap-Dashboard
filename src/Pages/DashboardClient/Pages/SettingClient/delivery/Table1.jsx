@@ -5,7 +5,6 @@ import AddArea from './AddArea';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useBranch } from '../../../../../context/BranchContext';
 import { BASE_URL } from '../../../../../utils/helperFunction';
 
 export const Table1 = () => {
@@ -13,7 +12,7 @@ export const Table1 = () => {
   const theme = useTheme();
   const [modalOpen, setModalOpen] = useState(false);
   const [deliveryData, setDeliveryData] = useState([]);
-  const { selectedBranch } = useBranch();
+  const selectedBranch = localStorage.getItem("selectedBranch")
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [editData, setEditData] = useState(null); // State to hold data for editing

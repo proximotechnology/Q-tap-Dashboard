@@ -6,7 +6,6 @@ import ModeCommentIcon from '@mui/icons-material/ModeComment';
 import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import Language from "../dashboard/TopBar/Language";
-import { useBranch } from "../../context/BranchContext";
 import { handleClientLogin } from "../../utils/clientLogin";
 
 const ImageContainer = styled(Box)({
@@ -47,13 +46,10 @@ export const LoginWaiter = () => {
     const navigate = useNavigate();
     const [pin, setPin] = useState()
     const [isLoading, setIsLoading] = useState(false);
-    const { setBranches, setSelectedBranch } = useBranch();
     const handleLogin = async () =>{
         await handleClientLogin({
             pin,
             setIsLoading,
-            setBranches,
-            setSelectedBranch,
             navigate,
             t,
             role:'waiter',
