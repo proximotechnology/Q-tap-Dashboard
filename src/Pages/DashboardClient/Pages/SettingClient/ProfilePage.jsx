@@ -61,7 +61,7 @@ const ProfilePage = () => {
   const [tableNumber, setTableNumber] = useState('');
   const [paymentTime, setPaymentTime] = useState('');
   const [callWaiter, setCallWaiter] = useState('');
-
+console.log("map",longitude," ",latitude)
   // Context and localStorage Data
 
   const allClientData = localStorage.getItem('allClientData');
@@ -70,7 +70,7 @@ const ProfilePage = () => {
   const user = parsedClientData?.user;
   const data = useSelector(selectGetInfoData)
   const qtap_clients = data?.qtap_clients;
-  
+
   const [selectedBranch, setSelectedBranch] = useState(localStorage.getItem('selectedBranch') || '');
 
   const [logoImage, setLogoImage] = useState(qtap_clients?.img || null);
@@ -132,8 +132,8 @@ const ProfilePage = () => {
         setBusinessEmail(branch.contact_info?.[0]?.business_email?.split(',')[0] || '');
         setBusinessCountry(branch.business_country || '');
         setBusinessCity(branch.business_city || '');
-        setLatitude(branch.latitude || '555.668848');
-        setLongitude(branch.longitude || '222.4684684');
+        setLatitude(branch.latitude || '');
+        setLongitude(branch.longitude || '');
         setBusinessFormat(branch.business_format || '');
         setBusinessType(branch.business_type || 'restaurant');
         setLang(branch.language || 'english');
@@ -170,8 +170,8 @@ const ProfilePage = () => {
       business_name: businessName,
       business_country: businessCountry,
       business_city: businessCity,
-      latitude: '555.668848',
-      longitude: '222.4684684',
+      latitude: latitude,
+      longitude: longitude,
       currency_id: '1',
       business_format: businessFormat,
       tables_number: tableNumber,
@@ -224,7 +224,11 @@ const ProfilePage = () => {
 
 
   const [isMapOpen, setIsMapOpen] = useState(false)
-  const updateBranchPosition = () => { }
+  const updateBranchPosition = (data) => {
+    // data :LatLng {lat: 30.029309166465175, lng: 31.474840247805297}
+    setLatitude(data.lat)
+    setLongitude(data.lng)
+  }
 
 
   return (
@@ -677,7 +681,7 @@ const ProfilePage = () => {
                 <span className="icon-map-1" style={{ fontSize: '20px', marginRight: '10px' }}></span>
                 {t("pinYourLocation")}
               </Button> */}
-              <MapWithPin setPos={updateBranchPosition} isMapOpen={isMapOpen} setIsMapOpen={setIsMapOpen} />
+              <MapWithPin setPos={updateBranchPosition} currentPos={{ latitude,longitude }} isMapOpen={isMapOpen} setIsMapOpen={setIsMapOpen} />
             </Box>
 
             <FormControl variant="outlined" sx={{ width: '100%', marginBottom: '10px' }}>

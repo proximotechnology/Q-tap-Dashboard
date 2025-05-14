@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, useMapEvents, useMap, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -13,16 +13,26 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 
-const MapWithPin = ({ setPos ,isMapOpen,setIsMapOpen }) => {
+const MapWithPin = ({ setPos, isMapOpen, setIsMapOpen, currentPos = {} }) => {
   const theme = useTheme();
   const { t } = useTranslation()
 
   const [userPosition, setUserPosition] = useState(null);
   const [position, setPosition] = useState(null);
-  
 
+  console.log("currentPos", currentPos)
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  useEffect(() => {
+    console.log("currentPos", currentPos)
+    if (currentPos.latitude && currentPos.longitude) {
+      setPosition({
+        lat: Number(currentPos.latitude), lng: Number(currentPos.longitude)
+      })
+      console.log("currentPos set", currentPos)
+    }
+  }, [currentPos])
+  useEffect(() => { console.log("new position", position) }, [position])
 
   const Markers = () => {
     useMapEvents({
@@ -73,7 +83,7 @@ const MapWithPin = ({ setPos ,isMapOpen,setIsMapOpen }) => {
   };
 
   return (
-    <div style={{ width: '100%', zIndex:'50' }}>
+    <div style={{ width: '100%', zIndex: '50' }}>
       <Button
         variant="contained"
         fullWidth
@@ -116,7 +126,7 @@ const MapWithPin = ({ setPos ,isMapOpen,setIsMapOpen }) => {
       {isMapOpen && userPosition && (
         <div style={{ marginTop: '20px', height: '400px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           <MapContainer
-            center={userPosition}
+            center={position || userPosition}
             zoom={13}
             style={{ height: '100%', width: '100%' }}
           >
@@ -137,8 +147,8 @@ const MapWithPin = ({ setPos ,isMapOpen,setIsMapOpen }) => {
           {position && (
             <div style={{ marginTop: '10px' }}>
               <p>
-                Latitude: {position.lat.toFixed(4)},
-                Longitude: {position.lng.toFixed(4)}
+                Latitude: {Number(position?.lat)?.toFixed(4)},
+                Longitude: {Number(position?.lng)?.toFixed(4)}
               </p>
             </div>
           )}
