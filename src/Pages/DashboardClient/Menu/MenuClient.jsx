@@ -1,26 +1,22 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import { Box, useTheme } from '@mui/material';
 import SideBar from './SideBar';
 import Content from './Content';
-import { MenuDataContext } from '../../../context/MenuDataContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMenuData, selectMenuData } from '../../../store/client/menuSlice';
 
 const MenuClient = () => {
     const [selectedCategory, setSelectedCategory] = useState('Popular');
-    const [allMenuData, setAllMenuData] = useState([]);
-    const { menuData, getMenuData } = useContext(MenuDataContext);
     
-    useEffect(() => {
-        getMenuData(localStorage.getItem('selectedBranch'));
-    }, []);
+    const dispatch = useDispatch()
+    const allMenuData = useSelector(selectMenuData)
 
     useEffect(() => {
-        if (menuData?.length === 0) {
-            setAllMenuData([]);
-        } else {
-            setAllMenuData(menuData || []);
-        }
-    }, [menuData]);
-    // console.log("allMenuData", allMenuData);
+        const branch = localStorage.getItem('selectedBranch')
+        dispatch(fetchMenuData(branch))
+    }, [dispatch]);
+
+    
     
     const theme = useTheme()
 
