@@ -26,16 +26,20 @@ import {
 } from '@mui/icons-material';
 import { PersonalInfo } from '../../Pages/Client/Row2/AddClient/PersonalInfo';
 import { BusinessInfo } from '../../Pages/Client/Row2/AddClient/BusinessInfo';
-import { useBusinessContext } from '../../context/BusinessContext';
 import { useTranslation } from 'react-i18next';
 import Language from '../dashboard/TopBar/Language';
-import { usePersonalContext } from '../../context/PersonalContext';
 import { BASE_URL } from '../../utils/helperFunction';
 import axios from 'axios';
 
+import { updateBusinessData, addBranch, selectBranch, clearBusinessData, setBranches } from "../../store/register/businessSlice";
+import { updatePersonalData } from "../../store/register/personalSlice";
+import { useDispatch, useSelector } from 'react-redux';
 export const Save = () => {
-  const { businessData, branches, selectedBranch } = useBusinessContext();
-  const { personalData, updatePersonalData } = usePersonalContext();
+
+  const dispatch = useDispatch();
+  const personalData = useSelector((state) => state.personalStore.personalData);
+  const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
+
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const theme = useTheme();
@@ -133,7 +137,7 @@ export const Save = () => {
   // Handle Personal Info Changes
   const handlePersonalChange = (field, value) => {
     const updatedData = { ...personalData, [field]: value };
-    updatePersonalData(updatedData);
+    dispatch(updatePersonalData(updatedData));
   };
 
   // Handle Save Button Click
@@ -152,7 +156,8 @@ export const Save = () => {
         UAE: 5,
         SA: 6,
       };
-      return currencyMap[country] || 1;
+      // return currencyMap[country] || 1;
+      return  1;
     };
 
     // Append personal data
@@ -296,10 +301,10 @@ export const Save = () => {
           sessionStorage.setItem("paymentUrl", payment_url);
         }
         navigate('/welcome');
-      } 
+      }
     } catch (error) {
       console.error('Network Error:', error);
-        toast.error(error.response.data.error_details || error.response.data.message || t("errorWhileSavingData"));
+      toast.error(error.response.data.error_details || error.response.data.message || t("errorWhileSavingData"));
     } finally {
       setIsLoading(false);
     }

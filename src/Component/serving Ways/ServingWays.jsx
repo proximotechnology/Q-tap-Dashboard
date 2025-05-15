@@ -7,10 +7,10 @@ import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import styles from '../../Pages/DashboardClient/Pages/SupportClient/supportCard.module.css';
-import { useBusinessContext } from '../../context/BusinessContext';
+import { useSelector, useDispatch } from "react-redux";
+import { updateBusinessData, addBranch, selectBranch, clearBusinessData, setBranches } from "../../store/register/businessSlice";
 
 export const ServingWays = () => {
-    const { addBranch } = useBusinessContext();
 
     const theme = useTheme();
     const Divider = styled(Box)({
@@ -30,7 +30,9 @@ export const ServingWays = () => {
     });
 
     const navigate = useNavigate();
-    const { updateBusinessData, businessData } = useBusinessContext();
+    const dispatch = useDispatch()
+    const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
+
     const { t } = useTranslation();
 
     // Initialize servingWays from businessData
@@ -38,23 +40,23 @@ export const ServingWays = () => {
 
     // Initialize serviceOptions with selected state based on businessData.servingWays
     const [serviceOptions, setServiceOptions] = useState([
-        { 
-            name: "Dine In", 
-            value: "dine_in", 
-            icon: <span className="icon-chair" style={{ fontSize: "80px" }}></span>, 
-            selected: businessData.servingWays?.includes("dine_in") || false 
+        {
+            name: "Dine In",
+            value: "dine_in",
+            icon: <span className="icon-chair" style={{ fontSize: "80px" }}></span>,
+            selected: businessData.servingWays?.includes("dine_in") || false
         },
-        { 
-            name: "Takeaway", 
-            value: "take_away", 
-            icon: <span className="icon-takeaway" style={{ fontSize: "80px" }}></span>, 
-            selected: businessData.servingWays?.includes("take_away") || false 
+        {
+            name: "Takeaway",
+            value: "take_away",
+            icon: <span className="icon-takeaway" style={{ fontSize: "80px" }}></span>,
+            selected: businessData.servingWays?.includes("take_away") || false
         },
-        { 
-            name: "Delivery", 
-            value: "delivery", 
-            icon: <span className="icon-fast-shipping" style={{ fontSize: "80px" }}></span>, 
-            selected: businessData.servingWays?.includes("delivery") || false 
+        {
+            name: "Delivery",
+            value: "delivery",
+            icon: <span className="icon-fast-shipping" style={{ fontSize: "80px" }}></span>,
+            selected: businessData.servingWays?.includes("delivery") || false
         }
     ]);
 
@@ -81,22 +83,22 @@ export const ServingWays = () => {
         const selectedServices = newOptions
             .filter(option => option.selected)
             .map(option => option.value);
-        
+
         setServingWays(selectedServices);
 
         // Update BusinessContext with the new serving ways
-        updateBusinessData({
+        dispatch(updateBusinessData({
             servingWays: selectedServices
-        });
+        }));
     };
 
     const handleTableCountChange = (value) => {
-        updateBusinessData({ tableCount: value });
+        dispatch(updateBusinessData({ tableCount: value }));
     };
 
     const handleNextClick = () => {
         if (servingWays.length > 0) {
-            addBranch();
+            dispatch(addBranch());
             navigate('/branches');
         } else {
             toast.error(t("plSelectOneService"));
@@ -193,7 +195,7 @@ export const ServingWays = () => {
                             }
                         >
                             <MenuItem value="" disabled>{t("HowManyTablesDoYouHave") + t("optional")}</MenuItem>
-                            {[1, 2, 3, 4, 5, 6,7,8,9,10,11,12].map((number) => (
+                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((number) => (
                                 <MenuItem key={number} value={number.toString()}>{number}</MenuItem>
                             ))}
                         </Select>

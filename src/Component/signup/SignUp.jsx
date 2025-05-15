@@ -9,13 +9,18 @@ import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { usePersonalContext } from '../../context/PersonalContext';
 import { useTranslation } from 'react-i18next';
 import { egyptGovernorates } from './../../utils/city';
+import { updatePersonalData } from "../../store/register/personalSlice";
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const SignUp = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const personalData = useSelector((state) => state.personalStore.personalData);
+
+
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -35,7 +40,6 @@ const SignUp = () => {
     const [apiSuccess, setApiSuccess] = useState('');
     const [clientDataFromRegist, setClientDataFromRegist] = useState()
 
-    const { updatePersonalData } = usePersonalContext();
 
     const { t } = useTranslation();
 
@@ -93,8 +97,7 @@ const SignUp = () => {
             user_type: "qtap_clients"
         };
 
-        // Store data in PersonalContext if user is affiliate
-        // if (user_type === "qtap_clients") {
+
         const personalContextData = {
             fullName,
             phone,
@@ -107,42 +110,10 @@ const SignUp = () => {
             confirmPassword,
             user_type: "qtap_clients"
         };
-        updatePersonalData(personalContextData);
+        dispatch(updatePersonalData(personalContextData));
         navigate("/product")
         return;
-        // }
 
-
-        // send data to api 
-        // try {
-        //     setIsLoading(true);
-        //     const options = {
-        //         method: 'POST',
-        //         url: "https://api.qutap.co/api/register",
-        //         headers: { 'Content-Type': 'application/json' },
-        //         data
-
-        //     }
-        //     const response = await axios.request(options)
-        //         .then(res => res)
-        //         .catch(error => console.log(error))
-        //     console.log(response);
-
-        //     setIsLoading(false);
-
-
-        //     if (response?.data?.status === "success") {
-        //         setApiSuccess(t("registrationSuccess"));
-
-        //         // dashboard-affiliate
-
-        //     } else {
-        //         setApiError(response?.data?.message || t("checkEmailOrPhoneDublicated"));
-        //     }
-        // } catch (error) {
-        //     setIsLoading(false);
-        //     setApiError(error.response?.data?.message || t("registerFiald"));
-        // }
     };
 
     return (

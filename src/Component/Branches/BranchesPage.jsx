@@ -3,18 +3,9 @@ import { SetupPage } from '../Business-info/SetupPage';
 import { Branches } from './Branches';
 import React, { useEffect, } from 'react';
 import { Box, Grid, useTheme } from '@mui/material';
-import { useBusinessContext } from '../../context/BusinessContext';
 import Language from '../dashboard/TopBar/Language';
 
 export const BranchesPage = () => {
-
-    // Access context
-    const { branches } = useBusinessContext();
-
-    // // Log branches data when the component mounts
-    // useEffect(() => {
-    //     console.log('BranchesPage branches:', branches);
-    // }, [branches]);
 
     return (
         <Grid

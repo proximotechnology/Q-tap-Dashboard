@@ -11,13 +11,16 @@ import NightlightIcon from '@mui/icons-material/Nightlight';
 import { useNavigate } from 'react-router';
 import { ArrowForwardIos, ArrowBackIos } from '@mui/icons-material';
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
-import { useBusinessContext } from '../../context/BusinessContext';
 import { useTranslation } from 'react-i18next';
 import GridViewIcon from '@mui/icons-material/GridView';
 import ListIcon from '@mui/icons-material/List';
 import { toast } from 'react-toastify';
 import { timeOptions } from './WorkingHoursDays';
 import { egyptGovernorates } from '../../utils/city';
+
+import { useSelector, useDispatch } from "react-redux";
+import { updateBusinessData, addBranch, selectBranch, clearBusinessData, setBranches } from "../../store/register/businessSlice";
+
 // تحديد الأيام بأحرف مختصرة للعرض
 const daysOfWeek = ['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr'];
 // تحديد الأيام الكاملة للـ context
@@ -32,7 +35,9 @@ export const BusinessInfo = () => {
         borderRadius: "20px",
         marginBottom: "20px"
     });
-    const { businessData, updateBusinessData, branches, selectedBranch, addBranch } = useBusinessContext();
+    const dispatch = useDispatch();
+    const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
+
     const navigate = useNavigate();
     const { t } = useTranslation();
 
@@ -94,7 +99,7 @@ export const BusinessInfo = () => {
             paymentMethods
         };
         console.log('Updating context (excluding workschedules):', updatedData);
-        updateBusinessData(updatedData);
+        dispatch(updateBusinessData(updatedData));
     }, [mode, design, format, currency, country, city, businessName, website,
         businessEmail, businessPhone, activeWaiter, paymentTime, paymentMethods]);
 
@@ -126,7 +131,7 @@ export const BusinessInfo = () => {
             delete updatedSchedules[fullDay];
         }
         console.log('Updating workschedules:', updatedSchedules);
-        updateBusinessData({ workschedules: updatedSchedules });
+        dispatch(updateBusinessData({ workschedules: updatedSchedules }));
     };
 
     const handleTimeChange = (event, type) => {
@@ -145,7 +150,7 @@ export const BusinessInfo = () => {
                 [currentDay]: type === 'from' ? [newTime, toTime] : [fromTime, newTime]
             };
             console.log('Updating workschedules:', updatedSchedules);
-            updateBusinessData({ workschedules: updatedSchedules });
+            dispatch(updateBusinessData({ workschedules: updatedSchedules }));
         }
     };
 

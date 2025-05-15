@@ -50,12 +50,7 @@ import { Save } from './Component/Save/Save';
 import { Welcome } from './Component/Welcome/Welcome';
 import { ProductsPage } from './Component/Products/ProductsPage';
 import { ToastContainer } from 'react-toastify';
-import { PersonalProvider } from './context/PersonalContext';
-import { BusinessProvider } from './context/BusinessContext';
 import { ContentMenuProvider } from './context/ContentMenuContext';
-import { RegisterClientProvider } from './context/RegisterClientContext';
-import { ClientProvider } from './context/ClientContext';
-import { AffiliateClientProvider } from './context/AffiliateClient';
 import Pusher from "pusher-js";
 import { toast } from "react-toastify";
 import { useEffect } from 'react';
@@ -394,28 +389,16 @@ function App() {
 
   return (
     <Provider store={store}>
-      <ClientProvider>
+      <ContentMenuProvider>
 
-        <AffiliateClientProvider>
-          <RegisterClientProvider>
-            <ContentMenuProvider>
-              
-                <PersonalProvider>
-                  <BusinessProvider>
-                    <div style={{ minHeight: "100vh" }}>
-                      <div className="w-100 ">
-                        <RouterProvider router={routes}></RouterProvider>
-                      </div>
-                      <ToastContainer />
-                    </div>
-                  </BusinessProvider>
-                </PersonalProvider>
-              
-            </ContentMenuProvider>
-          </RegisterClientProvider>
-        </AffiliateClientProvider>
+            <div style={{ minHeight: "100vh" }}>
+              <div className="w-100 ">
+                <RouterProvider router={routes}></RouterProvider>
+              </div>
+              <ToastContainer />
+            </div>
 
-      </ClientProvider>
+      </ContentMenuProvider>
     </Provider>
   );
 }

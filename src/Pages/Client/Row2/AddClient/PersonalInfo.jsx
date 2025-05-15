@@ -15,15 +15,16 @@ import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 
 import { useNavigate } from 'react-router';
-import { usePersonalContext } from '../../../../context/PersonalContext';
 import { useTranslation } from 'react-i18next';
+import { updatePersonalData, clearPersonalData, setPersonalData } from "../../../../store/register/personalSlice";
+import { useDispatch, useSelector } from 'react-redux';
 
 export const PersonalInfo = () => {
-    const {t} = useTranslation()
+    const { t } = useTranslation()
     const navigate = useNavigate();
-    const { personalData, updatePersonalData, clearPersonalData, setPersonalData } = usePersonalContext();
-    console.log(personalData);
-    
+    const dispatch = useDispatch();
+    const personalData = useSelector((state) => state.personalStore.personalData);
+
     const [fullName, setFullName] = useState(personalData.fullName || '');
     const [phone, setPhone] = useState(personalData.phone || '');
     const [email, setEmail] = useState(personalData.email || '');
@@ -50,7 +51,7 @@ export const PersonalInfo = () => {
         const file = e.target.files[0];
         if (file && file.type.startsWith('image/')) {
             setImage(file); // Update local state
-            updatePersonalData({ ...personalData, img: file }); // Update context
+            dispatch(updatePersonalData({ ...personalData, img: file })); // Update context
             console.log('Image updated in context:', file); // Debugging
         } else {
             alert(t("PlUploadValidImageFile"));
@@ -58,15 +59,15 @@ export const PersonalInfo = () => {
     };
 
     return (
-        <Grid container   sx={{ marginTop: "10px" ,justifyContent:{xs:"start",md:'space-around'}}}>
+        <Grid container sx={{ marginTop: "10px", justifyContent: { xs: "start", md: 'space-around' } }}>
             <Box>
                 <ArrowBackIosOutlinedIcon
                     onClick={() => navigate('/payment')}
-                    sx={{ color: "#4b4a4a", cursor: "pointer" ,marginInlineStart:{xs:'0px',md:'0px'}}}
+                    sx={{ color: "#4b4a4a", cursor: "pointer", marginInlineStart: { xs: '0px', md: '0px' } }}
                 />
             </Box>
 
-            <Grid item xs={12} md={3} sx={{ minWidth:'150px' }}>
+            <Grid item xs={12} md={3} sx={{ minWidth: '150px' }}>
                 <Box sx={{ textAlign: 'center' }}>
                     <Box sx={{
                         width: '150px',
@@ -77,9 +78,9 @@ export const PersonalInfo = () => {
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        marginX:{xs:'auto',md:'0px'}
+                        marginX: { xs: 'auto', md: '0px' }
                     }}>
-                        <img src={image ? URL.createObjectURL(image) : "/images/User.jpg"} alt="user" style={{ width: "110%", height: "110%"}} />
+                        <img src={image ? URL.createObjectURL(image) : "/images/User.jpg"} alt="user" style={{ width: "110%", height: "110%" }} />
                         <Box sx={{
                             position: 'absolute',
                             bottom: 0,
@@ -122,10 +123,10 @@ export const PersonalInfo = () => {
                         value={fullName}
                         onChange={(e) => {
                             setFullName(e.target.value);
-                            setPersonalData((prevState) => ({
+                            dispatch(setPersonalData((prevState) => ({
                                 ...prevState,
                                 fullName: e.target.value
-                            }));
+                            })));
                         }}
                         placeholder={t("fullName")}
                         sx={{ borderRadius: '10px', marginBottom: "18px", height: '33px', fontSize: "12px" }}
@@ -143,10 +144,10 @@ export const PersonalInfo = () => {
                         value={phone}
                         onChange={(e) => {
                             setPhone(e.target.value);
-                            setPersonalData((prevState) => ({
+                            dispatch(setPersonalData((prevState) => ({
                                 ...prevState,
                                 phone: e.target.value
-                            }));
+                            })));
                         }}
                         placeholder={t("mobileNumber")}
                         sx={{ borderRadius: '10px', marginBottom: "18px", height: '33px', fontSize: "12px" }}
@@ -162,10 +163,10 @@ export const PersonalInfo = () => {
                         value={email}
                         onChange={(e) => {
                             setEmail(e.target.value);
-                            setPersonalData((prevState) => ({
+                            dispatch(setPersonalData((prevState) => ({
                                 ...prevState,
                                 email: e.target.value
-                            }));
+                            })));
                         }}
                         placeholder={t("email")}
                         sx={{ borderRadius: '10px', marginBottom: "18px", height: '33px', fontSize: "12px" }}
@@ -182,10 +183,10 @@ export const PersonalInfo = () => {
                         value={website}
                         onChange={(e) => {
                             setWebsite(e.target.value);
-                            setPersonalData((prevState) => ({
+                            dispatch(setPersonalData((prevState) => ({
                                 ...prevState,
                                 website: e.target.value
-                            }));
+                            })));
                         }}
                         placeholder={t("websiteNoOptional")}
                         sx={{ borderRadius: '10px', height: "35px", fontSize: "12px", marginBottom: "18px" }}
@@ -206,10 +207,10 @@ export const PersonalInfo = () => {
                                 value={month}
                                 onChange={(e) => {
                                     setMonth(e.target.value);
-                                    setPersonalData((prevState) => ({
+                                    dispatch(setPersonalData((prevState) => ({
                                         ...prevState,
                                         month: e.target.value
-                                    }));
+                                    })));
                                 }}
                                 displayEmpty
                                 sx={{ borderRadius: '10px', height: '33px', fontSize: "12px", color: "gray", marginRight: "5px" }}
@@ -230,10 +231,10 @@ export const PersonalInfo = () => {
                                 value={day}
                                 onChange={(e) => {
                                     setDay(e.target.value);
-                                    setPersonalData((prevState) => ({
+                                    dispatch(setPersonalData((prevState) => ({
                                         ...prevState,
                                         day: e.target.value
-                                    }));
+                                    })));
                                 }}
                                 displayEmpty
                                 sx={{ borderRadius: '10px', height: '33px', fontSize: "12px", color: "gray", marginRight: "5px" }}
@@ -254,10 +255,10 @@ export const PersonalInfo = () => {
                                 value={year}
                                 onChange={(e) => {
                                     setYear(e.target.value);
-                                    setPersonalData((prevState) => ({
+                                    dispatch(setPersonalData((prevState) => ({
                                         ...prevState,
                                         year: e.target.value
-                                    }));
+                                    })));
                                 }}
                                 displayEmpty
                                 sx={{ borderRadius: '10px', height: '33px', fontSize: "12px", color: "gray" }}
@@ -279,10 +280,10 @@ export const PersonalInfo = () => {
                         value={country}
                         onChange={(e) => {
                             setCountry(e.target.value);
-                            setPersonalData((prevState) => ({
+                            dispatch(setPersonalData((prevState) => ({
                                 ...prevState,
                                 country: e.target.value
-                            }));
+                            })));
                         }}
                         displayEmpty
                         sx={{ marginBottom: "18px", borderRadius: '10px', height: '33px', fontSize: "12px", color: "gray" }}
@@ -306,10 +307,10 @@ export const PersonalInfo = () => {
                         value={password}
                         onChange={(e) => {
                             setPassword(e.target.value);
-                            setPersonalData((prevState) => ({
+                            dispatch(setPersonalData((prevState) => ({
                                 ...prevState,
                                 password: e.target.value
-                            }));
+                            })));
                         }}
                         startAdornment={
                             <InputAdornment position="start">
@@ -335,10 +336,10 @@ export const PersonalInfo = () => {
                         value={confirmPassword}
                         onChange={(e) => {
                             setConfirmPassword(e.target.value);
-                            setPersonalData((prevState) => ({
+                            dispatch(setPersonalData((prevState) => ({
                                 ...prevState,
                                 confirmPassword: e.target.value
-                            }));
+                            })));
                         }}
                         startAdornment={
                             <InputAdornment position="start">

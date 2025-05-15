@@ -34,11 +34,12 @@ import NightlightIcon from "@mui/icons-material/Nightlight";
 import ViewQuiltIcon from "@mui/icons-material/ViewQuilt";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import { ArrowForwardIos, ArrowBackIos } from "@mui/icons-material";
-import { useBusinessContext } from "../../../../context/BusinessContext";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { timeOptions } from "../../../../Component/Business-info/WorkingHoursDays";
 import MapWithPin, { ErrorBoundary } from "../../../../utils/MapWithPin";
+import { useSelector, useDispatch } from "react-redux";
+import { updateBusinessData, addBranch, selectBranch, clearBusinessData, setBranches } from "../../../../store/register/businessSlice";
 
 const daysOfWeek = ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"];
 const fullDaysOfWeek = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
@@ -46,7 +47,10 @@ const fullDaysOfWeek = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", 
 export const BusinessInfo = () => {
   const theme = useTheme();
   const { t } = useTranslation();
-  const { businessData, updateBusinessData, branches, selectedBranch, selectBranch } = useBusinessContext();
+
+  const dispatch = useDispatch()
+  const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
+
   const [branchIndex, setBranchIndex] = useState(selectedBranch || 0);
   const [branchPosition, setBranchPosition] = useState([]);
   const navigate = useNavigate();
@@ -81,8 +85,8 @@ export const BusinessInfo = () => {
 
   const updateBranchPosition = (pos) => {
     console.log(pos, 'set pos call', selectedBranch)
-    updateBusinessData({ longitude: pos.lng })
-    updateBusinessData({ latitude: pos.lat })
+    dispatch(updateBusinessData({ longitude: pos.lng }))
+    dispatch(updateBusinessData({ latitude: pos.lat }))
   }
 
   // Initialize local state based on workschedules
@@ -96,29 +100,29 @@ export const BusinessInfo = () => {
     // Update fromTime and toTime based on currentDay
     setFromTime(workschedules[currentDay]?.[0] || '9:00 am');
     setToTime(workschedules[currentDay]?.[1] || '7:00 pm');
-    selectBranch(branchIndex)
+    dispatch(selectBranch(branchIndex))
   }, [workschedules, currentDay, branchIndex]);
 
   const handleBranchClick = (index) => {
     setBranchIndex(index);
-    selectBranch(index);
-    updateBusinessData(branches[index]);
+    dispatch(selectBranch(index));
+    dispatch(updateBusinessData(branches[index]));
   };
 
   const handleModeChange = (event, newMode) => {
     if (newMode !== null) {
-      updateBusinessData({ mode: newMode });
+      dispatch(updateBusinessData({ mode: newMode }));
     }
   };
 
   const handleDesignChange = (event, newDesign) => {
     if (newDesign !== null) {
-      updateBusinessData({ design: newDesign });
+      dispatch(updateBusinessData({ design: newDesign }));
     }
   };
 
   const handleInputChange = (field, value) => {
-    updateBusinessData({ [field]: value });
+    dispatch(updateBusinessData({ [field]: value }));
   };
 
   const handleDayClick = (day) => {
@@ -138,7 +142,7 @@ export const BusinessInfo = () => {
       delete updatedSchedules[fullDay];
     }
 
-    updateBusinessData({ workschedules: updatedSchedules });
+    dispatch(updateBusinessData({ workschedules: updatedSchedules }));
   };
 
   const handleTimeChange = (event, type) => {
@@ -156,7 +160,7 @@ export const BusinessInfo = () => {
         ...workschedules,
         [currentDay]: type === 'from' ? [newTime, toTime] : [fromTime, newTime]
       };
-      updateBusinessData({ workschedules: updatedSchedules });
+      dispatch(updateBusinessData({ workschedules: updatedSchedules }));
     }
   };
 
@@ -173,7 +177,7 @@ export const BusinessInfo = () => {
     const updatedServingWays = servingWays.includes(way)
       ? servingWays.filter((w) => w !== way)
       : [...servingWays, way];
-    updateBusinessData({ servingWays: updatedServingWays });
+    dispatch(updateBusinessData({ servingWays: updatedServingWays }));
   };
 
   const paymentMethodValues = ["cash", "wallet", "card"];
@@ -184,18 +188,18 @@ export const BusinessInfo = () => {
     const updatedPaymentMethods = paymentMethods.includes(method)
       ? paymentMethods.filter((m) => m !== method)
       : [...paymentMethods, method];
-    updateBusinessData({ paymentMethods: updatedPaymentMethods });
+    dispatch(updateBusinessData({ paymentMethods: updatedPaymentMethods }));
   };
 
   const paymentTimeValues = ["before", "after"];
   const paymentTimeLabels = [t("beforeServing"), t("afterServing")];
 
   const handlePaymentTimeChange = (time) => {
-    updateBusinessData({ paymentTime: time });
+    dispatch(updateBusinessData({ paymentTime: time }));
   };
 
   const handleCallWaiterChange = (event) => {
-    updateBusinessData({ callWaiter: event.target.checked ? "active" : "inactive" });
+    dispatch(updateBusinessData({ callWaiter: event.target.checked ? "active" : "inactive" }));
   };
 
   const handlePrint = () => {
@@ -572,7 +576,7 @@ export const BusinessInfo = () => {
                     <IconButton onClick={() => handleDayToggle("prev")} sx={{ color: theme.palette.orangePrimary.main }}>
                       <ArrowBackIos sx={{ fontSize: "11px" }} />
                     </IconButton>
-                    <Typography sx={{  textTransform: "capitalize", color: "white", fontSize: "10px" }}>
+                    <Typography sx={{ textTransform: "capitalize", color: "white", fontSize: "10px" }}>
                       {t(currentDay.toLowerCase())}
                     </Typography>
                     <IconButton onClick={() => handleDayToggle("next")} sx={{ color: theme.palette.orangePrimary.main }}>

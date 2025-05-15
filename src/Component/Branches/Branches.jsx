@@ -4,10 +4,10 @@ import React from 'react';
 import { useNavigate } from 'react-router';
 import ControlPointOutlinedIcon from '@mui/icons-material/ControlPointOutlined';
 import PriorityHighOutlinedIcon from '@mui/icons-material/PriorityHighOutlined';
-import { useBusinessContext } from '../../context/BusinessContext';
 import { useTranslation } from 'react-i18next';
-import  styles  from '../../Pages/DashboardClient/Pages/SupportClient/supportCard.module.css';
-
+import styles from '../../Pages/DashboardClient/Pages/SupportClient/supportCard.module.css';
+import { useSelector, useDispatch } from "react-redux";
+import { updateBusinessData, addBranch, selectBranch, clearBusinessData, setBranches } from "../../store/register/businessSlice";
 
 
 export const Branches = () => {
@@ -19,12 +19,15 @@ export const Branches = () => {
     borderRadius: '20px',
     marginBottom: '20px',
   });
+
+
+  const dispatch = useDispatch();
+  const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
   
-  const { branches, setBranches } = useBusinessContext(); // Access branches from context
   const navigate = useNavigate();
 
   const deleteBranch = (index) => {
-    setBranches((prevBranches) => prevBranches.filter((_, i) => i !== index));
+    dispatch(setBranches((prevBranches) => prevBranches.filter((_, i) => i !== index)));
   };
 
   const { t } = useTranslation()
@@ -105,9 +108,9 @@ export const Branches = () => {
       <Box
         sx={{
           display: 'flex',
-          flexDirection:'column',
-          alignItems:'center',
-          position:"fixed",
+          flexDirection: 'column',
+          alignItems: 'center',
+          position: "fixed",
           bottom: '30px',
           left: '47%',
         }}
@@ -127,26 +130,26 @@ export const Branches = () => {
           {t("plNoteBranch")}
           <span style={{ color: theme.palette.orangePrimary.main }}>50%</span> {t("plNoteBranch2")}
         </Typography>
-       
-          <Button
-            variant="contained"
-            sx={{
-              width: '300px',
-              fontSize: '13px',
-              borderRadius: '50px',
+
+        <Button
+          variant="contained"
+          sx={{
+            width: '300px',
+            fontSize: '13px',
+            borderRadius: '50px',
+            backgroundColor: theme.palette.orangePrimary.main,
+            textTransform: 'none',
+            padding: '6px 0',
+            '&:hover': {
               backgroundColor: theme.palette.orangePrimary.main,
-              textTransform: 'none',
-              padding: '6px 0',
-              '&:hover': {
-                backgroundColor: theme.palette.orangePrimary.main,
-              },
-              color: '#fff',
-            }}
-            onClick={handleDoneClick} // Call handleDoneClick
-          >
-            {t("done")}
-          </Button>
-        
+            },
+            color: '#fff',
+          }}
+          onClick={handleDoneClick} // Call handleDoneClick
+        >
+          {t("done")}
+        </Button>
+
       </Box>
     </Box>
   );

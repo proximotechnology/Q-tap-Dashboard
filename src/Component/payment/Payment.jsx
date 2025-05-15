@@ -4,17 +4,17 @@ import { PricingCard } from './PricingCard';
 import { useNavigate } from 'react-router';
 import DoneIcon from '@mui/icons-material/Done';
 import { useTranslation } from 'react-i18next';
-import { usePersonalContext } from '../../context/PersonalContext';
 import { toast } from 'react-toastify';
-import { useBusinessContext } from '../../context/BusinessContext';
 import { BASE_URL } from '../../utils/helperFunction';
+
+import { updateBusinessData, addBranch, selectBranch, clearBusinessData, setBranches } from "../../store/register/businessSlice";
+import { updatePersonalData } from "../../store/register/personalSlice";
+import { useDispatch, useSelector } from 'react-redux';
 
 export const Payment = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const theme = useTheme();
-  const { personalData, updatePersonalData } = usePersonalContext();
-  const { branches } = useBusinessContext();
   const [selectedValue, setSelectedValue] = useState('cash');
   const [pricing, setPricing] = useState([]);
   const [discounts, setDiscounts] = useState([]);
@@ -22,6 +22,10 @@ export const Payment = () => {
   const [discountCode, setDiscountCode] = useState('');
   const [isLoading, setIsLoading] = useState(true); // حالة تحميل جديدة
   // console.log("branches", branches);
+  const dispatch = useDispatch();
+  const personalData = useSelector((state) => state.personalStore.personalData);
+  const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
+
 
   const Divider2 = styled(Box)({
     width: '35%',
@@ -76,7 +80,7 @@ export const Payment = () => {
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
-    updatePersonalData({ payment_method: event.target.value });
+    dispatch(updatePersonalData({ payment_method: event.target.value }));
   };
 
   const handleDiscountChange = (event) => {
@@ -88,18 +92,18 @@ export const Payment = () => {
     if (selectedPlan && selectedPlan.plan.id === plan.id) {
       // إلغاء اختيار الباقة إذا تم النقر عليها مرة أخرى
       setSelectedPlan(null);
-      updatePersonalData({ pricing_id: '', pricing_way: '' });
+      dispatch(updatePersonalData({ pricing_id: '', pricing_way: '' }));
     } else {
       // اختيار باقة واحدة فقط
       setSelectedPlan({ plan, pricingWay: '' });
-      updatePersonalData({ pricing_id: plan.id, pricing_way: '' });
+      dispatch(updatePersonalData({ pricing_id: plan.id, pricing_way: '' }));
     }
   };
 
   const handlePricingWayChange = (planId, pricingWay) => {
     if (selectedPlan && selectedPlan.plan.id === planId) {
       setSelectedPlan({ ...selectedPlan, pricingWay });
-      updatePersonalData({ pricing_way: pricingWay });
+      dispatch(updatePersonalData({ pricing_way: pricingWay }));
     }
   };
 
@@ -148,9 +152,9 @@ export const Payment = () => {
         toast.error(t("invalidDiscountCode"));
         return;
       }
-      updatePersonalData({ discount_id: validDiscount.id });
+      dispatch(updatePersonalData({ discount_id: validDiscount.id }));
     } else {
-      updatePersonalData({ discount_id: null });
+      dispatch(updatePersonalData({ discount_id: null }));
     }
 
     console.log('Total Price:', totalPrice);
