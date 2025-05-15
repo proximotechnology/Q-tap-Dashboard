@@ -6,6 +6,8 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL } from '../../../../utils/helperFunction';
+import { useDispatch } from 'react-redux';
+import { addNewCat } from '../../../../store/client/menuSlice';
 
 const CategoryForm = ({ open, handleClose }) => {
   const [name, setName] = useState('');
@@ -30,7 +32,7 @@ const CategoryForm = ({ open, handleClose }) => {
       setCover(file);
     }
   };
-
+  const dispatch = useDispatch()
   const handleAdd = async () => {
     try {
       setIsLoading(true);
@@ -60,6 +62,8 @@ const CategoryForm = ({ open, handleClose }) => {
 
       if (response.data) {
         toast.success(t("category.addSucc"));
+        console.log("----", response.data)
+        dispatch(addNewCat(response.data))
         // reload page to get new category whic added now
         const today = new Date().toLocaleDateString();
         const newCategory = {
@@ -74,7 +78,8 @@ const CategoryForm = ({ open, handleClose }) => {
         setDescription('');
         setImage(null);
         setCover(null);
-        window.location.reload();
+        handleClose()
+        // window.location.reload();
 
       }
     } catch (error) {

@@ -9,8 +9,9 @@ const MenuClient = () => {
     const [selectedCategory, setSelectedCategory] = useState('Popular');
     
     const dispatch = useDispatch()
-    const allMenuData = useSelector(selectMenuData)
-
+    const data = useSelector(selectMenuData)
+    const allMenuData = data?.data
+    console.log("allMenuData",allMenuData)
     useEffect(() => {
         const branch = localStorage.getItem('selectedBranch')
         dispatch(fetchMenuData(branch))

@@ -50,7 +50,6 @@ import { Save } from './Component/Save/Save';
 import { Welcome } from './Component/Welcome/Welcome';
 import { ProductsPage } from './Component/Products/ProductsPage';
 import { ToastContainer } from 'react-toastify';
-import { ContentMenuProvider } from './context/ContentMenuContext';
 import Pusher from "pusher-js";
 import { toast } from "react-toastify";
 import { useEffect } from 'react';
@@ -389,16 +388,12 @@ function App() {
 
   return (
     <Provider store={store}>
-      <ContentMenuProvider>
-
             <div style={{ minHeight: "100vh" }}>
               <div className="w-100 ">
                 <RouterProvider router={routes}></RouterProvider>
               </div>
               <ToastContainer />
             </div>
-
-      </ContentMenuProvider>
     </Provider>
   );
 }

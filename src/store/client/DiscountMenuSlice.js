@@ -47,7 +47,7 @@ const discountsSlice = createSlice({
         },
         deleteDiscounts: (state, action) => {
             state.discounts = state.discounts.filter(
-                (dis) => {console.log(dis.id ,"!==", action.payload); return dis.id !== action.payload}
+                (dis) => { console.log(dis.id, "!==", action.payload); return dis.id !== action.payload }
             )
         },
         updataDiscounts: (state, action) => {
@@ -85,8 +85,10 @@ const discountsSlice = createSlice({
     },
 });
 
-export const { setDiscounts, setDiscountContent, clearDiscountsError, addDiscounts, deleteDiscounts, updataDiscounts } = discountsSlice.actions;
 export default discountsSlice.reducer;
+
+export const { setDiscounts, setDiscountContent, clearDiscountsError,
+    addDiscounts, deleteDiscounts, updataDiscounts } = discountsSlice.actions;
 
 // Selector functions
 export const selectDiscounts = (state) => state.DiscountMenu.discounts;

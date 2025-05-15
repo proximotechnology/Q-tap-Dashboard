@@ -61,7 +61,7 @@ const ProfilePage = () => {
   const [tableNumber, setTableNumber] = useState('');
   const [paymentTime, setPaymentTime] = useState('');
   const [callWaiter, setCallWaiter] = useState('');
-console.log("map",longitude," ",latitude)
+  console.log("map", longitude, " ", latitude)
   // Context and localStorage Data
 
   const allClientData = localStorage.getItem('allClientData');
@@ -73,7 +73,7 @@ console.log("map",longitude," ",latitude)
 
   const [selectedBranch, setSelectedBranch] = useState(localStorage.getItem('selectedBranch') || '');
 
-  const [logoImage, setLogoImage] = useState(qtap_clients?.img || null);
+  const [logoImage, setLogoImage] = useState(qtap_clients?.img ? `${BASE_URL_IMG}${qtap_clients?.img}` : null);
   // console.log(selectedBranch);
 
   useEffect(() => {
@@ -252,7 +252,8 @@ console.log("map",longitude," ",latitude)
                   textAlign: 'center',
                 }}
               >
-                <img src={`${BASE_URL_IMG}${logoImage}` || '/images/User.jpg'} alt="user" width="110%" />
+              
+                <img src={logoImage || '/images/User.jpg'} alt="user" width="110%" />
                 <Box
                   sx={{
                     position: 'absolute',
@@ -681,7 +682,7 @@ console.log("map",longitude," ",latitude)
                 <span className="icon-map-1" style={{ fontSize: '20px', marginRight: '10px' }}></span>
                 {t("pinYourLocation")}
               </Button> */}
-              <MapWithPin setPos={updateBranchPosition} currentPos={{ latitude,longitude }} isMapOpen={isMapOpen} setIsMapOpen={setIsMapOpen} />
+              <MapWithPin setPos={updateBranchPosition} currentPos={{ latitude, longitude }} isMapOpen={isMapOpen} setIsMapOpen={setIsMapOpen} />
             </Box>
 
             <FormControl variant="outlined" sx={{ width: '100%', marginBottom: '10px' }}>

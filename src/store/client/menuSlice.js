@@ -9,9 +9,73 @@ export const fetchMenuData = createAsyncThunk(
     async (branchNumber, { rejectWithValue }) => {
         try {
             const response = await axios.get(`${BASE_URL}menu/${branchNumber}`);
-            console.log("fetchMenuData",response)
+            console.log("fetchMenuData", response.data)
             return response.data;
         } catch (error) {
+            if (axios.isAxiosError(error)) {
+                return rejectWithValue(error.response?.data?.message || error.message);
+            }
+            return rejectWithValue('An unexpected error occurred');
+        }
+    }
+);
+export const updataCategory = createAsyncThunk(
+    'menu/updataCategory',
+    async ({ id, newName, branch }, { rejectWithValue }) => {
+        try {
+            const response = await axios.put(`${BASE_URL}meals_categories/${id}`, {
+                name: newName,
+                brunch_id: branch
+            },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+                    },
+                }
+            );
+            console.log("updataCategory redux", response.data)
+            return response.data;
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                return rejectWithValue(error.response?.data?.message || error.message);
+            }
+            return rejectWithValue('An unexpected error occurred');
+        }
+    }
+);
+export const deleteCategory = createAsyncThunk(
+    'menu/deleteMenuData',
+    async (categoryId, { rejectWithValue }) => {
+        try {
+            const response = await axios.delete(`${BASE_URL}meals_categories/${categoryId}`,  {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+                }
+            });
+
+            return { ...response.data, categoryId };
+        } catch (error) {
+            console.log("delet", error)
+            if (axios.isAxiosError(error)) {
+                return rejectWithValue(error.response?.data?.message || error.message);
+            }
+            return rejectWithValue('An unexpected error occurred');
+        }
+    }
+);
+export const addCategory = createAsyncThunk(
+    'menu/deleteMenuData',
+    async (categoryId, { rejectWithValue }) => {
+        try {
+            const response = await axios.delete(`${BASE_URL}meals_categories/${categoryId}`,  {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+                }
+            });
+
+            return { ...response.data, categoryId };
+        } catch (error) {
+            console.log("delet", error)
             if (axios.isAxiosError(error)) {
                 return rejectWithValue(error.response?.data?.message || error.message);
             }
@@ -28,7 +92,11 @@ const initialState = {
 const menuSlice = createSlice({
     name: 'menu',
     initialState,
-    reducers: {},
+    reducers: {
+        addNewCat: (state, action) => {
+            state.data.data = [...state.data.data, action.payload.data];
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchMenuData.pending, (state) => {
@@ -42,10 +110,52 @@ const menuSlice = createSlice({
             .addCase(fetchMenuData.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
+            })
+            /// cat name
+            .addCase(updataCategory.pending, (state) => {
+                console.log("Update pending...");
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(updataCategory.rejected, (state, action) => {
+                console.log("Update rejected...");
+                state.loading = false;
+                state.error = action.payload;
+            })
+            .addCase(updataCategory.fulfilled, (state, action) => {
+                console.log("Fulfilled payload:", action.payload); // Check actual structure
+                state.success = true;
+                state.loading = false;
+                const index = state.data.data.findIndex(
+                    (cat) => cat.id === action.payload.data.id
+                );
+                if (index !== -1) {
+                    state.data.data[index].name = action.payload.data.name;
+                }
+            })
+            // cat delete
+            .addCase(deleteCategory.pending, (state) => {
+                console.log("Update pending...");
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(deleteCategory.rejected, (state, action) => {
+                console.log("Update rejected...");
+                state.loading = false;
+                state.error = action.payload;
+            })
+            .addCase(deleteCategory.fulfilled, (state, action) => {
+                console.log("Fulfilled payload:", action.payload); // Check actual structure
+                state.success = true;
+                state.loading = false;
+                state.data.data = state.data.data.filter(
+                    (cat) => { return cat.id !== action.payload.categoryId }
+                )
             });
+
     },
 });
 
 export default menuSlice.reducer;
-
+export const {addNewCat} = menuSlice.actions
 export const selectMenuData = (state) => state?.menu?.data;

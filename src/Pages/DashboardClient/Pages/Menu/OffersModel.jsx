@@ -3,10 +3,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Box, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { ContentMenu } from '../../../../context/ContentMenuContext';
 import AddIcon from '@mui/icons-material/Add';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL } from '../../../../utils/helperFunction';
+import { useSelector } from 'react-redux';
+import { selectMenuData } from '../../../../store/client/menuSlice';
 
 // New Add Offer Modal Component (unchanged)
 const AddOfferModal = ({ open, handleClose, selectedBranch, contentForMenu, onAddSuccess }) => {
@@ -187,7 +188,8 @@ const AddOfferModal = ({ open, handleClose, selectedBranch, contentForMenu, onAd
 export const OffersModel = ({ open, handleClose }) => {
     const selectedBranch = localStorage.getItem("selectedBranch")
     const theme = useTheme();
-    const { contentForMenu } = useContext(ContentMenu);
+    const [contentForMenu, setContentForMenu] = useState([]);
+
     const { t } = useTranslation();
     const [openAddModal, setOpenAddModal] = useState(false);
     const [offers, setOffers] = useState([]);
@@ -291,7 +293,18 @@ export const OffersModel = ({ open, handleClose }) => {
             toast.error(t("offer.deleteErr"));
         }
     };
-
+    const data = useSelector(selectMenuData)
+    useEffect(() => {
+        let AllMeals = []
+        if (data.data) {
+            data.data.map(cat => {
+                if (cat.meals)
+                    cat.meals.map(meal => AllMeals.push(meal))
+                return cat;
+            })
+        }
+        setContentForMenu(AllMeals)
+    }, [data]);
     useEffect(() => {
         getOffers();
     }, [selectedBranch]);
