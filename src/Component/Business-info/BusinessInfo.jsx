@@ -16,10 +16,10 @@ import GridViewIcon from '@mui/icons-material/GridView';
 import ListIcon from '@mui/icons-material/List';
 import { toast } from 'react-toastify';
 import { timeOptions } from './WorkingHoursDays';
-import { egyptGovernorates } from '../../utils/city';
+import { Country, Governorates } from '../../utils/city';
 
 import { useSelector, useDispatch } from "react-redux";
-import { updateBusinessData, addBranch, selectBranch, clearBusinessData, setBranches } from "../../store/register/businessSlice";
+import { updateBusinessData, } from "../../store/register/businessSlice";
 
 // تحديد الأيام بأحرف مختصرة للعرض
 const daysOfWeek = ['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr'];
@@ -473,7 +473,7 @@ export const BusinessInfo = () => {
                                                 <MenuItem value="" disabled sx={{ fontSize: "12px", color: "gray" }}>
                                                     {t("city")}
                                                 </MenuItem>
-                                                {egyptGovernorates.map((city) => (
+                                                {Governorates[Country.EGYPT].map((city) => (
                                                     <MenuItem value={city} sx={{ fontSize: "12px", color: "gray" }}>{city}</MenuItem>
                                                 ))}
                                                 <MenuItem value="NY" sx={{ fontSize: "12px", color: "gray" }}>New York</MenuItem>

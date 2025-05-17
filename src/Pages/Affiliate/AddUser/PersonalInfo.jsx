@@ -9,7 +9,7 @@ import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import { Box } from '@mui/system';
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useTranslation } from 'react-i18next';
-import { egyptGovernorates } from './../../../utils/city';
+import { Governorates, Country } from './../../../utils/city';
 
 export const PersonalInfo = ({
   fullName,
@@ -105,7 +105,7 @@ export const PersonalInfo = ({
           <OutlinedInput
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
-            startAdornment={<InputAdornment position="start"><PersonOutlinedIcon sx={{ fontSize: "20px"  , color:"gray"}} /></InputAdornment>}
+            startAdornment={<InputAdornment position="start"><PersonOutlinedIcon sx={{ fontSize: "20px", color: "gray" }} /></InputAdornment>}
             placeholder={t("fullName")}
             required
             sx={{ borderRadius: '6px', marginBottom: "18px", height: '33px', fontSize: "11px" }}
@@ -117,7 +117,7 @@ export const PersonalInfo = ({
           <OutlinedInput
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            startAdornment={<InputAdornment position="start"><PhoneOutlinedIcon sx={{ fontSize: "20px"  , color:"gray"}} /></InputAdornment>}
+            startAdornment={<InputAdornment position="start"><PhoneOutlinedIcon sx={{ fontSize: "20px", color: "gray" }} /></InputAdornment>}
             placeholder={t("mobileNumber")}
             required
             sx={{ borderRadius: '6px', marginBottom: "18px", height: '33px', fontSize: "11px" }}
@@ -130,7 +130,7 @@ export const PersonalInfo = ({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             type="email"
-            startAdornment={<InputAdornment position="start"><MailOutlinedIcon sx={{ fontSize: "20px"  , color:"gray"}} /></InputAdornment>}
+            startAdornment={<InputAdornment position="start"><MailOutlinedIcon sx={{ fontSize: "20px", color: "gray" }} /></InputAdornment>}
             placeholder={t("email")}
             required
             sx={{ borderRadius: '6px', marginBottom: "18px", height: '33px', fontSize: "11px" }}
@@ -203,11 +203,11 @@ export const PersonalInfo = ({
             onChange={(e) => setCountry(e.target.value)}
             displayEmpty
             sx={{ marginBottom: "18px", borderRadius: '6px', height: '33px', fontSize: "10px", color: "gray" }}
-            startAdornment={<InputAdornment position="start"><span className="icon-location-pin" style={{ fontSize: "16px" ,color: "gray" }} /></InputAdornment>}
+            startAdornment={<InputAdornment position="start"><span className="icon-location-pin" style={{ fontSize: "16px", color: "gray" }} /></InputAdornment>}
             error={!!errors.country}
           >
             <MenuItem value="" disabled>{t("country")}</MenuItem>
-            {egyptGovernorates.map((governorate) => (
+            {Governorates[Country.EGYPT].map((governorate) => (
               <MenuItem key={governorate} value={governorate} sx={{ fontSize: "10px", color: theme.palette.text.gray }}>
                 {governorate}
               </MenuItem>
@@ -225,7 +225,7 @@ export const PersonalInfo = ({
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            startAdornment={<InputAdornment position="start"><span className="icon-padlock" style={{ fontSize: "16px" , color: "gray" }} /></InputAdornment>}
+            startAdornment={<InputAdornment position="start"><span className="icon-padlock" style={{ fontSize: "16px", color: "gray" }} /></InputAdornment>}
             placeholder={t("password")}
             sx={{ borderRadius: '6px', marginBottom: "18px", height: '33px', fontSize: "10px" }}
             error={!!errors.password}
@@ -237,7 +237,7 @@ export const PersonalInfo = ({
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            startAdornment={<InputAdornment position="start"><span className="icon-padlock" style={{ fontSize: "16px" , color: "gray" }} /></InputAdornment>}
+            startAdornment={<InputAdornment position="start"><span className="icon-padlock" style={{ fontSize: "16px", color: "gray" }} /></InputAdornment>}
             placeholder={t("confirmPass")}
             sx={{
               marginBottom: "18px", borderRadius: '10px', height: '33px', fontSize: "12px",

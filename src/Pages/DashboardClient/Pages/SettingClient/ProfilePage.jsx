@@ -4,7 +4,6 @@ import {
   Typography,
   Button,
   Box,
-  IconButton,
   Divider,
   FormControl,
   OutlinedInput,
@@ -27,14 +26,16 @@ import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL, BASE_URL_IMG } from '../../../../utils/helperFunction';
-import { egyptGovernorates } from './../../../../utils/city';
+import { Country, Governorates } from './../../../../utils/city';
 import MapWithPin from '../../../../utils/MapWithPin';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectGetInfoData } from '../../../../store/client/clientLoginSlic';
+import { printFormData } from '../../../../utils/utils';
 
 const ProfilePage = () => {
   const theme = useTheme();
   // Personal Info State
+  const [isLoading, setIsLoading] = useState(false);
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
@@ -61,7 +62,6 @@ const ProfilePage = () => {
   const [tableNumber, setTableNumber] = useState('');
   const [paymentTime, setPaymentTime] = useState('');
   const [callWaiter, setCallWaiter] = useState('');
-  console.log("map", longitude, " ", latitude)
   // Context and localStorage Data
 
   const allClientData = localStorage.getItem('allClientData');
@@ -73,9 +73,9 @@ const ProfilePage = () => {
 
   const [selectedBranch, setSelectedBranch] = useState(localStorage.getItem('selectedBranch') || '');
 
-  const [logoImage, setLogoImage] = useState(qtap_clients?.img ? `${BASE_URL_IMG}${qtap_clients?.img}` : null);
-  // console.log(selectedBranch);
+  const [imageFile, setImageFile] = useState(null);
 
+  const dispatch = useDispatch()
   useEffect(() => {
     const handleStorageChange = (event) => {
       if (event.key === 'selectedBranch') {
@@ -101,15 +101,11 @@ const ProfilePage = () => {
   }, [selectedBranch]);
   // Populate state when clientData or selectedBranch changes
   useEffect(() => {
-    // console.log('useEffect triggered - qtap_clients:', qtap_clients, 'selectedBranch:', selectedBranch);
 
     if (!qtap_clients) {
       console.log('No qtap_clients data yet');
       return;
     }
-    // console.log(qtap_clients ,selectedBranch);
-
-
     const [birthYear, birthMonth, birthDay] = qtap_clients.birth_date?.split('-') || [];
 
     // Populate Personal Info
@@ -145,9 +141,13 @@ const ProfilePage = () => {
     }
   }, [qtap_clients, selectedBranch]); // Depend on qtap_clients directly
 
-  // Handle Save Button Click
+  // 
+  /* 
+  ***
+  **  Handle Save Button Click
+  *****************************
+  */
   const handleSave = async () => {
-    console.log('clicked on save profile');
 
     if (!password || !confirmPassword) {
       toast.error(t("please enter password and confirm password"));
@@ -157,68 +157,85 @@ const ProfilePage = () => {
       toast.error(t("password not match"));
       return; // Stop further execution
     }
+    setIsLoading(true)
+    const formData = new FormData();
 
-    const updatedData = {
-      brunch_id: selectedBranch,
-      name: fullName,
-      mobile: phone,
-      email: email,
-      birth_date: `${year}-${month}-${day}`,
-      country: country,
-      password: password,
-      img: '',
-      business_name: businessName,
-      business_country: businessCountry,
-      business_city: businessCity,
-      latitude: latitude,
-      longitude: longitude,
-      currency_id: '1',
-      business_format: businessFormat,
-      tables_number: tableNumber,
-      contact_info: {
-        business_phone: [businessPhone],
-        business_email: [businessEmail],
-        facebook: [''],
-        twitter: [''],
-        instagram: [''],
-        address: [''],
-        website: [website],
-      },
+    // Basic fields
+    formData.append('brunch_id', 187);
+    formData.append('name', fullName);
+    formData.append('mobile', phone);
+    formData.append('email', email);
+    formData.append('birth_date', `${year.padStart(2, '0')}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`);
+    formData.append('country', country);
+    formData.append('password', password);
+    formData.append('business_name', businessName);
+    formData.append('business_country', businessCountry);
+    formData.append('business_city', businessCity);
+    formData.append('latitude', latitude.toString());
+    formData.append('longitude', longitude.toString());
+    formData.append('currency_id', '1');
+    formData.append('business_format', businessFormat);
+    formData.append('tables_number', tableNumber.toString());
+
+    const contactFields = {
+      'business_phone': [businessPhone],
+      'business_email': [businessEmail],
+      'facebook': [''],
+      'twitter': [''],
+      'instagram': [''],
+      'address': [''],
+      'website': [website]
     };
-    console.log("updatedData", updatedData);
 
+    Object.entries(contactFields).forEach(([key, values]) => {
+      values.forEach((value) => {
+        // Always append, even if value is empty
+        formData.append(`contact_info[${key}][]`, value || '-');
+      });
+    });
+
+    // If you have an image file to upload
+    // console.log("Logo image:", imageFile);
+    // console.log("Type:", imageFile?.type);
+    // console.log("Instance of File:", imageFile instanceof File);
+    if (imageFile) {
+      formData.append('img', imageFile);
+    }
+    printFormData(formData)
     try {
+      if (!qtap_clients.id) return;
 
       const response = await fetch(`${BASE_URL}clients_update_profile/${qtap_clients.id}`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
         },
-        body: JSON.stringify(updatedData),
+        body: formData,
       });
-      console.log(response);
 
-      if (response.ok) {
+      const data = await response.json()
+
+      console.log("res:============", data)
+      console.log("REDUX:============", qtap_clients)
+
+      if (data.status === "success") {
         toast.success(t("updateSucc"));
-        console.log("response udpate data profile", response);
-
-      } else {
-        toast.error(t("updateErr"));
-        console.log(response);
-
+        // dispatch(updateInfoOnly(data)) // TODO:UPDATE REDUX
       }
+
     } catch (error) {
       console.error('Error:', error);
       toast.error(t("occuredErr"));
+    } finally {
+      setIsLoading(false)
     }
   };
+
 
   const handleLogoUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setLogoImage(imageUrl);
+      setImageFile(file)
     }
   };
 
@@ -237,7 +254,7 @@ const ProfilePage = () => {
         <Grid container spacing={{ xl: "-100px", lg: "-10px", sm: "-50px" }} justifyContent="space-between">
           {/* <Box display="flex" justifyContent="space-around" paddingTop="20px"> */}
           {/* Profile Image Column */}
-          <Grid item xs={12} sm={12} md={3} lg={2} container justifyContent="center" alignItems="flex-start">
+          <Grid item xs={12} sm={12} md={4} lg={2} container justifyContent="center" alignItems="flex-start">
             <Box textAlign="center" position="relative">
               <Box
                 sx={{
@@ -252,8 +269,12 @@ const ProfilePage = () => {
                   textAlign: 'center',
                 }}
               >
-              
-                <img src={logoImage || '/images/User.jpg'} alt="user" width="110%" />
+
+                <img src={imageFile
+                  ? imageFile instanceof File
+                    ? URL.createObjectURL(imageFile)
+                    : imageFile // assume it's a string URL
+                  : `${BASE_URL_IMG}${qtap_clients?.img}` || '/images/User.jpg'} alt="user" width="110%" />
                 <Box
                   sx={{
                     position: 'absolute',
@@ -288,7 +309,7 @@ const ProfilePage = () => {
           </Grid>
 
           {/* Personal Info Column */}
-          <Grid item xs={12} sm={12} md={3} lg={3} justifyContent="center" alignItems="center">
+          <Grid item xs={12} sm={12} md={8} lg={3} justifyContent="center" alignItems="center">
             <Typography variant="body2" sx={{ fontSize: '13px' }} color={theme.palette.text.gray_white} gutterBottom>
               {t("personalInfo")}
             </Typography>
@@ -476,18 +497,18 @@ const ProfilePage = () => {
                 MenuProps={{ disableScrollLock: true }}
               >
                 <MenuItem value="" disabled sx={{ fontSize: '12px', color: 'gray' }}>
-                  {t("country")}
+                  {t("country")}{country}
                 </MenuItem>
-                <MenuItem value="epypt" sx={{ fontSize: '12px', color: 'gray' }}>
-                  Epypt
+                <MenuItem value={Country.EGYPT} sx={{ fontSize: '12px', color: 'gray' }}>
+                  EGYPT
                 </MenuItem>
-                <MenuItem value="US" sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={Country.USA} sx={{ fontSize: '12px', color: 'gray' }}>
                   United States
                 </MenuItem>
-                <MenuItem value="CA" sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={Country.CANADA} sx={{ fontSize: '12px', color: 'gray' }}>
                   Canada
                 </MenuItem>
-                <MenuItem value="UK" sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={Country.UK} sx={{ fontSize: '12px', color: 'gray' }}>
                   United Kingdom
                 </MenuItem>
               </Select>
@@ -531,7 +552,7 @@ const ProfilePage = () => {
           </Box>
 
           {/* Business Info Column */}
-          <Grid item xs={12} sm={12} md={3} lg={3} justifyContent="center" alignItems="center">
+          <Grid item xs={12} sm={12} md={12} lg={3} justifyContent="center" alignItems="center">
             <Typography variant="body2" sx={{ fontSize: '13px' }} color={theme.palette.text.gray_white} gutterBottom>
               {t("busnessInfo")}
             </Typography>
@@ -618,13 +639,16 @@ const ProfilePage = () => {
                   <MenuItem value="" disabled sx={{ fontSize: '12px', color: theme.palette.text.gray_white }}>
                     {t("country")}
                   </MenuItem>
-                  <MenuItem value="US" sx={{ fontSize: '12px', color: theme.palette.text.gray_white }}>
+                  <MenuItem value={Country.USA} sx={{ fontSize: '12px', color: theme.palette.text.gray_white }}>
                     United States
                   </MenuItem>
-                  <MenuItem value="CA" sx={{ fontSize: '12px', color: theme.palette.text.gray_white }}>
+                  <MenuItem value={Country.EGYPT} sx={{ fontSize: '12px', color: theme.palette.text.gray_white }}>
+                    EGYPT
+                  </MenuItem>
+                  <MenuItem value={Country.CANADA} sx={{ fontSize: '12px', color: theme.palette.text.gray_white }}>
                     Canada
                   </MenuItem>
-                  <MenuItem value="UK" sx={{ fontSize: '12px', color: theme.palette.text.gray_white }}>
+                  <MenuItem value={Country.UK} sx={{ fontSize: '12px', color: theme.palette.text.gray_white }}>
                     United Kingdom
                   </MenuItem>
                 </Select>
@@ -647,7 +671,7 @@ const ProfilePage = () => {
                   <MenuItem value="" disabled sx={{ fontSize: '12px', color: theme.palette.text.gray_white }}>
                     {t("city")}
                   </MenuItem>
-                  {egyptGovernorates.map((city) => (
+                  {Governorates[Country.EGYPT].map((city) => (
                     <MenuItem value={city} sx={{ fontSize: '12px', color: theme.palette.text.gray_white }}>
                       {city}
                     </MenuItem>
@@ -872,6 +896,7 @@ const ProfilePage = () => {
               }}
               size="large"
               onClick={handleSave}
+              disabled={isLoading}
             >
               <CheckOutlinedIcon sx={{ fontSize: '18px', marginRight: '6px', color: 'white' }} />
               {t("save")}
@@ -884,6 +909,7 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
+
 
 
 

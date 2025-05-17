@@ -10,9 +10,9 @@ import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
-import { egyptGovernorates } from './../../utils/city';
 import { updatePersonalData } from "../../store/register/personalSlice";
 import { useDispatch, useSelector } from 'react-redux';
+import { Country, Governorates } from '../../utils/city';
 
 
 const SignUp = () => {
@@ -293,7 +293,7 @@ const SignUp = () => {
                     <MenuItem value="" disabled >
                         {t("country")}
                     </MenuItem>
-                    {egyptGovernorates.map((governorate) => (
+                    {Governorates[Country.EGYPT].map((governorate) => (
                         <MenuItem key={governorate} value={governorate} sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >
                             {governorate}
                         </MenuItem>

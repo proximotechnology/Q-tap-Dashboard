@@ -1,0 +1,311 @@
+{
+  "USERDATA_CLIENT": {
+    "birth_date": "2013-01-16",
+    "country": "US",
+    "created_at": "2025-05-03T14:15:33.000000Z",
+    "deleted_at": null,
+    "email": "m@gmail.com",
+    "email_verified_at": null,
+    "id": 159,
+    "img": "storage/uploads/clients/159/OUyY3xc22hZwsieUbvcjjrpn8qwlcKDMsNWm7C7N.jpg",
+    "mobile": "0100000002",
+    "name": "mahmoud456",
+    "order_id": null,
+    "otp": null,
+    "payment_method": "cash",
+    "status": "active",
+    "updated_at": "2025-05-17T06:52:14.000000Z",
+    "user_type": "qtap_clients",
+    "brunchs": [
+      {
+        "affiliate_code": null,
+        "business_city": "NY",
+        "business_country": "CA",
+        "business_format": "UK",
+        "business_name": "a",
+        "call_waiter": "active",
+        "client_id": 159,
+        "contact_info": [
+          {
+            "address": "-",
+            "brunch_id": 187,
+            "business_email": "2",
+            "business_phone": "يسي",
+            "created_at": "2025-05-15T15:36:42.000000Z",
+            "deleted_at": null,
+            "facebook": "-",
+            "id": 406,
+            "instagram": "-",
+            "twitter": "-",
+            "updated_at": "2025-05-15T15:36:42.000000Z",
+            "website": "2"
+          }
+        ],
+        "cover": "storage/uploads/client159/brunch187/XpWIN670BXDk9gIMnSURgTNm9UzPAKlgbKKhjhIW.jpg",
+        "created_at": "2025-05-03T14:15:33.000000Z",
+        "currency_id": 1,
+        "default_mode": "white",
+        "deleted_at": null,
+        "discount_id": null,
+        "id": 187,
+        "latitude": "29.8555329",
+        "logo": "storage/uploads/client159/brunch187/I56BiCmBPd3HvjCg7ZhRgKRceIkaUWNzcfVdls8E.png",
+        "longitude": "33.7552676",
+        "menu_design": "Grid",
+        "order_id": null,
+        "payment_method": "cash",
+        "payment_services": [],
+        "payment_time": "before",
+        "pricing_id": 1,
+        "serving_ways": [
+          {
+            "brunch_id": 187,
+            "created_at": "2025-05-17T06:46:25.000000Z",
+            "deleted_at": null,
+            "id": 819,
+            "name": "delivery",
+            "tables_number": null,
+            "updated_at": "2025-05-17T06:46:25.000000Z"
+          },
+          {
+            "brunch_id": 187,
+            "created_at": "2025-05-17T06:46:25.000000Z",
+            "deleted_at": null,
+            "id": 820,
+            "name": "take_away",
+            "tables_number": null,
+            "updated_at": "2025-05-17T06:46:25.000000Z"
+          },
+          {
+            "brunch_id": 187,
+            "created_at": "2025-05-17T06:46:25.000000Z",
+            "deleted_at": null,
+            "id": 821,
+            "name": "dine_in",
+            "tables_number": 12,
+            "updated_at": "2025-05-17T06:46:25.000000Z"
+          }
+        ],
+        "status": "active",
+        "updated_at": "2025-05-17T06:46:25.000000Z",
+        "workschedule": [
+          {
+            "brunch_id": 187,
+            "closing_time": "7pm",
+            "created_at": "2025-05-17T06:46:25.000000Z",
+            "day": "Saturday",
+            "deleted_at": null,
+            "id": 1636,
+            "opening_time": "9am",
+            "updated_at": "2025-05-17T06:46:25.000000Z"
+          },
+          {
+            "brunch_id": 187,
+            "closing_time": "7pm",
+            "created_at": "2025-05-17T06:46:25.000000Z",
+            "day": "Sunday",
+            "deleted_at": null,
+            "id": 1637,
+            "opening_time": "9am",
+            "updated_at": "2025-05-17T06:46:25.000000Z"
+          },
+          {
+            "brunch_id": 187,
+            "closing_time": "7pm",
+            "created_at": "2025-05-17T06:46:25.000000Z",
+            "day": "Monday",
+            "deleted_at": null,
+            "id": 1638,
+            "opening_time": "9am",
+            "updated_at": "2025-05-17T06:46:25.000000Z"
+          },
+          {
+            "brunch_id": 187,
+            "closing_time": "7pm",
+            "created_at": "2025-05-17T06:46:25.000000Z",
+            "day": "Tuesday",
+            "deleted_at": null,
+            "id": 1639,
+            "opening_time": "9am",
+            "updated_at": "2025-05-17T06:46:25.000000Z"
+          },
+          {
+            "brunch_id": 187,
+            "closing_time": "5pm",
+            "created_at": "2025-05-17T06:46:25.000000Z",
+            "day": "Wednesday",
+            "deleted_at": null,
+            "id": 1640,
+            "opening_time": "9am",
+            "updated_at": "2025-05-17T06:46:25.000000Z"
+          },
+          {
+            "brunch_id": 187,
+            "closing_time": "7pm",
+            "created_at": "2025-05-17T06:46:25.000000Z",
+            "day": "Thursday",
+            "deleted_at": null,
+            "id": 1641,
+            "opening_time": "9am",
+            "updated_at": "2025-05-17T06:46:25.000000Z"
+          },
+          {
+            "brunch_id": 187,
+            "closing_time": "7pm",
+            "created_at": "2025-05-17T06:46:25.000000Z",
+            "day": "Friday",
+            "deleted_at": null,
+            "id": 1642,
+            "opening_time": "9am",
+            "updated_at": "2025-05-17T06:46:25.000000Z"
+          }
+        ]
+      }
+    ]
+  },
+  "res": {/* clients_update_profile/:id */
+    "client_data": {
+      "birth_date": "2013-01-16",
+      "country": "US",
+      "created_at": "2025-05-03T14:15:33.000000Z",
+      "deleted_at": null,
+      "email": "m@gmail.com",
+      "email_verified_at": null,
+      "id": 159,
+      "img": "storage/uploads/clients/159/OUyY3xc22hZwsieUbvcjjrpn8qwlcKDMsNWm7C7N.jpg",
+      "mobile": "0100000002",
+      "name": "mahmoud456",
+      "order_id": null,
+      "otp": null,
+      "payment_method": "cash",
+      "status": "active",
+      "updated_at": "2025-05-17T07:00:38.000000Z",
+      "user_type": "qtap_clients"
+    },
+    "contact_business_data": {
+      "address": "-",
+      "brunch_id": "187",
+      "business_email": "2",
+      "business_phone": "يسي",
+      "created_at": "2025-05-17T07:00:38.000000Z",
+      "facebook": "-",
+      "id": 409,
+      "instagram": "-",
+      "twitter": "-",
+      "updated_at": "2025-05-17T07:00:38.000000Z",
+      "website": "2"
+    },
+    "message": "Client and branch updated successfully.",
+    "status": "success"
+  },
+  "res2": {/* clients_update_menu/${id} >>> miss "id": 187, */
+    "affiliate_code": null,
+    "business_city": "NY",
+    "business_country": "CA",
+    "business_format": "UK",
+    "business_name": "a",
+    "call_waiter": "active",
+    "client_id": 159,
+    "contact_info": [
+      {
+        "address": "-",
+        "brunch_id": 187,
+        "business_email": "2",
+        "business_phone": "يسي",
+        "created_at": "2025-05-17T07:00:38.000000Z",
+        "deleted_at": null,
+        "facebook": "-",
+        "id": 409,
+        "instagram": "-",
+        "twitter": "-",
+        "updated_at": "2025-05-17T07:00:38.000000Z",
+        "website": "2"
+      }
+    ],
+    "cover": "storage/uploads/client159/brunch187/XpWIN670BXDk9gIMnSURgTNm9UzPAKlgbKKhjhIW.jpg",
+    "currency_id": 1,
+    "default_mode": "white",
+    "discount_id": null,
+    // id , create_at ,deleted_at , updata_at
+    "latitude": "29.8555329",
+    "logo": "storage/uploads/client159/brunch187/I56BiCmBPd3HvjCg7ZhRgKRceIkaUWNzcfVdls8E.png",
+    "longitude": "33.7552676",
+    "menu_design": "Grid",
+    "order_id": null,
+    "payment_method": "cash",
+    "payment_services": [
+      {
+        "id": 231,
+        "name": "cash",
+        "brunch_id": 187,
+        "deleted_at": null,
+        "created_at": "2025-05-03T14:15:33.000000Z"
+      }
+    ],
+    "payment_time": "before",
+    "pricing_id": 1,
+    "serving_ways": [ 
+      {
+        "id": 822,
+        "name": "delivery",
+        "brunch_id": 187,
+        "tables_number": null,
+        "deleted_at": null
+      },
+      {
+        "id": 823,
+        "name": "take_away",
+        "brunch_id": 187,
+        "tables_number": null,
+        "deleted_at": null
+      },
+      {
+        "id": 824,
+        "name": "dine_in",
+        "brunch_id": 187,
+        "tables_number": 12,
+        "deleted_at": null
+      }
+    ],
+    "status": "active",
+    "workschedule": [
+      {
+        "brunch_id": 187,
+        "day": "Saturday",
+        "opening_time": "9am",
+        "closing_time": "7pm",
+        "created_at": "2025-05-17T07:26:04.000000Z",
+        "updated_at": "2025-05-17T07:26:04.000000Z",
+        "deleted_at": null,
+        "id": 1643
+      },
+      {
+        "brunch_id": 187,
+        "day": "Sunday",
+        "opening_time": "9am",
+        "closing_time": "7pm",
+        "created_at": "2025-05-17T07:26:04.000000Z",
+        "updated_at": "2025-05-17T07:26:04.000000Z",
+        "deleted_at": null,
+        "id": 1644
+      },
+      {
+        "brunch_id": 187,
+        "day": "Monday",
+        "opening_time": "9am",
+        "closing_time": "7pm",
+        "created_at": "2025-05-17T07:26:04.000000Z",
+        "updated_at": "2025-05-17T07:26:04.000000Z",
+        "deleted_at": null,
+        "id": 1645
+      },
+      {
+        "brunch_id": 187,
+        "day": "Tuesday",
+        "opening_time": "9am",
+        "closing_time": "7pm",
+        "created_at": "2025-05-17T07:26:04.000000Z"
+      }
+    ]
+  }
+}

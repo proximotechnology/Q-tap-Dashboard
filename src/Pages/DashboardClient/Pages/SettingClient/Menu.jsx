@@ -23,9 +23,10 @@ import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import Days from '../Menu/Days';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-import { BASE_URL } from '../../../../utils/helperFunction';
+import { BASE_URL, BASE_URL_IMG } from '../../../../utils/helperFunction';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectGetInfoData, updateBranchMenu } from '../../../../store/client/clientLoginSlic';
+import { printFormData } from '../../../../utils/utils';
 
 
 
@@ -45,19 +46,19 @@ const ImageBox = styled(Box)(({ imageUrl }) => ({
 const Menu = () => {
     const dispatch = useDispatch()
 
-    const data = useSelector(selectGetInfoData)
-    console.log("clientData redux", data)
-    const qtap_clients = data?.qtap_clients;
+    const dataRexud = useSelector(selectGetInfoData)
+    const qtap_clients = dataRexud?.qtap_clients;
 
+    const [isLoading, setIsLoading] = useState(false);
 
     const theme = useTheme();
     const selectedBranch = localStorage.getItem('selectedBranch');
 
     const existBranch = qtap_clients?.brunchs?.find((branch) => branch?.id == selectedBranch) || {};
-    const [mode, setMode] = useState(existBranch?.default_mode?.toLowerCase() || 'light');
+    const [mode, setMode] = useState(existBranch?.default_mode?.toLowerCase() || 'white');
     const [design, setDesign] = useState(existBranch?.menu_design?.toLowerCase() || 'grid');
-    const [logoImage, setLogoImage] = useState(existBranch?.logo || null);
-    const [bannerImage, setBannerImage] = useState(existBranch?.cover || null);
+    const [logoImage, setLogoImage] = useState(null);
+    const [bannerImage, setBannerImage] = useState(null);
     const [servingWays, setServingWays] = useState(
         existBranch?.serving_ways?.map((way) => way.name) || []
     );
@@ -105,37 +106,63 @@ const Menu = () => {
 
     // Handle save
     const handleSave = async (id) => {
-        const updatedData = {
-            brunch_id: selectedBranch,
-            default_mode: mode,
-            menu_design: design,
-            serving_ways: servingWays,
-            tables_number: tablesNumber,
-            workschedules: workSchedules.reduce((acc, schedule) => {
-                acc[schedule.day] = [schedule.opening_time, schedule.closing_time];
-                return acc;
-            }, {}),
-            payment_services: paymentServices,
-            call_waiter: callWaiter,
-            payment_time: paymentTime,
-        };
+        /* 
+         */
+        setIsLoading(true)
+        const finalWorkSchedules = workSchedules.reduce((acc, schedule) => {
+            acc[schedule.day] = [schedule.opening_time, schedule.closing_time];
+            return acc;
+        }, {})
+        const formData = new FormData();
 
+        formData.append('brunch_id', selectedBranch);
+        formData.append('default_mode', mode);
+        formData.append('menu_design', design);
+        formData.append('tables_number', tablesNumber);
+        formData.append('call_waiter', callWaiter);
+        formData.append('payment_time', paymentTime);
+
+        // Append payment services
+        paymentServices.forEach(service => {
+            formData.append('payment_services[]', service);
+        });
+
+        // Append serving ways
+        console.log("prepare servingWays dataa", servingWays)
+        servingWays.forEach(way => {
+            console.log("prepare dataa", way)
+            formData.append('serving_ways[]', way);
+        });
+
+
+        for (const [day, times] of Object.entries(finalWorkSchedules)) {
+            formData.append(`workschedules[${day}][]`, times[0]);
+            formData.append(`workschedules[${day}][]`, times[1]);
+        }
+
+        if (logoImage) {
+            formData.append('logo', logoImage);
+        }
+        if (bannerImage) {
+            formData.append('cover', bannerImage);
+        }
+        /* 
+         */
         try {
 
             const response = await fetch(`${BASE_URL}clients_update_menu/${id}`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
                 },
-                body: JSON.stringify(updatedData),
+                body: formData,
             });
-
+            const data = await response.json()
+            console.log("response updata =>>>>>>>>>>>>", data)
+            console.log("clientData redux>>>>>>>>>>>>>>>>>>>>>>>", dataRexud.qtap_clients.brunchs[0])
             if (response.ok) {
                 toast.success(t("menus.updateSucc"));
-                console.log("response updata", response)
-                console.log("updatedData", updatedData)
-                dispatch(updateBranchMenu(updatedData))//TODO: UPDATA Should return new object
+                dispatch(updateBranchMenu(data.data))//TODO: UPDATA Should return new object
 
             } else {
                 toast.error(t("menus.updateErr"));
@@ -143,22 +170,23 @@ const Menu = () => {
         } catch (error) {
             console.error('Error:', error);
             toast.error(t("menus.occuredErr"));
+        } finally {
+            setIsLoading(false)
         }
     };
 
     const handleLogoUpload = (event) => {
         const file = event.target.files[0];
         if (file) {
-            const imageUrl = URL.createObjectURL(file);
-            setLogoImage(imageUrl);
+            setLogoImage(file);
         }
     };
-
+    
     const handleBannerUpload = (event) => {
         const file = event.target.files[0];
         if (file) {
-            const imageUrl = URL.createObjectURL(file);
-            setBannerImage(imageUrl);
+
+            setBannerImage(file);
         }
     };
 
@@ -254,8 +282,8 @@ const Menu = () => {
                             paddingTop: '20px',
                         }}
                     >
-                        <ImageBox imageUrl={logoImage}>
-                            {!logoImage && (
+                        <ImageBox imageUrl={logoImage ? URL.createObjectURL(logoImage) : `${BASE_URL_IMG}${existBranch?.logo}`}>
+                            {!logoImage && !existBranch?.logo && (
                                 <span className="icon-image-gallery" style={{ fontSize: '40px', color: '#AAAAAA' }}></span>
                             )}
                         </ImageBox>
@@ -298,13 +326,13 @@ const Menu = () => {
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 textAlign: 'center',
-                                backgroundImage: bannerImage ? `url(${bannerImage})` : 'none',
+                                backgroundImage: bannerImage ? `url(${URL.createObjectURL(bannerImage)})` : existBranch?.cover ? `url(${BASE_URL_IMG}${existBranch.cover})` : 'none',
                                 backgroundColor: bannerImage ? 'transparent' : '#F1F2F2',
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
                             }}
                         >
-                            {!bannerImage && (
+                            {!bannerImage && !existBranch?.logo && (
                                 <span className="icon-image-gallery" style={{ fontSize: '40px', color: '#AAAAAA' }}></span>
                             )}
                         </Box>
@@ -924,6 +952,7 @@ const Menu = () => {
                     }}
                     startIcon={<CheckOutlinedIcon />}
                     onClick={() => handleSave(qtap_clients?.id)}
+                    disabled={isLoading}
                 >
                     {t("save")}
                 </Button>

@@ -9,7 +9,7 @@ import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import { Box } from '@mui/system';
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useTranslation } from 'react-i18next';
-import { egyptGovernorates } from '../../../../utils/city';
+import { Country, Governorates } from '../../../../utils/city';
 
 export const PersonalInfo = ({
   fullName,
@@ -207,7 +207,7 @@ export const PersonalInfo = ({
             error={!!errors.country}
           >
             <MenuItem value="" disabled>{t("country")}</MenuItem>
-            {egyptGovernorates.map((governorate) => (
+            {Governorates[Country.EGYPT].map((governorate) => (
               <MenuItem key={governorate} value={governorate} sx={{ fontSize: "10px", color: theme.palette.text.gray }}>
                 {governorate}
               </MenuItem>

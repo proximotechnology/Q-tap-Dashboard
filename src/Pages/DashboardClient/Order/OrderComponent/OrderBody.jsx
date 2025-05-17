@@ -56,7 +56,7 @@ export const OrderBody = () => {
                     }
                 )
 
-                // console.log(res)
+                console.log("basic res :", res)
 
                 // each request has its response data :
                 ///-------------------------------------------
@@ -90,9 +90,12 @@ export const OrderBody = () => {
                     setOrders(orders)
 
                 } else if (loginclient.user.role === 'admin') {
-                    orders = res.data.served_orders.map((item) => item ? { ...parseResponseOrderItem(item, orderPhaseType.DONING) } : undefined)
-                    orders = orders.filter(order => order !== undefined);
-                    orders = orders.filter(order => !order.orders_processing.some(item => item.status === 'done'));
+                    if (res.data.success !== false) {
+                        orders = res.data.served_orders.map((item) => item ? { ...parseResponseOrderItem(item, orderPhaseType.DONING) } : undefined)
+                        orders = orders.filter(order => order !== undefined);
+                        orders = orders.filter(order => !order.orders_processing.some(item => item.status === 'done'));
+                    }
+
 
 
                     try {
@@ -111,17 +114,19 @@ export const OrderBody = () => {
                             }
                         )
                         let delivryorders = []
-                        // console.log('admin fetch', res)
-                        delivryorders = res.data.prepared_orders.map((item) => item ? { ...parseResponseOrderItem(item, orderPhaseType.DONING) } : undefined)
-                        delivryorders = delivryorders.filter(order => order !== undefined);
-                        delivryorders = delivryorders.filter(order => order.type === "delivery" && !order.orders_processing.some(item => item.status === 'done'));
-                        // console.log('admin parsed delivery', delivryorders)
+                        console.log('admin fetch', res)
+                        if (res.data.success !== false) {
+                            delivryorders = res.data.prepared_orders.map((item) => item ? { ...parseResponseOrderItem(item, orderPhaseType.DONING) } : undefined)
+                            delivryorders = delivryorders.filter(order => order !== undefined);
+                            delivryorders = delivryorders.filter(order => order.type === "delivery" && !order.orders_processing.some(item => item.status === 'done'));
+                            // console.log('admin parsed delivery', delivryorders)
 
-                        setOrders([...delivryorders, ...orders].sort((a, b) => a.id - b.id));
+                            setOrders([...delivryorders, ...orders].sort((a, b) => a.id - b.id));
+                        }
                     }
 
                     catch (error) {
-                        // console.log("admin fetch", error)
+                        console.log("admin fetch", error)
                         toast.error(t("errorGetingData"))
                     }
                 }
@@ -180,7 +185,7 @@ export const OrderBody = () => {
             if (data.type === 'accepted_order') {
 
                 toast.info(`📢 pusher accepted_order`);
-                if (client?.user?.role === "chef" &&  client?.user?.id !== data?.message?.[0]?.orders_processing?.[0]?.user?.id) {
+                if (client?.user?.role === "chef" && client?.user?.id !== data?.message?.[0]?.orders_processing?.[0]?.user?.id) {
                     removeOrder(data?.message?.[0].id)
                 } else if (client?.user?.role === "cashier") {
                     setOrders((prev => [...prev, parseResponseOrderItem(data.message?.[0], orderPhaseType.PAYING)]))
@@ -264,137 +269,135 @@ export const OrderBody = () => {
         setSelectedOrder(null)
     }
 
-    return (
-        <Box sx={{
-            width: { xs: "100%", md: selectedOrder ? "78%" : "100%" }, transition: "width 0.3s ease-in-out",
-            backgroundColor: theme.palette.bodyColor.whiteGray_lightBlack, minHeight: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden'
-        }}>
-            <Header />
-
-            <Grid container>
-                <Grid container item xs={12} sx={{ display: "flex" }}>
-                    <Grid item xs={12} md={4} sx={{ marginBottom: '20px' }}>
-                        <Box
-                            sx={{
-                                position: "relative", color: theme.palette.text.white_black,
-                                backgroundColor: theme.palette.bodyColor.white_333, width: "80%", zIndex: 1000, textTransform: "capitalize",
-                                margin: "-20px 10% 5% 10%", height: "45px", borderBottom: "4px solid #ef7d00",
-                                textAlign: "center",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center", fontSize: "14px",
-                                fontFamily: "sans-serif",
-                                "&.Mui-selected": {
-                                    color: theme.palette.orangePrimary.main,
-                                },
-                                marginRight: "60px",
-                                borderRadius: "5px",
-                            }} >
-                            {t("newOrder")}
-                        </Box>
+    return (<Box sx={{
+        width: { xs: "100%", md: selectedOrder ? "78%" : "100%" }, transition: "width 0.3s ease-in-out",
+        backgroundColor: theme.palette.bodyColor.whiteGray_lightBlack, minHeight: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden'
+    }}>
+        <Header />
+        {orders?.length === 0 ? <p>no data</p> : <> <Grid container>
+            <Grid container item xs={12} sx={{ display: "flex" }}>
+                <Grid item xs={12} md={4} sx={{ marginBottom: '20px' }}>
+                    <Box
+                        sx={{
+                            position: "relative", color: theme.palette.text.white_black,
+                            backgroundColor: theme.palette.bodyColor.white_333, width: "80%", zIndex: 1000, textTransform: "capitalize",
+                            margin: "-20px 10% 5% 10%", height: "45px", borderBottom: "4px solid #ef7d00",
+                            textAlign: "center",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center", fontSize: "14px",
+                            fontFamily: "sans-serif",
+                            "&.Mui-selected": {
+                                color: theme.palette.orangePrimary.main,
+                            },
+                            marginRight: "60px",
+                            borderRadius: "5px",
+                        }} >
+                        {t("newOrder")}
+                    </Box>
 
 
-                        {orders.map((order) => (
-                            order?.phase === orderPhaseType.ACCEPTING && (
-                                <OrderCard
-                                    key={order.id}
-                                    order={order}
-                                    isSelected={selectedOrder?.id === order.id}
-                                    onClick={() => handleOrderClick(order)}
+                    {orders.map((order) => (
+                        order?.phase === orderPhaseType.ACCEPTING && (
+                            <OrderCard
+                                key={order.id}
+                                order={order}
+                                isSelected={selectedOrder?.id === order.id}
+                                onClick={() => handleOrderClick(order)}
 
-                                />
-                            )
-                        ))}
+                            />
+                        )
+                    ))}
 
-                    </Grid>
-
-                    <Grid item xs={12} md={4} sx={{ marginBottom: '20px' }}>
-                        <Box
-                            sx={{
-                                position: "relative", color: theme.palette.text.white_black,
-                                backgroundColor: theme.palette.bodyColor.white_333, width: "80%", zIndex: 1000, textTransform: "capitalize",
-                                margin: "-20px 10% 5% 10%", height: "45px", borderBottom: "4px solid #ef7d00",
-                                textAlign: "center",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center", fontSize: "14px",
-                                fontFamily: "sans-serif",
-                                "&.Mui-selected": {
-                                    color: theme.palette.orangePrimary.main,
-                                },
-                                marginRight: "60px",
-                                borderRadius: "5px",
-                            }} >
-                            {t("accepted")}
-                        </Box>
-                        {orders.map((order) => (
-                            (order?.phase === orderPhaseType.PAYING || order?.phase === orderPhaseType.PREPAREING || order?.phase === orderPhaseType.SERVRING || order?.phase === orderPhaseType.DONING)
-                            && (
-                                <OrderCard
-                                    key={order.id}
-                                    order={order}
-                                    isSelected={selectedOrder?.id === order.id}
-                                    onClick={() => handleOrderClick(order)}
-                                />
-                            )
-                        ))}
-                    </Grid>
-
-                    <Grid item xs={12} md={4} sx={{ marginBottom: '20px' }}>
-                        <Box
-                            sx={{
-                                position: "relative", color: theme.palette.text.white_black,
-                                backgroundColor: theme.palette.bodyColor.white_333, width: "80%", zIndex: 1000, textTransform: "capitalize",
-                                margin: "-20px 10% 5% 10%", height: "45px", borderBottom: "4px solid #ef7d00",
-                                textAlign: "center",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center", fontSize: "14px",
-                                fontFamily: "sans-serif",
-                                "&.Mui-selected": {
-                                    color: theme.palette.orangePrimary.main,
-                                },
-                                marginRight: "60px",
-                                borderRadius: "5px",
-                            }} >
-                            {t("done")}
-                        </Box>
-                        {orders.map((order) => order?.phase === orderPhaseType.CLOSING && (
-                            (
-                                <OrderCard
-                                    key={order.id}
-                                    order={order}
-                                    isSelected={selectedOrder?.id === order.id}
-                                    onClick={() => handleOrderClick(order)}
-
-                                />
-                            )
-                        ))}
-                    </Grid>
                 </Grid>
 
-                {selectedOrder && (
-                    <Box   >
-                        <Box>
-                            {/* <OrderDetails
+                <Grid item xs={12} md={4} sx={{ marginBottom: '20px' }}>
+                    <Box
+                        sx={{
+                            position: "relative", color: theme.palette.text.white_black,
+                            backgroundColor: theme.palette.bodyColor.white_333, width: "80%", zIndex: 1000, textTransform: "capitalize",
+                            margin: "-20px 10% 5% 10%", height: "45px", borderBottom: "4px solid #ef7d00",
+                            textAlign: "center",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center", fontSize: "14px",
+                            fontFamily: "sans-serif",
+                            "&.Mui-selected": {
+                                color: theme.palette.orangePrimary.main,
+                            },
+                            marginRight: "60px",
+                            borderRadius: "5px",
+                        }} >
+                        {t("accepted")}
+                    </Box>
+                    {orders.map((order) => (
+                        (order?.phase === orderPhaseType.PAYING || order?.phase === orderPhaseType.PREPAREING || order?.phase === orderPhaseType.SERVRING || order?.phase === orderPhaseType.DONING)
+                        && (
+                            <OrderCard
+                                key={order.id}
+                                order={order}
+                                isSelected={selectedOrder?.id === order.id}
+                                onClick={() => handleOrderClick(order)}
+                            />
+                        )
+                    ))}
+                </Grid>
+
+                <Grid item xs={12} md={4} sx={{ marginBottom: '20px' }}>
+                    <Box
+                        sx={{
+                            position: "relative", color: theme.palette.text.white_black,
+                            backgroundColor: theme.palette.bodyColor.white_333, width: "80%", zIndex: 1000, textTransform: "capitalize",
+                            margin: "-20px 10% 5% 10%", height: "45px", borderBottom: "4px solid #ef7d00",
+                            textAlign: "center",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center", fontSize: "14px",
+                            fontFamily: "sans-serif",
+                            "&.Mui-selected": {
+                                color: theme.palette.orangePrimary.main,
+                            },
+                            marginRight: "60px",
+                            borderRadius: "5px",
+                        }} >
+                        {t("done")}
+                    </Box>
+                    {orders.map((order) => order?.phase === orderPhaseType.CLOSING && (
+                        (
+                            <OrderCard
+                                key={order.id}
+                                order={order}
+                                isSelected={selectedOrder?.id === order.id}
+                                onClick={() => handleOrderClick(order)}
+
+                            />
+                        )
+                    ))}
+                </Grid>
+            </Grid>
+
+            {selectedOrder && (
+                <Box   >
+                    <Box>
+                        {/* <OrderDetails
                                 order={selectedOrder}
                                 onReject={handleModalOpen}
                                 closeDetails={handleCloseOrderDetailsOnMobile}// show x button on mobile to close this details panel
                                 orderPhaseType={orderPhase}
                             /> */}
-                            <OrderDetailsNew
-                                order={selectedOrder}
-                                onReject={handleModalOpen}
-                                closeDetails={handleCloseOrderDetailsOnMobile}// show x button on mobile to close this details panel
-                                // order control function
-                                updateOrderPhase={updateOrderPhase}
-                                removeOrder={removeOrder}
-                                loginUser={client}
-                            />
-                        </Box>
+                        <OrderDetailsNew
+                            order={selectedOrder}
+                            onReject={handleModalOpen}
+                            closeDetails={handleCloseOrderDetailsOnMobile}// show x button on mobile to close this details panel
+                            // order control function
+                            updateOrderPhase={updateOrderPhase}
+                            removeOrder={removeOrder}
+                            loginUser={client}
+                        />
                     </Box>
-                )}
-            </Grid>
+                </Box>
+            )}
+        </Grid>
 
             <Box sx={{ marginTop: 'auto' }}>
                 <Footer selectedOrder={selectedOrder} />
@@ -402,9 +405,11 @@ export const OrderBody = () => {
             <Box sx={{ height: '40px' }}>
 
             </Box>
-            <RejectionModal open={modalOpen} onClose={handleModalClose} selectedOrder={selectedOrder} removeOrder={removeOrder} />
-        </Box>
-    );
+            <RejectionModal open={modalOpen} onClose={handleModalClose} selectedOrder={selectedOrder} removeOrder={removeOrder} /></>}
+
+    </Box>)
+
+
 };
 
 export default OrderBody;

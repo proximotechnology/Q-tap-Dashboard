@@ -33,7 +33,7 @@ export const fetchGetInfoData = createAsyncThunk(
             const response = await axios.get(`${BASE_URL}get_info`, {
                 headers: getAuthHeader(),
             });
-            console.log('slic', response)
+            console.log('redux ========= fetchGetInfoData', response)
             return response.data;
         } catch (error) {
             throw new Error(error.message);
@@ -97,6 +97,7 @@ const dataSlice = createSlice({
                 state.area.data.tables[index] = action.payload;
             }
         },
+
         createTable: (state, action) => {
             // Assuming action.payload is the new area object
             state.tables.data.tables.push(action.payload);
@@ -117,18 +118,27 @@ const dataSlice = createSlice({
                 state.tables.data.tables[index] = action.payload;
             }
         },
+        /**\
+        ****\
+        *  *| ==> info
+        ** /
+        */
+
         updateBranchMenu: (state, action) => {
             const branches = state.info.data?.qtap_clients?.brunchs;
+
             if (!Array.isArray(branches)) return;
-            const index = branches.findIndex(branch => branch.brunch_id === action.payload?.id);
+
+            const index = branches.findIndex(branch => { console.log("slice updatedBranch", branch.id, "===", action.payload?.id); 
+                return branch.id === action.payload?.id });
             if (index === -1) return;
             // Handle serving_ways specifically
             const updatedBranch = {
                 ...action.payload,
-
             };
+            console.log("slice updatedBranch", updatedBranch)
             branches[index] = updatedBranch
-        }
+        },
     },
     extraReducers: (builder) => {
         // Reducers for fetchAreaData
@@ -173,7 +183,7 @@ const dataSlice = createSlice({
 });
 
 // Export the async thunks and the reducer
-export const { createArea, deleteArea, updateArea, createTable, deleteTable, updateTable, updateBranchMenu } = dataSlice.actions;
+export const { createArea, deleteArea, updateArea, createTable, deleteTable, updateTable, updateBranchMenu, } = dataSlice.actions;
 export default dataSlice.reducer;
 
 /*\
@@ -201,7 +211,7 @@ export const selectGetInfoError = (state) => state.clientLogin.info.error;
 export const selectBranch = (index) => (state) => {
     return state.clientLogin?.info?.data?.qtap_clients?.brunchs?.[index] || null;
 };
-export const selectAllBranch = (index)=>(state) => {
+export const selectAllBranch = (index) => (state) => {
     return state.clientLogin?.info?.data?.qtap_clients?.brunchs ?? [];
 }
 export const selectBranchById = (branchId) => (state) => {

@@ -17,7 +17,7 @@ import Language from '../../../../Component/dashboard/TopBar/Language';
 import { toast } from 'react-toastify';
 import { BASE_URL } from '../../../../utils/helperFunction';
 import axios from 'axios';
-import { egyptGovernorates } from '../../../../utils/city';
+import { Country, Governorates } from '../../../../utils/city';
 import MapWithPin from '../../../../utils/MapWithPin';
 const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, totalCart, setCartItems }) => {
 
@@ -305,7 +305,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
                                             <MenuItem value="" disabled sx={{ fontSize: "11px", color: theme.palette.text.gray_white, }}>
                                                 {t("plSelectCity")}
                                             </MenuItem>
-                                            {egyptGovernorates.map(item => <MenuItem value={item} sx={{ fontSize: "11px", color: theme.palette.text.gray_white, }}>{t(item)}</MenuItem>)}
+                                            {Governorates[Country.EGYPT].map(item => <MenuItem value={item} sx={{ fontSize: "11px", color: theme.palette.text.gray_white, }}>{t(item)}</MenuItem>)}
                                         </Select>
                                     </FormControl>
                                     <Typography variant='body2' sx={{ fontSize: "11px", marginBottom: "3px", color: theme.palette.text.gray_white }}>{t("address")}</Typography>
@@ -365,7 +365,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
                 <Box
                     sx={{
                         position: "fixed", bottom: 0, backgroundColor: theme.palette.bodyColor.white_lightBlack, width: customWidth.buttonSectionWidth
-                        , padding: "20px",zIndex:'999',
+                        , padding: "20px", zIndex: '999',
                         boxShadow: 3, borderRadius: "30px 30px 0px 0px", display: "flex", justifyContent: "space-between",
                     }}>
                     <Box sx={{ width: "100%" }}>
