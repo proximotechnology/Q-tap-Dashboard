@@ -56,7 +56,7 @@ export const AddUser = ({ open, onClose }) => {
         };
 
         try {
-            const token = localStorage.getItem('clientToken');
+            const token = localStorage.getItem('Token');
             const config = {
                 headers: { Authorization: `Bearer ${token}` },
             };
@@ -64,12 +64,23 @@ export const AddUser = ({ open, onClose }) => {
 
             const response = await axios.post(`${BASE_URL}restaurant_user_staff`, staffData, config)
 
+            
+            console.log("add user response", response)
+            if (response.data.success !== false) {
+                if (response.status === 200) {
+                    toast.success(t('add user success'));
+                    onClose();
+                } else {
+                    toast.error(t('failed to add used'));
+                }
 
-            if (response.status === 200) {
-                toast.success(t('add user success'));
-                onClose();
             } else {
-                toast.error(t('failed to add used'));
+                console.log("add user response.data.status === false")
+                if (response.data.errors) {
+                    console.log("WE ARE IN >>>",response.data.errors)
+                    toast.error(t('pinAlreadyBeenTakend'));
+                    // onClose();
+                }
             }
         } catch (error) {
             console.error('API Error:', error);

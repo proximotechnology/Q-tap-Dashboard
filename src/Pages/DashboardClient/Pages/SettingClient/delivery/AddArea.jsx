@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { BASE_URL } from '../../../../../utils/helperFunction';
+import { Country, CountryName, Governorates } from '../../../../../utils/city';
 
 const AddArea = ({ open, onClose, getDeliveryArea, editData }) => {
   const { t } = useTranslation();
@@ -53,7 +54,7 @@ const AddArea = ({ open, onClose, getDeliveryArea, editData }) => {
         cost,
       };
 
-      const token = localStorage.getItem('clientToken');
+      const token = localStorage.getItem('Token');
       const headers = {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -153,18 +154,14 @@ const AddArea = ({ open, onClose, getDeliveryArea, editData }) => {
                 onChange={(e) => setCountry(e.target.value)}
                 placeholder={t('selectCountry')}
               >
+
                 <MenuItem value="" disabled sx={{ fontSize: '12px', color: 'gray' }}>
                   {t('selectCountry')}
                 </MenuItem>
-                <MenuItem value="Egypt" sx={{ fontSize: '12px', color: 'gray' }}>
-                  Egypt
-                </MenuItem>
-                <MenuItem value="cairo" sx={{ fontSize: '12px', color: 'gray' }}>
-                  Cairo
-                </MenuItem>
-                <MenuItem value="Tanta" sx={{ fontSize: '12px', color: 'gray' }}>
-                  Tanta
-                </MenuItem>
+                {Object.values(Country).map(item => (<MenuItem value={item} sx={{ fontSize: '12px', color: 'gray' }}>
+                  {CountryName[item]}
+                </MenuItem>))}
+
               </Select>
             </FormControl>
           </Box>
@@ -249,15 +246,12 @@ const AddArea = ({ open, onClose, getDeliveryArea, editData }) => {
                 <MenuItem value="" disabled sx={{ fontSize: '12px', color: 'gray' }}>
                   {t('selectCity')}
                 </MenuItem>
-                <MenuItem value="cairo" sx={{ fontSize: '12px', color: 'gray' }}>
-                  Cairo
-                </MenuItem>
-                <MenuItem value="alex" sx={{ fontSize: '12px', color: 'gray' }}>
-                  Alex
-                </MenuItem>
-                <MenuItem value="tanta" sx={{ fontSize: '12px', color: 'gray' }}>
-                  Tanta
-                </MenuItem>
+                {country &&
+                  Governorates[country].map(item => (
+                    <MenuItem value="cairo" sx={{ fontSize: '12px', color: 'gray' }}>
+                      {item}
+                    </MenuItem>
+                  ))}
               </Select>
             </FormControl>
           </Box>

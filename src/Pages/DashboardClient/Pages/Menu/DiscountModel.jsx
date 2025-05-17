@@ -45,7 +45,7 @@ export const DiscountModel = ({ open, handleClose }) => {
         url: `${BASE_URL}meals_discount`,
         data: formData,
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+          'Authorization': `Bearer ${localStorage.getItem('Token')}`,
           'Content-Type': 'application/json'
         }
       });
@@ -70,7 +70,7 @@ export const DiscountModel = ({ open, handleClose }) => {
 
         url: `${BASE_URL}meals_discount/${discountId}`,
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+          'Authorization': `Bearer ${localStorage.getItem('Token')}`,
         }
       });
 
@@ -118,7 +118,7 @@ export const DiscountModel = ({ open, handleClose }) => {
         },
         {
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+            'Authorization': `Bearer ${localStorage.getItem('Token')}`,
           }
         }
       );

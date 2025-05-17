@@ -22,7 +22,7 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL } from '../../../../utils/helperFunction';
 import { useDispatch, useSelector } from "react-redux";
-import { selectAreaData, createTable, updateTable } from "../../../../store/client/clientLoginSlic"
+import { selectAreaData, createTable, updateTable } from "../../../../store/client/clientAdmin"
 
 
 const AddTableModal = ({ open, onClose, tableData }) => {
@@ -79,7 +79,7 @@ const AddTableModal = ({ open, onClose, tableData }) => {
         data: dataFormat,
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('clientToken')}`,
+          Authorization: `Bearer ${localStorage.getItem('Token')}`,
         },
       });
 

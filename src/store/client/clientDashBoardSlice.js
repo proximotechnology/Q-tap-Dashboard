@@ -20,7 +20,7 @@ const handleAxiosError = (error) => {
 };
 
 // Function to get the client token from localStorage
-const getClientToken = () => localStorage.getItem('clientToken');
+const getClientToken = () => localStorage.getItem('Token');
 
 // Create an Axios instance with default headers, including the Authorization header
 const axiosInstance = axios.create({
@@ -107,7 +107,7 @@ export const fetchPerformanceData = createAsyncThunk(
                 {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+                        'Authorization': `Bearer ${localStorage.getItem('Token')}`,
                     },
                    
                 }

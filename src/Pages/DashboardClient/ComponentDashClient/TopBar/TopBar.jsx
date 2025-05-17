@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 import DarkModeSwitch from "../../../../Component/DarkModeSwitch";
 import Language from "../../../../Component/dashboard/TopBar/Language";
 import { useSelector } from "react-redux";
-import { selectAllBranch, selectBranch } from "../../../../store/client/clientLoginSlic";
+import { selectAllBranch, selectBranch } from "../../../../store/client/clientAdmin";
 
 const styles = (theme) => ({
     button: {
@@ -126,10 +126,10 @@ export default function TopBar() {
     };
     const clientName = localStorage.getItem("clientName")
     const clientEmail = localStorage.getItem("clientEmail")
-    const clientToken = localStorage.getItem("clientToken")
-    console.log(clientEmail, clientName, clientToken);
+    const Token = localStorage.getItem("Token")
+    console.log(clientEmail, clientName, Token);
 
-    const url = `http://localhost:3000/en/?clientName=${encodeURIComponent(clientName)}&clientToken=${encodeURIComponent(clientToken)}&clientEmail=${encodeURIComponent(clientEmail)}`;
+    const url = `http://localhost:3000/en/?clientName=${encodeURIComponent(clientName)}&Token=${encodeURIComponent(Token)}&clientEmail=${encodeURIComponent(clientEmail)}`;
 
     return (
         <Box sx={{
@@ -324,7 +324,7 @@ export default function TopBar() {
                             </ListItem>
 
                             <ListItem sx={{ cursor: "pointer" }} onClick={() => {
-                                localStorage.removeItem("clientToken");
+                                localStorage.removeItem("Token");
                                 navigate('/');
                             }}>
                                 <ListItemIcon sx={{ marginLeft: lang == 'ar' ? "-30px" : '0px' }}>

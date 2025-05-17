@@ -21,7 +21,7 @@ import styles from '../SupportClient/supportCard.module.css'
 import { useTranslation } from 'react-i18next';
 import { BASE_URL } from '../../../../utils/helperFunction';
 import { useDispatch, useSelector } from 'react-redux';
-import { createTable, deleteTable, fetchAreaData, fetchTablesData, selectTablesData, updateTable } from '../../../../store/client/clientLoginSlic';
+import { createTable, deleteTable, fetchAreaData, fetchTablesData, selectTablesData, updateTable } from '../../../../store/client/clientAdmin';
 
 const TableCard = ({ table, onDeleteTable, onEditTable }) => {
   const { t } = useTranslation();
@@ -184,7 +184,7 @@ export const Tables = ({ openOldMenu }) => {
       const response = await axios.delete(`${BASE_URL}tables/${id}`, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('clientToken')}`,
+          Authorization: `Bearer ${localStorage.getItem('Token')}`,
         },
       });
 

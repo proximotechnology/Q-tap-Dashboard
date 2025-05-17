@@ -6,7 +6,9 @@ import ModeCommentIcon from '@mui/icons-material/ModeComment';
 import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import Language from "../dashboard/TopBar/Language";
-import { handleClientLogin } from "../../utils/clientLogin";
+import { useDispatch, useSelector } from "react-redux";
+import { handleClientLoginRedux, selectIsLoading } from "../../store/client/userSlic";
+import { toast } from "react-toastify";
 
 const ImageContainer = styled(Box)({
     backgroundImage: 'url(/images/logoClient.jpg)',
@@ -45,20 +47,21 @@ export const LoginChef = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const [pin, setPin] = useState()
-    const [isLoading, setIsLoading] = useState(false);
 
-    const handleLogin = async () =>{
-        await handleClientLogin({
-            pin,
-            setIsLoading,
-            navigate,
-            t,
-            role:'chef',
-            brunch_id:localStorage.getItem('selectedBranch'),
-            navurl:'/order-body'
-        })
-        //
-    }
+     const isLoading = useSelector(selectIsLoading)
+        const dispatch = useDispatch()
+        const handleLogin = async () => {
+            const data = { pin, role: 'chef', brunch_id: localStorage.getItem('selectedBranch') }
+            dispatch(handleClientLoginRedux(data))
+                .unwrap()
+                .then(() => {
+                    navigate('/order-body');
+                })
+                .catch(() => {
+                    toast.error(t('loginFaild'));
+                    navigate('/');
+                });
+        }
     
     return (
         <Grid item xs={12} md={6} sx={{ height: "100vh ", msOverflow: "hidden !important " }}>

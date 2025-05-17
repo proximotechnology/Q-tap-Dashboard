@@ -666,5 +666,6 @@
     "South Sinai": "جنوب سيناء",
     "passTooShortOrDontHaveNumber": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل وتتكون من أحرف وأرقام.",
     "errorGetingData": "حدث خطاء اثناء جلب البيانات الرجاء التاكد من تسجيل الدخول و الصلاحيات",
-    "Rejection Reason":"سبب الرفض"
+    "Rejection Reason":"سبب الرفض",
+    "pinAlreadyBeenTaken":"لقد تم أخذ البين بالفعل."
 }

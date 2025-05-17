@@ -67,7 +67,7 @@ export const UserTable = ({ userStaff, getUserStaff }) => {
       const response = await axios.delete(`${BASE_URL}resturant_users/${id}`, {
         headers: {
           'Content-Type': 'application/json',
-          "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
+          "Authorization": `Bearer ${localStorage.getItem('Token')}`
         }
       });
 

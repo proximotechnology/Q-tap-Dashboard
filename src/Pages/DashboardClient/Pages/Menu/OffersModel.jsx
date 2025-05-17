@@ -49,7 +49,7 @@ const AddOfferModal = ({ open, handleClose, selectedBranch, contentForMenu, onAd
 
             const response = await axios.post(`${BASE_URL}meals_special_offers`, formDataToSend, {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+                    'Authorization': `Bearer ${localStorage.getItem('Token')}`,
                     'Content-Type': 'multipart/form-data'
                 }
             });
@@ -202,7 +202,7 @@ export const OffersModel = ({ open, handleClose }) => {
 
             const response = await axios.get(`${BASE_URL}meals_special_offers`, {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+                    'Authorization': `Bearer ${localStorage.getItem('Token')}`,
                 },
                 params: {
                     brunch_id: selectedBranch
@@ -253,7 +253,7 @@ export const OffersModel = ({ open, handleClose }) => {
                     },
                     {
                         headers: {
-                            'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+                            'Authorization': `Bearer ${localStorage.getItem('Token')}`,
                         }
                     }
                 );
@@ -283,7 +283,7 @@ export const OffersModel = ({ open, handleClose }) => {
 
             await axios.delete(`${BASE_URL}meals_special_offers/${id}`, {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+                    'Authorization': `Bearer ${localStorage.getItem('Token')}`,
                 }
             });
             toast.success(t("offer.deleteSucc"));

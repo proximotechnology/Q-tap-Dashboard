@@ -14,7 +14,7 @@ export const User = () => {
                 const response = await axios.get(`${BASE_URL}resturant_users/${localStorage.getItem("selectedBranch")}`, {
                     headers: {
                         'Content-Type': 'application/json',
-                        "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
+                        "Authorization": `Bearer ${localStorage.getItem('Token')}`
                     }
                 });
 

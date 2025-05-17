@@ -29,8 +29,8 @@ import { BASE_URL, BASE_URL_IMG } from '../../../../utils/helperFunction';
 import { Country, Governorates } from './../../../../utils/city';
 import MapWithPin from '../../../../utils/MapWithPin';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectGetInfoData } from '../../../../store/client/clientLoginSlic';
-import { printFormData } from '../../../../utils/utils';
+import { selectGetInfoData, updateInfoOnly } from '../../../../store/client/clientAdmin';
+import { BusinessLang, BusinessTypes, printFormData } from '../../../../utils/utils';
 
 const ProfilePage = () => {
   const theme = useTheme();
@@ -64,7 +64,7 @@ const ProfilePage = () => {
   const [callWaiter, setCallWaiter] = useState('');
   // Context and localStorage Data
 
-  const allClientData = localStorage.getItem('allClientData');
+  const allClientData = localStorage.getItem('UserData');
   // const selectedBranch = localStorage.getItem('selectedBranch');
   const parsedClientData = allClientData ? JSON.parse(allClientData) : null;
   const user = parsedClientData?.user;
@@ -131,9 +131,9 @@ const ProfilePage = () => {
         setLatitude(branch.latitude || '');
         setLongitude(branch.longitude || '');
         setBusinessFormat(branch.business_format || '');
-        setBusinessType(branch.business_type || 'restaurant');
-        setLang(branch.language || 'english');
-        setTableNumber(branch.serving_ways[0]?.tables_number || '1');
+        setBusinessType(branch.business_types  || 'restaurant');
+        setLang(branch.default_lang || 'english');
+        setTableNumber(branch.tables_number || '1');
         setPaymentTime(branch.payment_time || '');
         setCallWaiter(branch.call_waiter || '');
         setWebsite(branch.contact_info?.[0]?.website?.split(',')[0] || '');
@@ -176,6 +176,8 @@ const ProfilePage = () => {
     formData.append('currency_id', '1');
     formData.append('business_format', businessFormat);
     formData.append('tables_number', tableNumber.toString());
+    formData.append('business_types', businessType.toString());
+    formData.append('default_lang', lang.toString());
 
     const contactFields = {
       'business_phone': [businessPhone],
@@ -201,14 +203,16 @@ const ProfilePage = () => {
     if (imageFile) {
       formData.append('img', imageFile);
     }
+
     printFormData(formData)
+
     try {
       if (!qtap_clients.id) return;
 
       const response = await fetch(`${BASE_URL}clients_update_profile/${qtap_clients.id}`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+          'Authorization': `Bearer ${localStorage.getItem('Token')}`,
         },
         body: formData,
       });
@@ -220,7 +224,7 @@ const ProfilePage = () => {
 
       if (data.status === "success") {
         toast.success(t("updateSucc"));
-        // dispatch(updateInfoOnly(data)) // TODO:UPDATE REDUX
+        dispatch(updateInfoOnly(data)) // TODO:UPDATE REDUX
       }
 
     } catch (error) {
@@ -726,11 +730,8 @@ const ProfilePage = () => {
                 <MenuItem value="" disabled>
                   {t("currency")}
                 </MenuItem>
-                <MenuItem value="US" sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value="UL" sx={{ fontSize: '12px', color: 'gray' }}>
                   United States
-                </MenuItem>
-                <MenuItem value="CA" sx={{ fontSize: '12px', color: 'gray' }}>
-                  Canada
                 </MenuItem>
                 <MenuItem value="UK" sx={{ fontSize: '12px', color: 'gray' }}>
                   United Kingdom
@@ -755,31 +756,31 @@ const ProfilePage = () => {
                 <MenuItem value="" disabled>
                   {t("businessType")}
                 </MenuItem>
-                <MenuItem value="restaurant" sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={BusinessTypes.RESTAURANT} sx={{ fontSize: '12px', color: 'gray' }}>
                   {t("restaurant")}
                 </MenuItem>
-                <MenuItem value="cafe" sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={BusinessTypes.CAFE} sx={{ fontSize: '12px', color: 'gray' }}>
                   {t("cafe")}
                 </MenuItem>
-                <MenuItem value="cloud" sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={BusinessTypes.CLOUD} sx={{ fontSize: '12px', color: 'gray' }}>
                   {t("cloudKitchens")}
                 </MenuItem>
-                <MenuItem value="fast" sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={BusinessTypes.FAST_FOOD} sx={{ fontSize: '12px', color: 'gray' }}>
                   {t("fastFood")}
                 </MenuItem>
-                <MenuItem value="truck" sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={BusinessTypes.TRUCK} sx={{ fontSize: '12px', color: 'gray' }}>
                   {t("foodTruch")}
                 </MenuItem>
-                <MenuItem value="Bakery" sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={BusinessTypes.BAKERY} sx={{ fontSize: '12px', color: 'gray' }}>
                   {t("bakeryStore")}
                 </MenuItem>
-                <MenuItem value="Pastry" sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={BusinessTypes.PASTRY} sx={{ fontSize: '12px', color: 'gray' }}>
                   {t("pastryStore")}
                 </MenuItem>
-                <MenuItem value="Fruits" sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={BusinessTypes.FRUITS} sx={{ fontSize: '12px', color: 'gray' }}>
                   {t("fruitsStore")}
                 </MenuItem>
-                <MenuItem value="Retail" sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={BusinessTypes.RETAIL} sx={{ fontSize: '12px', color: 'gray' }}>
                   {t("retailStore")}
                 </MenuItem>
               </Select>
@@ -802,10 +803,10 @@ const ProfilePage = () => {
                 <MenuItem value="" disabled>
                   {t("menuDefLang")}
                 </MenuItem>
-                <MenuItem value="english" sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={BusinessLang.EN} sx={{ fontSize: '12px', color: 'gray' }}>
                   English
                 </MenuItem>
-                <MenuItem value="arabic" sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={BusinessLang.AR} sx={{ fontSize: '12px', color: 'gray' }}>
                   Arabic
                 </MenuItem>
                 {/* <MenuItem value="3" sx={{ fontSize: '12px', color: 'gray' }}>
@@ -978,8 +979,8 @@ export default ProfilePage;
 //   const [logoFile, setLogoFile] = useState(null);
 
 //   // Context and localStorage Data
-//   const allClientData = localStorage.getItem('allClientData');
-//   const parsedClientData = allClientData ? JSON.parse(allClientData) : null;
+//   const UserData = localStorage.getItem('UserData');
+//   const parsedClientData = UserData ? JSON.parse(UserData) : null;
 //   const user = parsedClientData?.user;
 //   const qtap_clients = clientData?.qtap_clients;
 //   const [selectedBranch, setSelectedBranch] = useState(localStorage.getItem('selectedBranch') || '');
@@ -1147,7 +1148,7 @@ export default ProfilePage;
 //       const response = await fetch(`${BASE_URL}clients_update_profile/${qtap_clients.id}`, {
 //         method: 'POST',
 //         headers: {
-//           Authorization: `Bearer ${localStorage.getItem('clientToken')}`,
+//           Authorization: `Bearer ${localStorage.getItem('Token')}`,
 //         },
 //         body: formData,
 //       });

@@ -6,8 +6,8 @@ import { BASE_URL } from '../../utils/helperFunction';
 
 // Helper function to get the authorization header
 const getAuthHeader = () => {
-    const clientToken = localStorage.getItem('clientToken');
-    return clientToken ? { 'Authorization': `Bearer ${clientToken}` } : {};
+    const Token = localStorage.getItem('Token');
+    return Token ? { 'Authorization': `Bearer ${Token}` } : {};
 };
 
 // Async Thunk for fetching area data using Axios with Authorization
@@ -129,8 +129,10 @@ const dataSlice = createSlice({
 
             if (!Array.isArray(branches)) return;
 
-            const index = branches.findIndex(branch => { console.log("slice updatedBranch", branch.id, "===", action.payload?.id); 
-                return branch.id === action.payload?.id });
+            const index = branches.findIndex(branch => {
+                console.log("slice updatedBranch", branch.id, "===", action.payload?.id);
+                return branch.id === action.payload?.id
+            });
             if (index === -1) return;
             // Handle serving_ways specifically
             const updatedBranch = {
@@ -139,7 +141,11 @@ const dataSlice = createSlice({
             console.log("slice updatedBranch", updatedBranch)
             branches[index] = updatedBranch
         },
-    },
+        updateInfoOnly: (state, action) => {
+            console.log("updateInfoOnly", action.payload.client_data);
+            state.info.data.qtap_clients = action.payload.client_data;
+        }
+},
     extraReducers: (builder) => {
         // Reducers for fetchAreaData
         builder.addCase(fetchAreaData.pending, (state) => {
@@ -183,7 +189,7 @@ const dataSlice = createSlice({
 });
 
 // Export the async thunks and the reducer
-export const { createArea, deleteArea, updateArea, createTable, deleteTable, updateTable, updateBranchMenu, } = dataSlice.actions;
+export const { createArea, deleteArea, updateArea, createTable, deleteTable, updateTable, updateBranchMenu, updateInfoOnly } = dataSlice.actions;
 export default dataSlice.reducer;
 
 /*\

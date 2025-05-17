@@ -37,78 +37,9 @@ export const Login = () => {
       setApiError(t("fieldAreRequired"));
       return;
     }
-
-    // Prepare data for API
-    // const data = {
-    //   email,
-    //   password,
-    //   user_type: userType,
-    // };
-
-    // Send data to API
-    // change of api 2.2
-    // if (userType === 'qtap_clients') {
     localStorage.setItem("clientEmail", email);
     localStorage.setItem("clientPassword", password);
     navigate('/logo-cient');
-    // } else {
-    //   try {
-    //     setIsLoading(true);
-    //     const response = await axios.post(
-    //        `${BASE_URL}login`,
-    //       data,
-    //       {
-    //         headers: { 'Content-Type': 'application/json' },
-    //       }
-    //     );
-
-    //     console.log('API Response:', response.data); // Debug log
-
-    //     if (response?.data?.user) {
-    //       setApiSuccess(t("logInSuccess"));
-    //       const loginUserType = response.data.user?.user_type;
-
-    //       if (loginUserType === 'qtap_admins') {
-    //         // localStorage.setItem('adminToken', response.data.token);
-    //         // localStorage.setItem("userName", response.data.user.name);
-    //         // localStorage.setItem("userEmail", response.data.user.email);
-    //         // localStorage.setItem("adminId", response.data.user.id);
-    //         // navigate('/dashboard-home');
-    //         toast.error(t("someThingGoWrong"))
-    //       } else if (loginUserType === 'qtap_affiliates') {
-    //         localStorage.setItem('affiliateToken', response.data.token);
-    //         navigate('/dashboard-affiliate');
-    //       }
-    //       /* this part modified since the logic of client login change*/
-    //       // else if (loginUserType === 'qtap_clients') {
-    //       //   localStorage.setItem('clientToken', response.data.token);
-    //       //   localStorage.setItem('allClientData', JSON.stringify(response.data));
-    //       //   localStorage.setItem("clientName", response.data.user.name);
-    //       //   localStorage.setItem("clientEmail", response.data.user.email);
-
-    //       //   // Store branches in both context and localStorage
-    //       //   if (response?.data?.brunches && response.data.brunches.length > 0) {
-    //       //     setBranches(response.data.brunches);
-    //       //     localStorage.setItem('branches', JSON.stringify(response.data.brunches));
-    //       //     // Set and store the first branch as default
-    //       //     setSelectedBranch(response.data.brunches[0].id);
-    //       //     localStorage.setItem('selectedBranch', response.data.brunches[0].id);
-    //       //   }
-    //       //   navigate('/logo-cient');
-    //       // } 
-    //       else {
-    //         navigate('/');
-    //       }
-    //     } else {
-    //       setApiError(response?.data?.message || t("invEmailOrPassword"));
-    //     }
-    //   } catch (error) {
-    //     console.error('Login Error:', error); // Debug log
-    //     setApiError(error.response?.data?.message || t("loginFaild"));
-    //   } finally {
-    //     setIsLoading(false);
-    //   }
-    // }
   };
 
   return (

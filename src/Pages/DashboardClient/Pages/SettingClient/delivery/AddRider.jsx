@@ -21,7 +21,7 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
 
   // Fetch delivery areas
   const getDeliveryArea = async () => {
-    const token = localStorage.getItem('clientToken');
+    const token = localStorage.getItem('Token');
     if (!token) {
       console.error('No token found. User might not be authenticated.');
       return;
@@ -113,7 +113,7 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
       console.log('formData', formData);
 
 
-      const token = localStorage.getItem('clientToken');
+      const token = localStorage.getItem('Token');
       const headers = {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',

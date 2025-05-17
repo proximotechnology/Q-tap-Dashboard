@@ -7,3 +7,18 @@ export const printFormData = (formData) => {
     console.log("=======================Form Data=======================");
 }
 
+export const BusinessTypes = Object.freeze({
+    RESTAURANT: "restaurant",
+    CAFE: "cafe",
+    CLOUD: "cloud",
+    FAST_FOOD: "fast",
+    TRUCK: "truck",
+    BAKERY: "Bakery",
+    PASTRY: "Pastry",
+    FRUITS: "Fruits",
+    RETAIL: "Retail",
+});
+export const BusinessLang = Object.freeze({
+    EN:'en',
+    AR:'ar'
+});

@@ -9,7 +9,7 @@ export const fetchDiscounts = createAsyncThunk(
         try {
             const response = await axios.get(`${BASE_URL}meals_discount`, {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+                    'Authorization': `Bearer ${localStorage.getItem('Token')}`,
                 },
                 params: {
                     brunch_id: selectedBranch,

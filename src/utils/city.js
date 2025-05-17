@@ -5,6 +5,13 @@ export const Country = Object.freeze({
     CANADA: 'ca'
 });
 
+export const CountryName = Object.freeze({
+    [Country.EGYPT]: "Egypt",
+    [Country.UK]: "United Kingdom",
+    [Country.USA]: "United States",
+    [Country.CANADA]: "Canada"
+});
+
 export const Governorates = {
     [Country.EGYPT]: [
         "Cairo", "Giza", "Alexandria", "Qalyubia", "Port Said",

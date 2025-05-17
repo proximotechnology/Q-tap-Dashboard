@@ -21,7 +21,7 @@ export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
         try {
             const response = await axios.get(`${BASE_URL}roles`, {
                 headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("clientToken")}`
+                    "Authorization": `Bearer ${localStorage.getItem("Token")}`
                 },
                 params: {
                     brunch_id: selectedBranch
@@ -64,7 +64,7 @@ export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
                 brunch_id: selectedBranch
             }, {
                 headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("clientToken")}`
+                    "Authorization": `Bearer ${localStorage.getItem("Token")}`
                 }
             });
 

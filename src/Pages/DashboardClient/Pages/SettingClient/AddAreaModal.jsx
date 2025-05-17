@@ -7,7 +7,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { BASE_URL } from '../../../../utils/helperFunction';
 import { useDispatch, useSelector } from "react-redux";
-import { selectAreaData,  createArea, deleteArea, updateArea } from "../../../../store/client/clientLoginSlic"
+import { selectAreaData,  createArea, deleteArea, updateArea } from "../../../../store/client/clientAdmin"
 
 const AddAreaModal = ({ open, onClose }) => {
     const [name, setName] = useState('');
@@ -33,7 +33,7 @@ const AddAreaModal = ({ open, onClose }) => {
             }, {
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
+                    "Authorization": `Bearer ${localStorage.getItem('Token')}`
                 }
             });
 
@@ -64,7 +64,7 @@ const AddAreaModal = ({ open, onClose }) => {
             }, {
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
+                    "Authorization": `Bearer ${localStorage.getItem('Token')}`
                 }
             });
 
@@ -88,7 +88,7 @@ const AddAreaModal = ({ open, onClose }) => {
             const response = await axios.delete(`${BASE_URL}area/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
+                    "Authorization": `Bearer ${localStorage.getItem('Token')}`
                 }
             });
 

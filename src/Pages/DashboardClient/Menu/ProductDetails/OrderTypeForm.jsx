@@ -116,7 +116,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
                 {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+                        'Authorization': `Bearer ${localStorage.getItem('Token')}`
                     }
 
                 }

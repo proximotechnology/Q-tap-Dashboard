@@ -5,13 +5,16 @@ import SideBar from "../../ComponentDashClient/SideBar/SideBar";
 import TopBar from "../../ComponentDashClient/TopBar/TopBar";
 import Content from "../../ComponentDashClient/Content/Content";
 import SidebarButton from "../../../../Component/MobileSideBarButton/SidebarButton";
-import { fetchGetInfoData } from "../../../../store/client/clientLoginSlic";
+import { fetchGetInfoData } from "../../../../store/client/clientAdmin";
 import { useDispatch } from "react-redux";
-
+import { Navigate } from "react-router-dom";
 
 
 export default function HomeClient() {
     const theme = useTheme()
+    // const user = localStorage.getItem("")
+    // const allowedRoles = ["admin"]
+
 
     const [isSideBarOpen, setisSideBarOpen] = useState(false);
 
@@ -22,6 +25,10 @@ export default function HomeClient() {
     useEffect(() => {
         dispatch(fetchGetInfoData())
     }, [dispatch])
+
+    // if (!user || !allowedRoles.includes(user.role)) {
+    //     return <Navigate to="/unauthorized" />; // or redirect to login
+    // }
     return (
         <Box
             sx={{

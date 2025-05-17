@@ -32,7 +32,7 @@ export const OrderHistory = () => {
     useEffect(() => {
         const getOrder = async () => {
             try {
-                const loginclient = JSON.parse(localStorage.getItem('allClientData'))
+                const loginclient = JSON.parse(localStorage.getItem('UserData'))
                 const selectedBranch = localStorage.getItem('selectedBranch')
                 console.log('currnt user ',loginclient)
                 if (! loginclient || loginclient.user.role !== "admin") {
@@ -43,7 +43,7 @@ export const OrderHistory = () => {
                         {
                             headers: {
                                 'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+                                'Authorization': `Bearer ${localStorage.getItem('Token')}`
                             },
 
                         }

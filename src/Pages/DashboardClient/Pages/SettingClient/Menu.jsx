@@ -25,7 +25,7 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL, BASE_URL_IMG } from '../../../../utils/helperFunction';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectGetInfoData, updateBranchMenu } from '../../../../store/client/clientLoginSlic';
+import { selectGetInfoData, updateBranchMenu } from '../../../../store/client/clientAdmin';
 import { printFormData } from '../../../../utils/utils';
 
 
@@ -153,7 +153,7 @@ const Menu = () => {
             const response = await fetch(`${BASE_URL}clients_update_menu/${id}`, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+                    'Authorization': `Bearer ${localStorage.getItem('Token')}`,
                 },
                 body: formData,
             });

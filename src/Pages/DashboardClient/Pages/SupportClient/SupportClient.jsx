@@ -177,7 +177,7 @@ const Support = () => {
       const response = await axios.get(`${BASE_URL}faq_qtap`, {
         headers: {
           'Content-Type': 'application/json',
-          "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
+          "Authorization": `Bearer ${localStorage.getItem('Token')}`
         }
       })
 
@@ -205,7 +205,7 @@ const Support = () => {
       const response = await axios.get(`${BASE_URL}feedback_restaurant`, {
         headers: {
           'Content-Type': 'application/json',
-          "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
+          "Authorization": `Bearer ${localStorage.getItem('Token')}`
         }
       })
 
@@ -231,7 +231,7 @@ const Support = () => {
       const response = await axios.delete(`${BASE_URL}faq_qtap/${id}`, {
         headers: {
           'Content-Type': 'application/json',
-          "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
+          "Authorization": `Bearer ${localStorage.getItem('Token')}`
         }
       })
 
@@ -253,7 +253,7 @@ const Support = () => {
       const response = await axios.delete(`${BASE_URL}feedback_restaurant/${id}`, {
         headers: {
           'Content-Type': 'application/json',
-          "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
+          "Authorization": `Bearer ${localStorage.getItem('Token')}`
         }
       })
 
@@ -285,7 +285,7 @@ const Support = () => {
 
       const response = await axios.get(`${BASE_URL}ticket`, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+          'Authorization': `Bearer ${localStorage.getItem('Token')}`
         }
       });
       setTickets(response.data);
@@ -332,7 +332,7 @@ const Support = () => {
         content: content,
         status: status,
         Customer_Phone: phoneNumber,
-        client_id: JSON.parse(localStorage.getItem("allClientData")).user.id,
+        client_id: JSON.parse(localStorage.getItem("UserData")).user.id,
         brunch_id: localStorage.getItem("selectedBranch")
       };
 
@@ -344,7 +344,7 @@ const Support = () => {
         data,
         {
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+            'Authorization': `Bearer ${localStorage.getItem('Token')}`,
             'Content-Type': 'application/json'
           }
         }
@@ -379,7 +379,7 @@ const Support = () => {
         data,
         {
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+            'Authorization': `Bearer ${localStorage.getItem('Token')}`,
             'Content-Type': 'application/json'
           }
         }

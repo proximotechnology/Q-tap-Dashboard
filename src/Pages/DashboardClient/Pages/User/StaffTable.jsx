@@ -31,7 +31,7 @@ export const StaffTable = ({ userStaff }) => {
                 const response = await axios.get(`${BASE_URL}restaurant_user_staff/${localStorage.getItem("selectedBranch")}`, {
                     headers: {
                         'Content-Type': 'application/json',
-                        "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
+                        "Authorization": `Bearer ${localStorage.getItem('Token')}`
                     }
                 });
 
@@ -63,7 +63,7 @@ export const StaffTable = ({ userStaff }) => {
             const response = await axios.delete(`${BASE_URL}restaurant_user_staff/${id}`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": `Bearer ${localStorage.getItem('clientToken')}`
+                    "Authorization": `Bearer ${localStorage.getItem('Token')}`
                 }
             })
 

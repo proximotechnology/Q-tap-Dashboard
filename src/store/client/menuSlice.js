@@ -29,7 +29,7 @@ export const updataCategory = createAsyncThunk(
             },
                 {
                     headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+                        'Authorization': `Bearer ${localStorage.getItem('Token')}`,
                     },
                 }
             );
@@ -49,7 +49,7 @@ export const deleteCategory = createAsyncThunk(
         try {
             const response = await axios.delete(`${BASE_URL}meals_categories/${categoryId}`,  {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+                    'Authorization': `Bearer ${localStorage.getItem('Token')}`,
                 }
             });
 
@@ -69,7 +69,7 @@ export const addCategory = createAsyncThunk(
         try {
             const response = await axios.delete(`${BASE_URL}meals_categories/${categoryId}`,  {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+                    'Authorization': `Bearer ${localStorage.getItem('Token')}`,
                 }
             });
 

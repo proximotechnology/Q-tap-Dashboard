@@ -64,7 +64,7 @@ export const Feedback = () => {
             await axios.post(`${BASE_URL}feedback_client`, dataFormat, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+                    'Authorization': `Bearer ${localStorage.getItem('Token')}`
                 }
             });
 

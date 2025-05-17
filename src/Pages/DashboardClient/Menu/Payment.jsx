@@ -39,7 +39,7 @@ export const Payment = ({
             let data = {
                 name: selectedName,
                 phone: phone,
-                comments: comment,
+                comments: comment || "-",
                 type: 'takeaway',
                 payment_way: selectedValue,
                 brunch_id: localStorage.getItem('selectedBranch'),

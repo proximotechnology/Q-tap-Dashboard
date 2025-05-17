@@ -50,7 +50,7 @@ export const AddFeedback = ({ open, handleCloseModel, onAddFeedback }) => {
                 {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+                        'Authorization': `Bearer ${localStorage.getItem('Token')}`,
                     },
                 }
             );

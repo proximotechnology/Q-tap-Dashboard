@@ -33,7 +33,7 @@ export const Delivered = () => {
     }
 
     const getDeliveryData = async () => {
-        const loginclient = JSON.parse(localStorage.getItem('allClientData'));
+        const loginclient = JSON.parse(localStorage.getItem('UserData'));
 
         if (!loginclient) {
             console.log('No login');
@@ -42,7 +42,7 @@ export const Delivered = () => {
         }
 
         const deliveryId = loginclient?.user?.id;
-        const token = localStorage.getItem('clientToken');
+        const token = localStorage.getItem('Token');
 
         const headers = {
             'Content-Type': 'application/json',

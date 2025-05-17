@@ -41,7 +41,7 @@ export const OrderBody = () => {
 
 
     useEffect(() => {
-        const loginclient = JSON.parse(localStorage.getItem('allClientData'))
+        const loginclient = JSON.parse(localStorage.getItem('UserData'))
         setClient(loginclient)
         const handleClient = async () => {
             try {
@@ -50,7 +50,7 @@ export const OrderBody = () => {
                     {
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+                            'Authorization': `Bearer ${localStorage.getItem('Token')}`
                         },
 
                     }

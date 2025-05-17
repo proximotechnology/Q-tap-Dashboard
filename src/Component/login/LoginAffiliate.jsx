@@ -85,8 +85,8 @@ export const LoginAffiliate = () => {
           }
           /* this part modified since the logic of client login change*/
           // else if (loginUserType === 'qtap_clients') {
-          //   localStorage.setItem('clientToken', response.data.token);
-          //   localStorage.setItem('allClientData', JSON.stringify(response.data));
+          //   localStorage.setItem('Token', response.data.token);
+          //   localStorage.setItem('UserData', JSON.stringify(response.data));
           //   localStorage.setItem("clientName", response.data.user.name);
           //   localStorage.setItem("clientEmail", response.data.user.email);
 

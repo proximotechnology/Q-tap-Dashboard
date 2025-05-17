@@ -88,7 +88,7 @@ export const AddItem = () => {
                         {
                             params: { brunch_id: selectedBranch },
                             headers: {
-                                Authorization: `Bearer ${localStorage.getItem("clientToken")}`,
+                                Authorization: `Bearer ${localStorage.getItem("Token")}`,
                             },
                         }
                     );
@@ -244,7 +244,7 @@ export const AddItem = () => {
                     url,
                     data: formData,
                     headers: {
-                        Authorization: `Bearer ${localStorage.getItem("clientToken")}`,
+                        Authorization: `Bearer ${localStorage.getItem("Token")}`,
                         "Content-Type": "multipart/form-data",
                     },
                 });
@@ -260,7 +260,7 @@ export const AddItem = () => {
                     url,
                     data,
                     headers: {
-                        Authorization: `Bearer ${localStorage.getItem("clientToken")}`,
+                        Authorization: `Bearer ${localStorage.getItem("Token")}`,
                         "Content-Type": "application/json",
                     },
                 });

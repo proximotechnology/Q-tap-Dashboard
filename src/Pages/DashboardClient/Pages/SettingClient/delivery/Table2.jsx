@@ -40,7 +40,7 @@ export const Table2 = () => {
 
                 url: `${BASE_URL}delivery/${id}`,
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem('clientToken')}`,
+                    Authorization: `Bearer ${localStorage.getItem('Token')}`,
                 },
             });
 
@@ -55,7 +55,7 @@ export const Table2 = () => {
     };
 
     const getRiderData = async () => {
-        const token = localStorage.getItem('clientToken');
+        const token = localStorage.getItem('Token');
         if (!token) {
             console.error('No token found. User might not be authenticated.');
             return;
@@ -79,7 +79,7 @@ export const Table2 = () => {
     };
 
     const getDeliveryArea = async () => {
-        const token = localStorage.getItem('clientToken');
+        const token = localStorage.getItem('Token');
         if (!token) {
             console.error('No token found. User might not be authenticated.');
             return;

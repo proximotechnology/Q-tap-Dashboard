@@ -209,7 +209,7 @@ export default function SideBar({ isOpen }) {
                                 }}
                                 onClick={() => {
                                     if (item.text === "Logout") {
-                                        localStorage.removeItem("clientToken");
+                                        localStorage.removeItem("Token");
                                     }
                                     navigate(item.path);
                                 }}

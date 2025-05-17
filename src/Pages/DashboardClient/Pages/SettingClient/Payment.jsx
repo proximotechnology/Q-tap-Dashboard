@@ -32,7 +32,7 @@ const PaymentGatewayForm = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem("clientToken")}`
+                    'Authorization': `Bearer ${localStorage.getItem("Token")}`
                 },
                 body: JSON.stringify(formData)
             }

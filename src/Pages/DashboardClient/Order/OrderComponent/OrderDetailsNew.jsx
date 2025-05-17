@@ -40,7 +40,7 @@ const OrderDetailsNew = ({
                     {
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+                            'Authorization': `Bearer ${localStorage.getItem('Token')}`
                         },
 
                     }
@@ -96,7 +96,7 @@ const OrderDetailsNew = ({
                 {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+                        'Authorization': `Bearer ${localStorage.getItem('Token')}`
                     },
 
                 }
@@ -136,7 +136,7 @@ const OrderDetailsNew = ({
                 {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+                        'Authorization': `Bearer ${localStorage.getItem('Token')}`
                     },
 
                 }
@@ -174,7 +174,7 @@ const OrderDetailsNew = ({
                 {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+                        'Authorization': `Bearer ${localStorage.getItem('Token')}`
                     },
 
                 }
@@ -204,7 +204,7 @@ const OrderDetailsNew = ({
                 {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+                        'Authorization': `Bearer ${localStorage.getItem('Token')}`
                     },
 
                 }
@@ -244,13 +244,13 @@ const OrderDetailsNew = ({
                 }
                 console.log('order data', deliveryData)
                 /* after select delivery add it to the order throw request */
-                console.log(`Bearer ${localStorage.getItem('clientToken')}`)
+                console.log(`Bearer ${localStorage.getItem('Token')}`)
                 const setDelivery = await axios.post(`${BASE_URL}choose_delivery`,
                     deliveryData,
                     {
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+                            'Authorization': `Bearer ${localStorage.getItem('Token')}`
                         },
                     }
                 )
@@ -265,7 +265,7 @@ const OrderDetailsNew = ({
                 {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+                        'Authorization': `Bearer ${localStorage.getItem('Token')}`
                     },
 
                 }

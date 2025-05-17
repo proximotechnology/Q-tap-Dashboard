@@ -55,7 +55,7 @@ const CategoryForm = ({ open, handleClose }) => {
         url: `${BASE_URL}meals_categories`,
         data: formData,
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('clientToken')}`,
+          'Authorization': `Bearer ${localStorage.getItem('Token')}`,
           'Content-Type': 'multipart/form-data'
         }
       });
