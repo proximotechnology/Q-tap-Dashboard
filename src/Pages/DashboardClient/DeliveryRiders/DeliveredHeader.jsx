@@ -1,4 +1,4 @@
-import { AppBar, Avatar, Button, Divider, Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, Popover, Switch, Toolbar, Typography } from '@mui/material';
+import { AppBar, Avatar, Button, CircularProgress, Divider, Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, Popover, Switch, Toolbar, Typography } from '@mui/material';
 import { Box, useTheme } from '@mui/system';
 import React, { useState } from 'react'
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
@@ -9,11 +9,20 @@ import BedtimeOutlinedIcon from '@mui/icons-material/BedtimeOutlined';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { useTranslation } from 'react-i18next';
 import Language from '../../../Component/dashboard/TopBar/Language';
-export const DeliveredHeader = ({ totalDeliveredOrders, canceledOrders, deliveredOrders }) => {
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import { BASE_URL } from '../../../utils/helperFunction';
+import { deliveryFetchApi } from './Delivered';
+import { faLeaf } from '@fortawesome/free-solid-svg-icons';
+import { useSelector } from 'react-redux';
+import { selectHeaderData } from '../../../store/client/deliveryOrderSlic';
+export const DeliveredHeader = () => {
     const { t } = useTranslation();
     const theme = useTheme();
+    const logedINUserDataString = localStorage.getItem("UserData")
+    const logedINUserData = logedINUserDataString ? JSON.parse(logedINUserDataString) : null;
     const [anchorEl, setAnchorEl] = useState(null);
-
+    const { totalDeliveredOrders, canceledOrders, deliveredOrders } = useSelector(selectHeaderData)
     const handlePopoverClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -24,12 +33,51 @@ export const DeliveredHeader = ({ totalDeliveredOrders, canceledOrders, delivere
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
-    // حالة الـ Switch الأول
-    const [checkedAv, setCheckedAv] = useState(true);
 
+    // حالة الـ Switch الأول
+    console.log(">>>>>>>>", logedINUserData?.user?.status_rider)
+    const [checkedAv, setCheckedAv] = useState(logedINUserData?.user?.status_rider === "Available");
+    const [statusSwitchloading, setStatusSwitchloading] = useState(false);
+    const changeDeliveryStatus = async () => {
+        const token = localStorage.getItem('Token');
+
+        if (!token) {
+            console.log('No login');
+            toast.error("User not logged in");
+            return;
+        }
+        setStatusSwitchloading(true)
+
+        const data = {
+            "status_rider": checkedAv ? "Busy" : "Available"
+        }
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        };
+
+        try {
+            const res = await axios.post(`${BASE_URL}${deliveryFetchApi.action.changeStatus}`, data, { headers })
+            if (res.data.success === true) {
+                setCheckedAv(!checkedAv);
+
+                localStorage.setItem("UserData", JSON.stringify({ ...logedINUserData, user: res.data.restaurant_staff }))
+
+            }
+            console.log("change", res, data)
+        } catch (error) {
+            console.log(error)
+            toast.error(error)
+        } finally {
+            setStatusSwitchloading(false)
+        }
+    }
     const handleChangeAv = () => {
-        setCheckedAv(!checkedAv);
+
+        changeDeliveryStatus();
     };
+
+
     // حالة الـ Switch الثاني
     const [checked, setChecked] = useState(false);
 
@@ -79,7 +127,7 @@ export const DeliveredHeader = ({ totalDeliveredOrders, canceledOrders, delivere
                                     {t("totalDeliveredOrders")}
                                 </Typography>
                                 <Typography variant="h3" sx={{ color: theme.palette.orangePrimary.main, paddingLeft: "10px" }}>
-                                    {totalDeliveredOrders?totalDeliveredOrders:0}
+                                    {totalDeliveredOrders ? totalDeliveredOrders : 0}
                                 </Typography>
                             </Box>
                         </Grid>
@@ -99,7 +147,7 @@ export const DeliveredHeader = ({ totalDeliveredOrders, canceledOrders, delivere
                                     <CalendarMonthIcon sx={{ fontSize: "15px" }} />
                                 </Box>
                                 <Typography variant="h3" color="limegreen">
-                                    {deliveredOrders?deliveredOrders:0}
+                                    {deliveredOrders ? deliveredOrders : 0}
                                 </Typography>
                             </Box>
                         </Grid>
@@ -118,12 +166,12 @@ export const DeliveredHeader = ({ totalDeliveredOrders, canceledOrders, delivere
                                     <CalendarMonthIcon sx={{ fontSize: "15px" }} />
                                 </Box>
                                 <Typography variant="h3" color="#E02828">
-                                    {canceledOrders?canceledOrders:0}
+                                    {canceledOrders ? canceledOrders : 0}
                                 </Typography>
                             </Box>
                         </Grid>
                     </Grid>
-                    {showDetails && <DayDeliveredDetails onClose={toggleDetails}  totalDeliveredOrders={totalDeliveredOrders} canceledOrders={canceledOrders}  deliveredOrders={deliveredOrders}/>}
+                    {showDetails && <DayDeliveredDetails onClose={toggleDetails} totalDeliveredOrders={totalDeliveredOrders} canceledOrders={canceledOrders} deliveredOrders={deliveredOrders} />}
                     <Box
                         aria-describedby={id}
                         onClick={handlePopoverClick}
@@ -142,100 +190,11 @@ export const DeliveredHeader = ({ totalDeliveredOrders, canceledOrders, delivere
 
                         <KeyboardArrowDownOutlinedIcon sx={{ fontSize: "20px", color: theme.palette.orangePrimary.main }} />
                     </Box>
-                    <Popover disableScrollLock
-                        id={id}
-                        open={open}
-                        anchorEl={anchorEl}
-                        onClose={handlePopoverClose}
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'left',
-                        }}
-                    >
-                        <Box sx={{ width: 200 }}>
-                            <Box className='iamhere' sx={{ padding: '20px 0px 0px 20px', display: 'flex', alignItems: 'center', flexDirection: 'row', marginBottom: '20px', gap: '10px' }}>
-                                <Avatar sx={{ bgcolor: theme.palette.orangePrimary.main, width: 40, height: 40 }}>
-                                    <PersonOutlinedIcon sx={{ color: "white" }} />
-                                </Avatar>
-                                <Box>
-                                    <Typography variant="h6" sx={{ fontSize: "12px" }}>User01</Typography>
-                                    <Typography variant="body2" sx={{ fontSize: "11px" }} color="textSecondary">+123 3456 789</Typography>
-                                </Box>
-                            </Box>
-                            <Divider />
-
-                            <List sx={{ padding: "0px 5px" }}>
-                                <ListItem>
-                                    <Box style={{ display: 'flex', justifyContent: "space-between", alignItems: 'center' }}>
-
-                                        <Box display="flex" alignItems="center" marginRight={"30px"}>
-                                            <LightModeOutlinedIcon sx={{ color: "#575756", fontSize: "18px", marginRight: "5px" }} />
-                                            <Switch defaultChecked
-                                                checked={checked}
-                                                onChange={handleChange}
-                                                sx={{
-                                                    width: 30,
-                                                    height: 17,
-                                                    padding: 0,
-                                                    display: 'flex',
-                                                    '& .MuiSwitch-switchBase': {
-                                                        padding: 0, // حجم الـ switch نفسه
-                                                        '&.Mui-checked': {
-                                                            transform: 'translateX(14px)',
-                                                            color: '#fff',
-                                                            '& + .MuiSwitch-track': {
-                                                                opacity: 1,
-                                                                backgroundColor: '#E0E0E0',
-                                                            },
-                                                        },
-                                                    },
-                                                    '& .MuiSwitch-thumb': {
-                                                        width: 15, // عرض الدائرة
-                                                        height: 15, // ارتفاع الدائرة
-                                                        boxShadow: 'none',
-                                                        color: theme.palette.orangePrimary.main,
-                                                    },
-                                                    '& .MuiSwitch-track': {
-                                                        borderRadius: 16 / 2,
-                                                        opacity: 1,
-                                                        backgroundColor: '#D3D3D3',
-                                                        height: 13, // ارتفاع الـ track
-                                                    },
-                                                }}
-                                            />
-                                            <BedtimeOutlinedIcon sx={{ color: "#575756", fontSize: "18px", marginLeft: "5px" }} />
-                                        </Box>
-
-                                        <Language />
-                                    </Box>
-                                </ListItem>
-
-
-                                <Divider />
-
-                                <ListItem sx={{ cursor: "pointer" }} onClick={handlePopoverClose}>
-                                    <ListItemIcon>
-                                        <span class="icon-messenger" style={{ fontSize: "18px", color: theme.palette.orangePrimary.main, }} ></span>
-                                    </ListItemIcon>
-                                    <ListItemText primary="Support"
-                                        primaryTypographyProps={{
-                                            sx: { color: '#575756', fontSize: '11px', marginLeft: "-20px" }
-                                        }} />
-                                </ListItem>
-                                <Divider />
-
-                                <ListItem sx={{ cursor: "pointer" }} onClick={handlePopoverClose}>
-                                    <ListItemIcon>
-                                        <img src="/assets/logout.svg" alt="icon" style={{ width: "16px", height: "16px" }} />
-                                    </ListItemIcon>
-                                    <ListItemText primary="Logout"
-                                        primaryTypographyProps={{
-                                            sx: { color: '#575756', fontSize: '11px', marginLeft: "-20px" }
-                                        }} />
-                                </ListItem>
-                            </List>
-                        </Box>
-                    </Popover>
+                    {/* id,open,anchorEl,handlePopoverClose,theme,checked,handleChange,userData */}
+                    <DS id={id} open={open} anchorEl={anchorEl} handlePopoverClose={handlePopoverClose} theme={theme} checked={checked} handleChange={handleChange} userData={{
+                        phone: logedINUserData?.user.phone
+                        , name: logedINUserData?.user.name
+                    }} />
 
                 </Toolbar>  {/*  top Bar  */}
 
@@ -247,52 +206,63 @@ export const DeliveredHeader = ({ totalDeliveredOrders, canceledOrders, delivere
                         {t('openStatus')}
                     </Button>
 
-                    <Box >
-                        {checkedAv ?
-                            <Typography sx={{ display: "flex", textAlign: "center", alignItems: "center" }} >
-                                <Box sx={{ width: "6px", height: "6px", backgroundColor: "#2FD35E", borderRadius: "50%", marginRight: "5px" }}></Box>
-                                <Typography variant="subtitle2" sx={{ color: "#2FD35E", marginRight: "15px" }}> {t("Available")}</Typography>
-                            </Typography>
-                            :
-                            <Typography sx={{ display: "flex", textAlign: "center", alignItems: "center" }}>
-                                <Box sx={{ width: "6px", height: "6px", backgroundColor: "#E02828", borderRadius: "50%", marginRight: "5px" }}></Box>
-                                <Typography variant="subtitle2" sx={{ color: "#E02828", marginRight: "15px" }}> {t("unAvailable")}</Typography>
-                            </Typography>
-                        }
-                    </Box>
-                    <Switch defaultChecked
-                        checked={checkedAv}
-                        onChange={handleChangeAv}
-                        sx={{
-                            width: 30,
-                            height: 17,
-                            padding: 0,
-                            display: 'flex',
-                            '& .MuiSwitch-switchBase': {
-                                padding: 0,
-                                '&.Mui-checked': {
-                                    transform: 'translateX(15px)',
-                                    color: '#fff',
-                                    '& + .MuiSwitch-track': {
-                                        opacity: 1,
-                                        backgroundColor: '#E0E0E0',
+
+                    {
+
+                        statusSwitchloading
+                            ? (
+                                <CircularProgress
+                                    size={24}
+                                    sx={{
+                                        color: 'white',
+                                        alignItems: "center"
+                                    }}
+                                />
+                            ) : (<><Box >
+                                {checkedAv ?
+                                    <Typography sx={{ display: "flex", textAlign: "center", alignItems: "center" }} >
+                                        <Box sx={{ width: "6px", height: "6px", backgroundColor: "#2FD35E", borderRadius: "50%", marginRight: "5px" }}></Box>
+                                        <Typography variant="subtitle2" sx={{ color: "#2FD35E", marginRight: "15px" }}> {t("Available")}</Typography>
+                                    </Typography>
+                                    :
+                                    <Typography sx={{ display: "flex", textAlign: "center", alignItems: "center" }}>
+                                        <Box sx={{ width: "6px", height: "6px", backgroundColor: "#E02828", borderRadius: "50%", marginRight: "5px" }}></Box>
+                                        <Typography variant="subtitle2" sx={{ color: "#E02828", marginRight: "15px" }}> {t("unAvailable")}</Typography>
+                                    </Typography>
+                                }
+                            </Box><Switch defaultChecked
+                                checked={checkedAv}
+                                onChange={handleChangeAv}
+                                sx={{
+                                    width: 30,
+                                    height: 17,
+                                    padding: 0,
+                                    display: 'flex',
+                                    '& .MuiSwitch-switchBase': {
+                                        padding: 0,
+                                        '&.Mui-checked': {
+                                            transform: 'translateX(15px)',
+                                            color: '#fff',
+                                            '& + .MuiSwitch-track': {
+                                                opacity: 1,
+                                                backgroundColor: '#E0E0E0',
+                                            },
+                                        },
                                     },
-                                },
-                            },
-                            '& .MuiSwitch-thumb': {
-                                width: 15,
-                                height: 15,
-                                boxShadow: 'none',
-                                color: theme.palette.orangePrimary.main,
-                            },
-                            '& .MuiSwitch-track': {
-                                borderRadius: 16 / 2,
-                                opacity: 1,
-                                backgroundColor: '#D3D3D3',
-                                height: 13,
-                            },
-                        }}
-                    />
+                                    '& .MuiSwitch-thumb': {
+                                        width: 15,
+                                        height: 15,
+                                        boxShadow: 'none',
+                                        color: theme.palette.orangePrimary.main,
+                                    },
+                                    '& .MuiSwitch-track': {
+                                        borderRadius: 16 / 2,
+                                        opacity: 1,
+                                        backgroundColor: '#D3D3D3',
+                                        height: 13,
+                                    },
+                                }}
+                                /></>)}
                 </Box>
             </AppBar>
         </Box>
@@ -302,7 +272,7 @@ export const DeliveredHeader = ({ totalDeliveredOrders, canceledOrders, delivere
 
 
 
-const DayDeliveredDetails = ({ onClose ,totalDeliveredOrders, canceledOrders, deliveredOrders }) => {
+const DayDeliveredDetails = ({ onClose, totalDeliveredOrders, canceledOrders, deliveredOrders }) => {
     const { t } = useTranslation();
     const theme = useTheme();
     return (
@@ -398,4 +368,99 @@ const DayDeliveredDetails = ({ onClose ,totalDeliveredOrders, canceledOrders, de
         </div>
     )
 };
+const DS = ({ id, open, anchorEl, handlePopoverClose, theme, checked, handleChange, userData }) => {
+    return (<Popover disableScrollLock
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handlePopoverClose}
+        anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+        }}
+    >
+        <Box sx={{ width: 200 }}>
+            <Box className='iamhere' sx={{ padding: '20px 0px 0px 20px', display: 'flex', alignItems: 'center', flexDirection: 'row', marginBottom: '20px', gap: '10px' }}>
+                <Avatar sx={{ bgcolor: theme.palette.orangePrimary.main, width: 40, height: 40 }}>
+                    <PersonOutlinedIcon sx={{ color: "white" }} />
+                </Avatar>
+                <Box>
+                    <Typography variant="h6" sx={{ fontSize: "12px" }}>{userData?.name}</Typography>
+                    <Typography variant="body2" sx={{ fontSize: "11px" }} color="textSecondary">{userData?.phone}</Typography>
+                </Box>
+            </Box>
+            <Divider />
 
+            <List sx={{ padding: "0px 5px" }}>
+                <ListItem>
+                    <Box style={{ display: 'flex', justifyContent: "space-between", alignItems: 'center' }}>
+
+                        <Box display="flex" alignItems="center" marginRight={"30px"}>
+                            <LightModeOutlinedIcon sx={{ color: "#575756", fontSize: "18px", marginRight: "5px" }} />
+                            <Switch defaultChecked
+                                checked={checked}
+                                onChange={handleChange}
+                                sx={{
+                                    width: 30,
+                                    height: 17,
+                                    padding: 0,
+                                    display: 'flex',
+                                    '& .MuiSwitch-switchBase': {
+                                        padding: 0, // حجم الـ switch نفسه
+                                        '&.Mui-checked': {
+                                            transform: 'translateX(14px)',
+                                            color: '#fff',
+                                            '& + .MuiSwitch-track': {
+                                                opacity: 1,
+                                                backgroundColor: '#E0E0E0',
+                                            },
+                                        },
+                                    },
+                                    '& .MuiSwitch-thumb': {
+                                        width: 15, // عرض الدائرة
+                                        height: 15, // ارتفاع الدائرة
+                                        boxShadow: 'none',
+                                        color: theme.palette.orangePrimary.main,
+                                    },
+                                    '& .MuiSwitch-track': {
+                                        borderRadius: 16 / 2,
+                                        opacity: 1,
+                                        backgroundColor: '#D3D3D3',
+                                        height: 13, // ارتفاع الـ track
+                                    },
+                                }}
+                            />
+                            <BedtimeOutlinedIcon sx={{ color: "#575756", fontSize: "18px", marginLeft: "5px" }} />
+                        </Box>
+
+                        <Language />
+                    </Box>
+                </ListItem>
+
+
+                <Divider />
+
+                <ListItem sx={{ cursor: "pointer" }} onClick={handlePopoverClose}>
+                    <ListItemIcon>
+                        <span class="icon-messenger" style={{ fontSize: "18px", color: theme.palette.orangePrimary.main, }} ></span>
+                    </ListItemIcon>
+                    <ListItemText primary="Support"
+                        primaryTypographyProps={{
+                            sx: { color: '#575756', fontSize: '11px', marginLeft: "-20px" }
+                        }} />
+                </ListItem>
+                <Divider />
+
+                <ListItem sx={{ cursor: "pointer" }} onClick={handlePopoverClose}>
+                    <ListItemIcon>
+                        <img src="/assets/logout.svg" alt="icon" style={{ width: "16px", height: "16px" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Logout"
+                        primaryTypographyProps={{
+                            sx: { color: '#575756', fontSize: '11px', marginLeft: "-20px" }
+                        }} />
+                </ListItem>
+            </List>
+        </Box>
+    </Popover>)
+}

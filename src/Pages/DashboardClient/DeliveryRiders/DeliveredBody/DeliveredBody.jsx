@@ -32,17 +32,17 @@ export const orders = [
   },
 
 ];
-export const DeliveredBody = ({ preparedOrders, setSelectedOrder, setIsOrderDetailsOpen }) => {
+export const DeliveredBody = ({  setSelectedOrder, setIsOrderDetailsOpen }) => {
   return (
     <OrderProvider>
       <Grid container justifyContent="space-around" sx={{ padding: "0px 30px", marginBottom: "15px" }}>
         <Grid item xs={12} md={4} lg={3}>
-          <DeliveredCard orders={preparedOrders} setSelectedOrder={setSelectedOrder} setIsOrderDetailsOpen={setIsOrderDetailsOpen} />
+          <DeliveredCard  setSelectedOrder={setSelectedOrder} setIsOrderDetailsOpen={setIsOrderDetailsOpen} />
         </Grid>
 
 
         <Grid item xs={12} md={8} lg={8}>
-          <DeliveredTable orders={preparedOrders} setSelectedOrder={setSelectedOrder} setIsOrderDetailsOpen={setIsOrderDetailsOpen} />
+          <DeliveredTable  setSelectedOrder={setSelectedOrder} setIsOrderDetailsOpen={setIsOrderDetailsOpen} />
         </Grid>
       </Grid>
 

@@ -99,7 +99,6 @@ export const OrderBody = () => {
 
 
                     try {
-                        // console.log('admin parsed orders', orders)
                         /* Admin sees two types of orders: 
                                 1 - those served by the waiter 
                                 2 - those prepared by the chef for delivery. The admin can assign a delivery person to them.
@@ -108,7 +107,7 @@ export const OrderBody = () => {
                             {
                                 headers: {
                                     'Content-Type': 'application/json',
-                                    'Authorization': `Bearer ${localStorage.getItem('clientToken')}`
+                                    'Authorization': `Bearer ${localStorage.getItem('Token')}`
                                 },
 
                             }

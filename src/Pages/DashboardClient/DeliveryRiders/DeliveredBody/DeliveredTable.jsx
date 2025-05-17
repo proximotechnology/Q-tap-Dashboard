@@ -4,10 +4,13 @@ import * as XLSX from 'xlsx';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
-import { OrderContext } from './DeliveredContext';
 import { useTranslation } from 'react-i18next';
-export const DeliveredTable = ({ orders, setSelectedOrder, setIsOrderDetailsOpen }) => {
+import { useSelector } from 'react-redux';
+import { selectPreparedOrders } from '../../../../store/client/deliveryOrderSlic';
+
+export const DeliveredTable = ({  setSelectedOrder, setIsOrderDetailsOpen }) => {
   const theme = useTheme();
+  const orders = useSelector(selectPreparedOrders)
   const handleExport = () => {
     const data = [
       {
@@ -126,6 +129,7 @@ export const DeliveredTable = ({ orders, setSelectedOrder, setIsOrderDetailsOpen
           </TableHead>
 
           <TableBody>
+            {console.log("DeliveredTable>>>>>>>>>>>>>", orders)}
             {orders.map((order) => (
               <TableRow key={order.id}>
                 <TableCell sx={{ borderBottom: "none", textAlign: "center" }}>

@@ -139,8 +139,8 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
           headers,
         });
       }
+      console.log("delevery",response);
       if (response.data.success === false) {
-        console.log(response);
         if (response.data.message.pin)
 
           toast.error(response.data.message.pin[0]);

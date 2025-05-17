@@ -1,51 +1,44 @@
 import React, { useContext } from 'react';
-import { Card, Box, Typography, Button, Divider, useTheme } from '@mui/material';
+import { Card, Box, Typography, Button, Divider, useTheme, CircularProgress } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { OrderContext } from './DeliveredContext';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL, formateDate } from '../../../../utils/helperFunction';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { markOrderDelivered, selectActionError, selectActionStatus, selectPreparedOrders } from '../../../../store/client/deliveryOrderSlic';
 
-export const DeliveredCard = ({ orders, setSelectedOrder, setIsOrderDetailsOpen }) => {
+export const DeliveredCard = ({ setSelectedOrder, setIsOrderDetailsOpen }) => {
   const { t } = useTranslation();
   const theme = useTheme();
-
+  const orders = useSelector(selectPreparedOrders)
+  const actionStatus = useSelector(selectActionStatus)
+  const actionError = useSelector(selectActionError)
+  const dispatch = useDispatch()
   const handleOpen = (order) => {
     console.log("open details")
     setSelectedOrder(order);
     setIsOrderDetailsOpen(true)
   }
 
-  const action = {
+  const action = Object.freeze({
     delivered: 'delivered',
     canceled: 'canceled'
-  }
+  })
   const handleDeliveryAction = async (order, action) => {
-    /* 
-    {
-    "order_id":"5",
-    "status":"delivered",
-    "note":"test delivery"
-    } 
-    */
-    const token = localStorage.getItem("Token")
-    const BASE_URL = 'https://api.qutap.co/api/';
+
     const data = {
       order_id: order?.id,
       status: action,
       note: "test delivery"
     }
 
-    const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
-    };
 
     try {
-
-      const res = await axios.post(`${BASE_URL}order_delivered`, data, { headers })
-      console.log(res)
+      dispatch(markOrderDelivered(data)).unwrap()
+      // const res = await axios.post(`${BASE_URL}order_delivered`, data, { headers })
+      // console.log(res)
     }
     catch (error) {
       console.log(error)
@@ -85,8 +78,8 @@ export const DeliveredCard = ({ orders, setSelectedOrder, setIsOrderDetailsOpen 
         />
       </Box> {/*Tabs */}
 
-
-      {orders.map((order) => {
+      {console.log("DeliveredCard>>>>>>>>>>>>>>>>>>", orders)}
+      {orders?.map((order) => {
         const { dayName, formattedDate, time } = formateDate(order.updated_at)
         return (
           <Card sx={{ marginTop: "15px", marginBottom: "30px", borderRadius: "8px" }} key={order.id}>
@@ -154,16 +147,29 @@ export const DeliveredCard = ({ orders, setSelectedOrder, setIsOrderDetailsOpen 
 
               <Box display="flex" justifyContent={"space-between"} alignItems="center">
                 <Typography color="#262624" fontSize="12px" marginTop={"7px"}>{t("orderDetail")}</Typography>
+                {console.log("loading ",actionStatus)}
+                {actionStatus === "loading" ? (
+                  <CircularProgress
+                    size={24}
+                    sx={{
+                      color: 'black',
+                      alignItems: "center"
+                    }} />
+                ) : (
+                  <Button onClick={() => handleOpen(order)}
+                    disabled={actionStatus === "loading"}>
+                    <Typography display={"flex"} sx={{ cursor: "pointer" }}>
 
-                <Typography display={"flex"} sx={{ cursor: "pointer" }}
-                  onClick={() => handleOpen(order)}>
+                      <span class="icon-file" style={{ fontSize: "16px", color: theme.palette.orangePrimary.main }}></span>
+                      <Typography color="textSecondary" fontSize="10px">
+                        <span style={{ borderBottom: "1px solid gray" }}>{t("view")}</span>
+                      </Typography>
+                      <KeyboardArrowRightIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "16px" }} />
+                    </Typography>
+                  </Button>
+                )}
 
-                  <span class="icon-file" style={{ fontSize: "16px", color: theme.palette.orangePrimary.main }}></span>
-                  <Typography color="textSecondary" fontSize="10px">
-                    <span style={{ borderBottom: "1px solid gray" }}>{t("view")}</span>
-                  </Typography>
-                  <KeyboardArrowRightIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "16px" }} />
-                </Typography>
+
               </Box>
               <Divider sx={{ margin: "10px 0px" }} />
             </Box>
@@ -174,21 +180,35 @@ export const DeliveredCard = ({ orders, setSelectedOrder, setIsOrderDetailsOpen 
                 <span style={{ color: theme.palette.orangePrimary.main, fontSize: "8px" }}> EGP</span></Typography>
 
               <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} margin={"20px 0px 15px 0px"}>
-                <Button onClick={() => handleDeliveryAction(order, action.canceled)}>
-                  <Typography
-                    color="black" fontSize="12px" marginLeft={"15px"} ><span class="icon-close"></span> {t("cancel")}
-                  </Typography>
-                </Button>
-                <Button
-                  onClick={() => handleDeliveryAction(order, action.delivered)}
-                  variant="contained" sx={{
-                    background: `linear-gradient(to right, ${theme.palette.gradient.orange}, ${theme.palette.gradient.deepOrange})`, padding: "5px 25px",
-                    color: "white", textTransform: "capitalize", borderRadius: "30px", fontSize: "12px"
-                  }}
-                >
-                  <img src="/assets/balance.svg" alt="icon" style={{ width: "16px", height: "16px", marginRight: "5px" }} /> {t("cashReceived")}
+                {actionStatus === "loading" ? (
+                  <CircularProgress
+                    size={24}
+                    sx={{
+                      color: 'white',
+                      alignItems: "center"
+                    }} />
+                ) : (<>
 
-                </Button>
+                  <Button
+                    disabled={actionStatus === "loading"}
+                    onClick={() => handleDeliveryAction(order, action.canceled)}>
+                    <Typography
+                      color="black" fontSize="12px" marginLeft={"15px"} ><span class="icon-close"></span> {t("cancel")}
+                    </Typography>
+                  </Button>
+                  <Button
+                    onClick={() => handleDeliveryAction(order, action.delivered)}
+                    variant="contained" sx={{
+                      background: `linear-gradient(to right, ${theme.palette.gradient.orange}, ${theme.palette.gradient.deepOrange})`, padding: "5px 25px",
+                      color: "white", textTransform: "capitalize", borderRadius: "30px", fontSize: "12px"
+                    }}
+                  >
+                    <img src="/assets/balance.svg" alt="icon" style={{ width: "16px", height: "16px", marginRight: "5px" }} /> {t("cashReceived")}
+
+                  </Button>
+                </>
+                )}
+
               </Box>
             </Box>
           </Card>

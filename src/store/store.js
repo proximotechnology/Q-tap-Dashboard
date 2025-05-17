@@ -8,6 +8,7 @@ import DiscountMenu from "./client/DiscountMenuSlice"
 import { personalReducer } from "./register/personalSlice"
 import { businessReducer } from "./register/businessSlice"
 import UserData from "./client/userSlic"
+import DeliveryOrder from "./client/deliveryOrderSlic"
 
 export const store = configureStore({
     reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
         DiscountMenu,
         personalStore: personalReducer,
         businessStore: businessReducer,
-        UserData
+        UserData,
+        DeliveryOrder
     }
 }) 
