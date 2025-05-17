@@ -60,6 +60,8 @@ export const Delivered = () => {
         getDeliveryData()
     }, [])
     useEffect(() => {
+        const loginclient = JSON.parse(localStorage.getItem('UserData'));
+        const deliveryId = loginclient?.user?.id;
         const pusher = new Pusher('63b495891d2c3cff9d36', {
             cluster: 'eu',
         });
@@ -69,7 +71,8 @@ export const Delivered = () => {
             console.log('📢 Received from Pusher Delivery:', data);
             // {message : 0:  , type: "done_order"}
             if (data?.type === 'done_order') {
-                dispatch(addPreparedOrder(data.message)); // assuming `data.message` is the new order
+                if (data?.message?.[0]?.orders_processing?.some(order => order?.delivery_rider_id === deliveryId))
+                    dispatch(addPreparedOrder(data.message)); // assuming `data.message` is the new order
             }
         });
 

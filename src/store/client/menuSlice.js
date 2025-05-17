@@ -86,6 +86,7 @@ export const addCategory = createAsyncThunk(
 const initialState = {
     data: [],
     loading: 'idle',
+    status:'',
     error: null
 }
 
@@ -105,6 +106,7 @@ const menuSlice = createSlice({
             })
             .addCase(fetchMenuData.fulfilled, (state, action) => {
                 state.loading = false;
+                state.status = 'success'
                 state.data = action.payload;
             })
             .addCase(fetchMenuData.rejected, (state, action) => {
@@ -159,3 +161,4 @@ const menuSlice = createSlice({
 export default menuSlice.reducer;
 export const {addNewCat} = menuSlice.actions
 export const selectMenuData = (state) => state?.menu?.data;
+export const selectMenuDataStatus = (state) => state.menu.status

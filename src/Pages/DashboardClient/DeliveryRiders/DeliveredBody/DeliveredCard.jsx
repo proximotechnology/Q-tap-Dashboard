@@ -24,7 +24,7 @@ export const DeliveredCard = ({ setSelectedOrder, setIsOrderDetailsOpen }) => {
 
   const action = Object.freeze({
     delivered: 'delivered',
-    canceled: 'canceled'
+    canceled: 'cancelled'
   })
   const handleDeliveryAction = async (order, action) => {
 

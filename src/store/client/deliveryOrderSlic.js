@@ -69,6 +69,7 @@ export const markOrderDelivered = createAsyncThunk(
     async (data) => {
         const token = localStorage.getItem('Token');
         /* {"order_id":"5","status":"delivered","note":"test delivery"}} */
+        console.log("comming data", data)
         const res = await axios.post(`${BASE_URL}order_delivered`, data, {
             headers: {
                 'Content-Type': 'application/json',
@@ -106,26 +107,21 @@ const deliverySlice = createSlice({
             .addCase(fetchPreparedOrders.fulfilled, (state, action) => {
                 if (action.payload.success !== false) {
                     let p = action.payload.prepared_orders?.map(item => parseResponseOrderItem(item))
-                    // parsedOrders = parsedOrders ?? []
-                    console.log('Prepared Orders after parsed', p);
-                    console.log("fetch Prepared Orders>>>>>>>>>>>>>>", p)
+
                     state.preparedOrders = p;
                     state.status = 'succeeded';
                 }
             })
             .addCase(fetchDeliveredOrders.fulfilled, (state, action) => {
                 state.deliveredOrders = action.payload.total_delivered_orders;
-                console.log("fetch Delivered Orders>>>>>>>>>>>>>>", action.payload.total_delivered_orders)
                 state.status = 'succeeded';
             })
             .addCase(fetchTotalDelivered.fulfilled, (state, action) => {
                 state.totalDelivered = action.payload;
-                console.log("fetch Total Delivered>>>>>>>>>>>>>>", action.payload.Total_Delivered_Orders)
                 state.status = 'succeeded';
             })
             .addCase(fetchCanceledOrders.fulfilled, (state, action) => {
                 state.canceledOrders = action.payload.total_Cancaled_delivered_orders;
-                console.log("fetch Canceled Orders>>>>>>>>>>>>>>", action.payload.total_Cancaled_delivered_orders)
                 state.status = 'succeeded';
             })
             /*\
@@ -139,12 +135,21 @@ const deliverySlice = createSlice({
             })
             .addCase(markOrderDelivered.fulfilled, (state, action) => {
                 console.log("markOrderDelivered >> ", action.payload)
-                console.log("markOrderDelivered >> ", action.payload.orders_processing.order_id)
+
+
                 state.actionStatus = 'succeeded';
-                state.preparedOrders = state.preparedOrders.filter(item =>
-                    action.payload.orders_processing.order_id !== item.id
-                )
-                state.deliveredOrders++
+                if (action.payload.success) {
+                    console.log("markOrderDelivered >> cancelled")
+                    state.preparedOrders = state.preparedOrders.filter(item =>
+                        action.payload.orders_processing.order_id !== item.id
+                    )
+                    if (action.payload.orders_processing.status === 'cancelled')
+                        state.canceledOrders++
+                    else
+                        state.deliveredOrders++
+
+                }
+
             }).addCase(markOrderDelivered.rejected, (state, action) => {
                 state.actionStatus = 'failed';
                 state.actionError = action.error.message || 'Something went wrong while marking as delivered.';
