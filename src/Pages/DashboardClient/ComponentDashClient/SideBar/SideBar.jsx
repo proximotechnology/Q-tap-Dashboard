@@ -69,7 +69,7 @@ const Arr2 = [
     {
         text: "Help",
         icon: <img src="/assets/help.svg" alt="icon" style={{ width: "17px", height: "17px" }} />,
-        path: "/help"
+        path: "/help-client"
     },
 ];
 
@@ -209,8 +209,9 @@ export default function SideBar({ isOpen }) {
                                 }}
                                 onClick={() => {
                                     if (item.text === "Logout") {
-                                        localStorage.removeItem("Token");
+                                        localStorage.removeItem("clientToken");
                                     }
+                                    
                                     navigate(item.path);
                                 }}
                             >

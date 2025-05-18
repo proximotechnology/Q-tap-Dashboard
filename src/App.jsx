@@ -67,9 +67,14 @@ import { PasswordResetPageAffiliate } from './Pages/DashboardAffiliate/ResetPass
 import { ResetPageAdmin } from './Pages/DashboardHome/ResetPasswordAdmin/reset/ResetPageAdmin';
 import { ReceivePageAdmin } from './Pages/DashboardHome/ResetPasswordAdmin/receiveCode/ReceivePageAdmin';
 import { PasswordResetPageAdmin } from './Pages/DashboardHome/ResetPasswordAdmin/PasswordReset/PasswordResetPageAdmin';
+import { Help } from './Component/Help/Help'
+
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import ProtectedRoute from './Component/ProtectedRoute/ProtectedRoute';
+import { HelpAffiliate } from './Component/Help/HelpAffiliate';
+import { HelpClient } from './Component/Help/HelpClient';
 
 const queryClient = new QueryClient();
 
@@ -220,12 +225,24 @@ function App() {
       path: "menu-client", // todo: disapple pay button
       element: <MenuClient />,// TODO: style problem here  and logic modification 
     },
+    {
+      path: "help",
+      element: <Help />
+    },
+    {
+      path: "help-client",
+      element: <HelpClient />
+    },
+    {
+      path: "help-affiliate",
+      element: <HelpAffiliate />
+    },
 
 
     //  dashboard-Affiliate
     {
       path: "/",
-      element: <HomeAffiliate />,
+      element: <ProtectedRoute role="affiliate"><HomeAffiliate /></ProtectedRoute>,
       children: [
         {
           index: true,
@@ -241,7 +258,7 @@ function App() {
     // dashboard-client 
     {
       path: "/",
-      element: <HomeClient />,// صفحات الداش بورد بتاعت ال client الأساسية 
+      element: <ProtectedRoute role="client"><HomeClient /></ProtectedRoute>,
       children: [
         {
           index: true,
@@ -290,7 +307,7 @@ function App() {
     // dashboard-Admin
     {
       path: "/",
-      element: <Home />,
+      element: <ProtectedRoute role="admin"><Home /></ProtectedRoute>,
       children: [
         {
           index: true,

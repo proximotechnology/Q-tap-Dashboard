@@ -10,6 +10,7 @@ import { Box } from '@mui/system';
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useTranslation } from 'react-i18next';
 import { Governorates, Country } from './../../../utils/city';
+import { BASE_URL_IMG } from '../../../utils/helperFunction';
 
 export const PersonalInfo = ({
   fullName,
@@ -49,8 +50,8 @@ export const PersonalInfo = ({
       <Grid item xs={12} md={3} sx={{ marginRight: "40px" }}>
         <Box sx={{ textAlign: 'center' }}>
           <Box sx={{
-            width: '100%',
-            height: '100%',
+            width: { xs: "100%", lg: "150px" },
+            height: { xs: "100%", lg: "150px" },
             borderRadius: '50%',
             overflow: 'hidden',
             position: 'relative',
@@ -59,10 +60,11 @@ export const PersonalInfo = ({
             alignItems: 'center',
           }}>
             <img
-              src={selectedImage ? URL.createObjectURL(selectedImage) : "/images/User.jpg"}
+              src={selectedImage ? `${BASE_URL_IMG}${selectedImage}` : "/images/User.jpg"}
               alt="user"
-              width={"200px"} height={"180px"}
-            />
+              width="110%"
+              height="110%"
+              style={{ objectFit: "cover" }} />
             <Box
               component="label"
               htmlFor="image-upload"

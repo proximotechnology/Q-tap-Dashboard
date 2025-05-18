@@ -10,9 +10,10 @@ import { Edit, Logout, Settings } from '@mui/icons-material';
 
 
 
-const UserOptions = ({customSX = {}}) => {
+const UserOptions = ({ customSX = {} }) => {
     const [anchorElUser, setAnchorElUser] = useState(null);
     const openUserPopover = Boolean(anchorElUser);
+    const lang = localStorage.getItem("i18nextLng")
 
     const handleUserClick = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -27,7 +28,7 @@ const UserOptions = ({customSX = {}}) => {
         <><Box
             aria-describedby={openUserPopover ? 'simple-popover' : undefined}
             onClick={handleUserClick}
-            sx={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "3px" ,...customSX,}}>
+            sx={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "3px", ...customSX, }}>
             <IconButton color="inherit" sx={{
                 backgroundColor: theme.palette.orangePrimary.main, borderRadius: '30%', padding: '5px',
                 '&:hover': {
@@ -86,32 +87,32 @@ const UserOptions = ({customSX = {}}) => {
                         </Box>
 
                         <ListItem sx={{ cursor: "pointer" }} oonClick={handleUserClose}>
-                            <ListItemIcon>
-                            <Settings  style={{ fontSize:"20px"}} />
+                            <ListItemIcon sx={{ marginLeft: lang == 'ar' ? "-30px" : '0px' }}>
+                                <Settings style={{ fontSize: "20px" }} />
                             </ListItemIcon>
                             <ListItemText primary="Edit Profile"
                                 primaryTypographyProps={{
-                                    sx: { color: theme.palette.text.gray, fontSize: '12px', marginLeft: "-30px" }
+                                    sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: lang == 'en' ? "-30px" : '', textAlign: lang == "ar" ? "start" : '' }
                                 }} />
                         </ListItem>
 
                         <ListItem sx={{ cursor: "pointer" }} onClick={handleUserClose}>
-                            <ListItemIcon>
+                            <ListItemIcon sx={{ marginLeft: lang == 'ar' ? "-30px" : '0px' }}>
                                 <span class="icon-price-tag" style={{ fontSize: "20px" }}></span>
                             </ListItemIcon>
                             <ListItemText primary="My Subscription"
                                 primaryTypographyProps={{
-                                    sx: { color: theme.palette.text.gray, fontSize: '12px', marginLeft: "-30px" }
+                                    sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: lang == 'en' ? "-30px" : '', textAlign: lang == "ar" ? "start" : '' }
                                 }} />
                         </ListItem>
 
                         <ListItem sx={{ cursor: "pointer" }} onClick={handleUserClose}>
-                            <ListItemIcon>
+                            <ListItemIcon sx={{ marginLeft: lang == 'ar' ? "-30px" : '0px' }}>
                                 <HelpOutlineOutlinedIcon sx={{ fontSize: "20px" }} />
                             </ListItemIcon>
                             <ListItemText primary="FAQ"
                                 primaryTypographyProps={{
-                                    sx: { color: theme.palette.text.gray, fontSize: '12px', marginLeft: "-30px" }
+                                    sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: lang == 'en' ? "-30px" : '', textAlign: lang == "ar" ? "start" : '' }
                                 }} />
                         </ListItem>
 
@@ -120,12 +121,12 @@ const UserOptions = ({customSX = {}}) => {
                             localStorage.removeItem("affiliateToken");
                             navigate('/');
                         }}>
-                            <ListItemIcon>
-                                <Logout  style={{ fontSize:"20px"}} />
+                            <ListItemIcon sx={{ marginLeft: lang == 'ar' ? "-30px" : '0px' }}>
+                                <Logout style={{ fontSize: "20px" }} />
                             </ListItemIcon>
                             <ListItemText primary="Logout"
                                 primaryTypographyProps={{
-                                    sx: { color: theme.palette.text.gray, fontSize: '12px', marginLeft: "-30px" }
+                                    sx: { color: '#5D5D5C', fontSize: '12px', marginLeft: lang == 'en' ? "-30px" : '', textAlign: lang == "ar" ? "start" : '' }
                                 }} />
                         </ListItem>
                     </List>

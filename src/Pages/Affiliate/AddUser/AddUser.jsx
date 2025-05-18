@@ -26,7 +26,8 @@ export const AddUsers = () => {
     const user = location.state?.user; // Get user data from navigation state
     const { data, isLoading, error } = useSelector((state) => state.affiliates);
     const dispatch = useDispatch();
-
+    console.log(data);
+    
     // Personal Info States
     const [fullName, setFullName] = useState('');
     const [phone, setPhone] = useState('');
@@ -67,6 +68,7 @@ export const AddUsers = () => {
             setFullName(data.affiliate?.name || '');
             setPhone(data.affiliate?.mobile || '');
             setEmail(data.affiliate?.email || '');
+            setSelectedImage(data.affiliate?.img || '');
             if (data.affiliate?.birth_date) {
                 const [y, m, d] = data.affiliate.birth_date.split('-');
                 setYear(y);

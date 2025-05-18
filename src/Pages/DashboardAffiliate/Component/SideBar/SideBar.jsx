@@ -128,6 +128,7 @@ export default function SideBar({ isOpen }) {
 
                     }}
                     onClick={() => {
+                        navigate('/help-affiliate')
                     }}
                 >
                     <Message sx={{ color: "rgb(186, 185, 185)", fontSize: "17px" }} />

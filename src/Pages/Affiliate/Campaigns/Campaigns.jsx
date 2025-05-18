@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Card,
@@ -13,20 +12,21 @@ import {
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import axios from "axios";
 import { toast } from "react-toastify";
-import styles from './campaignsCard.module.css'
+import styles from './campaignsCard.module.css';
 import { useTranslation } from "react-i18next";
 import { BASE_URL } from "../../../utils/helperFunction";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const Campaigns = () => {
   const [openForm, setOpenForm] = useState(false);
   const theme = useTheme();
-  const [campaigns, setCampaigns] = useState([]);
   const [name, setName] = useState("");
   const [commission, setCommission] = useState("");
   const [limit, setLimit] = useState("");
   const [loading, setLoading] = useState(false);
   const [editingCampaign, setEditingCampaign] = useState(null);
-  const {t} = useTranslation()
+  const { t } = useTranslation();
+  const queryClient = useQueryClient();
 
   const toggleForm = () => {
     setOpenForm(!openForm);
@@ -38,48 +38,38 @@ const Campaigns = () => {
     }
   };
 
+  // Fetch campaigns from API
   const getCampaigns = async () => {
-    try {
-      const response = await axios.get(
-        `${BASE_URL}campaigns`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
-          },
-        }
-      );
-      setCampaigns(response.data);
-    } catch (error) {
-      console.error("Error fetching campaigns:", error);
-    }
+    const response = await axios.get(`${BASE_URL}campaigns`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+      },
+    });
+    return response.data || [];
   };
 
-  useEffect(() => {
-    let isMounted = true; // Flag to prevent setting state if component is unmounted
-    const fetchCampaigns = async () => {
-      if (isMounted) {
-        await getCampaigns();
-      }
-    };
-    fetchCampaigns();
-    return () => {
-      isMounted = false; // Cleanup to prevent multiple requests
-    }
-  }, []);
+  // UseQuery for fetching campaigns
+  const { data: campaigns = [], isLoading } = useQuery({
+    queryKey: ['campaigns'],
+    queryFn: getCampaigns,
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    onError: (error) => {
+      console.error("Error fetching campaigns:", error);
+    },
+  });
 
   const handleDeleteCampaign = async (campaignId) => {
     try {
-      await axios.delete(
-
-        `${BASE_URL}campaigns/${campaignId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
-          },
-        }
-      );
+      await axios.delete(`${BASE_URL}campaigns/${campaignId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+        },
+      });
       toast.success(t("campaignDeleted"));
-      getCampaigns();
+      // Update cached data
+      queryClient.setQueryData(['campaigns'], (oldData) =>
+        oldData.filter(campaign => campaign.id !== campaignId)
+      );
     } catch (error) {
       console.error("Error deleting campaign:", error);
       toast.error(t("errorDeleteCampaign"));
@@ -101,7 +91,6 @@ const Campaigns = () => {
       };
 
       const response = await axios.post(
-
         `${BASE_URL}campaigns`,
         dataCampaign,
         {
@@ -114,7 +103,11 @@ const Campaigns = () => {
 
       if (response.data) {
         toast.success(t("campaignAddedSucc"));
-        getCampaigns();
+        // Update cached data
+        queryClient.setQueryData(['campaigns'], (oldData) => [
+          response.data,
+          ...(oldData || []),
+        ]);
         setName("");
         setCommission("");
         setLimit("");
@@ -133,7 +126,6 @@ const Campaigns = () => {
   const handleEditCampaign = async (campaignId) => {
     try {
       const response = await axios.put(
-
         `${BASE_URL}campaigns/${campaignId}`,
         {
           name: name.trim(),
@@ -147,7 +139,14 @@ const Campaigns = () => {
         }
       );
       toast.success(t("campaignUpdateSucc"));
-      getCampaigns();
+      // Update cached data
+      queryClient.setQueryData(['campaigns'], (oldData) =>
+        oldData.map(campaign =>
+          campaign.id === campaignId
+            ? { ...campaign, name: name.trim(), commission: parseFloat(commission), limit: parseInt(limit) }
+            : campaign
+        )
+      );
       setEditingCampaign(null);
       setName("");
       setCommission("");
@@ -170,7 +169,7 @@ const Campaigns = () => {
   };
 
   return (
-    <Paper sx={{ borderRadius: "20px", padding: "10px 20px", height: "250px" ,overflow:'auto'}}>
+    <Paper sx={{ borderRadius: "20px", padding: "10px 20px", height: "250px", overflow: 'auto' }}>
       <Box>
         <Box
           sx={{
@@ -320,78 +319,89 @@ const Campaigns = () => {
           gap: "10px",
         }}
       >
-        {campaigns.map((campaign) => (
-          <Card className={styles.card}
-            key={campaign.id}
-            sx={{
-              width: "160px",
-              height: "175px",
-              background: "linear-gradient(to top right,rgba(34, 34, 64, 0.86) 10%, #222240)",
-              borderRadius: "20px",
-              padding: "12px 15px",
-              color: "white",
-              position: "relative",
-              margin:{xs:'auto',sm:'0px'}
-            }}
-          >
-            <Typography
-              variant="body2"
-              sx={{ fontSize: "8px", color: "white" }}
+        {isLoading ? (
+          <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "150px" }}>
+            <Typography>{t("loading")}</Typography>
+          </Box>
+        ) : campaigns.length === 0 ? (
+          <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "150px" }}>
+            <Typography>{t("noCampaigns")}</Typography>
+          </Box>
+        ) : (
+          campaigns.map((campaign) => (
+            <Card
+              className={styles.card}
+              key={campaign.id}
+              sx={{
+                width: "160px",
+                height: "175px",
+                background: "linear-gradient(to top right,rgba(34, 34, 64, 0.86) 10%, #222240)",
+                borderRadius: "20px",
+                padding: "12px 15px",
+                color: "white",
+                position: "relative",
+                margin: { xs: 'auto', sm: '0px' },
+              }}
             >
-              {t("name")}
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{ marginBottom: "8px", fontSize: "18px", color: theme.palette.orangePrimary.main }}
-            >
-              {campaign.name}
-            </Typography>
+              <Typography
+                variant="body2"
+                sx={{ fontSize: "8px", color: "white" }}
+              >
+                {t("name")}
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{ marginBottom: "8px", fontSize: "18px", color: theme.palette.orangePrimary.main }}
+              >
+                {campaign.name}
+              </Typography>
 
-            <Typography
-              variant="body2"
-              sx={{ fontSize: "8px", color: "white" }}
-            >
-              {t("commission")}
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{ marginBottom: "8px", fontSize: "18px", color: theme.palette.orangePrimary.main }}
-            >
-              {campaign.commission}%
-            </Typography>
+              <Typography
+                variant="body2"
+                sx={{ fontSize: "8px", color: "white" }}
+              >
+                {t("commission")}
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{ marginBottom: "8px", fontSize: "18px", color: theme.palette.orangePrimary.main }}
+              >
+                {campaign.commission}%
+              </Typography>
 
-            <Typography
-              variant="body2"
-              sx={{ fontSize: "8px", color: "white" }}
-            >
-              {t("affiliateNo")}
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{ fontSize: "18px", color: theme.palette.orangePrimary.main }}
-            >
-              {campaign.limit}
-            </Typography>
+              <Typography
+                variant="body2"
+                sx={{ fontSize: "8px", color: "white" }}
+              >
+                {t("affiliateNo")}
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{ fontSize: "18px", color: theme.palette.orangePrimary.main }}
+              >
+                {campaign.limit}
+              </Typography>
 
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
-              <IconButton sx={{ color: "white" }}>
-                <span
-                  className="icon-delete"
-                  style={{ fontSize: "15px" , color:"white" }}
-                  onClick={() => handleDeleteCampaign(campaign.id)}
-                ></span>
-              </IconButton>
-              <IconButton sx={{ color: "white" }}>
-                <img
-                  src="/assets/setting.svg"
-                  alt="icon"
-                  style={{ color: "white", width: "16px", height: "16px" }}
-                  onClick={() => openEditForm(campaign)}
-                />
-              </IconButton>
-            </Box>
-          </Card>
-        ))}
+              <Box sx={{ display: "flex", justifyContent: "center" }}>
+                <IconButton sx={{ color: "white" }}>
+                  <span
+                    className="icon-delete"
+                    style={{ fontSize: "15px", color: "white" }}
+                    onClick={() => handleDeleteCampaign(campaign.id)}
+                  ></span>
+                </IconButton>
+                <IconButton sx={{ color: "white" }}>
+                  <img
+                    src="/assets/setting.svg"
+                    alt="icon"
+                    style={{ color: "white", width: "16px", height: "16px" }}
+                    onClick={() => openEditForm(campaign)}
+                  />
+                </IconButton>
+              </Box>
+            </Card>
+          ))
+        )}
       </Box>
     </Paper>
   );

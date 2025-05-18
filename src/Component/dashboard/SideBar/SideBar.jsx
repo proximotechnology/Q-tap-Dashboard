@@ -81,7 +81,7 @@ export default function SideBar({ isOpen, handleToggleSideBar }) {
         {
             text: t("logout"),
             icon: <img src="/assets/logout.svg" alt="icon" style={{ width: "16px", height: "16px" }} />,
-            path: "/"
+            path: "/admin"
         },
         {
             text: t("help"),
@@ -204,7 +204,9 @@ export default function SideBar({ isOpen, handleToggleSideBar }) {
                                             : "gray",
                                 }}
                                 onClick={() => {
-                                    localStorage.removeItem("adminToken");
+                                    if (item.path === '/admin') {
+                                        localStorage.removeItem("adminToken");
+                                    }
                                     // localStorage.setItem("themeMode", "light");
                                     navigate(item.path);
                                 }}
