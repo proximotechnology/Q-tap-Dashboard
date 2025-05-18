@@ -10,6 +10,7 @@ import { Box } from '@mui/system';
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useTranslation } from 'react-i18next';
 import { Country, Governorates } from '../../../../utils/city';
+import { BASE_URL_IMG } from '../../../../utils/helperFunction';
 
 export const PersonalInfo = ({
   fullName,
@@ -49,8 +50,8 @@ export const PersonalInfo = ({
       <Grid item xs={12} md={3} sx={{ marginRight: "40px" }}>
         <Box sx={{ textAlign: 'center' }}>
           <Box sx={{
-            width: '100%',
-            height: '100%',
+            width: { xs: "100%", lg: "150px" },
+            height: { xs: "100%", lg: "150px" },
             borderRadius: '50%',
             overflow: 'hidden',
             position: 'relative',
@@ -59,10 +60,17 @@ export const PersonalInfo = ({
             alignItems: 'center',
           }}>
             <img
-              src={selectedImage ? URL.createObjectURL(selectedImage) : "/images/User.jpg"}
+              src={
+                selectedImage
+                  ? typeof selectedImage === "string"
+                    ? `${BASE_URL_IMG}${selectedImage}`
+                    : URL.createObjectURL(selectedImage)
+                  : "/images/User.jpg"
+              }
               alt="user"
-              width={"200px"} height={"180px"}
-            />
+              width="110%"
+              height="110%"
+              style={{ objectFit: "cover" }} />
             <Box
               component="label"
               htmlFor="image-upload"
@@ -105,7 +113,7 @@ export const PersonalInfo = ({
           <OutlinedInput
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
-            startAdornment={<InputAdornment position="start"><PersonOutlinedIcon sx={{ fontSize: "20px"  , color:"gray"}} /></InputAdornment>}
+            startAdornment={<InputAdornment position="start"><PersonOutlinedIcon sx={{ fontSize: "20px", color: "gray" }} /></InputAdornment>}
             placeholder={t("fullName")}
             required
             sx={{ borderRadius: '6px', marginBottom: "18px", height: '33px', fontSize: "11px" }}
@@ -117,7 +125,7 @@ export const PersonalInfo = ({
           <OutlinedInput
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            startAdornment={<InputAdornment position="start"><PhoneOutlinedIcon sx={{ fontSize: "20px"  , color:"gray"}} /></InputAdornment>}
+            startAdornment={<InputAdornment position="start"><PhoneOutlinedIcon sx={{ fontSize: "20px", color: "gray" }} /></InputAdornment>}
             placeholder={t("mobileNumber")}
             required
             sx={{ borderRadius: '6px', marginBottom: "18px", height: '33px', fontSize: "11px" }}
@@ -130,7 +138,7 @@ export const PersonalInfo = ({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             type="email"
-            startAdornment={<InputAdornment position="start"><MailOutlinedIcon sx={{ fontSize: "20px"  , color:"gray"}} /></InputAdornment>}
+            startAdornment={<InputAdornment position="start"><MailOutlinedIcon sx={{ fontSize: "20px", color: "gray" }} /></InputAdornment>}
             placeholder={t("email")}
             required
             sx={{ borderRadius: '6px', marginBottom: "18px", height: '33px', fontSize: "11px" }}
@@ -203,7 +211,7 @@ export const PersonalInfo = ({
             onChange={(e) => setCountry(e.target.value)}
             displayEmpty
             sx={{ marginBottom: "18px", borderRadius: '6px', height: '33px', fontSize: "10px", color: "gray" }}
-            startAdornment={<InputAdornment position="start"><span className="icon-location-pin" style={{ fontSize: "16px" ,color: "gray" }} /></InputAdornment>}
+            startAdornment={<InputAdornment position="start"><span className="icon-location-pin" style={{ fontSize: "16px", color: "gray" }} /></InputAdornment>}
             error={!!errors.country}
           >
             <MenuItem value="" disabled>{t("country")}</MenuItem>
@@ -225,7 +233,7 @@ export const PersonalInfo = ({
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            startAdornment={<InputAdornment position="start"><span className="icon-padlock" style={{ fontSize: "16px" , color: "gray" }} /></InputAdornment>}
+            startAdornment={<InputAdornment position="start"><span className="icon-padlock" style={{ fontSize: "16px", color: "gray" }} /></InputAdornment>}
             placeholder={t("password")}
             sx={{ borderRadius: '6px', marginBottom: "18px", height: '33px', fontSize: "10px" }}
             error={!!errors.password}
@@ -237,7 +245,7 @@ export const PersonalInfo = ({
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            startAdornment={<InputAdornment position="start"><span className="icon-padlock" style={{ fontSize: "16px" , color: "gray" }} /></InputAdornment>}
+            startAdornment={<InputAdornment position="start"><span className="icon-padlock" style={{ fontSize: "16px", color: "gray" }} /></InputAdornment>}
             placeholder={t("confirmPass")}
             sx={{
               marginBottom: "18px", borderRadius: '10px', height: '33px', fontSize: "12px",
