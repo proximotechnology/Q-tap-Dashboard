@@ -28,6 +28,8 @@ export default function SideBar({ isOpen }) {
     const navigate = useNavigate();
     const theme = useTheme();
     const { t } = useTranslation();
+    const lang = localStorage.getItem("i18nextLng")
+
     return (
         <Box
             sx={{
@@ -66,7 +68,7 @@ export default function SideBar({ isOpen }) {
                                             : theme.palette.text.gray_light,
 
                                 }}
-                                onClick={() => { navigate(item.path); }}
+                                onClick={() => { navigate(item.path) }}
                             >
                                 <ListItemIcon
                                     sx={{
@@ -89,6 +91,12 @@ export default function SideBar({ isOpen }) {
                                 <ListItemText
                                     primary={t(item.text)}
                                     primaryTypographyProps={{ fontSize: "12px" }}
+                                    style={{
+                                        color: item.text.toLowerCase() === "help" ?
+                                            "#D8E0E0" : "inherit",
+                                        textAlign: lang == 'ar' ? "start" : '',
+                                        marginRight: lang == 'ar' ? "10px" : ''
+                                    }}
                                 />
 
                             </ListItemButton>
@@ -100,7 +108,7 @@ export default function SideBar({ isOpen }) {
 
             </List>
             <Box sx={{ marginTop: "auto", textAlign: "center", marginTop: "400px" }}>
-            <Divider sx={{ height: "1px", backgroundColor: "rgb(221, 221, 221)" , width:"80%"}} />
+                <Divider sx={{ height: "1px", backgroundColor: "rgb(221, 221, 221)", width: "80%" }} />
 
                 <ListItemButton
                     sx={{
@@ -117,7 +125,12 @@ export default function SideBar({ isOpen }) {
                     <Logout sx={{ color: "rgb(186, 185, 185)", fontSize: "17px" }} />
                     <ListItemText
                         primary={t("Logout")}
-                        primaryTypographyProps={{ fontSize: "14px", color: "rgb(186, 185, 185)", textAlign: "start" , marginLeft: "10px"}}
+                        primaryTypographyProps={{ fontSize: "14px", color: "rgb(186, 185, 185)" }}
+                        style={{
+                            textAlign: lang == 'ar' ? "start" : '',
+                            marginRight: lang == 'ar' ? "10px" : '',
+                            marginLeft: lang == 'ar' ? "" : '10px'
+                        }}
                     />
                 </ListItemButton>
                 <ListItemButton
@@ -134,7 +147,12 @@ export default function SideBar({ isOpen }) {
                     <Message sx={{ color: "rgb(186, 185, 185)", fontSize: "17px" }} />
                     <ListItemText
                         primary={t("help")}
-                        primaryTypographyProps={{ fontSize: "14px", color: "rgb(186, 185, 185)", textAlign: "start" , marginLeft: "10px"}}
+                        primaryTypographyProps={{ fontSize: "14px", color: "rgb(186, 185, 185)" }}
+                        style={{
+                            textAlign: lang == 'ar' ? "start" : '',
+                            marginRight: lang == 'ar' ? "10px" : '',
+                            marginLeft: lang == 'ar' ? "" : '10px'
+                        }}
                     />
                 </ListItemButton>
             </Box>

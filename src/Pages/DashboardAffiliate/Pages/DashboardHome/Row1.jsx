@@ -23,7 +23,7 @@ export const Row1 = () => {
             }
           );
     
-          console.log('sales data', response)
+        //   console.log('sales data', response)
           setSalesData(response.data)
         } catch (error) {
     

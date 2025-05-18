@@ -41,7 +41,7 @@ export const Row2 = () => {
         }
       );
 
-      console.log('chart data', response)
+      // console.log('chart data', response)
       const clicks = response?.data?.clicksPerMonth;
       const users = response?.data?.users_count_by_month;
 

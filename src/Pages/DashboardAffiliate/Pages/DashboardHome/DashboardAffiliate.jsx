@@ -11,7 +11,7 @@ export const DashboardAffiliate = () => {
   const [userData , setUserData] = useState(null)
 
   const handleAffiliateData = async () => {
-    console.log("get affiliate data")
+    // console.log("get affiliate data")
     try {
       setIsLoading(true);
 
@@ -27,7 +27,7 @@ export const DashboardAffiliate = () => {
         }
       );
 
-      console.log('success login', response)
+      // console.log('success login', response)
       setUserData(response.data.affiliate)
     } catch (error) {
 
