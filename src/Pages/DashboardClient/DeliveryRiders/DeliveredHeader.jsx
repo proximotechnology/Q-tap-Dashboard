@@ -22,7 +22,7 @@ export const DeliveredHeader = () => {
     const logedINUserDataString = localStorage.getItem("UserData")
     const logedINUserData = logedINUserDataString ? JSON.parse(logedINUserDataString) : null;
     const [anchorEl, setAnchorEl] = useState(null);
-    const { totalDeliveredOrders, canceledOrders, deliveredOrders } = useSelector(selectHeaderData)
+    const { totalDelivered, canceledOrders, deliveredOrders } = useSelector(selectHeaderData)
     const handlePopoverClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -87,7 +87,6 @@ export const DeliveredHeader = () => {
     /// deatils
     const [showDetails, setShowDetails] = useState(false);
     const toggleDetails = () => setShowDetails((prev) => !prev);
-    console.log(totalDeliveredOrders, canceledOrders, deliveredOrders)
     return (
         <Box>
             <AppBar position="static" style={{
@@ -127,7 +126,7 @@ export const DeliveredHeader = () => {
                                     {t("totalDeliveredOrders")}
                                 </Typography>
                                 <Typography variant="h3" sx={{ color: theme.palette.orangePrimary.main, paddingLeft: "10px" }}>
-                                    {totalDeliveredOrders ? totalDeliveredOrders : 0}
+                                    {totalDelivered}
                                 </Typography>
                             </Box>
                         </Grid>
@@ -171,7 +170,7 @@ export const DeliveredHeader = () => {
                             </Box>
                         </Grid>
                     </Grid>
-                    {showDetails && <DayDeliveredDetails onClose={toggleDetails} totalDeliveredOrders={totalDeliveredOrders} canceledOrders={canceledOrders} deliveredOrders={deliveredOrders} />}
+                    {showDetails && <DayDeliveredDetails onClose={toggleDetails} totalDeliveredOrders={totalDelivered} canceledOrders={canceledOrders} deliveredOrders={deliveredOrders} />}
                     <Box
                         aria-describedby={id}
                         onClick={handlePopoverClick}

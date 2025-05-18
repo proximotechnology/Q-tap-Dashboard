@@ -188,7 +188,7 @@ function App() {
     },
     {
       path: "order-history",
-      element: <OrderHistory />, // done
+      element: <ProtectedRouteClient allowedRoles={['admin']} redirectPath={'/order-body'}><OrderHistory /></ProtectedRouteClient>, // done
     },
     {
       path: "order",
@@ -225,7 +225,7 @@ function App() {
 
     {
       path: "menu-client", // todo: disapple pay button
-      element: <MenuClient />,// TODO: style problem here  and logic modification 
+      element:<ProtectedRouteClient allowedRoles={['admin','cashier']} redirectPath={'/order-body'}><MenuClient /></ProtectedRouteClient> ,// TODO: style problem here  and logic modification 
     },
     {
       path: "help",
@@ -260,7 +260,7 @@ function App() {
     // dashboard-client 
     {
       path: "/",
-      element: <ProtectedRouteClient><HomeClient /></ProtectedRouteClient>,
+      element: <ProtectedRouteClient allowedRoles={['admin']} redirectPath={'/'}><HomeClient /></ProtectedRouteClient>,
       children: [
         {
           index: true,

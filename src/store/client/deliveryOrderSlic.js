@@ -117,7 +117,7 @@ const deliverySlice = createSlice({
                 state.status = 'succeeded';
             })
             .addCase(fetchTotalDelivered.fulfilled, (state, action) => {
-                state.totalDelivered = action.payload;
+                state.totalDelivered = action.payload.Total_Delivered_Orders;
                 state.status = 'succeeded';
             })
             .addCase(fetchCanceledOrders.fulfilled, (state, action) => {
