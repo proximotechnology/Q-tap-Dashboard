@@ -281,7 +281,8 @@ const OrderDetailsNew = ({
                 }
             )
             console.log("set delivery res", setDelivery)
-
+             removeOrder(order.id)
+             closeDetails()
         } catch (error) {
             console.log(error)
         } finally {

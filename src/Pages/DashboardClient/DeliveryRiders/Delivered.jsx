@@ -70,7 +70,7 @@ export const Delivered = () => {
         channel.bind('form-submitted', function (data) {
             console.log('📢 Received from Pusher Delivery:', data);
             // {message : 0:  , type: "done_order"}
-            if (data?.type === 'done_order') {
+            if (data?.type === 'choose_delivery_order') {
                 if (data?.message?.[0]?.orders_processing?.some(order => order?.delivery_rider_id === deliveryId))
                     dispatch(addPreparedOrder(data.message)); // assuming `data.message` is the new order
             }
