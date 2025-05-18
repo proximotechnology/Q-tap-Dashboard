@@ -71,6 +71,8 @@ const ProfilePage = () => {
   const data = useSelector(selectGetInfoData)
   const qtap_clients = data?.qtap_clients;
 
+  console.log('qtapce', qtap_clients);
+  
   const [selectedBranch, setSelectedBranch] = useState(localStorage.getItem('selectedBranch') || '');
 
   const [imageFile, setImageFile] = useState(null);

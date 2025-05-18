@@ -27,6 +27,7 @@ import { BASE_URL, BASE_URL_IMG } from '../../../../utils/helperFunction';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectGetInfoData, updateBranchMenu } from '../../../../store/client/clientAdmin';
 import { printFormData } from '../../../../utils/utils';
+import { timeOptions } from '../../../../Component/Business-info/WorkingHoursDays';
 
 
 
@@ -181,7 +182,7 @@ const Menu = () => {
             setLogoImage(file);
         }
     };
-    
+
     const handleBannerUpload = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -897,9 +898,9 @@ const Menu = () => {
                                                     disableScrollLock: true,
                                                 }}
                                             >
-                                                {['5:00 pm', '6:00 pm', '7:00 pm', '8:00 pm', '9:00 pm'].map((time) => (
-                                                    <MenuItem key={time} value={time} sx={{ fontSize: '13px', color: theme.palette.bodyColor.gray_white }}>
-                                                        {time}
+                                                {timeOptions.map((time) => (
+                                                    <MenuItem key={time} value={time} sx={{ color: "gray", fontSize: "12px" }}>
+                                                        <span style={{ fontSize: "10px", color: "gray" }}>{time}</span>
                                                     </MenuItem>
                                                 ))}
                                             </Select>
@@ -921,9 +922,9 @@ const Menu = () => {
                                                     disableScrollLock: true,
                                                 }}
                                             >
-                                                {['7:00 am', '8:00 am', '9:00 am', '10:00 am', '11:00 am'].map((time) => (
-                                                    <MenuItem key={time} value={time} sx={{ fontSize: '13px', color: theme.palette.bodyColor.gray_white }}>
-                                                        {time}
+                                                {timeOptions.map((time) => (
+                                                    <MenuItem key={time} value={time} sx={{ color: "gray", fontSize: "12px" }}>
+                                                        <span style={{ fontSize: "10px", color: "gray" }}>{time}</span>
                                                     </MenuItem>
                                                 ))}
                                             </Select>

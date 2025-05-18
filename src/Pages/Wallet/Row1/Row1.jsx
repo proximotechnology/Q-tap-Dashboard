@@ -119,7 +119,9 @@ export const Row1 = () => {
         </Grid>
       </Grid>
 
-      <Grid width={"20%"}>
+      <Grid sx={{
+        width:{xs:"50%", md:"30%"}
+      }}>
         <Box
           sx={{
             flex: 1,

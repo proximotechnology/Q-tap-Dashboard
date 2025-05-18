@@ -69,7 +69,9 @@ import { ReceivePageAdmin } from './Pages/DashboardHome/ResetPasswordAdmin/recei
 import { PasswordResetPageAdmin } from './Pages/DashboardHome/ResetPasswordAdmin/PasswordReset/PasswordResetPageAdmin';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+const queryClient = new QueryClient();
 
 function App() {
   const routes = createBrowserRouter([
@@ -388,12 +390,14 @@ function App() {
 
   return (
     <Provider store={store}>
-            <div style={{ minHeight: "100vh" }}>
-              <div className="w-100 ">
-                <RouterProvider router={routes}></RouterProvider>
-              </div>
-              <ToastContainer />
-            </div>
+      <QueryClientProvider client={queryClient}>
+        <div style={{ minHeight: "100vh" }}>
+          <div className="w-100 ">
+            <RouterProvider router={routes}></RouterProvider>
+          </div>
+          <ToastContainer />
+        </div>
+      </QueryClientProvider>
     </Provider>
   );
 }

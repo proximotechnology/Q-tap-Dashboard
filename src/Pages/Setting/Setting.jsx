@@ -114,6 +114,7 @@ export const Setting = () => {
             overflowX: 'auto', // Enable horizontal scroll
             scrollSnapType: 'x mandatory', // Snap on horizontal scroll
             scrollBehavior: 'smooth', // Smooth scrolling
+            color:theme.palette.text.gray
           }}
         >
           {tabData.map((tab, index) => (

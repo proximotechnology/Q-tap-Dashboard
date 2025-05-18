@@ -24,7 +24,7 @@ const FinancialCard = () => {
 
   return (
 
-    <Box display="flex" justifyContent="space-around" flexWrap="wrap">
+    <Box display="flex" justifyContent="space-around" flexWrap="wrap" width={"101%"} marginLeft={"-6px"}>
       {financialData.map((data, index) => (
         <Card
           key={index}
@@ -57,18 +57,18 @@ const FinancialCard = () => {
                     <Box sx={{ width: "70px", height: "70px" }}>
                       <CircularProgressbar
                         value={
-                          data.title === "Revenue" ? parseInt(allData.Revenue_Percentage) :
-                            data.title === "Expenses" ? parseInt(allData.Expenses_Percentage) :
-                              data.title === "Withdrawal" ? parseInt(allData.Withdrawal_Percentage) :
-                                data.title === "Balance" ? parseInt(allData.Balance_Percentage) : 0
+                          data.title === "Revenue" ? parseInt(allData.Revenue_Percentage ?? 0) :
+                            data.title === "Expenses" ? parseInt(allData.Expenses_Percentage ?? 0) :
+                              data.title === "Withdrawal" ? parseInt(allData.Withdrawal_Percentage ?? 0) :
+                                data.title === "Balance" ? parseInt(allData.Balance_Percentage ?? 0) : 0
                         }
                         text={
-                          `${data.title === "Revenue" ? allData.Revenue_Percentage :
-                            data.title === "Expenses" ? allData.Expenses_Percentage :
-                              data.title === "Withdrawal" ? allData.Withdrawal_Percentage :
-                                data.title === "Balance" ? allData.Balance_Percentage : 0
-                          }`
+                          `${data.title === "Revenue" ? (allData.Revenue_Percentage ?? 0) :
+                            data.title === "Expenses" ? (allData.Expenses_Percentage ?? 0) :
+                              data.title === "Withdrawal" ? (allData.Withdrawal_Percentage ?? 0) :
+                                data.title === "Balance" ? (allData.Balance_Percentage ?? 0) : 0}`
                         }
+
                         strokeWidth={10}
                         styles={buildStyles({
                           textSize: "20px",

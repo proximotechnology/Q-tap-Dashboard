@@ -30,13 +30,15 @@ import { Logout, Settings } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import Language from "../../../../Component/dashboard/TopBar/Language";
 import { Loader } from "../../../../Component/componetUi/Loader";
+import { fetchClients } from "../../../../store/adminSlice";
+import { useQuery } from "@tanstack/react-query";
 
 export const AddClient = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme();
-    const { t, i18n } = useTranslation();
-  
+  const { t, i18n } = useTranslation();
+
   const { clientData, isEditMode } = location.state || {};
 
   const [anchorElLanguage, setAnchorElLanguage] = useState(null);
@@ -48,6 +50,26 @@ export const AddClient = () => {
   const [personalInfo, setPersonalInfo] = useState({});
   const [businessInfo, setBusinessInfo] = useState([]);
   const [selectedBranchIndex, setSelectedBranchIndex] = useState(0);
+
+  const fetchClients = async () => {
+    const response = await fetch(`${BASE_URL}qtap_clients`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json();
+  };
+
+  const { data, isLoading, error, refetch } = useQuery({
+    queryKey: ["qtap_clients"],
+    queryFn: fetchClients,
+    staleTime: 1000 * 60 * 5, // كاش لمدة 5 دقائق
+  });
 
   const handleLanguageClick = (event) => {
     setAnchorElLanguage(event.currentTarget);
@@ -257,6 +279,7 @@ export const AddClient = () => {
       console.log("result", result);
 
       if (result.status === "success") {
+        refetch()
         toast.success("Client updated successfully!");
         navigate("/client");
       } else {
@@ -272,7 +295,7 @@ export const AddClient = () => {
   };
 
   return (
-    <Box sx={{ backgroundColor: theme.palette.bodyColor.secandary, height: "100%" , minHeight:'100vh' }}>
+    <Box sx={{ backgroundColor: theme.palette.bodyColor.secandary, height: "100%", minHeight: '100vh' }}>
       <Box
         sx={{
           display: "flex",
@@ -289,7 +312,7 @@ export const AddClient = () => {
         </Box>
 
         <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Language />
+          <Language />
           <Box
             aria-describedby={openUserPopover ? "simple-popover" : undefined}
             onClick={handleUserClick}
@@ -497,7 +520,9 @@ export const AddClient = () => {
                 },
               }}
             >
-              <CheckOutlinedIcon sx={{ fontSize: "22px", mr: 1 }} />{t("save")}
+              {loading ? <Loader size={22} /> : <CheckOutlinedIcon sx={{ fontSize: "22px", mr: 1 }} />}
+              {t("save")}
+
             </Button>
           </Grid>
         </Box>

@@ -22,6 +22,7 @@ import * as XLSX from "xlsx";
 import { useTranslation } from "react-i18next";
 import { BASE_URL } from "../../../utils/helperFunction";
 import { Dashboard, Settings } from "@mui/icons-material";
+import { useQuery } from "@tanstack/react-query";
 
 const exportToExcel = (clients) => {
   const worksheet = XLSX.utils.json_to_sheet(clients);
@@ -32,8 +33,8 @@ const exportToExcel = (clients) => {
 
 export const Row2 = () => {
   const theme = useTheme();
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [data, setData] = useState([]);
+  // const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -50,37 +51,28 @@ export const Row2 = () => {
     navigate("/add-client", { state: { isEditMode: false } });
   };
 
-  const getData = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(`${BASE_URL}qtap_clients`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
-        },
-      });
-      const result = await response.json();
-      setData(result);
-    } catch (error) {
-      console.error("Error fetching clients:", error);
-    } finally {
-      setLoading(false);
+  const fetchClients = async () => {
+    const response = await fetch(`${BASE_URL}qtap_clients`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
     }
+    return response.json();
   };
 
-  useEffect(() => {
-    let isMounted = true;
-    const fetchData = async () => {
-      if (isMounted) {
-        await getData();
-      }
-    };
-    fetchData();
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  const { data, isLoading, error, refetch } = useQuery({
+    queryKey: ["qtap_clients"],
+    queryFn: fetchClients,
+    staleTime: 1000 * 60 * 5, // كاش لمدة 5 دقائق
+  });
+
+  console.log("cach data", data );
+  
 
   const updateClientStatus = async (clientId, currentStatus) => {
     const newStatus = currentStatus === "active" ? "inactive" : "active";
@@ -93,7 +85,7 @@ export const Row2 = () => {
         },
       });
       const data = await response.json();
-      getData();
+      refetch();
       return data;
     } catch (error) {
       console.error("Error updating status:", error);
@@ -265,7 +257,7 @@ export const Row2 = () => {
             </TableHead>
 
             <TableBody>
-              {loading ? (
+              {isLoading ? (
                 <TableRow>
                   <TableCell
                     colSpan={6}
@@ -388,8 +380,8 @@ export const Row2 = () => {
                             row.status === "active"
                               ? theme.palette.orangePrimary.main
                               : row.status === "inactive"
-                              ? "gray"
-                              : "white",
+                                ? "gray"
+                                : "white",
                           padding:
                             row.status === "Confirm Payment" ? "5px 9px" : "12px",
                           fontSize: row.status === "Confirm Payment" ? "10px" : "11px",
@@ -423,12 +415,12 @@ export const Row2 = () => {
                     >
                       <IconButton onClick={handleDashboardClick}>
                         <Dashboard
-                          style={{ cursor: "pointer", color:theme.palette.bodyColor.gray_lightBlack50 , fontSize:"20px" }}
+                          style={{ cursor: "pointer", color: theme.palette.bodyColor.gray_lightBlack50, fontSize: "20px" }}
                         />
                       </IconButton>
                       <IconButton onClick={() => handleEditClient(row)}>
                         <Settings
-                          style={{ cursor: "pointer", color:theme.palette.bodyColor.gray_lightBlack50 , fontSize:"20px" }}
+                          style={{ cursor: "pointer", color: theme.palette.bodyColor.gray_lightBlack50, fontSize: "20px" }}
                         />
                       </IconButton>
                     </TableCell>

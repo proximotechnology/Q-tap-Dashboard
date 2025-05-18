@@ -7,6 +7,7 @@ import { DiscountModelAdmin } from './DiscountModelAdmin';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL } from '../../utils/helperFunction';
 import { Settings } from '@mui/icons-material';
+import { useQuery } from '@tanstack/react-query';
 
 export const Pricing = () => {
   const [open, setOpen] = useState(false);
@@ -76,7 +77,7 @@ export const Pricing = () => {
         backgroundColor: theme.palette.bodyColor.secandary,
         margin: '20px',
         marginTop: "70px",
-        minWidth:"200px",
+        minWidth: "200px",
       }}>
         <Box
           sx={{ display: 'flex', justifyContent: 'center', position: "relative", top: "-40px", }}>
@@ -130,31 +131,45 @@ export const Pricing = () => {
             <span className="icon-delete" style={{ color: theme.palette.text.gray, fontSize: "25px" }} />
           </IconButton>
           <IconButton onClick={() => handleSettingsClick({ id, name: title, monthly_price: priceMonthly, yearly_price: priceYearly, description, feature: JSON.stringify(features) })}>
-            <Settings src="/assets/setting.svg" alt="icon" style={{ color: theme.palette.text.gray,fontSize: "25px" }} />
+            <Settings src="/assets/setting.svg" alt="icon" style={{ color: theme.palette.text.gray, fontSize: "25px" }} />
           </IconButton>
         </Box>
       </Box>
     );
   };
 
-  const [pricing, setPricing] = useState([]);
-  // get pricing data from api
-  useEffect(() => {
 
-    fetch(`${BASE_URL}pricing`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
-        setPricing(data.data);
-        // console.log("price data", data);
-      })
-      .catch(error => console.error('Error fetching pricing data:', error));
-  }, []);
+  const getPrice = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}pricing`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      return result.data || []; // أو result.pricing حسب استجابة السيرفر
+
+    } catch (error) {
+      console.error(error.message || "Failed to fetch pricing data");
+      return [];
+    }
+  };
+
+  const token = localStorage.getItem('adminToken');
+
+  const { data: pricing = [], isLoading, isError } = useQuery({
+    queryKey: ['price'],
+    queryFn: getPrice,
+    staleTime: 1000 * 60 * 5,
+    enabled: !!token,
+  });
 
   return (
     <Box sx={{ padding: "0px 20px" }}>

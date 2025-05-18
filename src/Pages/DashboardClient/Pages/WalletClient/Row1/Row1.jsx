@@ -12,7 +12,7 @@ export const Row1 = () => {
   const { t } = useTranslation()
   const theme = useTheme();
   const walletChartClientData = useSelector(selectSalesByDays)
-  console.log("walletChartClientData",walletChartClientData)
+  console.log("walletChartClientData", walletChartClientData)
   const dispatch = useDispatch()
   const handleYearChange = (event) => {
     setYear(event.target.value);
@@ -22,8 +22,8 @@ export const Row1 = () => {
   // Fetch financial data
   React.useEffect(() => {
     dispatch(fetchSales(year))
-  }, [dispatch,year]);
-  
+  }, [dispatch, year]);
+
 
   return (
 
@@ -70,7 +70,9 @@ export const Row1 = () => {
       </Grid>
 
 
-      <Grid width={"20%"}>
+      <Grid sx={{
+        width: { xs: "50%", md: "30%" }
+      }}>
         <Box
           sx={{
             flex: 1,
@@ -112,13 +114,14 @@ export const Row1 = () => {
               zIndex: 1,
             }}
           >
-            {(() => {
+            {/* {(() => {
               const sum = Object.values(walletChartClientData)
                 .map((order) => order.total_revenue || 0)
                 .reduce((acc, curr) => acc + curr, 0);
               return sum > 0 ? (Number.isInteger(sum) ? sum : sum.toFixed(1)) : 0;
-            })()}{" "}
-            <span style={{ fontSize: "20px", opacity: '0.5' }}>£</span>
+            })()}{" "} */}
+            {(walletChartClientData.total_revenue).toFixed(1)}
+            <span style={{ fontSize: "20px", opacity: '0.5' }}> £</span>
           </Typography>
 
 

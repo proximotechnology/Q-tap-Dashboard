@@ -67,7 +67,7 @@ export const Chart2 = ({ dashboardClientData }) => {
                     fill={COLORS[0]}
                     fontSize="18"
                 >
-                    {Number(visitPercentage).toFixed(2)}%
+                    {Number(visitPercentage).toFixed(1)}%
                 </text>
             </PieChart>
 

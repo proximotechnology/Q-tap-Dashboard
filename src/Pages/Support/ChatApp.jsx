@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Grid, Box, List, ListItem, ListItemAvatar, Avatar, ListItemText, Paper, TextField, IconButton, Typography, Divider, Badge } from '@mui/material';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
@@ -14,60 +13,78 @@ import Pusher from 'pusher-js';
 import './chat.css';
 import { BASE_URL } from '../../utils/helperFunction';
 import { useTheme } from '@mui/system';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 const ChatApp = () => {
-  const [customers, setCustomers] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
-  const [messages, setMessages] = useState([]);
   const [messageInput, setMessageInput] = useState('');
   const [anchorEl, setAnchorEl] = useState(null);
   const theme = useTheme();
-  console.log("customers", customers, selectedCustomer, messages);
+  const queryClient = useQueryClient();
 
   // Fetch customers from API
-  const fetchCustomers = useCallback(async () => {
-    try {
-      const token = localStorage.getItem('adminToken');
-
-      const response = await axios.get(`${BASE_URL}customer_info`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setCustomers(response.data.customer_info.map(customer => ({
-        ...customer,
-        hasNewMessage: false,
-        lastMessageTime: customer.created_at,
-      })));
-    } catch (error) {
-      console.error('Error fetching customers:', error);
-    }
-  }, []);
+  const fetchCustomers = async () => {
+    const token = localStorage.getItem('adminToken');
+    const response = await axios.get(`${BASE_URL}customer_info`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data.customer_info.map(customer => ({
+      ...customer,
+      hasNewMessage: false,
+      lastMessageTime: customer.created_at,
+    }));
+  };
 
   // Fetch chat messages for selected customer
-  const fetchMessages = useCallback(async (customerId) => {
-    try {
-      const token = localStorage.getItem('adminToken');
+  const fetchMessages = async (customerId) => {
+    const token = localStorage.getItem('adminToken');
+    const response = await axios.get(`${BASE_URL}chat?customer_id=${customerId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const allMessages = [
+      ...(response.data.customer || []).map(msg => ({
+        ...msg,
+        sender: msg.sender_type === 'customer' ? 'customer' : 'me',
+      })),
+      ...(response.data.support || []).map(msg => ({
+        ...msg,
+        sender: msg.sender_type === 'support' ? 'me' : 'customer',
+      })),
+    ].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+    return allMessages;
+  };
 
-      const response = await axios.get(`${BASE_URL}chat?customer_id=${customerId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const allMessages = [
-        ...(response.data.customer || []).map(msg => ({
-          ...msg,
-          sender: msg.sender_type === 'customer' ? 'customer' : 'me',
-        })),
-        ...(response.data.support || []).map(msg => ({
-          ...msg,
-          sender: msg.sender_type === 'support' ? 'me' : 'customer',
-        })),
-      ].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
-      setMessages(allMessages);
-    } catch (error) {
+  // UseQuery for fetching customers
+  const { data: customers = [], refetch: refetchCustomers } = useQuery({
+    queryKey: ['customers'],
+    queryFn: fetchCustomers,
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    onError: (error) => {
+      console.error('Error fetching customers:', error);
+    },
+  });
+
+  // UseQuery for fetching messages
+  const { data: messages = [], isLoading: isMessagesLoading } = useQuery({
+    queryKey: ['messages', selectedCustomer?.id],
+    queryFn: () => fetchMessages(selectedCustomer.id),
+    enabled: !!selectedCustomer, // Only fetch when selectedCustomer exists
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    onError: (error) => {
       console.error('Error fetching messages:', error);
-    }
-  }, []);
+    },
+    onSuccess: () => {
+      // Clear new message badge for selected customer
+      queryClient.setQueryData(['customers'], (oldData) =>
+        oldData.map(c =>
+          c.id === selectedCustomer?.id ? { ...c, hasNewMessage: false } : c
+        )
+      );
+    },
+  });
 
   // Send message
-  const handleSendMessage = useCallback(async () => {
+  const handleSendMessage = async () => {
     if (!selectedCustomer || !messageInput.trim()) return;
     try {
       const token = localStorage.getItem('adminToken');
@@ -81,18 +98,21 @@ const ChatApp = () => {
       await axios.post(`${BASE_URL}chat`, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setMessages(prev => [
-        ...prev,
-        {
-          message: messageInput,
-          sender: 'me',
-          created_at: new Date().toISOString(),
-        },
+      const newMessage = {
+        message: messageInput,
+        sender: 'me',
+        created_at: new Date().toISOString(),
+      };
+      // Update cached messages
+      queryClient.setQueryData(['messages', selectedCustomer.id], (oldData) => [
+        ...(oldData || []),
+        newMessage,
       ]);
-      setCustomers(prev =>
-        prev.map(c =>
+      // Update customer lastMessageTime
+      queryClient.setQueryData(['customers'], (oldData) =>
+        oldData.map(c =>
           c.id === selectedCustomer.id
-            ? { ...c, lastMessageTime: new Date().toISOString() }
+            ? { ...c, lastMessageTime: newMessage.created_at }
             : c
         )
       );
@@ -100,18 +120,12 @@ const ChatApp = () => {
     } catch (error) {
       console.error('Error sending message:', error);
     }
-  }, [selectedCustomer, messageInput]);
+  };
 
-  // Select customer and fetch their messages
-  const handleSelectCustomer = useCallback((customer) => {
+  // Select customer
+  const handleSelectCustomer = (customer) => {
     setSelectedCustomer(customer);
-    fetchMessages(customer.id);
-    setCustomers(prev =>
-      prev.map(c =>
-        c.id === customer.id ? { ...c, hasNewMessage: false } : c
-      )
-    );
-  }, [fetchMessages]);
+  };
 
   // Pusher setup for real-time updates
   useEffect(() => {
@@ -119,49 +133,45 @@ const ChatApp = () => {
     const channel = pusher.subscribe('notify-channel');
 
     channel.bind('form-submitted', (data) => {
-      console.log('Pusher event received:', data); // Debugging log
+      console.log('Pusher event received:', data);
       if (data?.type === 'chat') {
         const newMessage = data.message;
         if (newMessage.sender_type === 'customer') {
-          // Ensure message is added to the correct customer's chat
+          // Update messages if the message is for the selected customer
           if (selectedCustomer && newMessage.sender_id === selectedCustomer.id) {
-            setMessages(prev => [
-              ...prev,
-              {
-                ...newMessage,
-                sender: 'customer',
-              },
+            const updatedMessage = { ...newMessage, sender: 'customer' };
+            queryClient.setQueryData(['messages', selectedCustomer.id], (oldData) => [
+              ...(oldData || []),
+              updatedMessage,
             ]);
           }
-          setCustomers(prev => {
-            const updated = prev.map(c =>
+          // Update customers list
+          queryClient.setQueryData(['customers'], (oldData) => {
+            if (!oldData) return oldData;
+            return oldData.map(c =>
               c.id === newMessage.sender_id
                 ? {
-                  ...c,
-                  hasNewMessage: c.id !== selectedCustomer?.id,
-                  lastMessageTime: newMessage.created_at,
-                }
+                    ...c,
+                    hasNewMessage: c.id !== selectedCustomer?.id,
+                    lastMessageTime: newMessage.created_at,
+                  }
                 : c
             );
-            return updated;
           });
         }
       } else if (data?.type === 'customer_added') {
         const newCustomer = data.customer;
-        console.log('New customer received:', newCustomer); // Debugging log
-        setCustomers(prev => {
-          // Prevent duplicate customers
-          if (prev.find(c => c.id === newCustomer.id)) {
-            return prev;
+        console.log('New customer received:', newCustomer);
+        queryClient.setQueryData(['customers'], (oldData) => {
+          if (!oldData || oldData.find(c => c.id === newCustomer.id)) {
+            return oldData;
           }
-          return [
-            {
-              ...newCustomer,
-              hasNewMessage: false,
-              lastMessageTime: newCustomer.created_at,
-            },
-            ...prev,
-          ];
+          const updatedCustomer = {
+            ...newCustomer,
+            hasNewMessage: false,
+            lastMessageTime: newCustomer.created_at,
+          };
+          return [updatedCustomer, ...(oldData || [])];
         });
       }
     });
@@ -170,12 +180,7 @@ const ChatApp = () => {
       channel.unbind_all();
       channel.unsubscribe();
     };
-  }, [selectedCustomer]);
-
-  // Initial fetch
-  useEffect(() => {
-    fetchCustomers();
-  }, [fetchCustomers]);
+  }, [selectedCustomer, queryClient]);
 
   // Sort customers by last message time
   const sortedCustomers = useMemo(() => {
@@ -194,7 +199,7 @@ const ChatApp = () => {
         <Typography variant='body2' sx={{ fontSize: '12px', color: theme.palette.text.gray }}>
           Live Chat
         </Typography>
-        <IconButton title='reload if new customer send message' onClick={fetchCustomers} sx={{ color: theme.palette.text.gray }}>
+        <IconButton title='reload if new customer send message' onClick={refetchCustomers} sx={{ color: theme.palette.text.gray }}>
           <RefreshIcon sx={{ fontSize: '18px' }} />
         </IconButton>
       </Box>
@@ -235,7 +240,6 @@ const ChatApp = () => {
                   <ListItemText
                     primary={<Typography sx={{ fontSize: '11px', color: theme.palette.text.gray_light }}>{customer.name}</Typography>}
                     secondary={<Typography sx={{ fontSize: '8px', color: theme.palette.text.gray_light, marginLeft: '10px' }}></Typography>}
-                  // secondary={<Typography sx={{ fontSize: '8px', color: theme.palette.text.gray_light, marginLeft: '10px' }}>{messages && messages.length > 0 ? messages[messages.length - 1].message.slice(0, 25) : customer.email}</Typography>}
                   />
                 </Box>
                 <Typography
@@ -276,31 +280,37 @@ const ChatApp = () => {
                   </Box>
                 </Box>
                 <Divider />
-                {messages.map((msg, index) => (
-                  <Box
-                    key={index}
-                    sx={{
-                      display: 'flex',
-                      justifyContent: msg.sender === 'me' ? 'flex-end' : 'flex-start',
-                    }}
-                  >
+                {isMessagesLoading ? (
+                  <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                    <Typography>Loading messages...</Typography>
+                  </Box>
+                ) : (
+                  messages.map((msg, index) => (
                     <Box
+                      key={index}
                       sx={{
-                        bgcolor: msg.sender === 'me' ? '#E57C00' : '#F1F1F1',
-                        color: msg.sender === 'me' ? 'white' : 'black',
-                        padding: '6px 20px',
-                        margin: '3px 0px',
-                        width: '50%',
-                        maxWidth: '70%',
-                        fontSize: '12px',
-                        borderRadius: msg.sender === 'me' ? '30px 30px 0px 30px' : '30px 30px 30px 0px',
-                        overflowWrap: 'break-word',
+                        display: 'flex',
+                        justifyContent: msg.sender === 'me' ? 'flex-end' : 'flex-start',
                       }}
                     >
-                      {msg.message}
+                      <Box
+                        sx={{
+                          bgcolor: msg.sender === 'me' ? '#E57C00' : '#F1F1F1',
+                          color: msg.sender === 'me' ? 'white' : 'black',
+                          padding: '6px 20px',
+                          margin: '3px 0px',
+                          width: '50%',
+                          maxWidth: '70%',
+                          fontSize: '12px',
+                          borderRadius: msg.sender === 'me' ? '30px 30px 0px 30px' : '30px 30px 30px 0px',
+                          overflowWrap: 'break-word',
+                        }}
+                      >
+                        {msg.message}
+                      </Box>
                     </Box>
-                  </Box>
-                ))}
+                  ))
+                )}
               </Box>
 
               <Box

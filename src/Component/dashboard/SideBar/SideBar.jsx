@@ -12,16 +12,13 @@ import SidebarExtraMobileSection from '../../../Component/SidebarExtraMobileSect
 import { CloseSideBarButton } from "../../MobileSideBarButton/SidebarButton";
 
 
-
-
-
-
-
 export default function SideBar({ isOpen, handleToggleSideBar }) {
     const location = useLocation();
     const navigate = useNavigate();
     const theme = useTheme();
     const { t } = useTranslation()
+    const lang = localStorage.getItem("i18nextLng")
+
 
     const Arr1 = [
         {
@@ -125,7 +122,7 @@ export default function SideBar({ isOpen, handleToggleSideBar }) {
                     // }
                     src={"/images/qtap.png"}
                     alt="Logo"
-                    style={{ width: '130px'  }}
+                    style={{ width: '130px' }}
                 />
 
             </Box>
@@ -173,6 +170,11 @@ export default function SideBar({ isOpen, handleToggleSideBar }) {
                                 <ListItemText
                                     primary={item.text}
                                     primaryTypographyProps={{ fontSize: "12px" }}
+                                    sx={{
+
+                                        textAlign: lang == 'ar' ? "start" : '',
+                                        marginRight: lang == 'ar' ? "10px" : ''
+                                    }}
                                 />
                             </ListItemButton>
                         </Box>
@@ -230,6 +232,8 @@ export default function SideBar({ isOpen, handleToggleSideBar }) {
                                         style: {
                                             color: item.text.toLowerCase() === "help" ?
                                                 "#D8E0E0" : "inherit",
+                                            textAlign: lang == 'ar' ? "start" : '',
+                                            marginRight: lang == 'ar' ? "10px" : ''
                                         }
                                     }}
                                 />
