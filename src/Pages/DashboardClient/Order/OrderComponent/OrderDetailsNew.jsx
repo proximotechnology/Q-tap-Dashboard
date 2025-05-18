@@ -87,7 +87,7 @@ const OrderDetailsNew = ({
             "order_id": order.id,
             "status": "accepted",
             "note": "test",
-            time:preparingTime
+            time: preparingTime
         }
         try {
             setIsLoading(true)
@@ -231,34 +231,6 @@ const OrderDetailsNew = ({
 
             if (isLoading) return;
             setIsLoading(true)
-            /* if older delivery must select delivery to the order to make it done */
-            if (order.type === 'delivery' && !selectedDelivery) { toast.error('plz select Delivery'); return; }
-            if (order.type === 'delivery') {
-                // if( !selectedDelivery)
-                console.log('selected delivery data', selectedDelivery)
-                const deliveryData = {
-                    "order_id": order.id,
-                    "status": "delivery",
-                    "delivery_rider_id": selectedDelivery.id,
-                    "note": ` delivery ${selectedDelivery.name} take order ${order.id}`,
-                }
-                console.log('order data', deliveryData)
-                /* after select delivery add it to the order throw request */
-                console.log(`Bearer ${localStorage.getItem('Token')}`)
-                const setDelivery = await axios.post(`${BASE_URL}choose_delivery`,
-                    deliveryData,
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${localStorage.getItem('Token')}`
-                        },
-                    }
-                )
-
-
-                console.log("set delivery res", setDelivery)
-            }
-
 
             const res = await axios.post(`${BASE_URL}${orderEndPoint.admin.action.orderDone}`,
                 data,
@@ -280,6 +252,43 @@ const OrderDetailsNew = ({
             setIsLoading(false)
         }
     }
+
+    const chooseDelivery = async () => { /* if older delivery must select delivery to the order to make it done */
+        try {
+
+            if (isLoading) return;
+            setIsLoading(true)
+
+            if (!selectedDelivery) { toast.error('plz select Delivery'); return; }
+
+            console.log('selected delivery data', selectedDelivery)
+            const deliveryData = {
+                "order_id": order.id,
+                "status": "delivery",
+                "delivery_rider_id": selectedDelivery.id,
+                "note": ` delivery ${selectedDelivery.name} take order ${order.id}`,
+            }
+            console.log('order data', deliveryData)
+            /* after select delivery add it to the order throw request */
+            console.log(`Bearer ${localStorage.getItem('Token')}`)
+            const setDelivery = await axios.post(`${BASE_URL}choose_delivery`,
+                deliveryData,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('Token')}`
+                    },
+                }
+            )
+            console.log("set delivery res", setDelivery)
+
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
     const adminCloseOrder = async () => {
         removeOrder(order.id)
         closeDetails()
@@ -386,6 +395,7 @@ const OrderDetailsNew = ({
                             </Typography>
                         </Typography>
                     }
+                    {/** delivery order*/}
                     {order?.type === 'delivery' && loginUser.user.role === 'admin' && order.phase !== orderPhaseType.CLOSING &&
                         (
                             <>
@@ -404,64 +414,74 @@ const OrderDetailsNew = ({
                                         {order?.address}
                                     </Typography>
                                 </Typography>
-                                <Typography variant="subtitle1" fontSize="12px" paddingTop="6px">{t("deliveryRiders")}</Typography>
-                                <Box display="flex" alignItems="center"  >
-                                    <TextField
-                                        select
-                                        onChange={e => {
-                                            const selectedId = e.target.value;
-                                            setSelectedDeliveryId(selectedId)
-                                            const selectedItem = delivery.find(item => item.id.toString() === selectedId);
-                                            console.log("selectedItem", selectedItem)
-                                            setSelectedDelivery(selectedItem);
-                                        }
-                                        }
-                                        placeholder={t("deliveryRiders")}
-                                        value={selectedDeliveryId}
-                                        SelectProps={{
-                                            native: true,
-                                        }}
-                                        sx={{
-                                            minWidth: '150px',
-                                            marginRight: '10px',
-                                            '& .MuiInputBase-root': {
-                                                padding: '0px 3px',
-                                                fontSize: '10px',
-                                                height: '30px', borderRadius: "8px", color: "gray"
-                                            },
-                                            '& .MuiInputLabel-root': {
-                                                fontSize: '12px',
-                                            },
+                                {/* choose the delivery */}
+                                {!order?.orders_processing?.find(i => i.status === 'delivered') ?
+                                    (<>
+                                        <Typography variant="subtitle1" fontSize="12px" paddingTop="6px">{t("deliveryRiders")}</Typography>
+                                        <Box display="flex" alignItems="center"  >
+                                            <TextField
+                                                select
+                                                onChange={e => {
+                                                    const selectedId = e.target.value;
+                                                    setSelectedDeliveryId(selectedId)
+                                                    const selectedItem = delivery.find(item => item.id.toString() === selectedId);
+                                                    console.log("selectedItem", selectedItem)
+                                                    setSelectedDelivery(selectedItem);
+                                                }
+                                                }
+                                                placeholder={t("deliveryRiders")}
+                                                value={selectedDeliveryId}
+                                                SelectProps={{
+                                                    native: true,
+                                                }}
+                                                sx={{
+                                                    minWidth: '150px',
+                                                    marginRight: '10px',
+                                                    '& .MuiInputBase-root': {
+                                                        padding: '0px 3px',
+                                                        fontSize: '10px',
+                                                        height: '30px', borderRadius: "8px", color: "gray"
+                                                    },
+                                                    '& .MuiInputLabel-root': {
+                                                        fontSize: '12px',
+                                                    },
 
-                                        }}
-                                    >
-                                        {delivery && delivery?.length > 0 ? (<>
+                                                }}
+                                            >
+                                                {delivery && delivery?.length > 0 ? (<>
 
-                                            <option value="" disabled >No delivery to select</option>
-                                            {delivery?.map((item, index) => (
-                                                <option
-                                                    key={index}
-                                                    value={item.id}
-                                                    style={{ fontSize: '12px', color: 'gray' }}
-                                                >
-                                                    {item.name}
-                                                </option>
-                                            ))}
-                                        </>
-                                        )
-                                            : (
-                                                <option disabled>No delivery to select</option>
-                                            )}
-                                    </TextField>
+                                                    <option value="" disabled >No delivery to select</option>
+                                                    {delivery?.map((item, index) => (
+                                                        <option
+                                                            key={index}
+                                                            value={item.id}
+                                                            style={{ fontSize: '12px', color: 'gray' }}
+                                                        >
+                                                            {item.name}
+                                                        </option>
+                                                    ))}
+                                                </>
+                                                )
+                                                    : (
+                                                        <option disabled>No delivery to select</option>
+                                                    )}
+                                            </TextField>
 
-                                    <IconButton sx={{ backgroundColor: theme.palette.orangePrimary.main, color: 'white', marginRight: '5px', borderRadius: "8px" }}>
-                                        <span class="icon-send" style={{ fontSize: "16px", color: "white" }} />
-                                    </IconButton>
+                                            <IconButton sx={{ backgroundColor: theme.palette.orangePrimary.main, color: 'white', marginRight: '5px', borderRadius: "8px" }}>
+                                                <span class="icon-send" style={{ fontSize: "16px", color: "white" }} />
+                                            </IconButton>
 
-                                    <IconButton sx={{ backgroundColor: theme.palette.secondaryColor.main, color: 'white', borderRadius: "8px" }}>
-                                        <span class="icon-map-1" style={{ fontSize: "16px", color: "white" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span><span class="path14"></span><span class="path15"></span></span>
-                                    </IconButton>
-                                </Box>
+                                            <IconButton sx={{ backgroundColor: theme.palette.secondaryColor.main, color: 'white', borderRadius: "8px" }}>
+                                                <span class="icon-map-1" style={{ fontSize: "16px", color: "white" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span><span class="path14"></span><span class="path15"></span></span>
+                                            </IconButton>
+                                        </Box>
+                                    </>)
+                                    :
+                                    (<>
+                                        <Typography sx={{ color: "gray", fontSize: "11px" }}>
+                                            <span style={{ color: theme.palette.orangePrimary.main, fontSize: "22px" }}> {t("delivered")}</span>
+                                        </Typography>
+                                    </>)}
                             </>
                         )}
                     {/* 
@@ -727,7 +747,31 @@ const OrderDetailsNew = ({
                             </Button>
                         </Grid>
                     </>)}
+                    {order?.phase === orderPhaseType.CHOOSE_DELIVERY && (<>
+                        <Grid item xs={12} display={"flex"}>
+                            <Button
+                                onClick={() => { chooseDelivery() }}
+                                variant="contained"
+                                disabled={isLoading}
+                                sx={{
+                                    textTransform: "capitalize",
+                                    backgroundColor: theme.palette.secondaryColor.main,
+                                    fontSize: "13px",
+                                    width: "70%",
+                                    borderRadius: "20px",
+                                    color: theme.palette.text.black_white,
+                                    '&:hover': {
+                                        backgroundColor: theme.palette.secondaryColor.main,
+                                    }
+                                }}
+                            >
+                                <span class="icon-double-check" style={{ fontSize: "22px", marginRight: "6px" }}><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
 
+                                {t("done")}
+                            </Button>
+                        </Grid>
+                    </>
+                    )}
                     {order?.phase === orderPhaseType.DONING && (<>
                         <Grid item xs={12} display={"flex"}>
                             <Button

@@ -102,26 +102,25 @@ export const OrderBody = () => {
                         /* Admin sees two types of orders: 
                                 1 - those served by the waiter 
                                 2 - those prepared by the chef for delivery. The admin can assign a delivery person to them.
+                                3 - those delivered by delivery rider
                          */
-                        const res = await axios.get(`${BASE_URL}${orderEndPoint[loginclient.user.role].fetch[2]}`,
-                            {
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Authorization': `Bearer ${localStorage.getItem('Token')}`
-                                },
-
-                            }
-                        )
+                        const res = await adminFetchGetPreparedOrdersDelivery()
+                        const res2 = await adminFetchGetDeliveredOrders()
                         let delivryorders = []
-                        console.log('admin fetch', res)
+                        let deliveredOrder = []
+                        console.log('admin fetch delivryorders >>>>', res)
+                        console.log('admin fetch deliveredOrder 2', res2)
                         if (res.data.success !== false) {
-                            delivryorders = res.data.prepared_orders.map((item) => item ? { ...parseResponseOrderItem(item, orderPhaseType.DONING) } : undefined)
+                            delivryorders = res.data.prepared_orders.map((item) => item ? { ...parseResponseOrderItem(item, orderPhaseType.CHOOSE_DELIVERY) } : undefined)
                             delivryorders = delivryorders.filter(order => order !== undefined);
                             delivryorders = delivryorders.filter(order => order.type === "delivery" && !order.orders_processing.some(item => item.status === 'done'));
                             // console.log('admin parsed delivery', delivryorders)
-
-                            setOrders([...delivryorders, ...orders].sort((a, b) => a.id - b.id));
                         }
+                        if (res2.data.success !== false)
+                            deliveredOrder = res2.data.delivered_orders.map((item) => item ? { ...parseResponseOrderItem(item, orderPhaseType.DONING) } : undefined)
+
+                        setOrders([...delivryorders, ...deliveredOrder, ...orders].sort((a, b) => a.id - b.id));
+
                     }
 
                     catch (error) {
@@ -142,6 +141,42 @@ export const OrderBody = () => {
         handleClient()
 
     }, [])
+
+    const adminFetchGetDeliveredOrders = async () => {
+        try {
+            const res = await axios.post(`${BASE_URL}get_delivered_orders`, {},
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('Token')}`
+                    },
+
+                }
+            )
+
+            return res;
+
+        } catch (err) {
+            throw err
+        }
+    }
+    const adminFetchGetPreparedOrdersDelivery = async () => {
+        try {
+            const res = await axios.get(`${BASE_URL}get_prepared_orders_delivery`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('Token')}`
+                    },
+
+                }
+            )
+
+            return res;
+        } catch (err) {
+            throw err
+        }
+    }
     //live update 
     // pusher
     useEffect(() => {
@@ -330,7 +365,13 @@ export const OrderBody = () => {
                         {t("accepted")}
                     </Box>
                     {orders.map((order) => (
-                        (order?.phase === orderPhaseType.PAYING || order?.phase === orderPhaseType.PREPAREING || order?.phase === orderPhaseType.SERVRING || order?.phase === orderPhaseType.DONING)
+                        (
+                            order?.phase === orderPhaseType.PAYING ||
+                            order?.phase === orderPhaseType.PREPAREING ||
+                            order?.phase === orderPhaseType.SERVRING ||
+                            order?.phase === orderPhaseType.DONING ||
+                            order?.phase === orderPhaseType.CHOOSE_DELIVERY
+                        )
                         && (
                             <OrderCard
                                 key={order.id}
@@ -454,12 +495,23 @@ export const orderEndPoint = {
         }
     }
 }
-
-export const orderPhaseType = {
+/* 
+backend :
+--------
+neworder 
+accepted
+payment
+recive
+prepared
+served
+delivred done
+*/
+export const orderPhaseType = Object.freeze({
     ACCEPTING: 'accept',//accept the order',
     PAYING: 'pay',//pay the order',
     PREPAREING: 'perpare',//prepare the order',
     SERVRING: 'served',//order ready to serve',
+    CHOOSE_DELIVERY: 'chooseDelivery',
     DONING: 'done',//order served'
     CLOSING: 'close'
-}
+})

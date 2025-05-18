@@ -75,6 +75,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ProtectedRoute from './Component/ProtectedRoute/ProtectedRoute';
 import { HelpAffiliate } from './Component/Help/HelpAffiliate';
 import { HelpClient } from './Component/Help/HelpClient';
+import ProtectedRouteClient from './Component/ProtectedRoute/ProtectedRouterClient';
 
 const queryClient = new QueryClient();
 
@@ -83,7 +84,8 @@ function App() {
     {
       path: "/",
       element: <HomePage />, // done
-    }, {
+    }, 
+    {
       path: "/affiliate-login",
       element: <HomePageAffiliate />, // done
     },
@@ -258,7 +260,7 @@ function App() {
     // dashboard-client 
     {
       path: "/",
-      element: <ProtectedRoute role="client"><HomeClient /></ProtectedRoute>,
+      element: <ProtectedRouteClient><HomeClient /></ProtectedRouteClient>,
       children: [
         {
           index: true,
