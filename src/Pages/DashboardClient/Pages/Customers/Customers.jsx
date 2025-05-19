@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 //redux
 import { fetchCustomerLog, selectCustomerLog } from '../../../../store/client/clientDashBoardSlice';
 import { useSelector, useDispatch } from 'react-redux';
+import { selectSelectedBranch } from '../../../../store/client/clientAdmin';
 
 export const Customers = () => {
   const { t } = useTranslation();
@@ -42,13 +43,13 @@ export const Customers = () => {
   };
 
 
+  const branchID = useSelector(selectSelectedBranch)
   React.useEffect(() => {
-    const selectedBranch = localStorage.getItem("selectedBranch")
-    if ([fromDate, fromDate, selectedBranch].every(Boolean)) {
-      dispatch(fetchCustomerLog({ branchId: selectedBranch, dateFormate: `${fromDate}/${toDate}` }))
+    if ([fromDate, fromDate, branchID].every(Boolean)) {
+      dispatch(fetchCustomerLog({ branchId: branchID, dateFormate: `${fromDate}/${toDate}` }))
     }
-  }, [dispatch, fromDate, toDate]);
-  
+  }, [dispatch, fromDate, toDate, branchID]);
+
 
   return (
     <Paper sx={{ padding: "15px 30px 50px 30px", borderRadius: "20px", whiteSpace: 'nowrap', overflowX: 'auto' }} >

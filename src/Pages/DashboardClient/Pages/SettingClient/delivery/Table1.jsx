@@ -6,13 +6,15 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { BASE_URL } from '../../../../../utils/helperFunction';
+import { useSelector } from 'react-redux';
+import { selectSelectedBranch } from '../../../../../store/client/clientAdmin';
 
 export const Table1 = () => {
   const { t } = useTranslation();
   const theme = useTheme();
   const [modalOpen, setModalOpen] = useState(false);
   const [deliveryData, setDeliveryData] = useState([]);
-  const selectedBranch = localStorage.getItem("selectedBranch")
+  const branchID = useSelector(selectSelectedBranch)
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [editData, setEditData] = useState(null); // State to hold data for editing
@@ -80,10 +82,10 @@ export const Table1 = () => {
   };
 
   useEffect(() => {
-    if (selectedBranch) {
+    if (branchID) {
       getDeliveryArea();
     }
-  }, [selectedBranch]);
+  }, [branchID]);
 
   const filteredData = (deliveryData || []).filter((row) =>
     row.country.toLowerCase().includes(searchQuery.toLowerCase())

@@ -65,6 +65,7 @@ const dataSlice = createSlice({
         },
         info: {
             data: null,
+            selectedBranch: null,
             loading: 'idle',
             error: null,
         },
@@ -137,8 +138,12 @@ const dataSlice = createSlice({
         },
         updateInfoOnly: (state, action) => {
             state.info.data.qtap_clients = action.payload.client_data;
-        }
-},
+        },
+        updateSelectedBranch: (state, action) => {
+            state.info.selectedBranch = action.payload
+            localStorage.setItem("selectedBranch", action.payload)
+        },
+    },
     extraReducers: (builder) => {
         // Reducers for fetchAreaData
         builder.addCase(fetchAreaData.pending, (state) => {
@@ -160,6 +165,10 @@ const dataSlice = createSlice({
         builder.addCase(fetchGetInfoData.fulfilled, (state, action) => {
             state.info.loading = 'succeeded';
             state.info.data = action.payload;
+            console.log("selected branch", action.payload.qtap_clients.brunchs?.[0].id) //debug log
+            state.info.selectedBranch = action.payload.qtap_clients.brunchs?.[0].id
+
+            localStorage.setItem("selectedBranch", action.payload.qtap_clients.brunchs?.[0].id)
         });
         builder.addCase(fetchGetInfoData.rejected, (state, action) => {
             state.info.loading = 'failed';
@@ -182,7 +191,7 @@ const dataSlice = createSlice({
 });
 
 // Export the async thunks and the reducer
-export const { createArea, deleteArea, updateArea, createTable, deleteTable, updateTable, updateBranchMenu, updateInfoOnly } = dataSlice.actions;
+export const { createArea, deleteArea, updateArea, createTable, deleteTable, updateTable, updateBranchMenu, updateInfoOnly ,updateSelectedBranch } = dataSlice.actions;
 export default dataSlice.reducer;
 
 /*\
@@ -202,6 +211,7 @@ export const selectAreaError = (state) => state.clientLogin.area.error;
 export const selectGetInfoData = (state) => state.clientLogin.info.data;
 export const selectGetInfoLoading = (state) => state.clientLogin.info.loading;
 export const selectGetInfoError = (state) => state.clientLogin.info.error;
+export const selectSelectedBranch = (state) => state.clientLogin.info.selectedBranch; //updateSelectedBranch
 /*\
 *  \ 
 ****| Branch

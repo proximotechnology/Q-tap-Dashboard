@@ -5,8 +5,8 @@ import SideBar from "../../ComponentDashClient/SideBar/SideBar";
 import TopBar from "../../ComponentDashClient/TopBar/TopBar";
 import Content from "../../ComponentDashClient/Content/Content";
 import SidebarButton from "../../../../Component/MobileSideBarButton/SidebarButton";
-import { fetchGetInfoData } from "../../../../store/client/clientAdmin";
-import { useDispatch } from "react-redux";
+import { fetchGetInfoData, selectSelectedBranch } from "../../../../store/client/clientAdmin";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchDashboardData } from "../../../../store/client/clientDashBoardSlice";
 import { useQuery } from "@tanstack/react-query";
 
@@ -16,14 +16,15 @@ export default function HomeClient() {
 
 
     const [isSideBarOpen, setisSideBarOpen] = useState(false);
-    const selectedBranch = localStorage.getItem("selectedBranch");
     const dispatch = useDispatch()
 
     const handleOpenSideBar = () => {
         setisSideBarOpen(!isSideBarOpen)
     }
 
-
+    // const selectedBranch = localStorage.getItem("selectedBranch");
+    const selectedBranch = useSelector(selectSelectedBranch)
+    console.log("selectedBranch homeClient change",selectedBranch) // debug log
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ['dashboard', selectedBranch],
         queryFn: async () => {

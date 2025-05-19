@@ -2,18 +2,19 @@ import { Box } from '@mui/system'
 import React, { useEffect } from 'react'
 import Header from './Header'
 import { Content } from './Content'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { fetchDiscounts } from '../../../../store/client/DiscountMenuSlice'
+import { selectSelectedBranch } from '../../../../store/client/clientAdmin'
 
 
 
 export const Menu = () => {
   const dispatch = useDispatch()
 
+  const branchId = useSelector(selectSelectedBranch)
   useEffect(() => {
-    const selectedBranch = localStorage.getItem("selectedBranch")
-    dispatch(fetchDiscounts(selectedBranch))
-  }, [dispatch])
+    dispatch(fetchDiscounts(branchId))
+  }, [dispatch, branchId])
 
 
   return (

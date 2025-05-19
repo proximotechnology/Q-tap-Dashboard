@@ -29,7 +29,7 @@ import { BASE_URL, BASE_URL_IMG } from '../../../../utils/helperFunction';
 import { Country, Governorates } from './../../../../utils/city';
 import MapWithPin from '../../../../utils/MapWithPin';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectGetInfoData, updateInfoOnly } from '../../../../store/client/clientAdmin';
+import { selectGetInfoData, selectSelectedBranch, updateInfoOnly, updateSelectedBranch } from '../../../../store/client/clientAdmin';
 import { BusinessLang, BusinessTypes, printFormData } from '../../../../utils/utils';
 
 const ProfilePage = () => {
@@ -71,35 +71,34 @@ const ProfilePage = () => {
   const data = useSelector(selectGetInfoData)
   const qtap_clients = data?.qtap_clients;
 
-  
-  const [selectedBranch, setSelectedBranch] = useState(localStorage.getItem('selectedBranch') || '');
 
+  const branchID = useSelector(selectSelectedBranch)
   const [imageFile, setImageFile] = useState(null);
 
   const dispatch = useDispatch()
-  useEffect(() => {
-    const handleStorageChange = (event) => {
-      if (event.key === 'selectedBranch') {
-        const newBranch = event.newValue || '';
-        setSelectedBranch(newBranch);
-      }
-    };
+  // useEffect(() => {
+  //   const handleStorageChange = (event) => {
+  //     if (event.key === 'selectedBranch') {
+  //       const newBranch = event.newValue || '';
+  //       dispatch(updateSelectedBranch(newBranch))
+  //     }
+  //   };
 
-    window.addEventListener('storage', handleStorageChange);
+  //   window.addEventListener('storage', handleStorageChange);
 
-    // Optional: Poll localStorage for same-tab changes
-    const interval = setInterval(() => {
-      const currentBranch = localStorage.getItem('selectedBranch') || '';
-      if (currentBranch !== selectedBranch) {
-        setSelectedBranch(currentBranch);
-      }
-    }, 1000); // Check every 1 second
+  //   // Optional: Poll localStorage for same-tab changes
+  //   const interval = setInterval(() => {
+  //     const currentBranch = localStorage.getItem('selectedBranch') || '';
+  //     if (currentBranch !== selectedBranch) {
+  //       dispatch(updateSelectedBranch(newBranch)
+  //     }
+  //   }, 1000); // Check every 1 second
 
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-      clearInterval(interval); // Clean up interval
-    };
-  }, [selectedBranch]);
+  //   return () => {
+  //     window.removeEventListener('storage', handleStorageChange);
+  //     clearInterval(interval); // Clean up interval
+  //   };
+  // }, [selectedBranch]);
   // Populate state when clientData or selectedBranch changes
   useEffect(() => {
 
@@ -120,8 +119,8 @@ const ProfilePage = () => {
     setConfirmPassword(user?.confirmPassword || '');
 
     // Populate Business Info based on selectedBranch
-    if (selectedBranch) {
-      const branch = qtap_clients?.brunchs?.find((b) => b.id === parseInt(selectedBranch));
+    if (branchID) {
+      const branch = qtap_clients?.brunchs?.find((b) => b.id === parseInt(branchID));
       if (branch) {
         setBusinessName(branch.business_name || '');
         setBusinessPhone(branch.contact_info?.[0]?.business_phone?.split(',')[0] || '');
@@ -131,7 +130,7 @@ const ProfilePage = () => {
         setLatitude(branch.latitude || '');
         setLongitude(branch.longitude || '');
         setBusinessFormat(branch.business_format || '');
-        setBusinessType(branch.business_types  || 'restaurant');
+        setBusinessType(branch.business_types || 'restaurant');
         setLang(branch.default_lang || 'english');
         setTableNumber(branch.tables_number || '1');
         setPaymentTime(branch.payment_time || '');
@@ -139,7 +138,7 @@ const ProfilePage = () => {
         setWebsite(branch.contact_info?.[0]?.website?.split(',')[0] || '');
       }
     }
-  }, [qtap_clients, selectedBranch]); // Depend on qtap_clients directly
+  }, [qtap_clients, branchID]); // Depend on qtap_clients directly
 
   // 
   /* 
@@ -196,7 +195,7 @@ const ProfilePage = () => {
       });
     });
 
-    
+
     if (imageFile) {
       formData.append('img', imageFile);
     }
@@ -213,7 +212,7 @@ const ProfilePage = () => {
         },
         body: formData,
       });
-
+      console.log(">>>>",response) // debug log
       const data = await response.json()
 
 

@@ -13,6 +13,7 @@ import { selectMenuData } from '../../../../store/client/menuSlice';
 const AddOfferModal = ({ open, handleClose, selectedBranch, contentForMenu, onAddSuccess }) => {
     const { t } = useTranslation();
     const theme = useTheme();
+    const [isLoading, selectIsLoading] = useState(false)
     const [formData, setFormData] = useState({
         discount: "",
         before_discount: "",
@@ -46,7 +47,7 @@ const AddOfferModal = ({ open, handleClose, selectedBranch, contentForMenu, onAd
         formDataToSend.append("description", formData.description);
 
         try {
-
+            selectIsLoading(true)
             const response = await axios.post(`${BASE_URL}meals_special_offers`, formDataToSend, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('Token')}`,
@@ -62,6 +63,8 @@ const AddOfferModal = ({ open, handleClose, selectedBranch, contentForMenu, onAd
         } catch (error) {
             console.error('Error adding offer:', error);
             toast.error(t("offer.addErr"));
+        }finally{
+            selectIsLoading(false)
         }
     };
 
@@ -176,6 +179,7 @@ const AddOfferModal = ({ open, handleClose, selectedBranch, contentForMenu, onAd
                                 backgroundColor: '#f18101',
                             },
                         }}
+                        disabled={isLoading}
                     >
                         {t("submit")}
                     </Button>

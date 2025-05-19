@@ -11,6 +11,8 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { AddRole } from './AddRole';
 import { BASE_URL } from '../../../../utils/helperFunction';
+import { useSelector } from 'react-redux';
+import { selectSelectedBranch } from '../../../../store/client/clientAdmin';
 
 export const UserTable = ({ userStaff, getUserStaff }) => {
   const theme = useTheme();
@@ -18,7 +20,7 @@ export const UserTable = ({ userStaff, getUserStaff }) => {
   const [addUserModalOpen, setAddUserModalOpen] = useState(false);
   const [addRoleModalOpen, setAddRoleModalOpen] = useState(false);
 
-  const selectedBranch = localStorage.getItem("selectedBranch")
+  const branchID = useSelector(selectSelectedBranch)
   const { t } = useTranslation();
   const handleToggleVisibility = (rowId) => {
     setVisiblePasswords((prev) => ({
@@ -50,15 +52,15 @@ export const UserTable = ({ userStaff, getUserStaff }) => {
   useEffect(() => {
     let isMounted = true; // Flag to prevent setting state if component is unmounted
     const fetchUserStaff = async () => {
-      if (isMounted && selectedBranch) {
-        await getUserStaff();
+      if (isMounted && branchID) {
+        await getUserStaff(branchID);
       }
     };
     fetchUserStaff();
     return () => {
       isMounted = false; // Cleanup to prevent multiple requests
     };
-  }, [selectedBranch]); // Re-fetch data when selectedBranch changes
+  }, [branchID]); // Re-fetch data when selectedBranch changes
 
   // Handle delete user staff
   const handleDeleteUserStaff = async (id) => {
@@ -73,7 +75,7 @@ export const UserTable = ({ userStaff, getUserStaff }) => {
 
       if (response.data) {
         toast.success(t("userStaff.deleteSucc"));
-        getUserStaff(); // Refresh data after deletion
+        getUserStaff(branchID); // Refresh data after deletion
       }
     } catch (error) {
       console.log("error delete UserStaff ", error);
@@ -147,7 +149,7 @@ export const UserTable = ({ userStaff, getUserStaff }) => {
           </Button>
           <AddUser open={addUserModalOpen} onClose={() => {
             setAddUserModalOpen(false)
-            getUserStaff()
+            getUserStaff(branchID)
           }} />
 
           <Button onClick={() => setAddRoleModalOpen(true)} sx={{ fontSize: "12px", color: theme.palette.orangePrimary.main, display: "flex", cursor: "pointer", textTransform: "capitalize" }}>
