@@ -26,7 +26,6 @@ export const handleClientLoginRedux = createAsyncThunk(
             const response = await axios.post(`${BASE_URL}login`, data, {
                 headers: { 'Content-Type': 'application/json' },
             });
-            console.log(" llog in res>>>>>>>", response)
 
             localStorage.removeItem('clientPassword');
             localStorage.removeItem('clientEmail');
@@ -41,7 +40,6 @@ export const handleClientLoginRedux = createAsyncThunk(
 
             return {...response.data,selected_brunch_id:brunch_id};
         } catch (error) {
-            console.log(" llog in error>>>>>>>", error)
             return rejectWithValue(error.response?.data || error.message);
         }
     }

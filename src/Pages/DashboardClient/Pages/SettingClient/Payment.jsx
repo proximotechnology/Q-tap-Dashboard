@@ -38,7 +38,6 @@ const PaymentGatewayForm = () => {
             }
 
             const response = await fetch(`${BASE_URL}payment`, options);
-            // console.log("response payment", response);
 
             const data = await response.json();
 
@@ -53,7 +52,6 @@ const PaymentGatewayForm = () => {
                 setToken2('');
                 setIframe('');
             }
-            // console.log("data", data);
 
         } catch (error) {
             toast.error(error.message);

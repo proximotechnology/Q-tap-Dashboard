@@ -71,7 +71,6 @@ const ProfilePage = () => {
   const data = useSelector(selectGetInfoData)
   const qtap_clients = data?.qtap_clients;
 
-  console.log('qtapce', qtap_clients);
   
   const [selectedBranch, setSelectedBranch] = useState(localStorage.getItem('selectedBranch') || '');
 
@@ -105,7 +104,6 @@ const ProfilePage = () => {
   useEffect(() => {
 
     if (!qtap_clients) {
-      console.log('No qtap_clients data yet');
       return;
     }
     const [birthYear, birthMonth, birthDay] = qtap_clients.birth_date?.split('-') || [];
@@ -198,10 +196,7 @@ const ProfilePage = () => {
       });
     });
 
-    // If you have an image file to upload
-    // console.log("Logo image:", imageFile);
-    // console.log("Type:", imageFile?.type);
-    // console.log("Instance of File:", imageFile instanceof File);
+    
     if (imageFile) {
       formData.append('img', imageFile);
     }
@@ -221,8 +216,6 @@ const ProfilePage = () => {
 
       const data = await response.json()
 
-      console.log("res:============", data)
-      console.log("REDUX:============", qtap_clients)
 
       if (data.status === "success") {
         toast.success(t("updateSucc"));
@@ -1074,7 +1067,6 @@ export default ProfilePage;
 
 //   // Handle Save Button Click
 //   const handleSave = async () => {
-//     console.log('handleSave called');
 
 //     // Validation checks
 //     if (!password || !confirmPassword) {
@@ -1127,7 +1119,7 @@ export default ProfilePage;
 
 
 //     // Log the request payload
-//     console.log('Request payload:', {
+//    ('Request payload:', {
 //       brunch_id: selectedBranch,
 //       name: fullName,
 //       mobile: phone,
@@ -1155,9 +1147,7 @@ export default ProfilePage;
 //         body: formData,
 //       });
 
-//       console.log('Response status:', response.status);
 //       const responseData = await response.json();
-//       console.log('Response data:', responseData);
 
 //       if (response.ok) {
 //         toast.success(t('updateSucc'));
@@ -1803,7 +1793,6 @@ export default ProfilePage;
 //               size="large"
 //               onClick={() => {
 
-//                 console.log('clicked save')
 //                 handleSave()
 //               }
 

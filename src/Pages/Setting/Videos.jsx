@@ -66,7 +66,6 @@ export const Videos = forwardRef((props, ref) => {
             toast.error(t("plAddAtleastOneVideo"));
             return;
         }
-        console.log(validUrls);
 
         const bundleData = {
             video: validUrls

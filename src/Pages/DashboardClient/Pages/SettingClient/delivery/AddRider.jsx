@@ -40,7 +40,6 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
       );
       if (response.data) {
         setDeliveryAreas(response.data.delivery_areas || []);
-        console.log('Fetched delivery Data:', response.data.delivery_areas);
       }
     } catch (error) {
       console.error('Error fetching delivery Data:', error.response?.data || error.message);
@@ -110,7 +109,6 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
         pin,
         status_rider: status,
       };
-      console.log('formData', formData);
 
 
       const token = localStorage.getItem('Token');
@@ -139,7 +137,6 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
           headers,
         });
       }
-      console.log("delevery",response);
       if (response.data.success === false) {
         if (response.data.message.pin)
 
@@ -149,7 +146,6 @@ const AddRider = ({ open, onClose, getRiderData, editData }) => {
       }
       else if (response.data) {
         toast.success(t(editData ? 'rider updated successfully' : 'rider added successfully'));
-        console.log(response);
 
         onClose();
         getRiderData();

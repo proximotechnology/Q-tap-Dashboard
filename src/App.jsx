@@ -376,7 +376,7 @@ function App() {
 
     const channel = pusher.subscribe('notify-channel');
     channel.bind('form-submitted', function (data) {
-      console.log('📢 Received from Pusher:', data);
+      // console.log('📢 Received from Pusher:', data);
 
       // Handle different types
       switch (data?.type) {

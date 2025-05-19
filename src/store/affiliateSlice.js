@@ -50,11 +50,9 @@ export const affiliateReducer = affiliateSlice.reducer
 //                 'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
 //             }
 //         });
-//         console.log("response", response);
 
 //         if (response.data) {
 //             setClients(Array.isArray(response.data) ? response.data : [response.data]);
-//             console.log('Fetched client:', response.data);
 //         }
 //     } catch (error) {
 //         console.error('Error fetching client data:', error);

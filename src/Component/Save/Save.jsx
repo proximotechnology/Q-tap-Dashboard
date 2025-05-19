@@ -93,7 +93,6 @@ export const Save = () => {
   useEffect(() => {
     // Load business data
     const data = selectedBranch !== null && branches[selectedBranch] ? branches[selectedBranch] : businessData;
-    console.log('Loaded business data:', data);
     if (data) {
       setBusinessName(data.businessName || '');
       setBusinessPhone(data.businessPhone || '');
@@ -292,7 +291,6 @@ export const Save = () => {
         },
       });
 
-      console.log('API Response:', response.data);
 
       if (response.status === 200 || response.status === 201) {
         const { payment_url } = response.data;

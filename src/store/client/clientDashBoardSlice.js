@@ -100,7 +100,6 @@ export const fetchPerformanceData = createAsyncThunk(
 
         try {
             const token = getClientToken();
-            console.log("api fetchPerformanceData - Token:", token);
             const response = await axiosInstance.post(
                 `Performance_restaurant/${selectedYear}`, // Removed BASE_URL
                 {},
@@ -109,7 +108,7 @@ export const fetchPerformanceData = createAsyncThunk(
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${localStorage.getItem('Token')}`,
                     },
-                   
+
                 }
             );
             return response.data;
@@ -132,6 +131,18 @@ export const fetchWalletData = createAsyncThunk(
                     },
                 }
             );
+            /**
+             * data: {
+                        LastYearRevenue:0
+                        Revenue:0
+                        RevenueChangePercentage:"0%"
+                        Withdrawal:0
+                        WithdrawalChangePercentage:"0%"
+                        balance:0
+                        success:true
+                        }
+                       
+             */
             return response.data;
         } catch (error) {
             return rejectWithValue(handleAxiosError(error));

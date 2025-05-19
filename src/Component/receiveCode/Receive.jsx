@@ -27,7 +27,6 @@ export const Receive = () => {
                 user_type: 'qtap_clients', // qtap_affiliate or qtap_clients
             };
 
-            console.log('Request data:', data);
             setIsLoading(true); // Set loading state
 
             const response = await axios.post(`${BASE_URL}receiveOTP`, data, {
@@ -36,7 +35,6 @@ export const Receive = () => {
                 },
             });
 
-            console.log('Response:', response);
 
             if (response.data.status === true) {
                 toast.success('otp sent successfully check your otp');

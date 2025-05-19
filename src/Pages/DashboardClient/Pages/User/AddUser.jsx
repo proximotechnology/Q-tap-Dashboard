@@ -65,7 +65,6 @@ export const AddUser = ({ open, onClose }) => {
             const response = await axios.post(`${BASE_URL}restaurant_user_staff`, staffData, config)
 
             
-            console.log("add user response", response)
             if (response.data.success !== false) {
                 if (response.status === 200) {
                     toast.success(t('add user success'));
@@ -75,9 +74,7 @@ export const AddUser = ({ open, onClose }) => {
                 }
 
             } else {
-                console.log("add user response.data.status === false")
                 if (response.data.errors) {
-                    console.log("WE ARE IN >>>",response.data.errors)
                     toast.error(t('pinAlreadyBeenTakend'));
                     // onClose();
                 }

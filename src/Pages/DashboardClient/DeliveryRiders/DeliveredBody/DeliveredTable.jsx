@@ -129,7 +129,6 @@ export const DeliveredTable = ({  setSelectedOrder, setIsOrderDetailsOpen }) => 
           </TableHead>
 
           <TableBody>
-            {console.log("DeliveredTable>>>>>>>>>>>>>", orders)}
             {orders.map((order) => (
               <TableRow key={order.id}>
                 <TableCell sx={{ borderBottom: "none", textAlign: "center" }}>

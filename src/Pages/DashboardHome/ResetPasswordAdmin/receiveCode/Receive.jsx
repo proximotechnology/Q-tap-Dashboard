@@ -36,7 +36,6 @@ export const Receive = () => {
                 },
             });
 
-            console.log('Response:', response);
 
             if (response.data.status === true) {
 

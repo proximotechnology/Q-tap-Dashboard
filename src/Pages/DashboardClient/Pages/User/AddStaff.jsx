@@ -47,7 +47,6 @@ export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
     }, [selectedBranch, open]); // Removed rolesData, added open for conditional fetch
 
     const handleSave = async () => {
-        console.log("Clicked on add staff");
         setIsLoading(true);
 
         try {
@@ -57,7 +56,6 @@ export const AddStaff = ({ open, onClose, onSave, userStaff }) => {
                 return;
             }
 
-            console.log("Submitting:", { role_id: role, user_id: userId, brunch_id: selectedBranch });
 
             const response = await axios.put(`${BASE_URL}link_user_role/${userId}`, {
                 role_id: role,

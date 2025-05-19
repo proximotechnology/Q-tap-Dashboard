@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, CssBaseline, useTheme } from "@mui/material";
 
 import SideBar from "../../ComponentDashClient/SideBar/SideBar";
@@ -7,21 +7,36 @@ import Content from "../../ComponentDashClient/Content/Content";
 import SidebarButton from "../../../../Component/MobileSideBarButton/SidebarButton";
 import { fetchGetInfoData } from "../../../../store/client/clientAdmin";
 import { useDispatch } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { fetchDashboardData } from "../../../../store/client/clientDashBoardSlice";
+import { useQuery } from "@tanstack/react-query";
 
 
 export default function HomeClient() {
     const theme = useTheme()
-    // const user = localStorage.getItem("")
-    // const allowedRoles = ["admin"]
 
 
     const [isSideBarOpen, setisSideBarOpen] = useState(false);
+    const selectedBranch = localStorage.getItem("selectedBranch");
+    const dispatch = useDispatch()
 
     const handleOpenSideBar = () => {
         setisSideBarOpen(!isSideBarOpen)
     }
-    const dispatch = useDispatch()
+
+
+    const { data, isLoading, isError, error } = useQuery({
+        queryKey: ['dashboard', selectedBranch],
+        queryFn: async () => {
+            const action = await dispatch(fetchDashboardData(selectedBranch));
+            if (fetchDashboardData.fulfilled.match(action)) {
+                return action.payload;
+            } else {
+                throw new Error(action.error?.message || 'Failed to fetch dashboard data');
+            }
+        },
+        staleTime: 5 * 60 * 1000, // optional
+    });
+
     useEffect(() => {
         dispatch(fetchGetInfoData())
     }, [dispatch])

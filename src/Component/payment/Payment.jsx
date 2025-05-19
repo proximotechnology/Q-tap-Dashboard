@@ -21,7 +21,6 @@ export const Payment = () => {
   const [selectedPlan, setSelectedPlan] = useState(null); // { plan, pricingWay }
   const [discountCode, setDiscountCode] = useState('');
   const [isLoading, setIsLoading] = useState(true); // حالة تحميل جديدة
-  // console.log("branches", branches);
   const dispatch = useDispatch();
   const personalData = useSelector((state) => state.personalStore.personalData);
   const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
@@ -57,7 +56,6 @@ export const Payment = () => {
         .then(response => response.json())
         .then(data => {
           setPricing(data.data);
-          // console.log("price data register", data);
         })
         .catch(error => console.error('Error fetching pricing data:', error)),
 
@@ -71,7 +69,6 @@ export const Payment = () => {
         .then(response => response.json())
         .then(data => {
           setDiscounts(data.discounts);
-          // console.log("discount data register", data.discounts);
         })
         .catch(error => console.error('Error fetch discount data:', error)),
     ])
@@ -157,7 +154,6 @@ export const Payment = () => {
       dispatch(updatePersonalData({ discount_id: null }));
     }
 
-    console.log('Total Price:', totalPrice);
     navigate('/save');
   };
 

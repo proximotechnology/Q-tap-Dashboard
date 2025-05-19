@@ -62,7 +62,6 @@ const CategoryForm = ({ open, handleClose }) => {
 
       if (response.data) {
         toast.success(t("category.addSucc"));
-        console.log("----", response.data)
         dispatch(addNewCat(response.data))
         // reload page to get new category whic added now
         const today = new Date().toLocaleDateString();

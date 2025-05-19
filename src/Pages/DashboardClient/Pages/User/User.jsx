@@ -21,10 +21,8 @@ export const User = () => {
                 if (response.data) {
                     setUserStaff(response.data.resturant_users || []);
                 }
-                console.log("userStaff data response ", response.data);
             } catch (error) {
                 if (error.response?.status === 429 && retries > 0) {
-                    console.log(`Retrying... attempts left: ${retries}`);
                     setTimeout(() => fetchWithRetry(retries - 1, delay * 2), delay);
                 } else {
                     console.log("error userStaff data ", error);

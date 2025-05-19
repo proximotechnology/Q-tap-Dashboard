@@ -64,7 +64,6 @@ export const LoginAdmin = () => {
                 }
             );
 
-            console.log('API Response:', response.data); // Debug log
 
             if (response?.data?.user) {
                 setApiSuccess(t("logInSuccess"));

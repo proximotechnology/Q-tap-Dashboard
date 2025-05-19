@@ -129,9 +129,7 @@ const Menu = () => {
         });
 
         // Append serving ways
-        console.log("prepare servingWays dataa", servingWays)
         servingWays.forEach(way => {
-            console.log("prepare dataa", way)
             formData.append('serving_ways[]', way);
         });
 
@@ -159,8 +157,6 @@ const Menu = () => {
                 body: formData,
             });
             const data = await response.json()
-            console.log("response updata =>>>>>>>>>>>>", data)
-            console.log("clientData redux>>>>>>>>>>>>>>>>>>>>>>>", dataRexud.qtap_clients.brunchs[0])
             if (response.ok) {
                 toast.success(t("menus.updateSucc"));
                 dispatch(updateBranchMenu(data.data))//TODO: UPDATA Should return new object
@@ -391,7 +387,6 @@ const Menu = () => {
                                     value={mode}
                                     exclusive
                                     onChange={(e, newValue) => { // Get value from second parameter
-                                        console.log("toggle mode", newValue);
                                         setMode(newValue);
                                     }}
                                     sx={{

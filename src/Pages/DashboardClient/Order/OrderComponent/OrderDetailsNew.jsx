@@ -29,7 +29,6 @@ const OrderDetailsNew = ({
     const [delivery, setDelivery] = useState([]);
     const [selectedDelivery, setSelectedDelivery] = useState(null)
     const [selectedDeliveryId, setSelectedDeliveryId] = useState("")
-    // console.log('OrderDetailsNew ', order)
     useEffect(() => {
         const getDelivery = async () => {
             try {
@@ -113,7 +112,6 @@ const OrderDetailsNew = ({
             localStorage.setItem('chefAcceptedOrder', fnorder)
             updateOrderPhase(order.id, orderPhaseType.PREPAREING)
 
-            // console.log('accept order', res)
         } catch (error) {
             console.log('accept error', error)
         } finally {
@@ -151,7 +149,6 @@ const OrderDetailsNew = ({
             localStorage.setItem('chefAcceptedOrder', fnorder)
 
             removeOrder(order.id)
-            console.log("prepared res", res)
         } catch (error) {
             console.log(error)
         } finally {
@@ -160,7 +157,6 @@ const OrderDetailsNew = ({
         }
     }
     const cashierReceivePaymentRequest = async () => {
-        console.log('payment reveived')
         try {
             const data = {
                 "order_id": order.id,
@@ -179,7 +175,6 @@ const OrderDetailsNew = ({
 
                 }
             )
-            console.log('res payment', res)
             removeOrder(order.id)
         } catch (error) {
             console.log(error)
@@ -211,7 +206,6 @@ const OrderDetailsNew = ({
             )
 
             removeOrder(order.id)
-            console.log("prepared res", res)
         } catch (error) {
             console.log(error)
         } finally {
@@ -261,16 +255,13 @@ const OrderDetailsNew = ({
 
             if (!selectedDelivery) { toast.error('plz select Delivery'); return; }
 
-            console.log('selected delivery data', selectedDelivery)
             const deliveryData = {
                 "order_id": order.id,
                 "status": "delivery",
                 "delivery_rider_id": selectedDelivery.id,
                 "note": ` delivery ${selectedDelivery.name} take order ${order.id}`,
             }
-            console.log('order data', deliveryData)
             /* after select delivery add it to the order throw request */
-            console.log(`Bearer ${localStorage.getItem('Token')}`)
             const setDelivery = await axios.post(`${BASE_URL}choose_delivery`,
                 deliveryData,
                 {
@@ -280,8 +271,8 @@ const OrderDetailsNew = ({
                     },
                 }
             )
-            console.log("set delivery res", setDelivery)
-
+             removeOrder(order.id)
+             closeDetails()
         } catch (error) {
             console.log(error)
         } finally {
@@ -326,7 +317,6 @@ const OrderDetailsNew = ({
                     {/* order details - > meal : name , quantity and price */}
                     {order?.meal_id?.map((id, index) => {
                         const item = order?.meals.find(item => item.id == id);
-                        console.log('order', order, 'item', item)
                         return (
                             <Box
                                 key={index}
@@ -425,7 +415,6 @@ const OrderDetailsNew = ({
                                                     const selectedId = e.target.value;
                                                     setSelectedDeliveryId(selectedId)
                                                     const selectedItem = delivery.find(item => item.id.toString() === selectedId);
-                                                    console.log("selectedItem", selectedItem)
                                                     setSelectedDelivery(selectedItem);
                                                 }
                                                 }

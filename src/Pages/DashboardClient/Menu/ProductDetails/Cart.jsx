@@ -25,7 +25,6 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, setCartItems 
     const [total, setTotal] = useState(0)
     useEffect(() => {
         setTotal(calculateTotalPrice())
-        console.log('cart item ', cartItems)
     }, [cartItems])
 
     const calculateTotalPrice = () => { /// TODO: what if the user select multi size of same meal
@@ -51,7 +50,6 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, setCartItems 
         }
         let totalCal = calsubtotal - caldiscount
         totalCal += caltax
-        console.log('cart.jsx total ', totalCal)
         return totalCal.toFixed(2);
     }
 
@@ -60,7 +58,6 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, setCartItems 
         let totalTax = 0;
 
         if (item.selectedSize) {// if user select size 
-            console.log('item tax ', item.Tax)
             if (item.selectedSize === 'S') { subTotal += item.quantity * item.price_small; totalTax += item.Tax * item.price_small / 100; }
             if (item.selectedSize === 'M') { subTotal += item.quantity * item.price_medium; totalTax += item.Tax * item.price_medium / 100; }
             if (item.selectedSize === 'L') { subTotal += item.quantity * item.price_large; totalTax += item.Tax * item.price_large / 100; }

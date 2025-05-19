@@ -21,10 +21,8 @@ export const DeliveredDetails = ({ selectedOrder, isOrderDetailsOpen, setSelecte
   };
   const { t } = useTranslation();
   const theme = useTheme();
-  console.log("opened details panel", selectedOrder)
 
   const closePanel = () => {
-    console.log("close")
     setIsOrderDetailsOpen(false)
     setSelectedOrder(null)
   }

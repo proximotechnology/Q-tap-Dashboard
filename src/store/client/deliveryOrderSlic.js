@@ -69,7 +69,6 @@ export const markOrderDelivered = createAsyncThunk(
     async (data) => {
         const token = localStorage.getItem('Token');
         /* {"order_id":"5","status":"delivered","note":"test delivery"}} */
-        console.log("comming data", data)
         const res = await axios.post(`${BASE_URL}order_delivered`, data, {
             headers: {
                 'Content-Type': 'application/json',
@@ -97,7 +96,6 @@ const deliverySlice = createSlice({
     reducers: {
         addPreparedOrder: (state, action) => {
             // parse then save 
-            console.log('push order', action.payload[0])
             let parsedOrder = parseResponseOrderItem(action.payload[0])
             state.preparedOrders.push(parsedOrder)
         },
@@ -134,12 +132,10 @@ const deliverySlice = createSlice({
                 state.actionError = null;
             })
             .addCase(markOrderDelivered.fulfilled, (state, action) => {
-                console.log("markOrderDelivered >> ", action.payload)
 
 
                 state.actionStatus = 'succeeded';
                 if (action.payload.success) {
-                    console.log("markOrderDelivered >> cancelled")
                     state.preparedOrders = state.preparedOrders.filter(item =>
                         action.payload.orders_processing.order_id !== item.id
                     )

@@ -121,11 +121,9 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
 
                 }
             )
-            console.log(response)
             setTable(response.data.tables)
         } catch (error) {
             console.log(error)
-            console.log(error?.response?.data?.error)
             if (error?.response?.data?.error === 'Unauthorized.' && error?.status === 403) {
                 toast.error(t("yourNotAuthorized"))
             }

@@ -17,7 +17,6 @@ export const fetchDiscounts = createAsyncThunk(
             });
 
             if (response.data) {
-                console.log("response discount", response.data.discounts);
                 return response.data.discounts || [];
             } else {
                 return []; // Return an empty array if response.data is null or undefined
@@ -47,7 +46,7 @@ const discountsSlice = createSlice({
         },
         deleteDiscounts: (state, action) => {
             state.discounts = state.discounts.filter(
-                (dis) => { console.log(dis.id, "!==", action.payload); return dis.id !== action.payload }
+                (dis) => { return dis.id !== action.payload }
             )
         },
         updataDiscounts: (state, action) => {

@@ -20,7 +20,6 @@ export const PaymentInfo = ({
   const theme = useTheme();
   const handleSelect = (option) => {
     setSelectedOption(option);
-    console.log(option);
     
 
   };

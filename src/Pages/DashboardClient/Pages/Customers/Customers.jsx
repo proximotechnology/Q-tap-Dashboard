@@ -45,7 +45,6 @@ export const Customers = () => {
   React.useEffect(() => {
     const selectedBranch = localStorage.getItem("selectedBranch")
     if ([fromDate, fromDate, selectedBranch].every(Boolean)) {
-      console.log(`api call  ${selectedBranch}/${fromDate}/${toDate}`)
       dispatch(fetchCustomerLog({ branchId: selectedBranch, dateFormate: `${fromDate}/${toDate}` }))
     }
   }, [dispatch, fromDate, toDate]);

@@ -53,7 +53,6 @@ export const FeedbackAdmin = () => {
 
             if (response.data) {
                 setFeedbackData(response.data);
-                // console.log('Fetched feedback:', response.data);
             }
         } catch (error) {
             console.error('Error fetching feedback data:', error);
@@ -81,7 +80,6 @@ export const FeedbackAdmin = () => {
     // toggle the publishing status of the feedback
     const publishFeedback = async (id, currentStatus) => {
         const newStatus = currentStatus === "yes" ? "no" : "yes";
-        // console.log('newStatus:', newStatus, currentStatus);
 
 
         await axios.put(`${BASE_URL}feedback_client/${id}`, {

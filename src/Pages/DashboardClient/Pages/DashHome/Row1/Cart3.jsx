@@ -18,7 +18,6 @@ export const Cart3 = () => {
   //redux
   const dispatch = useDispatch()
   const performanceClientData = useSelector(selectPerformance)
-  console.log("preformance",performanceClientData)
   // Calculate totals from performanceClientData
   const { subscriptionsTotal, ordersTotal } = React.useMemo(() => {
     if (!performanceClientData) return { subscriptionsTotal: 0, ordersTotal: 0 };

@@ -26,7 +26,6 @@ export const AddUsers = () => {
     const user = location.state?.user; // Get user data from navigation state
     const { data, isLoading, error } = useSelector((state) => state.affiliates);
     const dispatch = useDispatch();
-    console.log(data);
     
     // Personal Info States
     const [fullName, setFullName] = useState('');

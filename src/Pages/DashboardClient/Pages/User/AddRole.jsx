@@ -64,7 +64,6 @@ export const AddRole = ({ open, onClose, onSave }) => {
             customers_log: checkedItems['Customers Log'] ? '1' : '0',
             brunch_id: localStorage.getItem("selectedBranch"),
         };
-        console.log(roleData);
         
         try {
             const token = localStorage.getItem('Token');

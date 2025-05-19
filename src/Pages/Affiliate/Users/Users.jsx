@@ -37,10 +37,8 @@ export const Users = () => {
   const handleClick = (event, user) => {
     setAnchorEl(event.currentTarget);
     setSelectedUser(user);
-    // console.log("user======================", user);
 
   };
-  // console.log("sletected user", selectedUser);
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -143,7 +141,6 @@ export const Users = () => {
   const filteredUsers = allUsers.filter(user =>
     user.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
-  console.log("filteredUsers", filteredUsers);
   return (
     <Box>
       <Paper sx={{ padding: "15px", borderRadius: 5, minHeight: "60vh", maxHeight: "82vh" }}>

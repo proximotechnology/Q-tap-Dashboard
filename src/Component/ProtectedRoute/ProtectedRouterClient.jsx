@@ -10,7 +10,6 @@ const ProtectedRouteClient = ({ allowedRoles,redirectPath, children }) => {
             const userData = JSON.parse(userDataString)
             return userData?.user.user_type === "qtap_clients" &&  allowedRoles.includes(userData?.user.role)
         } catch (error) {
-            console.log("")
             return false
         }
 

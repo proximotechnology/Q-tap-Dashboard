@@ -36,7 +36,6 @@ export const Delivered = () => {
     const getDeliveryData = async () => {
         const loginclient = JSON.parse(localStorage.getItem('UserData'));
         if (!loginclient) {
-            console.log('No login');
             toast.error("User not logged in");
             return;
         }
@@ -68,9 +67,9 @@ export const Delivered = () => {
 
         const channel = pusher.subscribe('notify-channel');
         channel.bind('form-submitted', function (data) {
-            console.log('📢 Received from Pusher Delivery:', data);
+            // console.log('📢 Received from Pusher Delivery:', data);
             // {message : 0:  , type: "done_order"}
-            if (data?.type === 'done_order') {
+            if (data?.type === 'choose_delivery_order') {
                 if (data?.message?.[0]?.orders_processing?.some(order => order?.delivery_rider_id === deliveryId))
                     dispatch(addPreparedOrder(data.message)); // assuming `data.message` is the new order
             }

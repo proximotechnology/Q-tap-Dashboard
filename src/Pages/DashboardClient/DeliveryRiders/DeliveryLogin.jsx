@@ -75,7 +75,6 @@ export const DeliveryLogin = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   const handleDeliveryLogin = async () => {
-    console.log("delivery_rider login")
     try {
 
       const data = {
@@ -99,7 +98,6 @@ export const DeliveryLogin = () => {
         }
       );
 
-      console.log('success login', response)
       localStorage.setItem('Token', response.data.token);
       localStorage.setItem('UserData', JSON.stringify(response.data));
       localStorage.setItem("clientName", response.data.user.name);
