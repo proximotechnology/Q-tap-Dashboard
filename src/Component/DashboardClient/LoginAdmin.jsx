@@ -59,8 +59,8 @@ export const LoginAdmin = () => {
                     window.location.href = 
                     `${sessionStorage.getItem("redirectBack")}` +
                     `?token=${localStorage.getItem("Token")}` +
-                    `&name=${localStorage.getItem("userName")}` +
-                    `&email=${localStorage.getItem("userEmail")}`;
+                    `&name=${localStorage.getItem("UserName")}` +
+                    `&email=${localStorage.getItem("UserEmail")}`;
                 } else {
                     navigate("/dashboard-client")
                 }
