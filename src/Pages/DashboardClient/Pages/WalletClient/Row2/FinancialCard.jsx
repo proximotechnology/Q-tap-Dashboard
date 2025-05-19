@@ -6,6 +6,7 @@ import financialData from "./FinancialData";
 import { useTranslation } from "react-i18next";
 import { fetchWalletData, selectWallet } from "../../../../../store/client/clientDashBoardSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { selectSelectedBranch } from "../../../../../store/client/clientAdmin";
 
 const Financial = ({
   allData,
@@ -99,15 +100,15 @@ const FinancialCard = () => {
 
   const walletClientData = useSelector(selectWallet)
   // Fetch financial data
+  const branchId = useSelector(selectSelectedBranch)
   React.useEffect(() => {
-    const branchId = localStorage.getItem("selectedBranch")
     if (walletClientData.length === 0) {
       dispatch(fetchWalletData({ branchId, year }));
 
     } else {
       setAllData(walletClientData);
     }
-  }, [dispatch, year, walletClientData]);
+  }, [dispatch, year, walletClientData, branchId]);
 
 
 

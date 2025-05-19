@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit"
 import { affiliateReducer } from "./affiliateSlice"
 import { adminReducer } from "./adminSlice"
 import clientDashBoard from "./client/clientDashBoardSlice"
-import clientLogin from "./client/clientAdmin"
+import clientInfo from "./client/clientAdmin"
 import menu from "./client/menuSlice"
 import DiscountMenu from "./client/DiscountMenuSlice"
 import { personalReducer } from "./register/personalSlice"
@@ -14,13 +14,16 @@ export const store = configureStore({
     reducer: {
         affiliates: affiliateReducer,
         admins: adminReducer,
-        clientDashBoard,
-        clientLogin,
-        menu,
-        DiscountMenu,
-        personalStore: personalReducer,
         businessStore: businessReducer,
-        UserData,
-        DeliveryOrder
+        personalStore: personalReducer,
+        /* 
+        qtabClient 
+        */
+        clientDashBoard,            // client role : admin
+        clientLogin: clientInfo,    // client role : admin ->> contain branches
+        menu,                       // client role : admin
+        DiscountMenu,               // client role : admin
+        DeliveryOrder,              // client role : delivery
+        UserData,                   // client login first time 
     }
 }) 

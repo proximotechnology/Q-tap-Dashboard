@@ -25,7 +25,7 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL, BASE_URL_IMG } from '../../../../utils/helperFunction';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectGetInfoData, updateBranchMenu } from '../../../../store/client/clientAdmin';
+import { selectGetInfoData, selectSelectedBranch, updateBranchMenu } from '../../../../store/client/clientAdmin';
 import { printFormData } from '../../../../utils/utils';
 import { timeOptions } from '../../../../Component/Business-info/WorkingHoursDays';
 
@@ -53,9 +53,10 @@ const Menu = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const theme = useTheme();
-    const selectedBranch = localStorage.getItem('selectedBranch');
+    const branchID = useSelector(selectSelectedBranch)
+    console.log("branchID menu >>", branchID) // debug log
 
-    const existBranch = qtap_clients?.brunchs?.find((branch) => branch?.id == selectedBranch) || {};
+    const existBranch = qtap_clients?.brunchs?.find((branch) => branch?.id == branchID) || {};
     const [mode, setMode] = useState(existBranch?.default_mode?.toLowerCase() || 'white');
     const [design, setDesign] = useState(existBranch?.menu_design?.toLowerCase() || 'grid');
     const [logoImage, setLogoImage] = useState(null);
@@ -79,7 +80,31 @@ const Menu = () => {
     const [workSchedules, setWorkSchedules] = useState(
         existBranch?.workschedule?.filter((day) => day.day) || []
     );
+    useEffect(() => {
+        const existBranch = qtap_clients?.brunchs?.find((branch) => branch?.id == branchID) || {};
+        setMode(existBranch?.default_mode?.toLowerCase() || 'white');
+        setDesign(existBranch?.menu_design?.toLowerCase() || 'grid');
+        setLogoImage(null);
+        setBannerImage(null);
+        setServingWays(
+            existBranch?.serving_ways?.map((way) => way.name) || []
+        );
+        setTablesNumber(
+            existBranch?.serving_ways?.find((way) => way.name === 'dine_in')?.tables_number || '12'
+        );
+        setPaymentServices(
+            existBranch?.payment_services?.map((service) => service.name) || []
+        );
+        setCallWaiter(existBranch?.call_waiter || 'active');
+        setPaymentTime(existBranch?.payment_time || 'before');
+        setSelectedButtons(
+            existBranch?.workschedule?.map((day) => day.day) || []
+        );
 
+        setWorkSchedules(
+            existBranch?.workschedule?.filter((day) => day.day) || []
+        );
+    }, [branchID])
 
     // Helper function to format API time (e.g., "9am" to "9:00 am")
     const formatTime = (time) => {
@@ -116,7 +141,7 @@ const Menu = () => {
         }, {})
         const formData = new FormData();
 
-        formData.append('brunch_id', selectedBranch);
+        formData.append('brunch_id', branchID);
         formData.append('default_mode', mode);
         formData.append('menu_design', design);
         formData.append('tables_number', tablesNumber);

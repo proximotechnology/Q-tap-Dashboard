@@ -10,8 +10,8 @@ import { useLocation, useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import DarkModeSwitch from "../../../../Component/DarkModeSwitch";
 import Language from "../../../../Component/dashboard/TopBar/Language";
-import { useSelector } from "react-redux";
-import { selectAllBranch, selectBranch } from "../../../../store/client/clientAdmin";
+import { useDispatch, useSelector } from "react-redux";
+import { selectAllBranch, selectBranch, updateSelectedBranch } from "../../../../store/client/clientAdmin";
 
 const styles = (theme) => ({
     button: {
@@ -62,7 +62,7 @@ export default function TopBar() {
     const branches = useSelector(selectAllBranch(0))
     // Load branches and selected branch from localStorage on component mount
     const selectedBranch = localStorage.getItem("selectedBranch")
-    
+
     useEffect(() => {
         const storedBranches = localStorage.getItem('branches');
         const storedSelectedBranch = localStorage.getItem('selectedBranch');
@@ -84,10 +84,11 @@ export default function TopBar() {
     const BranchOpen = (event) => {
         setBranch(event.currentTarget);
     };
-
+    const dispatch = useDispatch()
     const BranchClose = (branchId, index) => {
         if (branchId) {
-            localStorage.setItem('selectedBranch', branchId);
+            // localStorage.setItem('selectedBranch', branchId);
+            dispatch(updateSelectedBranch(branchId))
             localStorage.setItem('branchNumber', index)
         }
         setBranch(null);

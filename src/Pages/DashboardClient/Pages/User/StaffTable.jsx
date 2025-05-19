@@ -11,6 +11,8 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL } from '../../../../utils/helperFunction';
 import { Settings } from '@mui/icons-material';
+import { useSelector } from 'react-redux';
+import { selectSelectedBranch } from '../../../../store/client/clientAdmin';
 
 export const StaffTable = ({ userStaff }) => {
     const theme = useTheme();
@@ -22,12 +24,12 @@ export const StaffTable = ({ userStaff }) => {
     //========================================== get RestStaff data 
 
     const [RestStaff, setRestStaff] = useState([]);
-    const selectedBranch = localStorage.getItem("selectedBranch")
+    const branchID = useSelector(selectSelectedBranch)
 
-    const getRestStaff = async () => {
+    const getRestStaff = async (branchID) => {
         const fetchWithRetry = async (retries, delay) => {
             try {
-                const response = await axios.get(`${BASE_URL}restaurant_user_staff/${localStorage.getItem("selectedBranch")}`, {
+                const response = await axios.get(`${BASE_URL}restaurant_user_staff/${branchID}`, {
                     headers: {
                         'Content-Type': 'application/json',
                         "Authorization": `Bearer ${localStorage.getItem('Token')}`
@@ -51,8 +53,8 @@ export const StaffTable = ({ userStaff }) => {
     };
 
     useEffect(() => {
-        getRestStaff();
-    }, [selectedBranch]);
+        getRestStaff(branchID);
+    }, [branchID]);
     //========================================== handle delete RestStaff
 
     const handleDeleteRestStaff = async (id) => {
@@ -67,7 +69,7 @@ export const StaffTable = ({ userStaff }) => {
 
             if (response.data) {
                 toast.success(t("userStaff.restStaffDeletedSucc"));
-                getRestStaff();
+                getRestStaff(branchID);
             }
         } catch (error) {
             console.log("error delete RestStaff ", error);
@@ -93,7 +95,7 @@ export const StaffTable = ({ userStaff }) => {
 
     const handleClose = () => {
         setModalOpen(false);
-        getRestStaff(); // Refresh the staff data after closing the modal
+        getRestStaff(branchID); // Refresh the staff data after closing the modal
     }
 
     const handleExport = () => {
