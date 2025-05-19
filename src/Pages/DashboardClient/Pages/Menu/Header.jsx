@@ -7,6 +7,7 @@ import CategoryForm from './AddCategory';
 import { DiscountModel } from './DiscountModel';
 import { OffersModel } from './OffersModel';
 import { useTranslation } from 'react-i18next';
+import { Add } from '@mui/icons-material';
 
 
 
@@ -104,7 +105,7 @@ const Header = () => {
                         onClick={handleDiscountOpen}
                         variant="outlined"
                         sx={{ fontSize: "10px" }}
-                        startIcon={<img src="/assets/present.svg" alt="add icon" style={{ width: "20px", height: "20px" }} />}
+                        startIcon={<Add style={{ fontSize:"18px", fontWeight:"bold" , color :"white"}} />}
                     >
                         {t("discountCodes")}
                     </StyledButton>

@@ -38,7 +38,8 @@ export const Reset = () => {
 
             console.log('Response:', response);
 
-            if (response.status === true) {
+            if (response.data.status === true) {
+
                 toast.success('Email sent successfully check your email');
                 navigate('/receive-code-affiliate');
             }

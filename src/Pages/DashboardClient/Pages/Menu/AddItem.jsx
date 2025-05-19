@@ -267,7 +267,7 @@ export const AddItem = () => {
             }
 
             if (response.status === 200 || response.status === 201) {
-                toast.success(isEditing ? t("item.updateSucc") : t("item.addSucc"));
+                toast.success(isEditing ? t("item updated success") : t("item added Success"));
                 navigate("/menu");
             }
         } catch (error) {
@@ -504,7 +504,7 @@ export const AddItem = () => {
                         marginLeft: "100px",
                     }}
                 >
-                    {isEditing ? t("item.update") : t("item.add")}
+                    {isEditing ? t("update") : t("add")}
                 </Typography>
             </AppBar>
 

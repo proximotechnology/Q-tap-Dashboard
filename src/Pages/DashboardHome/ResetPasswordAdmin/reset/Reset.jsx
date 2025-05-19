@@ -37,8 +37,9 @@ export const Reset = () => {
             });
 
             console.log('Response:', response);
+ 
+            if (response.data.status === true) {
 
-            if (response.status === true) {
                 toast.success('Email sent successfully check your email');
                 navigate('/receive-code-admin');
             }

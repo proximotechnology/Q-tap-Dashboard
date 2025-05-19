@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { selectDiscounts } from '../../../../store/client/DiscountMenuSlice';
+import { BASE_URL_IMG } from '../../../../utils/helperFunction';
 
 export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData }) => {
     const { t } = useTranslation();
@@ -219,7 +220,7 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
                             {image ? (
                                 typeof image === 'string' ? (
                                     <img
-                                        src={image}
+                                        src={`${BASE_URL_IMG}${image}`}
                                         alt="Uploaded item"
                                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                     />

@@ -62,7 +62,7 @@ export default function TopBar() {
     const branches = useSelector(selectAllBranch(0))
     // Load branches and selected branch from localStorage on component mount
     const selectedBranch = localStorage.getItem("selectedBranch")
-    
+
     useEffect(() => {
         const storedBranches = localStorage.getItem('branches');
         const storedSelectedBranch = localStorage.getItem('selectedBranch');
@@ -127,10 +127,10 @@ export default function TopBar() {
     const clientName = localStorage.getItem("clientName")
     const clientEmail = localStorage.getItem("clientEmail")
     const Token = localStorage.getItem("Token")
-    console.log(clientEmail, clientName, Token);
 
     const url = `http://localhost:3000/en/?clientName=${encodeURIComponent(clientName)}&Token=${encodeURIComponent(Token)}&clientEmail=${encodeURIComponent(clientEmail)}`;
 
+    
     return (
         <Box sx={{
             display: "flex", justifyContent: "space-between", alignItems: "center",
@@ -251,8 +251,8 @@ export default function TopBar() {
                                 <PersonOutlineOutlinedIcon sx={{ fontSize: "22px" }} />
                             </Avatar>
                             <Box>
-                                <Typography variant="h6" sx={{ fontSize: "14px" }}>{localStorage.getItem("clientName")}</Typography>
-                                <Typography variant="body2" sx={{ fontSize: "12px" }} color="textSecondary">{localStorage.getItem("clientEmail")}</Typography>
+                                <Typography variant="h6" sx={{ fontSize: "14px" }}>{localStorage.getItem("UserName")}</Typography>
+                                <Typography variant="body2" sx={{ fontSize: "12px" }} color="textSecondary">{localStorage.getItem("UserEmail")}</Typography>
                             </Box>
                         </Box>
                         <Divider />
@@ -262,7 +262,8 @@ export default function TopBar() {
                             <Box
                                 onClick={() => {
                                     try {
-                                        window.location.href = url;
+
+                                        window.location.href = `http://localhost:3000/en`;
                                         handleUserClose();
                                     } catch (error) {
                                         console.error('Navigation failed:', error);
