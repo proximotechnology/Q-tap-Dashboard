@@ -27,6 +27,21 @@ export const Login = () => {
   const [apiSuccess, setApiSuccess] = useState('');
   const { t } = useTranslation();
 
+  React.useEffect(() => {
+    const storedRedirectBack = sessionStorage.getItem('redirectBack');
+    if (!storedRedirectBack) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const redirectBack = urlParams.get('redirectBack');
+      if (redirectBack) {
+        sessionStorage.setItem('redirectBack', redirectBack);
+        console.log('redirectBack stored:', redirectBack);
+      } else {
+        console.log('No redirectBack found in URL');
+      }
+    } else {
+      console.log('Using existing redirectBack:', storedRedirectBack);
+    }
+  }, []);
   const handleSubmit = async () => {
     // Reset API states
     setApiError('');
@@ -43,14 +58,14 @@ export const Login = () => {
   };
 
   return (
-    <Box style={{ color:'black' }}>
+    <Box style={{ color: 'black' }}>
       <FormControl variant="outlined" fullWidth margin="normal">
         <OutlinedInput
           placeholder={t("email")}
           onChange={(e) => setEmail(e.target.value)}
           startAdornment={
             <InputAdornment position="start">
-              <MailOutlinedIcon sx={{ fontSize: '18px' , color: theme.palette.text.fixedGray,}} />
+              <MailOutlinedIcon sx={{ fontSize: '18px', color: theme.palette.text.fixedGray, }} />
             </InputAdornment>
           }
           required
@@ -74,7 +89,7 @@ export const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           startAdornment={
             <InputAdornment position="start">
-              <span className="icon-padlock" style={{ fontSize: '18px' , color: theme.palette.text.fixedGray,}} />
+              <span className="icon-padlock" style={{ fontSize: '18px', color: theme.palette.text.fixedGray, }} />
             </InputAdornment>
           }
           required

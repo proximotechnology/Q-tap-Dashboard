@@ -131,6 +131,7 @@ export default function TopBar() {
 
     const url = `http://localhost:3000/en/?clientName=${encodeURIComponent(clientName)}&Token=${encodeURIComponent(Token)}&clientEmail=${encodeURIComponent(clientEmail)}`;
 
+    
     return (
         <Box sx={{
             display: "flex", justifyContent: "space-between", alignItems: "center",
@@ -251,8 +252,8 @@ export default function TopBar() {
                                 <PersonOutlineOutlinedIcon sx={{ fontSize: "22px" }} />
                             </Avatar>
                             <Box>
-                                <Typography variant="h6" sx={{ fontSize: "14px" }}>{localStorage.getItem("clientName")}</Typography>
-                                <Typography variant="body2" sx={{ fontSize: "12px" }} color="textSecondary">{localStorage.getItem("clientEmail")}</Typography>
+                                <Typography variant="h6" sx={{ fontSize: "14px" }}>{localStorage.getItem("UserName")}</Typography>
+                                <Typography variant="body2" sx={{ fontSize: "12px" }} color="textSecondary">{localStorage.getItem("UserEmail")}</Typography>
                             </Box>
                         </Box>
                         <Divider />
@@ -262,7 +263,8 @@ export default function TopBar() {
                             <Box
                                 onClick={() => {
                                     try {
-                                        window.location.href = url;
+
+                                        window.location.href = `http://localhost:3000/en`;
                                         handleUserClose();
                                     } catch (error) {
                                         console.error('Navigation failed:', error);

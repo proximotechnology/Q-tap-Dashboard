@@ -35,8 +35,13 @@ export const Reset = () => {
                 },
             });
 
+<<<<<<< HEAD
+            console.log('Response:', response);
+ 
+            if (response.data.status === true) {
+=======
+>>>>>>> 7396e2e4638efdbeb90ce9f6b781eed594822d61
 
-            if (response.status === true) {
                 toast.success('Email sent successfully check your email');
                 navigate('/receive-code-admin');
             }

@@ -62,7 +62,8 @@ export const PasswordReset = () => {
             });
 
 
-            if (response.status === true) {
+            if (response.data.status === true) {
+
                 toast.success(t('passwordChangedSuccess'));
                 navigate('/affiliate-login');
             }

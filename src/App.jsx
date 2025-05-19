@@ -73,9 +73,10 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ProtectedRoute from './Component/ProtectedRoute/ProtectedRoute';
-import { HelpAffiliate } from './Component/Help/HelpAffiliate';
+import { HelpAffiliate } from './Component/login/HelpAffiliate';
 import { HelpClient } from './Component/Help/HelpClient';
 import ProtectedRouteClient from './Component/ProtectedRoute/ProtectedRouterClient';
+import { TestWebLogin } from './Component/TestWebLogin';
 
 const queryClient = new QueryClient();
 
@@ -84,7 +85,7 @@ function App() {
     {
       path: "/",
       element: <HomePage />, // done
-    }, 
+    },
     {
       path: "/affiliate-login",
       element: <HomePageAffiliate />, // done
@@ -225,7 +226,7 @@ function App() {
 
     {
       path: "menu-client", // todo: disapple pay button
-      element:<ProtectedRouteClient allowedRoles={['admin','cashier']} redirectPath={'/order-body'}><MenuClient /></ProtectedRouteClient> ,// TODO: style problem here  and logic modification 
+      element: <ProtectedRouteClient allowedRoles={['admin', 'cashier']} redirectPath={'/order-body'}><MenuClient /></ProtectedRouteClient>,// TODO: style problem here  and logic modification 
     },
     {
       path: "help",
@@ -238,6 +239,10 @@ function App() {
     {
       path: "help-affiliate",
       element: <HelpAffiliate />
+    },
+    {
+      path: "test-web-login",
+      element: <TestWebLogin />
     },
 
 

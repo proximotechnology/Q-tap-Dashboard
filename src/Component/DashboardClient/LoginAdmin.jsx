@@ -51,11 +51,19 @@ export const LoginAdmin = () => {
 
     const dispatch = useDispatch()
     const handleLogin = async () => {
-        const data = { pin, role:'admin', brunch_id:localStorage.getItem('selectedBranch') }
+        const data = { pin, role: 'admin', brunch_id: localStorage.getItem('selectedBranch') }
         dispatch(handleClientLoginRedux(data))
             .unwrap()
             .then(() => {
-                navigate('/dashboard-client');
+                if (sessionStorage.getItem("redirectBack") !== null && sessionStorage.getItem("redirectBack") !== "null" && sessionStorage.getItem("redirectBack") !== "") {
+                    window.location.href = 
+                    `${sessionStorage.getItem("redirectBack")}` +
+                    `?token=${localStorage.getItem("Token")}` +
+                    `&name=${localStorage.getItem("userName")}` +
+                    `&email=${localStorage.getItem("userEmail")}`;
+                } else {
+                    navigate("/dashboard-client")
+                }
             })
             .catch(() => {
                 toast.error(t('loginFaild'));

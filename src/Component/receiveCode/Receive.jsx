@@ -36,7 +36,7 @@ export const Receive = () => {
             });
 
 
-            if (response.status === true) {
+            if (response.data.status === true) {
                 toast.success('otp sent successfully check your otp');
                 navigate('/reset-password');
             }else{

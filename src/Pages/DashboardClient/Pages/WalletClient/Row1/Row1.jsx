@@ -114,13 +114,18 @@ export const Row1 = () => {
               zIndex: 1,
             }}
           >
-            {/* {(() => {
+            {(() => {
               const sum = Object.values(walletChartClientData)
                 .map((order) => order.total_revenue || 0)
                 .reduce((acc, curr) => acc + curr, 0);
               return sum > 0 ? (Number.isInteger(sum) ? sum : sum.toFixed(1)) : 0;
+<<<<<<< HEAD
+            })()}{" "}
+            {/* {(walletChartClientData.total_revenue).toFixed(1)} */}
+=======
             })()}{" "} */}
             {(Number(walletChartClientData.total_revenue)).toFixed(1)}
+>>>>>>> 7396e2e4638efdbeb90ce9f6b781eed594822d61
             <span style={{ fontSize: "20px", opacity: '0.5' }}> £</span>
           </Typography>
 

@@ -131,7 +131,11 @@ export default function SideBar({ isOpen }) {
                                     },
                                 }}
                                 onClick={() => {
-                                    navigate(item.path);
+                                    if(localStorage.getItem("Token")){
+                                        navigate(item.path);
+                                    }else{
+                                        navigate('/')
+                                    }
                                 }}
                             >
                                 {/* الأيقونة */}
@@ -209,7 +213,7 @@ export default function SideBar({ isOpen }) {
                                 }}
                                 onClick={() => {
                                     if (item.text === "Logout") {
-                                        localStorage.removeItem("clientToken");
+                                        localStorage.removeItem("Token");
                                     }
                                     
                                     navigate(item.path);
