@@ -160,7 +160,7 @@ const ProfilePage = () => {
     const formData = new FormData();
 
     // Basic fields
-    formData.append('brunch_id', 187);
+    formData.append('brunch_id', branchID);
     formData.append('name', fullName);
     formData.append('mobile', phone);
     formData.append('email', email);
@@ -214,7 +214,7 @@ const ProfilePage = () => {
       });
       console.log(">>>>",response) // debug log
       const data = await response.json()
-
+      console.log(">>>>",data) // debug log
 
       if (data.status === "success") {
         toast.success(t("updateSucc"));
