@@ -76,7 +76,6 @@ export const DiscountModel = ({ open, handleClose }) => {
 
       if (response.data) {
         toast.success(t("discount.deleteSucc"));
-        console.log(response.data)
         dipatch(deleteDiscounts(discountId))
       }
     } catch (error) {
@@ -125,7 +124,6 @@ export const DiscountModel = ({ open, handleClose }) => {
 
       if (response.data) {
         toast.success(t("discount.updateSucc"));
-        console.log('discount.updateSucc', response.data);
         dipatch(updataDiscounts(response.data.data))
       }
     } catch (error) {

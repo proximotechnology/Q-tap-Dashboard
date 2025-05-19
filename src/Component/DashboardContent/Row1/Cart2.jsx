@@ -24,7 +24,6 @@ const Cart2 = ({ Total_Orders }) => {
       if (isMounted && Total_Orders) {
         const orderArray = Object.values(Total_Orders);
         setAllOrders(orderArray);
-        // console.log("orders cart2", orderArray);
         // Initially show first 6 orders
         setDisplayedOrders(orderArray.slice(0, 6));
       } else if (isMounted) {
@@ -47,7 +46,6 @@ const Cart2 = ({ Total_Orders }) => {
   };
 
   const hasMoreOrders = allOrders.length > 6;
-  // console.log("orders cart2", displayedOrders, page, Total_Orders);
   
   return (
     <div style={{ position: 'relative' }}>

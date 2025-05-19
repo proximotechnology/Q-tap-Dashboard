@@ -27,7 +27,6 @@ export const Reset = () => {
                 user_type: 'qtap_clients', // qtap_affiliate or qtap_clients
             };
 
-            console.log('Request data:', data);
             setIsLoading(true); // Set loading state
 
             const response = await axios.post(`${BASE_URL}sendOTP`, data, {
@@ -36,7 +35,6 @@ export const Reset = () => {
                 },
             });
 
-            console.log('Response:', response);
 
             if (response.status === true) {
                 toast.success('Email sent successfully check your email');

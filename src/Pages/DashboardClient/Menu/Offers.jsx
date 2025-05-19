@@ -11,7 +11,6 @@ import { BASE_URL } from '../../../utils/helperFunction';
 
 const OfferCard = ({ offer }) => {
     const theme = useTheme();
-    // console.log("offer", offer);
 
     return (
         <Card
@@ -220,7 +219,6 @@ const Offers = ({ isItemSelected }) => {
 
             if (response.data) {
                 setOffers(response.data);
-                // console.log("response offers", response?.data);
 
             }
         } catch (error) {

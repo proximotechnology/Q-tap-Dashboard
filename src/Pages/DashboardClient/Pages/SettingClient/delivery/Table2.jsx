@@ -71,7 +71,6 @@ export const Table2 = () => {
             });
             if (response.data) {
                 setRiderData(response.data.delivery_riders || []);
-                console.log('Fetched rider Data:', response.data.delivery_riders);
             }
         } catch (error) {
             console.error('Error fetching rider Data:', error.response?.data || error.message);

@@ -34,7 +34,6 @@ export const Notification = () => {
       .then(data => {
         if (data && data.notes) {
           setNotificationsData(data.notes);
-          // console.log(data.notes);
         }
       })
       .catch(error => console.error('Error fetching notifications:', error));

@@ -40,17 +40,14 @@ const businessSlice = createSlice({
           ...updatedBranches[state.selectedBranch],
           ...action.payload,
         };
-        console.log("Updated branches:", updatedBranches);
         state.branches = updatedBranches;
       } else {
         state.businessData = { ...state.businessData, ...action.payload };
-        console.log("Updating businessData:", state.businessData);
       }
     },
     addBranch: (state) => {
       const newBranch = { ...state.businessData };
       state.branches = [...state.branches, newBranch];
-      console.log("Added branch:", state.branches);
       // Clear businessData after adding branch
       state.businessData = {
         businessName: "",
@@ -82,7 +79,6 @@ const businessSlice = createSlice({
       state.selectedBranch = index;
       if (state.branches[index]) {
         state.businessData = { ...state.branches[index] };
-        console.log("Selected branch:", state.branches[index]);
       }
     },
     clearBusinessData: (state) => {
@@ -110,7 +106,6 @@ const businessSlice = createSlice({
         longitude: "",
       };
       state.selectedBranch = null;
-      console.log("Cleared businessData");
     },
     setBranches: (state, action) => {
       state.branches = action.payload;

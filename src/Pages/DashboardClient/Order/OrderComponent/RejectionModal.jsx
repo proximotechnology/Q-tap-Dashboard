@@ -34,12 +34,10 @@ const RejectionModal = ({ open, onClose ,selectedOrder,removeOrder}) => {
 
                 }
             )
-            console.log('add res', res)
             if(res.data.success===false){toast.error(t("error"));return;}
             toast.done(t("success"))
             removeOrder(selectedOrder.id)
             onClose()
-            // console.log('accept order', res)
         } catch (error) {
             console.log('accept error', error)
             toast.done(t("notfoundTitle"))

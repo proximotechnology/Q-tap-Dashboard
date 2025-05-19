@@ -32,7 +32,6 @@ const FeedbackDetailsModal = ({ open, handleClose, pageId }) => {
 
             if (response.data) {
                 setFeedbackData(response.data);
-                // console.log('Fetched feedback::::::', response.data);
             }
         } catch (error) {
             console.error('Error fetching feedback data:', error);
@@ -40,7 +39,6 @@ const FeedbackDetailsModal = ({ open, handleClose, pageId }) => {
     };
     useEffect(() => {
         getFeedbackData();
-        console.log('Feedback data:', feedbackData);
         
 
     }, []);

@@ -33,7 +33,6 @@ const CustomTooltip = ({ active, payload }) => {
 
 const LineChart2 = ({ revenueData }) => {
     const theme = useTheme();
-    // console.log("revenueArray", revenueData);
     return (
         <ResponsiveContainer width="100%" height={180}>
             <LineChart data={Object.values(revenueData)} margin={{ top: 5, right: 15, left: 0, bottom: 0 }}>

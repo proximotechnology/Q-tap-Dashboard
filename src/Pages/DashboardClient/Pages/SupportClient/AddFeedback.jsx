@@ -40,7 +40,6 @@ export const AddFeedback = ({ open, handleCloseModel, onAddFeedback }) => {
             comment: comment,
             phone: phone
         };
-        // console.log("data feedback_restaurant", data);
 
         try {
             const response = await axios.post(

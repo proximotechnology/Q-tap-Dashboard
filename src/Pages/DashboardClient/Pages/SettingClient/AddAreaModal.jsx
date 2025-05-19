@@ -39,7 +39,6 @@ const AddAreaModal = ({ open, onClose }) => {
 
             if (response.data) {
                 toast.success("Area added successfully!");
-                console.log("Area added successfully!", response.data)
                 dispatch(createArea(response.data?.area));
                 setName('');
             }
@@ -71,7 +70,6 @@ const AddAreaModal = ({ open, onClose }) => {
             if (response.data) {
                 toast.success("Area updated successfully!");
                 dispatch(updateArea(response.data.area));
-                console.log("Area updated successfully", response.data)
                 setName('');
                 setEditingAreaId(null); // إعادة تعيين ID التعديل بعد التحديث
             }
@@ -94,7 +92,6 @@ const AddAreaModal = ({ open, onClose }) => {
 
             if (response.data) {
                 toast.success("Area deleted successfully!");
-                console.log("Area deleted successfully!", response.data);
                 dispatch(deleteArea(id));
             }
         } catch (error) {
@@ -193,7 +190,7 @@ const AddAreaModal = ({ open, onClose }) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {areas?.filter(area => { console.log(area.brunch_id, "==", selectedBranch, "res ", area.brunch_id !== Number(selectedBranch)); return area.brunch_id == Number(selectedBranch) }).map((row) => (
+                            {areas?.filter(area => { return area.brunch_id == Number(selectedBranch) }).map((row) => (
                                 <TableRow key={row.id} sx={{ height: "30px" }}>
                                     <TableCell align="center" sx={{ padding: "0px", fontSize: "10px", color: "gray" }}>{row.name}</TableCell>
                                     <TableCell align="center" sx={{ padding: "0px" }}>

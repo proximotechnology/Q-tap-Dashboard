@@ -98,7 +98,6 @@ export const BusinessInfo = () => {
             paymentTime,
             paymentMethods
         };
-        console.log('Updating context (excluding workschedules):', updatedData);
         dispatch(updateBusinessData(updatedData));
     }, [mode, design, format, currency, country, city, businessName, website,
         businessEmail, businessPhone, activeWaiter, paymentTime, paymentMethods]);
@@ -130,7 +129,6 @@ export const BusinessInfo = () => {
         } else {
             delete updatedSchedules[fullDay];
         }
-        console.log('Updating workschedules:', updatedSchedules);
         dispatch(updateBusinessData({ workschedules: updatedSchedules }));
     };
 
@@ -149,7 +147,6 @@ export const BusinessInfo = () => {
                 ...dataSource.workschedules,
                 [currentDay]: type === 'from' ? [newTime, toTime] : [fromTime, newTime]
             };
-            console.log('Updating workschedules:', updatedSchedules);
             dispatch(updateBusinessData({ workschedules: updatedSchedules }));
         }
     };
@@ -189,7 +186,6 @@ export const BusinessInfo = () => {
 
         // إضافة الفرع الحالي إلى branches
         // addBranch();
-        console.log('Navigating to serving-ways with businessData:', businessData);
         navigate('/serving-ways');
     };
 

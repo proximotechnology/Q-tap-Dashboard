@@ -33,7 +33,6 @@ export const fetchGetInfoData = createAsyncThunk(
             const response = await axios.get(`${BASE_URL}get_info`, {
                 headers: getAuthHeader(),
             });
-            console.log('redux ========= fetchGetInfoData', response)
             return response.data;
         } catch (error) {
             throw new Error(error.message);
@@ -78,8 +77,6 @@ const dataSlice = createSlice({
     reducers: {
         createArea: (state, action) => {
             // Assuming action.payload is the new area object
-            console.log('Current data type:', typeof state.area.data, state.area.data);
-            console.log('Raw data:', JSON.parse(JSON.stringify(state.area.data)));
             state.area.data.areas.push(action.payload);
         },
         deleteArea: (state, action) => {
@@ -104,7 +101,6 @@ const dataSlice = createSlice({
         },
         deleteTable: (state, action) => {
             // Assuming action.payload is the ID of the area to delete
-            console.log('Raw data:', JSON.parse(JSON.stringify(state.tables.data)));
             state.tables.data.tables = state.tables.data.tables.filter(
                 (area) => area.id !== action.payload
             );
@@ -130,7 +126,6 @@ const dataSlice = createSlice({
             if (!Array.isArray(branches)) return;
 
             const index = branches.findIndex(branch => {
-                console.log("slice updatedBranch", branch.id, "===", action.payload?.id);
                 return branch.id === action.payload?.id
             });
             if (index === -1) return;
@@ -138,11 +133,9 @@ const dataSlice = createSlice({
             const updatedBranch = {
                 ...action.payload,
             };
-            console.log("slice updatedBranch", updatedBranch)
             branches[index] = updatedBranch
         },
         updateInfoOnly: (state, action) => {
-            console.log("updateInfoOnly", action.payload.client_data);
             state.info.data.qtap_clients = action.payload.client_data;
         }
 },

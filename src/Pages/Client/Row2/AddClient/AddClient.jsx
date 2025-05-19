@@ -276,7 +276,6 @@ export const AddClient = () => {
         body: formData,
       });
       const result = await response.json();
-      console.log("result", result);
 
       if (result.status === "success") {
         refetch()

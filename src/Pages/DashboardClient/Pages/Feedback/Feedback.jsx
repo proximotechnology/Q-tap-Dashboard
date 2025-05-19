@@ -57,7 +57,6 @@ export const Feedback = () => {
                 "missing_Q-tap_Menus": missingQtapMenus,
                 comment: comment
             };
-            // console.log("data formate", dataFormat);
 
 
 

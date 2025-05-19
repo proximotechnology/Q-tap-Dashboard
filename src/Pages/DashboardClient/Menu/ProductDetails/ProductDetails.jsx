@@ -86,7 +86,6 @@ const ProductDetails = ({
     }
     /* this call by the button  */
     const addItemToCart = (newItem) => {
-        console.log('new', newItem)
         if (quantity === 0) {
             toast.error('select quantity')
             return;
@@ -111,7 +110,6 @@ const ProductDetails = ({
                 });
                 // Update localStorage with the new cart
                 localStorage.setItem('cartItems', JSON.stringify(updatedCart));
-                console.log('updatedCart', updatedCart)
                 return updatedCart;
             });
         } else {

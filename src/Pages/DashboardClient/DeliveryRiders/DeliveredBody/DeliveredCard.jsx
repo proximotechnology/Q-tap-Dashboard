@@ -17,7 +17,6 @@ export const DeliveredCard = ({ setSelectedOrder, setIsOrderDetailsOpen }) => {
   const actionError = useSelector(selectActionError)
   const dispatch = useDispatch()
   const handleOpen = (order) => {
-    console.log("open details")
     setSelectedOrder(order);
     setIsOrderDetailsOpen(true)
   }
@@ -38,7 +37,6 @@ export const DeliveredCard = ({ setSelectedOrder, setIsOrderDetailsOpen }) => {
     try {
       dispatch(markOrderDelivered(data)).unwrap()
       // const res = await axios.post(`${BASE_URL}order_delivered`, data, { headers })
-      // console.log(res)
     }
     catch (error) {
       console.log(error)
@@ -78,7 +76,6 @@ export const DeliveredCard = ({ setSelectedOrder, setIsOrderDetailsOpen }) => {
         />
       </Box> {/*Tabs */}
 
-      {console.log("DeliveredCard>>>>>>>>>>>>>>>>>>", orders)}
       {orders?.map((order) => {
         const { dayName, formattedDate, time } = formateDate(order.updated_at)
         return (
@@ -147,7 +144,6 @@ export const DeliveredCard = ({ setSelectedOrder, setIsOrderDetailsOpen }) => {
 
               <Box display="flex" justifyContent={"space-between"} alignItems="center">
                 <Typography color="#262624" fontSize="12px" marginTop={"7px"}>{t("orderDetail")}</Typography>
-                {console.log("loading ",actionStatus)}
                 {actionStatus === "loading" ? (
                   <CircularProgress
                     size={24}

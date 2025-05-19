@@ -184,7 +184,6 @@ const Support = () => {
       if (response.data) {
         setQuestionData(response.data);
       }
-      // console.log("question data response ", response.data);
 
     } catch (error) {
       console.log("error question data ", error);
@@ -212,7 +211,6 @@ const Support = () => {
       if (response.data) {
         setFeedbackData(response.data);
       }
-      // console.log("feedback data response ", response.data);
 
     } catch (error) {
       console.log("error feedback data ", error);
@@ -289,7 +287,6 @@ const Support = () => {
         }
       });
       setTickets(response.data);
-      // console.log('Tickets:', response.data);
 
     } catch (error) {
       console.error('Error fetching tickets:', error);
@@ -336,7 +333,6 @@ const Support = () => {
         brunch_id: localStorage.getItem("selectedBranch")
       };
 
-      // console.log(" dat2a add", data);
 
       const response = await axios.post(
 
@@ -371,7 +367,6 @@ const Support = () => {
 
       };
 
-      // console.log(" dat2a", data);
 
       const response = await axios.post(
 

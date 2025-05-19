@@ -133,7 +133,6 @@ const ChatApp = () => {
     const channel = pusher.subscribe('notify-channel');
 
     channel.bind('form-submitted', (data) => {
-      console.log('Pusher event received:', data);
       if (data?.type === 'chat') {
         const newMessage = data.message;
         if (newMessage.sender_type === 'customer') {
@@ -161,7 +160,6 @@ const ChatApp = () => {
         }
       } else if (data?.type === 'customer_added') {
         const newCustomer = data.customer;
-        console.log('New customer received:', newCustomer);
         queryClient.setQueryData(['customers'], (oldData) => {
           if (!oldData || oldData.find(c => c.id === newCustomer.id)) {
             return oldData;

@@ -127,7 +127,6 @@ export default function TopBar() {
     const clientName = localStorage.getItem("clientName")
     const clientEmail = localStorage.getItem("clientEmail")
     const Token = localStorage.getItem("Token")
-    console.log(clientEmail, clientName, Token);
 
     const url = `http://localhost:3000/en/?clientName=${encodeURIComponent(clientName)}&Token=${encodeURIComponent(Token)}&clientEmail=${encodeURIComponent(clientEmail)}`;
 

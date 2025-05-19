@@ -28,7 +28,6 @@ export const Revenue = () => {
         }
       )
       const data = await response.json();
-      // console.log("data", data);
       if (response.ok) {
         setRevenueData(data);
         setLoading(false)
@@ -44,7 +43,6 @@ export const Revenue = () => {
     const fetchRevenueData = async () => {
       if (isMounted) {
         await getRvenueData();
-        // console.log("Fetched revenue data:", revenueData);
       }
     };
     fetchRevenueData();

@@ -34,7 +34,6 @@ export const OrderHistory = () => {
             try {
                 const loginclient = JSON.parse(localStorage.getItem('UserData'))
                 const selectedBranch = localStorage.getItem('selectedBranch')
-                console.log('currnt user ',loginclient)
                 if (! loginclient || loginclient.user.role !== "admin") {
                     toast.error("unauth")
                     return ;
@@ -51,7 +50,6 @@ export const OrderHistory = () => {
                 
                 const parsedOrder = res.data.orders.map((item)=>parseResponseOrderItem(item))
                 setOrdera(parsedOrder)
-                console.log("order history ",parsedOrder)
             } catch (error) {
                 console.log('get order', error)
             }

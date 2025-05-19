@@ -53,7 +53,6 @@ export const PasswordReset = () => {
                 user_type: 'qtap_admins', // qtap_affiliate or qtap_clients
             };
 
-            console.log('Request data:', data);
             setIsLoading(true);
 
             const response = await axios.post(`${BASE_URL}resetpassword`, data, {
@@ -62,7 +61,6 @@ export const PasswordReset = () => {
                 },
             });
 
-            console.log('Response:', response);
 
             if (response.status === true) {
                 toast.success(t('passwordChangedSuccess'));

@@ -9,7 +9,6 @@ export const fetchMenuData = createAsyncThunk(
     async (branchNumber, { rejectWithValue }) => {
         try {
             const response = await axios.get(`${BASE_URL}menu/${branchNumber}`);
-            console.log("fetchMenuData", response.data)
             return response.data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -33,7 +32,6 @@ export const updataCategory = createAsyncThunk(
                     },
                 }
             );
-            console.log("updataCategory redux", response.data)
             return response.data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -55,7 +53,6 @@ export const deleteCategory = createAsyncThunk(
 
             return { ...response.data, categoryId };
         } catch (error) {
-            console.log("delet", error)
             if (axios.isAxiosError(error)) {
                 return rejectWithValue(error.response?.data?.message || error.message);
             }
@@ -75,7 +72,6 @@ export const addCategory = createAsyncThunk(
 
             return { ...response.data, categoryId };
         } catch (error) {
-            console.log("delet", error)
             if (axios.isAxiosError(error)) {
                 return rejectWithValue(error.response?.data?.message || error.message);
             }
@@ -115,17 +111,14 @@ const menuSlice = createSlice({
             })
             /// cat name
             .addCase(updataCategory.pending, (state) => {
-                console.log("Update pending...");
                 state.loading = true;
                 state.error = null;
             })
             .addCase(updataCategory.rejected, (state, action) => {
-                console.log("Update rejected...");
                 state.loading = false;
                 state.error = action.payload;
             })
             .addCase(updataCategory.fulfilled, (state, action) => {
-                console.log("Fulfilled payload:", action.payload); // Check actual structure
                 state.success = true;
                 state.loading = false;
                 const index = state.data.data.findIndex(
@@ -137,17 +130,14 @@ const menuSlice = createSlice({
             })
             // cat delete
             .addCase(deleteCategory.pending, (state) => {
-                console.log("Update pending...");
                 state.loading = true;
                 state.error = null;
             })
             .addCase(deleteCategory.rejected, (state, action) => {
-                console.log("Update rejected...");
                 state.loading = false;
                 state.error = action.payload;
             })
             .addCase(deleteCategory.fulfilled, (state, action) => {
-                console.log("Fulfilled payload:", action.payload); // Check actual structure
                 state.success = true;
                 state.loading = false;
                 state.data.data = state.data.data.filter(

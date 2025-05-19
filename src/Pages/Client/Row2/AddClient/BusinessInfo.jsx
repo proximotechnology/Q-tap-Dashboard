@@ -84,7 +84,6 @@ export const BusinessInfo = () => {
   const [isMapOpen, setIsMapOpen] = useState(false);
 
   const updateBranchPosition = (pos) => {
-    console.log(pos, 'set pos call', selectedBranch)
     dispatch(updateBusinessData({ longitude: pos.lng }))
     dispatch(updateBusinessData({ latitude: pos.lat }))
   }

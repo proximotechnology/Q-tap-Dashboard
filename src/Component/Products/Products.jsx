@@ -45,7 +45,6 @@ export const Products = () => {
 
             if (response.data.products) {
                 setMenus(response.data.products);
-                console.log(response.data.products);
             }
         } catch (error) {
             console.error('Error fetching menus:', error);

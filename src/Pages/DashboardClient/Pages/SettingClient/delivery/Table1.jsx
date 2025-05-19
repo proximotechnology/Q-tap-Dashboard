@@ -73,7 +73,6 @@ export const Table1 = () => {
       );
       if (response.data) {
         setDeliveryData(response.data.delivery_areas);
-        console.log('Fetched delivery Data:', response.data.delivery_areas);
       }
     } catch (error) {
       console.error('Error fetching delivery Data:', error.response?.data || error.message);

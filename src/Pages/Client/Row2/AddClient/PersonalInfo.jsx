@@ -52,7 +52,6 @@ export const PersonalInfo = () => {
         if (file && file.type.startsWith('image/')) {
             setImage(file); // Update local state
             dispatch(updatePersonalData({ ...personalData, img: file })); // Update context
-            console.log('Image updated in context:', file); // Debugging
         } else {
             alert(t("PlUploadValidImageFile"));
         }

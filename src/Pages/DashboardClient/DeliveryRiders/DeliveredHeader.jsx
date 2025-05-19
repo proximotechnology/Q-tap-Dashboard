@@ -35,14 +35,12 @@ export const DeliveredHeader = () => {
 
 
     // حالة الـ Switch الأول
-    console.log(">>>>>>>>", logedINUserData?.user?.status_rider)
     const [checkedAv, setCheckedAv] = useState(logedINUserData?.user?.status_rider === "Available");
     const [statusSwitchloading, setStatusSwitchloading] = useState(false);
     const changeDeliveryStatus = async () => {
         const token = localStorage.getItem('Token');
 
         if (!token) {
-            console.log('No login');
             toast.error("User not logged in");
             return;
         }
@@ -64,7 +62,6 @@ export const DeliveredHeader = () => {
                 localStorage.setItem("UserData", JSON.stringify({ ...logedINUserData, user: res.data.restaurant_staff }))
 
             }
-            console.log("change", res, data)
         } catch (error) {
             console.log(error)
             toast.error(error)

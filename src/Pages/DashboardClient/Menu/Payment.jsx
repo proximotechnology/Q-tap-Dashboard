@@ -28,7 +28,6 @@ export const Payment = ({
     const theme = useTheme();
     const [isDone, setIsDone] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    console.log(selectedType)
     const payOrderRequestApi = async () => {
         try {
             setIsLoading(true) // disable the button untill the request finish
@@ -80,7 +79,6 @@ export const Payment = ({
                     type: 'dinein',
                 }
             }
-            console.log('pay order data', data)
             const response = await axios.post(
                 `${BASE_URL}add_orders`,
                 data,
@@ -95,7 +93,6 @@ export const Payment = ({
             setCartItems([])
             setIsDone(!isDone);
         } catch (error) {
-            console.log('order payment errror', error)
         }
         finally {
 

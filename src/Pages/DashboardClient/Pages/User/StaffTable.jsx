@@ -16,7 +16,6 @@ export const StaffTable = ({ userStaff }) => {
     const theme = useTheme();
     const { t } = useTranslation();
     const [modalOpen, setModalOpen] = useState(false);
-    // console.log("userStaff in stafftable", userStaff);
 
 
 
@@ -38,7 +37,6 @@ export const StaffTable = ({ userStaff }) => {
                 if (response.data) {
                     setRestStaff(response.data.restaurant_user_staff || []);
                 }
-                console.log("RestStaff data response ", response.data);
             } catch (error) {
                 if (error.response?.status === 429 && retries > 0) {
                     console.log(`Retrying... attempts left: ${retries}`);

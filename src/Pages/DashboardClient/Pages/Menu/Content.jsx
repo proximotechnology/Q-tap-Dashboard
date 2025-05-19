@@ -24,7 +24,6 @@ export const Content = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch()
     const data = useSelector(selectMenuData)
-    console.log("data menuDat", data)
     const menuData = data?.data;
 
     useEffect(() => {

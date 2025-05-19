@@ -100,19 +100,20 @@ const FinancialCard = () => {
   const walletClientData = useSelector(selectWallet)
   // Fetch financial data
   React.useEffect(() => {
+    const branchId = localStorage.getItem("selectedBranch")
     if (walletClientData.length === 0) {
-      dispatch(fetchWalletData(year));
+      dispatch(fetchWalletData({ branchId, year }));
 
     } else {
       setAllData(walletClientData);
     }
   }, [dispatch, year, walletClientData]);
- 
+
 
 
   return (
     <Grid container spacing={2} sx={{ marginTop: "5px" }}>
-      {financialData.map((item, index) => (
+      {/* {financialData.map((item, index) => (
         <Grid item xs={12} sm={index == 2 ? 12 : 6} lg={index < 2 ? 3 : 6} key={index}>
           <Financial
             allData={allData}
@@ -125,7 +126,43 @@ const FinancialCard = () => {
             iconColor={item.iconColor}
           />
         </Grid>
-      ))}
+      ))} */}
+      <Grid item xs={12} sm={6} lg={3} >
+        <Financial
+          allData={allData}
+          icon={financialData[0].icon}
+          percentage={walletClientData?.RevenueChangePercentage || "0%"}
+          direction={walletClientData?.RevenueChangePercentage?.toString().startsWith('-') ? "down" : "up"}
+          label={t(financialData[0].label)}
+          amount={walletClientData?.Revenue || 0}
+          description={t(financialData[0].description)}
+          iconColor={financialData[2].iconColor}
+        />
+      </Grid>
+      <Grid item xs={12} sm={6} lg={3} >
+        <Financial
+          allData={allData}
+          icon={financialData[1].icon}
+          percentage={walletClientData?.WithdrawalChangePercentage || "0%"}
+          direction={walletClientData?.WithdrawalChangePercentage?.toString().startsWith('-') ? "down" : "up"}
+          label={t(financialData[1].label)}
+          amount={walletClientData?.Withdrawal || 0}
+          description={t(financialData[1].description)}
+          iconColor={financialData[2].iconColor}
+        />
+      </Grid>
+      <Grid item xs={12} sm={12} lg={3} >
+        <Financial
+          allData={allData}
+          icon={financialData[2].icon}
+          percentage={financialData[2].percentage}
+          direction={financialData[2].direction}
+          label={t(financialData[2].label)}
+          amount={walletClientData?.balance || 0}
+          description={t(financialData[2].description)}
+          iconColor={financialData[2].iconColor}
+        />
+      </Grid>
     </Grid>
   );
 };

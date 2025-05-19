@@ -36,7 +36,6 @@ export const Receive = () => {
                 },
             });
 
-            console.log('Response:', response);
 
             if (response.status === true) {
                 toast.success('otp sent successfully check your otp');

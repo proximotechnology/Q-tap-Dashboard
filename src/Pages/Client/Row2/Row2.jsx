@@ -44,7 +44,6 @@ export const Row2 = () => {
 
   const handleEditClient = (client) => {
     navigate("/add-client", { state: { clientData: client, isEditMode: true } });
-    console.log("client", client);
   };
 
   const handleAddClient = () => {
@@ -71,7 +70,6 @@ export const Row2 = () => {
     staleTime: 1000 * 60 * 5, // كاش لمدة 5 دقائق
   });
 
-  console.log("cach data", data );
   
 
   const updateClientStatus = async (clientId, currentStatus) => {

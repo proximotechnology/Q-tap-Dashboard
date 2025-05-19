@@ -10,7 +10,6 @@ import { Cart3 } from "./Cart3";
 export default function Dashboard({ dashboardClientData }) {
     const { t } = useTranslation();
     const theme = useTheme();
-    // console.log("Dashboard dataaa:", dashboardClientData);
 
     return (
         <Grid container spacing={2} >
