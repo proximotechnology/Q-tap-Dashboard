@@ -129,7 +129,7 @@ export default function TopBar() {
     const clientEmail = localStorage.getItem("clientEmail")
     const Token = localStorage.getItem("Token")
 
-    const url = `http://localhost:3000/en/?clientName=${encodeURIComponent(clientName)}&Token=${encodeURIComponent(Token)}&clientEmail=${encodeURIComponent(clientEmail)}`;
+    const url = `https://qutap.co/en?clientName=${encodeURIComponent(clientName)}&Token=${encodeURIComponent(Token)}&clientEmail=${encodeURIComponent(clientEmail)}`;
 
     
     return (
@@ -264,7 +264,7 @@ export default function TopBar() {
                                 onClick={() => {
                                     try {
 
-                                        window.location.href = `http://localhost:3000/en`;
+                                        window.location.href = `https://qutap.co/en`;
                                         handleUserClose();
                                     } catch (error) {
                                         console.error('Navigation failed:', error);
