@@ -10,7 +10,7 @@ const data01 = [{ name: 'Pro', value: 10 }, { name: 'Remaining', value: 90 }];
 
 const COLORS = ['#30ADF8', '#D8E0E0'];
 
-export const Chart2 = ({ dashboardClientData }) => {
+ const Chart2 = ({ dashboardClientData }) => {
     const { t } = useTranslation();
 
     // Parse visit_only_percentage to a number (remove '%' and convert)
@@ -76,3 +76,4 @@ export const Chart2 = ({ dashboardClientData }) => {
     )
 }
 
+export default Chart2

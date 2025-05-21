@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import { fetchPerformanceData, selectPerformance } from "../../../../../store/client/clientDashBoardSlice";
 import { useSelector, useDispatch } from "react-redux";
 
-export const Cart3 = () => {
+ const Cart3 = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedYear, setSelectedYear] = useState("2024-2025");
   const { t } = useTranslation();
@@ -245,3 +245,5 @@ export const Cart3 = () => {
     </>
   );
 };
+
+export default Cart3
