@@ -152,7 +152,7 @@ const FinancialCard = () => {
           iconColor={financialData[2].iconColor}
         />
       </Grid>
-      <Grid item xs={12} sm={12} lg={3} >
+      <Grid item xs={12} sm={12} lg={6} >
         <Financial
           allData={allData}
           icon={financialData[2].icon}

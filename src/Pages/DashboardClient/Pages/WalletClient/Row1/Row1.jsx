@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import LineChart1 from './lineChart1';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSales, selectSalesByDays } from '../../../../../store/client/clientDashBoardSlice';
+import { formatNumber } from '../../../../../utils/formatNumber';
 export const Row1 = () => {
   const [year, setYear] = React.useState('2025');
   const navigate = useNavigate();
@@ -114,14 +115,17 @@ export const Row1 = () => {
               zIndex: 1,
             }}
           >
-            {(() => {
+            {/* {(() => {
               const sum = Object.values(walletChartClientData)
                 .map((order) => order.total_revenue || 0)
                 .reduce((acc, curr) => acc + curr, 0);
               return sum > 0 ? (Number.isInteger(sum) ? sum : sum.toFixed(1)) : 0;
-            })()}
-            {(Number(walletChartClientData.total_revenue)).toFixed(1)}
+            })()} */}
+
+            {formatNumber(Number(walletChartClientData.total_revenue))}
             <span style={{ fontSize: "20px", opacity: '0.5' }}> £</span>
+
+
           </Typography>
 
 

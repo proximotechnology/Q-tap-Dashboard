@@ -54,7 +54,7 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
                 setDiscountCode(foundDiscount.code || '');
             }
         }
-    }, [initialData, discountContent]);
+    }, [discountContent]);
 
     // تحديث المكون الأب عند تغيير أي حقل
     useEffect(() => {
