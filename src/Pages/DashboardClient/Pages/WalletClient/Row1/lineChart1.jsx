@@ -14,7 +14,6 @@ const CustomTooltip = ({ active, payload }) => {
 };
 
 const LineChart1 = ({ walletChartClientData }) => {
-
     return (
         <ResponsiveContainer width="100%" height={180}>
             <LineChart data={walletChartClientData ? Object.values(walletChartClientData?.weeks || {}) : []} margin={{ top: 5, right: 20, left: 0, bottom: 0 }}>
