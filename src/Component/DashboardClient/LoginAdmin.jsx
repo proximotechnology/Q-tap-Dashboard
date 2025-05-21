@@ -56,11 +56,13 @@ export const LoginAdmin = () => {
             .unwrap()
             .then(() => {
                 if (sessionStorage.getItem("redirectBack") !== null && sessionStorage.getItem("redirectBack") !== "null" && sessionStorage.getItem("redirectBack") !== "") {
-                    window.location.href = 
-                    `${sessionStorage.getItem("redirectBack")}` +
-                    `?token=${localStorage.getItem("Token")}` +
-                    `&name=${localStorage.getItem("UserName")}` +
-                    `&email=${localStorage.getItem("UserEmail")}`;
+                    window.location.href =
+                        `${sessionStorage.getItem("redirectBack")}` +
+                        `?token=${localStorage.getItem("Token")}` +
+                        `&name=${localStorage.getItem("UserName")}` +
+                        `&email=${localStorage.getItem("UserEmail")}`;
+
+                    sessionStorage.removeItem("redirectBack")
                 } else {
                     navigate("/dashboard-client")
                 }
