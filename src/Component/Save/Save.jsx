@@ -141,6 +141,7 @@ export const Save = () => {
 
   // Handle Save Button Click
   const handleSave = async () => {
+
     setIsLoading(true);
     const formData = new FormData();
 
@@ -156,7 +157,7 @@ export const Save = () => {
         SA: 6,
       };
       // return currencyMap[country] || 1;
-      return  1;
+      return 1;
     };
 
     // Append personal data
@@ -291,7 +292,7 @@ export const Save = () => {
         },
       });
 
-
+      console.log("save register data ", response)// debug log
       if (response.status === 200 || response.status === 201) {
         const { payment_url } = response.data;
         toast.success(t(isUpdate ? "dataUpdatedSuccessfully" : "dataSavedSuccessfully"));
@@ -306,7 +307,7 @@ export const Save = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  };//
 
   // Language and User Popover Handlers
   const handleLanguageClick = (event) => {

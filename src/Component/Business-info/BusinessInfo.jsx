@@ -20,6 +20,7 @@ import { Country, Governorates } from '../../utils/city';
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateBusinessData, } from "../../store/register/businessSlice";
+import MapWithPin from '../../utils/MapWithPin';
 
 // تحديد الأيام بأحرف مختصرة للعرض
 const daysOfWeek = ['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr'];
@@ -37,7 +38,9 @@ export const BusinessInfo = () => {
     });
     const dispatch = useDispatch();
     const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
-
+    const [isMapOpen, setIsMapOpen] = useState(false)
+    const [pos, setPos] = useState(null)
+    console.log("selected position", pos) // debug log
     const navigate = useNavigate();
     const { t } = useTranslation();
 
@@ -96,11 +99,15 @@ export const BusinessInfo = () => {
             businessPhone,
             callWaiter: activeWaiter,
             paymentTime,
-            paymentMethods
+            paymentMethods,
+            latitude: pos?.lat,
+            longitude: pos?.lng,
+
         };
+        console.log("use effect to updata business data")
         dispatch(updateBusinessData(updatedData));
     }, [mode, design, format, currency, country, city, businessName, website,
-        businessEmail, businessPhone, activeWaiter, paymentTime, paymentMethods]);
+        businessEmail, businessPhone, activeWaiter, paymentTime, paymentMethods, pos]);
 
     // Handlers
     const handleModeChange = (event, newMode) => {
@@ -480,7 +487,7 @@ export const BusinessInfo = () => {
                                     </Grid>
                                 </Grid>
                             </Box>
-                            <Button
+                            {/* <Button
                                 variant="contained"
                                 sx={{
                                     backgroundColor: theme.palette.bluePrimary.main,
@@ -502,7 +509,8 @@ export const BusinessInfo = () => {
                                     <span className="path13"></span><span className="path14"></span><span className="path15"></span>
                                 </span>
                                 {t("pinYourLocation")}
-                            </Button>
+                            </Button> */}
+                            <MapWithPin isMapOpen={isMapOpen} setIsMapOpen={setIsMapOpen} setPos={setPos} />
                             <Box sx={{ marginTop: "6px", display: 'flex', justifyContent: 'space-between', alignItems: "center" }}>
                                 <Grid container direction="column" spacing={1} sx={{ marginLeft: "2px" }}>
                                     <Typography
