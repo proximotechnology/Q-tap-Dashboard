@@ -130,7 +130,8 @@ export const AddItem = () => {
             };
             fetchItem();
         }
-    }, [itemId, t, selectedBranch]);
+        console.log("useEffect rerender")
+    }, [itemId, selectedBranch]);
 
     // Update item data from ItemDetails
     const updateItemData = (data) => {
