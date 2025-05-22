@@ -672,5 +672,10 @@
     "helpIntro": "Find answers to common questions or contact our support team for assistance.",
     "helpBtn": "Visit Support Center",
     "helpContact": "Reach out to us for personalized support.",
-    "delivered":"Delivered"
+    "delivered": "Delivered",
+    "verifyEmail": "Verify Email",
+    "enterOtp": "Enter OTP",
+    "verifying": "Verifying...",
+    "invalidOtp": "Invalid OTP. Please try again.",
+    "otpVerificationFailed": "OTP verification failed. Please try again later."
 }

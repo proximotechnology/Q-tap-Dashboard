@@ -77,6 +77,7 @@ import { HelpAffiliate } from './Component/login/HelpAffiliate';
 import { HelpClient } from './Component/Help/HelpClient';
 import ProtectedRouteClient from './Component/ProtectedRoute/ProtectedRouterClient';
 import { TestWebLogin } from './Component/TestWebLogin';
+import { OtpSignupPage } from './Component/Otp/OtpSingupPage';
 
 const queryClient = new QueryClient();
 
@@ -157,6 +158,10 @@ function App() {
     {
       path: "/welcome",
       element: <Welcome />, // done
+    },
+    {
+      path: "/otp-signup",
+      element: <OtpSignupPage />, // done
     },
     /// client
     {

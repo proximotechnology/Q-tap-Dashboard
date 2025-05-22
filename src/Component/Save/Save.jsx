@@ -280,6 +280,8 @@ export const Save = () => {
     const url = isUpdate ? `${BASE_URL}qtap_clients/${personalData.id}` : `${BASE_URL}qtap_clients`;
     const method = isUpdate ? 'PUT' : 'POST';
 
+    console.log("formData" , formData);
+    
     // Send data to API
     try {
       const response = await axios({
@@ -291,14 +293,16 @@ export const Save = () => {
         },
       });
 
-
+      
+      console.log(response);
       if (response.status === 200 || response.status === 201) {
         const { payment_url } = response.data;
+          
         toast.success(t(isUpdate ? "dataUpdatedSuccessfully" : "dataSavedSuccessfully"));
         if (payment_url) {
           sessionStorage.setItem("paymentUrl", payment_url);
         }
-        navigate('/welcome');
+        navigate('/otp-signup');
       }
     } catch (error) {
       console.error('Network Error:', error);
