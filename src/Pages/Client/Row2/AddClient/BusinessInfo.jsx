@@ -74,8 +74,10 @@ export const BusinessInfo = () => {
     paymentMethods = [],
     paymentTime = 'after',
     callWaiter = 'inactive',
+    latitude = '',
+    longitude = ''
   } = branches[branchIndex] || businessData;
-
+  console.log("branches[branchIndex]", branches[branchIndex]) // debug log
   // Local state for working hours
   const [selectedDays, setSelectedDays] = useState([]);
   const [currentDay, setCurrentDay] = useState(fullDaysOfWeek[0]); // Default to Saturday
@@ -341,7 +343,7 @@ export const BusinessInfo = () => {
             {t("pinYourLocation")}
           </Button> */}
           <ErrorBoundary>
-            <MapWithPin setPos={updateBranchPosition} isMapOpen={isMapOpen} setIsMapOpen={setIsMapOpen} />
+            <MapWithPin setPos={updateBranchPosition} isMapOpen={isMapOpen} setIsMapOpen={setIsMapOpen} currentPos={{ latitude, longitude }} />
           </ErrorBoundary>
         </Box>
 
@@ -398,25 +400,27 @@ export const BusinessInfo = () => {
             <MenuItem value="UK">English (UK)</MenuItem>
           </Select>
         </FormControl>
+        {/* {console.log(servingWays)} */}
+        {servingWays.includes("dine_in") &&
+          <FormControl variant="outlined" sx={{ width: "100%", marginBottom: "10px" }}>
+            <Select
+              id="outlined-TableCount"
+              value={tableCount || ''}
+              onChange={(e) => handleInputChange("tableCount", e.target.value)}
+              displayEmpty
+              sx={{ borderRadius: "10px", height: "33px", fontSize: "12px", color: "gray" }}
+              startAdornment={<InputAdornment position="start"><TableBarIcon sx={{ fontSize: "20px" }} /></InputAdornment>}
+            >
+              <MenuItem value="" disabled>{t("HowManyTablesDoYouHave")}</MenuItem>
+              {[...Array(12)].map((_, index) => (
+                <MenuItem key={index + 1} value={index + 1}>
+                  {index + 1}
+                </MenuItem>
+              ))}
 
-        <FormControl variant="outlined" sx={{ width: "100%", marginBottom: "10px" }}>
-          <Select
-            id="outlined-TableCount"
-            value={tableCount || ''}
-            onChange={(e) => handleInputChange("tableCount", e.target.value)}
-            displayEmpty
-            sx={{ borderRadius: "10px", height: "33px", fontSize: "12px", color: "gray" }}
-            startAdornment={<InputAdornment position="start"><TableBarIcon sx={{ fontSize: "20px" }} /></InputAdornment>}
-          >
-            <MenuItem value="" disabled>{t("HowManyTablesDoYouHave")}</MenuItem>
-            {[...Array(12)].map((_, index) => (
-              <MenuItem key={index + 1} value={index + 1}>
-                {index + 1}
-              </MenuItem>
-            ))}
+            </Select>
+          </FormControl>}
 
-          </Select>
-        </FormControl>
 
         <Divider sx={{ width: "100%", borderBottom: "1px solid #9d9d9c", marginBottom: "18px" }} />
 

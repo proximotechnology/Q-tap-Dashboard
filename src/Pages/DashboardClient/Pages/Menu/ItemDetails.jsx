@@ -54,6 +54,7 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
                 setDiscountCode(foundDiscount.code || '');
             }
         }
+        console.log("useEffect ItemDetails discountContent") // debug log
     }, [discountContent]);
 
     // تحديث المكون الأب عند تغيير أي حقل
@@ -73,7 +74,10 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
             discount, // إرسال id الخصم
             image,
         });
-    }, [name, brief, description, ingredients, calories, time, tax, priceSmall, priceMedium, priceLarge, price, discount, image, updateItemData]);
+        console.log("useEffect ItemDetails lot") // debug log
+        //     }, [name, brief, description, ingredients, calories, time, tax, priceSmall, priceMedium, priceLarge, price, discount, image, updateItemData]);
+
+    }, [name, brief, description, ingredients, calories, time, tax, priceSmall, priceMedium, priceLarge, price, discount, image]); // dont put  updateItemData here wrong !!!!
 
     // التعامل مع إدخال رمز الخصم
     const handleDiscountChange = (e) => {

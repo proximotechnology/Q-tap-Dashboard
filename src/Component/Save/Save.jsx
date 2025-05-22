@@ -34,10 +34,13 @@ import axios from 'axios';
 import { updateBusinessData, addBranch, selectBranch, clearBusinessData, setBranches } from "../../store/register/businessSlice";
 import { updatePersonalData } from "../../store/register/personalSlice";
 import { useDispatch, useSelector } from 'react-redux';
+import { printFormData } from '../../utils/utils';
 export const Save = () => {
 
   const dispatch = useDispatch();
   const personalData = useSelector((state) => state.personalStore.personalData);
+  
+  console.log('Current personalData:', personalData);
   const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
 
   const navigate = useNavigate();
@@ -141,6 +144,7 @@ export const Save = () => {
 
   // Handle Save Button Click
   const handleSave = async () => {
+
     setIsLoading(true);
     const formData = new FormData();
 
@@ -156,9 +160,9 @@ export const Save = () => {
         SA: 6,
       };
       // return currencyMap[country] || 1;
-      return  1;
+      return 1;
     };
-
+    console.log("personalData",personalData )//debug log
     // Append personal data
     formData.append('name', personalData.fullName?.trim() || '');
     formData.append('mobile', personalData.phone?.trim() || '');
@@ -280,8 +284,7 @@ export const Save = () => {
     const url = isUpdate ? `${BASE_URL}qtap_clients/${personalData.id}` : `${BASE_URL}qtap_clients`;
     const method = isUpdate ? 'PUT' : 'POST';
 
-    console.log("formData" , formData);
-    
+    printFormData(formData)
     // Send data to API
     try {
       const response = await axios({
@@ -293,8 +296,8 @@ export const Save = () => {
         },
       });
 
-      
-      console.log(response);
+
+      console.log("save register data ", response)// debug log
       if (response.status === 200 || response.status === 201) {
         const { payment_url } = response.data;
           
@@ -310,7 +313,7 @@ export const Save = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  };//
 
   // Language and User Popover Handlers
   const handleLanguageClick = (event) => {

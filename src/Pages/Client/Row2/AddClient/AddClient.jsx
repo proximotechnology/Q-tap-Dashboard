@@ -519,8 +519,13 @@ export const AddClient = () => {
                 },
               }}
             >
-              {loading ? <Loader size={22} /> : <CheckOutlinedIcon sx={{ fontSize: "22px", mr: 1 }} />}
-              {t("save")}
+              {loading ? (
+                <Loader size={22} />
+              ) : (
+                <>
+                  <CheckOutlinedIcon sx={{ fontSize: "22px", mr: 1 }} />{t("save")}
+                </>
+              )}
 
             </Button>
           </Grid>

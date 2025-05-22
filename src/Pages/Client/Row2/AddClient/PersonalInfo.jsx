@@ -24,6 +24,7 @@ export const PersonalInfo = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const personalData = useSelector((state) => state.personalStore.personalData);
+    console.log("personalData", personalData)
 
     const [fullName, setFullName] = useState(personalData.fullName || '');
     const [phone, setPhone] = useState(personalData.phone || '');
@@ -122,10 +123,13 @@ export const PersonalInfo = () => {
                         value={fullName}
                         onChange={(e) => {
                             setFullName(e.target.value);
-                            dispatch(setPersonalData((prevState) => ({
-                                ...prevState,
+                            // dispatch(setPersonalData((prevState) => ({
+                            //     ...prevState,
+                            //     fullName: e.target.value
+                            // })));
+                            dispatch(setPersonalData({
                                 fullName: e.target.value
-                            })));
+                            }));
                         }}
                         placeholder={t("fullName")}
                         sx={{ borderRadius: '10px', marginBottom: "18px", height: '33px', fontSize: "12px" }}
@@ -143,10 +147,9 @@ export const PersonalInfo = () => {
                         value={phone}
                         onChange={(e) => {
                             setPhone(e.target.value);
-                            dispatch(setPersonalData((prevState) => ({
-                                ...prevState,
+                            dispatch(setPersonalData({
                                 phone: e.target.value
-                            })));
+                            }));
                         }}
                         placeholder={t("mobileNumber")}
                         sx={{ borderRadius: '10px', marginBottom: "18px", height: '33px', fontSize: "12px" }}
@@ -162,10 +165,9 @@ export const PersonalInfo = () => {
                         value={email}
                         onChange={(e) => {
                             setEmail(e.target.value);
-                            dispatch(setPersonalData((prevState) => ({
-                                ...prevState,
+                            dispatch(setPersonalData({
                                 email: e.target.value
-                            })));
+                            }));
                         }}
                         placeholder={t("email")}
                         sx={{ borderRadius: '10px', marginBottom: "18px", height: '33px', fontSize: "12px" }}
@@ -182,10 +184,7 @@ export const PersonalInfo = () => {
                         value={website}
                         onChange={(e) => {
                             setWebsite(e.target.value);
-                            dispatch(setPersonalData((prevState) => ({
-                                ...prevState,
-                                website: e.target.value
-                            })));
+                            dispatch(setPersonalData({ website: e.target.value }));
                         }}
                         placeholder={t("websiteNoOptional")}
                         sx={{ borderRadius: '10px', height: "35px", fontSize: "12px", marginBottom: "18px" }}
@@ -206,10 +205,9 @@ export const PersonalInfo = () => {
                                 value={month}
                                 onChange={(e) => {
                                     setMonth(e.target.value);
-                                    dispatch(setPersonalData((prevState) => ({
-                                        ...prevState,
+                                    dispatch(setPersonalData({
                                         month: e.target.value
-                                    })));
+                                    }));
                                 }}
                                 displayEmpty
                                 sx={{ borderRadius: '10px', height: '33px', fontSize: "12px", color: "gray", marginRight: "5px" }}
@@ -230,10 +228,9 @@ export const PersonalInfo = () => {
                                 value={day}
                                 onChange={(e) => {
                                     setDay(e.target.value);
-                                    dispatch(setPersonalData((prevState) => ({
-                                        ...prevState,
+                                    dispatch(setPersonalData({
                                         day: e.target.value
-                                    })));
+                                    }));
                                 }}
                                 displayEmpty
                                 sx={{ borderRadius: '10px', height: '33px', fontSize: "12px", color: "gray", marginRight: "5px" }}
@@ -254,10 +251,9 @@ export const PersonalInfo = () => {
                                 value={year}
                                 onChange={(e) => {
                                     setYear(e.target.value);
-                                    dispatch(setPersonalData((prevState) => ({
-                                        ...prevState,
+                                    dispatch(setPersonalData({
                                         year: e.target.value
-                                    })));
+                                    }));
                                 }}
                                 displayEmpty
                                 sx={{ borderRadius: '10px', height: '33px', fontSize: "12px", color: "gray" }}
@@ -279,10 +275,9 @@ export const PersonalInfo = () => {
                         value={country}
                         onChange={(e) => {
                             setCountry(e.target.value);
-                            dispatch(setPersonalData((prevState) => ({
-                                ...prevState,
+                            dispatch(setPersonalData({
                                 country: e.target.value
-                            })));
+                            }));
                         }}
                         displayEmpty
                         sx={{ marginBottom: "18px", borderRadius: '10px', height: '33px', fontSize: "12px", color: "gray" }}
@@ -306,10 +301,9 @@ export const PersonalInfo = () => {
                         value={password}
                         onChange={(e) => {
                             setPassword(e.target.value);
-                            dispatch(setPersonalData((prevState) => ({
-                                ...prevState,
+                            dispatch(setPersonalData({
                                 password: e.target.value
-                            })));
+                            }));
                         }}
                         startAdornment={
                             <InputAdornment position="start">
@@ -335,10 +329,9 @@ export const PersonalInfo = () => {
                         value={confirmPassword}
                         onChange={(e) => {
                             setConfirmPassword(e.target.value);
-                            dispatch(setPersonalData((prevState) => ({
-                                ...prevState,
+                            dispatch(setPersonalData({
                                 confirmPassword: e.target.value
-                            })));
+                            }));
                         }}
                         startAdornment={
                             <InputAdornment position="start">

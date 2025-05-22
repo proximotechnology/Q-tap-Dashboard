@@ -32,7 +32,7 @@ export const OtpSignUp = () => {
         setLoading(true);
         setError('');
         try {
-            const response = await axios.post(`${BASE_URL}verify_email`, {
+            const response = await axios.post(`${BASE_URL}verfiy_email`, {
                 otp,
                 user_type: "qtap_clients"
             });

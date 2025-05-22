@@ -48,7 +48,7 @@ const personalSlice = createSlice({
       };
     },
     setPersonalData: (state, action) => {
-      state.personalData = action.payload;
+      state.personalData = {...state.personalData,...action.payload};
     },
   },
 });
