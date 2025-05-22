@@ -1,7 +1,9 @@
 export const printFormData = (formData) => {
+    console.log("=======================FORM DATA ======================");
     for (const [key, value] of formData.entries()) {
         console.log(key, value);
     }
+    console.log("=======================================================");
 }
 
 export const BusinessTypes = Object.freeze({
@@ -16,6 +18,6 @@ export const BusinessTypes = Object.freeze({
     RETAIL: "Retail",
 });
 export const BusinessLang = Object.freeze({
-    EN:'en',
-    AR:'ar'
+    EN: 'en',
+    AR: 'ar'
 });

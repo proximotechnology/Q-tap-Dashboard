@@ -34,10 +34,13 @@ import axios from 'axios';
 import { updateBusinessData, addBranch, selectBranch, clearBusinessData, setBranches } from "../../store/register/businessSlice";
 import { updatePersonalData } from "../../store/register/personalSlice";
 import { useDispatch, useSelector } from 'react-redux';
+import { printFormData } from '../../utils/utils';
 export const Save = () => {
 
   const dispatch = useDispatch();
   const personalData = useSelector((state) => state.personalStore.personalData);
+  
+  console.log('Current personalData:', personalData);
   const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
 
   const navigate = useNavigate();
@@ -159,7 +162,7 @@ export const Save = () => {
       // return currencyMap[country] || 1;
       return 1;
     };
-
+    console.log("personalData",personalData )//debug log
     // Append personal data
     formData.append('name', personalData.fullName?.trim() || '');
     formData.append('mobile', personalData.phone?.trim() || '');
@@ -280,7 +283,7 @@ export const Save = () => {
     const isUpdate = personalData.id; // Assuming personalData.id exists for existing users
     const url = isUpdate ? `${BASE_URL}qtap_clients/${personalData.id}` : `${BASE_URL}qtap_clients`;
     const method = isUpdate ? 'PUT' : 'POST';
-
+    printFormData(formData)
     // Send data to API
     try {
       const response = await axios({
