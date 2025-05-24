@@ -1,15 +1,26 @@
 import { Button, Divider, Paper, Typography } from '@mui/material'
 import { Box, useTheme } from '@mui/system'
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { QRCodeSVG } from 'qrcode.react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { fetchTablesData, selectTablesData } from '../../../../store/client/clientAdmin';
 
 export const Share = () => {
     const qrCodeRef = useRef();
     const theme = useTheme();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
+
+    const dispatch = useDispatch()
+    const data = useSelector(selectTablesData)
+    const tableDataRes = data.tables
+    console.log(tableDataRes);
+
+
     const handleCopyLink = () => {
-        const link = "https://highleveltecknology.com/";
+        // Assuming tableDataRes is an array and you want the link from the first table
+        const link = tableDataRes && tableDataRes.length > 0 ? tableDataRes[0].link : '';
         navigator.clipboard.writeText(link)
             .then(() => alert(t("linkCopied")))
             .catch((error) => alert(t("faildToCopyLink"), error));
@@ -30,8 +41,12 @@ export const Share = () => {
             URL.revokeObjectURL(url);
         }
     };
+    useEffect(() => {
+        dispatch(fetchTablesData())
+    }, [dispatch]);
+
     return (
-        <Paper style={{ padding: '20px 30px', borderRadius: "10px", marginTop: '16px', overflowX:'auto',whiteSpace:'nowrap' }}>
+        <Paper style={{ padding: '20px 30px', borderRadius: "10px", marginTop: '16px', overflowX: 'auto', whiteSpace: 'nowrap' }}>
             <Box
                 sx={{
                     maxWidth: '100%',
@@ -71,13 +86,13 @@ export const Share = () => {
                             justifyContent: "center",
                             alignItems: "center",
                             position: "relative",
-                             minWidth:'200px',
-                             marginX:'auto'
+                            minWidth: '200px',
+                            marginX: 'auto'
                         }}
                     >
                         <QRCodeSVG
                             ref={qrCodeRef}
-                            value="https://highleveltecknology.com/"
+                            value={tableDataRes[0].qr}
                             size={156}
                             fgColor="#000000"
                             bgColor="#FFFFFF"

@@ -26,7 +26,7 @@ export default function HomeClient() {
     const selectedBranchId = useSelector(selectSelectedBranch)
     const branch = useSelector(selectBranchById(selectedBranchId))
     
-    // console.log("selectedBranch homeClient change ::",branch.default_mode) // debug log
+    // console.log("selectedBranch homeClient change ::",branch.default_mode) //debug log
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ['dashboard', selectedBranchId],
         queryFn: async () => {

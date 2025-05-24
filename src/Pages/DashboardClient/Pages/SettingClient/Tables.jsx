@@ -27,12 +27,12 @@ const TableCard = ({ table, onDeleteTable, onEditTable }) => {
   const { t } = useTranslation();
   const theme = useTheme();
   const handleCopyLink = (qrLink) => {
-    const link = `https://highleveltecknology.com/Qtap/${qrLink}`;
+    const link = `${qrLink}`;
     navigator.clipboard.writeText(link)
       .then(() => alert(t("linkCopied")))
       .catch((error) => alert(t("faildToCopyLink"), error));
   };
-
+  
   return (
     <Card
       className={styles.card3} // Apply the card3 class for the gradient background
@@ -56,7 +56,7 @@ const TableCard = ({ table, onDeleteTable, onEditTable }) => {
           <Typography variant="subtitle2" sx={{ fontSize: '11px', color: theme.palette.orangePrimary.main }}>
             {t("id")}{' '}
             <span style={{ fontSize: '10px', color: '#AAAAAA', borderBottom: '1px solid #AAAAAA' }}>
-              {table.id}
+              {table?.id}
             </span>
           </Typography>
           <span
@@ -82,7 +82,7 @@ const TableCard = ({ table, onDeleteTable, onEditTable }) => {
           component="div"
           sx={{ fontSize: '9px', display: 'flex', color: '#9d9d9c', marginLeft: '5px' }}
         >
-          {table.name}
+          {table?.name}
         </Typography>
 
         <Box display={'flex'} justifyContent={'space-between'}>
@@ -92,13 +92,13 @@ const TableCard = ({ table, onDeleteTable, onEditTable }) => {
               sx={{ fontSize: '10px', display: 'flex', color: '#7b6a6a', marginTop: '10px' }}
             >
               <ChairAltOutlinedIcon sx={{ fontSize: '14px', mr: '5px' }} />
-              Chairs
+              Chair
             </Typography>
             <Typography
               variant="body2"
               sx={{ fontSize: '10px', display: 'flex', color: '#9d9d9c', marginLeft: '5px' }}
             >
-              {table.chairs} ch
+              {table?.table_number} ch
             </Typography>
           </Box>
           <Box>
@@ -133,7 +133,7 @@ const TableCard = ({ table, onDeleteTable, onEditTable }) => {
           }}
         >
           <QRCodeSVG
-            value={`https://highleveltecknology.com/Qtap/${table.link}`}
+            value={`${table?.link}`}
             size={90}
             fgColor="#000000"
             bgColor="#FFFFFF"
@@ -142,7 +142,7 @@ const TableCard = ({ table, onDeleteTable, onEditTable }) => {
         </Box>
 
         <Grid container justifyContent="center" alignItems="center">
-          <IconButton onClick={() => handleCopyLink(table.link)}>
+          <IconButton onClick={() => handleCopyLink(table?.link)}>
             <span className="icon-link" style={{ fontSize: '15px', color: 'black' }} />
           </IconButton>
           <IconButton>
@@ -200,7 +200,8 @@ export const Tables = ({ openOldMenu }) => {
 
   const data = useSelector(selectTablesData)
   const tableDataRes = data.tables
-
+  // console.log(data, tableDataRes);
+  
   useEffect(() => {
       dispatch(fetchAreaData())
       dispatch(fetchTablesData())
