@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import SalesVolumeChartClient from './SalesVolumeChart';
 import { fetchSalesByDays, selectSalesByDays } from '../../../../../../store/client/clientDashBoardSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { nFormatter } from '../../../../../../utils/formatNumber';
 
 const SalesVolumeCardClient = () => {
     const [year, setYear] = React.useState('30');
@@ -70,7 +71,7 @@ const SalesVolumeCardClient = () => {
                         {(() => {
                             const sum = salesVolumeClientData?.weeks?.map((order) => order.total_revenue || 0)
                                 .reduce((acc, curr) => acc + curr, 0);
-                            return sum > 0 ? (Number.isInteger(sum) ? sum : sum.toFixed(1)) : 0;
+                            return sum > 0 ? nFormatter(Number.isInteger(sum) ? sum : sum.toFixed(1)) : 0;
                         })()}{" "}
                     </Typography>
                     <Typography variant="body2" color={theme.palette.text.default}>

@@ -6,11 +6,12 @@ import { Grid, Select, MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { fetchSales, selectSales } from '../../../../../store/client/clientDashBoardSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { nFormatter } from '../../../../../utils/formatNumber';
 const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
         return (
             <div style={{ background: '#fff', border: '1px solid #ccc', padding: '0px 5px', fontSize: '10px', borderRadius: '5px' }}>
-                <p>{`${payload[0].payload.name}: ${payload[0].value / 1}k`}</p>
+                <p>{`${payload[0].payload.month_name}: ${payload[0].value} `}</p>
             </div>
         );
     }
@@ -29,7 +30,7 @@ export const BarChartClientDashboard = () => {
         setYear(event.target.value);
     };
 
-   
+
     React.useEffect(() => {
         dispatch(fetchSales(year))
     }, [year]);
@@ -74,7 +75,7 @@ export const BarChartClientDashboard = () => {
                     />
 
                     <YAxis
-                        tickFormatter={(tick) => `${tick / 1}k`}
+                        tickFormatter={nFormatter}
                         tick={{ fontSize: 10 }}
                         tickLine={false}
                         axisLine={false}

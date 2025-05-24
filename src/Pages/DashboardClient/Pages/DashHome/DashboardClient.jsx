@@ -11,7 +11,6 @@ export const DashboardClient = () => {
   
   const { users_logs } = dashboardData || {};
 
-
   return (
     <Box >
       <Row1 dashboardClientData={dashboardData} />
