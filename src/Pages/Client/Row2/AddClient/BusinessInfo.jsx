@@ -467,7 +467,7 @@ export const BusinessInfo = () => {
                 value={mode}
                 exclusive
                 onChange={handleModeChange}
-                sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "start" }}
+                sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "space-between" }}
               >
                 <ToggleButton
                   value="white"
@@ -490,8 +490,6 @@ export const BusinessInfo = () => {
                     backgroundColor: mode === "dark" ? theme.palette.orangePrimary.main : "transparent",
                     border: `1px solid ${mode === "dark" ? theme.palette.orangePrimary.main : "#AAAAAA"} !important`,
                     borderRadius: "8px !important",
-                    marginLeft: 'auto !important',
-                    marginRight: 'auto !important',
                   }}
                 >
                   <NightlightIcon
@@ -508,7 +506,7 @@ export const BusinessInfo = () => {
                 height: "40px",
                 width: "2px",
                 backgroundColor: theme.palette.orangePrimary.main,
-                margin: "auto 10px",
+                margin: "30px 15px 0 15px",
               }}
             />
 
@@ -523,7 +521,7 @@ export const BusinessInfo = () => {
                 value={design}
                 exclusive
                 onChange={handleDesignChange}
-                sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "start" }}
+                sx={{ backgroundColor: 'transparent', display: "flex", justifyContent: "space-between" }}
               >
                 <ToggleButton
                   value="grid"
@@ -546,8 +544,6 @@ export const BusinessInfo = () => {
                     backgroundColor: design === "list" ? theme.palette.orangePrimary.main : "transparent",
                     border: `1px solid ${design === "list" ? theme.palette.orangePrimary.main : "#AAAAAA"} !important`,
                     borderRadius: "8px !important",
-                    marginLeft: 'auto !important',
-                    marginRight: 'auto !important',
                   }}
                 >
                   <FormatListBulletedIcon

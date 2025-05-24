@@ -5,16 +5,21 @@ import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import LineChart1 from './lineChart1';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSales, selectSalesByDays } from '../../../../../store/client/clientDashBoardSlice';
+import { fetchSales, selectSales } from '../../../../../store/client/clientDashBoardSlice';
 import { formatNumber } from '../../../../../utils/formatNumber';
 export const Row1 = () => {
   const [year, setYear] = React.useState('2025');
   const navigate = useNavigate();
   const { t } = useTranslation()
   const theme = useTheme();
-  const walletChartClientData = useSelector(selectSalesByDays)
-  console.log("walletChartClientData", walletChartClientData)
-  const dispatch = useDispatch()
+  const walletChartClientData = useSelector(selectSales) || {};
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    if (walletChartClientData && Object.keys(walletChartClientData).length > 0) {
+      // console.log("walletChartClientData", walletChartClientData);
+    }
+  }, [walletChartClientData]);
+
   const handleYearChange = (event) => {
     setYear(event.target.value);
   };
@@ -115,17 +120,13 @@ export const Row1 = () => {
               zIndex: 1,
             }}
           >
-            {/* {(() => {
+            {(() => {
               const sum = Object.values(walletChartClientData)
                 .map((order) => order.total_revenue || 0)
                 .reduce((acc, curr) => acc + curr, 0);
-              return sum > 0 ? (Number.isInteger(sum) ? sum : sum.toFixed(1)) : 0;
-            })()} */}
-
-            {formatNumber(Number(walletChartClientData.total_revenue))}
-            <span style={{ fontSize: "20px", opacity: '0.5' }}> £</span>
-
-
+              return sum > 0 ? formatNumber(Number(sum)) : 0;
+            })()}{" "}
+            <span style={{ fontSize: "20px", opacity: "0.5" }}>£</span>
           </Typography>
 
 
