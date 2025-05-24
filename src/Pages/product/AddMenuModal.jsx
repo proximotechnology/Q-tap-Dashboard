@@ -13,6 +13,7 @@ import {
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL } from '../../utils/helperFunction';
+import { toast } from 'react-toastify';
 
 const AddMenuModal = ({ open, handleClose, onSuccess }) => {
     const [menuData, setMenuData] = useState({
@@ -60,6 +61,7 @@ const AddMenuModal = ({ open, handleClose, onSuccess }) => {
             }
         } catch (error) {
             console.error('Error creating menu:', error);
+            toast.error(error.response.data.errors.img[0] || 'faild to add menu')
         } finally {
             setLoading(false);
         }

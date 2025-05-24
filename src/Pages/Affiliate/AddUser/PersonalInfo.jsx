@@ -60,7 +60,7 @@ export const PersonalInfo = ({
             alignItems: 'center',
           }}>
             <img
-              src={selectedImage ? `${BASE_URL_IMG}${selectedImage}` : "/images/User.jpg"}
+              src={selectedImage ? (typeof selectedImage === "string" ? `${BASE_URL_IMG}${selectedImage}` : URL.createObjectURL(selectedImage)) : "/images/User.jpg"}
               alt="user"
               width="110%"
               height="110%"
