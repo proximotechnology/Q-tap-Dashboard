@@ -45,7 +45,7 @@ const ProfilePageNew = () => {
   const data = useSelector(selectGetInfoData)
   const qtap_clients = data?.qtap_clients;
 
-
+  const MENU_STYLE = { fontSize: '12px', color: 'gray' }
   const branchID = useSelector(selectSelectedBranch)
   const [imageFile, setImageFile] = useState(null);
 
@@ -415,11 +415,11 @@ const ProfilePageNew = () => {
                       marginRight: '5px',
                     }}
                   >
-                    <MenuItem value="" disabled sx={{ fontSize: '12px', color: 'gray' }}>
+                    <MenuItem value="" disabled sx={MENU_STYLE}>
                       {t("month")}
                     </MenuItem>
                     {['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'].map((m) => (
-                      <MenuItem key={m} value={m} sx={{ fontSize: '12px', color: 'gray' }}>
+                      <MenuItem key={m} value={m} sx={MENU_STYLE}>
                         {m}
                       </MenuItem>
                     ))}
@@ -449,7 +449,7 @@ const ProfilePageNew = () => {
                       <MenuItem
                         key={i + 1}
                         value={String(i + 1).padStart(2, '0')}
-                        sx={{ fontSize: '12px', color: 'gray' }}
+                        sx={MENU_STYLE}
                       >
                         {String(i + 1).padStart(2, '0')}
                       </MenuItem>
@@ -467,11 +467,11 @@ const ProfilePageNew = () => {
                     displayEmpty
                     sx={{ borderRadius: '6px', height: '33px', fontSize: '10px', color: 'gray' }}
                   >
-                    <MenuItem value="" disabled sx={{ fontSize: '12px', color: 'gray' }}>
+                    <MenuItem value="" disabled sx={MENU_STYLE}>
                       {t("year")}
                     </MenuItem>
                     {Array.from({ length: 2025 - 1900 + 1 }, (_, i) => 1900 + i).map((y) => (
-                      <MenuItem key={y} value={y} sx={{ fontSize: '12px', color: 'gray' }}>
+                      <MenuItem key={y} value={y} sx={MENU_STYLE}>
                         {y}
                       </MenuItem>
                     ))}
@@ -501,19 +501,19 @@ const ProfilePageNew = () => {
                 }
                 MenuProps={{ disableScrollLock: true }}
               >
-                <MenuItem value="" disabled sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value="" disabled sx={MENU_STYLE}>
                   {t("country")}{userData.country}
                 </MenuItem>
-                <MenuItem value={Country.EGYPT} sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={Country.EGYPT} sx={MENU_STYLE}>
                   EGYPT
                 </MenuItem>
-                <MenuItem value={Country.USA} sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={Country.USA} sx={MENU_STYLE}>
                   United States
                 </MenuItem>
-                <MenuItem value={Country.CANADA} sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={Country.CANADA} sx={MENU_STYLE}>
                   Canada
                 </MenuItem>
-                <MenuItem value={Country.UK} sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={Country.UK} sx={MENU_STYLE}>
                   United Kingdom
                 </MenuItem>
               </Select>
@@ -739,10 +739,10 @@ const ProfilePageNew = () => {
                 <MenuItem value="" disabled>
                   {t("currency")}
                 </MenuItem>
-                <MenuItem value="UL" sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value="UL" sx={MENU_STYLE}>
                   United States
                 </MenuItem>
-                <MenuItem value="UK" sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value="UK" sx={MENU_STYLE}>
                   United Kingdom
                 </MenuItem>
               </Select>
@@ -766,31 +766,31 @@ const ProfilePageNew = () => {
                 <MenuItem value="" disabled>
                   {t("businessType")}
                 </MenuItem>
-                <MenuItem value={BusinessTypes.RESTAURANT} sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={BusinessTypes.RESTAURANT} sx={MENU_STYLE}>
                   {t("restaurant")}
                 </MenuItem>
-                <MenuItem value={BusinessTypes.CAFE} sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={BusinessTypes.CAFE} sx={MENU_STYLE}>
                   {t("cafe")}
                 </MenuItem>
-                <MenuItem value={BusinessTypes.CLOUD} sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={BusinessTypes.CLOUD} sx={MENU_STYLE}>
                   {t("cloudKitchens")}
                 </MenuItem>
-                <MenuItem value={BusinessTypes.FAST_FOOD} sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={BusinessTypes.FAST_FOOD} sx={MENU_STYLE}>
                   {t("fastFood")}
                 </MenuItem>
-                <MenuItem value={BusinessTypes.TRUCK} sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={BusinessTypes.TRUCK} sx={MENU_STYLE}>
                   {t("foodTruch")}
                 </MenuItem>
-                <MenuItem value={BusinessTypes.BAKERY} sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={BusinessTypes.BAKERY} sx={MENU_STYLE}>
                   {t("bakeryStore")}
                 </MenuItem>
-                <MenuItem value={BusinessTypes.PASTRY} sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={BusinessTypes.PASTRY} sx={MENU_STYLE}>
                   {t("pastryStore")}
                 </MenuItem>
-                <MenuItem value={BusinessTypes.FRUITS} sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={BusinessTypes.FRUITS} sx={MENU_STYLE}>
                   {t("fruitsStore")}
                 </MenuItem>
-                <MenuItem value={BusinessTypes.RETAIL} sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={BusinessTypes.RETAIL} sx={MENU_STYLE}>
                   {t("retailStore")}
                 </MenuItem>
               </Select>
@@ -814,13 +814,13 @@ const ProfilePageNew = () => {
                 <MenuItem value="" disabled>
                   {t("menuDefLang")}
                 </MenuItem>
-                <MenuItem value={BusinessLang.EN} sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={BusinessLang.EN} sx={MENU_STYLE}>
                   English
                 </MenuItem>
-                <MenuItem value={BusinessLang.AR} sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value={BusinessLang.AR} sx={MENU_STYLE}>
                   Arabic
                 </MenuItem>
-                {/* <MenuItem value="3" sx={{ fontSize: '12px', color: 'gray' }}>
+                {/* <MenuItem value="3" sx={MENU_STYLE}>
                   France
                 </MenuItem> */}
               </Select>
@@ -841,11 +841,11 @@ const ProfilePageNew = () => {
                 }
                 MenuProps={{ disableScrollLock: true }}
               >
-                <MenuItem value="" disabled sx={{ fontSize: '12px', color: 'gray' }}>
+                <MenuItem value="" disabled sx={MENU_STYLE}>
                   {t("HowManyTablesDoYouHave")}
                 </MenuItem>
                 {[...Array(12).keys()].map((i) => (
-                  <MenuItem key={i + 1} value={i + 1} sx={{ fontSize: '12px', color: 'gray' }}>
+                  <MenuItem key={i + 1} value={i + 1} sx={MENU_STYLE}>
                     {i + 1}
                   </MenuItem>
                 ))}
