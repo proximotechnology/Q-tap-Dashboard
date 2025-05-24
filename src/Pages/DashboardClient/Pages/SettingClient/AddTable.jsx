@@ -37,6 +37,7 @@ const AddTableModal = ({ open, onClose, tableData }) => {
   const [areaMenu, setAreaMenu] = useState('');
   const [size, setSize] = useState('');
   const [name, setName] = useState('');
+  const [tableNumber, setTableNumber] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleOpen = () => setModalOpen(true);
@@ -48,10 +49,12 @@ const AddTableModal = ({ open, onClose, tableData }) => {
     if (tableData) {
       setName(tableData.name || '');
       setSize(tableData.size || '');
+      setTableNumber(tableData.table_number || '');
       setAreaMenu(tableData.area_id || '');
     } else {
       setName('');
       setSize('');
+      setTableNumber('');
       setAreaMenu('');
     }
   }, [tableData]);
@@ -63,11 +66,10 @@ const AddTableModal = ({ open, onClose, tableData }) => {
         area_id: areaMenu,
         name,
         size,
-        link: tableData ? tableData.link : 'no link until now', // Preserve link if editing
+        table_number: tableNumber,
       };
 
       const url = tableData
-
         ? `${BASE_URL}tables/${tableData.id}` // Update existing table
         : `${BASE_URL}tables`; // Add new table
 
@@ -85,17 +87,17 @@ const AddTableModal = ({ open, onClose, tableData }) => {
 
       if (response.data) {
         toast.success(tableData ? t("table.updateSucc") : t("table.addSucc"));
-        if (!tableData) { //
-          dispatch(createTable(response.data.table))
+        if (!tableData) {
+          dispatch(createTable(response.data.table));
+        } else {
+          // Use response.data.table for update, not response.data.tables
+          dispatch(updateTable(response.data.table));
         }
-        else {
-          dispatch(updateTable(response.data.tables))
-        }
-
-        onClose(); // Close the modal
+        onClose();
       }
     } catch (error) {
-      console.error('Error saving table:', error);
+      // Log the actual error message for easier debugging
+      console.error('Error saving table:', error?.response?.data || error.message || error);
       toast.error(t("table.saveErr"));
     }
   };
@@ -172,6 +174,30 @@ const AddTableModal = ({ open, onClose, tableData }) => {
               }}
               fullWidth
               placeholder={t("chairs")}
+            />
+          </Box>
+        </Box>
+        {/* table number Field */}
+        <Box sx={{ marginTop: '20px', display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'left' }}>
+          <Typography variant="body2" sx={{ width: '40%', textAlign: 'center' }} color={theme.palette.bodyColor.gray_white} fontSize="12px">
+            {t("Table Number")}
+          </Typography>
+          <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+            <TextField
+              value={tableNumber}
+              onChange={(e) => setTableNumber(e.target.value)}
+              sx={{
+                width: '90%',
+                '& .MuiInputBase-input': {
+                  height: '35px',
+                  padding: '0px 14px',
+                  color: theme.palette.bodyColor.gray_white,
+                  textAlign: 'left',
+                  fontSize: '12px',
+                },
+              }}
+              fullWidth
+              placeholder={t("table Number")}
             />
           </Box>
         </Box>
