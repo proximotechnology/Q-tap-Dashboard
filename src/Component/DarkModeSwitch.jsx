@@ -15,9 +15,7 @@ const DarkModeSwitch = () => {
     useEffect(() => {
         // "dark" or "white" api
         // mode lib "dark"  or "light" 
-        console.log("mode ::::::::::::::::::", selectedBranch) 
         const defaultModeOfBranch = selectedBranch?.default_mode
-        console.log("mode ::::::::::::::::::", mode, "default Mode Of Branch ::::::::::::::::::", defaultModeOfBranch)
         if (defaultModeOfBranch === "white" && mode === "dark") {
              toggleColorMode()
         }if(defaultModeOfBranch === "dark"  && mode === "light" ){
