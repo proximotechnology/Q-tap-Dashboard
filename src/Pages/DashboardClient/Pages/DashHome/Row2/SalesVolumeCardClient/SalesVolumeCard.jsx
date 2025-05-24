@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import SalesVolumeChartClient from './SalesVolumeChart';
 import { fetchSalesByDays, selectSalesByDays } from '../../../../../../store/client/clientDashBoardSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { formatNumber } from '../../../../../../utils/formatNumber';
 
 const SalesVolumeCardClient = () => {
     const [year, setYear] = React.useState('30');
@@ -17,8 +18,8 @@ const SalesVolumeCardClient = () => {
     const salesVolumeClientData = useSelector(selectSalesByDays)
     React.useEffect(() => {
         dispatch(fetchSalesByDays(year))
-    }, [dispatch,year]);
-    
+    }, [dispatch, year]);
+
     return (
         <Paper sx={{ borderRadius: "20px", marginTop: "20px", padding: "10px", }}>
             <Grid container justifyContent="space-between" alignItems="center" sx={{ padding: "10px 20px", }} >
@@ -67,11 +68,12 @@ const SalesVolumeCardClient = () => {
                     <span class="icon-wallet1" style={{ fontSize: '26px' }} ></span>
                     <Typography variant="h5"
                         sx={{ fontSize: "20px", color: theme.palette.text.default, marginTop: '8px', border: `2px solid${theme.palette.orangePrimary.main}`, padding: "3px 25px", borderRadius: "20px" }}>
-                        {(() => {
+                        {/* {(() => {
                             const sum = salesVolumeClientData?.weeks?.map((order) => order.total_revenue || 0)
                                 .reduce((acc, curr) => acc + curr, 0);
                             return sum > 0 ? (Number.isInteger(sum) ? sum : sum.toFixed(1)) : 0;
-                        })()}{" "}
+                        })()}{" "} */}
+                        {formatNumber(Number(salesVolumeClientData.total_revenue))}
                     </Typography>
                     <Typography variant="body2" color={theme.palette.text.default}>
                         EGP

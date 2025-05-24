@@ -5,7 +5,7 @@ import SideBar from "../../ComponentDashClient/SideBar/SideBar";
 import TopBar from "../../ComponentDashClient/TopBar/TopBar";
 import Content from "../../ComponentDashClient/Content/Content";
 import SidebarButton from "../../../../Component/MobileSideBarButton/SidebarButton";
-import { fetchGetInfoData, selectSelectedBranch } from "../../../../store/client/clientAdmin";
+import { fetchGetInfoData, selectBranchById, selectSelectedBranch } from "../../../../store/client/clientAdmin";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDashboardData } from "../../../../store/client/clientDashBoardSlice";
 import { useQuery } from "@tanstack/react-query";
@@ -23,12 +23,14 @@ export default function HomeClient() {
     }
 
     // const selectedBranch = localStorage.getItem("selectedBranch");
-    const selectedBranch = useSelector(selectSelectedBranch)
-    console.log("selectedBranch homeClient change",selectedBranch) // debug log
+    const selectedBranchId = useSelector(selectSelectedBranch)
+    const branch = useSelector(selectBranchById(selectedBranchId))
+    
+    // console.log("selectedBranch homeClient change ::",branch.default_mode) // debug log
     const { data, isLoading, isError, error } = useQuery({
-        queryKey: ['dashboard', selectedBranch],
+        queryKey: ['dashboard', selectedBranchId],
         queryFn: async () => {
-            const action = await dispatch(fetchDashboardData(selectedBranch));
+            const action = await dispatch(fetchDashboardData(selectedBranchId));
             if (fetchDashboardData.fulfilled.match(action)) {
                 return action.payload;
             } else {
@@ -41,6 +43,13 @@ export default function HomeClient() {
     useEffect(() => {
         dispatch(fetchGetInfoData())
     }, [dispatch])
+
+    useEffect(() => {
+        if(branch){
+        localStorage.setItem("themeMode", branch.default_mode)
+    }
+    }, [selectedBranchId])
+    
 
     // if (!user || !allowedRoles.includes(user.role)) {
     //     return <Navigate to="/unauthorized" />; // or redirect to login

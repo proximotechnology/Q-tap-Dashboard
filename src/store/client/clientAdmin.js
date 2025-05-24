@@ -33,6 +33,8 @@ export const fetchGetInfoData = createAsyncThunk(
             const response = await axios.get(`${BASE_URL}get_info`, {
                 headers: getAuthHeader(),
             });
+            console.log(response.data ,":::::::get_info");
+            
             return response.data;
         } catch (error) {
             throw new Error(error.message);

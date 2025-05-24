@@ -16,9 +16,7 @@ const SidebarExtraMobileSection = ({ customSX = {} }) => {
                     <Language />
                 </Grid>
                     <UserOptions customSX={{ justifyContent: 'center' }} />
-
-
-
+                    
             </Grid>
 
         </Box>
