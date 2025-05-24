@@ -11,6 +11,7 @@ import { Tables } from './Tables';
 import { Delivery } from './delivery/Delivery';
 import RoomServiceOutlinedIcon from '@mui/icons-material/RoomServiceOutlined';
 import { useTranslation } from 'react-i18next';
+import ProfilePageNew from './ProfilePageNew';
 //TODO: navigate button styling
 const CategoryTabs = () => {
     const { t } = useTranslation();
@@ -20,7 +21,9 @@ const CategoryTabs = () => {
         {
             name: 'profile', label: 'Profile',
             icon: <PersonOutlineOutlinedIcon />,
-            content: <ProfilePage />, selected: true
+            // content: <ProfilePage />, 
+            content: <ProfilePageNew />, 
+            selected: true
         },
 
         {
