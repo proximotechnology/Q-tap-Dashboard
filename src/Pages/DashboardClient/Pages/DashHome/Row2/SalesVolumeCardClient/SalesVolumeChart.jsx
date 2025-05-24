@@ -5,7 +5,6 @@ import React from 'react'
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Area } from "recharts";
 import { nFormatter } from '../../../../../../utils/formatNumber';
 const CustomTooltip = ({ active, payload }) => {
-    console.log("CustomTooltip>>>>>>>>>>>", active, " ", payload)
     if (active && payload && payload.length) {
         return (
             <div style={{ background: '#fff', border: '1px solid #ccc', padding: '0px 5px', fontSize: '10px', borderRadius: '5px' }}>

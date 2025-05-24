@@ -1,12 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
-import {useColorMode} from '../context/ThemeModeProvider'
+import { useColorMode } from '../context/ThemeModeProvider'
 import { Box, useTheme } from '@mui/system';
 import { Switch } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { selectBranchById, selectSelectedBranch } from '../store/client/clientAdmin';
 const DarkModeSwitch = () => {
     const { toggleColorMode, mode } = useColorMode();
     const theme = useTheme();
+    const selectedBranchID = useSelector(selectSelectedBranch)
+    const selectedBranch = useSelector(selectBranchById(selectedBranchID))
+
+    useEffect(() => {
+        // "dark" or "white" api
+        // mode lib "dark"  or "light" 
+        console.log("mode ::::::::::::::::::", selectedBranch) 
+        const defaultModeOfBranch = selectedBranch?.default_mode
+        console.log("mode ::::::::::::::::::", mode, "default Mode Of Branch ::::::::::::::::::", defaultModeOfBranch)
+        if (defaultModeOfBranch === "white" && mode === "dark") {
+             toggleColorMode()
+        }if(defaultModeOfBranch === "dark"  && mode === "light" ){
+            toggleColorMode()
+        } 
+    }, [selectedBranch?.default_mode])
     return (
         <Box sx={{ marginInlineEnd: "20px", display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
             <LightModeOutlinedIcon onClick={toggleColorMode}
