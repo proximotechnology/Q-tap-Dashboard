@@ -15,7 +15,6 @@ import ProfilePageNew from './ProfilePageNew';
 //TODO: navigate button styling
 const CategoryTabs = () => {
     const { t } = useTranslation();
-
     const theme = useTheme();
     const [buttons, setButtons] = useState([
         {
