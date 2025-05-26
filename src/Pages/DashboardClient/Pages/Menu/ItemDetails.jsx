@@ -85,6 +85,7 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
         if (value >= 0 && value <= 100) {
             setDiscount(value);
         }else {
+            toast.error("dicount must be between 0 to 100")
             console.log("error  cant add discount") // debug log
         }
         // setDiscountCode(code);
