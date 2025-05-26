@@ -37,6 +37,9 @@ const MenuClient = () => {
 
     const theme = useTheme()
     const allMenuData = query?.data?.data
+    console.log('allMenuData', allMenuData , selectedCategory);
+
+    
     return (
         <Box sx={{ display: 'flex', background: theme.palette.bodyColor.whiteGray_lightBlack, padding: "20px 0px", minHeight: "100vh" }}>
             <SideBar
