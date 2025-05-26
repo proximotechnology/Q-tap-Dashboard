@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Container, Grid, Typography, useTheme } from '@mui/material';
+import { Box, Container, Grid, Hidden, Typography, useTheme } from '@mui/material';
 import Offers from './Offers';
 import Item from './Items';
 import ProductDetails from './ProductDetails/ProductDetails';
@@ -114,6 +114,7 @@ const Content = ({ allMenuData, selectedCategory }) => {
                                 md={selectedItem ? 6 : 4} 
                                 lg={selectedItem ? 3 : 2} 
                                 key={meal.id}
+                                overflow={"Hidden"}
                             >
                                 <Box
                                     sx={{
