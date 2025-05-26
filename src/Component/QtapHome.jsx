@@ -5,9 +5,28 @@ import { LoginPage } from './login/LoginPage';
 import { useTranslation } from 'react-i18next';
 
 const QtapHome = () => {
-    const [selectedTab, setSelectedTab] = useState('login');
+    const [selectedTab, setSelectedTab] = useState(
+        sessionStorage.getItem('affiliate_code') ? 'signup' : 'login'
+    );
     const theme = useTheme();
     const { t } = useTranslation();
+
+    const params = new URLSearchParams(window.location.search);
+
+    // هل هناك أي باراميتر في الرابط؟
+    if (params.has("affiliate_code")) {
+        const value = params.get("affiliate_code");
+
+        // خزّن القيمة تحت نفس الاسم
+        sessionStorage.setItem("affiliate_code", value);
+    } else {
+        // إذا لم يوجد باراميتر affiliate_code → احذفه من sessionStorage
+        sessionStorage.removeItem("affiliate_code");
+    }
+
+
+
+
     return (
         <Box>
 
@@ -69,14 +88,14 @@ const QtapHome = () => {
                             cursor: "pointer",
                         }}
                     >
-                        
+
                         {t("signUp")}
                     </Typography>
                 </Box>
             </Box>
 
             <Box >
-
+                        
                 {selectedTab === 'login' && <LoginPage />}
                 {selectedTab === 'signup' && <SignUpPage />}
 

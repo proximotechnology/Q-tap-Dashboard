@@ -183,7 +183,9 @@ export const Save = () => {
     if (personalData.img instanceof File) {
       formData.append('img', personalData.img);
     }
-
+    if(sessionStorage.getItem('affiliate_code')){
+      formData.append('affiliate_code', sessionStorage.getItem('affiliate_code'));
+    }
     // Branch data preparation
     const apiBranches = (branches.length > 0 ? branches : [businessData]).map((branch, index) => ({
       brunch: `brunch${index + 1}`,
