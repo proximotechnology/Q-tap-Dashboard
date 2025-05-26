@@ -202,19 +202,19 @@ function App() {
     },
     {
       path: "add-item",
-      element: <AddItem />, // done
+      element: <ProtectedRouteClient allowedRoles={['admin']} redirectPath={'/'}><AddItem /></ProtectedRouteClient>, // done
     },
     {
       path: "add-client",
-      element: <AddClient />, // done
+      element: <ProtectedRouteClient allowedRoles={['admin']} redirectPath={'/'}> <AddClient /></ProtectedRouteClient>, // done
     },
     {
       path: "add-user",
-      element: <AddUsers />, // done
+      element: <ProtectedRouteClient allowedRoles={['admin']} redirectPath={'/'}><AddUsers />,</ProtectedRouteClient> // done
     },
     {
       path: "add-role",
-      element: <AddRole />, // done
+      element: <ProtectedRouteClient allowedRoles={['admin']} redirectPath={'/'}><AddRole /></ProtectedRouteClient>, // done
     },
     {
       path: "add-Affiliate",
