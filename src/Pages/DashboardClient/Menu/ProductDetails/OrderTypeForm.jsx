@@ -19,6 +19,7 @@ import { BASE_URL } from '../../../../utils/helperFunction';
 import axios from 'axios';
 import { Country, Governorates } from '../../../../utils/city';
 import MapWithPin from '../../../../utils/MapWithPin';
+import { calculateCartDetails } from '../utils/cartUtils';
 const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, totalCart, setCartItems }) => {
 
     const [selectedType, setSelectedType] = useState('Dine In');
@@ -82,32 +83,11 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
     const [total, setTotal] = useState(0)
 
     const calculateTotalPrice = () => { /// TODO: what if the user select multi size of same meal
-        let calsubtotal = 0;
-        let caltax = 0;
-        let caldiscount = 0
-
-        for (const meal of cartItems) {
-            let priceOfItem = 0;
-            if (meal.selectedSize === 'S') {
-                priceOfItem = meal.price_small
-            }
-            if (meal.selectedSize === 'M') {
-                priceOfItem = meal.price_medium
-            }
-            if (meal.selectedSize === 'L') {
-                priceOfItem = meal.price_large
-            }
-            calsubtotal += (priceOfItem * meal.quantity);
-            caltax += priceOfItem * (meal.Tax / 100);
-            caldiscount += priceOfItem * (meal.discounts?.discount ? meal.discounts?.discount / 100 : 0)
-
-        }
-        let totalCal = calsubtotal - caldiscount
-        totalCal += caltax
+        const { calsubtotal, caltax, caldiscount } = calculateCartDetails(cartItems)
         setSubTotal(calsubtotal.toFixed(2))
         setTax(caltax.toFixed(2))
         setDiscount(caldiscount.toFixed(2))
-        setTotal(totalCal.toFixed(2))
+        setTotal((calsubtotal + caltax - caldiscount).toFixed(2))
     }
     const getBranchTable = async () => {
         try {

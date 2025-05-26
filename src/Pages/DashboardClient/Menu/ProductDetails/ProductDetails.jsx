@@ -12,6 +12,7 @@ import { customWidth } from '../utils';
 import Language from '../../../../Component/dashboard/TopBar/Language';
 import { toast } from 'react-toastify';
 import { BASE_URL_IMG } from '../../../../utils/helperFunction';
+import { haveSameExtrasAndOptions, itemCalculation } from '../utils/cartUtils';
 
 const ProductDetails = ({
     item,
@@ -73,17 +74,7 @@ const ProductDetails = ({
     *       - meal identical (size , options , extras) --> update the meal
     *       - meal not identical --> create new meal with this specification
     */
-    function haveSameExtrasAndOptions(obj1, obj2) {
-        const extras1 = (obj1.selectedExtras ?? []).map(e => e.id).sort();
-        const extras2 = (obj2.selectedExtras ?? []).map(e => e.id).sort();
 
-        const options1 = (obj1.selectedOptions ?? []).map(o => o.id).sort();
-        const options2 = (obj2.selectedOptions ?? []).map(o => o.id).sort();
-
-        const extrasEqual = JSON.stringify(extras1) === JSON.stringify(extras2);
-        const optionsEqual = JSON.stringify(options1) === JSON.stringify(options2);
-        return extrasEqual & optionsEqual
-    }
     /* this call by the button  */
     const addItemToCart = (newItem) => {
         if (quantity === 0) {
@@ -158,25 +149,38 @@ const ProductDetails = ({
     // حساب السعر الإجمالي
     const getTotalPrice = () => {
         // السعر الأساسي بناءً على الحجم المختار
-        let basePrice = item.price;
-        const selectedSizeLabel = selectedSize[item.id];
-        if (selectedSizeLabel) {
-            const selectedSizeObj = sizes.find(size => size.label === selectedSizeLabel);
-            basePrice = selectedSizeObj ? selectedSizeObj.price : item.price;
-        }
 
-        // أسعار المتغيرات المختارة
-        const optionsPrice = selectedItemOptions[item.id]?.reduce((total, option) => {
-            return total + (parseFloat(option.price) || 0);
-        }, 0) || 0;
+        const { itemSubTotal, itemDiscount, itemTax } = itemCalculation({
+            price_large: item.price_large,
+            price_medium: item.price_medium,
+            price_small: item.price_small,
+            selectedSize: selectedSize[item.id],
+            selectedExtra: selectedItemExtra[item.id],
+            selectedOptions: selectedItemOptions[item.id],
+            Tax: item.Tax,
+            discountPer: item.discount
+        })
+        // console.log(">>>>>>>>>>> item <<<<<<<<<<<<<", item)
+        // let basePrice = item.price;
+        // const selectedSizeLabel = selectedSize[item.id];
+        // if (selectedSizeLabel) {
+        //     const selectedSizeObj = sizes.find(size => size.label === selectedSizeLabel);
+        //     basePrice = selectedSizeObj ? selectedSizeObj.price : item.price;
+        // }
 
-        // أسعار الإضافات المختارة
-        const extrasPrice = selectedItemExtra[item.id]?.reduce((total, extra) => {
-            return total + (parseFloat(extra.price) || 0);
-        }, 0) || 0;
+        // // أسعار المتغيرات المختارة
+        // const optionsPrice = selectedItemOptions[item.id]?.reduce((total, option) => {
+        //     return total + (parseFloat(option.price) || 0);
+        // }, 0) || 0;
 
-        // السعر الإجمالي
-        return (parseFloat(basePrice) + optionsPrice + extrasPrice).toFixed(2);
+        // // أسعار الإضافات المختارة
+        // const extrasPrice = selectedItemExtra[item.id]?.reduce((total, extra) => {
+        //     return total + (parseFloat(extra.price) || 0);
+        // }, 0) || 0;
+
+        // // السعر الإجمالي
+       
+        return (itemSubTotal + itemTax - itemDiscount).toFixed(2);
     };
 
     return (

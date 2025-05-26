@@ -11,6 +11,7 @@ import OrderTypeForm from './OrderTypeForm';
 import { useTranslation } from 'react-i18next';
 import { customWidth } from '../utils';
 import Language from '../../../../Component/dashboard/TopBar/Language';
+import { calculateSingleItemTotalPrice, calculateTotalPrice, haveSameExtrasAndOptions } from '../utils/cartUtils';
 
 
 const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, setCartItems }) => {
@@ -24,62 +25,11 @@ const Cart = ({ selectedItemOptions, selectedItemExtra, cartItems, setCartItems 
 
     const [total, setTotal] = useState(0)
     useEffect(() => {
-        setTotal(calculateTotalPrice())
+        setTotal(calculateTotalPrice(cartItems))
     }, [cartItems])
 
-    const calculateTotalPrice = () => { /// TODO: what if the user select multi size of same meal
-        let calsubtotal = 0;
-        let caltax = 0;
-        let caldiscount = 0
-
-        for (const meal of cartItems) {
-            let priceOfItem = 0;
-            if (meal.selectedSize === 'S') {
-                priceOfItem = meal.price_small
-            }
-            if (meal.selectedSize === 'M') {
-                priceOfItem = meal.price_medium
-            }
-            if (meal.selectedSize === 'L') {
-                priceOfItem = meal.price_large
-            }
-            calsubtotal += (priceOfItem * meal.quantity);
-            caltax += priceOfItem * (meal.Tax / 100);
-            caldiscount += priceOfItem * (meal.discounts?.discount ? meal.discounts?.discount / 100 : 0)
-
-        }
-        let totalCal = calsubtotal - caldiscount
-        totalCal += caltax
-        return totalCal.toFixed(2);
-    }
-
-    const calculateSingleItemTotalPrice = (item) => {
-        let subTotal = 0;
-        let totalTax = 0;
-
-        if (item.selectedSize) {// if user select size 
-            if (item.selectedSize === 'S') { subTotal += item.quantity * item.price_small; totalTax += item.Tax * item.price_small / 100; }
-            if (item.selectedSize === 'M') { subTotal += item.quantity * item.price_medium; totalTax += item.Tax * item.price_medium / 100; }
-            if (item.selectedSize === 'L') { subTotal += item.quantity * item.price_large; totalTax += item.Tax * item.price_large / 100; }
-
-        } else {
-            subTotal += item.quantity * item.price;
-            totalTax += item.Tax * item.price / 100;
-        }
-        return (subTotal + totalTax).toFixed(2)
-    }
     
-    function haveSameExtrasAndOptions(obj1, obj2) {
-        const extras1 = (obj1.selectedExtras ?? []).map(e => e.id).sort();
-        const extras2 = (obj2.selectedExtras ?? []).map(e => e.id).sort();
 
-        const options1 = (obj1.selectedOptions ?? []).map(o => o.id).sort();
-        const options2 = (obj2.selectedOptions ?? []).map(o => o.id).sort();
-
-        const extrasEqual = JSON.stringify(extras1) === JSON.stringify(extras2);
-        const optionsEqual = JSON.stringify(options1) === JSON.stringify(options2);
-        return extrasEqual & optionsEqual
-    }
     
     const handleCartItemQuantityChange = (meal, event /* 1 for increase , -1 for decrease */) => {
         let cartStorage = localStorage.getItem('cartItems') ? localStorage.getItem('cartItems') : "[]";

@@ -8,6 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { BASE_URL } from '../../../utils/helperFunction';
+import { getSpecialOffers } from './utils/Api';
 
 const OfferCard = ({ offer }) => {
     const theme = useTheme();
@@ -27,7 +28,7 @@ const OfferCard = ({ offer }) => {
                 backgroundColor: "#fff",
                 justifyContent: 'space-between',
                 overflow: 'visible',
-                marginTop:"30px"
+                marginTop: "30px"
             }}
         >
             <Box
@@ -145,7 +146,7 @@ const Offers = ({ isItemSelected }) => {
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToShow: isItemSelected ? 3 : 4,
+        slidesToShow: offers.length <= 1 ? 1 : (isItemSelected ? 3 : 4),
         slidesToScroll: 1,
         arrows: false,
         beforeChange: (current, next) => setActiveSlide(next),
@@ -153,19 +154,19 @@ const Offers = ({ isItemSelected }) => {
             {
                 breakpoint: 1200,
                 settings: {
-                    slidesToShow: isItemSelected ? 3 : 4,
+                    slidesToShow: Math.min(offers.length, isItemSelected ? 3 : 4),
                 }
             },
             {
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: 3,
+                    slidesToShow: Math.min(offers.length, 3),
                 }
             },
             {
                 breakpoint: 900,
                 settings: {
-                    slidesToShow: 2,
+                    slidesToShow: Math.min(offers.length, 2),
                 }
             },
             {
@@ -206,20 +207,11 @@ const Offers = ({ isItemSelected }) => {
     const getOffers = async () => {
         try {
 
-            const response = await axios.get(`${BASE_URL}meals_special_offers`, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('Token')}`,
-                    // 'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2hpZ2hsZXZlbHRlY2tub2xvZ3kuY29tL1F0YXAvYXBpL2xvZ2luIiwiaWF0IjoxNzQ0NzE5ODU4LCJleHAiOjE3NDQ3NjMwNTgsIm5iZiI6MTc0NDcxOTg1OCwianRpIjoiM29SVzROZFFwNURwZExPdSIsInN1YiI6IjEiLCJwcnYiOiJiODgwNWZkMjFkOTAwNWQ1YjFjMmJkOGZhZjNlZGIwOTEzMjJmMWRiIn0.1D0MLr31LKxhuiSH_VQlsTuj-WN5Rq68P0yVpoowvaw`,
-                },
-                data: {
-                    brunch_id: localStorage.getItem('selectedBranch')
-                    // brunch_id: 102,
-                }
-            });
+            const res = await getSpecialOffers(localStorage.getItem('selectedBranch'));
 
-            if (response.data) {
-                setOffers(response.data);
-
+            if (res) {
+                setOffers(res);
+                console.log(">>>", res)
             }
         } catch (error) {
             console.error('Error fetching discounts:', error);
@@ -240,14 +232,26 @@ const Offers = ({ isItemSelected }) => {
                 sx={{ fontSize: "15px", fontWeight: "bold", marginBottom: "20px", color: theme.palette.text.gray_white }}>
                 <span style={{ padding: "2px 0px", borderBottom: "2px solid #ef7d00", }}>{t("special")}</span> {t("offers")}
             </Typography>
+            {offers.length === 0 ? (
+                <Typography sx={{ color: theme.palette.text.gray_white }}>
+                    {t("no_offers_available")}
+                </Typography>
+            ) :
 
-            <Slider  {...settings}>
-                {offers.map((offer) => (
-                    <Box key={offer.id} sx={{ height: "150px" }}> {/* Adjust the height here */}
-                        <OfferCard offer={offer} />
+                offers.length > 1 ? (
+                    <Slider {...settings} className="here">
+                        {offers.map((offer) => (
+                            <Box key={offer.id} sx={{ height: "150px" }} className="here2">
+                                <OfferCard offer={offer} />
+                            </Box>
+                        ))}
+                    </Slider>
+                ) : (
+                    <Box sx={{ height: "150px" }}>
+                        <OfferCard offer={offers[0]} />
                     </Box>
-                ))}
-            </Slider>
+                )
+            }
         </Box>
     );
 };

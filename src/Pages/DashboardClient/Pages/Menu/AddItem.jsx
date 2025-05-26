@@ -171,6 +171,7 @@ export const AddItem = () => {
                 // !limitVariants
             ) {
                 toast.error(t("plFillAllField"));
+                console.log("validate fields") // debug log
                 return;
             }
 

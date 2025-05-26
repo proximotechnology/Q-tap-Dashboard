@@ -42,8 +42,8 @@ export const Payment = ({
                 type: 'takeaway',
                 payment_way: selectedValue,
                 brunch_id: localStorage.getItem('selectedBranch'),
-                "tax": 15.0, //may be nullable
-                "total_price": 150.75,
+                "tax": tax, //may be nullable
+                "total_price": total,
                 meals: []
             }
             //// add meals data to the request 
@@ -52,7 +52,7 @@ export const Payment = ({
                 const itemData = {
                     meal_id: item.id,
                     quantity: item.quantity,
-                    variants: (item.selectedOptions?? []).map(item => item.id),
+                    variants: (item.selectedOptions ?? []).map(item => item.id),
                     extras: (item.selectedExtras ?? []).map(item => item.id),
                     size: item.selectedSize ? sizeConvert[item.selectedSize] : 's',
                     discount_code: item.discounts ? item.discounts.code : null,
@@ -295,9 +295,9 @@ export const Payment = ({
                                 }
                             }}
                             disabled={isLoading}
-                            >
-                            
-                            {isLoading ? <><CircularProgress size={24} color='inherit'/> {t("loading")}</>: <><img src="/assets/balance.svg" alt="icon" style={{ width: "16px", height: "16px", marginRight: "5px" }} />{t("pay")}</>}
+                        >
+
+                            {isLoading ? <><CircularProgress size={24} color='inherit' /> {t("loading")}</> : <><img src="/assets/balance.svg" alt="icon" style={{ width: "16px", height: "16px", marginRight: "5px" }} />{t("pay")}</>}
                         </Button>
                         <span class="icon-printer" style={{ width: "25px", height: "22px", marginLeft: "15px" }} ></span>
                     </Box>
