@@ -179,7 +179,7 @@ const ProductDetails = ({
         // }, 0) || 0;
 
         // // السعر الإجمالي
-       
+
         return (itemSubTotal + itemTax - itemDiscount).toFixed(2);
     };
 
@@ -308,6 +308,9 @@ const ProductDetails = ({
                     </Box>
 
                     <Box>
+                        <Typography variant="h6" sx={{ fontSize: "10px", fontWeight: 'bold', color: theme.palette.text.gray_white }}>
+                            {t("discount.one")}:{item.discount} 
+                        </Typography>
                         <Typography variant="h6" sx={{ fontSize: "10px", fontWeight: 'bold', color: theme.palette.text.gray_white }}>
                             {t("yourOptions")} <span style={{ fontSize: "8px", fontWeight: '300', color: theme.palette.text.black_white }}>({t("required")})</span>
                         </Typography>
