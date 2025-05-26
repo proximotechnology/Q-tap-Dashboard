@@ -30,32 +30,32 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
     const [image, setImage] = useState(initialData.image || null);
 
     // تحديث الحالة عند تغيير initialData (عند التعديل)
-    useEffect(() => {
-        setName(initialData.name || '');
-        setBrief(initialData.brief || '');
-        setDescription(initialData.description || '');
-        setIngredients(initialData.ingredients || '');
-        setCalories(initialData.calories || '');
-        setTime(initialData.time || '');
-        setTax(initialData.tax || '');
-        setPriceSmall(initialData.priceSmall || '');
-        setPriceMedium(initialData.priceMedium || '');
-        setPriceLarge(initialData.priceLarge || '');
-        setPrice(initialData.price || '');
-        setDiscount(initialData.discount || '');
-        setImage(initialData.image || null);
+    // useEffect(() => {
+    //     setName(initialData.name || '');
+    //     setBrief(initialData.brief || '');
+    //     setDescription(initialData.description || '');
+    //     setIngredients(initialData.ingredients || '');
+    //     setCalories(initialData.calories || '');
+    //     setTime(initialData.time || '');
+    //     setTax(initialData.tax || '');
+    //     setPriceSmall(initialData.priceSmall || '');
+    //     setPriceMedium(initialData.priceMedium || '');
+    //     setPriceLarge(initialData.priceLarge || '');
+    //     setPrice(initialData.price || '');
+    //     setDiscount(initialData.discount || '');
+    //     setImage(initialData.image || null);
 
-        // إذا كان هناك discount (id)، ابحث عن الرمز المقابل له في discountContent
-        if (initialData.discount && discountContent) {
-            const foundDiscount = discountContent.find(
-                (item) => item.id === parseInt(initialData.discount)
-            );
-            if (foundDiscount) {
-                setDiscountCode(foundDiscount.code || '');
-            }
-        }
-        console.log("useEffect ItemDetails discountContent") // debug log
-    }, [discountContent]);
+    //     // إذا كان هناك discount (id)، ابحث عن الرمز المقابل له في discountContent
+    //     if (initialData.discount && discountContent) {
+    //         const foundDiscount = discountContent.find(
+    //             (item) => item.id === parseInt(initialData.discount)
+    //         );
+    //         if (foundDiscount) {
+    //             setDiscountCode(foundDiscount.code || '');
+    //         }
+    //     }
+    //     console.log("useEffect ItemDetails discountContent") // debug log
+    // }, [discountContent]);
 
     // تحديث المكون الأب عند تغيير أي حقل
     useEffect(() => {
@@ -81,24 +81,29 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
 
     // التعامل مع إدخال رمز الخصم
     const handleDiscountChange = (e) => {
-        const code = e.target.value;
-        setDiscountCode(code);
-
-        // البحث عن الرمز في discountContent
-        if (code && discountContent) {
-            const foundDiscount = discountContent.find(
-                (item) => item.code.toLowerCase() === code.toLowerCase()
-            );
-            if (foundDiscount) {
-                setDiscount(foundDiscount.id); // حفظ id الخصم
-                // toast.success(t("discount valid")); // رسالة نجاح
-            } else {
-                setDiscount(''); // إعادة تعيين id الخصم إذا لم يكن الرمز صحيحًا
-                // toast.error(t("discount invalid")); // رسالة خطأ
-            }
-        } else {
-            setDiscount(''); // إعادة تعيين id الخصم إذا كان الحقل فارغًا
+        const value = e.target.value;
+        if (value >= 0 && value <= 100) {
+            setDiscount(value);
+        }else {
+            console.log("error  cant add discount") // debug log
         }
+        // setDiscountCode(code);
+
+        // // البحث عن الرمز في discountContent
+        // if (code && discountContent) {
+        //     const foundDiscount = discountContent.find(
+        //         (item) => item.code.toLowerCase() === code.toLowerCase()
+        //     );
+        //     if (foundDiscount) {
+        //         setDiscount(foundDiscount.id); // حفظ id الخصم
+        //         // toast.success(t("discount valid")); // رسالة نجاح
+        //     } else {
+        //         setDiscount(''); // إعادة تعيين id الخصم إذا لم يكن الرمز صحيحًا
+        //         // toast.error(t("discount invalid")); // رسالة خطأ
+        //     }
+        // } else {
+        //     setDiscount(''); // إعادة تعيين id الخصم إذا كان الحقل فارغًا
+        // }
     };
 
     const handleImageUpload = (e) => {
@@ -129,7 +134,7 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
                     <Grid item xs={12} md={7} marginTop={"15px"}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
-                                <Typography variant='body2' sx={{ fontSize: "10px", color:theme.palette.text.gray_white }}>{t("item.name")}</Typography>
+                                <Typography variant='body2' sx={{ fontSize: "10px", color: theme.palette.text.gray_white }}>{t("item.name")}</Typography>
                                 <TextField
                                     variant="outlined"
                                     fullWidth
@@ -386,7 +391,7 @@ export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData })
                     <Grid item xs={3}>
                         <Typography variant='body2' sx={{ fontSize: "10px", color: theme.palette.text.gray_white }}>{t("discount.one")}</Typography>
                         <TextField
-                            value={discountCode} // عرض الرمز النصي
+                            value={discount} // عرض الرمز النصي
                             onChange={handleDiscountChange} // التحقق من الرمز
                             variant="outlined"
                             fullWidth

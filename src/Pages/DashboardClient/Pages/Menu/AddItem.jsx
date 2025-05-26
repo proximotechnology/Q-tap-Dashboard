@@ -41,7 +41,7 @@ export const AddItem = () => {
     const itemId = searchParams.get("itemId");
     const selectedBranch = localStorage.getItem("selectedBranch");
 
-  
+
 
     // State for data
     const [itemData, setItemData] = useState({
@@ -112,7 +112,7 @@ export const AddItem = () => {
                         priceMedium: item.price_medium || "",
                         priceLarge: item.price_large || "",
                         price: item.price || "",
-                        discount: item.discount_id || "",
+                        discount: item.discount || "",
                         image: item.img || null,
                     });
                     setVariants(item.variants || []);
@@ -154,24 +154,28 @@ export const AddItem = () => {
             setLoading(true);
 
             // Validate required fields
-            if (
-                !itemData.name ||
-                !itemData.brief ||
-                !itemData.description ||
-                !itemData.ingredients ||
-                !itemData.calories ||
-                !itemData.time ||
-                !itemData.tax ||
-                !itemData.priceSmall ||
-                !itemData.priceMedium ||
-                !itemData.priceLarge ||
-                !itemData.price ||
-                !itemData.discount 
-                // !itemData.image ||
-                // !limitVariants
-            ) {
+            const requiredFields = [
+                'name',
+                'brief',
+                'description',
+                'ingredients',
+                'calories',
+                'time',
+                'tax',
+                'price',
+                'priceSmall',
+                'priceMedium',
+                'priceLarge',
+                'discount',
+                // 'image',       // Uncomment if needed
+                // 'limitVariants' // If it's part of itemData
+            ];
+            const missingFields = requiredFields.filter(field => !itemData[field]);
+            const isMissingField = requiredFields.some(field => !itemData[field]);
+            if (isMissingField) {
+                console.log("missingFields",missingFields)
                 toast.error(t("plFillAllField"));
-                console.log("validate fields") // debug log
+                console.log("Validation failed: missing required fields.");
                 return;
             }
 
@@ -305,7 +309,7 @@ export const AddItem = () => {
 
     // Main content
     return (
-        <Box sx={{ backgroundColor: theme.palette.bodyColor.white_333 ,marginBottom:"-33px"}}>  {/* TODO: fix white space here */}
+        <Box sx={{ backgroundColor: theme.palette.bodyColor.white_333, marginBottom: "-33px" }}>  {/* TODO: fix white space here */}
             <AppBar
                 position="static"
                 style={{
@@ -545,7 +549,7 @@ export const AddItem = () => {
                             borderRadius: "20px",
                             textTransform: "capitalize",
                             "&:hover": { backgroundColor: theme.palette.orangePrimary.main },
-                            margin:'5px'
+                            margin: '5px'
                         }}
                         disabled={loading}
                     >
