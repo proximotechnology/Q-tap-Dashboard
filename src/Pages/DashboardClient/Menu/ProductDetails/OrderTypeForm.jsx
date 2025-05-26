@@ -87,6 +87,7 @@ const OrderTypeForm = ({ selectedItemOptions, selectedItemExtra, cartItems, tota
         setSubTotal(calsubtotal.toFixed(2))
         setTax(caltax.toFixed(2))
         setDiscount(caldiscount.toFixed(2))
+        console.log()
         setTotal((calsubtotal + caltax - caldiscount).toFixed(2))
     }
     const getBranchTable = async () => {
