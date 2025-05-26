@@ -20,7 +20,7 @@ export const calculateTotalPrice = (cartItems) => { /// TODO: what if the user s
             price_medium: meal.price_medium,
             price_small: meal.price_small,
             selectedSize: meal.selectedSize,
-            // special,
+            special:meal?.special,
             selectedExtra: meal.selectedExtras,
             selectedOptions: meal.selectedOptions,
             Tax: meal.Tax,
@@ -40,7 +40,7 @@ export const calculateSingleItemTotalPrice = (item) => {
         price_medium: item.price_medium,
         price_small: item.price_small,
         selectedSize: item.selectedSize,
-        // special,
+        special:item?.special,
         selectedExtra: item.selectedExtras,
         selectedOptions: item.selectedOptions,
         Tax: item.Tax,
@@ -59,7 +59,7 @@ export const calculateCartDetails = (cartItems) => {
             price_medium: meal.price_medium,
             price_small: meal.price_small,
             selectedSize: meal.selectedSize,
-            // special,
+            special:meal.special,
             selectedExtra: meal.selectedExtras,
             selectedOptions: meal.selectedOptions,
             Tax: meal.Tax,
@@ -89,7 +89,7 @@ export const itemCalculation = ({
     let discount = 0
     let tax = 0
     if (special) {
-        subTotal = Number(special.priceAfter)
+        subTotal = Number(special.after_discount)
     } else {
         if (selectedSize === 'L')
             subTotal = Number(price_large)
@@ -98,8 +98,7 @@ export const itemCalculation = ({
         if (selectedSize === 'S')
             subTotal = Number(price_small)
     }
-    if (selectedExtra) selectedExtra.map(extra => subTotal += Number(extra.price))
-    if (selectedOptions) selectedOptions.map(options => subTotal += Number(options.price))
+    
 
 
     if (Tax) tax += subTotal * Number(Tax) / 100
@@ -109,6 +108,9 @@ export const itemCalculation = ({
             discount += subTotal * (Number(discountPer) / 100);
         }
     }
+
+    if (selectedExtra) selectedExtra.map(extra => subTotal += Number(extra.price))
+    if (selectedOptions) selectedOptions.map(options => subTotal += Number(options.price))
     console.log("itemSubTotal:", subTotal, "itemDiscount:", discount, "itemTax:", tax)
     return { itemSubTotal: subTotal, itemDiscount: discount, itemTax: tax }
 

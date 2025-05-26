@@ -29,6 +29,7 @@ const ProductDetails = ({
     cartCount,
     setCartCount
 }) => {
+    console.log("item of meal", item)
     const { t } = useTranslation();
     const theme = useTheme();
     const sizes = [
@@ -82,7 +83,7 @@ const ProductDetails = ({
             return;
         }
 
-        if (!newItem.selectedSize) {
+        if (!newItem.selectedSize && !newItem?.special) {
             toast.error('select size')
             return;
         }
@@ -157,6 +158,7 @@ const ProductDetails = ({
             selectedSize: selectedSize[item.id],
             selectedExtra: selectedItemExtra[item.id],
             selectedOptions: selectedItemOptions[item.id],
+            special: item?.special,
             Tax: item.Tax,
             discountPer: item.discount
         })
@@ -180,7 +182,7 @@ const ProductDetails = ({
 
         // // السعر الإجمالي
 
-        return (itemSubTotal + itemTax - itemDiscount).toFixed(2);
+        return ((itemSubTotal + itemTax - itemDiscount) * quantity).toFixed(2);
     };
 
     return (
@@ -275,7 +277,7 @@ const ProductDetails = ({
                         <Typography variant="h6" sx={{ fontSize: '11px', fontWeight: "bold", color: theme.palette.text.gray_white }}>
                             {t("size.one")}
                         </Typography>
-                        {sizes.map((size) => (
+                        {(item?.special === null || item?.special === undefined) && sizes.map((size) => (
                             <Box key={size.label} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                 <Button
                                     onClick={() => handleSizeClick(item.id, size.label)}
@@ -309,7 +311,7 @@ const ProductDetails = ({
 
                     <Box>
                         <Typography variant="h6" sx={{ fontSize: "10px", fontWeight: 'bold', color: theme.palette.text.gray_white }}>
-                            {t("discount.one")}:{item.discount} 
+                            {t("discount.one")}:{item.discount}
                         </Typography>
                         <Typography variant="h6" sx={{ fontSize: "10px", fontWeight: 'bold', color: theme.palette.text.gray_white }}>
                             {t("yourOptions")} <span style={{ fontSize: "8px", fontWeight: '300', color: theme.palette.text.black_white }}>({t("required")})</span>

@@ -141,7 +141,7 @@ const Offers = ({ isItemSelected, offers, setSelectedItem ,selectedItem, cartCou
   const [activeSlide, setActiveSlide] = useState(0);
 
   const handleOfferClick = (offer) => {
-    setSelectedItem(offer); // تحديث العرض المختار
+    setSelectedItem({...offer,special:offer}); // تحديث العرض المختار
     setActiveItemId(offer.id === activeItemId ? null : offer.id); // تحديث المعرف النشط
   };
 
