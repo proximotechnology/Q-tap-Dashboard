@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Typography, useTheme, } from '@mui/material';
 import { SignUpPage } from './signup/SignUPage';
 import { LoginPage } from './login/LoginPage';
 import { useTranslation } from 'react-i18next';
+import { BASE_URL } from '../utils/helperFunction';
+import axios from 'axios';
 
 const QtapHome = () => {
     const [selectedTab, setSelectedTab] = useState(
@@ -11,20 +13,49 @@ const QtapHome = () => {
     const theme = useTheme();
     const { t } = useTranslation();
 
-    const params = new URLSearchParams(window.location.search);
+    // const params = new URLSearchParams(window.location.search);
 
-    // هل هناك أي باراميتر في الرابط؟
-    if (params.has("affiliate_code")) {
-        const value = params.get("affiliate_code");
+    // // هل هناك أي باراميتر في الرابط؟
+    // if (params.has("affiliate_code")) {
+    //     const value = params.get("affiliate_code");
+    //     // خزّن القيمة تحت نفس الاسم
+    //     sessionStorage.setItem("affiliate_code", value);
+    // } else {
+    //     console.log("dont save affiliate code")
 
-        // خزّن القيمة تحت نفس الاسم
-        sessionStorage.setItem("affiliate_code", value);
-    } else {
-        // إذا لم يوجد باراميتر affiliate_code → احذفه من sessionStorage
-        sessionStorage.removeItem("affiliate_code");
-    }
+    //     // إذا لم يوجد باراميتر affiliate_code → احذفه من sessionStorage
+    //     sessionStorage.removeItem("affiliate_code");
+    // }
 
+useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        if (params.has("affiliate_code")) {
+            console.log("send click")
+            const code = params.get("affiliate_code");
+            sessionStorage.setItem("affiliate_code", code);
+           
+            
+            // Check if we already reported this affiliate click
+            const clickKey = `affiliate_clicked_${code}`;
+            // sessionStorage.removeItem(clickKey)
+            if (!sessionStorage.getItem(clickKey)) {
+                        console.log("useeffect api")
 
+                // Call API to increase count
+                //https://api.qutap.co/api/home_affiliate/4RBNfeOt
+                axios.get(`${BASE_URL}home_affiliate/${code}`)
+                    .then((res) => {
+                        sessionStorage.setItem(clickKey, 'true'); // Mark as reported
+                        // console.log(res)
+                    })
+                    .catch((err) => {
+                        console.error('Failed to report affiliate click:', err);
+                    });
+            }
+        } else {
+            console.log("dont save affiliate code");
+        }
+    }, [])
 
 
     return (
