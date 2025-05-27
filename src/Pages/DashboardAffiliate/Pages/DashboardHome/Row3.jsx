@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 export const Row3 = ({code}) => {
     const  dashBoardServerUrl = "https://dashboard.qutap.co"
-    const invitationLink = `${dashBoardServerUrl}/${code}`;
+    const invitationLink = `${dashBoardServerUrl}/?affiliate_code=${code}`;
     const theme = useTheme();
     const {t} = useTranslation();
     const copyToClipboard = () => {
