@@ -3,11 +3,10 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Box, useTheme } from '@mui/system';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { BASE_URL } from '../../../../utils/helperFunction';
 
 export const Row3 = ({code}) => {
-
-    const invitationLink = `${BASE_URL}home_affiliate/${code}`;
+    const  dashBoardServerUrl = "https://dashboard.qutap.co"
+    const invitationLink = `${dashBoardServerUrl}/${code}`;
     const theme = useTheme();
     const {t} = useTranslation();
     const copyToClipboard = () => {
