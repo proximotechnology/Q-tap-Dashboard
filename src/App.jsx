@@ -416,7 +416,7 @@ function App() {
       channel.unsubscribe();
     };
   }, []);
-
+  console.log("qtap version 1")
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
