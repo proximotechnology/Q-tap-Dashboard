@@ -33,7 +33,7 @@ useEffect(() => {
             console.log("send click")
             const code = params.get("affiliate_code");
             sessionStorage.setItem("affiliate_code", code);
-           
+            setSelectedTab('signup')
             
             // Check if we already reported this affiliate click
             const clickKey = `affiliate_clicked_${code}`;
