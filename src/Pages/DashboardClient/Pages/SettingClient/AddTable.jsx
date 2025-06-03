@@ -20,7 +20,7 @@ import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-import { BASE_URL } from '../../../../utils/helperFunction';
+import { BASE_URL } from "../../../../utils/constants"
 import { useDispatch, useSelector } from "react-redux";
 import { selectAreaData, createTable, updateTable } from "../../../../store/client/clientAdmin"
 

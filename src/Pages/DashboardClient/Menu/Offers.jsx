@@ -6,7 +6,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { useTranslation } from 'react-i18next';
 import ProductDetails from './ProductDetails/ProductDetails';
-import { BASE_URL_IMG } from '../../../utils/helperFunction';
+import { BASE_URL_IMG } from "../../../utils/constants"
 
 const OfferCard = ({ offer, onClick }) => {
   const theme = useTheme();

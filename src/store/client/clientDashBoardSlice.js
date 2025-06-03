@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { BASE_URL } from '../../utils/helperFunction';
+import {BASE_URL} from  "../../utils/constants";
 
 
 // Function to handle Axios errors
@@ -99,7 +99,6 @@ export const fetchPerformanceData = createAsyncThunk(
     async (selectedYear, { rejectWithValue }) => {
 
         try {
-            const token = getClientToken();
             const response = await axiosInstance.post(
                 `Performance_restaurant/${selectedYear}`, // Removed BASE_URL
                 {},

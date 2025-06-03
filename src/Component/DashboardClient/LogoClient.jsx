@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import Language from "../dashboard/TopBar/Language";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { BASE_URL } from "../../utils/helperFunction";
+import { BASE_URL } from "../../utils/constants";
 
 const ImageContainer = styled(Box)({
     backgroundImage: 'url(/images/logoClient.jpg)',

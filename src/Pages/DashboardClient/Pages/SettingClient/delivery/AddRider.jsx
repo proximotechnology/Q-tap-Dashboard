@@ -6,7 +6,7 @@ import { FormControl, Select, MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { BASE_URL } from '../../../../../utils/helperFunction';
+import { BASE_URL,BASE_URL_IMG } from "../../../../../utils/constants";
 
 const AddRider = ({ open, onClose, getRiderData, editData }) => {
   const { t } = useTranslation();

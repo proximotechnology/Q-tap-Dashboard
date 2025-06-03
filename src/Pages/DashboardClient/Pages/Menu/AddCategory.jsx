@@ -5,7 +5,7 @@ import StraightIcon from '@mui/icons-material/Straight';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-import { BASE_URL } from '../../../../utils/helperFunction';
+import { BASE_URL } from "../../../../utils/constants"
 import { useDispatch } from 'react-redux';
 import { addNewCat } from '../../../../store/client/menuSlice';
 

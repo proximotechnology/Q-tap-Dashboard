@@ -2,7 +2,7 @@ import React, { useContext, useRef } from 'react';
 import { Box, Typography, IconButton, Grid, Paper, Divider, useTheme } from '@mui/material';
 import { OrderContext } from './DeliveredContext';
 import { useTranslation } from 'react-i18next';
-import { formateDate } from '../../../../utils/helperFunction';
+import { formateDate } from '../../../../utils/formateDateFn';
 
 
 

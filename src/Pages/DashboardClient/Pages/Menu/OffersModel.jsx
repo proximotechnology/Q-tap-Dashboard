@@ -5,7 +5,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import AddIcon from '@mui/icons-material/Add';
 import { useTranslation } from 'react-i18next';
-import { BASE_URL } from '../../../../utils/helperFunction';
+import { BASE_URL } from "../../../../utils/constants"
 import { useSelector } from 'react-redux';
 import { selectMenuData } from '../../../../store/client/menuSlice';
 

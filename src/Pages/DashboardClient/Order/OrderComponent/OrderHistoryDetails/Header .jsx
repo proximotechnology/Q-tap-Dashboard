@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Typography, Chip, Box, IconButton, Divider, useTheme } from '@mui/material';
-import { formateDate } from '../../../../../utils/helperFunction';
+import { formateDate } from '../../../../../utils/formateDateFn';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import CancelIcon from '@mui/icons-material/Cancel';

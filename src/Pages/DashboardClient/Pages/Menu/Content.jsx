@@ -7,7 +7,7 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-import { BASE_URL_IMG } from '../../../../utils/helperFunction';
+import { BASE_URL, BASE_URL_IMG } from "../../../../utils/constants"
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteCategory, fetchMenuData, selectMenuData, updataCategory } from '../../../../store/client/menuSlice';
 

@@ -7,7 +7,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import { parseResponseOrderItem } from '../Order/OrderComponent/OrderBody'
 import { DeliveredDetails } from './DeliveredBody/DeliveredDetails'
-import { BASE_URL } from '../../../utils/helperFunction'
+import { BASE_URL } from "../../../utils/constants"
 import Pusher from 'pusher-js'
 import { useDispatch } from 'react-redux'
 import { addPreparedOrder, fetchCanceledOrders, fetchDeliveredOrders, fetchPreparedOrders, fetchTotalDelivered } from '../../../store/client/deliveryOrderSlic'

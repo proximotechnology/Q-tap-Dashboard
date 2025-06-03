@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
-import { BASE_URL } from '../../utils/helperFunction';
+import {BASE_URL} from  "../../utils/constants";
 import { toast } from 'react-toastify';
 
 const AddMenuModal = ({ open, handleClose, onSuccess }) => {

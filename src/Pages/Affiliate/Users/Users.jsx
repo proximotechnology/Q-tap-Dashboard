@@ -22,7 +22,7 @@ import { useNavigate } from "react-router";
 import * as XLSX from "xlsx";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
-import { BASE_URL, BASE_URL_IMG } from "../../../utils/helperFunction";
+import { BASE_URL, BASE_URL_IMG } from "../../../utils/constants";
 import { Settings } from "@mui/icons-material";
 
 export const Users = () => {

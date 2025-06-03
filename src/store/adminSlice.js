@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { BASE_URL } from "../utils/helperFunction";
+import { BASE_URL } from "../utils/constants";
 
 // Utility function for fetching with retry logic
 const fetchWithRetry = async (url, options, maxRetries = 5, initialDelay = 1000) => {

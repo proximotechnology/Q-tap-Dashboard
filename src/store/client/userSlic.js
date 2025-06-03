@@ -1,7 +1,7 @@
 // clientAuthSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { BASE_URL } from '../../utils/helperFunction';
+import { BASE_URL } from "../../utils/constants"
 
 const initialState = {
     loading: false,

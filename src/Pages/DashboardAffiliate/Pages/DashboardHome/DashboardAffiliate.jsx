@@ -4,7 +4,7 @@ import { Row1 } from './Row1'
 import { Row2 } from './Row2'
 import { Row3 } from './Row3'
 import axios from 'axios'
-import { BASE_URL } from '../../../../utils/helperFunction'
+import { BASE_URL } from "../../../../utils/constants";
 
 export const DashboardAffiliate = () => {
   const [isLoading, setIsLoading] = useState(false)

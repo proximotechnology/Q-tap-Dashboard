@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 import DoneIcon from '@mui/icons-material/Done';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { BASE_URL } from '../../utils/helperFunction';
+import {BASE_URL} from '../../utils/constants'
 
 import { updateBusinessData, addBranch, selectBranch, clearBusinessData, setBranches } from "../../store/register/businessSlice";
 import { updatePersonalData } from "../../store/register/personalSlice";

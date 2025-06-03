@@ -10,7 +10,7 @@ import { Box } from '@mui/system';
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useTranslation } from 'react-i18next';
 import { Governorates, Country } from './../../../utils/city';
-import { BASE_URL_IMG } from '../../../utils/helperFunction';
+import {BASE_URL, BASE_URL_IMG} from '../../../utils/constants'
 
 export const PersonalInfo = ({
   fullName,

@@ -3,7 +3,8 @@ import { Card, Box, Typography, Button, Divider, useTheme, CircularProgress } fr
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { OrderContext } from './DeliveredContext';
 import { useTranslation } from 'react-i18next';
-import { BASE_URL, formateDate } from '../../../../utils/helperFunction';
+import { formateDate } from '../../../../utils/formateDateFn';
+import { BASE_URL } from "../../../../utils/constants"
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';

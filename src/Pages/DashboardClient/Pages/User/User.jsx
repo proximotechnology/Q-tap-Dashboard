@@ -3,7 +3,7 @@ import { useState } from 'react'
 import UserTable from './UserTable'
 import StaffTable from './StaffTable'
 import axios from 'axios'
-import { BASE_URL } from '../../../../utils/helperFunction'
+import { BASE_URL,BASE_URL_IMG } from "../../../../utils/constants"
 
 export const User = () => {
     const [userStaff, setUserStaff] = useState([]);

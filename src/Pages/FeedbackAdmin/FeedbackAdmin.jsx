@@ -14,7 +14,7 @@ import FeedbackDetailsModal from './FeedbackDetailsModal';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-import { BASE_URL } from '../../utils/helperFunction';
+import {BASE_URL,BASE_URL_IMG} from  "../../utils/constants";
 
 
 export const FeedbackAdmin = () => {

@@ -12,7 +12,7 @@ import { PersonalInfo } from './PersonalInfo';
 import { PaymentInfo } from './PaymentInfo';
 import { useTranslation } from 'react-i18next';
 import Language from '../../../Component/dashboard/TopBar/Language';
-import { BASE_URL } from '../../../utils/helperFunction';
+import {BASE_URL} from '../../../utils/constants'
 import { Logout, Print, Settings } from '@mui/icons-material';
 import { getAffiliateData } from '../../../store/affiliateSlice';
 import { useDispatch, useSelector } from 'react-redux';

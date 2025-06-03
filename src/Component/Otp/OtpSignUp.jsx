@@ -8,9 +8,8 @@ import { useTranslation } from 'react-i18next';
 import Language from '../dashboard/TopBar/Language';
 import ModeCommentIcon from '@mui/icons-material/ModeComment';
 import axios from 'axios';
-import { BASE_URL } from '../../utils/helperFunction';
 import { toast } from 'react-toastify';
-
+import {BASE_URL} from '../../utils/constants'
 export const OtpSignUp = () => {
     const theme = useTheme();
     const { t } = useTranslation();

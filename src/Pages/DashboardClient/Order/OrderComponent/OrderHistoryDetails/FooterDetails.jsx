@@ -1,6 +1,6 @@
 
 import { Box, Divider, Typography, useTheme } from '@mui/material';
-import { formateDate } from '../../../../../utils/helperFunction';
+import { formateDate } from '../../../../../utils/formateDateFn';
 import { useTranslation } from 'react-i18next';
 
 const FooterDetails = ({ order }) => {

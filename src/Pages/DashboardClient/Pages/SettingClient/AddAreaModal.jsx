@@ -5,7 +5,7 @@ import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { BASE_URL } from '../../../../utils/helperFunction';
+import { BASE_URL } from "../../../../utils/constants"
 import { useDispatch, useSelector } from "react-redux";
 import { selectAreaData,  createArea, deleteArea, updateArea } from "../../../../store/client/clientAdmin"
 

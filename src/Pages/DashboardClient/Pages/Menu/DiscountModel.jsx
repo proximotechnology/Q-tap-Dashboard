@@ -7,7 +7,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import { Select, MenuItem } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { useTranslation } from 'react-i18next';
-import { BASE_URL } from '../../../../utils/helperFunction';
+import { BASE_URL } from "../../../../utils/constants"
 import { useDispatch, useSelector } from 'react-redux';
 import { addDiscounts, deleteDiscounts, selectDiscounts, updataDiscounts } from '../../../../store/client/DiscountMenuSlice';
 

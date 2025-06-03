@@ -29,7 +29,7 @@ import { useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { BASE_URL } from "../../../../utils/helperFunction";
+import { BASE_URL } from "../../../../utils/constants"
 
 export const AddItem = () => {
     const { t } = useTranslation();

@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { BASE_URL } from '../../utils/helperFunction';
+import { BASE_URL} from '../../utils/constants'
 
 export const LoginAffiliate = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -31,7 +31,6 @@ export const LoginAffiliate = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [apiSuccess, setApiSuccess] = useState('');
   const { t } = useTranslation();
-
   const handleSubmit = async () => {
     // Reset API states
     setApiError('');

@@ -3,7 +3,7 @@ import { Box, Button, IconButton, List, ListItem, ListItemIcon, ListItemText, Ty
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 import { useTranslation } from 'react-i18next';
 import { Menu, Close } from '@mui/icons-material';
-import { BASE_URL_IMG } from '../../../utils/helperFunction';
+import { BASE_URL_IMG } from "../../../utils/constants"
 
 const SideBar = ({ setSelectedCategory, allMenuData, selectedCategory }) => {
 

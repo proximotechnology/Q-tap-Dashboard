@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { customWidth } from '../utils';
 import Language from '../../../../Component/dashboard/TopBar/Language';
 import { toast } from 'react-toastify';
-import { BASE_URL } from '../../../../utils/helperFunction';
+import { BASE_URL } from "../../../../utils/constants"
 import axios from 'axios';
 import { Country, Governorates } from '../../../../utils/city';
 import MapWithPin from '../../../../utils/MapWithPin';

@@ -20,7 +20,7 @@ import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined
 import { useNavigate } from "react-router";
 import * as XLSX from "xlsx";
 import { useTranslation } from "react-i18next";
-import { BASE_URL } from "../../../utils/helperFunction";
+import { BASE_URL } from "../../../utils/constants";
 import { Dashboard, Settings } from "@mui/icons-material";
 import { useQuery } from "@tanstack/react-query";
 

@@ -28,13 +28,12 @@ import { PersonalInfo } from '../../Pages/Client/Row2/AddClient/PersonalInfo';
 import { BusinessInfo } from '../../Pages/Client/Row2/AddClient/BusinessInfo';
 import { useTranslation } from 'react-i18next';
 import Language from '../dashboard/TopBar/Language';
-import { BASE_URL } from '../../utils/helperFunction';
-import axios from 'axios';
-
 import { updateBusinessData, addBranch, selectBranch, clearBusinessData, setBranches } from "../../store/register/businessSlice";
 import { updatePersonalData } from "../../store/register/personalSlice";
 import { useDispatch, useSelector } from 'react-redux';
 import { printFormData } from '../../utils/utils';
+import { BASE_URL } from '../../utils/constants';
+import axios from 'axios';
 export const Save = () => {
 
   const dispatch = useDispatch();
@@ -267,7 +266,7 @@ export const Save = () => {
         throw new Error(`${prefix} missing required fields: ${error.message}`);
       }
     };
-
+    printFormData(formData)
     try {
       apiBranches.forEach((branch) => {
         if (!branch.latitude || !branch.longitude) {

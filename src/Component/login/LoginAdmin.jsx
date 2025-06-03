@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { BASE_URL } from '../../utils/helperFunction';
+import { BASE_URL } from '../../utils/constants';
 
 export const LoginAdmin = () => {
     const [showPassword, setShowPassword] = useState(false);

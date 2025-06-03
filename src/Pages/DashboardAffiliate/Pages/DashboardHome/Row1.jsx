@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import { BASE_URL } from '../../../../utils/helperFunction';
+import { BASE_URL } from "../../../../utils/constants";
 
 export const Row1 = () => {
     const {t} = useTranslation()

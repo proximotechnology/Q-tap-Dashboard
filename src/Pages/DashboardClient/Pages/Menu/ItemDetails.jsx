@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { selectDiscounts } from '../../../../store/client/DiscountMenuSlice';
-import { BASE_URL_IMG } from '../../../../utils/helperFunction';
+import { BASE_URL_IMG } from "../../../../utils/constants"
 
 export const ItemDetails = ({ categoryId, itemId, updateItemData, initialData }) => {
     const { t } = useTranslation();

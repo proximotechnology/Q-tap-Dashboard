@@ -4,7 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 import AddMenuModal from './AddMenuModal';
-import { BASE_URL, BASE_URL_IMG } from '../../utils/helperFunction';
+import {BASE_URL,BASE_URL_IMG} from  "../../utils/constants";
 import { useQuery } from '@tanstack/react-query';
 
 const fetchMenus = async () => {

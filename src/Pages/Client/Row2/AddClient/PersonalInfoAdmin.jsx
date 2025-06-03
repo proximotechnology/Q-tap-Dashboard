@@ -23,7 +23,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import { useNavigate } from "react-router";
-import { BASE_URL_IMG } from "../../../../utils/helperFunction";
+import { BASE_URL, BASE_URL_IMG } from "../../../../utils/constants";
 import { useTranslation } from "react-i18next";
 
 export const PersonalInfoAdmin = ({ personalInfo, setPersonalInfo, clientData }) => {

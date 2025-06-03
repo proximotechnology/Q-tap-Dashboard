@@ -25,7 +25,7 @@ import TableBarIcon from '@mui/icons-material/TableBar';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-import { BASE_URL, BASE_URL_IMG } from '../../../../utils/helperFunction';
+import { BASE_URL, BASE_URL_IMG } from "../../../../utils/constants"
 import { Country, Governorates } from '../../../../utils/city';
 import MapWithPin from '../../../../utils/MapWithPin';
 import { useDispatch, useSelector } from 'react-redux';

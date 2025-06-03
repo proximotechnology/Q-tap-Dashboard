@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import {
-    Table, TableBody, TableCell, TableHead, TableRow, Box, TextField, Button,
+    Table, TableBody, TableCell, TableHead, TableRow, Box,
     Card,
     CardContent,
     Typography,
     useTheme,
     Divider,
 } from '@mui/material';
-import MinimizeOutlinedIcon from '@mui/icons-material/MinimizeOutlined';
+import MinimizeOutlined from '@mui/icons-material/MinimizeOutlined';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import { BASE_URL } from '../../../../../utils/helperFunction';
+import { BASE_URL } from "../../../../../utils/constants";
 
 export const TableTransaction = () => {
     const [transData, settransData] = useState([]);
@@ -129,7 +129,7 @@ export const TableTransaction = () => {
                                         display: "flex", textAlign: "center", justifyContent: "left", color: theme.palette.text.gray_light,
                                         borderBottom: "none", height: "30px", padding: "15px 0px 0px 10px"
                                     }}>
-                                        <MinimizeOutlinedIcon sx={{ color: theme.palette.orangePrimary.main, fontSize: "15px" }} />
+                                        <MinimizeOutlined sx={{ color: theme.palette.orangePrimary.main, fontSize: "15px" }} />
                                         <Typography sx={{ fontSize: "11px", borderBottom: "1px solid #9d9d9c" }}># {transaction.id}</Typography>
                                     </TableCell>
 

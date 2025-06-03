@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { parseResponseOrderItem } from './OrderBody';
-import { BASE_URL } from '../../../../utils/helperFunction';
+import { BASE_URL } from "../../../../utils/constants"
 
 export const OrderHistory = () => {
     const navigate = useNavigate();

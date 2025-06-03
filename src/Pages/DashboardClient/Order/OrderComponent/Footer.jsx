@@ -1,6 +1,6 @@
 import { Box, Divider, Typography, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { formateDate } from '../../../../utils/helperFunction'
+import { formateDate } from '../../../../utils/formateDateFn'
 import { orderPhaseType } from './OrderBody';
 const Footer = ({ selectedOrder }) => {
     const { t } = useTranslation()

@@ -6,7 +6,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { BASE_URL } from '../../../../../utils/helperFunction';
+import { BASE_URL,BASE_URL_IMG } from "../../../../../utils/constants";
 
 export const Table2 = () => {
     const { t } = useTranslation();

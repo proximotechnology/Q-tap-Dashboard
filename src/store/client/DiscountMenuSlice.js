@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { BASE_URL } from '../../utils/helperFunction'; // Adjust the path as needed
+import {BASE_URL} from  "../../utils/constants";
 
 // Async Thunk for fetching discounts
 export const fetchDiscounts = createAsyncThunk(

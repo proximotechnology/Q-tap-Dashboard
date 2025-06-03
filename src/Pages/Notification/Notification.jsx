@@ -5,7 +5,7 @@ import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNone
 import { AddNotification } from './AddNotification';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-import { BASE_URL } from '../../utils/helperFunction';
+import {BASE_URL,BASE_URL_IMG} from  "../../utils/constants";
 
 export const Notification = () => {
   const [open, setOpen] = useState(false);

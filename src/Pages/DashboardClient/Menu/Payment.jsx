@@ -12,7 +12,7 @@ import { customWidth } from './utils';
 import Language from '../../../Component/dashboard/TopBar/Language';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { BASE_URL } from '../../../utils/helperFunction';
+import { BASE_URL } from "../../../utils/constants"
 
 
 

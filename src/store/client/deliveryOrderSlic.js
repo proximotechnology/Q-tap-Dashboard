@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { BASE_URL } from '../../utils/helperFunction';
+import {BASE_URL} from  "../../utils/constants";
 import { parseResponseOrderItem } from '../../Pages/DashboardClient/Order/OrderComponent/OrderBody';
 
 

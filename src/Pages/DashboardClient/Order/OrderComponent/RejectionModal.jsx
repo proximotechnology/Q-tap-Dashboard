@@ -2,7 +2,7 @@ import { Modal, Box, Typography, TextField, Button, Chip, useTheme } from '@mui/
 import axios from 'axios';
 import React, { useState } from "react";
 import { useTranslation } from 'react-i18next';
-import { BASE_URL } from '../../../../utils/helperFunction';
+import { BASE_URL } from "../../../../utils/constants"
 import { toast } from 'react-toastify';
 
 const RejectionModal = ({ open, onClose ,selectedOrder,removeOrder}) => {

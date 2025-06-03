@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Grid, Paper, Typography, IconButton, useTheme } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
 import TicketDetails from '../DashboardClient/Pages/SupportClient/TicketDetails';
 import ChatApp from './ChatApp';
 import axios from 'axios';
@@ -8,7 +7,7 @@ import { toast } from 'react-toastify';
 import DetailsModal from '../DashboardClient/Pages/SupportClient/DetailsModal';
 import styles from '../DashboardClient/Pages/SupportClient/supportCard.module.css'
 import { useTranslation } from 'react-i18next';
-import { BASE_URL } from '../../utils/helperFunction';
+import {BASE_URL,} from  "../../utils/constants";
 
 
 const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onClick }) => {
@@ -26,7 +25,7 @@ const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onC
 
   return (
     <Paper
-      className={status == 'in_progress' ? styles.card : styles.card2}
+      className={status === 'in_progress' ? styles.card : styles.card2}
       elevation={3}
       sx={{
         padding: "10px",

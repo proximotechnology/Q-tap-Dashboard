@@ -15,7 +15,7 @@ import { toast } from 'react-toastify';
 import styles from './supportCard.module.css'
 import { useTranslation } from 'react-i18next';
 import { AddFeedback } from './AddFeedback';
-import { BASE_URL } from '../../../../utils/helperFunction';
+import { BASE_URL,BASE_URL_IMG } from "../../../../utils/constants";
 import { Settings } from '@mui/icons-material';
 const TicketCard = ({ id, Customer_Name, Customer_Email, created_at, status, onClick }) => {
   const theme = useTheme();

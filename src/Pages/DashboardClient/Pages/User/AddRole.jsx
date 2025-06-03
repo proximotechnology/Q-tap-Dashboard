@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { BASE_URL } from '../../../../utils/helperFunction';
+import { BASE_URL,BASE_URL_IMG } from "../../../../utils/constants";
 
 const iconsArray = [
     { name: 'Dashboard', icon: <img src="/assets/dashboard.svg" alt="icon" style={{ width: "16px", height: "16px" }} /> },

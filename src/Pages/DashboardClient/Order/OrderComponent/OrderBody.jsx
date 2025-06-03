@@ -10,7 +10,7 @@ import axios from 'axios';
 import OrderDetailsNew from './OrderDetailsNew';
 import Pusher from 'pusher-js';
 import { toast } from 'react-toastify';
-import { BASE_URL } from '../../../../utils/helperFunction';
+import { BASE_URL } from "../../../../utils/constants"
 
 
 

@@ -16,7 +16,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { BASE_URL } from '../../utils/helperFunction';
+import {BASE_URL} from '../../utils/constants'
 
 export const PasswordReset = () => {
     const [showPassword, setShowPassword] = useState(false);

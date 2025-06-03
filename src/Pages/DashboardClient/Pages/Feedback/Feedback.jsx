@@ -13,7 +13,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-import { BASE_URL } from '../../../../utils/helperFunction';
+import { BASE_URL } from "../../../../utils/constants"
 
 export const Feedback = () => {
     const theme = useTheme();

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography, Card, CardMedia, Grid, useTheme } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { BASE_URL_IMG } from '../../../utils/helperFunction';
+import { BASE_URL, BASE_URL_IMG } from "../../../utils/constants"
 
 const Item = ({ item, onItemSelect, handleAddToCart }) => {
     const theme = useTheme();

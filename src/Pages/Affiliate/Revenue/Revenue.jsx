@@ -3,7 +3,7 @@ import { Box, Grid, MenuItem, Paper, Select, Typography, useTheme } from "@mui/m
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import LineChart2 from "../LineChart2";
 import { useTranslation } from "react-i18next";
-import { BASE_URL } from "../../../utils/helperFunction";
+import { BASE_URL } from "../../../utils/constants";
 
 export const Revenue = () => {
   const [year, setYear] = React.useState("2025");

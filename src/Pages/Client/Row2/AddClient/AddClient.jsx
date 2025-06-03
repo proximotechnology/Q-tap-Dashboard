@@ -24,7 +24,7 @@ import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
 import { useNavigate, useLocation } from "react-router";
 import { PersonalInfoAdmin } from "./PersonalInfoAdmin";
 import { BusinessInfoAdmin } from "./BusinessInfoAdmin";
-import { BASE_URL, BASE_URL_IMG } from "../../../../utils/helperFunction";
+import { BASE_URL, BASE_URL_IMG } from "../../../../utils/constants";
 import { toast } from "react-toastify";
 import { Logout, Settings } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";

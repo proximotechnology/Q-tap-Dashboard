@@ -11,7 +11,7 @@ import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlin
 import axios from 'axios';
 import Pusher from 'pusher-js';
 import './chat.css';
-import { BASE_URL } from '../../utils/helperFunction';
+import { BASE_URL } from "../../utils/constants";
 import { useTheme } from '@mui/system';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -150,10 +150,10 @@ const ChatApp = () => {
             return oldData.map(c =>
               c.id === newMessage.sender_id
                 ? {
-                    ...c,
-                    hasNewMessage: c.id !== selectedCustomer?.id,
-                    lastMessageTime: newMessage.created_at,
-                  }
+                  ...c,
+                  hasNewMessage: c.id !== selectedCustomer?.id,
+                  lastMessageTime: newMessage.created_at,
+                }
                 : c
             );
           });

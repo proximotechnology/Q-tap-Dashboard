@@ -19,7 +19,7 @@ import { toast } from 'react-toastify';
 import AddTableModal from './AddTable'; // Ensure this component is created
 import styles from '../SupportClient/supportCard.module.css'
 import { useTranslation } from 'react-i18next';
-import { BASE_URL } from '../../../../utils/helperFunction';
+import { BASE_URL,BASE_URL_IMG } from "../../../../utils/constants"
 import { useDispatch, useSelector } from 'react-redux';
 import { createTable, deleteTable, fetchAreaData, fetchTablesData, selectTablesData, updateTable } from '../../../../store/client/clientAdmin';
 

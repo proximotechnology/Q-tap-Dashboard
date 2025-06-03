@@ -3,7 +3,7 @@ import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import { BASE_URL } from '../../../utils/helperFunction';
+import { BASE_URL } from "../../../utils/constants";
 
 
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from "../../../../utils/helperFunction";
+import { BASE_URL } from "../../../../utils/constants"
 
 export const getSpecialOffers = async (branchId) => {
     if (!branchId) {

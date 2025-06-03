@@ -10,7 +10,7 @@ import {
 import MinimizeOutlinedIcon from '@mui/icons-material/MinimizeOutlined';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import { BASE_URL } from '../../../../utils/helperFunction';
+import { BASE_URL } from "../../../../utils/constants";
 
 export const TableTransaction = () => {
     const [transData, settransData] = useState([]);

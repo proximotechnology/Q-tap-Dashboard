@@ -3,7 +3,7 @@ import { Box, TextField, IconButton, Paper, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-import { BASE_URL } from '../../utils/helperFunction';
+import {BASE_URL} from  "../../utils/constants";
 import { useTheme } from '@mui/system';
 
 const URLInput = ({ label, setVideoUrl, value }) => {

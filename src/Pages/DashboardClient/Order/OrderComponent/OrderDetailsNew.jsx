@@ -10,7 +10,7 @@ import { Box } from '@mui/system';
 import CheckIcon from '@mui/icons-material/Check';
 import { orderPhaseType, orderEndPoint } from './OrderBody';
 import Pusher from 'pusher-js';
-import { BASE_URL } from '../../../../utils/helperFunction';
+import { BASE_URL } from "../../../../utils/constants"
 const OrderDetailsNew = ({
     order,
     onReject, // open reject form panel

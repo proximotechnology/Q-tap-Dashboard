@@ -6,7 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { BASE_URL } from '../../utils/helperFunction';
+import {BASE_URL,BASE_URL_IMG} from  "../../utils/constants";
 import { useTheme } from '@mui/system';
 
 const OurClients = forwardRef((props, ref) => {

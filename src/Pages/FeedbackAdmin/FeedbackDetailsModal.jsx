@@ -9,7 +9,7 @@ import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDiss
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import axios from 'axios';
-import { BASE_URL } from '../../utils/helperFunction';
+import {BASE_URL,BASE_URL_IMG} from  "../../utils/constants";
 
 const FeedbackDetailsModal = ({ open, handleClose, pageId }) => {
     const theme = useTheme();

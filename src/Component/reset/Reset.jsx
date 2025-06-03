@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { BASE_URL } from './../../utils/helperFunction';
+import {BASE_URL} from '../../utils/constants'
 
 export const Reset = () => {
     const navigate = useNavigate();

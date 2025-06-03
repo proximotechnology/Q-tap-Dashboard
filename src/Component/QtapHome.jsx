@@ -3,8 +3,8 @@ import { Box, Typography, useTheme, } from '@mui/material';
 import { SignUpPage } from './signup/SignUPage';
 import { LoginPage } from './login/LoginPage';
 import { useTranslation } from 'react-i18next';
-import { BASE_URL } from '../utils/helperFunction';
 import axios from 'axios';
+import { BASE_URL } from '../utils/constants';
 
 const QtapHome = () => {
     const [selectedTab, setSelectedTab] = useState(

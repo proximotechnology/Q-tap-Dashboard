@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useImperativeHandle, forwardRef } from 'react';
-import { Box, Typography, Divider, TextField, Paper, Button } from '@mui/material';
-import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
-import axios from 'axios';
+import React, { useState, useImperativeHandle, forwardRef } from 'react';
+import { Box, Typography, Divider, TextField, Paper } from '@mui/material';
+
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-import { BASE_URL } from '../../utils/helperFunction';
+import {BASE_URL} from  "../../utils/constants";
 import { useTheme } from '@mui/system';
 
 const PaymentGatewayForm = forwardRef((props, ref) => {

@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { customWidth } from '../utils';
 import Language from '../../../../Component/dashboard/TopBar/Language';
 import { toast } from 'react-toastify';
-import { BASE_URL_IMG } from '../../../../utils/helperFunction';
+import { BASE_URL_IMG } from "../../../../utils/constants"
 import { haveSameExtrasAndOptions, itemCalculation } from '../utils/cartUtils';
 
 const ProductDetails = ({

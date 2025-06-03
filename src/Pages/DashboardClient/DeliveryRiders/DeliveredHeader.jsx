@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import Language from '../../../Component/dashboard/TopBar/Language';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { BASE_URL } from '../../../utils/helperFunction';
+import { BASE_URL } from "../../../utils/constants"
 import { deliveryFetchApi } from './Delivered';
 import { faLeaf } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';

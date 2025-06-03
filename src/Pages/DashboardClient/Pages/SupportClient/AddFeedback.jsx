@@ -8,7 +8,7 @@ import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-import { BASE_URL } from '../../../../utils/helperFunction';
+import { BASE_URL,BASE_URL_IMG } from "../../../../utils/constants";
 
 export const AddFeedback = ({ open, handleCloseModel, onAddFeedback }) => {
     const [clientId, setClientId] = useState(""); // Assuming this is the customer ID
