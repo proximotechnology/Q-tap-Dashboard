@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Grid, Typography, Box } from '@mui/material';
+import { Grid, Typography, Box, Button } from '@mui/material';
 import { styled, useTheme } from '@mui/system';
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
 import { useTranslation } from 'react-i18next';
@@ -61,10 +61,24 @@ const QtapLogo = () => {
 
 
         <ImageContainer sx={{ position: 'relative', height: '100%', minHeight: '100vh' }}>
-            <ChevronLeftOutlinedIcon sx={{ position: "absolute", top: "40px", left: "10%", color: theme.palette.text.fixedWhite, fontSize: "33px", zIndex: "8" }} />
+
+            <Button
+                disableRipple
+                sx={{
+                    position: "absolute", top: "40px", left: "10%", color: theme.palette.text.fixedWhite, zIndex: "8",
+                    '&:hover': {
+                        backgroundColor: 'transparent', // Removes default hover bg
+                        color: theme.palette.text.orange, // Replace with desired hover color (e.g., "#ff0000")
+                    },
+                }}
+                onClick={() => {
+                    window.location.href = "https://qutap.co/";
+                }} >
+                <ChevronLeftOutlinedIcon sx={{ fontSize: "33px", }} />
+            </Button>
             <TextOverlay sx={{ width: "80%" }}>
 
-                <Typography variant="h1" sx={{ width: "80%", fontSize: "27px", fontWeight: "500", wordSpacing: "3px" }}>
+                <Typography variant="h1" sx={{ width: "80%", fontSize: "29px", fontWeight: "600", wordSpacing: "3px" }}>
                     {t("qtapLogoPageTitle")}
                 </Typography>
 

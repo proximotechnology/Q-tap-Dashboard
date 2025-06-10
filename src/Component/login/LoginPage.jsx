@@ -7,7 +7,7 @@ export const LoginPage = () => {
 
 
     return (
-        <Box>
+        <Box >
             <Login />
         </Box>
 

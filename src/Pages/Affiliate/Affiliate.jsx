@@ -9,6 +9,7 @@ import { Transactions } from './Users/Transactions';
 
 
 export const Affiliate = () => {
+  console.log("afff")
   return (
     <Box sx={{ padding: 2 }}>
       <Box>

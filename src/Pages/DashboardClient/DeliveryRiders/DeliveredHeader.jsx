@@ -376,7 +376,7 @@ const DS = ({ id, open, anchorEl, handlePopoverClose, theme, checked, handleChan
         }}
     >
         <Box sx={{ width: 200 }}>
-            <Box className='iamhere' sx={{ padding: '20px 0px 0px 20px', display: 'flex', alignItems: 'center', flexDirection: 'row', marginBottom: '20px', gap: '10px' }}>
+            <Box  sx={{ padding: '20px 0px 0px 20px', display: 'flex', alignItems: 'center', flexDirection: 'row', marginBottom: '20px', gap: '10px' }}>
                 <Avatar sx={{ bgcolor: theme.palette.orangePrimary.main, width: 40, height: 40 }}>
                     <PersonOutlinedIcon sx={{ color: "white" }} />
                 </Avatar>

@@ -237,9 +237,9 @@ const Offers = ({ isItemSelected, offers, setSelectedItem ,selectedItem, cartCou
           {t('no_offers_available')}
         </Typography>
       ) : offers.length > 1 ? (
-        <Slider {...settings} className='here'>
+        <Slider {...settings} >
           {offers.map((offer) => (
-            <Box key={offer.id} sx={{ height: '150px' }} className='here2'>
+            <Box key={offer.id} sx={{ height: '150px' }} >
               <OfferCard offer={offer} onClick={handleOfferClick} />
             </Box>
           ))}

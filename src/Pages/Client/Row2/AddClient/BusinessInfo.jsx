@@ -253,7 +253,7 @@ export const BusinessInfo = () => {
         <Divider sx={{ margin: "12px 0px" }} />
       </Grid>
 
-      <Grid xs={12} md={6} sx={{ paddingX: { xs: '0px', md: '8px' } }} overflow='hidden' className="here_section">
+      <Grid xs={12} md={6} sx={{ paddingX: { xs: '0px', md: '8px' } }} overflow='hidden' >
         <FormControl variant="outlined" fullWidth>
           <OutlinedInput
             id="outlined-businessName"

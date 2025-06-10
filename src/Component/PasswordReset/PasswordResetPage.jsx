@@ -35,7 +35,7 @@ export const PasswordResetPage = () => {
                         </Box>
 
                         <Box display="flex" flexDirection="column" justifyContent="center"
-                            alignItems="center" height="100vh" className="iamhere">
+                            alignItems="center" height="100vh" >
 
                             <Box sx={{ width: { lg: "47%", md: "70%", xs: "90%" } }} >
                                 <Box display="flex" justifyContent="center" >

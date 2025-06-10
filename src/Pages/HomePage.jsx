@@ -40,7 +40,7 @@ export const HomePage = () => {
               style={{ width: "20px", height: "20px", marginRight: "30px" }}
             />
             <Language />
-           
+
           </Box>
           {/* login component */}
           <Box
@@ -51,7 +51,7 @@ export const HomePage = () => {
             minHeight="calc(100vh - 70px)"
             marginTop='70px'
           >
-            <Box sx={{ width: { lg: "43%", md: "60%", xs: "90%" } }}>
+            <Box sx={{ width: { lg: "43%", md: "60%", xs: "90%" }, flexGrow: "1", display: 'flex' }}>
               <QtapHome
                 setSelectedTab={setSelectedTab}
                 selectedTab={selectedTab}

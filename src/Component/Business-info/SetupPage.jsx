@@ -54,7 +54,7 @@ export const SetupPage = () => {
     return (
 
         <Grid container item xs={12} md={3} >
-            <ImageContainer sx={{ width: '100%' , display:'flex' , flexDirection:'column',alignItems:'start', justifyContent:'space-between',padding:'3rem'}} className='here' >
+            <ImageContainer sx={{ width: '100%' , display:'flex' , flexDirection:'column',alignItems:'start', justifyContent:'space-between',padding:'3rem'}}  >
                 <ChevronLeftOutlinedIcon onClick={() => navigate('/')}
                     sx={{  color: "white", fontSize: "40px", zIndex: "100" }}
                     // sx={{ zIndex:'100',fontSize: "33px" }}

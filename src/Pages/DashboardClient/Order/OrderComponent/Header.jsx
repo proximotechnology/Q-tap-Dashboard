@@ -62,7 +62,7 @@ const Header = () => {
                 backgroundColor: 'transparent',
                 padding: "0px 40px", zIndex: 3, boxShadow: 'none'
             }}>
-                <Box sx={{ display: 'flex', alignItems: "center", justifyContent: 'space-between',margin:{xs:'3px 0px',md:'0px'} ,padding:{xs:'3px 0px',md:'0px'}}} className="overhere">
+                <Box sx={{ display: 'flex', alignItems: "center", justifyContent: 'space-between',margin:{xs:'3px 0px',md:'0px'} ,padding:{xs:'3px 0px',md:'0px'}}} >
                     <IconButton
                         onClick={() => { navigate('/dashboard-client'); }}
                         edge="start" color="inherit" aria-label="back">

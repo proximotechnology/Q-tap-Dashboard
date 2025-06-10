@@ -27,19 +27,19 @@ const QtapHome = () => {
     //     sessionStorage.removeItem("affiliate_code");
     // }
 
-useEffect(() => {
+    useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         if (params.has("affiliate_code")) {
             console.log("send click")
             const code = params.get("affiliate_code");
             sessionStorage.setItem("affiliate_code", code);
             setSelectedTab('signup')
-            
+
             // Check if we already reported this affiliate click
             const clickKey = `affiliate_clicked_${code}`;
             // sessionStorage.removeItem(clickKey)
             if (!sessionStorage.getItem(clickKey)) {
-                        console.log("useeffect api")
+                console.log("useeffect api")
 
                 // Call API to increase count
                 //https://api.qutap.co/api/home_affiliate/4RBNfeOt
@@ -59,78 +59,85 @@ useEffect(() => {
 
 
     return (
-        <Box>
+        <Box sx={{ display: "flex", flexDirection: "column", flexGrow: '1' }}  >
 
 
-            <Box display="flex" justifyContent="center" >
-                <img src="/assets/qtap.svg" alt="logo Qtap" style={{ width: "250px", height: "40px" }} />
+            <Box display={"flex"} justifyContent="center" marginBottom={"5vh"} marginTop={"5vh"}>
+                <img src="/assets/qtap.svg" alt="logo Qtap" style={{ width: "250px", height: "60px" }} />
             </Box>
 
-            <Box
-                display="flex"
-                flexDirection="row"
-                justifyContent="space-between"
-                sx={{ margin: selectedTab === 'login' ? "60px 0px 50px 0px" : "10px 0px  60px 0px" }}
+            <div style={{ flexGrow: "1", display: 'flex', flexDirection: "column" }}>
+                <Box className='hereMore'
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    sx={{ margin: selectedTab === 'login' ? "60px 0px 50px 0px" : "60px 0px 50px 0px" }}
 
-            >
-                <Box
-                    component="div"
-                    sx={{
-                        width: "30%",
-                        textDecoration: 'none',
-                    }}
-                    onClick={() => setSelectedTab('login')}
                 >
-                    <Typography
-                        variant="body1"
+                    <Box
+                        component="div"
                         sx={{
-                            borderBottom: selectedTab === 'login' ? `3px solid ${theme.palette.orangePrimary.main}` : "none",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            fontSize: "11px",
-                            color: theme.palette.text.fixedBlack,
-                            paddingBottom: "10px",
-                            cursor: "pointer",
+                            width: "30%",
+                            textDecoration: 'none',
+                            flex: "1"
+
                         }}
+                        onClick={() => setSelectedTab('login')}
                     >
-                        {t("logIn")}
-                    </Typography>
+                        <Typography className='hereChange'
+                            variant="body1"
+                            sx={{
+                                borderBottom: selectedTab === 'login' ? `3px solid ${theme.palette.orangePrimary.main}` : "none",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                fontSize: "11px",
+                                color: theme.palette.text.fixedBlack,
+                                paddingBottom: "10px",
+                                cursor: "pointer",
+                            }}
+                        >
+                            {t("logIn")}
+                        </Typography>
+                    </Box>
+
+                    <Box
+                        component="div"
+                        sx={{
+                            width: "30%",
+                            textDecoration: 'none',
+                            flex: "1"
+
+                        }}
+                        onClick={() => setSelectedTab('signup')}
+
+                    >
+                        <Typography
+                            variant="body1"
+                            sx={{
+                                borderBottom: selectedTab === 'signup' ? `3px solid ${theme.palette.orangePrimary.main}` : "none",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                fontSize: "11px",
+                                color: theme.palette.text.fixedBlack,
+                                paddingBottom: "10px",
+                                cursor: "pointer",
+                            }}
+                        >
+
+                            {t("signUp")}
+                        </Typography>
+                    </Box>
                 </Box>
 
-                <Box
-                    component="div"
-                    sx={{
-                        width: "30%",
-                        textDecoration: 'none',
-                    }}
-                    onClick={() => setSelectedTab('signup')}
-                >
-                    <Typography
-                        variant="body1"
-                        sx={{
-                            borderBottom: selectedTab === 'signup' ? `3px solid ${theme.palette.orangePrimary.main}` : "none",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            fontSize: "11px",
-                            color: theme.palette.text.fixedBlack,
-                            paddingBottom: "10px",
-                            cursor: "pointer",
-                        }}
-                    >
+                <Box style={{ flexGrow: "1" ,marginBottom:"10px"}}>
 
-                        {t("signUp")}
-                    </Typography>
+                    {selectedTab === 'login' && <LoginPage />}
+                    {selectedTab === 'signup' && <SignUpPage />}
+
                 </Box>
-            </Box>
-
-            <Box >
-                        
-                {selectedTab === 'login' && <LoginPage />}
-                {selectedTab === 'signup' && <SignUpPage />}
-
-            </Box>
+            </div>
 
         </Box>
     );

@@ -117,7 +117,7 @@ const SignUp = () => {
     };
 
     return (
-        <Box width="100%" maxWidth="400px" marginTop={"-30px"} mx="auto" px={2}>
+        <Box width="100%" maxWidth="400px"  mx="auto" px={2}>
 
             <FormControl variant="outlined" fullWidth >
                 <OutlinedInput
@@ -397,7 +397,7 @@ const SignUp = () => {
                 />}
                 label={<Typography sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}> {t("registerAgree")}</Typography>}
             />
-            {apiError && <Typography sx={{ color: theme.palette.text.red, fontSize: '13px', textAlign: "center" }}>{apiError}</Typography>}
+            {apiError && <Typography className='error-color' sx={{  fontSize: '13px', textAlign: "center" }}>{apiError}</Typography>}
             {apiSuccess && <Typography sx={{ color: theme.palette.text.green, fontSize: '13px', textAlign: "center" }}>{apiSuccess}</Typography>}
             <Button
                 disabled={isLoading}

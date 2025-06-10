@@ -4,6 +4,7 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import LineChart2 from "../LineChart2";
 import { useTranslation } from "react-i18next";
 import { BASE_URL } from "../../../utils/constants";
+import { toNumberSafe } from "../../../utils/toNumberSafeFn";
 
 export const Revenue = () => {
   const [year, setYear] = React.useState("2025");
@@ -112,7 +113,8 @@ export const Revenue = () => {
               const sum = Object.values(revenueData)
                 .map((order) => order.total_revenue || 0)
                 .reduce((acc, curr) => acc + curr, 0);
-              return sum > 0 ? (Number.isInteger(sum) ? sum : sum.toFixed(1)) : 0;
+
+              return toNumberSafe(sum);
             })()}{" "}
             <span style={{ fontSize: "15px", color: theme.palette.text.gray }}>EGP</span>
           </Typography>
