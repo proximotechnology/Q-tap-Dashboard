@@ -23,7 +23,9 @@ export const handleClientLoginRedux = createAsyncThunk(
                 pin,
                 brunch_id,
             };
+            console.log()
             const response = await axios.post(`${BASE_URL}login`, data, {
+                withCredentials: true,
                 headers: { 'Content-Type': 'application/json' },
             });
 
