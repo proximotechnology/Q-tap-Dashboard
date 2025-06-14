@@ -3,9 +3,10 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Box, useTheme } from '@mui/system';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { DASHBOARD_SERVER_URL } from '../../../../utils/constants';
 
 export const Row3 = ({code}) => {
-    const  dashBoardServerUrl = "https://dashboard.qutap.co"
+    const  dashBoardServerUrl = DASHBOARD_SERVER_URL
     const invitationLink = `${dashBoardServerUrl}/?affiliate_code=${code}`;
     const theme = useTheme();
     const {t} = useTranslation();

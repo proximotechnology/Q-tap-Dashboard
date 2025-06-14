@@ -12,6 +12,7 @@ import DarkModeSwitch from "../../../../Component/DarkModeSwitch";
 import Language from "../../../../Component/dashboard/TopBar/Language";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAllBranch, selectBranch, updateSelectedBranch } from "../../../../store/client/clientAdmin";
+import { WEBSITE_SERVER_URL } from "../../../../utils/constants";
 
 const styles = (theme) => ({
     button: {
@@ -264,7 +265,7 @@ export default function TopBar() {
                                 onClick={() => {
                                     try {
 
-                                        window.location.href = `https://qutap.co/en`;
+                                        window.location.href = WEBSITE_SERVER_URL;
                                         handleUserClose();
                                     } catch (error) {
                                         console.error('Navigation failed:', error);

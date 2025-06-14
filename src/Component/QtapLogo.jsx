@@ -4,6 +4,7 @@ import { Grid, Typography, Box, Button } from '@mui/material';
 import { styled, useTheme } from '@mui/system';
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
 import { useTranslation } from 'react-i18next';
+import { WEBSITE_SERVER_URL } from '../utils/constants';
 
 
 /* 2 backgroundColor
@@ -72,7 +73,7 @@ const QtapLogo = () => {
                     },
                 }}
                 onClick={() => {
-                    window.location.href = "https://qutap.co/";
+                    window.location.href = WEBSITE_SERVER_URL;
                 }} >
                 <ChevronLeftOutlinedIcon sx={{ fontSize: "33px", }} />
             </Button>
