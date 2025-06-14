@@ -90,7 +90,7 @@ export const Row3 = () => {
 
   // Filter deposits by order_id
   const filteredDeposits = deposits.filter((transaction) =>
-    transaction.order_id.toString().includes(depositSearchQuery)
+    transaction.order_id?.toString().includes(depositSearchQuery)
   );
 
   return (
