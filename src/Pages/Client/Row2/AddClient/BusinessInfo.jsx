@@ -18,6 +18,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { LockKeyhole } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
@@ -40,24 +41,34 @@ import { timeOptions } from "../../../../Component/Business-info/WorkingHoursDay
 import MapWithPin, { ErrorBoundary } from "../../../../utils/MapWithPin";
 import { useSelector, useDispatch } from "react-redux";
 import { updateBusinessData, addBranch, selectBranch, clearBusinessData, setBranches } from "../../../../store/register/businessSlice";
+import { customErrorLog } from "../../../../utils/customErrorLog";
 
 const daysOfWeek = ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"];
 const fullDaysOfWeek = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
-export const BusinessInfo = () => {
+export const BusinessInfo = ({ branchErrors }) => {
   const theme = useTheme();
   const { t } = useTranslation();
 
   const dispatch = useDispatch()
   const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
-
   const [branchIndex, setBranchIndex] = useState(selectedBranch || 0);
   const [branchPosition, setBranchPosition] = useState([]);
   const navigate = useNavigate();
+  const getFieldError = (errors, branchIndex, field) => {
+
+    const branchKey = "branch" + (branchIndex + 1)
+    const error = errors?.[branchKey]?.[field];
+
+    return error ? (
+      <span style={{ color: "red" }}>{error}</span>
+    ) : null;
+  };
   const {
     businessName = '',
     businessPhone = '',
     businessEmail = '',
+    pin = "",
     country = '',
     city = '',
     currency = '',
@@ -265,7 +276,7 @@ export const BusinessInfo = () => {
             onChange={(e) => handleInputChange("businessName", e.target.value)}
           />
         </FormControl>
-
+        {getFieldError(branchErrors, (branchIndex), "businessName")}
         <FormControl variant="outlined" fullWidth>
           <OutlinedInput
             id="outlined-businessPhone"
@@ -290,7 +301,20 @@ export const BusinessInfo = () => {
             onChange={(e) => handleInputChange("businessEmail", e.target.value)}
           />
         </FormControl>
-
+        {/*<InputAdornment position="start"><MailOutlinedIcon sx={{ fontSize: "20px" }} /></InputAdornment> */}
+        <FormControl variant="outlined" fullWidth>
+          <OutlinedInput
+            id="outlined-adminPin"
+            startAdornment={<InputAdornment position="start"><LockKeyhole size="20px" /></InputAdornment>}
+            required
+            placeholder={t("pin")}
+            type="text"
+            sx={{ borderRadius: "10px", marginBottom: "10px", height: "33px", fontSize: "12px" }}
+            value={pin}
+            onChange={(e) => handleInputChange("pin", e.target.value)}
+          />
+        </FormControl>
+        {getFieldError(branchErrors, branchIndex, "pin")}
         <Box display="flex" justifyContent="space-between" width="100%" marginBottom="10px">
           <FormControl variant="outlined" sx={{ width: "48%" }}>
             <Select

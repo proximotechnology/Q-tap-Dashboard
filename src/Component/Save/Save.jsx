@@ -31,15 +31,17 @@ import Language from '../dashboard/TopBar/Language';
 import { updateBusinessData, addBranch, selectBranch, clearBusinessData, setBranches } from "../../store/register/businessSlice";
 import { updatePersonalData } from "../../store/register/personalSlice";
 import { useDispatch, useSelector } from 'react-redux';
-import { printFormData } from '../../utils/utils';
 import { BASE_URL } from '../../utils/constants';
 import axios from 'axios';
-export const Save = () => {
 
+import { appendBrunchData, appendUserData } from '../../utils/register-client/createBranchFormData';
+import { registerUser } from '../../api/Client/registerUser';
+import { customErrorLog } from '../../utils/customErrorLog';
+export const Save = () => {
+  const [branchErrors, setBranchErrors] = useState({})
   const dispatch = useDispatch();
   const personalData = useSelector((state) => state.personalStore.personalData);
-  
-  console.log('Current personalData:', personalData);
+
   const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
 
   const navigate = useNavigate();
@@ -47,93 +49,93 @@ export const Save = () => {
   const theme = useTheme();
   const [isLoading, setIsLoading] = useState(false);
 
-  // Business Info State
-  const [businessName, setBusinessName] = useState('');
-  const [businessPhone, setBusinessPhone] = useState('');
-  const [businessEmail, setBusinessEmail] = useState('');
-  const [businessCountry, setBusinessCountry] = useState('');
-  const [businessCity, setBusinessCity] = useState('');
-  const [currency, setCurrency] = useState('');
-  const [businessType, setBusinessType] = useState('');
-  const [menuLanguage, setMenuLanguage] = useState('');
-  const [tableCount, setTableCount] = useState('');
-  const [mode, setMode] = useState('white');
-  const [design, setDesign] = useState('grid');
-  const [workschedules, setWorkSchedules] = useState({
-    Saturday: ['9:00 am', '7:00 pm'],
-    Sunday: ['9:00 am', '7:00 pm'],
-  });
-  const [servingWays, setServingWays] = useState([]);
-  const [paymentMethods, setPaymentMethods] = useState([]);
-  const [paymentTime, setPaymentTime] = useState('after');
-  const [callWaiter, setCallWaiter] = useState('inactive');
+  // // Business Info State
+  // const [businessName, setBusinessName] = useState('');
+  // const [businessPhone, setBusinessPhone] = useState('');
+  // const [businessEmail, setBusinessEmail] = useState('');
+  // const [businessCountry, setBusinessCountry] = useState('');
+  // const [businessCity, setBusinessCity] = useState('');
+  // const [currency, setCurrency] = useState('');
+  // const [businessType, setBusinessType] = useState('');
+  // const [menuLanguage, setMenuLanguage] = useState('');
+  // const [tableCount, setTableCount] = useState('');
+  // const [mode, setMode] = useState('white');
+  // const [design, setDesign] = useState('grid');
+  // const [workschedules, setWorkSchedules] = useState({
+  //   Saturday: ['9:00 am', '7:00 pm'],
+  //   Sunday: ['9:00 am', '7:00 pm'],
+  // });
+  // const [servingWays, setServingWays] = useState([]);
+  // const [paymentMethods, setPaymentMethods] = useState([]);
+  // const [paymentTime, setPaymentTime] = useState('after');
+  // const [callWaiter, setCallWaiter] = useState('inactive');
 
-  // Personal Info State
-  const [fullName, setFullName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [country, setCountry] = useState('');
-  const [year, setYear] = useState('');
-  const [month, setMonth] = useState('');
-  const [day, setDay] = useState('');
-  const [password, setPassword] = useState('');
-  const [img, setImg] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState('cash');
-  const [pricingId, setPricingId] = useState(1);
-  const [pricingWay, setPricingWay] = useState('monthly');
-  const [discountId, setDiscountId] = useState(null);
+  // // Personal Info State
+  // const [fullName, setFullName] = useState('');
+  // const [phone, setPhone] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [country, setCountry] = useState('');
+  // const [year, setYear] = useState('');
+  // const [month, setMonth] = useState('');
+  // const [day, setDay] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [img, setImg] = useState('');
+  // const [paymentMethod, setPaymentMethod] = useState('cash');
+  // const [pricingId, setPricingId] = useState(1);
+  // const [pricingWay, setPricingWay] = useState('monthly');
+  // const [discountId, setDiscountId] = useState(null);
 
   // Language and User Popover State
-  const [anchorElLanguage, setAnchorElLanguage] = useState(null);
-  const [selectedLanguage, setSelectedLanguage] = useState('en');
+  // const [anchorElLanguage, setAnchorElLanguage] = useState(null);
+  // const [selectedLanguage, setSelectedLanguage] = useState('en');
   const [anchorElUser, setAnchorElUser] = useState(null);
 
-  const openLanguage = Boolean(anchorElLanguage);
+  // const openLanguage = Boolean(anchorElLanguage);
   const openUserPopover = Boolean(anchorElUser);
 
   // Load data from contexts when component mounts
-  useEffect(() => {
-    // Load business data
-    const data = selectedBranch !== null && branches[selectedBranch] ? branches[selectedBranch] : businessData;
-    if (data) {
-      setBusinessName(data.businessName || '');
-      setBusinessPhone(data.businessPhone || '');
-      setBusinessEmail(data.businessEmail || '');
-      setBusinessCountry(data.country || '');
-      setBusinessCity(data.city || '');
-      setCurrency(data.currency || '');
-      setBusinessType(data.format || '');
-      setMenuLanguage(data.menuLanguage || '');
-      setTableCount(data.tableCount || '');
-      setMode(data.mode || 'white');
-      setDesign(data.design || 'grid');
-      setWorkSchedules(data.workschedules || {
-        Saturday: ['9:00 am', '7:00 pm'],
-        Sunday: ['9:00 am', '7:00 pm'],
-      });
-      setServingWays(data.servingWays || []);
-      setPaymentMethods(data.paymentMethods || []);
-      setPaymentTime(data.paymentTime || 'after');
-      setCallWaiter(data.callWaiter || 'inactive');
-    }
+  // useEffect(() => {
+  //   // Load business data
+  //   const data = selectedBranch !== null && branches[selectedBranch] ? branches[selectedBranch] : businessData;
+  //   if (data) {
+  //     setBusinessName(data.businessName || '');
+  //     setBusinessPhone(data.businessPhone || '');
+  //     setBusinessEmail(data.businessEmail || '');
+  //     setBusinessCountry(data.country || '');
+  //     setBusinessCity(data.city || '');
+  //     setCurrency(data.currency || '');
+  //     setBusinessType(data.format || '');
+  //     setMenuLanguage(data.menuLanguage || '');
+  //     setTableCount(data.tableCount || '');
+  //     setMode(data.mode || 'white');
+  //     setDesign(data.design || 'grid');
+  //     setWorkSchedules(data.workschedules || {
+  //       Saturday: ['9:00 am', '7:00 pm'],
+  //       Sunday: ['9:00 am', '7:00 pm'],
+  //     });
+  //     setServingWays(data.servingWays || []);
+  //     setPaymentMethods(data.paymentMethods || []);
+  //     setPaymentTime(data.paymentTime || 'after');
+  //     setCallWaiter(data.callWaiter || 'inactive');
+  //   }
 
-    // Load personal data
-    if (personalData) {
-      setFullName(personalData.fullName || '');
-      setPhone(personalData.phone || '');
-      setEmail(personalData.email || '');
-      setCountry(personalData.country || '');
-      setYear(personalData.year || '');
-      setMonth(personalData.month || '');
-      setDay(personalData.day || '');
-      setPassword(personalData.password || '');
-      setImg(personalData.img || '');
-      setPaymentMethod(personalData.payment_method || 'cash');
-      setPricingId(personalData.pricing_id || 1);
-      setPricingWay(personalData.pricing_way || 'monthly');
-      setDiscountId(personalData.discount_id || null);
-    }
-  }, [businessData, branches, selectedBranch, personalData]);
+  //   // Load personal data
+  //   if (personalData) {
+  //     setFullName(personalData.fullName || '');
+  //     setPhone(personalData.phone || '');
+  //     setEmail(personalData.email || '');
+  //     setCountry(personalData.country || '');
+  //     setYear(personalData.year || '');
+  //     setMonth(personalData.month || '');
+  //     setDay(personalData.day || '');
+  //     setPassword(personalData.password || '');
+  //     setImg(personalData.img || '');
+  //     setPaymentMethod(personalData.payment_method || 'cash');
+  //     setPricingId(personalData.pricing_id || 1);
+  //     setPricingWay(personalData.pricing_way || 'monthly');
+  //     setDiscountId(personalData.discount_id || null);
+  //   }
+  // }, [businessData, branches, selectedBranch, personalData]);
 
   // Handle Personal Info Changes
   const handlePersonalChange = (field, value) => {
@@ -161,33 +163,13 @@ export const Save = () => {
       // return currencyMap[country] || 1;
       return 1;
     };
-    console.log("personalData",personalData )//debug log
     // Append personal data
-    formData.append('name', personalData.fullName?.trim() || '');
-    formData.append('mobile', personalData.phone?.trim() || '');
-    formData.append('email', personalData.email?.trim().toLowerCase() || '');
-    formData.append('birth_date', personalData.year && personalData.month && personalData.day
-      ? `${personalData.year}-${personalData.month}-${personalData.day}`
-      : '');
-    formData.append('country', personalData.country || '');
-    formData.append('password', personalData.password || '1');
-    formData.append('user_type', 'qtap_clients');
-    formData.append('payment_method', personalData.payment_method || 'cash');
-    formData.append('pricing_id', personalData.pricing_id || 1);
-    formData.append('pricing_way', `${personalData.pricing_way}_price` || 'monthly_price');
-    if (personalData.discount_id) formData.append('discount_id', personalData.discount_id);
-    if (personalData.affiliate_code) formData.append('affiliate_code', personalData.affiliate_code);
 
-    // Append image if it exists
-    if (personalData.img instanceof File) {
-      formData.append('img', personalData.img);
-    }
-    if(sessionStorage.getItem('affiliate_code')){
-      formData.append('affiliate_code', sessionStorage.getItem('affiliate_code'));
-    }
+    appendUserData({ personalData, formData })
     // Branch data preparation
     const apiBranches = (branches.length > 0 ? branches : [businessData]).map((branch, index) => ({
       brunch: `brunch${index + 1}`,
+      pin: branch.pin || '',
       contact_info: {
         business_phone: [branch.businessPhone?.trim() || ''],
         business_email: [branch.businessEmail?.trim() || ''],
@@ -218,90 +200,40 @@ export const Save = () => {
     }));
 
     // Append branch data
-    const appendBrunchData = (prefix, data) => {
-      try {
-        // Contact info
-        formData.append(`${prefix}[contact_info][business_phone][]`, data.contact_info.business_phone[0]);
-        formData.append(`${prefix}[contact_info][business_email][]`, data.contact_info.business_email[0]);
-        formData.append(`${prefix}[contact_info][facebook][]`, data.contact_info.facebook[0]);
-        formData.append(`${prefix}[contact_info][twitter][]`, data.contact_info.twitter[0]);
-        formData.append(`${prefix}[contact_info][instagram][]`, data.contact_info.instagram[0]);
-        formData.append(`${prefix}[contact_info][address][]`, data.contact_info.address[0]);
-        formData.append(`${prefix}[contact_info][website][]`, data.contact_info.website[0]);
+    let branchErrors = {}
 
-        // Work schedules
-        Object.entries(data.workschedules).forEach(([day, times]) => {
-          times.forEach((time) => {
-            formData.append(`${prefix}[workschedules][${day}][]`, time);
-          });
-        });
-
-        // Serving ways
-        data.serving_ways.forEach((value) => {
-          formData.append(`${prefix}[serving_ways][]`, value);
-        });
-
-        // Payment services
-        data.payment_services.forEach((value) => {
-          formData.append(`${prefix}[payment_services][]`, value);
-        });
-
-        // Other fields
-        formData.append(`${prefix}[tables_number]`, data.tables_number);
-        formData.append(`${prefix}[currency_id]`, data.currency_id);
-        formData.append(`${prefix}[business_name]`, data.business_name);
-        formData.append(`${prefix}[business_country]`, data.business_country);
-        formData.append(`${prefix}[business_city]`, data.business_city);
-        formData.append(`${prefix}[latitude]`, data.latitude);
-        formData.append(`${prefix}[longitude]`, data.longitude);
-        formData.append(`${prefix}[business_format]`, data.business_format);
-        formData.append(`${prefix}[menu_design]`, data.menu_design);
-        formData.append(`${prefix}[default_mode]`, data.default_mode);
-        formData.append(`${prefix}[payment_time]`, data.payment_time);
-        formData.append(`${prefix}[call_waiter]`, data.call_waiter);
-        if (data.pricing_id) formData.append(`${prefix}[pricing_id]`, data.pricing_id);
-        if (data.payment_method) formData.append(`${prefix}[payment_method]`, data.payment_method);
-        if (data.discount_id) formData.append(`${prefix}[discount_id]`, data.discount_id);
-      } catch (error) {
-        throw new Error(`${prefix} missing required fields: ${error.message}`);
-      }
-    };
-    printFormData(formData)
     try {
-      apiBranches.forEach((branch) => {
+      apiBranches.forEach((branch, index) => {
         if (!branch.latitude || !branch.longitude) {
+
           throw new Error(`${branch.brunch} no latitude or longitude`);
         }
-        appendBrunchData(branch.brunch, branch);
+        const errorsFromBranch = appendBrunchData(branch.brunch, branch, formData);
+        branchErrors[`branch${index + 1}`] = errorsFromBranch
+
       });
     } catch (error) {
       toast.error(`Please select position: ${error.message}`);
       setIsLoading(false);
       return;
     }
-
+    if (Object.keys(branchErrors).length !== 0) {
+      setBranchErrors(branchErrors)
+      setIsLoading(false);
+      return;
+    }
     // Determine if this is an update or create operation
     const isUpdate = personalData.id; // Assuming personalData.id exists for existing users
     const url = isUpdate ? `${BASE_URL}qtap_clients/${personalData.id}` : `${BASE_URL}qtap_clients`;
     const method = isUpdate ? 'PUT' : 'POST';
 
-    printFormData(formData)
     // Send data to API
     try {
-      const response = await axios({
-        method,
-        url,
-        data: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await registerUser({ method, url, data: formData })
 
-
-      console.log("save register data ", response)// debug log
       if (response.status === 200 || response.status === 201) {
         const { payment_url } = response.data;
-          
+
         toast.success(t(isUpdate ? "dataUpdatedSuccessfully" : "dataSavedSuccessfully"));
         if (payment_url) {
           sessionStorage.setItem("paymentUrl", payment_url);
@@ -316,16 +248,7 @@ export const Save = () => {
     }
   };//
 
-  // Language and User Popover Handlers
-  const handleLanguageClick = (event) => {
-    setAnchorElLanguage(event.currentTarget);
-  };
 
-  const handleLanguageClose = (language) => {
-    i18n.changeLanguage(language);
-    setAnchorElLanguage(null);
-    setSelectedLanguage(language);
-  };
 
   const handleUserClick = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -335,13 +258,13 @@ export const Save = () => {
     setAnchorElUser(null);
   };
 
-  const getLanguageIcon = () => {
-    return selectedLanguage === 'ar' ? (
-      <span className="icon-translation" style={{ color: theme.palette.orangePrimary.main, fontSize: '22px' }} />
-    ) : (
-      <LanguageOutlined sx={{ color: theme.palette.orangePrimary.main, fontSize: '22px' }} />
-    );
-  };
+  // const getLanguageIcon = () => {
+  //   return selectedLanguage === 'ar' ? (
+  //     <span className="icon-translation" style={{ color: theme.palette.orangePrimary.main, fontSize: '22px' }} />
+  //   ) : (
+  //     <LanguageOutlined sx={{ color: theme.palette.orangePrimary.main, fontSize: '22px' }} />
+  //   );
+  // };
 
   return (
     <Box sx={{ backgroundColor: 'white', height: '100%' }}>
@@ -483,7 +406,23 @@ export const Save = () => {
             <Divider orientation="vertical" sx={{ backgroundColor: '#f4f6fc', width: '1px', marginTop: '30px', height: '90%' }} />
           </Box>
           <Grid item xs={12} md={6} sx={{ marginTop: "10px", paddingInlineStart: "20px", paddingInlineEnd: { xs: '20px', md: '0px' } }}>
-            <BusinessInfo />
+            {Object.keys(branchErrors).length !== 0 ?
+              <span style={{ color: "red" }}> {
+                Object.entries(branchErrors).map(([branch, singlebranchErrors]) => {
+                  customErrorLog({fileName:branch,error:singlebranchErrors})
+                  return (<>
+                    {Object.keys(singlebranchErrors).length !== 0 ? <>error:{branch} {" "}</> : ""}
+                  </>)
+                })
+              } </span> : ""}
+            {/* {Object.keys(branchErrors).length !== 0 ? <span style={{ color: "red" }}>error in : {
+              Object.entries(branchErrors).map(([branch, branchErrors]) => (
+                Object.entries(branchErrors).map(([field, message]) => (
+                  <>{field}:{message}</>
+                ))
+              ))
+            } </span> : ""} */}
+            <BusinessInfo branchErrors={branchErrors} />
           </Grid>
         </Grid>
 

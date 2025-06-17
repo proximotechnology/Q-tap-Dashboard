@@ -78,6 +78,7 @@ import { HelpClient } from './Component/Help/HelpClient';
 import ProtectedRouteClient from './Component/ProtectedRoute/ProtectedRouterClient';
 import { TestWebLogin } from './Component/TestWebLogin';
 import { OtpSignupPage } from './Component/Otp/OtpSingupPage';
+import ClientPlan from './Pages/DashboardClient/Pages/client-plane-page/ClientPlan';
 
 const queryClient = new QueryClient();
 
@@ -312,6 +313,11 @@ function App() {
         {
           path: "feedback",
           element: <Feedback />,
+        },
+         {
+          index: true,
+          path: "/client-plan",
+          element: <ClientPlan />,
         },
       ]
 

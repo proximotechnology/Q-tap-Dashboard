@@ -8,6 +8,7 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import RoomServiceOutlinedIcon from '@mui/icons-material/RoomServiceOutlined';
 import GridViewIcon from '@mui/icons-material/GridView';
 import { useTranslation } from "react-i18next";
+import { HandPlatter } from "lucide-react";
 const Arr1 = [
     {
         text: "Dashboard",
@@ -49,6 +50,11 @@ const Arr1 = [
         icon: <SettingsIcon style={{ fontSize: "18px", marginLeft: "-1px" }}></SettingsIcon>,
         path: "/setting-client",
     },
+    {
+        text: "Plan",
+        icon: <HandPlatter size={"18px"} />,
+        path: "/client-plan",
+    },
 
 ];
 const Arr2 = [
@@ -88,7 +94,7 @@ export default function SideBar({ isOpen }) {
             top: 0,
             insetInlineStart: 0,
             height: '100vh',
-            zIndex: 1000,
+            zIndex: 998,
             display: { xs: isOpen ? 'block' : 'none', md: 'block' }
         }}>
             <Box sx={{ display: "felx", justifyContent: "center", textAlign: "center", alignItems: "center", marginTop: "18px" }}>

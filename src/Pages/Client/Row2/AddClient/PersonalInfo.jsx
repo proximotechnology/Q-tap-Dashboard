@@ -24,7 +24,6 @@ export const PersonalInfo = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const personalData = useSelector((state) => state.personalStore.personalData);
-    console.log("personalData", personalData)
 
     const [fullName, setFullName] = useState(personalData.fullName || '');
     const [phone, setPhone] = useState(personalData.phone || '');

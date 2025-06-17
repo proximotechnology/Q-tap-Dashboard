@@ -20,7 +20,7 @@ const MapWithPin = ({ setPos, isMapOpen, setIsMapOpen, currentPos = {} }) => {
   const [userPosition, setUserPosition] = useState(null);
   const [position, setPosition] = useState(null);
 
- 
+
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   useEffect(() => {
@@ -56,7 +56,7 @@ const MapWithPin = ({ setPos, isMapOpen, setIsMapOpen, currentPos = {} }) => {
 
     setIsLoading(true);
     setErrorMessage('');
-
+    setIsMapOpen(true);
     if (!navigator.geolocation) {
       setErrorMessage('Geolocation is not supported by your browser');
       setIsLoading(false);
@@ -69,16 +69,34 @@ const MapWithPin = ({ setPos, isMapOpen, setIsMapOpen, currentPos = {} }) => {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         });
-        setIsMapOpen(true);
         setIsLoading(false);
       },
       (error) => {
-        setErrorMessage(`Error getting location: ${error.message}`);
+        let message = '';
+        switch (error.code) {
+          case 1:
+            message = 'Permission denied. Please allow location access.';
+            break;
+          case 2:
+            message = 'Position unavailable. Try again later.';
+            break;
+          case 3:
+            message = 'Request timed out. Please try again.';
+            break;
+          default:
+            message = 'An unknown error occurred.';
+        }
+        console.log(`Error getting location: ${message}`)
+        setErrorMessage(`Error getting location: ${message}`);
         setIsLoading(false);
-      }
+      }, {
+      enableHighAccuracy: true, // ✅ Ask for best accuracy
+      timeout: 10000,           // Optional: 10s timeout
+      maximumAge: 0             // Don't use cached location
+    }
     );
   };
-
+  const fallbackPosition = { lat: 30.0444, lng: 31.2357 };
   return (
     <div style={{ width: '100%', zIndex: '50' }}>
       <Button
@@ -120,10 +138,10 @@ const MapWithPin = ({ setPos, isMapOpen, setIsMapOpen, currentPos = {} }) => {
         {isMapOpen ? 'Close Map' : 'Open Map'}
       </button> */}
 
-      {isMapOpen && userPosition && (
+      {isMapOpen  && (
         <div style={{ marginTop: '20px', height: '400px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           <MapContainer
-            center={position || userPosition}
+            center={position || userPosition || fallbackPosition }
             zoom={13}
             style={{ height: '100%', width: '100%' }}
           >

@@ -7,6 +7,7 @@ const initialState = {
     website: "",
     businessEmail: "",
     businessPhone: "",
+    pin:"",
     country: "",
     city: "",
     mode: "white",
@@ -85,6 +86,7 @@ const businessSlice = createSlice({
       state.businessData = {
         businessName: "",
         website: "",
+        pin:"",
         businessEmail: "",
         businessPhone: "",
         country: "",

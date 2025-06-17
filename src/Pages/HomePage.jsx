@@ -1,13 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import QtapLogo from "../Component/QtapLogo";
 import QtapHome from "../Component/QtapHome";
 import { Box, Grid } from "@mui/material";
 
 import Language from "../Component/dashboard/TopBar/Language";
+import { getUserDataFromCookies } from "../api/Client/getUserDataFromCookies";
 
 export const HomePage = () => {
   const [selectedTab, setSelectedTab] = useState("login");
 
+  const checkLogin = async () => {
+    try {
+      const res = await getUserDataFromCookies();
+      console.log("check user login :::::", res)
+    } catch (error) {
+      console.log("check user login :::::", error)
+
+    }
+  }
+
+  useEffect(() => {
+    console.log("call")
+    checkLogin()
+  }, [])
   return (
     <Box
       sx={{

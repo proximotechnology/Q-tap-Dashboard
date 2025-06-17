@@ -42,6 +42,7 @@ export const handleClientLoginRedux = createAsyncThunk(
 
             return {...response.data,selected_brunch_id:brunch_id};
         } catch (error) {
+            console.log("error login",error)
             return rejectWithValue(error.response?.data || error.message);
         }
     }

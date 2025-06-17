@@ -13,6 +13,7 @@ import Language from "../../../../Component/dashboard/TopBar/Language";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAllBranch, selectBranch, updateSelectedBranch } from "../../../../store/client/clientAdmin";
 import { WEBSITE_SERVER_URL } from "../../../../utils/constants";
+import { logout } from "../../../../api/Client/logout";
 
 const styles = (theme) => ({
     button: {
@@ -327,6 +328,7 @@ export default function TopBar() {
                             </ListItem>
 
                             <ListItem sx={{ cursor: "pointer" }} onClick={() => {
+                                logout() // call logout api to delete the cookies
                                 localStorage.removeItem("Token");
                                 navigate('/');
                             }}>
