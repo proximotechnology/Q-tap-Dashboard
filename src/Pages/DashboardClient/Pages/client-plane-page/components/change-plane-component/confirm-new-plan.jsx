@@ -2,6 +2,9 @@ import { ChevronLeft } from 'lucide-react'
 import React, { useState } from 'react'
 import { usePlanPricingStore } from '../../../../../../store/zustand-store/client-user-plan'
 import '../../css/confirmNewPlanePage.css'
+import { changePlan } from '../../../../../../api/Client/plan/changePlan'
+import { customErrorLog } from '../../../../../../utils/customErrorLog'
+import { printFormData } from '../../../../../../utils/utils'
 
 const ConfirmNewPlan = ({ handleBackToSelectPlan, closeChangePlan }) => {
     const {
@@ -12,9 +15,51 @@ const ConfirmNewPlan = ({ handleBackToSelectPlan, closeChangePlan }) => {
         reset,
     } = usePlanPricingStore()
     const [imagePreview, setImagePreview] = useState(null);
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(null);
 
-    const handleConfirm = () => {
-        console.log('Confirmed:', { selectedPlan, billingCycle, paymentMethod });
+    const handleConfirm = async () => {
+        try {
+            // brunch_id
+            // package_id
+            // img
+            // package_type => yearly_price , monthly_price
+            // renewal_date
+            // type => cash or wallet
+            setLoading(true)
+            setError(null)
+            const formdata = new FormData()
+            formdata.append("brunch_id", localStorage.getItem("selectedBranch"))
+            formdata.append("package_id", selectedPlan.id)
+            if (!selectedFile && paymentMethod === "wallet") {
+                setError("selectFile")
+                return;
+            }
+            if (paymentMethod === "wallet") {
+                formdata.append("img", selectedFile)
+            }
+
+            if (billingCycle === "yearly") {
+                formdata.append("package_type", "yearly_price")
+            } else {
+                formdata.append("package_type", "monthly_price")
+            }
+            const now = new Date();
+            const formattedDate = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+            formdata.append("renewal_date", formattedDate)
+            formdata.append("type", paymentMethod)
+
+            const response = await changePlan(formdata)
+        } catch (error) {
+            if (error.status === 400 && error.response.data.status === "pending") {
+                setError("you already send request to change your plan wait until admin approve")
+                return
+            }
+            setError(error.message || "some error happend")
+        } finally {
+            setLoading(false)
+        }
     };
 
     const handleCancel = () => {
@@ -26,6 +71,7 @@ const ConfirmNewPlan = ({ handleBackToSelectPlan, closeChangePlan }) => {
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
+            setSelectedFile(file)
             const reader = new FileReader();
             reader.onloadend = () => {
                 setImagePreview(reader.result);
@@ -42,6 +88,8 @@ const ConfirmNewPlan = ({ handleBackToSelectPlan, closeChangePlan }) => {
                 <div className="panel-content">
                     <p className="plan-name">{selectedPlan ? selectedPlan.name : 'No plan selected'}</p>
                     <p className="billing-cycle">{billingCycle}</p>
+                    <p className="billing-cycle">{billingCycle === "yearly" ? selectedPlan?.yearly_price + "$" : selectedPlan?.monthly_price + "$"}</p>
+
                     <p className="payment-label">Select payment method:</p>
 
                     <div className="payment-options">
@@ -59,7 +107,7 @@ const ConfirmNewPlan = ({ handleBackToSelectPlan, closeChangePlan }) => {
                         </div>
                     </div>
 
-                    {paymentMethod === 'cash' && (
+                    {paymentMethod === 'wallet' && (
                         <div className="upload-section">
                             <label htmlFor="receiptUpload" className="upload-label">
                                 Upload payment receipt:
@@ -78,10 +126,10 @@ const ConfirmNewPlan = ({ handleBackToSelectPlan, closeChangePlan }) => {
                         </div>
                     )}
                 </div>
-
+                <p className="p-0 m-0" style={{ color: "red" }}>{error || ""}</p>
                 <div className="button-group">
-                    <button onClick={handleCancel} className="btn cancel">Cancel</button>
-                    <button onClick={handleConfirm} className="btn confirm">Confirm</button>
+                    <button onClick={handleCancel} className="btn cancel" disabled={loading}>{loading ? "Loading" : "Cancel"}</button>
+                    <button onClick={handleConfirm} className="btn confirm" disabled={loading}>{loading ? "Loading" : "Confirm"}</button>
                 </div>
             </div>
         </div>

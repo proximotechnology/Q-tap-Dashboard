@@ -226,7 +226,7 @@ const AddTableModal = ({ open, onClose, tableData }) => {
                 onChange={(e) => setAreaMenu(e.target.value)}
                 placeholder="Select Area"
               >
-                {areas?.filter((area) => area.brunch_id == selectedBranch)
+                {areas?.filter((area) => area?.brunch_id == selectedBranch)
                   .map((area) => (
                     <MenuItem key={area.id} value={area.id}>
                       {area.name}

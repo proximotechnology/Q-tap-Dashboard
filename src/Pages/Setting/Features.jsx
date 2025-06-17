@@ -7,7 +7,8 @@ import AddIcon from "@mui/icons-material/Add";
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
-import {BASE_URL,BASE_URL_IMG} from  "../../utils/constants";
+import { BASE_URL, BASE_URL_IMG } from "../../utils/constants";
+import FeatureList from './component/FeatureList';
 
 const FeatureSection = ({ section, updateSection, index }) => {
     const [feature, setFeature] = useState('');
@@ -254,31 +255,34 @@ export const Features = forwardRef((props, ref) => {
     }));
 
     return (
-        <Paper sx={{ padding: "10px 0", borderRadius: "20px", position: 'relative' }}>
-            <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ padding: "0px 30px" }}>
-                <Typography variant="h6" sx={{ color: "gray", fontSize: "10px" }}>
-                    W:780px H:500px
-                </Typography>
-                <IconButton onClick={addFeat} sx={{ textAlign: "center" }}>
-                    <AddIcon fontSize="large" sx={{ color: "grey" }} />
-                </IconButton>
-            </Box>
-            {isSaving && (
-                <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.7)', zIndex: 1000, borderRadius: "20px" }}>
-                    <Box sx={{ textAlign: 'center' }}>
-                        <CircularProgress sx={{ color: theme.palette.orangePrimary.main }} />
-                        <Typography sx={{ mt: 2, color: theme.palette.secondaryColor.main }}>{t("saving")}</Typography>
-                    </Box>
+        <>
+            <Paper sx={{ padding: "10px 0", borderRadius: "20px", position: 'relative' }}>
+                <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ padding: "0px 30px" }}>
+                    <Typography variant="h6" sx={{ color: "gray", fontSize: "10px" }}>
+                        W:780px H:500px
+                    </Typography>
+                    <IconButton onClick={addFeat} sx={{ textAlign: "center" }}>
+                        <AddIcon fontSize="large" sx={{ color: "grey" }} />
+                    </IconButton>
                 </Box>
-            )}
-            {sections.map((section, index) => (
-                <FeatureSection
-                    key={index}
-                    section={section}
-                    updateSection={updateSection}
-                    index={index}
-                />
-            ))}
-        </Paper>
+                {isSaving && (
+                    <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.7)', zIndex: 1000, borderRadius: "20px" }}>
+                        <Box sx={{ textAlign: 'center' }}>
+                            <CircularProgress sx={{ color: theme.palette.orangePrimary.main }} />
+                            <Typography sx={{ mt: 2, color: theme.palette.secondaryColor.main }}>{t("saving")}</Typography>
+                        </Box>
+                    </Box>
+                )}
+                {sections.map((section, index) => (
+                    <FeatureSection
+                        key={index}
+                        section={section}
+                        updateSection={updateSection}
+                        index={index}
+                    />
+                ))}
+            </Paper>
+            <FeatureList />
+        </>
     );
 });

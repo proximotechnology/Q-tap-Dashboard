@@ -190,7 +190,7 @@ const AddAreaModal = ({ open, onClose }) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {areas?.filter(area => { return area.brunch_id == Number(selectedBranch) }).map((row) => (
+                            {areas?.filter(area => { return area?.brunch_id == Number(selectedBranch) }).map((row) => (
                                 <TableRow key={row.id} sx={{ height: "30px" }}>
                                     <TableCell align="center" sx={{ padding: "0px", fontSize: "10px", color: "gray" }}>{row.name}</TableCell>
                                     <TableCell align="center" sx={{ padding: "0px" }}>

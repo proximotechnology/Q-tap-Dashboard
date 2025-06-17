@@ -5,7 +5,7 @@ import './utils/i18n';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {ThemeModeProvider} from './context/ThemeModeProvider'
-
+import './utils/use-tailwind/useTailwind.css';
 
 
 

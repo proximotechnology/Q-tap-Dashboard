@@ -18,11 +18,6 @@ const ClientPlan = () => {
   const [isChangePlanDialog, setChangePlanDialog] = useState(false);
 
 
-  const handleConfirmRenewPlan = () => {
-    setDialogOpen(false);
-    console.log("Plan change confirmed.");
-    // Call your API or change plan logic here
-  };
 
   const {reset} = 
   usePlanPricingStore();
@@ -44,11 +39,10 @@ const ClientPlan = () => {
         :
         (
           <>
-            <UsageCard total={1200} used={283} planName={"pro plan"} openDialog={() => setDialogOpen(true)} openChangePlan={() => openChangePlane()} />
+            <UsageCard openDialog={() => setDialogOpen(true)} openChangePlan={() => openChangePlane()} />
             <ConfirmDialog
               isOpen={isDialogOpen}
               onClose={() => setDialogOpen(false)}
-              onConfirm={handleConfirmRenewPlan}
             />
           </>
         )}

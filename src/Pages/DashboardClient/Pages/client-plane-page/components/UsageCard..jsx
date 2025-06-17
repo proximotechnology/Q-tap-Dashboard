@@ -1,8 +1,25 @@
+import { useClientCurrentPlan } from '../../../../../Hooks/clientDashBoard/useClientCurrentPlan';
+import { usePlanPricing } from '../../../../../Hooks/usePlanPricing';
+import { customErrorLog } from '../../../../../utils/customErrorLog';
 
-const UsageCard = ({ planName, used, total, openDialog ,openChangePlan }) => {
-  const percentage = Math.min((used / total) * 100, 100);
+
+const UsageCard = ({ openDialog, openChangePlan }) => {
+  const { data } = useClientCurrentPlan()
+  const { data: allPlanes } = usePlanPricing()
+
+  const planesArray = allPlanes?.data?.data;
+  const currentPlanData = data?.data;
+
+  const currentPlan = (planesArray ?? []).find(plan => plan.id === currentPlanData?.["your plan id"]);
+
+  const total = currentPlan?.orders_limit ?? 0;
+  const remain = currentPlanData?.remain_orders ?? 0;
+  const used = total - remain;
 
 
+  const percentage = Math.min((remain / total) * 100, 100);
+
+  const planName = currentPlan?.name || "Unknown Plan";
   return (
     <div className="usage-card">
       <div className="plan-name">{planName}</div>

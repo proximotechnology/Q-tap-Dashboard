@@ -1,9 +1,9 @@
 import axios from "axios"
-import { BASE_URL } from "../../utils/constants"
+import { BASE_URL } from "../../../utils/constants"
 
 export const getClintPlan = async () => {
     try {
-        const response = axios.get(`${BASE_URL}pricing`, {
+        const response = await axios.get(`${BASE_URL}pricing`, {
             headers: {
                 'Content-Type': 'application/json',
             }

@@ -3,8 +3,13 @@ import { Box, TextField, IconButton, Paper, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-import {BASE_URL} from  "../../utils/constants";
+import { BASE_URL } from "../../utils/constants";
 import { useTheme } from '@mui/system';
+import { useVideos } from '../../Hooks/adminDashBoard/setting/useVideos';
+import { customErrorLog } from '../../utils/customErrorLog';
+import { Loader2, Trash } from 'lucide-react';
+import { deleteVideo } from '../../api/admin/setting/deleteVideo';
+import { useQueryClient } from '@tanstack/react-query';
 
 const URLInput = ({ label, setVideoUrl, value }) => {
     const { t } = useTranslation()
@@ -101,24 +106,71 @@ export const Videos = forwardRef((props, ref) => {
         saveVideos: handleSave,
     }));
 
+    const [deletingIds, setDeletingIds] = useState([]);
+    const queryClient = useQueryClient();
+    const { data } = useVideos();
+    const handleVideo = async (id) => {
+        setDeletingIds((prev) => [...prev, id]);
+        try {
+            const response = await deleteVideo(id)
+            queryClient.invalidateQueries(['website-videos']);
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setDeletingIds((prev) => prev.filter((itemId) => itemId !== id));
+        }
+    }
+
     return (
-        <Paper sx={{ width: "100%", borderRadius: "20px", height: "400px", padding: "20px 30px" }}>
-            <Typography variant='body2' sx={{ color: "#cacacaf1", fontSize: "11px" }}>W:1500px H:500px</Typography>
+        <>
+            <Paper sx={{ width: "100%", borderRadius: "20px", height: "400px", padding: "20px 30px" }}>
+                <Typography variant='body2' sx={{ color: "#cacacaf1", fontSize: "11px" }}>W:1500px H:500px</Typography>
 
-            <Box display="flex" flexDirection="column" alignItems="center" p={3}>
-                {urls.map((label, index) => (
-                    <URLInput
-                        key={index}
-                        label={label}
-                        value={videoUrls[label] || ''}
-                        setVideoUrl={(value) => handleUrlChange(label, value)}
-                    />
-                ))}
+                <Box display="flex" flexDirection="column" alignItems="center" p={3}>
+                    {urls.map((label, index) => (
+                        <URLInput
+                            key={index}
+                            label={label}
+                            value={videoUrls[label] || ''}
+                            setVideoUrl={(value) => handleUrlChange(label, value)}
+                        />
+                    ))}
 
-                <IconButton onClick={addUrlInput}>
-                    <AddIcon fontSize="large" sx={{ color: 'grey', opacity: 0.5 }} />
-                </IconButton>
-            </Box>
-        </Paper>
+                    <IconButton onClick={addUrlInput}>
+                        <AddIcon fontSize="large" sx={{ color: 'grey', opacity: 0.5 }} />
+                    </IconButton>
+                </Box>
+            </Paper>
+            {
+                data?.data?.map(item => {
+                    customErrorLog({ error: item })
+
+                    return (
+                        <div className='tw-bg-white tw-mx-2 tw-my-4 tw-text-black tw-px-2 tw-py-4 tw-rounded-xl tw-flex tw-justify-between'>
+                            <YouTubeLink rawUrl={item.video} />
+                            <button
+                                onClick={() => handleVideo(item?.id)}
+                                disabled={deletingIds.includes(item.id)}
+                            >
+                                {deletingIds.includes(item.id) ? <Loader2 className="tw-animate-spin tw-text-gray-500" size={24} /> : <Trash size="24px" color='red' />}
+                            </button>
+                        </div>
+                    )
+                })
+            }
+        </>
     );
 });
+
+
+const YouTubeLink = ({ rawUrl }) => {
+    const cleanedUrl = rawUrl
+        .replace(/^"+|"+$/g, '')       // remove surrounding quotes
+        .replace(/\\\//g, '/');        // unescape slashes
+
+    return (
+        <a href={cleanedUrl} target="_blank" rel="noopener noreferrer" className="tw-text-blue-600 tw-underline">
+            {cleanedUrl}
+        </a>
+    );
+};

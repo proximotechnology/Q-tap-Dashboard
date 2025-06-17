@@ -6,14 +6,22 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import {BASE_URL,BASE_URL_IMG} from  "../../utils/constants";
+import { BASE_URL, BASE_URL_IMG } from "../../utils/constants";
 import { useTheme } from '@mui/system';
+import { useOurClient } from '../../Hooks/adminDashBoard/setting/useOurClient';
+import { customErrorLog } from '../../utils/customErrorLog';
+import { Loader2, Trash } from 'lucide-react';
+import { deleteOurClient } from '../../api/admin/setting/deleteOurClient';
+import { useQueryClient } from '@tanstack/react-query';
 
 const OurClients = forwardRef((props, ref) => {
     const [clients, setClients] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const { t } = useTranslation();
     const theme = useTheme();
+    const queryClient = useQueryClient();
+
+
     const validateImage = (file) => {
         const maxSize = 5 * 1024 * 1024; // 5MB
         const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
@@ -71,13 +79,13 @@ const OurClients = forwardRef((props, ref) => {
                     formData.append('title[]', ''); // Handle empty title
                 }
 
-            const response = await fetch(`${BASE_URL}settings/our-clients`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem("adminToken")}`,
-                },
-                body: formData
-            });
+                const response = await fetch(`${BASE_URL}settings/our-clients`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem("adminToken")}`,
+                    },
+                    body: formData
+                });
 
                 const data = await response.json();
 
@@ -88,7 +96,7 @@ const OurClients = forwardRef((props, ref) => {
 
             toast.success(t("clientSaveSucc"));
             setClients([]); // Clear after successful save
-
+            queryClient.invalidateQueries(['website-our-client']);
         } catch (error) {
             toast.error(error.message);
             console.error('Error:', error);
@@ -101,86 +109,124 @@ const OurClients = forwardRef((props, ref) => {
         saveClients: handleSave,
     }));
 
+    const [deletingIds, setDeletingIds] = useState([]);
+    const handleDeleteOurClient = async (id) => {
+        setDeletingIds((prev) => [...prev, id]);
+        try {
+            const response = await deleteOurClient(id)
+            queryClient.invalidateQueries(['website-our-client']);
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setDeletingIds((prev) => prev.filter((itemId) => itemId !== id));
+        }
+    }
+
+    const { data } = useOurClient()
     return (
         <Paper sx={{ width: "100%", borderRadius: "20px", padding: "20px 30px" }}>
             <Typography variant='body2' sx={{ color: "#cacacaf1", fontSize: "11px", mb: 2 }}>
                 W:500px H:500px
             </Typography>
+            <div className='tw-flex tw-flex-wrap tw-gap-2'>
+                {
+                    data?.data?.map(item => {
+                        let img = null
 
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, padding: "20px 20px" }}>
-                {clients.map((client) => (
+                        try {
+                            img = JSON.parse(item.img)
+                        } catch {
+
+                        }
+
+                        return (
+                            <div className='tw-relative'>
+                                <img className='tw-w-[140px] tw-h-[140px] tw-p-[20px] tw-rounded-full' src={`${BASE_URL_IMG}${img?.[0]}` || ""} alt="" />
+                                <button className='tw-absolute  tw--translate-y-1/2 tw-left-1/2 tw--translate-x-1/2 hover:tw-cursor-pointer'
+                                    onClick={() => handleDeleteOurClient(item?.id)}
+                                    disabled={deletingIds.includes(item.id)}
+                                >
+                                    {deletingIds.includes(item.id) ? <Loader2 className="tw-animate-spin tw-text-gray-500" size={24} /> : <Trash size="24px" color='red' />}
+                                </button>
+                            </div>
+                        )
+                    })
+                }
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, padding: "20px 20px" }}>
+                    {clients.map((client) => (
+                        <Box
+                            key={client.id}
+                            sx={{
+                                position: 'relative',
+                                width: "120px",
+                                height: "120px",
+                            }}
+                        >
+                            <Box
+                                sx={{
+                                    width: "100%",
+                                    height: "100%",
+                                    borderRadius: "50%",
+                                    overflow: "hidden",
+                                    backgroundColor: "#eeeeeef1",
+                                }}
+                            >
+                                <img
+                                    src={URL.createObjectURL(client.img)} // Display image from File object
+                                    alt={client.title}
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        objectFit: 'cover'
+                                    }}
+                                />
+                            </Box>
+                            <IconButton
+                                size="small"
+                                sx={{
+                                    position: 'absolute',
+                                    top: -8,
+                                    right: -8,
+                                    backgroundColor: theme.palette.bodyColor.secandaryInput,
+                                    // '&:hover': { backgroundColor: '#E57C00' }
+                                }}
+                                onClick={() => handleRemoveClient(client.id)}
+                            >
+                                <DeleteIcon fontSize="small" />
+                            </IconButton>
+                        </Box>
+                    ))}
+
                     <Box
-                        key={client.id}
                         sx={{
-                            position: 'relative',
                             width: "120px",
                             height: "120px",
+                            borderRadius: "50%",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            backgroundColor: theme.palette.bodyColor.secandaryInput,
+                            cursor: isLoading ? "not-allowed" : "pointer",
+                            opacity: isLoading ? 0.7 : 1
                         }}
+                        onClick={() => !isLoading && document.getElementById('client-image-upload').click()}
                     >
-                        <Box
-                            sx={{
-                                width: "100%",
-                                height: "100%",
-                                borderRadius: "50%",
-                                overflow: "hidden",
-                                backgroundColor: "#eeeeeef1",
-                            }}
-                        >
-                            <img
-                                src={URL.createObjectURL(client.img)} // Display image from File object
-                                alt={client.title}
-                                style={{
-                                    width: '100%',
-                                    height: '100%',
-                                    objectFit: 'cover'
-                                }}
-                            />
-                        </Box>
-                        <IconButton
-                            size="small"
-                            sx={{
-                                position: 'absolute',
-                                top: -8,
-                                right: -8,
-                                backgroundColor: theme.palette.bodyColor.secandaryInput,
-                                // '&:hover': { backgroundColor: '#E57C00' }
-                            }}
-                            onClick={() => handleRemoveClient(client.id)}
-                        >
-                            <DeleteIcon fontSize="small" />
-                        </IconButton>
+                        {isLoading ? (
+                            <CircularProgress size={24} />
+                        ) : (
+                            <AddIcon sx={{ fontSize: "50px", fontWeight: "bolder", color: "gray", opacity: 0.5 }} />
+                        )}
                     </Box>
-                ))}
 
-                <Box
-                    sx={{
-                        width: "120px",
-                        height: "120px",
-                        borderRadius: "50%",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        backgroundColor:theme.palette.bodyColor.secandaryInput,
-                        cursor: isLoading ? "not-allowed" : "pointer",
-                        opacity: isLoading ? 0.7 : 1
-                    }}
-                    onClick={() => !isLoading && document.getElementById('client-image-upload').click()}
-                >
-                    {isLoading ? (
-                        <CircularProgress size={24} />
-                    ) : (
-                        <AddIcon sx={{ fontSize: "50px", fontWeight: "bolder", color: "gray", opacity: 0.5 }} />
-                    )}
+                    <input
+                        type="file"
+                        id="client-image-upload"
+                        accept="image/*"
+                        style={{ display: 'none' }}
+                        onChange={handleImageUpload}
+                    />
                 </Box>
-
-                <input
-                    type="file"
-                    id="client-image-upload"
-                    accept="image/*"
-                    style={{ display: 'none' }}
-                    onChange={handleImageUpload}
-                />
-            </Box>
+            </div>
         </Paper>
     );
 });

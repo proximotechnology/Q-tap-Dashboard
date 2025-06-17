@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { fetchTablesData, selectTablesData } from '../../../../store/client/clientAdmin';
+import { customErrorLog } from '../../../../utils/customErrorLog';
 
 export const Share = () => {
     const qrCodeRef = useRef();
@@ -14,9 +15,9 @@ export const Share = () => {
 
     const dispatch = useDispatch()
     const data = useSelector(selectTablesData)
-    const tableDataRes = data.tables
-    console.log(tableDataRes);
+    const tableDataRes = data?.tables
 
+    customErrorLog({fileName:"share ", error:tableDataRes})
 
     const handleCopyLink = () => {
         // Assuming tableDataRes is an array and you want the link from the first table
@@ -92,7 +93,7 @@ export const Share = () => {
                     >
                         <QRCodeSVG
                             ref={qrCodeRef}
-                            value={tableDataRes[0].qr}
+                            value={tableDataRes?.[0]?.qr} // fix for   tableDataRes be undefined when first render
                             size={156}
                             fgColor="#000000"
                             bgColor="#FFFFFF"

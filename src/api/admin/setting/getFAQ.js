@@ -1,11 +1,13 @@
 import axios from "axios"
 import { BASE_URL } from "../../utils/constants"
 
-export const getPlanDiscount = async () => {
+export const getFAQ= async () => {
+    const adminToken = localStorage.getItem('adminToken');
     try {
-        const response = await axios.get(`${BASE_URL}discount`, {
+        const response = await axios.get(`${BASE_URL}settings/faq`, {
             headers: {
                 'Content-Type': 'application/json',
+                Authorization: `Bearer ${adminToken}`
             }
         })
         return response
