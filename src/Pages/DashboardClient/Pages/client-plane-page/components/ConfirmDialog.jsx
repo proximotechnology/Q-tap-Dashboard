@@ -64,7 +64,6 @@ const ConfirmDialog = ({ isOpen, onClose }) => {
         }
         response = await confirmRenewPlanCash(data)
       }
-      // customErrorLog({ fileName: 'confirmDialog', error: response })
       toast.success("your request recived successfully now wait admin aprove your request")
       onClose()
       setPaymentMethod(null)

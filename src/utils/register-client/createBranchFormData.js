@@ -22,7 +22,6 @@ export const appendBrunchData = (prefix, data, formData) => {
         } else if (valStr.length !== 6) {
             errors["pin"] = "Pin must be 6 digits.";
         } else {
-            customErrorLog({error:"validation pass"})
             delete errors["pin"];
         }
 

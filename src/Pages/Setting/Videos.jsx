@@ -143,7 +143,6 @@ export const Videos = forwardRef((props, ref) => {
             </Paper>
             {
                 data?.data?.map(item => {
-                    customErrorLog({ error: item })
 
                     return (
                         <div className='tw-bg-white tw-mx-2 tw-my-4 tw-text-black tw-px-2 tw-py-4 tw-rounded-xl tw-flex tw-justify-between'>

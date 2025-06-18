@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getFAQ } from "../../../api/admin/setting/getFAQ";
 
-export const useFeature = () => {
+export const useFAQ = () => {
     return useQuery({
         queryKey: ['website-FAQ'],
         queryFn: getFAQ,

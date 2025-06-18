@@ -12,7 +12,13 @@ import React, { forwardRef, useImperativeHandle, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
-import {BASE_URL,BASE_URL_IMG} from  "../../utils/constants";
+import { BASE_URL, BASE_URL_IMG } from "../../utils/constants";
+import { useDeleteItemFromList } from "../../Hooks/ui/useDeleteItemFromList";
+import { customErrorLog } from "../../utils/customErrorLog";
+import { useFAQ } from "../../Hooks/adminDashBoard/setting/useFAQ";
+import { Loader2, Trash } from "lucide-react";
+import { deleteFAQ } from "../../api/admin/setting/deleteFAQ";
+import { useQueryClient } from "@tanstack/react-query";
 
 const initialData = [{ faq: "FAQ 1" }];
 
@@ -39,7 +45,7 @@ export const FAQ = forwardRef((props, ref) => {
     newFaqs[index][field] = value;
     setFaqs(newFaqs);
   };
-
+  const queryClient = useQueryClient();
   const handleSave = async () => {
     setIsLoading(true);
 
@@ -87,6 +93,7 @@ export const FAQ = forwardRef((props, ref) => {
       setFaqs([{ question: "", answer: "", questionAr: "", answerAr: "" }]);
       setData([{ faq: "FAQ 1" }]);
       toast.success(t("FAQAddSucc"));
+      queryClient.invalidateQueries(['website-FAQ']);
     } catch (error) {
       console.error("Error saving faqs:", error);
       toast.error(t("FAQAddErr"));
@@ -100,146 +107,204 @@ export const FAQ = forwardRef((props, ref) => {
   }));
 
   return (
-    <Paper sx={{ padding: "20px 50px", borderRadius: "20px" }}>
-      {isLoading ? (
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          minHeight="200px"
-          backgroundColor={"transparent"}
-        >
-          {" "}
-          <CircularProgress sx={{ color: "#ef7c00" }} />
-        </Box>
-      ) : (
-        <>
-          {data.map((item, index) => (
-            <Box key={index}>
-              <Typography
-                variant="subtitle1"
-                sx={{
-                  fontSize: "10px",
-                  color: theme.palette.text.gray,
-                  marginBottom: "5px",
-                }}
-              >
-                {item.faq}
-              </Typography>
-              <Grid item xs={12} md={12}>
-                <Grid container spacing={1}>
-                  <Grid item xs={12} md={12}>
-                    <TextField
-                      placeholder={t("questions")}
-                      fullWidth
-                      variant="outlined"
-                      size="small"
-                      value={faqs[index]?.question || ""}
-                      onChange={(e) =>
-                        handleInputChange(index, "question", e.target.value)
-                      }
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          fontSize: "10px",
-                          height: "25px",
-                          borderRadius: "10px",
-                          backgroundColor:
-                            theme.palette.bodyColor.secandaryInput,
-                        },
-                        "& .MuiOutlinedInput-notchedOutline": {
-                          border: "none",
-                        },
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={12}>
-                    <TextField
-                      placeholder={t("answer")}
-                      fullWidth
-                      variant="outlined"
-                      size="small"
-                      value={faqs[index]?.answer || ""}
-                      onChange={(e) =>
-                        handleInputChange(index, "answer", e.target.value)
-                      }
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          fontSize: "10px",
-                          height: "40px",
-                          borderRadius: "10px",
-                          backgroundColor:
-                            theme.palette.bodyColor.secandaryInput,
-                        },
-                        "& .MuiOutlinedInput-notchedOutline": {
-                          border: "none",
-                        },
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={12}>
-                    <TextField
-                      placeholder={t("questionsAr")}
-                      fullWidth
-                      variant="outlined"
-                      size="small"
-                      value={faqs[index]?.questionAr || ""}
-                      onChange={(e) =>
-                        handleInputChange(index, "questionAr", e.target.value)
-                      }
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          fontSize: "10px",
-                          height: "25px",
-                          borderRadius: "10px",
-                          backgroundColor:
-                            theme.palette.bodyColor.secandaryInput,
-                        },
-                        "& .MuiOutlinedInput-notchedOutline": {
-                          border: "none",
-                        },
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={12}>
-                    <TextField
-                      placeholder={t("answerAr")}
-                      fullWidth
-                      variant="outlined"
-                      size="small"
-                      value={faqs[index]?.answerAr || ""}
-                      onChange={(e) =>
-                        handleInputChange(index, "answerAr", e.target.value)
-                      }
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          fontSize: "10px",
-                          height: "40px",
-                          borderRadius: "10px",
-                          backgroundColor:
-                            theme.palette.bodyColor.secandaryInput,
-                        },
-                        "& .MuiOutlinedInput-notchedOutline": {
-                          border: "none",
-                        },
-                      }}
-                    />
+    <>
+      <Paper sx={{ padding: "20px 50px", borderRadius: "20px" }}>
+        {isLoading ? (
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="200px"
+            backgroundColor={"transparent"}
+          >
+            {" "}
+            <CircularProgress sx={{ color: "#ef7c00" }} />
+          </Box>
+        ) : (
+          <>
+            {data.map((item, index) => (
+              <Box key={index}>
+                <Typography
+                  variant="subtitle1"
+                  sx={{
+                    fontSize: "10px",
+                    color: theme.palette.text.gray,
+                    marginBottom: "5px",
+                  }}
+                >
+                  {item.faq}
+                </Typography>
+                <Grid item xs={12} md={12}>
+                  <Grid container spacing={1}>
+                    <Grid item xs={12} md={12}>
+                      <TextField
+                        placeholder={t("questions")}
+                        fullWidth
+                        variant="outlined"
+                        size="small"
+                        value={faqs[index]?.question || ""}
+                        onChange={(e) =>
+                          handleInputChange(index, "question", e.target.value)
+                        }
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            fontSize: "10px",
+                            height: "25px",
+                            borderRadius: "10px",
+                            backgroundColor:
+                              theme.palette.bodyColor.secandaryInput,
+                          },
+                          "& .MuiOutlinedInput-notchedOutline": {
+                            border: "none",
+                          },
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={12}>
+                      <TextField
+                        placeholder={t("answer")}
+                        fullWidth
+                        variant="outlined"
+                        size="small"
+                        value={faqs[index]?.answer || ""}
+                        onChange={(e) =>
+                          handleInputChange(index, "answer", e.target.value)
+                        }
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            fontSize: "10px",
+                            height: "40px",
+                            borderRadius: "10px",
+                            backgroundColor:
+                              theme.palette.bodyColor.secandaryInput,
+                          },
+                          "& .MuiOutlinedInput-notchedOutline": {
+                            border: "none",
+                          },
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={12}>
+                      <TextField
+                        placeholder={t("questionsAr")}
+                        fullWidth
+                        variant="outlined"
+                        size="small"
+                        value={faqs[index]?.questionAr || ""}
+                        onChange={(e) =>
+                          handleInputChange(index, "questionAr", e.target.value)
+                        }
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            fontSize: "10px",
+                            height: "25px",
+                            borderRadius: "10px",
+                            backgroundColor:
+                              theme.palette.bodyColor.secandaryInput,
+                          },
+                          "& .MuiOutlinedInput-notchedOutline": {
+                            border: "none",
+                          },
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={12}>
+                      <TextField
+                        placeholder={t("answerAr")}
+                        fullWidth
+                        variant="outlined"
+                        size="small"
+                        value={faqs[index]?.answerAr || ""}
+                        onChange={(e) =>
+                          handleInputChange(index, "answerAr", e.target.value)
+                        }
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            fontSize: "10px",
+                            height: "40px",
+                            borderRadius: "10px",
+                            backgroundColor:
+                              theme.palette.bodyColor.secandaryInput,
+                          },
+                          "& .MuiOutlinedInput-notchedOutline": {
+                            border: "none",
+                          },
+                        }}
+                      />
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-              <Divider sx={{ margin: "15px" }} />
+                <Divider sx={{ margin: "15px" }} />
+              </Box>
+            ))}
+            <Box display="flex" justifyContent="center" alignItems="center">
+              <IconButton
+                onClick={addFaq}
+                sx={{ textAlign: "center" }}
+                disabled={isLoading}
+              >
+                <AddIcon fontSize="large" sx={{ color: "grey" }} />
+              </IconButton>
             </Box>
-          ))}
-          <Box display="flex" justifyContent="center" alignItems="center">
-            <IconButton
-              onClick={addFaq}
-              sx={{ textAlign: "center" }}
-              disabled={isLoading}
-            >
-              <AddIcon fontSize="large" sx={{ color: "grey" }} />
-            </IconButton>
-          </Box>
-        </>
-      )}
-    </Paper>
+          </>
+        )}
+      </Paper>
+      <FAQList />
+    </>
   );
 });
+
+const FAQList = () => {
+  const { data } = useFAQ()
+  const { i18n } = useTranslation();
+  const theme = useTheme();
+  const { handleDeleteItem, isItemDeleting } = useDeleteItemFromList({ queryName: "website-FAQ", deleteApiFn: deleteFAQ })
+  // question
+  // answer white_lightBlack
+  return (
+    <div>
+      {
+        data?.data?.map(item => {
+          let question = null
+          let answer = null
+          try {
+            question = JSON.parse(item.question)
+            answer = JSON.parse(item.answer)
+            customErrorLog({ fileName: "hh", error: question })
+            customErrorLog({ fileName: "hh", error: answer })
+            if (i18n.language === 'ar') {
+              question = question[1]
+              answer = answer[1]
+            } else {
+              question = question[0]
+              answer = answer[0]
+            }
+          } catch (error) {
+            console.log(error)
+          }
+
+          return (
+            <div
+            style={{ backgroundColor: theme.palette.bodyColor.secandary , color:theme.palette.text.black_white }} 
+            className={`tw-text-black tw-my-4 tw-px-4 tw-py-2  tw-rounded-lg tw-flex tw-justify-between`} >
+              <div>
+                <p>{question}</p>
+                <p>{answer}</p>
+              </div>
+              <button
+                onClick={() => handleDeleteItem(item.id)}
+                disabled={isItemDeleting(item.id)}
+              >
+                {
+                  isItemDeleting(item.id)
+                    ? <Loader2 className="tw-animate-spin tw-text-gray-500" size={24} />
+                    : <Trash size={24} color="red" />
+                }
+              </button>
+            </div>
+          )
+        })
+      }
+    </div>
+  )
+}

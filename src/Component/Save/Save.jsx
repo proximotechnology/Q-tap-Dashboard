@@ -409,7 +409,6 @@ export const Save = () => {
             {Object.keys(branchErrors).length !== 0 ?
               <span style={{ color: "red" }}> {
                 Object.entries(branchErrors).map(([branch, singlebranchErrors]) => {
-                  customErrorLog({fileName:branch,error:singlebranchErrors})
                   return (<>
                     {Object.keys(singlebranchErrors).length !== 0 ? <>error:{branch} {" "}</> : ""}
                   </>)

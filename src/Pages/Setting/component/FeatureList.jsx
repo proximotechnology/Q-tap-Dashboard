@@ -6,18 +6,19 @@ import { BASE_URL_IMG } from '../../../utils/constants';
 import { Trash } from 'lucide-react';
 import { deleteFeature } from '../../../api/admin/setting/deleteFeature';
 import { useQueryClient } from '@tanstack/react-query';
+import { useTheme } from '@mui/system';
 
 
 const FeatureList = () => {
   const { data } = useFeature();
   const [loading, setLoading] = useState(false)
   const queryClient = useQueryClient();
+  const theme = useTheme();
 
   const handleDeleteFeature = async (id) => {
     try {
       setLoading(true)
       const response = await deleteFeature(id)
-      customErrorLog({ error: response })
       queryClient.invalidateQueries(['website-feature']);
     } catch (error) {
       console.log("error delete feature", error)
@@ -48,7 +49,9 @@ const FeatureList = () => {
             console.error("Failed to parse item", error);
           }
           return (
-            <div className="tw-bg-white tw-rounded-xl tw-p-4 tw-mt-4 tw-shadow-sm tw-flex tw-flex-col tw-gap-4">
+            <div
+              style={{ backgroundColor: theme.palette.bodyColor.secandary, color: theme.palette.text.black_white }}
+              className="tw-bg-white tw-rounded-xl tw-p-4 tw-mt-4 tw-shadow-sm tw-flex tw-flex-col tw-gap-4">
               <div className="tw-flex tw-justify-between tw-gap-4">
                 {/* Left: Image + Info */}
                 <div className="tw-flex tw-gap-4">
@@ -58,13 +61,13 @@ const FeatureList = () => {
                     className="tw-w-24 tw-h-24 tw-object-cover tw-rounded-lg tw-border"
                   />
                   <div className="tw-flex tw-flex-col tw-gap-1">
-                    <p className="tw-font-semibold tw-text-lg tw-text-black">{title?.[0]}</p>
-                    <p className="tw-text-sm tw-text-gray-700">
-                      Description: <span className="tw-text-gray-600">{descriptions?.[0]}</span>
+                    <p className="tw-font-semibold tw-text-lg ">{title?.[0]}</p>
+                    <p className="tw-text-sm ">
+                      Description: <span className="">{descriptions?.[0]}</span>
                     </p>
                     <div>
-                      <p className="tw-text-sm tw-font-medium tw-text-black">Features:</p>
-                      <ul className="tw-list-disc tw-pl-4 tw-text-sm tw-text-gray-600">
+                      <p className="tw-text-sm tw-font-medium ">Features:</p>
+                      <ul className="tw-list-disc tw-pl-4 tw-text-sm">
                         {features.map((feature, index) => (
                           <li key={index}>{feature}</li>
                         ))}
