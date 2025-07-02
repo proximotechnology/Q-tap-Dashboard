@@ -1,31 +1,10 @@
-import { customErrorLog } from "../customErrorLog";
+
 
 export const appendBrunchData = (prefix, data, formData) => {
-    const errors = {};
-
-    const safe = (key, value, required = true) => {
-        if (value !== undefined && value !== null && value !== '') {
-            formData.append(key, value);
-        } else if (required) {
-            errors.push(`${key} is required`);
-        }
-    };
 
     try {
-        const value = data.pin
-        const valStr = String(value);
 
-        if (valStr === '') {
-            errors["pin"] = "Pin is required. Pin must be a number. Pin must be 6 digits.";
-        } else if (!/^\d+$/.test(valStr)) {
-            errors["pin"] = "Pin must be a number. Pin must be 6 digits.";
-        } else if (valStr.length !== 6) {
-            errors["pin"] = "Pin must be 6 digits.";
-        } else {
-            delete errors["pin"];
-        }
-
-        formData.append(`${prefix}[pin]`, value)
+        formData.append(`${prefix}[pin]`, data.pin)
 
         // Contact info
         formData.append(`${prefix}[contact_info][business_phone][]`, data.contact_info.business_phone[0]);
@@ -72,7 +51,6 @@ export const appendBrunchData = (prefix, data, formData) => {
     } catch (error) {
         throw new Error(`${prefix} missing required fields: ${error.message}`);
     }
-    return errors
 };
 
 

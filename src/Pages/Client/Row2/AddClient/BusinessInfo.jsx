@@ -88,7 +88,6 @@ export const BusinessInfo = ({ branchErrors }) => {
     latitude = '',
     longitude = ''
   } = branches[branchIndex] || businessData;
-  console.log("branches[branchIndex]", branches[branchIndex]) // debug log
   // Local state for working hours
   const [selectedDays, setSelectedDays] = useState([]);
   const [currentDay, setCurrentDay] = useState(fullDaysOfWeek[0]); // Default to Saturday

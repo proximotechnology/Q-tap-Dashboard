@@ -21,22 +21,20 @@ import {
   CheckOutlined,
   HelpOutlineOutlined,
   KeyboardArrowDown,
-  LanguageOutlined,
   PersonOutlineOutlined,
 } from '@mui/icons-material';
 import { PersonalInfo } from '../../Pages/Client/Row2/AddClient/PersonalInfo';
 import { BusinessInfo } from '../../Pages/Client/Row2/AddClient/BusinessInfo';
 import { useTranslation } from 'react-i18next';
 import Language from '../dashboard/TopBar/Language';
-import { updateBusinessData, addBranch, selectBranch, clearBusinessData, setBranches } from "../../store/register/businessSlice";
 import { updatePersonalData } from "../../store/register/personalSlice";
 import { useDispatch, useSelector } from 'react-redux';
 import { BASE_URL } from '../../utils/constants';
-import axios from 'axios';
 
 import { appendBrunchData, appendUserData } from '../../utils/register-client/createBranchFormData';
 import { registerUser } from '../../api/Client/registerUser';
-import { customErrorLog } from '../../utils/customErrorLog';
+import { getValidationError } from '../../utils/register-validation/registerValidation';
+import { printFormData } from '../../utils/utils';
 export const Save = () => {
   const [branchErrors, setBranchErrors] = useState({})
   const dispatch = useDispatch();
@@ -49,93 +47,10 @@ export const Save = () => {
   const theme = useTheme();
   const [isLoading, setIsLoading] = useState(false);
 
-  // // Business Info State
-  // const [businessName, setBusinessName] = useState('');
-  // const [businessPhone, setBusinessPhone] = useState('');
-  // const [businessEmail, setBusinessEmail] = useState('');
-  // const [businessCountry, setBusinessCountry] = useState('');
-  // const [businessCity, setBusinessCity] = useState('');
-  // const [currency, setCurrency] = useState('');
-  // const [businessType, setBusinessType] = useState('');
-  // const [menuLanguage, setMenuLanguage] = useState('');
-  // const [tableCount, setTableCount] = useState('');
-  // const [mode, setMode] = useState('white');
-  // const [design, setDesign] = useState('grid');
-  // const [workschedules, setWorkSchedules] = useState({
-  //   Saturday: ['9:00 am', '7:00 pm'],
-  //   Sunday: ['9:00 am', '7:00 pm'],
-  // });
-  // const [servingWays, setServingWays] = useState([]);
-  // const [paymentMethods, setPaymentMethods] = useState([]);
-  // const [paymentTime, setPaymentTime] = useState('after');
-  // const [callWaiter, setCallWaiter] = useState('inactive');
-
-  // // Personal Info State
-  // const [fullName, setFullName] = useState('');
-  // const [phone, setPhone] = useState('');
-  // const [email, setEmail] = useState('');
-  // const [country, setCountry] = useState('');
-  // const [year, setYear] = useState('');
-  // const [month, setMonth] = useState('');
-  // const [day, setDay] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [img, setImg] = useState('');
-  // const [paymentMethod, setPaymentMethod] = useState('cash');
-  // const [pricingId, setPricingId] = useState(1);
-  // const [pricingWay, setPricingWay] = useState('monthly');
-  // const [discountId, setDiscountId] = useState(null);
-
-  // Language and User Popover State
-  // const [anchorElLanguage, setAnchorElLanguage] = useState(null);
-  // const [selectedLanguage, setSelectedLanguage] = useState('en');
   const [anchorElUser, setAnchorElUser] = useState(null);
 
   // const openLanguage = Boolean(anchorElLanguage);
   const openUserPopover = Boolean(anchorElUser);
-
-  // Load data from contexts when component mounts
-  // useEffect(() => {
-  //   // Load business data
-  //   const data = selectedBranch !== null && branches[selectedBranch] ? branches[selectedBranch] : businessData;
-  //   if (data) {
-  //     setBusinessName(data.businessName || '');
-  //     setBusinessPhone(data.businessPhone || '');
-  //     setBusinessEmail(data.businessEmail || '');
-  //     setBusinessCountry(data.country || '');
-  //     setBusinessCity(data.city || '');
-  //     setCurrency(data.currency || '');
-  //     setBusinessType(data.format || '');
-  //     setMenuLanguage(data.menuLanguage || '');
-  //     setTableCount(data.tableCount || '');
-  //     setMode(data.mode || 'white');
-  //     setDesign(data.design || 'grid');
-  //     setWorkSchedules(data.workschedules || {
-  //       Saturday: ['9:00 am', '7:00 pm'],
-  //       Sunday: ['9:00 am', '7:00 pm'],
-  //     });
-  //     setServingWays(data.servingWays || []);
-  //     setPaymentMethods(data.paymentMethods || []);
-  //     setPaymentTime(data.paymentTime || 'after');
-  //     setCallWaiter(data.callWaiter || 'inactive');
-  //   }
-
-  //   // Load personal data
-  //   if (personalData) {
-  //     setFullName(personalData.fullName || '');
-  //     setPhone(personalData.phone || '');
-  //     setEmail(personalData.email || '');
-  //     setCountry(personalData.country || '');
-  //     setYear(personalData.year || '');
-  //     setMonth(personalData.month || '');
-  //     setDay(personalData.day || '');
-  //     setPassword(personalData.password || '');
-  //     setImg(personalData.img || '');
-  //     setPaymentMethod(personalData.payment_method || 'cash');
-  //     setPricingId(personalData.pricing_id || 1);
-  //     setPricingWay(personalData.pricing_way || 'monthly');
-  //     setDiscountId(personalData.discount_id || null);
-  //   }
-  // }, [businessData, branches, selectedBranch, personalData]);
 
   // Handle Personal Info Changes
   const handlePersonalChange = (field, value) => {
@@ -143,9 +58,23 @@ export const Save = () => {
     dispatch(updatePersonalData(updatedData));
   };
 
-  // Handle Save Button Click
+  /*  \ 
+       \
+        \ 
+         | => handle save button click
+        /
+       /
+      /
+  \ */
   const handleSave = async () => {
+    const errors = getValidationError(branches)
 
+    if (errors) {
+      setBranchErrors(errors)
+      return;
+    } else {
+      setBranchErrors(null)
+    }
     setIsLoading(true);
     const formData = new FormData();
 
@@ -200,7 +129,6 @@ export const Save = () => {
     }));
 
     // Append branch data
-    let branchErrors = {}
 
     try {
       apiBranches.forEach((branch, index) => {
@@ -208,8 +136,7 @@ export const Save = () => {
 
           throw new Error(`${branch.brunch} no latitude or longitude`);
         }
-        const errorsFromBranch = appendBrunchData(branch.brunch, branch, formData);
-        branchErrors[`branch${index + 1}`] = errorsFromBranch
+        appendBrunchData(branch.brunch, branch, formData);
 
       });
     } catch (error) {
@@ -217,11 +144,7 @@ export const Save = () => {
       setIsLoading(false);
       return;
     }
-    if (Object.keys(branchErrors).length !== 0) {
-      setBranchErrors(branchErrors)
-      setIsLoading(false);
-      return;
-    }
+
     // Determine if this is an update or create operation
     const isUpdate = personalData.id; // Assuming personalData.id exists for existing users
     const url = isUpdate ? `${BASE_URL}qtap_clients/${personalData.id}` : `${BASE_URL}qtap_clients`;
@@ -229,6 +152,7 @@ export const Save = () => {
 
     // Send data to API
     try {
+      printFormData(formData)
       const response = await registerUser({ method, url, data: formData })
 
       if (response.status === 200 || response.status === 201) {
@@ -406,14 +330,15 @@ export const Save = () => {
             <Divider orientation="vertical" sx={{ backgroundColor: '#f4f6fc', width: '1px', marginTop: '30px', height: '90%' }} />
           </Box>
           <Grid item xs={12} md={6} sx={{ marginTop: "10px", paddingInlineStart: "20px", paddingInlineEnd: { xs: '20px', md: '0px' } }}>
-            {Object.keys(branchErrors).length !== 0 ?
-              <span style={{ color: "red" }}> {
-                Object.entries(branchErrors).map(([branch, singlebranchErrors]) => {
-                  return (<>
-                    {Object.keys(singlebranchErrors).length !== 0 ? <>error:{branch} {" "}</> : ""}
-                  </>)
-                })
-              } </span> : ""}
+
+
+            {
+              branchErrors?.branchError && branchErrors?.branchError?.map(item =>
+                <span style={{ color: "red" }}>
+                  {item} <br />
+                </span>
+              )
+            }
             {/* {Object.keys(branchErrors).length !== 0 ? <span style={{ color: "red" }}>error in : {
               Object.entries(branchErrors).map(([branch, branchErrors]) => (
                 Object.entries(branchErrors).map(([field, message]) => (
