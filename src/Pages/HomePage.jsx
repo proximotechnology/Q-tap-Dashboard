@@ -5,9 +5,13 @@ import { Box, Grid } from "@mui/material";
 
 import Language from "../Component/dashboard/TopBar/Language";
 import { getUserDataFromCookies } from "../api/Client/getUserDataFromCookies";
+import { useAuthStore } from "../store/zustand-store/authStore";
+import { useNavigate } from "react-router";
 
 export const HomePage = () => {
   const [selectedTab, setSelectedTab] = useState("login");
+  const navigate = useNavigate()
+  const { isAuthenticated } = useAuthStore()
 
   const checkLogin = async () => {
     try {
@@ -20,9 +24,13 @@ export const HomePage = () => {
   }
 
   useEffect(() => {
-    console.log("call")
     checkLogin()
+    if (isAuthenticated) { // navigate to client if auth
+      navigate("/dashboard-client")
+    }
   }, [])
+
+
   return (
     <Box
       sx={{

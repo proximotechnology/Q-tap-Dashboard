@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectAllBranch, selectBranch, updateSelectedBranch } from "../../../../store/client/clientAdmin";
 import { WEBSITE_SERVER_URL } from "../../../../utils/constants";
 import { logout } from "../../../../api/Client/logout";
+import { useAuthStore } from "../../../../store/zustand-store/authStore";
 
 const styles = (theme) => ({
     button: {
@@ -65,6 +66,8 @@ export default function TopBar() {
     // Load branches and selected branch from localStorage on component mount
     const selectedBranch = localStorage.getItem("selectedBranch")
 
+    const {logout} = useAuthStore();
+     
     useEffect(() => {
         const storedBranches = localStorage.getItem('branches');
         const storedSelectedBranch = localStorage.getItem('selectedBranch');
@@ -330,6 +333,7 @@ export default function TopBar() {
                             <ListItem sx={{ cursor: "pointer" }} onClick={() => {
                                 logout() // call logout api to delete the cookies
                                 localStorage.removeItem("Token");
+                                logout()
                                 navigate('/');
                             }}>
                                 <ListItemIcon sx={{ marginLeft: lang == 'ar' ? "-30px" : '0px' }}>

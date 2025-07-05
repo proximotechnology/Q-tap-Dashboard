@@ -9,6 +9,7 @@ import Language from "../dashboard/TopBar/Language";
 import { handleClientLoginRedux, selectIsLoading } from "../../store/client/userSlic";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { useAuthStore } from "../../store/zustand-store/authStore";
 
 const ImageContainer = styled(Box)({
     backgroundImage: 'url(/images/logoClient.jpg)',
@@ -49,12 +50,15 @@ export const LoginAdmin = () => {
     const [pin, setPin] = useState()
     const isLoading = useSelector(selectIsLoading)
 
+    const { login } = useAuthStore()
+
     const dispatch = useDispatch()
     const handleLogin = async () => {
         const data = { pin, role: 'admin', brunch_id: localStorage.getItem('selectedBranch') }
         dispatch(handleClientLoginRedux(data))
             .unwrap()
-            .then(() => {
+            .then((res) => {
+                login(res.token, res.user, res.selected_brunch_id)
                 if (sessionStorage.getItem("redirectBack") !== null && sessionStorage.getItem("redirectBack") !== "null" && sessionStorage.getItem("redirectBack") !== "") {
                     window.location.href =
                         `${sessionStorage.getItem("redirectBack")}` +
