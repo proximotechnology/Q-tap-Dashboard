@@ -145,7 +145,7 @@ const SignUp = () => {
                     id="outlined-phone"
                     endAdornment={
                         <InputAdornment position="end">
-                            <Typography sx={{ color: theme.palette.text.fixedGray, fontSize: "10px", color: theme.palette.text.fixedBlack }} >{t("verify")}</Typography>
+                            {/* <Typography sx={{ color: theme.palette.text.fixedGray, fontSize: "10px", color: theme.palette.text.fixedBlack }} >{t("verify")}</Typography> */}
                         </InputAdornment>
                     }
                     startAdornment={

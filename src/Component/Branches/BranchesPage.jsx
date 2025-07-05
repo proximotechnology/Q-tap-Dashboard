@@ -6,12 +6,13 @@ import { Box, Grid, useTheme } from '@mui/material';
 import Language from '../dashboard/TopBar/Language';
 
 export const BranchesPage = () => {
-
+    const theme = useTheme()
+    let isDarkMode = theme.palette.mode === "dark"
     return (
         <Grid
             container
             sx={{
-                backgroundImage: 'url(/images/Rectangle.png)',
+                backgroundColor: theme.palette.bodyColor.white_333, backgroundImage: isDarkMode ? 'none' : 'url(/images/Rectangle.png)',
                 backgroundSize: '100% 100%',
                 width: '100%',
                 height: '100vh',

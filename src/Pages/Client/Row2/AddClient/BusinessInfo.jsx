@@ -42,6 +42,9 @@ import MapWithPin, { ErrorBoundary } from "../../../../utils/MapWithPin";
 import { useSelector, useDispatch } from "react-redux";
 import { updateBusinessData, addBranch, selectBranch, clearBusinessData, setBranches } from "../../../../store/register/businessSlice";
 import { customErrorLog } from "../../../../utils/customErrorLog";
+import { Country, Governorates } from "../../../../utils/city";
+import { useColorMode } from "../../../../context/ThemeModeProvider";
+import useRegisterChangeThemeMode from "../../../../Hooks/useRegisterChangeThemeMode";
 
 const daysOfWeek = ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"];
 const fullDaysOfWeek = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
@@ -216,13 +219,15 @@ export const BusinessInfo = ({ branchErrors }) => {
   const handlePrint = () => {
     window.print();
   };
+  
+  useRegisterChangeThemeMode(mode)
 
   return (
     <Grid container sx={{ marginTop: "0px", }}>
       <Grid item xs={12} >
         <Box display={"flex"} justifyContent={"space-between"}>
           <Box>
-            <Typography variant="body2" sx={{ fontSize: "15px" }} color="#3b3a3a" gutterBottom>
+            <Typography variant="body2" sx={{ fontSize: "15px" }} color={theme.palette.text.black_white} gutterBottom>
               {t("businessInfo")}
             </Typography>
             <Divider sx={{ width: "100%", borderBottom: "4px solid #ef7d00", marginBottom: "18px" }} />
@@ -325,9 +330,11 @@ export const BusinessInfo = ({ branchErrors }) => {
               startAdornment={<InputAdornment position="start"><PinDropOutlinedIcon sx={{ fontSize: "20px" }} /></InputAdornment>}
             >
               <MenuItem value="" disabled>{t("country")}</MenuItem>
-              <MenuItem value="US">United States</MenuItem>
+              <MenuItem value="egypt">egypt</MenuItem>
+
+              {/* <MenuItem value="US">United States</MenuItem>
               <MenuItem value="CA">Canada</MenuItem>
-              <MenuItem value="UK">United Kingdom</MenuItem>
+              <MenuItem value="UK">United Kingdom</MenuItem> */}
             </Select>
           </FormControl>
 
@@ -341,9 +348,12 @@ export const BusinessInfo = ({ branchErrors }) => {
               startAdornment={<InputAdornment position="start"><PinDropOutlinedIcon sx={{ fontSize: "20px" }} /></InputAdornment>}
             >
               <MenuItem value="" disabled>{t("city")}</MenuItem>
-              <MenuItem value="NY">New York</MenuItem>
+              {Governorates[Country.EGYPT].map((city) => (
+                <MenuItem value={city} sx={{ fontSize: "12px", color: "gray" }}>{city}</MenuItem>
+              ))}
+              {/* <MenuItem value="NY">New York</MenuItem>
               <MenuItem value="LA">Los Angeles</MenuItem>
-              <MenuItem value="CHI">Chicago</MenuItem>
+              <MenuItem value="CHI">Chicago</MenuItem> */}
             </Select>
           </FormControl>
         </Box>

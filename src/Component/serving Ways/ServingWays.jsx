@@ -107,7 +107,7 @@ export const ServingWays = () => {
 
     return (
         <Box marginTop={"50px"} padding={"10px 40px"} flexGrow={1}>
-            <Typography variant="body1" sx={{ fontSize: "18px", color: theme.palette.secondaryColor.main }}>
+            <Typography variant="body1" sx={{ fontSize: "18px", color: theme.palette.text.black_white }}>
                 {t("busnessInfo")}
             </Typography>
             <Divider />

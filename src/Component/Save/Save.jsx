@@ -191,7 +191,7 @@ export const Save = () => {
   // };
 
   return (
-    <Box sx={{ backgroundColor: 'white', height: '100%' }}>
+    <Box sx={{ backgroundColor: theme.palette.bodyColor.white_333, minHeight: '100vh',paddingBottom:"1rem" }}>
       {/* Header */}
       <Box
         sx={{

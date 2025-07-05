@@ -22,6 +22,10 @@ export const ThemeModeProvider = ({ children }) => {
   const toggleColorMode = () => {
     setMode((prev) => (prev === "light" ? "dark" : "light"));
   };
+
+  const setTheme = (theme) => {
+    setMode(theme)
+  }
   const { i18n } = useTranslation();
   const currentLanguage = i18n.language
   const isArabic = currentLanguage === 'ar';
@@ -38,7 +42,7 @@ export const ThemeModeProvider = ({ children }) => {
   ), [mode, isArabic]);
 
   return (
-    <ColorModeContext.Provider value={{ mode, toggleColorMode }}>
+    <ColorModeContext.Provider value={{ mode, toggleColorMode, setTheme }}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         {children}

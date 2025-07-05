@@ -21,8 +21,8 @@ const branchSchema = z.object({
     currency: z.string().min(1, "Currency is required"),
     design: z.enum(["grid", "list", "classic"]), // add allowed designs
     format: z.string(), // optionally restrict values
-    latitude: z.string(),
-    longitude: z.string(),
+    latitude: z.string({ required_error: "Latitude is required" }),
+    longitude: z.string({ required_error: "longtude is required" }),
     mode: z.enum(["white", "dark"]),
     paymentMethods: z.array(z.string()).min(1, "At least one payment method is required"),
     paymentTime: z.enum(["before", "after"]),
@@ -69,7 +69,6 @@ export const getValidationError = (branches) => {
 
 
             // Handle branches (array)
-            console.log(section)
             if (key === "branches") {
 
 

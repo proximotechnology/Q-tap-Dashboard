@@ -21,6 +21,7 @@ import { Country, Governorates } from '../../utils/city';
 import { useSelector, useDispatch } from "react-redux";
 import { updateBusinessData, } from "../../store/register/businessSlice";
 import MapWithPin from '../../utils/MapWithPin';
+import useRegisterChangeThemeMode from '../../Hooks/useRegisterChangeThemeMode';
 
 // تحديد الأيام بأحرف مختصرة للعرض
 const daysOfWeek = ['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr'];
@@ -195,10 +196,10 @@ export const BusinessInfo = () => {
         // addBranch();
         navigate('/serving-ways');
     };
-
+    useRegisterChangeThemeMode(mode)
     return (
         <Box marginTop={"50px"} padding={"20px 0 0 40px "}>
-            <Typography variant="body1" sx={{ fontSize: "18px", color: theme.palette.secondaryColor.main }}>
+            <Typography variant="body1" sx={{ fontSize: "18px", color: theme.palette.text.black_white }}>
                 {t("busnessInfo")}
             </Typography>
             <Divider />
@@ -453,9 +454,9 @@ export const BusinessInfo = () => {
                                                     {t("country")}
                                                 </MenuItem>
                                                 <MenuItem value="egypt" sx={{ fontSize: "12px", color: "gray" }}>Egypt</MenuItem>
-                                                <MenuItem value="US" sx={{ fontSize: "12px", color: "gray" }}>United States</MenuItem>
+                                                {/* <MenuItem value="US" sx={{ fontSize: "12px", color: "gray" }}>United States</MenuItem>
                                                 <MenuItem value="CA" sx={{ fontSize: "12px", color: "gray" }}>Canada</MenuItem>
-                                                <MenuItem value="UK" sx={{ fontSize: "12px", color: "gray" }}>United Kingdom</MenuItem>
+                                                <MenuItem value="UK" sx={{ fontSize: "12px", color: "gray" }}>United Kingdom</MenuItem> */}
                                             </Select>
                                         </FormControl>
                                     </Grid>
@@ -479,9 +480,9 @@ export const BusinessInfo = () => {
                                                 {Governorates[Country.EGYPT].map((city) => (
                                                     <MenuItem value={city} sx={{ fontSize: "12px", color: "gray" }}>{city}</MenuItem>
                                                 ))}
-                                                <MenuItem value="NY" sx={{ fontSize: "12px", color: "gray" }}>New York</MenuItem>
+                                                {/* <MenuItem value="NY" sx={{ fontSize: "12px", color: "gray" }}>New York</MenuItem>
                                                 <MenuItem value="LA" sx={{ fontSize: "12px", color: "gray" }}>Los Angeles</MenuItem>
-                                                <MenuItem value="CHI" sx={{ fontSize: "12px", color: "gray" }}>Chicago</MenuItem>
+                                                <MenuItem value="CHI" sx={{ fontSize: "12px", color: "gray" }}>Chicago</MenuItem> */}
                                             </Select>
                                         </FormControl>
                                     </Grid>

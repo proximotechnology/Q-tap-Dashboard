@@ -2,7 +2,7 @@
 import { Divider, FormControl, Grid, IconButton, InputAdornment, MenuItem, OutlinedInput, Select, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { Box } from '@mui/system';
+import { Box, useTheme } from '@mui/system';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -23,6 +23,8 @@ export const PersonalInfo = () => {
     const { t } = useTranslation()
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const theme = useTheme();
+
     const personalData = useSelector((state) => state.personalStore.personalData);
 
     const [fullName, setFullName] = useState(personalData.fullName || '');
@@ -107,7 +109,7 @@ export const PersonalInfo = () => {
                 </Box>
             </Grid>
             <Grid item xs={12} md={6}>
-                <Typography variant="body2" sx={{ fontSize: "15px" }} color="#3b3a3a" gutterBottom>
+                <Typography variant="body2" sx={{ fontSize: "15px" }} color={theme.palette.text.black_white} gutterBottom>
                     {t("personalInfo")}
                 </Typography>
                 <Divider sx={{ width: "35%", borderBottom: "4px solid #ef7d00", marginBottom: "18px" }} />

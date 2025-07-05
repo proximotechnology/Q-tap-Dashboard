@@ -1,16 +1,17 @@
 import React from 'react'
 import { SetupPage } from './SetupPage'
 import { BusinessInfo } from './BusinessInfo'
-import { Box, Grid, } from "@mui/material";
+import { Box, Grid, useTheme, } from "@mui/material";
 
 import Language from '../dashboard/TopBar/Language';
 
 
 export const BusinessInfoPage = () => {
-
+  const theme = useTheme()
+  let isDarkMode = theme.palette.mode === "dark"
   return (
     <Grid container
-      sx={{ backgroundImage: "url(/images/Rectangle.png)", backgroundSize: "100% 100%", width: "100%", height: "100vh" }}>
+      sx={{ backgroundSize: "100% 100%", width: "100%", height: "100vh", backgroundColor: theme.palette.bodyColor.white_333, backgroundImage: isDarkMode ? 'none' : 'url(/images/Rectangle.png)', }}>
       <SetupPage />
 
       <Grid item xs={12} md={8}  >
