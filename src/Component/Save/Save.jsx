@@ -67,6 +67,7 @@ export const Save = () => {
       /
   \ */
   const handleSave = async () => {
+    console.log(branches)
     const errors = getValidationError(branches)
 
     if (errors) {
@@ -116,8 +117,8 @@ export const Save = () => {
       business_name: branch.businessName?.trim() || '',
       business_country: branch.country || '',
       business_city: branch.city || '',
-      latitude: branch.latitude || '846.668848',
-      longitude: branch.longitude || '648.4684684',
+      latitude: branch.latitude || '',
+      longitude: branch.longitude || '',
       business_format: (branch.format || 'uk').toLowerCase(),
       menu_design: branch.design || 'grid',
       default_mode: branch.mode === 'white' || branch.mode === 'light' ? 'white' : 'dark',

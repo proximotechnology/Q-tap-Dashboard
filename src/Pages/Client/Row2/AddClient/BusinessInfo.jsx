@@ -99,10 +99,12 @@ export const BusinessInfo = ({ branchErrors }) => {
   const [isMapOpen, setIsMapOpen] = useState(false);
 
   const updateBranchPosition = (pos) => {
+    console.log("selected branch", selectedBranch, "data", pos)
+    console.log("all  branch data ", branches,)
     dispatch(updateBusinessData({ longitude: pos.lng }))
     dispatch(updateBusinessData({ latitude: pos.lat }))
   }
-
+  console.log(selectedBranch, latitude, longitude)
   // Initialize local state based on workschedules
   useEffect(() => {
     // Update selectedDays based on workschedules keys
@@ -219,9 +221,13 @@ export const BusinessInfo = ({ branchErrors }) => {
   const handlePrint = () => {
     window.print();
   };
-  
+
   useRegisterChangeThemeMode(mode)
 
+  const selectedBranchLocation = {}
+
+  if (latitude !== "") selectedBranchLocation.latitude = latitude
+  if (longitude !== "") selectedBranchLocation.longitude = longitude
   return (
     <Grid container sx={{ marginTop: "0px", }}>
       <Grid item xs={12} >
@@ -376,7 +382,7 @@ export const BusinessInfo = ({ branchErrors }) => {
             {t("pinYourLocation")}
           </Button> */}
           <ErrorBoundary>
-            <MapWithPin setPos={updateBranchPosition} isMapOpen={isMapOpen} setIsMapOpen={setIsMapOpen} currentPos={{ latitude, longitude }} />
+            <MapWithPin setPos={updateBranchPosition} isMapOpen={isMapOpen} setIsMapOpen={setIsMapOpen} currentPos={selectedBranchLocation} />
           </ErrorBoundary>
         </Box>
 

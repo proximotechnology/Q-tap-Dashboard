@@ -14,22 +14,42 @@ const workSchedulesSchema = z.record(
 const branchSchema = z.object({
     businessEmail: z.string().email("Invalid email"),
     businessName: z.string().min(1, "Business name is required"),
-    businessPhone: z.string().min(1, "Phone is required"),
+    businessPhone: z
+        .string()
+        .min(1, "Phone is required")
+        .regex(/^01[0125][0-9]{8}$/, "Phone number must be a valid Egyptian number"),
     callWaiter: z.enum(["active", "inactive"]),
     city: z.string().min(1, "City is required"),
     country: z.string().min(1, "Country is required"),
     currency: z.string().min(1, "Currency is required"),
     design: z.enum(["grid", "list", "classic"]), // add allowed designs
-    format: z.string(), // optionally restrict values
-    latitude: z.string({ required_error: "Latitude is required" }),
-    longitude: z.string({ required_error: "longtude is required" }),
+    format: z.string({ required_error: "format is required" }), // optionally restrict values
+    latitude: z.preprocess(
+        (val) => {
+            if (val === null || val === undefined) return '';
+            return String(val); // force convert number to string
+        },
+        z.string().min(1, 'Latitude is required')
+    ),
+    longitude: z.preprocess(
+        (val) => {
+            if (val === null || val === undefined) return '';
+            return String(val); // force convert number to string
+        },
+        z.string().min(1, "Longitude is required")
+    ),
     mode: z.enum(["white", "dark"]),
     paymentMethods: z.array(z.string()).min(1, "At least one payment method is required"),
     paymentTime: z.enum(["before", "after"]),
-    pin: z.string().regex(/^\d*$/, "Must be a number").length(6, "pin required and must be 6 digits"),
+    pin: z.string({
+        required_error: "Pin is required and must be 6 digits"
+    })
+        .min(6, "Pin is required and must be 6 digits")
+        .max(6, "Pin must be exactly 6 digits")
+        .regex(/^\d{6}$/, "Pin must contain only 6 digits"),
     servingWays: z.array(z.string()).min(1, "At least one serving Ways is required"),
     tableCount: z.coerce.number().optional(),
-    website: z.string(), // OR use z.string().url() for stricter validation
+    // website: z.string(), // OR use z.string().url() for stricter validation
     workschedules: workSchedulesSchema,
 });
 
@@ -76,7 +96,7 @@ export const getValidationError = (branches) => {
                     if (fieldKey !== "_errors") {
                         Object.entries(value).forEach(([key, value]) => {
                             if (key !== "_errors") {
-                                branchError.push(`branch ${(Number(fieldKey) + 1)} ` + value?._errors?.[0])
+                                branchError.push(`branch ${(Number(fieldKey) + 1)} -> ` + key + ": " + value?._errors?.[0])
                                 console.log(`branch ${(Number(fieldKey) + 1)}`, key, value?._errors?.[0])
                             }
                         })

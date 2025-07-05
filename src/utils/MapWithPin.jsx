@@ -16,10 +16,11 @@ L.Icon.Default.mergeOptions({
 const MapWithPin = ({ setPos, isMapOpen, setIsMapOpen, currentPos = {} }) => {
   const theme = useTheme();
   const { t } = useTranslation()
-
+  console.log("currentPos", currentPos)
   const [userPosition, setUserPosition] = useState(null);
   const [position, setPosition] = useState(null);
 
+  console.log("position", position)
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -28,6 +29,8 @@ const MapWithPin = ({ setPos, isMapOpen, setIsMapOpen, currentPos = {} }) => {
       setPosition({
         lat: Number(currentPos.latitude), lng: Number(currentPos.longitude)
       })
+    } else {
+      setPosition(null)
     }
   }, [currentPos])
 
@@ -138,10 +141,10 @@ const MapWithPin = ({ setPos, isMapOpen, setIsMapOpen, currentPos = {} }) => {
         {isMapOpen ? 'Close Map' : 'Open Map'}
       </button> */}
 
-      {isMapOpen  && (
+      {isMapOpen && (
         <div style={{ marginTop: '20px', height: '400px', width: '100%', display: 'flex', flexDirection: 'column' }}>
           <MapContainer
-            center={position || userPosition || fallbackPosition }
+            center={position || userPosition || fallbackPosition}
             zoom={13}
             style={{ height: '100%', width: '100%' }}
           >
