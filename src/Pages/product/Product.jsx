@@ -5,6 +5,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 import AddMenuModal from './AddMenuModal';
 import {BASE_URL,BASE_URL_IMG} from  "../../utils/constants";
+import RoomServiceOutlinedIcon from '@mui/icons-material/RoomServiceOutlined';
+
 import { useQuery } from '@tanstack/react-query';
 
 const fetchMenus = async () => {
@@ -75,7 +77,7 @@ const Product = () => {
             color: 'white',
             position: 'relative',
           }}>
-          <IconButton
+          {/* <IconButton
             onClick={() => handleDeleteMenu(menu.id)}
             sx={{
               position: 'absolute',
@@ -89,13 +91,11 @@ const Product = () => {
             }}
           >
             <DeleteIcon />
-          </IconButton>
+          </IconButton> */}
           <CardContent sx={{ padding: "20px" }}>
             <Box>
-              {menu.img && (
-                <img
-                  src={`${BASE_URL_IMG}${menu.img}`}
-                  alt={menu.name}
+              
+                <RoomServiceOutlinedIcon
                   style={{
                     width: "70px",
                     height: "70px",
@@ -104,22 +104,20 @@ const Product = () => {
                     marginBottom: "10px"
                   }}
                 />
-              )}
-              {menu.img && (
-                <img
-                  src={`${BASE_URL_IMG}${menu.img}`}
-                  alt={menu.name}
+              
+              
+                <RoomServiceOutlinedIcon
                   style={{
-                    width: "120px",
-                    height: "120px",
+                    width: "200px",
+                    height: "200px",
                     objectFit: "cover",
                     position: "absolute",
-                    bottom: "10px",
-                    right: "-1%",
+                    bottom: "-10%",
+                    right: "-40%",
                     opacity: '.2'
                   }}
                 />
-              )}
+              
               <Typography variant="body2" sx={{ letterSpacing: "2px", fontSize: "18px" }}>
                 {menu.name}
               </Typography>
@@ -128,7 +126,7 @@ const Product = () => {
         </Card>
       ))}
 
-      <Paper
+      {/* <Paper
         onClick={handleAddClick}
         sx={{
           borderRadius: '20px',
@@ -142,7 +140,7 @@ const Product = () => {
           cursor: 'pointer',
         }}>
         <AddIcon sx={{ fontSize: "50px", color: "#464444" }} />
-      </Paper>
+      </Paper> */}
 
       <AddMenuModal
         open={openAddModal}

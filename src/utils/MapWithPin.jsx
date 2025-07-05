@@ -16,11 +16,9 @@ L.Icon.Default.mergeOptions({
 const MapWithPin = ({ setPos, isMapOpen, setIsMapOpen, currentPos = {} }) => {
   const theme = useTheme();
   const { t } = useTranslation()
-  console.log("currentPos", currentPos)
   const [userPosition, setUserPosition] = useState(null);
   const [position, setPosition] = useState(null);
 
-  console.log("position", position)
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -89,7 +87,6 @@ const MapWithPin = ({ setPos, isMapOpen, setIsMapOpen, currentPos = {} }) => {
           default:
             message = 'An unknown error occurred.';
         }
-        console.log(`Error getting location: ${message}`)
         setErrorMessage(`Error getting location: ${message}`);
         setIsLoading(false);
       }, {
@@ -121,11 +118,11 @@ const MapWithPin = ({ setPos, isMapOpen, setIsMapOpen, currentPos = {} }) => {
 
         {isLoading ? 'Detecting Location...' : isMapOpen ? "close" : t("pinYourLocation")}
       </Button>
-      {errorMessage && (
+      {/* {errorMessage && (
         <div style={{ color: 'red', marginTop: '10px' }}>
           {errorMessage}
         </div>
-      )}
+      )} */}
       {/* <button
         onClick={() => setIsMapOpen(!isMapOpen)}
         style={{
