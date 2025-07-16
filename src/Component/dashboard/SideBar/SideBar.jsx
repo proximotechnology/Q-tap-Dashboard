@@ -143,7 +143,7 @@ export default function SideBar({ isOpen, handleToggleSideBar }) {
                                     py: 1.2, // reduced padding
                                     color:
                                         location.pathname === item.path
-                                            ? theme.palette.text.orange
+                                            ? theme.palette.text.fixedDarkOrange
                                             : theme.palette.text.gray,
                                 }}
                                 onClick={() => { navigate(item.path); }}>

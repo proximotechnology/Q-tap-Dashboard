@@ -427,7 +427,7 @@ function App() {
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <div style={{ minHeight: "100vh" }}>
-          <div className="w-100 ">
+          <div>
             <RouterProvider router={routes}></RouterProvider>
           </div>
           <ToastContainer />

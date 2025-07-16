@@ -135,7 +135,7 @@ export const ClientsLog = () => {
                                     <TableCell sx={{ textAlign: 'center', border: 'none', fontSize: '11px', color: 'gray', padding: '0px', paddingX: '1px' }}>
                                         {date}
                                     </TableCell>
-                                    <TableCell sx={{ textAlign: 'center', border: 'none', fontSize: '11px', color: row.action ? theme.palette.text.orange : theme.palette.text.default, padding: '0px', paddingX: '1px' }}>
+                                    <TableCell sx={{ textAlign: 'center', border: 'none', fontSize: '11px', color: row.action ? theme.palette.text.fixedDarkOrange : theme.palette.text.default, padding: '0px', paddingX: '1px' }}>
                                         {row.action && <CircleIcon sx={{ fontSize: "7px" }} />} {t(row.action ? "active Now" : "inactive")}
                                     </TableCell>
                                 </TableRow>

@@ -17,6 +17,8 @@ export const getDesignTokens = (mode) => ({
         },
         bgColor: {
           main: "#FEE1DC",
+          fixedDarkOrange: "#E57C00",
+          fixedDarkBlue: "#222240"
         },
         bodyColor: {
           main: '#EBEDF3',
@@ -30,7 +32,7 @@ export const getDesignTokens = (mode) => ({
           white_333: "white",
           gray_lightBlack40: "#9d9d9c",
           gray_lightBlack50: "rgb(176, 176, 176)",
-          white_lightBlack:"#ffffff"
+          white_lightBlack: "#ffffff"
         },
         gradient: {
           orange: '#f7931e',
@@ -44,7 +46,8 @@ export const getDesignTokens = (mode) => ({
           black: "#000",
           gray: '#575756',
           blue: 'rgb(3, 3, 80)',// login form
-          orange: '#E57C00',
+          fixedDarkOrange: '#E57C00',
+          fixedDarkBlue:"#222240",
           fixedGray: '#575756',
           fixedWhite: '#ffffff',
           fixedBlack: "#000",
@@ -83,6 +86,8 @@ export const getDesignTokens = (mode) => ({
         },
         bgColor: {
           main: "#000",
+          fixedDarkOrange: "#E57C00",
+          fixedDarkBlue: "#222240"
         },
         bodyColor: {// theme.palette.bodyColor.
           //#f4f6fc
@@ -95,12 +100,12 @@ export const getDesignTokens = (mode) => ({
           whiteGray: '#575756',
 
           whiteGray_lightBlack: "#4d4d4d", // #EBEDF3
-          white_lightBlack:"#4d4d4d",
-          
+          white_lightBlack: "#4d4d4d",
+
           gray_lightBlack40: '#404040',// #9d9d9c
           gray_lightBlack50: 'rgb(226, 225, 225)',// #9d9d9c
           white_333: "#333333",
-          
+
         },
         gradient: {
           orange: '#000',
@@ -116,13 +121,14 @@ export const getDesignTokens = (mode) => ({
           fixedGray: '#575756',
           fixedWhite: '#FFFFFF', // White text for better contrast
           fixedBlack: "#000000",
-          orange: '#E57C00',
+          fixedDarkOrange: '#E57C00',
+          fixedDarkBlue:"#222240",
 
           black_white: "#FFFFFF",//theme.palette.text.white_black
           gray_white: "#FFFFFF", // #575756
-          dGray27_white:"#FFFFFF",// #272725
-          blue:'blue'
-,
+          dGray27_white: "#FFFFFF",// #272725
+          blue: 'blue'
+          ,
           gray_light: 'rgb(191, 191, 188)',
 
         },

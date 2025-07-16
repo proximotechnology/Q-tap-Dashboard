@@ -5,11 +5,31 @@ import { useNavigate } from 'react-router';
 import DoneIcon from '@mui/icons-material/Done';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import {BASE_URL} from '../../utils/constants'
+import { BASE_URL } from '../../utils/constants'
 
 import { updateBusinessData, addBranch, selectBranch, clearBusinessData, setBranches } from "../../store/register/businessSlice";
 import { updatePersonalData } from "../../store/register/personalSlice";
 import { useDispatch, useSelector } from 'react-redux';
+import { ReactComponent as Wallet } from '../../assets/cardColor.svg';
+import { ReactComponent as Cash } from '../../assets/cash.svg';
+import { Stack } from '@mui/system';
+
+
+const Divider2 = styled(Box)(({ theme }) => ({
+  width: '35%',
+  height: '2px',
+  backgroundColor: theme.palette.orangePrimary.main,
+  borderRadius: "20px",
+  display: "flex",
+  margin: "0 auto",
+}));
+const Divider = styled(Box)(({ theme }) => ({
+  width: '5%',
+  height: '3px',
+  backgroundColor: theme.palette.orangePrimary.main,
+  borderRadius: "20px",
+  marginBottom: "20px",
+}));
 
 export const Payment = () => {
   const navigate = useNavigate();
@@ -26,21 +46,7 @@ export const Payment = () => {
   const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
 
 
-  const Divider2 = styled(Box)({
-    width: '35%',
-    height: '2px',
-    backgroundColor: theme.palette.orangePrimary.main,
-    borderRadius: "20px",
-    display: "flex",
-    margin: "0 auto",
-  });
-  const Divider = styled(Box)({
-    width: '5%',
-    height: '3px',
-    backgroundColor: theme.palette.orangePrimary.main,
-    borderRadius: "20px",
-    marginBottom: "20px",
-  });
+
 
   // Fetch pricing and discount data from API
   useEffect(() => {
@@ -193,100 +199,24 @@ export const Payment = () => {
         </Grid>
         <Box sx={{ height: '15px' }}></Box>
         {/* section2 calc & discount */}
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
-            <Box sx={{ textAlign: "center", justifyContent: "center", marginTop: "15px" }}>
-              <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
-                {t("subTotal")}
-                <span style={{ fontSize: '17px', color: theme.palette.secondaryColor.main, marginLeft: "10px" }}>
-                  {totals.subTotal.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
-                </span>
-              </Typography>
-              <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
-                {t("addOns")}
-                <span style={{ fontSize: '17px', color: theme.palette.secondaryColor.main, marginLeft: "10px" }}>
-                  {totals.addOns.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
-                </span>
-              </Typography>
-              <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
-                {t("tax")}
-                <span style={{ fontSize: '17px', color: theme.palette.secondaryColor.main, marginLeft: "10px" }}>
-                  {totals.tax.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
-                </span>
-              </Typography>
-              <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
-                {t("discounts")}
-                <span style={{ fontSize: '17px', color: theme.palette.secondaryColor.main, marginLeft: "10px" }}>
-                  {totals.discounts.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
-                </span>
-              </Typography>
-              <Divider2 sx={{ mt: 1, mb: 1 }} />
-              <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
-                {t("total")}
-                <span style={{ fontSize: '17px', color: theme.palette.orangePrimary.main, marginLeft: "10px" }}>
-                  {totalPrice.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
-                </span>
-              </Typography>
-            </Box>
-          </Grid>
+        <Box style={{ display: 'flex', gap: "2rem", justifyContent: 'space-around', flexWrap: "wrap" }}>
+          <CalculationCard totals={totals} totalPrice={totalPrice} />
 
-          <Grid item xs={12} md={6} sx={{ marginTop: "30px" }}>
-            <Box sx={{ width: '100%', textAlign: 'center', display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <Box sx={{ width: { lg: '220px', md: "100%", xs: "100%" } }}>
-                <Box sx={{ display: "flex", alignItems: "center", justifyContent: 'center' }}>
-                  <Box>
-                    <Typography sx={{ fontSize: '9px', color: "gray" }}>{t("disCode")}</Typography>
-                    <TextField
-                      variant="outlined"
-                      size="small"
-                      value={discountCode}
-                      onChange={handleDiscountChange}
-                      sx={{
-                        width: "70px",
-                        "& .MuiOutlinedInput-root": { height: "26px" },
-                      }}
-                    />
-                  </Box>
-                  <Box alignItems={"center"}>
-                    <IconButton>
-                      <DoneIcon sx={{ fontSize: "15px", color: theme.palette.orangePrimary.main }} />
-                    </IconButton>
-                    <IconButton>
-                      <span className="icon-close-1" style={{ fontSize: "9px", color: theme.palette.secondaryColor.main }}></span>
-                    </IconButton>
-                  </Box>
-                </Box>
-              </Box>
-
-              <RadioGroup defaultValue="cash" sx={{ mt: 1 }} onChange={handleChange}>
-                <FormControlLabel
-                  sx={{ color: 'gray', fontSize: "11px" }}
-                  value="cash"
-                  control={<Radio size="small" sx={{ color: selectedValue === 'cash' ? theme.palette.orangePrimary.main : 'gray', '&.Mui-checked': { color: theme.palette.orangePrimary.main } }} />}
-                  label={<Typography sx={{ fontSize: "12px", color: 'gray' }}>{t("cashOrCard")}</Typography>}
-                />
-                <FormControlLabel
-                  sx={{ color: 'gray', fontSize: "11px", mt: '-8px' }}
-                  value="wallet"
-                  control={<Radio size="small" sx={{ color: selectedValue === 'wallet' ? theme.palette.orangePrimary.main : 'gray', '&.Mui-checked': { color: theme.palette.orangePrimary.main } }} />}
-                  label={<Typography sx={{ fontSize: "12px", color: 'gray' }}>{t("onlinePayment")}</Typography>}
-                />
-              </RadioGroup>
-            </Box>
-          </Grid>
-        </Grid>
+          <DiscountSection discountCode={discountCode} handleChange={handleChange} handleDiscountChange={handleDiscountChange} selectedValue={selectedValue} />
+        </Box>
         {/* section 3 pay button */}
         <Grid container>
           <Button
             variant="contained"
             sx={{
-              width: '20%',
+              width: '40%',
               fontSize: "13px",
               borderRadius: '50px',
               backgroundColor: theme.palette.orangePrimary.main,
               textTransform: 'none',
               padding: "6px 0",
               marginX: 'auto',
+              marginY:"2rem",
               '&:hover': { backgroundColor: theme.palette.orangePrimary.main },
               color: "#fff",
             }}
@@ -299,3 +229,220 @@ export const Payment = () => {
     </Box>
   );
 };
+
+
+const CalculationCard = ({ totals, totalPrice }) => {
+
+  const { t } = useTranslation();
+  const theme = useTheme();
+
+  const items = [
+    [t("subTotal"), totals.subTotal.toFixed(2)],
+    [t("addOns"), totals.addOns.toFixed(2)],
+    [t("tax"), totals.tax.toFixed(2)],
+    [t("discounts"), totals.discounts.toFixed(2)],
+    [t("total"), totalPrice.toFixed(2)],
+  ];
+
+  const longestLabelLength = Math.max(...items.map(([label]) => label.length));
+  const longestValueLength = Math.max(...items.map(([, value]) => value.length));
+
+  const labelWidth = `${longestLabelLength + 2}ch`; // add buffer
+  const valueWidth = `${longestValueLength + 5}ch`;
+
+  return <Box
+    sx={{
+      width: 'fit-content',
+      fontFamily: 'monospace',
+    }}
+  >
+    {items.map(([label, value], index) => (
+      <Box key={label}>
+        {index === items.length - 1 && (
+          <Box
+            sx={{
+              width: `calc(${labelWidth} + ${valueWidth})`,
+              height: '2px',
+              backgroundColor: theme => theme.palette.orangePrimary.main,
+              borderRadius: '20px',
+              mb: 1,
+              ml: 0, // aligned with label start
+            }}
+          />
+        )}
+
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: `${labelWidth} ${valueWidth}`,
+            alignItems: 'center',
+            mb: 0.5,
+          }}
+        >
+          <Typography sx={{ textAlign: 'right', pr: 1, color: theme.palette.text.fixedGray }}>{label}</Typography>
+          <Typography sx={{
+            textAlign: 'left', color: index === items.length - 1 ? theme.palette.text.fixedDarkOrange : theme.palette.text.fixedDarkBlue
+          }}>
+            <Box
+              component="span"
+              sx={{
+                display: 'inline-flex',
+                alignItems: 'baseline',
+                fontWeight: "bold"
+              }}
+            >
+              {value}
+              <Box
+                component="span"
+                sx={{
+                  fontSize: '0.6rem',
+                  ml: 0.5,
+                }}
+              >
+                EGP
+              </Box>
+            </Box>
+          </Typography>
+        </Box>
+      </Box>
+    ))}
+  </Box>
+  return <Grid container spacing={2}>
+    <Grid item xs={12} md={6}>
+      <Box sx={{ textAlign: "center", justifyContent: "center", marginTop: "15px" }}>
+        <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
+          {t("subTotal")}
+          <span style={{ fontSize: '17px', color: theme.palette.secondaryColor.main, marginLeft: "10px" }}>
+            {totals.subTotal.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
+          </span>
+        </Typography>
+        <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
+          {t("addOns")}
+          <span style={{ fontSize: '17px', color: theme.palette.secondaryColor.main, marginLeft: "10px" }}>
+            {totals.addOns.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
+          </span>
+        </Typography>
+        <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
+          {t("tax")}
+          <span style={{ fontSize: '17px', color: theme.palette.secondaryColor.main, marginLeft: "10px" }}>
+            {totals.tax.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
+          </span>
+        </Typography>
+        <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
+          {t("discounts")}
+          <span style={{ fontSize: '17px', color: theme.palette.secondaryColor.main, marginLeft: "10px" }}>
+            {totals.discounts.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
+          </span>
+        </Typography>
+        <Divider2 sx={{ mt: 1, mb: 1 }} />
+        <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
+          {t("total")}
+          <span style={{ fontSize: '17px', color: theme.palette.orangePrimary.main, marginLeft: "10px" }}>
+            {totalPrice.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
+          </span>
+        </Typography>
+      </Box>
+    </Grid>
+
+
+  </Grid>
+}
+
+const DiscountSection = ({ discountCode, handleDiscountChange, handleChange, selectedValue }) => {
+  const { t } = useTranslation();
+  const theme = useTheme();
+  const UncheckedIcon = styled('span')(({ theme }) => ({
+    width: 16,
+    height: 16,
+    borderRadius: '50%',
+    border: '2px solid gray',
+    display: 'inline-block',
+  }));
+
+  const CheckedIcon = styled('span')(({ theme }) => ({
+    width: 16,
+    height: 16,
+    borderRadius: '50%',
+    backgroundColor: theme.palette.orangePrimary.main,
+    display: 'inline-block',
+  }));
+
+  return (
+    <Box sx={{ marginTop: "30px" }}>
+      <Box sx={{ width: '100%', textAlign: 'center', display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <Box sx={{ width: { lg: '220px', md: "100%", xs: "100%" } }}>
+          <Box sx={{ display: "flex", justifyContent: 'start' , alignItems:"end" , gap:".5rem"}}>
+            <Box>
+              <Typography sx={{ fontSize: '9px', color: "gray"  , textAlign:"start"}}>{t("disCode")}</Typography>
+              <TextField
+                variant="outlined"
+                size="small"
+                value={discountCode}
+                onChange={handleDiscountChange}
+                sx={{
+                  width: "70px",
+                  "& .MuiOutlinedInput-root": { height: "26px" },
+                }}
+              />
+            </Box>
+            <Box position={'relative'} sx={{display:"flex" , gap:1}}>
+              <IconButton sx={{ margin: "0px", padding: "0px", position: "relative", bottom: "0px" ,fontWeight:"bold"}}>
+                <DoneIcon sx={{ width: "21px", height: "21px", color: theme.palette.orangePrimary.main }} />
+              </IconButton>
+              <IconButton sx={{ margin: "0px", padding: "0px", position: "relative", bottom: "0px" }}  >
+                <span className="icon-close-1" style={{ width: "15px", height: "15px", fontSize: "15px", color: theme.palette.secondaryColor.main }}></span>
+              </IconButton>
+            </Box>
+          </Box>
+        </Box>
+
+        <RadioGroup defaultValue="cash"
+          className='problem here'
+          sx={{
+            width: '100%',
+            mt: 1,
+            flexDirection: 'column',
+            gap: 2,
+            alignItems: 'start',
+          }} onChange={handleChange}>
+
+          <FormControlLabel
+            sx={{ color: 'gray', fontSize: "11px" }}
+            value="cash"
+            control={
+              <Radio size="small"
+                icon={<UncheckedIcon />}
+                checkedIcon={<CheckedIcon />}
+                sx={{ color: selectedValue === 'cash' ? theme.palette.orangePrimary.main : 'gray', '&.Mui-checked': { color: theme.palette.orangePrimary.main } }} />}
+            label={
+              <Stack direction="row" alignItems="center" spacing={0.5}>
+                <Cash sx={{ fontSize: 16 }} />
+                <Typography sx={{ fontSize: "12px", color: 'gray' }}>{t("cashOrCard")}</Typography>
+              </Stack>
+
+            }
+          />
+          <FormControlLabel
+            sx={{ color: 'gray', fontSize: "11px", mt: '-8px' }}
+            value="wallet"
+            control={
+              <Radio size="small"
+                icon={<UncheckedIcon />}
+                checkedIcon={<CheckedIcon />}
+                sx={{ color: selectedValue === 'wallet' ? theme.palette.orangePrimary.main : 'gray', '&.Mui-checked': { color: theme.palette.orangePrimary.main } }}
+              />
+            }
+            label={
+              <Stack direction="row" alignItems="center" spacing={0.5}>
+                <Wallet sx={{ fontSize: 16 }} />
+                <Typography sx={{ fontSize: '12px', color: 'gray' }}>
+                  {t('onlinePayment')}
+                </Typography>
+              </Stack>
+            }
+          />
+        </RadioGroup>
+      </Box>
+    </Box>
+  )
+}

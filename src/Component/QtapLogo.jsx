@@ -69,7 +69,7 @@ const QtapLogo = () => {
                     position: "absolute", top: "40px", left: "10%", color: theme.palette.text.fixedWhite, zIndex: "8",
                     '&:hover': {
                         backgroundColor: 'transparent', // Removes default hover bg
-                        color: theme.palette.text.orange, // Replace with desired hover color (e.g., "#ff0000")
+                        color: theme.palette.text.fixedDarkOrange, // Replace with desired hover color (e.g., "#ff0000")
                     },
                 }}
                 onClick={() => {

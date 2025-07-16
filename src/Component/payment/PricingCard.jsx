@@ -32,7 +32,7 @@ export function PricingCard({ title, pricePerMonth, pricePerYear, orders, button
 
   return (
     <Box sx={{ minWidth: "130px", minHeight: "200px" }}>
-      <Box sx={{ width: "90px", borderRadius: "20px", textAlign: "center", color: "#fff", position: "relative", top: "15px", left: "24%" }}>
+      <Box sx={{ width: "90px", borderRadius: "20px", textAlign: "center", color: "#fff", position: "relative", top: "15px",  mx: "auto",  }}>
         <Typography variant="body1" sx={{ backgroundColor: theme.palette.orangePrimary.main, borderRadius: "20px", padding: "5px 6px", fontSize: "12px" }}>
           {title}
         </Typography>
@@ -55,7 +55,7 @@ export function PricingCard({ title, pricePerMonth, pricePerYear, orders, button
           </Box>
           <Box sx={{ backgroundColor: theme.palette.orangePrimary.main, height: "50px", justifyContent: "center", display: "flex", alignItems: "center", borderRadius: "0px 0px 20px 20px" }}>
             <Typography variant="body2" sx={{ color: "white", fontSize: "12px" }}>
-              <span style={{ color: theme.palette.secondaryColor.main, fontSize: "16px" }}>{orders} </span>
+              <span style={{ color: theme.palette.secondaryColor.main, fontSize: "1.5rem" ,fontWeight:'bold' }}>{orders}</span>
               {t("order")}
             </Typography>
           </Box>

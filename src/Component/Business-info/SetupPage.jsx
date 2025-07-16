@@ -49,16 +49,16 @@ const Divider = styled(Box)({
 export const SetupPage = () => {
     const theme = useTheme()
     const navigate = useNavigate();
-    const {t} = useTranslation()
+    const { t } = useTranslation()
 
     return (
 
-        <Grid container item xs={12} md={3} >
-            <ImageContainer sx={{ width: '100%' , display:'flex' , flexDirection:'column',alignItems:'start', justifyContent:'space-between',padding:'3rem'}}  >
+        <div style={{ width: "100%", height: "100%" }} >
+            <ImageContainer sx={{ width: '100%', height: "100%", display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'space-between', padding: '3rem' }}  >
                 <ChevronLeftOutlinedIcon onClick={() => navigate('/')}
-                    sx={{  color: "white", fontSize: "40px", zIndex: "100" }}
-                    // sx={{ zIndex:'100',fontSize: "33px" }}
-                     />
+                    sx={{ color: "white", fontSize: "40px", zIndex: "100" }}
+                // sx={{ zIndex:'100',fontSize: "33px" }}
+                />
 
                 {/* <TextOverlay sx={{ width: { xs: "90%", sm: "75%", md: "60%" }, margin: "0 auto" }}> */}
                 <Box>
@@ -78,10 +78,10 @@ export const SetupPage = () => {
 
                 {/* <Box sx={{position: "absolute", bottom: "30px", left: "10%", zIndex: "8"}}> */}
                 <Box>
-                    <img src="/assets/qtapwhite.svg" alt="logo setup" style={{width:"90px" ,height:"25px"}} />
+                    <img src="/assets/qtapwhite.svg" alt="logo setup" style={{ width: "90px", height: "25px" }} />
                 </Box>
             </ImageContainer>
-        </Grid>
+        </div>
 
 
     )
