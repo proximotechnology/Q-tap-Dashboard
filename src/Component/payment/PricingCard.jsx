@@ -70,6 +70,7 @@ export function PricingCard({ title, pricePerMonth, pricePerYear, orders, button
             padding: "1px",
             marginLeft: { lg: "10px", md: "0" },
             borderRadius: "50px",
+            color:theme.palette.text.fixedWhite, 
             backgroundColor: isSelected ? theme.palette.orangePrimary.main : theme.palette.secondaryColor.main,
             textTransform: "capitalize",
             fontSize: "11px",

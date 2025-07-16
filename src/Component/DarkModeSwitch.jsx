@@ -17,33 +17,46 @@ const DarkModeSwitch = () => {
         // mode lib "dark"  or "light" 
         const defaultModeOfBranch = selectedBranch?.default_mode
         if (defaultModeOfBranch === "white" && mode === "dark") {
-             toggleColorMode()
-        }if(defaultModeOfBranch === "dark"  && mode === "light" ){
             toggleColorMode()
-        } 
+        } if (defaultModeOfBranch === "dark" && mode === "light") {
+            toggleColorMode()
+        }
     }, [selectedBranch?.default_mode])
     return (
-        <Box sx={{ marginInlineEnd: "20px", display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
+        <Box sx={{  display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
             <LightModeOutlinedIcon onClick={toggleColorMode}
                 sx={{ fontSize: "20px", fill: mode === 'light' ? '#ff9800' : theme.palette.text.gray }} />
+            
             <Switch
-                checked={mode === 'light'}
+                checked={mode === 'dark'}
                 onChange={toggleColorMode}
                 sx={{
-                    margin: "0px -10px !important",
+                    margin: "0px 0px !important",
+                    padding: "0px",
+                    // width: "100%",
+                    // display: "flex",
+                    
+                    alignItems: "center",
                     transform: 'scale(0.8)', // تصغير الحجم العام
                     '& .MuiSwitch-switchBase': {
-                        padding: -1, // تصغير القاعدة
+                        padding: 0,
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        transition: 'transform 300ms ease',
+                        '&.Mui-checked': {
+                            transform: 'translate( 40px, -50%)', // adjust based on thumb size + track width
+                            color: theme.palette.orangePrimary.main,
+                        },
                     },
                     '& .MuiSwitch-thumb': {
-                        width: 18, // تصغير النقطة
-                        height: 18,
+                        width: "20px", // تصغير النقطة
+                        height: "20px",
                         color: theme.palette.orangePrimary.main,
                     },
                     '& .MuiSwitch-track': {
                         borderRadius: 12,
                         height: 15,
-                        width: 50, // تصغير المسار
+                        width:"100%", // تصغير المسار
                     },
                     '& .MuiSwitch-switchBase.Mui-checked': {
                         color: theme.palette.orangePrimary.main,
@@ -53,6 +66,7 @@ const DarkModeSwitch = () => {
                     },
                 }}
             />
+
             <DarkModeOutlinedIcon onClick={toggleColorMode}
                 sx={{ fontSize: "20px", fill: mode === 'dark' ? '#ff9800' : '#575756' }} />
         </Box>
