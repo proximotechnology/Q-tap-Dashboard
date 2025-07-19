@@ -8,10 +8,15 @@ import Language from '../dashboard/TopBar/Language';
 
 export const BusinessInfoPage = () => {
   const theme = useTheme()
-  let isDarkMode = theme.palette.mode === "dark"
+  
   return (
     <Grid container
-      sx={{ backgroundSize: "100% 100%", width: "100%", height: "100vh", backgroundColor: theme.palette.bodyColor.white_333, backgroundImage: isDarkMode ? 'none' : 'url(/images/Rectangle.png)', }}>
+      sx={{
+        backgroundSize: "100% 100%", width: "100%", height: "100vh",
+        backgroundImage: theme.palette.mode === 'light' ? "url(/images/Rectangle.png)" : undefined,
+        backgroundColor: theme.palette.mode === 'light' ? undefined : theme.palette.background.default,
+
+      }}>
       <SetupPage />
 
       <Grid item xs={12} md={8}  >

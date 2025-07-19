@@ -47,7 +47,7 @@ export const BusinessInfo = () => {
 
     // Initialize all state values from context
     const dataSource = selectedBranch !== null && branches[selectedBranch] ? branches[selectedBranch] : businessData;
-    const [mode, setMode] = useState(dataSource.mode || 'white');
+    const [mode, setMode] = useState(theme.palette.mode === "light" ? 'white' : "dark");
     const [design, setDesign] = useState(dataSource.design || 'grid');
     const [format, setFormat] = useState(dataSource.format || '');
     const [currency, setCurrency] = useState(dataSource.currency || '');
@@ -110,6 +110,15 @@ export const BusinessInfo = () => {
     }, [mode, design, format, currency, country, city, businessName, website,
         businessEmail, businessPhone, activeWaiter, paymentTime, paymentMethods, pos]);
 
+    // const { toggleColorMode, setTheme, mode: ThemeMode } = useColorMode();
+    // useEffect(() => {
+    //     if ((mode === "white" && ThemeMode !== "light")) {
+    //         setTheme("light")
+
+    //     } else if (mode === "dark" && ThemeMode !== "dark") {
+    //         setTheme("dark")
+    //     }
+    // }, [mode])
     // Handlers
     const handleModeChange = (event, newMode) => {
         if (newMode !== null) {
@@ -199,7 +208,7 @@ export const BusinessInfo = () => {
     useRegisterChangeThemeMode(mode)
     return (
         <Box marginTop={"50px"} padding={"20px 0 0 40px "}>
-            <Typography variant="body1" sx={{ fontSize: "18px", color: theme.palette.text.black_white }}>
+            <Typography variant="body1" sx={{ fontSize: "18px" }}>
                 {t("busnessInfo")}
             </Typography>
             <Divider />
@@ -216,7 +225,7 @@ export const BusinessInfo = () => {
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
-                                            <StorefrontOutlinedIcon sx={{ fontSize: "18px", color: "#575756" }} />
+                                            <StorefrontOutlinedIcon sx={{ fontSize: "18px", }} />
                                         </InputAdornment>
                                     ),
                                     sx: { height: "40px", borderRadius: "10px", fontSize: "10px" }
@@ -231,7 +240,7 @@ export const BusinessInfo = () => {
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
-                                            <LanguageOutlinedIcon sx={{ fontSize: "18px", color: "#575756" }} />
+                                            <LanguageOutlinedIcon sx={{ fontSize: "18px", }} />
                                         </InputAdornment>
                                     ),
                                     sx: { height: "40px", borderRadius: "10px", fontSize: "10px" }
@@ -246,7 +255,7 @@ export const BusinessInfo = () => {
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
-                                            <MailOutlinedIcon sx={{ fontSize: "18px", color: "#575756" }} />
+                                            <MailOutlinedIcon sx={{ fontSize: "18px" }} />
                                         </InputAdornment>
                                     ),
                                     sx: { height: "40px", borderRadius: "10px", fontSize: "10px" }
@@ -259,7 +268,7 @@ export const BusinessInfo = () => {
                                     value={currency}
                                     onChange={(e) => setCurrency(e.target.value)}
                                     displayEmpty
-                                    sx={{ borderRadius: '10px', height: '40px', marginBottom: "10px", fontSize: "10px", color: "gray" }}
+                                    sx={{ borderRadius: '10px', height: '40px', marginBottom: "10px", fontSize: "10px" }}
                                     startAdornment={
                                         <InputAdornment position="start">
                                             <img src="/assets/revenue.svg" alt="icon" style={{ width: "16px", height: "16px" }} />
@@ -280,7 +289,7 @@ export const BusinessInfo = () => {
                                     value={format}
                                     onChange={(e) => setFormat(e.target.value)}
                                     displayEmpty
-                                    sx={{ borderRadius: '10px', height: '40px', marginBottom: "10px", fontSize: "10px", color: "gray" }}
+                                    sx={{ borderRadius: '10px', height: '40px', marginBottom: "10px", fontSize: "10px" }}
                                     startAdornment={
                                         <InputAdornment position="start">
                                             <span className="icon-briefcase" style={{ fontSize: "18px" }}></span>
@@ -297,7 +306,7 @@ export const BusinessInfo = () => {
                             <Box>
                                 <Grid container spacing={2} alignItems="center" sx={{ marginTop: "40px" }}>
                                     <Typography variant="body1" display="flex" alignItems="center"
-                                        sx={{ fontSize: '15px', color: "gray", marginLeft: "20px" }}>
+                                        sx={{ fontSize: '15px', marginLeft: "20px" }}>
                                         <span className="icon-working-hour" style={{ marginRight: "10px", fontSize: "20px" }}>
                                             <span className="path1"></span><span className="path2"></span><span className="path3"></span>
                                             <span className="path4"></span><span className="path5"></span><span className="path6"></span>
@@ -443,17 +452,17 @@ export const BusinessInfo = () => {
                                                 value={country}
                                                 onChange={(e) => setCountry(e.target.value)}
                                                 displayEmpty
-                                                sx={{ borderRadius: '10px', height: '40px', marginBottom: "10px", fontSize: "10px", color: "gray" }}
+                                                sx={{ borderRadius: '10px', height: '40px', marginBottom: "10px", fontSize: "10px" }}
                                                 startAdornment={
                                                     <InputAdornment position="start">
                                                         <PinDropOutlinedIcon sx={{ fontSize: "18px" }} />
                                                     </InputAdornment>
                                                 }
                                             >
-                                                <MenuItem value="" disabled sx={{ fontSize: "12px", color: "gray" }}>
+                                                <MenuItem value="" disabled sx={{ fontSize: "12px" }}>
                                                     {t("country")}
                                                 </MenuItem>
-                                                <MenuItem value="egypt" sx={{ fontSize: "12px", color: "gray" }}>Egypt</MenuItem>
+                                                <MenuItem value="egypt" sx={{ fontSize: "12px" }}>Egypt</MenuItem>
                                                 {/* <MenuItem value="US" sx={{ fontSize: "12px", color: "gray" }}>United States</MenuItem>
                                                 <MenuItem value="CA" sx={{ fontSize: "12px", color: "gray" }}>Canada</MenuItem>
                                                 <MenuItem value="UK" sx={{ fontSize: "12px", color: "gray" }}>United Kingdom</MenuItem> */}
@@ -467,18 +476,18 @@ export const BusinessInfo = () => {
                                                 value={city}
                                                 onChange={(e) => setCity(e.target.value)}
                                                 displayEmpty
-                                                sx={{ borderRadius: '10px', height: '40px', marginBottom: "10px", fontSize: "10px", color: "gray" }}
+                                                sx={{ borderRadius: '10px', height: '40px', marginBottom: "10px", fontSize: "10px" }}
                                                 startAdornment={
                                                     <InputAdornment position="start">
                                                         <PinDropOutlinedIcon sx={{ fontSize: "18px" }} />
                                                     </InputAdornment>
                                                 }
                                             >
-                                                <MenuItem value="" disabled sx={{ fontSize: "12px", color: "gray" }}>
+                                                <MenuItem value="" disabled sx={{ fontSize: "12px", }}>
                                                     {t("city")}
                                                 </MenuItem>
                                                 {Governorates[Country.EGYPT].map((city) => (
-                                                    <MenuItem value={city} sx={{ fontSize: "12px", color: "gray" }}>{city}</MenuItem>
+                                                    <MenuItem value={city} sx={{ fontSize: "12px", }}>{city}</MenuItem>
                                                 ))}
                                                 {/* <MenuItem value="NY" sx={{ fontSize: "12px", color: "gray" }}>New York</MenuItem>
                                                 <MenuItem value="LA" sx={{ fontSize: "12px", color: "gray" }}>Los Angeles</MenuItem>

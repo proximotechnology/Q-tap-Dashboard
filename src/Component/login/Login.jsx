@@ -58,14 +58,14 @@ export const Login = () => {
   };
 
   return (
-    <Box style={{ color: 'black' }}>
+    <Box >
       <FormControl variant="outlined" fullWidth margin="normal">
         <OutlinedInput
           placeholder={t("email")}
           onChange={(e) => setEmail(e.target.value)}
           startAdornment={
             <InputAdornment position="start">
-              <MailOutlinedIcon sx={{ fontSize: '18px', color: theme.palette.text.fixedGray, }} />
+              <MailOutlinedIcon sx={{ fontSize: '18px'}} />
             </InputAdornment>
           }
           required
@@ -73,7 +73,7 @@ export const Login = () => {
             borderRadius: '50px',
             height: '35px',
             fontSize: '11px',
-            color: theme.palette.text.fixedGray,
+            // color: theme.palette.text.fixedGray,
             '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
               outline: 'none',
             },
@@ -89,7 +89,7 @@ export const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           startAdornment={
             <InputAdornment position="start">
-              <span className="icon-padlock" style={{ fontSize: '18px', color: theme.palette.text.fixedGray, }} />
+              <span className="icon-padlock" style={{ fontSize: '18px' }} />
             </InputAdornment>
           }
           required
@@ -113,7 +113,7 @@ export const Login = () => {
             borderRadius: '50px',
             height: '35px',
             fontSize: '11px',
-            color: theme.palette.text.fixedGray,
+            // color: theme.palette.text.fixedGray,
           }}
         />
       </FormControl>
@@ -123,7 +123,7 @@ export const Login = () => {
       <Typography
         variant="body2"
         sx={{
-          color: theme.palette.text.fixedBlack,
+          // color: theme.palette.text.fixedBlack,
           fontSize: '10px',
           cursor: 'pointer',
           margin: '5px 0px',
@@ -149,7 +149,6 @@ export const Login = () => {
           bgcolor: theme.palette.bluePrimary.main,
           borderRadius: '50px',
           textTransform: 'capitalize',
-          color: theme.palette.text.fixedWhite,
           '&:hover': {
             backgroundColor: theme.palette.secondaryColor.main,
           },
@@ -157,7 +156,11 @@ export const Login = () => {
         onClick={handleSubmit}
       >
         {/* {isLoading ? <CircularProgress size={24} /> : t("logIn")} */}
-        {t("logIn")}
+        <Typography
+          variant='body1'
+          style={{ color: theme.palette.text.fixedWhite }}>
+          {t("logIn")}
+        </Typography>
       </Button>
 
       <FormControlLabel
@@ -165,12 +168,12 @@ export const Login = () => {
         control={
           <Checkbox
             sx={{
-              color: theme.palette.text.fixedGray,
+              // color: theme.palette.text.fixedGray,
               transform: 'scale(0.7)',
             }}
           />
         }
-        label={<Typography sx={{ fontSize: '10px', color: theme.palette.text.fixedGray }}>{t("stayLogIn")}</Typography>}
+        label={<Typography sx={{ fontSize: '10px' }}>{t("stayLogIn")}</Typography>}
       />
     </Box>
   );

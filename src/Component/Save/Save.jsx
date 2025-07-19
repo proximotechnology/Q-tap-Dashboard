@@ -192,7 +192,11 @@ export const Save = () => {
   // };
 
   return (
-    <Box sx={{ backgroundColor: theme.palette.bodyColor.white_333, minHeight: '100vh',paddingBottom:"1rem" }}>
+    <Box sx={{
+      backgroundImage: theme.palette.mode === 'light' ? "url(/images/Rectangle.png)" : undefined,
+      backgroundColor: theme.palette.mode === 'light' ? undefined : theme.palette.background.default,
+      minHeight: '100vh', paddingBottom: "1rem"
+    }}>
       {/* Header */}
       <Box
         sx={{

@@ -174,7 +174,7 @@ export const Payment = () => {
 
   return (
     <Box marginTop={"50px"} flexGrow={1}>
-      <Typography variant="body1" sx={{ marginLeft: "50px", fontSize: "18px", color: theme.palette.secondaryColor.main }}>
+      <Typography variant="body1" sx={{ marginLeft: "50px", fontSize: "18px" }}>
         {t("payment")}
       </Typography>
       <Divider marginLeft={"50px"} />
@@ -281,7 +281,7 @@ const CalculationCard = ({ totals, totalPrice }) => {
         >
           <Typography sx={{ textAlign: 'right', pr: 1, color: theme.palette.text.fixedGray }}>{label}</Typography>
           <Typography sx={{
-            textAlign: 'left', color: index === items.length - 1 ? theme.palette.text.fixedDarkOrange : theme.palette.text.fixedDarkBlue
+            textAlign: 'left', color: index === items.length - 1 ? theme.palette.text.fixedDarkOrange : theme.palette.mode === 'light' ?theme.palette.text.fixedDarkBlue : theme.palette.text.fixedWhite
           }}>
             <Box
               component="span"
@@ -307,45 +307,6 @@ const CalculationCard = ({ totals, totalPrice }) => {
       </Box>
     ))}
   </Box>
-  return <Grid container spacing={2}>
-    <Grid item xs={12} md={6}>
-      <Box sx={{ textAlign: "center", justifyContent: "center", marginTop: "15px" }}>
-        <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
-          {t("subTotal")}
-          <span style={{ fontSize: '17px', color: theme.palette.secondaryColor.main, marginLeft: "10px" }}>
-            {totals.subTotal.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
-          </span>
-        </Typography>
-        <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
-          {t("addOns")}
-          <span style={{ fontSize: '17px', color: theme.palette.secondaryColor.main, marginLeft: "10px" }}>
-            {totals.addOns.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
-          </span>
-        </Typography>
-        <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
-          {t("tax")}
-          <span style={{ fontSize: '17px', color: theme.palette.secondaryColor.main, marginLeft: "10px" }}>
-            {totals.tax.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
-          </span>
-        </Typography>
-        <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
-          {t("discounts")}
-          <span style={{ fontSize: '17px', color: theme.palette.secondaryColor.main, marginLeft: "10px" }}>
-            {totals.discounts.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
-          </span>
-        </Typography>
-        <Divider2 sx={{ mt: 1, mb: 1 }} />
-        <Typography variant="body1" sx={{ fontSize: '12px', color: "gray" }}>
-          {t("total")}
-          <span style={{ fontSize: '17px', color: theme.palette.orangePrimary.main, marginLeft: "10px" }}>
-            {totalPrice.toFixed(2)} <sub style={{ fontSize: '8px' }}>EGP</sub>
-          </span>
-        </Typography>
-      </Box>
-    </Grid>
-
-
-  </Grid>
 }
 
 const DiscountSection = ({ discountCode, handleDiscountChange, handleChange, selectedValue }) => {
@@ -373,7 +334,7 @@ const DiscountSection = ({ discountCode, handleDiscountChange, handleChange, sel
         <Box sx={{ width: { lg: '220px', md: "100%", xs: "100%" } }}>
           <Box sx={{ display: "flex", justifyContent: 'start' , alignItems:"end" , gap:".5rem"}}>
             <Box>
-              <Typography sx={{ fontSize: '9px', color: "gray"  , textAlign:"start"}}>{t("disCode")}</Typography>
+              <Typography sx={{ fontSize: '9px'  , textAlign:"start"}}>{t("disCode")}</Typography>
               <TextField
                 variant="outlined"
                 size="small"

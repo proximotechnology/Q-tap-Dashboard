@@ -117,14 +117,17 @@ const SignUp = () => {
     };
 
     return (
-        <Box width="100%" maxWidth="400px"  mx="auto" px={2}>
+        <Box width="100%" maxWidth="400px" mx="auto" px={2}>
 
             <FormControl variant="outlined" fullWidth >
                 <OutlinedInput
                     id="outlined-fullname"
                     startAdornment={
                         <InputAdornment position="start">
-                            <PersonOutlinedIcon sx={{ color: theme.palette.text.fixedGray, fontSize: "16px" }} />
+                            <PersonOutlinedIcon sx={{
+                                // ,
+                                fontSize: "16px"
+                            }} />
                         </InputAdornment>
                     }
                     required
@@ -132,7 +135,7 @@ const SignUp = () => {
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder={t("fullName")}
                     sx={{
-                        color: theme.palette.text.fixedGray,
+                        // ,
                         borderRadius: '50px',
                         marginTop: "10px",
                         height: '33px', fontSize: "10px"
@@ -145,19 +148,23 @@ const SignUp = () => {
                     id="outlined-phone"
                     endAdornment={
                         <InputAdornment position="end">
-                            {/* <Typography sx={{ color: theme.palette.text.fixedGray, fontSize: "10px", color: theme.palette.text.fixedBlack }} >{t("verify")}</Typography> */}
+                            {/* <Typography sx={{ , fontSize: "10px", }} >{t("verify")}</Typography> */}
                         </InputAdornment>
                     }
                     startAdornment={
                         <InputAdornment position="start">
-                            <PhoneOutlinedIcon sx={{ color: theme.palette.text.fixedGray, fontSize: "16px" }} />
+                            <PhoneOutlinedIcon sx={{ 
+                                // ,
+                                 fontSize: "16px" }} />
                         </InputAdornment>
                     }
                     placeholder={t("mobileNumber")}
                     required
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    sx={{ color: theme.palette.text.fixedGray, borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
+                    sx={{ 
+                        // ,
+                         borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
                 />
             </FormControl>
 
@@ -167,20 +174,26 @@ const SignUp = () => {
                     type="email"
                     startAdornment={
                         <InputAdornment position="start">
-                            <EmailOutlinedIcon sx={{ color: theme.palette.text.fixedGray, fontSize: "16px" }} />
+                            <EmailOutlinedIcon sx={{ 
+                                // ,
+                                 fontSize: "16px" }} />
                         </InputAdornment>
                     }
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={t("email")}
-                    sx={{ color: theme.palette.text.fixedGray, borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
+                    sx={{ 
+                        // ,
+                         borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
                 />
             </FormControl>
 
             <Grid container alignItems="center" sx={{ marginTop: "10px", }}>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
-                    <Grid container alignItems="center" sx={{ color: theme.palette.text.fixedGray, marginTop: "5px", marginBottom: "2px" }} >
+                    <Grid container alignItems="center" sx={{ 
+                        // ,
+                         marginTop: "5px", marginBottom: "2px" }} >
                         <CalendarMonthOutlinedIcon sx={{ marginRight: 1, fontSize: "15px" }} />
                         <Typography variant="body1" sx={{ fontSize: "11px" }}>{t("dateOfBirth")}</Typography>
                     </Grid>
@@ -193,23 +206,27 @@ const SignUp = () => {
                             value={month}
                             onChange={(e) => setMonth(e.target.value)}
                             displayEmpty
-                            sx={{ borderRadius: '50px', height: '33px', fontSize: "10px", color: theme.palette.text.fixedGray, marginRight: "5px" }}
+                            sx={{ borderRadius: '50px', height: '33px', fontSize: "10px", 
+                                // ,
+                                 marginRight: "5px" }}
                         >
-                            <MenuItem value="" disabled sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >
+                            <MenuItem value="" disabled sx={{ fontSize: "10px",
+                                //   
+                                 }} >
                                 {t("month")}
                             </MenuItem>
-                            <MenuItem value="01" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>01</MenuItem>
-                            <MenuItem value="02" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>02</MenuItem>
-                            <MenuItem value="03" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>03</MenuItem>
-                            <MenuItem value="04" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>04</MenuItem>
-                            <MenuItem value="05" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>05</MenuItem>
-                            <MenuItem value="06" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>06</MenuItem>
-                            <MenuItem value="07" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>07</MenuItem>
-                            <MenuItem value="08" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>08</MenuItem>
-                            <MenuItem value="09" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>09</MenuItem>
-                            <MenuItem value="10" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>10</MenuItem>
-                            <MenuItem value="11" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>11</MenuItem>
-                            <MenuItem value="12" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>12</MenuItem>
+                            <MenuItem value="01" sx={{ fontSize: "10px",  }}>01</MenuItem>
+                            <MenuItem value="02" sx={{ fontSize: "10px",  }}>02</MenuItem>
+                            <MenuItem value="03" sx={{ fontSize: "10px",  }}>03</MenuItem>
+                            <MenuItem value="04" sx={{ fontSize: "10px",  }}>04</MenuItem>
+                            <MenuItem value="05" sx={{ fontSize: "10px",  }}>05</MenuItem>
+                            <MenuItem value="06" sx={{ fontSize: "10px",  }}>06</MenuItem>
+                            <MenuItem value="07" sx={{ fontSize: "10px",  }}>07</MenuItem>
+                            <MenuItem value="08" sx={{ fontSize: "10px",  }}>08</MenuItem>
+                            <MenuItem value="09" sx={{ fontSize: "10px",  }}>09</MenuItem>
+                            <MenuItem value="10" sx={{ fontSize: "10px",  }}>10</MenuItem>
+                            <MenuItem value="11" sx={{ fontSize: "10px",  }}>11</MenuItem>
+                            <MenuItem value="12" sx={{ fontSize: "10px",  }}>12</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
@@ -225,14 +242,13 @@ const SignUp = () => {
                                 borderRadius: '50px',
                                 height: '33px',
                                 fontSize: "10px",
-                                color: theme.palette.text.fixedGray,
                                 marginRight: "5px"
                             }}
                         >
                             <MenuItem
                                 value=""
                                 disabled
-                                sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}
+                                sx={{ fontSize: "10px",  }}
                             >
                                 {t("day")}
                             </MenuItem>
@@ -243,7 +259,7 @@ const SignUp = () => {
                                     <MenuItem
                                         key={dayStr}
                                         value={dayStr}
-                                        sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}
+                                        sx={{ fontSize: "10px",  }}
                                     >
                                         {dayStr}
                                     </MenuItem>
@@ -261,13 +277,13 @@ const SignUp = () => {
                             value={year}
                             onChange={(e) => setYear(e.target.value)}
                             displayEmpty
-                            sx={{ borderRadius: '50px', height: '33px', fontSize: "10px", color: theme.palette.text.fixedGray }}
+                            sx={{ borderRadius: '50px', height: '33px', fontSize: "10px",  }}
                         >
-                            <MenuItem value="" disabled sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>
+                            <MenuItem value="" disabled sx={{ fontSize: "10px",  }}>
                                 {t("year")}
                             </MenuItem>
                             {Array.from({ length: 2025 - 2000 + 1 }, (_, i) => (
-                                <MenuItem key={i + 2000} value={i + 2000} sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}>
+                                <MenuItem key={i + 2000} value={i + 2000} sx={{ fontSize: "10px",  }}>
                                     {i + 2000}
                                 </MenuItem>
                             ))}
@@ -283,10 +299,10 @@ const SignUp = () => {
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
                     displayEmpty
-                    sx={{ color: theme.palette.text.fixedGray, borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px", }}
+                    sx={{  borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px", }}
                     startAdornment={
                         <InputAdornment position="start">
-                            <span class="icon-map" style={{ color: theme.palette.text.fixedGray, fontSize: "14px" }}></span>
+                            <span class="icon-map" style={{  fontSize: "14px" }}></span>
                         </InputAdornment>
                     }
                 >
@@ -294,13 +310,13 @@ const SignUp = () => {
                         {t("country")}
                     </MenuItem>
                     {Governorates[Country.EGYPT].map((governorate) => (
-                        <MenuItem key={governorate} value={governorate} sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >
+                        <MenuItem key={governorate} value={governorate} sx={{ fontSize: "10px",  }} >
                             {governorate}
                         </MenuItem>
                     ))}
-                    <MenuItem value="US" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >United States</MenuItem>
-                    <MenuItem value="CA" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >Canada</MenuItem>
-                    <MenuItem value="UK" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >United Kingdom</MenuItem>
+                    <MenuItem value="US" sx={{ fontSize: "10px",  }} >United States</MenuItem>
+                    <MenuItem value="CA" sx={{ fontSize: "10px",  }} >Canada</MenuItem>
+                    <MenuItem value="UK" sx={{ fontSize: "10px",  }} >United Kingdom</MenuItem>
                 </Select>
             </FormControl>
             {/* <FormControl variant="outlined" fullWidth  >
@@ -309,7 +325,7 @@ const SignUp = () => {
                     value={user_type}
                     onChange={(e) => setUserType(e.target.value)}
                     displayEmpty
-                    sx={{ borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px", color: theme.palette.text.fixedGray }}
+                    sx={{ borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px",  }}
                     startAdornment={
                         <InputAdornment position="start">
                             <PeopleOutlineIcon style={{ fontSize: "18px" }}></PeopleOutlineIcon>
@@ -319,9 +335,9 @@ const SignUp = () => {
                     <MenuItem value="" disabled >
                         {t("userType")}
                     </MenuItem>
-                    <MenuItem value="qtap_admins" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >{t("admin")}</MenuItem>
-                    <MenuItem value="qtap_clients" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >{t("client")}</MenuItem>
-                    <MenuItem value="qtap_affiliates" sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }} >{t("affiliate")}</MenuItem>
+                    <MenuItem value="qtap_admins" sx={{ fontSize: "10px",  }} >{t("admin")}</MenuItem>
+                    <MenuItem value="qtap_clients" sx={{ fontSize: "10px",  }} >{t("client")}</MenuItem>
+                    <MenuItem value="qtap_affiliates" sx={{ fontSize: "10px",  }} >{t("affiliate")}</MenuItem>
                 </Select>
             </FormControl> */}
 
@@ -333,7 +349,7 @@ const SignUp = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     startAdornment={
                         <InputAdornment position="start">
-                            <span class="icon-padlock" style={{ color: theme.palette.text.fixedGray, fontSize: "18px" }}></span>
+                            <span class="icon-padlock" style={{ fontSize: "18px" }}></span>
                         </InputAdornment>
                     }
                     endAdornment={
@@ -343,16 +359,16 @@ const SignUp = () => {
                                 onClick={handleClickShowPassword}
                                 edge="end"
                             >
-                                {showPassword ? <VisibilityOffOutlinedIcon sx={{ color: theme.palette.text.fixedGray, fontSize: "18px" }} />
+                                {showPassword ? <VisibilityOffOutlinedIcon sx={{  fontSize: "18px" }} />
                                     :
-                                    <span class="icon-show" style={{ color: theme.palette.text.fixedGray, fontSize: "16px" }}></span>
+                                    <span class="icon-show" style={{  fontSize: "16px" }}></span>
                                 }
 
                             </IconButton>
                         </InputAdornment>
                     }
                     placeholder={t("password")}
-                    sx={{ color: theme.palette.text.fixedGray, borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
+                    sx={{  borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
                 />
             </FormControl>
 
@@ -365,7 +381,7 @@ const SignUp = () => {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     startAdornment={
                         <InputAdornment position="start">
-                            <span class="icon-padlock" style={{ color: theme.palette.text.fixedGray, fontSize: "18px" }}></span>
+                            <span class="icon-padlock" style={{  fontSize: "18px" }}></span>
 
                         </InputAdornment>
                     }
@@ -376,15 +392,15 @@ const SignUp = () => {
                                 onClick={handleClickShowConfirmPassword}
                                 edge="end"
                             >
-                                {showPassword ? <VisibilityOffOutlinedIcon sx={{ color: theme.palette.text.fixedGray, fontSize: "18px" }} />
+                                {showPassword ? <VisibilityOffOutlinedIcon sx={{  fontSize: "18px" }} />
                                     :
-                                    <span class="icon-show" style={{ color: theme.palette.text.fixedGray, fontSize: "16px" }}></span>
+                                    <span class="icon-show" style={{  fontSize: "16px" }}></span>
                                 }
                             </IconButton>
                         </InputAdornment>
                     }
                     placeholder={t("confirmPass")}
-                    sx={{ color: theme.palette.text.fixedGray, borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
+                    sx={{  borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
                 />
             </FormControl>
 
@@ -395,9 +411,9 @@ const SignUp = () => {
                         transform: "scale(0.7)"
                     }}
                 />}
-                label={<Typography sx={{ fontSize: "10px", color: theme.palette.text.fixedGray }}> {t("registerAgree")}</Typography>}
+                label={<Typography sx={{ fontSize: "10px",  }}> {t("registerAgree")}</Typography>}
             />
-            {apiError && <Typography className='error-color' sx={{  fontSize: '13px', textAlign: "center" }}>{apiError}</Typography>}
+            {apiError && <Typography className='error-color' sx={{ fontSize: '13px', textAlign: "center" }}>{apiError}</Typography>}
             {apiSuccess && <Typography sx={{ color: theme.palette.text.green, fontSize: '13px', textAlign: "center" }}>{apiSuccess}</Typography>}
             <Button
                 disabled={isLoading}

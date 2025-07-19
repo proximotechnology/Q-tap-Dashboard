@@ -11,6 +11,12 @@ const DarkModeSwitch = () => {
     const theme = useTheme();
     const selectedBranchID = useSelector(selectSelectedBranch)
     const selectedBranch = useSelector(selectBranchById(selectedBranchID))
+  
+
+    useEffect(() => {
+        document.body.classList.toggle('dark', mode === 'dark');
+        document.body.classList.toggle('light', mode === 'light');
+    }, [mode]);
 
     useEffect(() => {
         // "dark" or "white" api
@@ -23,10 +29,10 @@ const DarkModeSwitch = () => {
         }
     }, [selectedBranch?.default_mode])
     return (
-        <Box sx={{  display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
+        <Box sx={{ display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center" }}>
             <LightModeOutlinedIcon onClick={toggleColorMode}
                 sx={{ fontSize: "20px", fill: mode === 'light' ? '#ff9800' : theme.palette.text.gray }} />
-            
+
             <Switch
                 checked={mode === 'dark'}
                 onChange={toggleColorMode}
@@ -35,7 +41,7 @@ const DarkModeSwitch = () => {
                     padding: "0px",
                     // width: "100%",
                     // display: "flex",
-                    
+
                     alignItems: "center",
                     transform: 'scale(0.8)', // تصغير الحجم العام
                     '& .MuiSwitch-switchBase': {
@@ -56,7 +62,7 @@ const DarkModeSwitch = () => {
                     '& .MuiSwitch-track': {
                         borderRadius: 12,
                         height: 15,
-                        width:"100%", // تصغير المسار
+                        width: "100%", // تصغير المسار
                     },
                     '& .MuiSwitch-switchBase.Mui-checked': {
                         color: theme.palette.orangePrimary.main,

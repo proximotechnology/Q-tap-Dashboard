@@ -314,7 +314,7 @@ function App() {
           path: "feedback",
           element: <Feedback />,
         },
-         {
+        {
           index: true,
           path: "/client-plan",
           element: <ClientPlan />,

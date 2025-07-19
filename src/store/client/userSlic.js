@@ -25,7 +25,7 @@ export const handleClientLoginRedux = createAsyncThunk(
             };
             console.log()
             const response = await axios.post(`${BASE_URL}login`, data, {
-                withCredentials: true,
+                // withCredentials: true,
                 headers: { 'Content-Type': 'application/json' },
             });
 

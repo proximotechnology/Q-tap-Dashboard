@@ -3,6 +3,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { getDesignTokens } from './theme'; // Your custom theme generator
 import { useTranslation } from 'react-i18next';
+import { GlobalStyles } from '@mui/material';
 
 const ColorModeContext = createContext();
 
@@ -17,7 +18,11 @@ export const ThemeModeProvider = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
+    const root = document.documentElement;
+    root.style.setProperty('--bg-color', theme.palette.background.paper);
+    root.style.setProperty('--text-color', theme.palette.text.primary);
   }, [mode]);
+
 
   const toggleColorMode = () => {
     setMode((prev) => (prev === "light" ? "dark" : "light"));
@@ -41,9 +46,24 @@ export const ThemeModeProvider = ({ children }) => {
     }
   ), [mode, isArabic]);
 
+  const autofillStyles = {
+    WebkitBoxShadow: `0 0 0 1000px ${theme.palette.background.paper} inset`,
+    WebkitTextFillColor: `${theme.palette.text.primary} !important`,
+    caretColor: theme.palette.text.primary,
+    transition: "background-color 9999s ease-in-out 0s",
+    borderRadius: 4,
+  };
+
   return (
     <ColorModeContext.Provider value={{ mode, toggleColorMode, setTheme }}>
       <ThemeProvider theme={theme}>
+        <GlobalStyles
+          styles={{
+            "input:-webkit-autofill": autofillStyles,
+            "input:-webkit-autofill:hover": autofillStyles,
+            "input:-webkit-autofill:focus": autofillStyles,
+          }}
+        />
         <CssBaseline />
         {children}
       </ThemeProvider>

@@ -117,7 +117,7 @@ export const Products = () => {
 
     return (
         <Box marginTop={"50px"} padding={"50px"} flexGrow={1}>
-            <Typography variant="body1" sx={{ fontSize: "18px", color: theme.palette.secondaryColor.main }}>
+            <Typography variant="body1" sx={{ fontSize: "18px" }}>
                 {t("selectProduct")}
             </Typography>
             <Divider />

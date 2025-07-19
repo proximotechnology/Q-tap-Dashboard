@@ -1,16 +1,21 @@
-import React  from 'react'
+import React from 'react'
 import { Reset } from './Reset'
 import QtapLogo from '../QtapLogo'
-import { Box,Grid } from "@mui/material";
+import { Box, Grid, useTheme } from "@mui/material";
 import Language from '../dashboard/TopBar/Language';
 
 
 export const ResetPage = () => {
+  const theme = useTheme()
   return (
     <Box>
       <Box >
         <Grid container spacing={0}
-          sx={{ backgroundImage: "url(/images/Rectangle.png)", backgroundSize: "100% 100%", width: "100%" }}>
+          sx={{
+            backgroundImage: theme.palette.mode === 'light' ? "url(/images/Rectangle.png)" : undefined,
+            backgroundColor: theme.palette.mode === 'light' ? undefined : theme.palette.background.default,
+            backgroundSize: "100% 100%", width: "100%"
+          }}>
           <Grid item xs={12} md={6}>
             <QtapLogo />
           </Grid>
@@ -19,11 +24,11 @@ export const ResetPage = () => {
               position: "absolute", top: "30px", right: "80px", zIndex: 2000,
               cursor: "pointer", display: "flex", alignItems: "center"
             }}>
-                          <img
-              src="/images/help.jpg"
-              alt="icon"
-              style={{ width: "20px", height: "20px", marginRight: "30px" }}
-            />
+              <img
+                src="/images/help.jpg"
+                alt="icon"
+                style={{ width: "20px", height: "20px", marginRight: "30px" }}
+              />
 
               <Language />
             </Box>

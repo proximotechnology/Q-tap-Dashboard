@@ -62,7 +62,7 @@ export const Reset = () => {
                 variant="body2"
                 sx={{
                     fontSize: '13px',
-                    color: theme.palette.secondaryColor.main,
+                    // color: theme.palette.secondaryColor.main,
                     margin: '50px 0px 8px 0px',
                     letterSpacing: '12px',
                     fontFamily: 'serif',

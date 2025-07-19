@@ -1,3 +1,40 @@
+const textColorDark = {// theme.palette.text.
+  white: '#000000', // White text for better contrast
+  gray: '#FFFFFF', // Lighter gray text for secondary content //#D8E0E0
+  black: "#FFFFFF",
+  fixedGray: '#575756',
+  fixedWhite: '#FFFFFF', // White text for better contrast
+  fixedBlack: "#000000",
+  fixedDarkOrange: '#E57C00',
+  fixedDarkBlue: "#222240",
+
+  black_white: "#FFFFFF",//theme.palette.text.white_black
+  gray_white: "#FFFFFF", // #575756
+  dGray27_white: "#FFFFFF",// #272725
+  blue: 'blue'
+  ,
+  gray_light: 'rgb(191, 191, 188)',
+
+}
+
+const textColorLight = {//theme.palette.text.white
+  white: '#ffffff',
+  black: "#000",
+  gray: '#575756',
+  blue: 'rgb(3, 3, 80)',// login form
+  fixedDarkOrange: '#E57C00',
+  fixedDarkBlue: "#222240",
+  fixedGray: '#575756',
+  fixedWhite: '#FFFFFF',
+  fixedBlack: "#000",
+  red: 'red',
+  green: 'green',
+  black_white: "black",
+  gray_white: "gray",
+  gray_light: '#575756',
+
+}
+
 export const getDesignTokens = (mode) => ({
   palette: {
     mode,
@@ -42,23 +79,7 @@ export const getDesignTokens = (mode) => ({
           yellow: '#fbc927',
           deepOrange: '#f05a27'
         },
-        text: {//theme.palette.text.white
-          white: '#ffffff',
-          black: "#000",
-          gray: '#575756',
-          blue: 'rgb(3, 3, 80)',// login form
-          fixedDarkOrange: '#E57C00',
-          fixedDarkBlue:"#222240",
-          fixedGray: '#575756',
-          fixedWhite: '#ffffff',
-          fixedBlack: "#000",
-          red: 'red',
-          green: 'green',
-          black_white: "black",
-          gray_white: "gray",
-          gray_light: '#575756',
 
-        },
         chart: {
           pink: '#AD4181', pinkLight: "#ffaed8",
           blue: "#2EA6F7", blueLight: "#aad6f3",
@@ -116,24 +137,7 @@ export const getDesignTokens = (mode) => ({
           yellow: '#000',
           deepOrange: '#000'
         },
-        text: {// theme.palette.text.
-          white: '#000000', // White text for better contrast
-          gray: '#FFFFFF', // Lighter gray text for secondary content //#D8E0E0
-          black: "#FFFFFF",
-          fixedGray: '#575756',
-          fixedWhite: '#FFFFFF', // White text for better contrast
-          fixedBlack: "#000000",
-          fixedDarkOrange: '#E57C00',
-          fixedDarkBlue:"#222240",
 
-          black_white: "#FFFFFF",//theme.palette.text.white_black
-          gray_white: "#FFFFFF", // #575756
-          dGray27_white: "#FFFFFF",// #272725
-          blue: 'blue'
-          ,
-          gray_light: 'rgb(191, 191, 188)',
-
-        },
         chart: {
           pink: '#AD4181', pinkLight: "#ffaed8",
           blue: "#2EA6F7", blueLight: "#aad6f3",
@@ -150,5 +154,17 @@ export const getDesignTokens = (mode) => ({
         }
       }
     ),
+    background: {
+      default: mode === "light" ? "#ffffff" : "#121212",
+      paper: mode === "light" ? "#fff" : "#1e1e1e",
+    },
+    text: {
+      primary: mode === "light" ? "#000" : "#fff",
+      secondary: mode === "light" ? "#444" : "#bbb",
+      ...(mode === "light" ? textColorLight : textColorDark)
+    },
+    primary: {
+      main: "#E57C00", // MUI will use this for inputs/buttons/etc.
+    },
   },
 });

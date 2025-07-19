@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import QtapLogo from "../Component/QtapLogo";
 import QtapHome from "../Component/QtapHome";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, useTheme } from "@mui/material";
 
 import Language from "../Component/dashboard/TopBar/Language";
 import { getUserDataFromCookies } from "../api/Client/getUserDataFromCookies";
@@ -13,6 +13,7 @@ export const HomePage = () => {
   const [selectedTab, setSelectedTab] = useState("login");
   const navigate = useNavigate()
   const { isAuthenticated } = useAuthStore()
+  const theme = useTheme();
 
   const checkLogin = async () => {
     try {
@@ -35,7 +36,8 @@ export const HomePage = () => {
   return (
     <Box
       sx={{
-        backgroundImage: "url(/images/Rectangle.png)",
+        backgroundImage: theme.palette.mode === 'light' ? "url(/images/Rectangle.png)" : undefined,
+        backgroundColor: theme.palette.mode === 'light' ? undefined : theme.palette.background.default,
         backgroundSize: "100% 100%",
         width: "100%",
       }}
