@@ -1,12 +1,10 @@
 
 import axios from "axios"
 import { BASE_URL } from "../../../utils/constants"
-import { customErrorLog } from "../../../utils/customErrorLog"
 
-export const confirmRenewPlanCash = async ( data ) => {
-    const token = localStorage.getItem("Token")
+export const getClientPlanRequests = async ({ token }) => {
     try {
-        const response = await axios.post(`${BASE_URL}renewal_package_cash`, data, {
+        const response = await axios.get(`${BASE_URL}client/subscribtion/chang_request/get_all_my_request`, {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,

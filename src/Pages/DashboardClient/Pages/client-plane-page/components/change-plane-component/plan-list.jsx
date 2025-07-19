@@ -1,9 +1,10 @@
 import { ChevronLeft } from "lucide-react";
 import { usePlanPricingStore } from "../../../../../../store/zustand-store/client-user-plan";
 import PlanListItem from "./plan-list-item";
+import { usePlanPricing } from "../../../../../../Hooks/Queries/clientDashBoard/plan/usePlanPricing";
+import { useEffect } from "react";
 
-const PlanList = ({ data, toggleChangePlane, handleNewPlanConfirmed }) => {
-
+const PlanList = ({ data, handleNewPlanConfirmed }) => {
   const {
     selectedPlan,
     setSelectedPlan,
@@ -27,11 +28,17 @@ const PlanList = ({ data, toggleChangePlane, handleNewPlanConfirmed }) => {
   };
 
 
+  useEffect(() => {
+    return () => {
+      reset(); // This will be called on unmount
+    };
+  }, []);
+
   return (
     <>
-      <div className="back-button-icon" onClick={() => toggleChangePlane()}>
+      {/* <div className="back-button-icon" onClick={() => toggleChangePlane()}>
         <ChevronLeft size={"24px"} strokeWidth={2.25} />
-      </div>
+      </div> */}
       <div className="plan-list">
         {
           data?.data?.data?.map((plan) => {
