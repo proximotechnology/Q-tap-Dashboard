@@ -58,11 +58,12 @@ export const HomePage = () => {
               zIndex: "2000",
             }}
           >
-            <img
+            {/* <img
               src="/images/help.jpg"
               alt="icon"
               style={{ width: "20px", height: "20px", marginRight: "30px" }}
-            />
+            /> */}
+            <SupportChat />
             <Language />
 
           </Box>

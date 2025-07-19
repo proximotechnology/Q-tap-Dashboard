@@ -5,8 +5,9 @@ export const getDesignTokens = (mode) => ({
       ? {
         orangePrimary: {
           main: "#E57C00", //theme.palette.orangePrimary.main
+          secondary: "#ff9800",
           icon: "#ff9800",
-          secondary: "#000"
+          // secondary: "#000"
         },
         secondaryColor: {
           main: "#222240", //theme.palette.secondaryColor.main
@@ -74,8 +75,9 @@ export const getDesignTokens = (mode) => ({
       {
         orangePrimary: {
           main: "#E57C00", //theme.palette.orangePrimary.main
+          secondary: "#ff9800",
           icon: "#000",
-          secondary: "#000"
+          // secondary: "#000"
         },
         secondaryColor: {
           main: "#000", //theme.palette.secondaryColor.main
