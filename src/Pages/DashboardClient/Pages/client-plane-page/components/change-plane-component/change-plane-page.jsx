@@ -1,6 +1,6 @@
 import { ChevronLeft } from "lucide-react"
 import PlanList from "./plan-list"
-import { usePlanPricing } from "../../../../../../Hooks/usePlanPricing"
+import { usePlanPricing } from "../../../../../../Hooks/Queries/usePlanPricing"
 import { useState } from "react"
 import ConfirmNewPlan from "./confirm-new-plan"
 

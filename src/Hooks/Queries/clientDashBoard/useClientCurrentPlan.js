@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getClientCurrentPlan } from "../../api/Client/plan/getClientCurrentPlan";
+import { getClientCurrentPlan } from "../../../api/Client/plan/getClientCurrentPlan";
 
 export const useClientCurrentPlan = () => {
     return useQuery({

@@ -10,9 +10,9 @@ export const PaymentPage = () => {
   return (
     <Grid container position={'relative'}
       sx={{ backgroundImage: "url(/images/Rectangle.png)", backgroundSize: "100% 100%", width: "100%", height: "100vh" }}>
-      <Grid item xs={12} md={4} position={'relative'}>
+      {/* <Grid item xs={12} md={4} position={'relative'}> */}
         <SetupPage />
-      </Grid>
+      {/* </Grid> */}
 
       <Grid item xs={12} md={8} >
         <Box sx={{

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useColorMode } from "../context/ThemeModeProvider";
+import { useColorMode } from "../../context/ThemeModeProvider";
 
 
 const useRegisterChangeThemeMode = (mode) => {

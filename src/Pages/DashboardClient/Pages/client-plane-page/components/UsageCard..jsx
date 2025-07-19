@@ -1,5 +1,5 @@
-import { useClientCurrentPlan } from '../../../../../Hooks/clientDashBoard/useClientCurrentPlan';
-import { usePlanPricing } from '../../../../../Hooks/usePlanPricing';
+import { useClientCurrentPlan } from '../../../../../Hooks/Queries/clientDashBoard/useClientCurrentPlan';
+import { usePlanPricing } from '../../../../../Hooks/Queries/usePlanPricing';
 import { customErrorLog } from '../../../../../utils/customErrorLog';
 
 

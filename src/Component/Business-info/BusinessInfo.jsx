@@ -21,7 +21,7 @@ import { Country, Governorates } from '../../utils/city';
 import { useSelector, useDispatch } from "react-redux";
 import { updateBusinessData, } from "../../store/register/businessSlice";
 import MapWithPin from '../../utils/MapWithPin';
-import useRegisterChangeThemeMode from '../../Hooks/useRegisterChangeThemeMode';
+import useRegisterChangeThemeMode from '../../Hooks/Queries/useRegisterChangeThemeMode';
 
 // تحديد الأيام بأحرف مختصرة للعرض
 const daysOfWeek = ['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr'];

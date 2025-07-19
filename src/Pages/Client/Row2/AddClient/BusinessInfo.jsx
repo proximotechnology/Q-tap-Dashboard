@@ -44,7 +44,7 @@ import { updateBusinessData, addBranch, selectBranch, clearBusinessData, setBran
 import { customErrorLog } from "../../../../utils/customErrorLog";
 import { Country, Governorates } from "../../../../utils/city";
 import { useColorMode } from "../../../../context/ThemeModeProvider";
-import useRegisterChangeThemeMode from "../../../../Hooks/useRegisterChangeThemeMode";
+import useRegisterChangeThemeMode from "../../../../Hooks/Queries/useRegisterChangeThemeMode";
 
 const daysOfWeek = ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"];
 const fullDaysOfWeek = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];

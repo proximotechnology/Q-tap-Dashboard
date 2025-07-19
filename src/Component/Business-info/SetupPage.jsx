@@ -53,7 +53,7 @@ export const SetupPage = () => {
 
     return (
 
-        <div style={{ width: "100%", height: "100%" }} >
+        <Grid container item xs={12} md={3} >
             <ImageContainer sx={{ width: '100%', height: "100%", display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'space-between', padding: '3rem' }}  >
                 <ChevronLeftOutlinedIcon onClick={() => navigate('/')}
                     sx={{ color: "white", fontSize: "40px", zIndex: "100" }}
@@ -81,7 +81,7 @@ export const SetupPage = () => {
                     <img src="/assets/qtapwhite.svg" alt="logo setup" style={{ width: "90px", height: "25px" }} />
                 </Box>
             </ImageContainer>
-        </div>
+        </Grid>
 
 
     )

@@ -7,6 +7,7 @@ import Language from "../Component/dashboard/TopBar/Language";
 import { getUserDataFromCookies } from "../api/Client/getUserDataFromCookies";
 import { useAuthStore } from "../store/zustand-store/authStore";
 import { useNavigate } from "react-router";
+import SupportChat from "../Component/chat/SupportChat";
 
 export const HomePage = () => {
   const [selectedTab, setSelectedTab] = useState("login");
