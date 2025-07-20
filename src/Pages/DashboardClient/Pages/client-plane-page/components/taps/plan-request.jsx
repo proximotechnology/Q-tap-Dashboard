@@ -15,26 +15,43 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { useClientGetPlanRequests } from "../../../../../../Hooks/Queries/clientDashBoard/plan/useClientGetPlanRequests"
 import { useAuthStore } from "../../../../../../store/zustand-store/authStore"
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useDeletePlanRequest } from '../../../../../../Hooks/Queries/clientDashBoard/plan/actions/useDeletePlanRequest';
+import { toast } from 'react-toastify';
+import { useQueryClient } from '@tanstack/react-query';
 
 
 
-function PlanCard({
-    actionType = "Renewal",
-    name = "Monthly Pro Plan",
-    status = "Active",
-    planDetails = {
-        storage: "50GB",
-        bandwidth: "100GB",
-        price: "$10/month"
-    }
-}) {
-    
+function PlanCard({ item }) {
+
+    const token = useAuthStore(state => state.userData.token)
+    const actionType = item?.action_type === 'renew' ? 'Renewal' : "Change"
+
+
+    const name = item?.pricing?.name
+    const planDetails = (item?.pricing)
+
+    const status = item?.status
+
     const [showDetails, setShowDetails] = useState(false);
-    const parsedFeature = JSON.parse(planDetails.feature)
+    const parsedFeature = JSON.parse(item.pricing.feature || '[]')
 
+    const queryClient = useQueryClient();
 
+    const { mutate, isPending } = useDeletePlanRequest()
 
-    const onDelete = () => {}
+    const onDelete = () => {
+        mutate({ token, request_id: item?.id },
+            {
+                onSuccess: (res) => {
+                    toast.success("delete success")
+                    queryClient.invalidateQueries({ queryKey: ['client-current-plan-request'] });
+                },
+                onError: (error) => {
+                    console.log(error)
+                },
+            }
+        )
+    }
     return (
         <Card sx={{ maxWidth: 400, boxShadow: 4, borderRadius: 2 }}>
             <CardHeader
@@ -63,9 +80,10 @@ function PlanCard({
                         color="error"
                         size="small"
                         startIcon={<DeleteIcon />}
-                        onClick={onDelete}
+                        onClick={() => onDelete()}
+                        disabled={isPending}
                     >
-                        Delete
+                        {isPending ? "Loading..." : "Delete"}
                     </Button>
                 </Box>
             </CardActions>
@@ -95,10 +113,13 @@ function PlanCard({
 
 
 const PlanRequests = () => {
+
     const token = useAuthStore(state => state.userData.token)
+
     const { data, isPending } = useClientGetPlanRequests({ token })
+
     const currentRequests = data?.data?.requests?.data
-    console.log(currentRequests)
+
 
     if (isPending) {
         return "loading"
@@ -110,11 +131,9 @@ const PlanRequests = () => {
                 currentRequests.map(item => {
 
                     return (
-                        <PlanCard actionType={item?.action_type === 'renew' ? 'Renewal' : "Change"}
+                        <PlanCard
                             key={item?.id}
-                            name={item?.pricing?.name}
-                            planDetails={(item?.pricing)}
-                            status={item?.status} />
+                            item={item} />
                     )
                 })
             }

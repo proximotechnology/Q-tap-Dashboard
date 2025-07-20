@@ -30,9 +30,18 @@ export default function PlanTapLayout() {
                 <Tab label="Change Plan" />
             </Tabs>
 
-            <TabPanel value={value} index={0}> <UsageCard /></TabPanel>
-            <TabPanel value={value} index={1}><PlanRequests /></TabPanel>
-            <TabPanel value={value} index={2}><ChangePlan  /></TabPanel>
+            <TabPanel value={value} index={0}>
+                <UsageCard />
+            </TabPanel>
+
+            <TabPanel value={value} index={1}>
+                <PlanRequests />
+            </TabPanel>
+
+            <TabPanel value={value} index={2}>
+                <ChangePlan />
+            </TabPanel>
+            
         </Box>
     );
 }

@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 
 
-const ConfirmDialog = ({ isOpen, onClose }) => {
+const ConfirmDialog = ({ isOpen, onClose, onConfirm, isPending }) => {
   const dialogRef = useRef(null);
   const [isConfirming, setIsConfirming] = useState(false);
 
@@ -31,10 +31,7 @@ const ConfirmDialog = ({ isOpen, onClose }) => {
     };
   }, [isOpen, onClose]);
 
-  const onConfirm = async () => {
 
-
-  }
 
   if (!isOpen) return null;
   return (
@@ -53,39 +50,39 @@ const ConfirmDialog = ({ isOpen, onClose }) => {
           variant="contained"
           color="primary"
           onClick={onConfirm}
-          disabled={isConfirming}
+          disabled={isPending}
         >
-          {isConfirming ? "Loading..." : "Yes"}
+          {isPending ? "Loading..." : "Yes"}
         </Button>
         <Button
           variant="outlined"
           color="secondary"
           onClick={onClose}
-          disabled={isConfirming}
+          disabled={isPending}
         >
-          {isConfirming ? "Loading..." : "No"}
+          {isPending ? "Loading..." : "No"}
         </Button>
       </DialogActions>
     </Dialog>
   )
-  return (
-    <div className="dialog-backdrop">
-      <div className="dialog-box" ref={dialogRef}>
-        <h2 className="dialog-title">Are you sure?</h2>
-        <p className="dialog-message">
-          Changing  plan will result in <strong>keep any unused benefits</strong>.
-          Do you want to proceed?
-        </p>
+  // return (
+  //   <div className="dialog-backdrop">
+  //     <div className="dialog-box" ref={dialogRef}>
+  //       <h2 className="dialog-title">Are you sure?</h2>
+  //       <p className="dialog-message">
+  //         Changing  plan will result in <strong>keep any unused benefits</strong>.
+  //         Do you want to proceed?
+  //       </p>
 
-        <div className="dialog-actions">
-          <button className="main-button" onClick={onConfirm} disabled={isConfirming}> {isConfirming ? "Loading..." : "yes"}</button>
-          <button className="secondary-button" onClick={() => {
-            onClose()
-          }} disabled={isConfirming}> {isConfirming ? "Loading..." : "no"}</button>
-        </div>
-      </div>
-    </div>
-  );
+  //       <div className="dialog-actions">
+  //         <button className="main-button" onClick={onConfirm} disabled={isPending}> {isPending ? "Loading..." : "yes"}</button>
+  //         <button className="secondary-button" onClick={() => {
+  //           onClose()
+  //         }} disabled={isPending}> {isPending ? "Loading..." : "no"}</button>
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
 };
 
 export default ConfirmDialog;

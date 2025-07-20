@@ -10,14 +10,52 @@ import {
   Button,
   Box
 } from "@mui/material";
+import { useCreatePlanRequest } from '../../../../../../Hooks/Queries/clientDashBoard/plan/actions/useCreatePlanRequest';
+import { toast } from 'react-toastify';
 
 const UsageCard = () => {
   const token = useAuthStore(state => state.userData.token)
   const [isDialogOpen, setDialogOpen] = useState(false);
+  const [selectedRenewPlan, setSelectedRenewPlan] = useState(null);
 
   const { data, isPending } = useClientCurrentPlan({ token })
   const currentPlansData = data?.data?.subscriptions?.data
 
+  const { mutate, isPending: isPendingRenew } = useCreatePlanRequest()
+  const userData = useAuthStore(state => state.userData.user)
+
+
+  const onClickRenew = (plan) => {
+    setDialogOpen(true)
+    setSelectedRenewPlan(plan)
+  }
+  const onCloseRenewDialog = () => {
+    setDialogOpen(false)
+    setSelectedRenewPlan(null)
+  }
+
+  const createRenewPlanRequest = () => {
+    const payload = {
+      action_type: "renew",
+      pricing_way: selectedRenewPlan.pricing_way,
+      payment_method: "cash"
+    }
+    mutate({ token: token, payload, user_id: userData.user_id }, {
+      onSuccess: (res) => {
+        // console.log("success", res)
+        toast.success("your renew request success")
+        onCloseRenewDialog()
+      },
+      onError: (error) => {
+        // console.log("error", error?.response?.data)
+        if (error?.response?.data?.existing_request_id && error?.response?.data?.success === false) {
+          toast.error(error?.response?.data?.message)
+          console.log(error)
+          return;
+        }
+      }
+    })
+  }
 
   if (isPending) {
     return "loading"
@@ -38,7 +76,7 @@ const UsageCard = () => {
       const percentage = Math.min((remain / capacity) * 100, 100);
 
       return (
-        <Card sx={{ maxWidth: 400, p: 2, borderRadius: 2, boxShadow: 3 }}>
+        <Card key={items.id} sx={{ maxWidth: 400, p: 2, borderRadius: 2, boxShadow: 3 }}>
           <CardContent>
             <Typography variant="h6" gutterBottom>
               {name}
@@ -71,7 +109,7 @@ const UsageCard = () => {
               <Button
                 variant="outlined"
                 color="primary"
-                onClick={() => setDialogOpen(true)}
+                onClick={() => onClickRenew(items)}
                 fullWidth
               >
                 Renew Plan
@@ -80,7 +118,9 @@ const UsageCard = () => {
 
             <ConfirmDialog
               isOpen={isDialogOpen}
-              onClose={() => setDialogOpen(false)}
+              onClose={() => onCloseRenewDialog()}
+              onConfirm={() => createRenewPlanRequest()}
+              isPending={isPendingRenew}
             />
           </CardContent>
         </Card>

@@ -12,8 +12,12 @@ import {
     Stack,
     Card
 } from "@mui/material";
+import { useCreatePlanRequest } from '../../../../../../Hooks/Queries/clientDashBoard/plan/actions/useCreatePlanRequest';
+import { useAuthStore } from '../../../../../../store/zustand-store/authStore';
+import { toast } from 'react-toastify';
 
 const ConfirmNewPlan = ({ handleBackToSelectPlan }) => {
+
     const {
         selectedPlan,
         billingCycle,
@@ -21,13 +25,41 @@ const ConfirmNewPlan = ({ handleBackToSelectPlan }) => {
         setPaymentMethod,
         reset,
     } = usePlanPricingStore()
+
     const [imagePreview, setImagePreview] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(null);
 
-    const handleConfirm = async () => {
+    const userData = useAuthStore(state => state.userData)
+    const { mutate, isPending } = useCreatePlanRequest()
 
+    const handleConfirm = () => {
+
+        const payload = {
+            action_type: "upgrade",
+            pricing_way: billingCycle === "monthly" ? "monthly_price" : "yearly_price",
+            payment_method: "cash",
+            new_pricing_id: selectedPlan.id,
+        }
+
+        mutate({ payload, token: userData.token, user_id: userData.user.user_id },
+
+            {
+                onSuccess: (res) => {
+                    toast.success("plan change successfully wait for admin approve")
+                    handleCancel()
+                },
+                onError: (error) => {
+                    console.log(error)
+                    if (error?.response?.data?.existing_request_id && error?.response?.data?.success === false) {
+                        toast.error(error?.response?.data?.message)
+
+                        return;
+                    }
+                }
+            }
+        )
     };
 
     const handleCancel = () => {
