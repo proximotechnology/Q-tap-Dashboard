@@ -21,7 +21,7 @@ const registerCustomerInfoForChat = async ({ payload }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                withCredentials: true, // equivalent to fetch's credentials: 'include'
+                // withCredentials: true, // equivalent to fetch's credentials: 'include'
             }
         );
         return response;

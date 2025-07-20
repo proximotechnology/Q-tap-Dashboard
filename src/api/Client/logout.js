@@ -7,7 +7,7 @@ export const logout = async () => {
         const token = localStorage.getItem('Token'); // or get from Zustand, context, etc.
 
         const res = await axios.post(`${BASE_URL}logout`, null, {
-            withCredentials: true, // ✅ send cookies
+            // withCredentials: true, // ✅ send cookies
             headers: {
                 Authorization: `Bearer ${token}`, // ✅ add Bearer token
             }
