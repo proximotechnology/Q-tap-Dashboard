@@ -6,6 +6,8 @@ import {
 } from '@mui/material';
 
 import { UserInfoForm } from './UserInfoForm';
+import { usePlanPricingStore } from '../../store/zustand-store/user-chat-data-store';
+import ChatCard from './ChatCard';
 
 export default function SupportChat() {
     const [isOpen, setIsOpen] = useState(false);
@@ -15,7 +17,7 @@ export default function SupportChat() {
         setIsOpen(!isOpen);
     };
 
-
+    const { isLoged } = usePlanPricingStore()
     return (
         <>
             {/* Button renders inline in header */}
@@ -40,8 +42,12 @@ export default function SupportChat() {
                     }}
                 >
 
-                    <UserInfoForm toggleChat={toggleChat} />
-                    {/* <Chat /> */}
+                    {
+                        isLoged ?
+                            <ChatCard />
+                            :
+                            <UserInfoForm toggleChat={toggleChat} />
+                    }
                 </Box>
             )}
         </>

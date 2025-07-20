@@ -7,9 +7,10 @@ import {
     TextField,
     Typography,
 } from '@mui/material';
+import { useState } from 'react';
 
 
-export default  Chat = ({ }) => {
+const ChatCard = ({ }) => {
     const handleSend = () => {
         if (message.trim()) {
             console.log('Send message:', message);
@@ -56,3 +57,4 @@ export default  Chat = ({ }) => {
     )
 
 }
+export default ChatCard

@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
+import { useRegisterCustomerInfoForChat } from '../../Hooks/Queries/public/chat/useRegisterUserForChat';
 
 
 export function UserInfoForm({ toggleChat }) {
@@ -21,6 +22,7 @@ export function UserInfoForm({ toggleChat }) {
     });
     const [errors, setErrors] = useState({ email: '', phone: '', name: '' });
     const theme = useTheme()
+    const { mutate, isPending } = useRegisterCustomerInfoForChat()
 
     const handleChange = (e) => {
         setFormData(prev => ({
@@ -70,6 +72,16 @@ export function UserInfoForm({ toggleChat }) {
 
         if (valid) {
             console.log('Submitted data:', formData);
+            const payload = {
+                name: formData.name,
+                email: formData.email,
+                address: formData.address,
+                phone: formData.phone
+            }
+            mutate({ payload }, {
+                onSuccess: (res) => { console.log(res) },
+                onError: (error) => { console.log(error) },
+            })
         }
     };
 
@@ -141,8 +153,14 @@ export function UserInfoForm({ toggleChat }) {
                         rows={2}
                     />
 
-                    <Button type="submit" variant="contained" color="primary" sx={{ backgroundColor: theme.palette.orangePrimary.main, '&:hover': { backgroundColor: theme.palette.orangePrimary.secondary } }}>
-                        Submit
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        sx={{ backgroundColor: theme.palette.orangePrimary.main, '&:hover': { backgroundColor: theme.palette.orangePrimary.secondary } }}
+                        disabled={isPending}
+                    >
+                        {isPending ? "loading" : "Submit"}
                     </Button>
                 </Box>
                 {/* </Paper> */}

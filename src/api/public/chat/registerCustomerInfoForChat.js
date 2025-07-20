@@ -1,11 +1,22 @@
 import axios from "axios";
 import { BASE_URL } from "../../../utils/constants";
 
-export default registerCustomerInfoForChat = async () => {
+/* 
+  |-------------------------------
+  | body
+  |---------------------------
+  | name
+  | email
+  | phone
+  | address
+  |
+  |
+*/
+const registerCustomerInfoForChat = async ({ payload }) => {
     try {
         const response = await axios.post(
             `${BASE_URL}customer_info`,
-            userData,
+            payload,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -18,3 +29,5 @@ export default registerCustomerInfoForChat = async () => {
         throw error
     }
 }
+
+export default registerCustomerInfoForChat
