@@ -1,11 +1,19 @@
 import { ChevronLeft } from 'lucide-react'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { usePlanPricingStore } from '../../../../../../store/zustand-store/client-user-plan'
-import '../../css/confirmNewPlanePage.css'
-import { customErrorLog } from '../../../../../../utils/customErrorLog'
-import { printFormData } from '../../../../../../utils/utils'
+// import '../../css/confirmNewPlanePage.css'
 
-const ConfirmNewPlan = ({ handleBackToSelectPlan, closeChangePlan }) => {
+import {
+    Box,
+    IconButton,
+    Typography,
+    Button,
+    CircularProgress,
+    Stack,
+    Card
+} from "@mui/material";
+
+const ConfirmNewPlan = ({ handleBackToSelectPlan }) => {
     const {
         selectedPlan,
         billingCycle,
@@ -19,16 +27,76 @@ const ConfirmNewPlan = ({ handleBackToSelectPlan, closeChangePlan }) => {
     const [loading, setLoading] = useState(null);
 
     const handleConfirm = async () => {
-           
+
     };
 
     const handleCancel = () => {
         reset();
-        closeChangePlan()
+        handleBackToSelectPlan()
     };
 
 
-   
+    return (
+        <Box>
+            {/* Back button */}
+            <IconButton onClick={handleBackToSelectPlan}>
+                <ChevronLeft sx={{ fontSize: 24 }} />
+            </IconButton>
+
+            {/* Panel */}
+            <Card
+                sx={{
+                    border: "1px solid #ccc",
+                    borderRadius: 2,
+                    p: 3,
+                    mt: 2,
+                    maxWidth: 400,
+                    boxShadow: 2,
+                    // backgroundColor: "#fafafa"
+                }}
+            >
+                <Box mb={2}>
+                    <Typography variant="h6">
+                        {selectedPlan ? selectedPlan.name : "No plan selected"}
+                    </Typography>
+                    <Typography variant="body2" sx={{ my: 0.5 }}>
+                        {billingCycle}
+                    </Typography>
+                    <Typography variant="body2" sx={{ my: 0.5 }}>
+                        {billingCycle === "yearly"
+                            ? `${selectedPlan?.yearly_price}$`
+                            : `${selectedPlan?.monthly_price}$`}
+                    </Typography>
+                </Box>
+
+                {error && (
+                    <Typography variant="body2" color="error" mb={2}>
+                        {error}
+                    </Typography>
+                )}
+
+                {/* Buttons */}
+                <Stack direction="row" spacing={2}>
+                    <Button
+                        variant="outlined"
+                        color="inherit"
+                        onClick={handleCancel}
+                        disabled={loading}
+                    >
+                        {loading ? <CircularProgress size={20} /> : "Cancel"}
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleConfirm}
+                        disabled={loading}
+                    >
+                        {loading ? <CircularProgress size={20} /> : "Confirm"}
+                    </Button>
+                </Stack>
+            </Card>
+        </Box>
+    )
     return (
         <div>
             <div className="back-button-icon" onClick={() => handleBackToSelectPlan()}>
@@ -37,8 +105,8 @@ const ConfirmNewPlan = ({ handleBackToSelectPlan, closeChangePlan }) => {
             <div className="checkout-panel">
                 <div className="panel-content">
                     <p className="plan-name">{selectedPlan ? selectedPlan.name : 'No plan selected'}</p>
-                    <p className="billing-cycle" style={{margin:"2px"}} >{billingCycle}</p>
-                    <p className="billing-cycle" style={{margin:"2px"}} >{billingCycle === "yearly" ? selectedPlan?.yearly_price + "$" : selectedPlan?.monthly_price + "$"}</p>
+                    <p className="billing-cycle" style={{ margin: "2px" }} >{billingCycle}</p>
+                    <p className="billing-cycle" style={{ margin: "2px" }} >{billingCycle === "yearly" ? selectedPlan?.yearly_price + "$" : selectedPlan?.monthly_price + "$"}</p>
 
                 </div>
                 <p className="p-0 m-0" style={{ color: "red" }}>{error || ""}</p>

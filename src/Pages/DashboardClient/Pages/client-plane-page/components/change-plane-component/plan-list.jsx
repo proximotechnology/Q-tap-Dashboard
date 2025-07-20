@@ -3,6 +3,7 @@ import { usePlanPricingStore } from "../../../../../../store/zustand-store/clien
 import PlanListItem from "./plan-list-item";
 import { usePlanPricing } from "../../../../../../Hooks/Queries/clientDashBoard/plan/usePlanPricing";
 import { useEffect } from "react";
+import { Stack, Typography, Paper } from '@mui/material';
 
 const PlanList = ({ data, handleNewPlanConfirmed }) => {
   const {
@@ -21,19 +22,37 @@ const PlanList = ({ data, handleNewPlanConfirmed }) => {
       else {
         reset()
         setSelectedPlan(plan)
+        console.log("select plan")
       }
     } else {
       setSelectedPlan(plan)
+      console.log("select plan")
+
     }
   };
 
-
-  useEffect(() => {
-    return () => {
-      reset(); // This will be called on unmount
-    };
-  }, []);
-
+  return (
+    // Inside your component
+    <Stack spacing={2}>
+      {data?.data?.data?.length ? (
+        data.data.data.map((plan) => {
+          const isSelected = selectedPlan?.id === plan.id;
+          return (
+            <Paper elevation={3} key={plan.id} sx={{ p: 2, borderRadius: 2 }}>
+              <PlanListItem
+                plan={plan}
+                isSelected={isSelected}
+                onSelect={() => toggleSelect(plan)}
+                handleNewPlanConfirmed={handleNewPlanConfirmed}
+              />
+            </Paper>
+          );
+        })
+      ) : (
+        <Typography variant="body1">No plans available</Typography>
+      )}
+    </Stack>
+  )
   return (
     <>
       {/* <div className="back-button-icon" onClick={() => toggleChangePlane()}>
