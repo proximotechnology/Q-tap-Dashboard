@@ -23,11 +23,12 @@ export const Branches = () => {
 
   const dispatch = useDispatch();
   const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
-  
+
   const navigate = useNavigate();
 
   const deleteBranch = (index) => {
-    dispatch(setBranches((prevBranches) => prevBranches.filter((_, i) => i !== index)));
+    const updatedBranches = branches.filter((_, i) => i !== index);
+    dispatch(setBranches(updatedBranches));
   };
 
   const { t } = useTranslation()
@@ -45,14 +46,16 @@ export const Branches = () => {
 
       <Box sx={{ display: 'flex', marginTop: { xs: '20px', md: '50px' }, marginInlineStart: '30px', flexWrap: 'wrap' }}>
         {/* Display existing branches */}
-        {branches.map((branch, index) => (
+        {(branches || []).map((branch, index) => (
           <Box
             className={styles.card}
             key={index}
             sx={{
-              width: { xs: '100%', sm: '45%', md: '140px' },
+              width: { xs: '100%', sm: '45%', md: '200px' },
               marginRight: { sm: '20px' },
-              height: '140px',
+              height: '200px',
+              minHeight: "200px",
+              minWidth: '200px',
               borderRadius: '20px',
               backgroundColor: theme.palette.secondaryColor.main,
               marginBottom: '20px',
@@ -89,8 +92,10 @@ export const Branches = () => {
         <Box
           onClick={() => navigate('/business-info')}
           sx={{
-            width: { xs: '100%', sm: '45%', md: '140px' },
-            height: '140px',
+            width: { xs: '100%', sm: '45%', md: '200px' },
+            height: '200px',
+            minHeight: "200px",
+            minWidth: '200px',
             borderRadius: '20px',
             border: '1px solid gray',
             display: 'flex',

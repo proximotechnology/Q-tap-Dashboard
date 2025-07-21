@@ -207,7 +207,7 @@ export const BusinessInfo = () => {
     };
     useRegisterChangeThemeMode(mode)
     return (
-        <Box marginTop={"50px"} padding={"20px 0 0 40px "}>
+        <Box marginTop={"50px"} padding={"20px 0 0 40px "} style={{}}>
             <Typography variant="body1" sx={{ fontSize: "18px" }}>
                 {t("busnessInfo")}
             </Typography>
@@ -221,6 +221,7 @@ export const BusinessInfo = () => {
                                 fullWidth
                                 placeholder={t("businessName")}
                                 value={businessName}
+                                autoComplete="off"
                                 onChange={(e) => setBusinessName(e.target.value)}
                                 InputProps={{
                                     startAdornment: (
@@ -236,6 +237,7 @@ export const BusinessInfo = () => {
                                 fullWidth
                                 placeholder={t("website")}
                                 value={website}
+                                autoComplete="off"
                                 onChange={(e) => setWebsite(e.target.value)}
                                 InputProps={{
                                     startAdornment: (
@@ -251,6 +253,7 @@ export const BusinessInfo = () => {
                                 fullWidth
                                 placeholder={t("businessEmail")}
                                 value={businessEmail}
+                                autoComplete="off"
                                 onChange={(e) => setBusinessEmail(e.target.value)}
                                 InputProps={{
                                     startAdornment: (

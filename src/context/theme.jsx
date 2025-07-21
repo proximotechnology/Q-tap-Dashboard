@@ -154,26 +154,6 @@ export const getDesignTokens = (mode) => ({
         }
       }
     ),
-    components: {
-      MuiOutlinedInput: {
-        styleOverrides: {
-          input: {
-            '&:-webkit-autofill': {
-              WebkitBoxShadow: mode === 'light'
-                ? '0 0 0 100px #ffffff inset'
-                : '0 0 0 100px #1e1e1e inset',
-              WebkitTextFillColor: mode === 'light' ? '#000' : '#fff',
-              caretColor: mode === 'light' ? '#000' : '#fff',
-            },
-            '&:-webkit-autofill:focus': {
-              WebkitBoxShadow: mode === 'light'
-                ? '0 0 0 100px #ffffff inset'
-                : '0 0 0 100px #1e1e1e inset',
-            },
-          },
-        },
-      },
-    },
     background: {
       default: mode === "light" ? "#ffffff" : "#121212",
       paper: mode === "light" ? "#fff" : "#1e1e1e",

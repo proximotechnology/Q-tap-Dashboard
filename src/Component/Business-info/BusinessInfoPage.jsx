@@ -12,7 +12,7 @@ export const BusinessInfoPage = () => {
   return (
     <Grid container
       sx={{
-        backgroundSize: "100% 100%", width: "100%", height: "100vh",
+        backgroundSize: "100% 100%", width: "100%", minHeight: "100vh",
         backgroundImage: theme.palette.mode === 'light' ? "url(/images/Rectangle.png)" : undefined,
         backgroundColor: theme.palette.mode === 'light' ? undefined : theme.palette.background.default,
 
