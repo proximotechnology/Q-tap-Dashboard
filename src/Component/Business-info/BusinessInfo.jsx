@@ -520,9 +520,14 @@ export const BusinessInfo = () => {
                                 </span>
                                 {t("pinYourLocation")}
                             </Button> */}
-                            {console.log(pos)}
-                            <MapWithPin isMapOpen={isMapOpen} setIsMapOpen={setIsMapOpen} setPos={setPos} currentPos={{latitude: pos?.lat,
-            longitude: pos?.lng,}}/>
+
+                            <MapWithPin
+                                isMapOpen={isMapOpen}
+                                setIsMapOpen={setIsMapOpen}
+                                setPos={setPos}
+                                currentPos={{ latitude: pos?.lat, longitude: pos?.lng, }}
+                            />
+
                             <Box sx={{ marginTop: "6px", display: 'flex', justifyContent: 'space-between', alignItems: "center" }}>
                                 <Grid container direction="column" spacing={1} sx={{ marginLeft: "2px" }}>
                                     <Typography
