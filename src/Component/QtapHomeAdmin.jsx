@@ -36,7 +36,6 @@ const QtapHomeAdmin = () => {
                             justifyContent: "center",
                             alignItems: "center",
                             fontSize: "11px",
-                            color: theme.palette.text.blue,
                             paddingBottom: "10px",
                             cursor: "pointer",
                         }}

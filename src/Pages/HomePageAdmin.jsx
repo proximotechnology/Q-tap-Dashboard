@@ -1,19 +1,22 @@
 import React, { useState } from "react";
 import QtapLogo from "../Component/QtapLogo";
 import QtapHome from "../Component/QtapHome";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, useTheme } from "@mui/material";
 
 import Language from "../Component/dashboard/TopBar/Language";
 import QtapHomeAdmin from "../Component/QtapHomeAdmin";
 
 export const HomePageAdmin = () => {
-
+  const theme = useTheme()
   return (
     <Box
       sx={{
-        backgroundImage: "url(/images/Rectangle.png)",
+
         backgroundSize: "100% 100%",
         width: "100%",
+        backgroundImage: theme.palette.mode === 'light' ? "url(/images/Rectangle.png)" : undefined,
+        backgroundColor: theme.palette.mode === 'light' ? undefined : theme.palette.background.default,
+
       }}
     >
       <Grid container spacing={0}>
@@ -40,7 +43,7 @@ export const HomePageAdmin = () => {
               style={{ width: "20px", height: "20px", marginRight: "30px" }}
             />
             <Language />
-           
+
           </Box>
           {/* login component */}
           <Box
@@ -52,7 +55,7 @@ export const HomePageAdmin = () => {
             marginTop='70px'
           >
             <Box sx={{ width: { lg: "43%", md: "60%", xs: "90%" } }}>
-              <QtapHomeAdmin/>
+              <QtapHomeAdmin />
             </Box>
           </Box>
         </Grid>

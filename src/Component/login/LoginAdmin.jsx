@@ -107,7 +107,7 @@ export const LoginAdmin = () => {
                         borderRadius: '50px',
                         height: '35px',
                         fontSize: '11px',
-                        color: theme.palette.text.fixedGray,
+                        // color: theme.palette.text.fixedGray,
                         '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                             outline: 'none',
                         },
@@ -147,7 +147,7 @@ export const LoginAdmin = () => {
                         borderRadius: '50px',
                         height: '35px',
                         fontSize: '11px',
-                        color: theme.palette.text.fixedGray,
+                        // color: theme.palette.text.fixedGray,
                     }}
                 />
             </FormControl>
@@ -156,7 +156,7 @@ export const LoginAdmin = () => {
             <Typography
                 variant="body2"
                 sx={{
-                    color: theme.palette.text.blue,
+                    // color: theme.palette.text.blue,
                     fontSize: '10px',
                     cursor: 'pointer',
                     margin: '5px 0px',
@@ -202,7 +202,9 @@ export const LoginAdmin = () => {
                         }}
                     />
                 }
-                label={<Typography sx={{ fontSize: '10px', color: theme.palette.text.fixedGray }}>{t("stayLogIn")}</Typography>}
+                label={<Typography sx={{ fontSize: '10px', 
+                    color: theme.palette.text.fixedGray
+                 }}>{t("stayLogIn")}</Typography>}
             />
         </Box>
     );
