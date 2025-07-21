@@ -11,7 +11,7 @@ import { useState } from 'react';
 
 
 
-const NewUsersTableComponent  = ({ selectedStatus }) => {
+const NewUsersTableComponent = ({ selectedStatus }) => {
     const [selectedRow, setSelectedRow] = useState(null);
     const [page, setPage] = useState(1);
 
@@ -84,17 +84,24 @@ const NewUsersTableComponent  = ({ selectedStatus }) => {
                                 <TableCell>{row.client.email}</TableCell>
                                 <TableCell>{row.updated_at}</TableCell>
                                 <TableCell>
+
                                     {
-                                        row.status === 'active' ?
-                                            <span style={{ color: 'green', fontWeight: 'bold' }}>Active</span>
-                                            :
+                                        row.status !== 'pending' ?
+                                            <span style={{ color: 'green', fontWeight: 'bold' }}>{row.status}</span>
+                                            : undefined
+                                    }
+                                    {
+                                        row.status === 'pending' ?
+
                                             <Button variant="contained"
-                                                color={row.status === 'active' ? "success" : "error"}
+                                                color={'warning'}
+                                                // color={row.status === 'active' ? "success" : "error"}
                                                 size="small"
                                                 onClick={(e) => handleActiveClick(row.id, e)}
                                             >
-                                                {row.status === 'active' ? "Active" : "Inactive"}
+                                                {row.status}
                                             </Button>
+                                            : undefined
                                     }
 
                                 </TableCell>

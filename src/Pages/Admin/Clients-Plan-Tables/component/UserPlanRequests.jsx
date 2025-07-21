@@ -67,7 +67,7 @@ export default function UserPlanRequests() {
     }
 
     if (rows.length === 0) {
-        return <Typography>Now Request</Typography>
+        return <Typography>No Request</Typography>
     }
     return (
         <>
