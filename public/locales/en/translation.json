@@ -677,5 +677,6 @@
     "enterOtp": "Enter OTP",
     "verifying": "Verifying...",
     "invalidOtp": "Invalid OTP. Please try again.",
-    "otpVerificationFailed": "OTP verification failed. Please try again later."
+    "otpVerificationFailed": "OTP verification failed. Please try again later.",
+    "clientPlans":"Client Plans"
 }

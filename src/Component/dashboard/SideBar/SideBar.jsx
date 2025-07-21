@@ -10,7 +10,7 @@ import GridViewIcon from '@mui/icons-material/GridView';
 import { useTranslation } from "react-i18next";
 import SidebarExtraMobileSection from '../../../Component/SidebarExtraMobileSection'
 import { CloseSideBarButton } from "../../MobileSideBarButton/SidebarButton";
-
+import { HandPlatter } from "lucide-react";
 
 export default function SideBar({ isOpen, handleToggleSideBar }) {
     const location = useLocation();
@@ -74,6 +74,11 @@ export default function SideBar({ isOpen, handleToggleSideBar }) {
             text: t("feedback"),
             icon: <StarBorderIcon style={{ fontSize: "20px", marginLeft: "-1px" }}></StarBorderIcon>,
             path: "/feedback-admin",
+        },
+        {
+            text: t("clientPlans"),
+            icon: <HandPlatter size={'20px'} style={{ marginLeft: "-1px" }}></HandPlatter>,
+            path: "/plan-action",
         },
     ];
 

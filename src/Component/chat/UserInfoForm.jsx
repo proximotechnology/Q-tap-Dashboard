@@ -160,7 +160,7 @@ export function UserInfoForm({ toggleChat }) {
                         sx={{ backgroundColor: theme.palette.orangePrimary.main, '&:hover': { backgroundColor: theme.palette.orangePrimary.secondary } }}
                         disabled={isPending}
                     >
-                        {isPending ? "loading" : "Submit"}
+                        {isPending ? "loading" : "Start Chat"}
                     </Button>
                 </Box>
                 {/* </Paper> */}

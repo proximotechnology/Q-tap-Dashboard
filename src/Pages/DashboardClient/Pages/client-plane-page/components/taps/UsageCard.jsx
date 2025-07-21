@@ -60,7 +60,7 @@ const UsageCard = () => {
   if (isPending) {
     return "loading"
   }
-
+  console.log(currentPlansData)
   // const planName = currentPlan?.name || "Unknown Plan";
   return (
     currentPlansData?.map(items => {
@@ -76,11 +76,16 @@ const UsageCard = () => {
       const percentage = Math.min((remain / capacity) * 100, 100);
 
       return (
-        <Card key={items.id} sx={{ maxWidth: 400, p: 2, borderRadius: 2, boxShadow: 3 }}>
+        <Card key={items.id} sx={{ maxWidth: 400, p: 2, borderRadius: 2, boxShadow: 3, m: 2 }}>
           <CardContent>
-            <Typography variant="h6" gutterBottom>
-              {name}
-            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: "space-between" }}>
+              <Typography variant="h6" gutterBottom>
+                {name}
+              </Typography>
+              <Typography variant="body2" gutterBottom >
+                {items.status}
+              </Typography>
+            </Box>
 
             {Carryover && (
               <>
@@ -97,9 +102,18 @@ const UsageCard = () => {
               </>
             )}
 
-            <Typography variant="body2" gutterBottom>
-              Used: {used} / {capacity}
-            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: "space-between" }}>
+              <Typography variant="body2" gutterBottom>
+                Used: {used} / {capacity}
+              </Typography>
+
+
+
+              <Typography variant="body2" gutterBottom >
+                {items.pricing_way === "yearly_price" ? "Yearly" : "Monthly"}
+              </Typography>
+
+            </Box>
             <LinearProgress variant="determinate" value={percentage} sx={{ height: 8, borderRadius: 1, mb: 1 }} />
             <Typography variant="caption" color="text.secondary">
               {percentage.toFixed(0)}%
