@@ -5,7 +5,7 @@ import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useTranslation } from 'react-i18next';
-import {BASE_URL,BASE_URL_IMG} from  "../../utils/constants";
+import { BASE_URL, BASE_URL_IMG } from "../../utils/constants";
 
 const AddBundle = ({ open, onClose, editData = null }) => {
     const [text, setText] = useState('');
@@ -15,8 +15,9 @@ const AddBundle = ({ open, onClose, editData = null }) => {
     const [yearlyPrice, setYearlyPrice] = useState('');
     const [description, setDescription] = useState('');
     const [orderLimit, setOrderLimit] = useState('unlimited');
+    const [numberOfOrders, setNumberOfOrders] = useState(0);
     const theme = useTheme();
-
+    console.log(editData)
     const { t } = useTranslation()
     // Populate form when editing
     useEffect(() => {
@@ -46,7 +47,7 @@ const AddBundle = ({ open, onClose, editData = null }) => {
             description: description,
             feature: features,
             is_active: "active",
-            orders_limit: "10"
+            orders_limit: numberOfOrders
         };
 
         const url = editData
@@ -207,6 +208,26 @@ const AddBundle = ({ open, onClose, editData = null }) => {
                                 <Divider sx={{ width: "90%", marginLeft: "10px" }} />
                                 <MenuItem value="specific" sx={{ fontSize: "11px", color: "gray", padding: "3px 10px" }}>{t("specificNumber")}</MenuItem>
                             </TextField>
+                            {orderLimit === "specific" &&
+                                <>
+                                    <Typography variant='body2' sx={{ marginTop: "4px", fontSize: "10px", color: theme.palette.text.gray }}>{t("numberOfOrders")}</Typography>
+                                    <TextField
+                                        fullWidth
+                                        value={numberOfOrders}
+                                        onChange={(e) => setNumberOfOrders(e.target.value)}
+                                        InputProps={{
+                                            sx: {
+                                                marginTop: "10px",
+                                                borderRadius: "20px",
+                                                fontSize: "11px",
+                                                color: "gray",
+                                                height: "30px",
+                                            }
+                                        }}
+                                    />
+                                </>
+                            }
+
                         </Box>
 
                         <Box sx={{ flex: 1 }}>

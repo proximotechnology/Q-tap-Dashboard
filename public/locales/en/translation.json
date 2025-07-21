@@ -678,5 +678,6 @@
     "verifying": "Verifying...",
     "invalidOtp": "Invalid OTP. Please try again.",
     "otpVerificationFailed": "OTP verification failed. Please try again later.",
-    "clientPlans":"Client Plans"
+    "clientPlans":"Client Plans",
+    "numberOfOrders":"Number of Orders"
 }
