@@ -34,23 +34,26 @@ const PlanList = ({ data, handleNewPlanConfirmed }) => {
   return (
     // Inside your component
     <Stack spacing={2}>
-      {data?.data?.data?.length ? (
-        data.data.data.map((plan) => {
-          const isSelected = selectedPlan?.id === plan.id;
-          return (
-            <Paper elevation={3} key={plan.id} sx={{ p: 2, borderRadius: 2 }}>
+      <Paper elevation={3} sx={{ p: 2, borderRadius: 2 }}>
+        {data?.data?.data?.length ? (
+          data.data.data.map((plan) => {
+            const isSelected = selectedPlan?.id === plan.id;
+            return (
               <PlanListItem
+                key={plan.id}
                 plan={plan}
                 isSelected={isSelected}
                 onSelect={() => toggleSelect(plan)}
                 handleNewPlanConfirmed={handleNewPlanConfirmed}
               />
-            </Paper>
-          );
-        })
-      ) : (
-        <Typography variant="body1">No plans available</Typography>
-      )}
+
+            );
+          })
+        ) : (
+          <Typography variant="body1">No plans available</Typography>
+        )}
+      </Paper>
+
     </Stack>
   )
   return (
