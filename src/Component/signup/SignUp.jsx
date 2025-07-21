@@ -130,7 +130,8 @@ const SignUp = () => {
                             }} />
                         </InputAdornment>
                     }
-                    required
+                    autoComplete="off"
+                    className='hereProblem1'
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder={t("fullName")}
@@ -138,7 +139,7 @@ const SignUp = () => {
                         // ,
                         borderRadius: '50px',
                         marginTop: "10px",
-                        height: '33px', fontSize: "10px"
+                        height: '33px', fontSize: "10px",
                     }}
                 />
             </FormControl>
@@ -153,18 +154,20 @@ const SignUp = () => {
                     }
                     startAdornment={
                         <InputAdornment position="start">
-                            <PhoneOutlinedIcon sx={{ 
+                            <PhoneOutlinedIcon sx={{
                                 // ,
-                                 fontSize: "16px" }} />
+                                fontSize: "16px"
+                            }} />
                         </InputAdornment>
                     }
                     placeholder={t("mobileNumber")}
                     required
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    sx={{ 
+                    sx={{
                         // ,
-                         borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
+                        borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px"
+                    }}
                 />
             </FormControl>
 
@@ -174,26 +177,29 @@ const SignUp = () => {
                     type="email"
                     startAdornment={
                         <InputAdornment position="start">
-                            <EmailOutlinedIcon sx={{ 
+                            <EmailOutlinedIcon sx={{
                                 // ,
-                                 fontSize: "16px" }} />
+                                fontSize: "16px"
+                            }} />
                         </InputAdornment>
                     }
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={t("email")}
-                    sx={{ 
+                    sx={{
                         // ,
-                         borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
+                        borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px"
+                    }}
                 />
             </FormControl>
 
             <Grid container alignItems="center" sx={{ marginTop: "10px", }}>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
-                    <Grid container alignItems="center" sx={{ 
+                    <Grid container alignItems="center" sx={{
                         // ,
-                         marginTop: "5px", marginBottom: "2px" }} >
+                        marginTop: "5px", marginBottom: "2px"
+                    }} >
                         <CalendarMonthOutlinedIcon sx={{ marginRight: 1, fontSize: "15px" }} />
                         <Typography variant="body1" sx={{ fontSize: "11px" }}>{t("dateOfBirth")}</Typography>
                     </Grid>
@@ -206,27 +212,30 @@ const SignUp = () => {
                             value={month}
                             onChange={(e) => setMonth(e.target.value)}
                             displayEmpty
-                            sx={{ borderRadius: '50px', height: '33px', fontSize: "10px", 
+                            sx={{
+                                borderRadius: '50px', height: '33px', fontSize: "10px",
                                 // ,
-                                 marginRight: "5px" }}
+                                marginRight: "5px"
+                            }}
                         >
-                            <MenuItem value="" disabled sx={{ fontSize: "10px",
+                            <MenuItem value="" disabled sx={{
+                                fontSize: "10px",
                                 //   
-                                 }} >
+                            }} >
                                 {t("month")}
                             </MenuItem>
-                            <MenuItem value="01" sx={{ fontSize: "10px",  }}>01</MenuItem>
-                            <MenuItem value="02" sx={{ fontSize: "10px",  }}>02</MenuItem>
-                            <MenuItem value="03" sx={{ fontSize: "10px",  }}>03</MenuItem>
-                            <MenuItem value="04" sx={{ fontSize: "10px",  }}>04</MenuItem>
-                            <MenuItem value="05" sx={{ fontSize: "10px",  }}>05</MenuItem>
-                            <MenuItem value="06" sx={{ fontSize: "10px",  }}>06</MenuItem>
-                            <MenuItem value="07" sx={{ fontSize: "10px",  }}>07</MenuItem>
-                            <MenuItem value="08" sx={{ fontSize: "10px",  }}>08</MenuItem>
-                            <MenuItem value="09" sx={{ fontSize: "10px",  }}>09</MenuItem>
-                            <MenuItem value="10" sx={{ fontSize: "10px",  }}>10</MenuItem>
-                            <MenuItem value="11" sx={{ fontSize: "10px",  }}>11</MenuItem>
-                            <MenuItem value="12" sx={{ fontSize: "10px",  }}>12</MenuItem>
+                            <MenuItem value="01" sx={{ fontSize: "10px", }}>01</MenuItem>
+                            <MenuItem value="02" sx={{ fontSize: "10px", }}>02</MenuItem>
+                            <MenuItem value="03" sx={{ fontSize: "10px", }}>03</MenuItem>
+                            <MenuItem value="04" sx={{ fontSize: "10px", }}>04</MenuItem>
+                            <MenuItem value="05" sx={{ fontSize: "10px", }}>05</MenuItem>
+                            <MenuItem value="06" sx={{ fontSize: "10px", }}>06</MenuItem>
+                            <MenuItem value="07" sx={{ fontSize: "10px", }}>07</MenuItem>
+                            <MenuItem value="08" sx={{ fontSize: "10px", }}>08</MenuItem>
+                            <MenuItem value="09" sx={{ fontSize: "10px", }}>09</MenuItem>
+                            <MenuItem value="10" sx={{ fontSize: "10px", }}>10</MenuItem>
+                            <MenuItem value="11" sx={{ fontSize: "10px", }}>11</MenuItem>
+                            <MenuItem value="12" sx={{ fontSize: "10px", }}>12</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
@@ -248,7 +257,7 @@ const SignUp = () => {
                             <MenuItem
                                 value=""
                                 disabled
-                                sx={{ fontSize: "10px",  }}
+                                sx={{ fontSize: "10px", }}
                             >
                                 {t("day")}
                             </MenuItem>
@@ -259,7 +268,7 @@ const SignUp = () => {
                                     <MenuItem
                                         key={dayStr}
                                         value={dayStr}
-                                        sx={{ fontSize: "10px",  }}
+                                        sx={{ fontSize: "10px", }}
                                     >
                                         {dayStr}
                                     </MenuItem>
@@ -277,13 +286,13 @@ const SignUp = () => {
                             value={year}
                             onChange={(e) => setYear(e.target.value)}
                             displayEmpty
-                            sx={{ borderRadius: '50px', height: '33px', fontSize: "10px",  }}
+                            sx={{ borderRadius: '50px', height: '33px', fontSize: "10px", }}
                         >
-                            <MenuItem value="" disabled sx={{ fontSize: "10px",  }}>
+                            <MenuItem value="" disabled sx={{ fontSize: "10px", }}>
                                 {t("year")}
                             </MenuItem>
                             {Array.from({ length: 2025 - 2000 + 1 }, (_, i) => (
-                                <MenuItem key={i + 2000} value={i + 2000} sx={{ fontSize: "10px",  }}>
+                                <MenuItem key={i + 2000} value={i + 2000} sx={{ fontSize: "10px", }}>
                                     {i + 2000}
                                 </MenuItem>
                             ))}
@@ -299,10 +308,10 @@ const SignUp = () => {
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
                     displayEmpty
-                    sx={{  borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px", }}
+                    sx={{ borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px", }}
                     startAdornment={
                         <InputAdornment position="start">
-                            <span class="icon-map" style={{  fontSize: "14px" }}></span>
+                            <span class="icon-map" style={{ fontSize: "14px" }}></span>
                         </InputAdornment>
                     }
                 >
@@ -310,13 +319,13 @@ const SignUp = () => {
                         {t("country")}
                     </MenuItem>
                     {Governorates[Country.EGYPT].map((governorate) => (
-                        <MenuItem key={governorate} value={governorate} sx={{ fontSize: "10px",  }} >
+                        <MenuItem key={governorate} value={governorate} sx={{ fontSize: "10px", }} >
                             {governorate}
                         </MenuItem>
                     ))}
-                    <MenuItem value="US" sx={{ fontSize: "10px",  }} >United States</MenuItem>
-                    <MenuItem value="CA" sx={{ fontSize: "10px",  }} >Canada</MenuItem>
-                    <MenuItem value="UK" sx={{ fontSize: "10px",  }} >United Kingdom</MenuItem>
+                    <MenuItem value="US" sx={{ fontSize: "10px", }} >United States</MenuItem>
+                    <MenuItem value="CA" sx={{ fontSize: "10px", }} >Canada</MenuItem>
+                    <MenuItem value="UK" sx={{ fontSize: "10px", }} >United Kingdom</MenuItem>
                 </Select>
             </FormControl>
             {/* <FormControl variant="outlined" fullWidth  >
@@ -359,16 +368,16 @@ const SignUp = () => {
                                 onClick={handleClickShowPassword}
                                 edge="end"
                             >
-                                {showPassword ? <VisibilityOffOutlinedIcon sx={{  fontSize: "18px" }} />
+                                {showPassword ? <VisibilityOffOutlinedIcon sx={{ fontSize: "18px" }} />
                                     :
-                                    <span class="icon-show" style={{  fontSize: "16px" }}></span>
+                                    <span class="icon-show" style={{ fontSize: "16px" }}></span>
                                 }
 
                             </IconButton>
                         </InputAdornment>
                     }
                     placeholder={t("password")}
-                    sx={{  borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
+                    sx={{ borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
                 />
             </FormControl>
 
@@ -381,7 +390,7 @@ const SignUp = () => {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     startAdornment={
                         <InputAdornment position="start">
-                            <span class="icon-padlock" style={{  fontSize: "18px" }}></span>
+                            <span class="icon-padlock" style={{ fontSize: "18px" }}></span>
 
                         </InputAdornment>
                     }
@@ -392,15 +401,15 @@ const SignUp = () => {
                                 onClick={handleClickShowConfirmPassword}
                                 edge="end"
                             >
-                                {showPassword ? <VisibilityOffOutlinedIcon sx={{  fontSize: "18px" }} />
+                                {showPassword ? <VisibilityOffOutlinedIcon sx={{ fontSize: "18px" }} />
                                     :
-                                    <span class="icon-show" style={{  fontSize: "16px" }}></span>
+                                    <span class="icon-show" style={{ fontSize: "16px" }}></span>
                                 }
                             </IconButton>
                         </InputAdornment>
                     }
                     placeholder={t("confirmPass")}
-                    sx={{  borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
+                    sx={{ borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px" }}
                 />
             </FormControl>
 
@@ -411,7 +420,7 @@ const SignUp = () => {
                         transform: "scale(0.7)"
                     }}
                 />}
-                label={<Typography sx={{ fontSize: "10px",  }}> {t("registerAgree")}</Typography>}
+                label={<Typography sx={{ fontSize: "10px", }}> {t("registerAgree")}</Typography>}
             />
             {apiError && <Typography className='error-color' sx={{ fontSize: '13px', textAlign: "center" }}>{apiError}</Typography>}
             {apiSuccess && <Typography sx={{ color: theme.palette.text.green, fontSize: '13px', textAlign: "center" }}>{apiSuccess}</Typography>}

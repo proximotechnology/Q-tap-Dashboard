@@ -30,6 +30,14 @@ input:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+  -webkit-text-fill-color: var(--mui-text-color, #fff) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
 /* Red (#FF0000 or #D32F2F) – The most universally recognized color for errors, signaling danger or urgency. */
 
 .error-color {

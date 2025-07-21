@@ -19,8 +19,8 @@ export const ThemeModeProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
     const root = document.documentElement;
-    root.style.setProperty('--bg-color', theme.palette.background.paper);
-    root.style.setProperty('--text-color', theme.palette.text.primary);
+    root.style.setProperty('--mui-bg-color', theme.palette.background.paper);
+    root.style.setProperty('--mui-text-color', theme.palette.text.primary);
   }, [mode]);
 
 
