@@ -37,6 +37,7 @@ const MapWithPin = ({ setPos, isMapOpen, setIsMapOpen, currentPos = {} }) => {
       click(e) {
         setPosition(e.latlng);
         setPos(e.latlng)
+        console.log(e.latlng)
       },
     });
 

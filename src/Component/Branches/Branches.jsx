@@ -36,7 +36,12 @@ export const Branches = () => {
   const handleDoneClick = () => {
     navigate('/payment');
   };
+
+  const handleEditClick = (branchIndex) => {
+    navigate(`/business-info/edit/${branchIndex}`);
+  }
   const isAr = i18n.language === 'ar';
+
   return (
     <Box marginTop={'50px'} padding={"10px 40px"} flexGrow={1}>
       <Typography variant="body1" sx={{ fontSize: '18px', color: theme.palette.text.black_white }}>
@@ -80,8 +85,9 @@ export const Branches = () => {
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
               <IconButton onClick={() => deleteBranch(index)}>
                 <span className="icon-delete" style={{ fontSize: '16px', color: 'white' }}></span>
+                <p style={{color:'white'}}>delete</p>
               </IconButton>
-              <IconButton>
+              <IconButton onClick={() => handleEditClick(index)}>
                 <img src="/assets/setting.svg" alt="icon" style={{ width: '18px', height: '18px' }} />
               </IconButton>
             </Box>

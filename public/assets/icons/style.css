@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'iconQtap';
-  src:  url('fonts/iconQtap.eot?se9t08');
-  src:  url('fonts/iconQtap.eot?se9t08#iefix') format('embedded-opentype'),
-    url('fonts/iconQtap.ttf?se9t08') format('truetype'),
-    url('fonts/iconQtap.woff?se9t08') format('woff'),
-    url('fonts/iconQtap.svg?se9t08#iconQtap') format('svg');
+  src:  url('/assets/icons/fonts/iconQtap.eot?se9t08');
+  src:  url('/assets/icons/fonts/iconQtap.eot?se9t08#iefix') format('embedded-opentype'),
+    url('/assets/icons/fonts/iconQtap.ttf?se9t08') format('truetype'),
+    url('/assets/icons/fonts/iconQtap.woff?se9t08') format('woff'),
+    url('/assets/icons/fonts/iconQtap.svg?se9t08#iconQtap') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;

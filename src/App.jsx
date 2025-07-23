@@ -80,6 +80,7 @@ import { TestWebLogin } from './Component/TestWebLogin';
 import { OtpSignupPage } from './Component/Otp/OtpSingupPage';
 import ClientPlan from './Pages/DashboardClient/Pages/client-plane-page/ClientPlan';
 import ClientsPlanTables from './Pages/Admin/Clients-Plan-Tables/ClientsPlanTables';
+import EditBusinessInfo from './Pages/register-busniess-info-page/EditBusinessInfo';
 
 const queryClient = new QueryClient();
 
@@ -140,6 +141,10 @@ function App() {
     {
       path: "/business-info",
       element: <BusinessInfoPage />, // done
+    },
+    {
+      path: "/business-info/edit/:id",
+      element: <EditBusinessInfo />, // done
     },
     {
       path: "/serving-ways",
