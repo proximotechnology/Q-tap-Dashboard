@@ -45,13 +45,14 @@ import { customErrorLog } from "../../../../utils/customErrorLog";
 import { Country, Governorates } from "../../../../utils/city";
 import { useColorMode } from "../../../../context/ThemeModeProvider";
 import useRegisterChangeThemeMode from "../../../../Hooks/Queries/useRegisterChangeThemeMode";
+import useGetGovernAndCityFromQuery from "../../../../Hooks/Queries/public/citys/useGetGovernAndCityFromQuery";
 
 const daysOfWeek = ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"];
 const fullDaysOfWeek = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
 export const BusinessInfo = ({ branchErrors }) => {
   const theme = useTheme();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const dispatch = useDispatch()
   const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
@@ -91,6 +92,9 @@ export const BusinessInfo = ({ branchErrors }) => {
     latitude = '',
     longitude = ''
   } = branches[branchIndex] || businessData;
+
+  console.log(country)
+  const { citysValue, governValue, loadingCities, loadingGovern } = useGetGovernAndCityFromQuery(country)
   // Local state for working hours
   const [selectedDays, setSelectedDays] = useState([]);
   const [currentDay, setCurrentDay] = useState(fullDaysOfWeek[0]); // Default to Saturday
@@ -330,13 +334,18 @@ export const BusinessInfo = ({ branchErrors }) => {
             <Select
               id="outlined-country"
               value={country}
-              onChange={(e) => handleInputChange("country", e.target.value)}
+              onChange={(e) => {
+                handleInputChange("country", e.target.value)
+                handleInputChange("city", "")
+              }}
               displayEmpty
               sx={{ borderRadius: "10px", height: "33px", fontSize: "12px", color: "gray" }}
               startAdornment={<InputAdornment position="start"><PinDropOutlinedIcon sx={{ fontSize: "20px" }} /></InputAdornment>}
             >
               <MenuItem value="" disabled>{t("country")}</MenuItem>
-              <MenuItem value="egypt">egypt</MenuItem>
+              {governValue.map((govern) => (
+                <MenuItem key={govern.id} value={govern} sx={{ fontSize: "12px", color: "gray" }}>{i18n.language === 'ar' ? govern.name_ar : govern.name_en}</MenuItem>
+              ))}
 
               {/* <MenuItem value="US">United States</MenuItem>
               <MenuItem value="CA">Canada</MenuItem>
@@ -354,8 +363,8 @@ export const BusinessInfo = ({ branchErrors }) => {
               startAdornment={<InputAdornment position="start"><PinDropOutlinedIcon sx={{ fontSize: "20px" }} /></InputAdornment>}
             >
               <MenuItem value="" disabled>{t("city")}</MenuItem>
-              {Governorates[Country.EGYPT].map((city) => (
-                <MenuItem value={city} sx={{ fontSize: "12px", color: "gray" }}>{city}</MenuItem>
+              {citysValue.map((city) => (
+                <MenuItem key={city.id} value={city} sx={{ fontSize: "12px", color: "gray" }}>{i18n.language === 'ar' ? city.name_ar : city.name_en}</MenuItem>
               ))}
               {/* <MenuItem value="NY">New York</MenuItem>
               <MenuItem value="LA">Los Angeles</MenuItem>

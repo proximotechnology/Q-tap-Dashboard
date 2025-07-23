@@ -1,5 +1,5 @@
 
-import { Box, Button, MenuItem, styled, TextField, ToggleButton, ToggleButtonGroup, Typography, Grid, InputAdornment, Select, FormControl, useTheme, IconButton, Checkbox, FormControlLabel, Radio } from '@mui/material';
+import { Box, Button, MenuItem, styled, TextField, ToggleButton, ToggleButtonGroup, Typography, Grid, InputAdornment, Select, FormControl, useTheme, IconButton, Checkbox, FormControlLabel, Radio, CircularProgress, OutlinedInput, InputLabel } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
@@ -22,6 +22,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateBusinessData, } from "../../store/register/businessSlice";
 import MapWithPin from '../../utils/MapWithPin';
 import useRegisterChangeThemeMode from '../../Hooks/Queries/useRegisterChangeThemeMode';
+import { useGetEgyptGovern } from '../../Hooks/Queries/public/citys/useGetEgyptGovern';
+import { useGetEgyptCityByGovernID } from '../../Hooks/Queries/public/citys/useGetEgyptCityByGovernID';
+import useGetGovernAndCityFromQuery from '../../Hooks/Queries/public/citys/useGetGovernAndCityFromQuery';
 
 // تحديد الأيام بأحرف مختصرة للعرض
 const daysOfWeek = ['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr'];
@@ -41,9 +44,9 @@ export const BusinessInfo = () => {
     const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
     const [isMapOpen, setIsMapOpen] = useState(false)
     const [pos, setPos] = useState(null)
-    console.log("selected position", pos) // debug log
+
     const navigate = useNavigate();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     // Initialize all state values from context
     const dataSource = selectedBranch !== null && branches[selectedBranch] ? branches[selectedBranch] : businessData;
@@ -72,6 +75,11 @@ export const BusinessInfo = () => {
     const [paymentMethods, setPaymentMethods] = useState(dataSource.paymentMethods || []);
     const [paymentTime, setPaymentTime] = useState(dataSource.paymentTime || 'after');
     const [activeWaiter, setActiveWaiter] = useState(dataSource.callWaiter || 'inactive');
+
+
+    const { citysValue, governValue, loadingCities, loadingGovern } = useGetGovernAndCityFromQuery(country)
+
+
 
     // تحديث fromTime و toTime عند تغيير currentDay
     useEffect(() => {
@@ -453,22 +461,38 @@ export const BusinessInfo = () => {
                                             <Select
                                                 id="outlined-country"
                                                 value={country}
-                                                onChange={(e) => setCountry(e.target.value)}
-                                                displayEmpty
-                                                sx={{ borderRadius: '10px', height: '40px', marginBottom: "10px", fontSize: "10px" }}
+                                                onChange={(e) => {
+                                                    console.log("Selected:", e.target.value);
+                                                    setCountry(e.target.value);
+                                                    setCity("");
+                                                }}
+                                                sx={{
+                                                    borderRadius: '10px',
+                                                    height: '40px',
+                                                    marginBottom: "10px",
+                                                    fontSize: "10px"
+                                                }}
                                                 startAdornment={
                                                     <InputAdornment position="start">
                                                         <PinDropOutlinedIcon sx={{ fontSize: "18px" }} />
                                                     </InputAdornment>
                                                 }
                                             >
-                                                <MenuItem value="" disabled sx={{ fontSize: "12px" }}>
-                                                    {t("country")}
+                                                <MenuItem value="" disabled>
+                                                    {t("Select country") || "Select country"}
                                                 </MenuItem>
-                                                <MenuItem value="egypt" sx={{ fontSize: "12px" }}>Egypt</MenuItem>
-                                                {/* <MenuItem value="US" sx={{ fontSize: "12px", color: "gray" }}>United States</MenuItem>
-                                                <MenuItem value="CA" sx={{ fontSize: "12px", color: "gray" }}>Canada</MenuItem>
-                                                <MenuItem value="UK" sx={{ fontSize: "12px", color: "gray" }}>United Kingdom</MenuItem> */}
+
+                                                {loadingGovern ? (
+                                                    <MenuItem disabled>
+                                                        <CircularProgress size={20} /> &nbsp; Loading cities...
+                                                    </MenuItem>
+                                                ) : (
+                                                    governValue.map(item => (
+                                                        <MenuItem key={item.id} value={item} sx={{ fontSize: "12px" }}>
+                                                            {i18n.language === 'ar' ? item.name_ar : item.name_en}
+                                                        </MenuItem>
+                                                    ))
+                                                )}
                                             </Select>
                                         </FormControl>
                                     </Grid>
@@ -489,9 +513,14 @@ export const BusinessInfo = () => {
                                                 <MenuItem value="" disabled sx={{ fontSize: "12px", }}>
                                                     {t("city")}
                                                 </MenuItem>
-                                                {Governorates[Country.EGYPT].map((city) => (
-                                                    <MenuItem value={city} sx={{ fontSize: "12px", }}>{city}</MenuItem>
-                                                ))}
+                                                {loadingCities ? (
+                                                    <MenuItem disabled>
+                                                        <CircularProgress size={20} /> &nbsp; Loading cities...
+                                                    </MenuItem>
+                                                ) :
+                                                    citysValue.map((city) => (
+                                                        <MenuItem key={city?.id} value={city} sx={{ fontSize: "12px", }}>{city.name_en}</MenuItem>
+                                                    ))}
                                                 {/* <MenuItem value="NY" sx={{ fontSize: "12px", color: "gray" }}>New York</MenuItem>
                                                 <MenuItem value="LA" sx={{ fontSize: "12px", color: "gray" }}>Los Angeles</MenuItem>
                                                 <MenuItem value="CHI" sx={{ fontSize: "12px", color: "gray" }}>Chicago</MenuItem> */}

@@ -31,12 +31,12 @@ export const Branches = () => {
     dispatch(setBranches(updatedBranches));
   };
 
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   const handleDoneClick = () => {
     navigate('/payment');
   };
-
+  const isAr = i18n.language === 'ar';
   return (
     <Box marginTop={'50px'} padding={"10px 40px"} flexGrow={1}>
       <Typography variant="body1" sx={{ fontSize: '18px', color: theme.palette.text.black_white }}>
@@ -52,7 +52,7 @@ export const Branches = () => {
             key={index}
             sx={{
               width: { xs: '100%', sm: '45%', md: '200px' },
-              marginRight: { sm: '20px' },
+              marginInlineEnd: { sm: '20px' },
               height: '200px',
               minHeight: "200px",
               minWidth: '200px',
@@ -75,7 +75,7 @@ export const Branches = () => {
               {"City"}
             </Typography>
             <Typography variant="h6" sx={{ fontSize: '15px', color: theme.palette.orangePrimary.main, padding: '0 0px 0px 16px' }}>
-              {branch.city}
+              {i18n.language === 'ar' ? branch.city.name_ar : branch.city.name_en}
             </Typography>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
               <IconButton onClick={() => deleteBranch(index)}>
@@ -117,7 +117,7 @@ export const Branches = () => {
           alignItems: 'center',
           position: "fixed",
           bottom: '30px',
-          left: '47%',
+          [isAr ? 'right' : 'left']: '47%',
         }}
       >
         <Typography

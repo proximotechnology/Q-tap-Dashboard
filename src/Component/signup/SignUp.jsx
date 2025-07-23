@@ -8,11 +8,11 @@ import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+
 import { useTranslation } from 'react-i18next';
 import { updatePersonalData } from "../../store/register/personalSlice";
 import { useDispatch, useSelector } from 'react-redux';
-import { Country, Governorates } from '../../utils/city';
+import { useGetEgyptGovern } from '../../Hooks/Queries/public/citys/useGetEgyptGovern';
 
 
 const SignUp = () => {
@@ -20,6 +20,8 @@ const SignUp = () => {
     const dispatch = useDispatch();
     const personalData = useSelector((state) => state.personalStore.personalData);
 
+    const { data } = useGetEgyptGovern()
+    const governorates = data?.data?.data;
 
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -41,7 +43,7 @@ const SignUp = () => {
     const [clientDataFromRegist, setClientDataFromRegist] = useState()
 
 
-    const { t } = useTranslation();
+    const { t , i18n} = useTranslation();
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
@@ -318,9 +320,9 @@ const SignUp = () => {
                     <MenuItem value="" disabled >
                         {t("country")}
                     </MenuItem>
-                    {Governorates[Country.EGYPT].map((governorate) => (
-                        <MenuItem key={governorate} value={governorate} sx={{ fontSize: "10px", }} >
-                            {governorate}
+                    {(governorates || []).map((governorate) => (
+                        <MenuItem key={governorate.id} value={governorate.code} sx={{ fontSize: "10px", }} >
+                            {i18n.language === 'ar' ? governorate.name_ar : governorate.name_en }
                         </MenuItem>
                     ))}
                     <MenuItem value="US" sx={{ fontSize: "10px", }} >United States</MenuItem>

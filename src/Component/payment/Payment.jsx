@@ -122,7 +122,7 @@ export const Payment = () => {
     // حساب addOns بناءً على عدد الفروع
     let addOns = 0;
     if (branches.length > 1) {
-      addOns = subTotal / 2; // إضافة نصف سعر الباقة إذا كان هناك أكثر من فرع
+      addOns = (subTotal / 2) * (branches.length -1) ; // إضافة نصف سعر الباقة إذا كان هناك أكثر من فرع
     }
 
     const tax = 0; // يمكن تعديله حسب الحاجة

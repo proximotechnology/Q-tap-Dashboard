@@ -126,6 +126,7 @@ export const getDashboard = createAsyncThunk(
                 },
                 data: {},
             });
+            console.log("response.data", response.data)
             return response.data;
         } catch (error) {
             return rejectWithValue(error.message || "Failed to fetch dashboard data");
@@ -246,6 +247,7 @@ const adminSlice = createSlice({
             })
             .addCase(getDashboard.fulfilled, (state, action) => {
                 state.isLoading.dashboardData = false;
+                console.log("action.payload",action.payload)
                 state.dashboardData = action.payload;
             })
             .addCase(getDashboard.rejected, (state, action) => {
