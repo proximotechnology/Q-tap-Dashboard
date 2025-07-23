@@ -22,7 +22,7 @@ const EditBusinessInfo = () => {
     const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
     // dispatch(updateBusinessData(updatedData));
     const [isMapOpen, setIsMapOpen] = useState(false)
-
+    const PaymentMethodEnum = z.enum(['cash', 'card', 'digitalWaller']);
     const schema = z.object({
         businessName: z.string().min(1, "Name is required"),
         website: z.string().min(1, "Name is required"),
@@ -37,8 +37,8 @@ const EditBusinessInfo = () => {
         city: z.string().min(1, "Name is required"),
 
         location: z.object({
-            latitude: z.string(),
-            longitude: z.string(),
+            latitude: z.number(),
+            longitude: z.number(),
         }),
 
         mode: z.string().min(1, "Name is required"),
@@ -46,7 +46,7 @@ const EditBusinessInfo = () => {
 
 
         callWaiter: z.boolean(),
-        paymentMethods: z.array(z.enum(["cash", "card", "wallet"])).min(1, "Select at least one method"),
+        paymentMethods: z.array(PaymentMethodEnum).min(1, "Select at least one payment method"),
         paymentTime: z.enum(["before", "after"], {
             required_error: "Please choose when to pay",
         }),
@@ -67,6 +67,7 @@ const EditBusinessInfo = () => {
         },
     });
 
+    console.log("Form errors:", errors);
     const onSubmit = (data) => {
         console.log("Form Data:", data);
     };
@@ -99,37 +100,66 @@ const EditBusinessInfo = () => {
                                     error={!!errors.name}
                                     helperText={errors.name?.message}
                                 />
-                                <FormControl fullWidth error={!!errors.role}>
-                                    <Select
+                                <FormControl fullWidth error={!!errors.currency}>
+                                    <Controller
+                                        name="currency"
+                                        control={control}
                                         defaultValue=""
-                                        {...register("currency")}
-                                        startAdornment={
-                                            <InputAdornment position="start">
-                                                <img src="/assets/revenue.svg" alt="icon" style={{ width: "16px", height: "16px" }} />
-                                            </InputAdornment>
-                                        }
-                                        displayEmpty
-                                    >
-                                        <MenuItem value="" disabled>currency</MenuItem>
-                                    </Select>
-                                    <FormHelperText>{errors.role?.message}</FormHelperText>
+                                        render={({ field }) => (
+                                            <Select
+                                                {...field}
+                                                startAdornment={
+                                                    <InputAdornment position="start">
+                                                        <img
+                                                            src="/assets/revenue.svg"
+                                                            alt="icon"
+                                                            style={{ width: "16px", height: "16px" }}
+                                                        />
+                                                    </InputAdornment>
+                                                }
+                                                displayEmpty
+                                            >
+                                                <MenuItem value="" disabled>
+                                                    currency
+                                                </MenuItem>
+                                                <MenuItem value="USD">USD</MenuItem>
+                                                <MenuItem value="EUR">EUR</MenuItem>
+                                                <MenuItem value="EGP">EGP</MenuItem>
+                                            </Select>
+                                        )}
+                                    />
+                                    <FormHelperText>{errors.currency?.message}</FormHelperText>
                                 </FormControl>
 
-                                <FormControl fullWidth error={!!errors.role}>
-                                    <Select
+                                <FormControl fullWidth error={!!errors.format}>
+                                    <Controller
+                                        name="format"
+                                        control={control}
                                         defaultValue=""
-                                        {...register("format")}
-                                        displayEmpty
-                                        startAdornment={
-                                            <InputAdornment position="start">
-                                                <span className="icon-briefcase" style={{ fontSize: "18px" }}></span>
-                                            </InputAdornment>
-                                        }
-                                    >
-                                        <MenuItem value="" disabled>format</MenuItem>
-
-                                    </Select>
-                                    <FormHelperText>{errors.role?.message}</FormHelperText>
+                                        render={({ field }) => (
+                                            <Select
+                                                {...field}
+                                                startAdornment={
+                                                    <InputAdornment position="start">
+                                                        <img
+                                                            src="/assets/revenue.svg"
+                                                            alt="icon"
+                                                            style={{ width: "16px", height: "16px" }}
+                                                        />
+                                                    </InputAdornment>
+                                                }
+                                                displayEmpty
+                                            >
+                                                <MenuItem value="" disabled>
+                                                    format
+                                                </MenuItem>
+                                                <MenuItem value="USD">USD</MenuItem>
+                                                <MenuItem value="EUR">EUR</MenuItem>
+                                                <MenuItem value="EGP">EGP</MenuItem>
+                                            </Select>
+                                        )}
+                                    />
+                                    <FormHelperText>{errors.format?.message}</FormHelperText>
                                 </FormControl>
 
                                 <WorkDays />
@@ -145,44 +175,73 @@ const EditBusinessInfo = () => {
                                 />
 
                                 <Box display="flex" justifyContent="left" gap={'.5rem'}>
-                                    <FormControl fullWidth error={!!errors.role}>
-                                        <Select
+                                    <FormControl fullWidth error={!!errors.country}>
+                                        <Controller
+                                            name="country"
+                                            control={control}
                                             defaultValue=""
-                                            {...register("country")}
-                                            displayEmpty
-                                            startAdornment={
-                                                <InputAdornment position="start">
-                                                    <span className="icon-briefcase" style={{ fontSize: "18px" }}></span>
-                                                </InputAdornment>
-                                            }
-                                        >
-                                            <MenuItem value="" disabled>country</MenuItem>
-
-                                        </Select>
-                                        <FormHelperText>{errors.role?.message}</FormHelperText>
+                                            render={({ field }) => (
+                                                <Select
+                                                    {...field}
+                                                    startAdornment={
+                                                        <InputAdornment position="start">
+                                                            <img
+                                                                src="/assets/revenue.svg"
+                                                                alt="icon"
+                                                                style={{ width: "16px", height: "16px" }}
+                                                            />
+                                                        </InputAdornment>
+                                                    }
+                                                    displayEmpty
+                                                >
+                                                    <MenuItem value="" disabled>
+                                                        country
+                                                    </MenuItem>
+                                                    <MenuItem value="USD">USD</MenuItem>
+                                                    <MenuItem value="EUR">EUR</MenuItem>
+                                                    <MenuItem value="EGP">EGP</MenuItem>
+                                                </Select>
+                                            )}
+                                        />
+                                        <FormHelperText>{errors.country?.message}</FormHelperText>
                                     </FormControl>
-                                    <FormControl fullWidth error={!!errors.role}>
-                                        <Select
+                                    <FormControl fullWidth error={!!errors.city}>
+                                        <Controller
+                                            name="city"
+                                            control={control}
                                             defaultValue=""
-                                            {...register("city")}
-                                            displayEmpty
-                                            startAdornment={
-                                                <InputAdornment position="start">
-                                                    <span className="icon-briefcase" style={{ fontSize: "18px" }}></span>
-                                                </InputAdornment>
-                                            }
-                                        >
-                                            <MenuItem value="" disabled>city</MenuItem>
-
-                                        </Select>
-                                        <FormHelperText>{errors.role?.message}</FormHelperText>
+                                            render={({ field }) => (
+                                                <Select
+                                                    {...field}
+                                                    startAdornment={
+                                                        <InputAdornment position="start">
+                                                            <img
+                                                                src="/assets/revenue.svg"
+                                                                alt="icon"
+                                                                style={{ width: "16px", height: "16px" }}
+                                                            />
+                                                        </InputAdornment>
+                                                    }
+                                                    displayEmpty
+                                                >
+                                                    <MenuItem value="" disabled>
+                                                        city
+                                                    </MenuItem>
+                                                    <MenuItem value="USD">USD</MenuItem>
+                                                    <MenuItem value="EUR">EUR</MenuItem>
+                                                    <MenuItem value="EGP">EGP</MenuItem>
+                                                </Select>
+                                            )}
+                                        />
+                                        <FormHelperText>{errors.city?.message}</FormHelperText>
                                     </FormControl>
+
+
                                 </Box>
                                 <Controller
                                     name="location"
                                     control={control}
                                     render={({ field: { onChange, value } }) => {
-                                        console.log(value)
                                         return (
                                             <MapWithPin
                                                 isMapOpen={isMapOpen}

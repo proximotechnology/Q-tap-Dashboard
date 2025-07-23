@@ -54,7 +54,7 @@ export default function BusinessOptions({ control, errors }) {
             {/* 1. Active Checkbox */}
             <FormControl error={!!errors.active}>
                 <Controller
-                    name="active"
+                    name="callWaiter"
                     control={control}
                     defaultValue={false}
                     render={({ field }) => (
@@ -90,7 +90,7 @@ export default function BusinessOptions({ control, errors }) {
                     {t("paymentMethod")}
                 </Typography>
                 <Controller
-                    name="pricingWay"
+                    name="paymentMethods"
                     control={control}
                     defaultValue={[]}
                     render={({ field }) => (
@@ -104,6 +104,7 @@ export default function BusinessOptions({ control, errors }) {
                                                 value={method.text}
                                                 checked={field.value.includes(method.text)}
                                                 onChange={(e) => {
+                                                    console.log(field.value)
                                                     const isChecked = e.target.checked;
                                                     const updated = isChecked
                                                         ? [...field.value, method.text]
@@ -138,7 +139,7 @@ export default function BusinessOptions({ control, errors }) {
             {/* 3. Pay Time Radio Buttons */}
             <FormControl error={!!errors.payTime}>
                 <Controller
-                    name="payTime"
+                    name="paymentTime"
                     control={control}
                     defaultValue=""
                     render={({ field }) => (
