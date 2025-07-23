@@ -9,10 +9,11 @@ import { updateBusinessData } from "../../store/register/businessSlice";
 import { zodResolver } from '@hookform/resolvers/zod';
 import WorkDays from "./WordDays";
 import MapWithPin from "../../utils/MapWithPin";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import BusinessOptions from "./BusinessOptionsComponent";
 import ModeAndDesignBox from "./ModeAndDesignBox";
+import useGetGovernAndCityFromQuery from "../../Hooks/Queries/public/citys/useGetGovernAndCityFromQuery";
 
 const EditBusinessInfo = () => {
     const { t, i18n } = useTranslation();
@@ -20,6 +21,8 @@ const EditBusinessInfo = () => {
 
     const dispatch = useDispatch();
     const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
+
+
     // dispatch(updateBusinessData(updatedData));
     const [isMapOpen, setIsMapOpen] = useState(false)
     const PaymentMethodEnum = z.enum(['cash', 'card', 'digitalWaller']);
@@ -47,11 +50,11 @@ const EditBusinessInfo = () => {
 
         callWaiter: z.boolean(),
         paymentMethods: z.array(PaymentMethodEnum).min(1, "Select at least one payment method"),
-        paymentTime: z.enum(["before", "after"], {
-            required_error: "Please choose when to pay",
-        }),
-
-
+        paymentTime: z
+            .string()
+            .refine(val => val === 'before' || val === 'after', {
+                message: "Please select when the payment should happen (before or after)",
+            }),
     });
 
 
@@ -59,6 +62,8 @@ const EditBusinessInfo = () => {
         register,
         handleSubmit,
         control,
+        watch,
+        setValue,
         formState: { errors },
     } = useForm({
         resolver: zodResolver(schema),
@@ -67,6 +72,11 @@ const EditBusinessInfo = () => {
         },
     });
 
+
+    const selectedCountry = watch("country");
+    const { citysValue, governValue } = useGetGovernAndCityFromQuery(selectedCountry || "")
+
+    useEffect(() => { setValue("city", ""); }, [selectedCountry])
     console.log("Form errors:", errors);
     const onSubmit = (data) => {
         console.log("Form Data:", data);
@@ -80,25 +90,25 @@ const EditBusinessInfo = () => {
                         <Grid container display={"flex"} justifyContent={"space-between"} >
                             <Grid item xs={12} md={6} gap={'.25rem'}>
                                 <TextField
-                                    label="Name"
+                                    label="businessName"
                                     fullWidth
                                     {...register("businessName")}
-                                    error={!!errors.name}
-                                    helperText={errors.name?.message}
+                                    error={!!errors.businessName}
+                                    helperText={errors.businessName?.message}
                                 />
                                 <TextField
-                                    label="Name"
+                                    label="website"
                                     fullWidth
                                     {...register("website")}
-                                    error={!!errors.name}
-                                    helperText={errors.name?.message}
+                                    error={!!errors.website}
+                                    helperText={errors.website?.message}
                                 />
                                 <TextField
-                                    label="Name"
+                                    label="businessEmail"
                                     fullWidth
                                     {...register("businessEmail")}
-                                    error={!!errors.name}
-                                    helperText={errors.name?.message}
+                                    error={!!errors.businessEmail}
+                                    helperText={errors.businessEmail?.message}
                                 />
                                 <FormControl fullWidth error={!!errors.currency}>
                                     <Controller
@@ -170,8 +180,8 @@ const EditBusinessInfo = () => {
                                 <TextField
                                     fullWidth
                                     {...register("businessPhone", { required: "phone is required" })}
-                                    error={!!errors.name}
-                                    helperText={errors.name?.message}
+                                    error={!!errors.businessPhone}
+                                    helperText={errors.businessPhone?.message}
                                 />
 
                                 <Box display="flex" justifyContent="left" gap={'.5rem'}>
@@ -197,9 +207,7 @@ const EditBusinessInfo = () => {
                                                     <MenuItem value="" disabled>
                                                         country
                                                     </MenuItem>
-                                                    <MenuItem value="USD">USD</MenuItem>
-                                                    <MenuItem value="EUR">EUR</MenuItem>
-                                                    <MenuItem value="EGP">EGP</MenuItem>
+                                                    {governValue.map(govern => (<MenuItem key={govern?.id} value={govern?.id}>{govern?.name_en}</MenuItem>))}
                                                 </Select>
                                             )}
                                         />
@@ -227,9 +235,7 @@ const EditBusinessInfo = () => {
                                                     <MenuItem value="" disabled>
                                                         city
                                                     </MenuItem>
-                                                    <MenuItem value="USD">USD</MenuItem>
-                                                    <MenuItem value="EUR">EUR</MenuItem>
-                                                    <MenuItem value="EGP">EGP</MenuItem>
+                                                    {citysValue.map(city => (<MenuItem key={city?.id} value={city?.id}>{city?.name_en}</MenuItem>))}
                                                 </Select>
                                             )}
                                         />

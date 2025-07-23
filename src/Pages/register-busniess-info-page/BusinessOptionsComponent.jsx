@@ -94,43 +94,50 @@ export default function BusinessOptions({ control, errors }) {
                     control={control}
                     defaultValue={[]}
                     render={({ field }) => (
-                        <FormGroup>
-                            <Box display="flex" justifyContent="space-between">
-                                {methods.map((method) => (
-                                    <FormControlLabel
-                                        key={method.text}
-                                        control={
-                                            <Checkbox
-                                                value={method.text}
-                                                checked={field.value.includes(method.text)}
-                                                onChange={(e) => {
-                                                    console.log(field.value)
-                                                    const isChecked = e.target.checked;
-                                                    const updated = isChecked
-                                                        ? [...field.value, method.text]
-                                                        : field.value.filter((val) => val !== method.text);
-                                                    field.onChange(updated);
-                                                }}
-                                                sx={{
-                                                    '& .MuiSvgIcon-root': { fontSize: 22 },
-                                                    color: "gray",
-                                                    '&.Mui-checked': { color: theme.palette.orangePrimary.main }
-                                                }}
-                                            />
-                                        }
-                                        label={
-                                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                                {method.icon}
-                                                <span>
-                                                    {t(`${method.text}`)}
-                                                </span>
-                                            </Box>
-                                        }
-                                        sx={{ '& .MuiTypography-root': { fontSize: "10px", color: "gray" } }}
-                                    />
-                                ))}
-                            </Box>
-                        </FormGroup>
+                        <>
+                            <FormGroup>
+                                <Box display="flex" justifyContent="space-between">
+                                    {methods.map((method) => (
+                                        <FormControlLabel
+                                            key={method.text}
+                                            control={
+                                                <Checkbox
+                                                    value={method.text}
+                                                    checked={field.value.includes(method.text)}
+                                                    onChange={(e) => {
+                                                        console.log(field.value)
+                                                        const isChecked = e.target.checked;
+                                                        const updated = isChecked
+                                                            ? [...field.value, method.text]
+                                                            : field.value.filter((val) => val !== method.text);
+                                                        field.onChange(updated);
+                                                    }}
+                                                    sx={{
+                                                        '& .MuiSvgIcon-root': { fontSize: 22 },
+                                                        color: "gray",
+                                                        '&.Mui-checked': { color: theme.palette.orangePrimary.main }
+                                                    }}
+                                                />
+                                            }
+                                            label={
+                                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                                    {method.icon}
+                                                    <span>
+                                                        {t(`${method.text}`)}
+                                                    </span>
+                                                </Box>
+                                            }
+                                            sx={{ '& .MuiTypography-root': { fontSize: "10px", color: "gray" } }}
+                                        />
+                                    ))}
+                                </Box>
+                            </FormGroup>
+                            {errors.paymentMethods && (
+                                <FormHelperText error sx={{ marginLeft: 2 }}>
+                                    {errors.paymentMethods.message}
+                                </FormHelperText>
+                            )}
+                        </>
                     )}
                 />
                 <FormHelperText>{errors.pricingWay?.message}</FormHelperText>
@@ -143,33 +150,42 @@ export default function BusinessOptions({ control, errors }) {
                     control={control}
                     defaultValue=""
                     render={({ field }) => (
-                        <RadioGroup {...field} row>
-                            <Box display="flex" justifyContent="left">
+                        <>
+                            <RadioGroup {...field} row>
+                                <Box display="flex" justifyContent="left">
 
-                                {
-                                    [
-                                        { value: 'before', text: 'beforeServing' },
-                                        { value: 'after', text: 'afterServing' },
+                                    {
+                                        [
+                                            { value: 'before', text: 'beforeServing' },
+                                            { value: 'after', text: 'afterServing' },
 
-                                    ].map(item =>
-                                    (<FormControlLabel value={item.value}
-                                        control={
-                                            <Radio
-                                                sx={{
-                                                    '& .MuiSvgIcon-root': { fontSize: 20 },
-                                                    color: "gray",
-                                                    '&.Mui-checked': { color: theme.palette.orangePrimary.main }
-                                                }}
-                                            />
-                                        }
-                                        label={t(`${item.text}`)}
-                                        sx={{ '& .MuiTypography-root': { fontSize: "13px", color: "gray" } }}
-                                    />)
-                                    )
-                                }
+                                        ].map(item =>
+                                        (<FormControlLabel value={item.value}
+                                            control={
+                                                <Radio
+                                                    sx={{
+                                                        '& .MuiSvgIcon-root': { fontSize: 20 },
+                                                        color: "gray",
+                                                        '&.Mui-checked': { color: theme.palette.orangePrimary.main }
+                                                    }}
+                                                />
+                                            }
+                                            label={t(`${item.text}`)}
+                                            sx={{ '& .MuiTypography-root': { fontSize: "13px", color: "gray" } }}
+                                        />)
+                                        )
+                                    }
 
-                            </Box>
-                        </RadioGroup>
+                                </Box>
+                            </RadioGroup>
+                            {
+                                errors.paymentTime && (
+                                    <FormHelperText error sx={{ marginLeft: 2 }}>
+                                        {errors.paymentTime.message}
+                                    </FormHelperText>
+                                )}
+                        </>
+
                     )}
                 />
                 <FormHelperText>{errors.payTime?.message}</FormHelperText>
