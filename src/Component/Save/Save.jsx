@@ -68,7 +68,7 @@ export const Save = () => {
   \ */
   const handleSave = async () => {
     console.log(branches)
-    const branchesData = branches.map(branch => ({ ...branch, city: branch?.city?.id, country: branch?.country?.id }))
+    const branchesData = branches.map(branch => ({ ...branch }))
     const errors = getValidationError(branchesData)
 
     if (errors) {

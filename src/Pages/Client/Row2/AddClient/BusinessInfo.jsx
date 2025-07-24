@@ -336,7 +336,7 @@ export const BusinessInfo = ({ branchErrors }) => {
               value={country}
               onChange={(e) => {
                 handleInputChange("country", e.target.value)
-                handleInputChange("city", "")
+                handleInputChange("city", undefined)
               }}
               displayEmpty
               sx={{ borderRadius: "10px", height: "33px", fontSize: "12px", color: "gray" }}
@@ -344,7 +344,7 @@ export const BusinessInfo = ({ branchErrors }) => {
             >
               <MenuItem value="" disabled>{t("country")}</MenuItem>
               {governValue.map((govern) => (
-                <MenuItem key={govern.id} value={govern} sx={{ fontSize: "12px", color: "gray" }}>{i18n.language === 'ar' ? govern.name_ar : govern.name_en}</MenuItem>
+                <MenuItem key={govern.id} value={govern.id} sx={{ fontSize: "12px", color: "gray" }}>{i18n.language === 'ar' ? govern.name_ar : govern.name_en}</MenuItem>
               ))}
 
               {/* <MenuItem value="US">United States</MenuItem>
@@ -362,9 +362,9 @@ export const BusinessInfo = ({ branchErrors }) => {
               sx={{ borderRadius: "10px", height: "33px", fontSize: "12px", color: "gray" }}
               startAdornment={<InputAdornment position="start"><PinDropOutlinedIcon sx={{ fontSize: "20px" }} /></InputAdornment>}
             >
-              <MenuItem value="" disabled>{t("city")}</MenuItem>
+              <MenuItem value={undefined} disabled>{t("city")}</MenuItem>
               {citysValue.map((city) => (
-                <MenuItem key={city.id} value={city} sx={{ fontSize: "12px", color: "gray" }}>{i18n.language === 'ar' ? city.name_ar : city.name_en}</MenuItem>
+                <MenuItem key={city.id} value={city.id} sx={{ fontSize: "12px", color: "gray" }}>{i18n.language === 'ar' ? city.name_ar : city.name_en}</MenuItem>
               ))}
               {/* <MenuItem value="NY">New York</MenuItem>
               <MenuItem value="LA">Los Angeles</MenuItem>

@@ -19,22 +19,10 @@ const branchSchema = z.object({
         .min(1, "Phone is required")
         .regex(/^01[0125][0-9]{8}$/, "Phone number must be a valid Egyptian number"),
     callWaiter: z.enum(["active", "inactive"]),
-    city: z.union([z.string(), z.number()])
-        .refine(val => {
-            if (typeof val === 'string') return val.trim().length > 0;
-            if (typeof val === 'number') return true;
-            return false;
-        }, {
-            message: "City is required"
-        }),
-    country: z.union([z.string(), z.number()])
-        .refine(val => {
-            if (typeof val === 'string') return val.trim().length > 0;
-            if (typeof val === 'number') return true;
-            return false;
-        }, {
-            message: "Country is required"
-        }),
+
+    city: z.number({ required_error: "City is required" }),
+    country: z.number({ required_error: "Country is required" }),
+
     currency: z.string().min(1, "Currency is required"),
     design: z.enum(["grid", "list", "classic"]), // add allowed designs
     format: z.string({ required_error: "format is required" }), // optionally restrict values
