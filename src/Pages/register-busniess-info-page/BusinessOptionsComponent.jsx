@@ -62,7 +62,11 @@ export default function BusinessOptions({ control, errors }) {
                             control={
                                 <Checkbox
                                     {...field}
-                                    checked={field.value}
+                                    checked={field.value === 'active'}
+                                    onChange={(e) => {
+                                        const newValue = e.target.checked ? "active" : "inactive";
+                                        field.onChange(newValue);
+                                    }}
                                     sx={{
                                         '& .MuiSvgIcon-root': { fontSize: 22 },
                                         color: "gray",
@@ -160,7 +164,7 @@ export default function BusinessOptions({ control, errors }) {
                                             { value: 'after', text: 'afterServing' },
 
                                         ].map(item =>
-                                        (<FormControlLabel value={item.value}
+                                        (<FormControlLabel key={item.value} value={item.value}
                                             control={
                                                 <Radio
                                                     sx={{

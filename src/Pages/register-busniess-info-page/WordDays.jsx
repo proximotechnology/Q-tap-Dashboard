@@ -1,8 +1,9 @@
 import { ArrowForwardIos, ArrowBackIos } from '@mui/icons-material';
 import { timeOptions } from "../../Component/Business-info/WorkingHoursDays";
-import { useState } from "react";
-import { Button, IconButton, MenuItem, Typography, Grid, useTheme, Box, TextField } from "@mui/material"
+import { useEffect, useState } from "react";
+import { Button, IconButton, MenuItem, Typography, Grid, useTheme, Box, TextField, Select } from "@mui/material"
 import { useTranslation } from 'react-i18next';
+import { Controller } from 'react-hook-form';
 
 
 const daysOfWeek = [
@@ -16,7 +17,7 @@ const daysOfWeek = [
 ];
 
 
-const WorkDays = ({ watch, setValue, getValues }) => {
+const WorkDays = ({ watch, setValue, getValues, control, errors }) => {
     const { t } = useTranslation()
     const theme = useTheme()
     // const [selectedDays, setSelectedDays] = useState([]);
@@ -49,6 +50,10 @@ const WorkDays = ({ watch, setValue, getValues }) => {
 
 
     const selectedDaysWatch = watch("workschedules");
+
+    useEffect(() => {
+        console.log("watchedWorkSchedules", selectedDaysWatch);
+    }, [selectedDaysWatch]);
 
     const selectedDays = Object.keys(selectedDaysWatch || {})
 
@@ -129,29 +134,48 @@ const WorkDays = ({ watch, setValue, getValues }) => {
                                 <Typography variant='body1' sx={{ fontSize: '11px', color: "gray", mr: 1 }}>{t("from")}</Typography>
                             </Grid>
                             <Grid item>
-                                <TextField
-                                    select
-                                    value={fromTime}
-                                    onChange={(e) => handleTimeChange(e, 'from')}
-                                    size="small"
-                                    sx={{ width: "90px", height: "30px" }}
-                                    inputProps={{ sx: { padding: '2px 10px', fontSize: '12px' } }}
-                                    SelectProps={{
-                                        MenuProps: {
-                                            PaperProps: {
-                                                style: {
-                                                    maxHeight: 150, // <-- 👈 الارتفاع الثابت للقائمة المنسدلة (يمكنك تعديله)
+                                <Controller
+                                    name={`workschedules.${currentDay}.0`}
+                                    control={control}
+                                    render={({ field }) => (
+                                        <Select
+                                            {...field}
+                                            value={field.value ?? ""}
+                                            onChange={(e) => {
+                                                const selected = e.target.value;
+
+                                                // Initialize if undefined
+                                                const existing = getValues(`workschedules.${currentDay}`) ?? [];
+                                                const updated = [...existing];
+                                                updated[0] = selected;
+                                                console.log(updated)
+                                                setValue(`workschedules.${currentDay}`, updated, {
+                                                    shouldDirty: true,
+                                                    shouldValidate: true,
+                                                });
+                                            }}
+                                            fullWidth
+
+                                            size="small"
+                                            sx={{ width: "90px", height: "30px" }}
+                                            inputProps={{ sx: { padding: '2px 10px', fontSize: '12px' } }}
+                                            SelectProps={{
+                                                MenuProps: {
+                                                    PaperProps: {
+                                                        style: {
+                                                            maxHeight: 150, // <-- 👈 الارتفاع الثابت للقائمة المنسدلة (يمكنك تعديله)
+                                                        },
+                                                    },
                                                 },
-                                            },
-                                        },
-                                    }}
-                                >
-                                    {timeOptions.map((time) => (
-                                        <MenuItem key={time} value={time} sx={{ color: "gray", fontSize: "12px" }}>
-                                            <span style={{ fontSize: "10px", color: "gray" }}>{time}</span>
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
+                                            }}
+                                        >
+                                            {timeOptions.map((t) => (
+                                                <MenuItem key={t} value={t}>{t}</MenuItem>
+                                            ))}
+                                        </Select>
+                                    )}
+                                />
+
                             </Grid>
                         </Box>
                         <Box display={"flex"} sx={{ margin: "3px 10px" }}>
@@ -159,34 +183,60 @@ const WorkDays = ({ watch, setValue, getValues }) => {
                                 <Typography variant='body1' sx={{ fontSize: '11px', color: "gray", mr: 1 }}>{t("to")}</Typography>
                             </Grid>
                             <Grid item>
-                                <TextField
-                                    select
-                                    value={toTime}
-                                    onChange={(e) => handleTimeChange(e, 'to')}
-                                    size="small"
-                                    sx={{ width: "90px", height: "30px" }}
-                                    inputProps={{ sx: { padding: '2px 10px', fontSize: '12px' } }}
-                                    SelectProps={{
-                                        MenuProps: {
-                                            PaperProps: {
-                                                style: {
-                                                    maxHeight: 150, // <-- 👈 الارتفاع الثابت للقائمة المنسدلة (يمكنك تعديله)
+                                <Controller
+                                    name={`workschedules.${currentDay}.1`}
+                                    control={control}
+                                    render={({ field }) => (
+                                        <Select
+                                            {...field}
+                                            value={field.value ?? ""}
+                                            onChange={(e) => {
+                                                const selected = e.target.value;
+
+                                                // Initialize if undefined
+                                                const existing = getValues(`workschedules.${currentDay}`) ?? [];
+                                                const updated = [...existing];
+                                                updated[1] = selected;
+                                                console.log(updated)
+                                                setValue(`workschedules.${currentDay}`, updated, {
+                                                    shouldDirty: true,
+                                                    shouldValidate: true,
+                                                });
+                                            }}
+                                            fullWidth
+
+                                            size="small"
+                                            sx={{ width: "90px", height: "30px" }}
+                                            inputProps={{ sx: { padding: '2px 10px', fontSize: '12px' } }}
+                                            SelectProps={{
+                                                MenuProps: {
+                                                    PaperProps: {
+                                                        style: {
+                                                            maxHeight: 150, // <-- 👈 الارتفاع الثابت للقائمة المنسدلة (يمكنك تعديله)
+                                                        },
+                                                    },
                                                 },
-                                            },
-                                        },
-                                    }}
-                                >
-                                    {timeOptions.map((time) => (
-                                        <MenuItem key={time} value={time} sx={{ color: "gray", fontSize: "12px" }}>
-                                            <span style={{ fontSize: "10px", color: "gray" }}>{time}</span>
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
+                                            }}
+                                        >
+                                            {timeOptions.map((t) => (
+                                                <MenuItem key={t} value={t}>{t}</MenuItem>
+                                            ))}
+                                        </Select>
+                                    )}
+                                />
                             </Grid>
                         </Box>
+
                     </Grid>
                 </Grid>
             </Grid>
+            {Object.entries(errors.workschedules ?? {}).map(([day, errorObj]) => (
+                errorObj?.root?.message && (
+                    <Typography key={day} color="error">
+                        {day}: {errorObj.root.message}
+                    </Typography>
+                )
+            ))}
         </Grid>
     )
 }

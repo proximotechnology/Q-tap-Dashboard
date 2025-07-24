@@ -489,7 +489,7 @@ export const BusinessInfo = () => {
                                                     </MenuItem>
                                                 ) : (
                                                     governValue.map(item => (
-                                                        <MenuItem key={item.id} value={item} sx={{ fontSize: "12px" }}>
+                                                        <MenuItem key={item.id} value={item.id} sx={{ fontSize: "12px" }}>
                                                             {i18n.language === 'ar' ? item.name_ar : item.name_en}
                                                         </MenuItem>
                                                     ))
@@ -520,7 +520,7 @@ export const BusinessInfo = () => {
                                                     </MenuItem>
                                                 ) :
                                                     citysValue.map((city) => (
-                                                        <MenuItem key={city?.id} value={city} sx={{ fontSize: "12px", }}>{city.name_en}</MenuItem>
+                                                        <MenuItem key={city?.id} value={city.id} sx={{ fontSize: "12px", }}>{city.name_en}</MenuItem>
                                                     ))}
                                                 {/* <MenuItem value="NY" sx={{ fontSize: "12px", color: "gray" }}>New York</MenuItem>
                                                 <MenuItem value="LA" sx={{ fontSize: "12px", color: "gray" }}>Los Angeles</MenuItem>

@@ -5,32 +5,32 @@ import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import { Controller, useForm } from "react-hook-form";
 import { z } from 'zod';
 import { useDispatch, useSelector } from "react-redux";
-import { updateBusinessData } from "../../store/register/businessSlice";
+import { updateBusinessData, updateBusinessDataByIndex } from "../../store/register/businessSlice";
 import { zodResolver } from '@hookform/resolvers/zod';
 import WorkDays from "./WordDays";
 import MapWithPin from "../../utils/MapWithPin";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import BusinessOptions from "./BusinessOptionsComponent";
 import ModeAndDesignBox from "./ModeAndDesignBox";
 import useGetGovernAndCityFromQuery from "../../Hooks/Queries/public/citys/useGetGovernAndCityFromQuery";
+import { useNavigate, useParams } from "react-router";
 
 const EditBusinessInfo = () => {
     const { t, i18n } = useTranslation();
     const theme = useTheme();
 
     const dispatch = useDispatch();
-    const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
+    const { branches } = useSelector((state) => state.businessStore);
 
+    const { id } = useParams();
 
-    // dispatch(updateBusinessData(updatedData));
     const [isMapOpen, setIsMapOpen] = useState(false)
-    const days = [
-        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
-    ];
+
 
     const timeRangeSchema = z
-        .tuple([z.string().min(1, "Start time required"), z.string().min(1, "End time required")])
+        .array(z.string().min(1))
+        .length(2, { message: "You must select both start and end time" }) // ✅ custom message
         .refine(([start, end]) => start !== end, {
             message: "Start and end time cannot be the same",
         });
@@ -43,7 +43,7 @@ const EditBusinessInfo = () => {
     const PaymentMethodEnum = z.enum(['cash', 'card', 'digitalWaller']);
     const schema = z.object({
         businessName: z.string().min(1, "Name is required"),
-        website: z.string().min(1, "Name is required"),
+        website: z.string().optional(),
         businessEmail: z.string().min(1, "Name is required"),
         currency: z.string().min(1, "Name is required"),
         format: z.string().min(1, "Name is required"),
@@ -51,28 +51,38 @@ const EditBusinessInfo = () => {
         workschedules: workScheduleSchema,
 
         businessPhone: z.string().min(1, "Name is required"),
-        country: z.number().min(1, "Name is required"),
-        city: z.number().min(1, "Name is required"),
+        country: z.number({ required_error: "country is required" }).min(1),
+        city: z.union([
+            z.number().min(1, "Field is required"),
+            z.literal(""),
+        ]).refine((val) => typeof val === "number" && val > 0, {
+            message: "This field is required",
+        }),
 
-        location: z
-            .object({
-                latitude: z.number().optional(),
-                longitude: z.number().optional(),
-            })
-            .refine(
-                (loc) =>
-                    typeof loc.latitude === "number" && typeof loc.longitude === "number",
-                {
-                    message: "You must select location",
-                    path: [], // attaches the error to `location` instead of latitude/longitude
-                }
-            ),
+
+        latitude: z.number().optional().refine(
+            (latitude) => typeof latitude === "number",
+            {
+                message: "You must select location",
+                path: ["latitude"],
+            }
+        ),
+        longitude: z.number().optional().refine(
+            (longitude) => typeof longitude === "number",
+            {
+                message: "You must select location",
+                path: ["longitude"],
+            }
+        ),
 
         mode: z.string().min(1, "Name is required"),
         design: z.string().min(1, "Name is required"),
 
 
-        callWaiter: z.boolean(),
+        callWaiter: z.enum(["active", "inactive"], {
+            required_error: "Please select call waiter status",
+        })
+        ,
         paymentMethods: z.array(PaymentMethodEnum).min(1, "Select at least one payment method"),
         paymentTime: z
             .string()
@@ -93,19 +103,29 @@ const EditBusinessInfo = () => {
     } = useForm({
         resolver: zodResolver(schema),
         defaultValues: {
-            location: { lat: "", lng: "" }, // default Cairo
+            ...(branches?.[id]),
+            latitude: branches?.[id]?.latitude ?? "",
+            longitude: branches?.[id]?.longitude ?? "",
+            workSchedules: {}
         },
     });
 
 
     const selectedCountry = watch("country");
+    const latitude = watch("latitude");
+    const longitude = watch("longitude");
 
     const { citysValue, governValue } = useGetGovernAndCityFromQuery(selectedCountry || "")
 
-    useEffect(() => { setValue("city", ""); }, [selectedCountry])
 
+    const navigate = useNavigate();
     const onSubmit = (data) => {
         console.log("Form Data:", data);
+        dispatch(updateBusinessDataByIndex({
+            index: id,
+            ...data
+        }))
+        navigate("/branches", { replace: true });
     };
 
     return (
@@ -198,7 +218,13 @@ const EditBusinessInfo = () => {
                                         <FormHelperText>{errors.format?.message}</FormHelperText>
                                     </FormControl>
 
-                                    <WorkDays setValue={setValue} watch={watch} getValues={getValues} />
+                                    <WorkDays
+                                        setValue={setValue}
+                                        watch={watch}
+                                        getValues={getValues}
+                                        control={control}
+                                        errors={errors}
+                                    />
                                 </Stack>
                             </Grid>
                             <Grid item xs={12} md={5}>
@@ -217,10 +243,17 @@ const EditBusinessInfo = () => {
                                             <Controller
                                                 name="country"
                                                 control={control}
-                                                defaultValue=""
+                                                defaultValue={undefined}
                                                 render={({ field }) => (
                                                     <Select
                                                         {...field}
+                                                        onChange={
+                                                            (e) => {
+                                                                const selected = e.target.value;
+                                                                setValue("country", selected)
+                                                                setValue("city", "")
+                                                            }
+                                                        }
                                                         startAdornment={
                                                             <InputAdornment position="start">
                                                                 <img
@@ -235,7 +268,7 @@ const EditBusinessInfo = () => {
                                                         <MenuItem value="" disabled>
                                                             country
                                                         </MenuItem>
-                                                        {governValue.map(govern => (<MenuItem key={govern?.id} value={govern?.id}>{govern?.name_en}</MenuItem>))}
+                                                        {governValue.map(govern => (<MenuItem key={govern?.id} value={govern.id}>{govern?.name_en}</MenuItem>))}
                                                     </Select>
                                                 )}
                                             />
@@ -245,7 +278,7 @@ const EditBusinessInfo = () => {
                                             <Controller
                                                 name="city"
                                                 control={control}
-                                                defaultValue=""
+                                                defaultValue={undefined}
                                                 render={({ field }) => (
                                                     <Select
                                                         {...field}
@@ -263,7 +296,7 @@ const EditBusinessInfo = () => {
                                                         <MenuItem value="" disabled>
                                                             city
                                                         </MenuItem>
-                                                        {citysValue.map(city => (<MenuItem key={city?.id} value={city?.id}>{city?.name_en}</MenuItem>))}
+                                                        {citysValue.map(city => (<MenuItem key={city?.id} value={city.id}>{city?.name_en}</MenuItem>))}
                                                     </Select>
                                                 )}
                                             />
@@ -272,28 +305,25 @@ const EditBusinessInfo = () => {
 
 
                                     </Box>
-                                    <Controller
-                                        name="location"
-                                        control={control}
-                                        render={({ field: { onChange, value } }) => {
-                                            return (
-                                                <MapWithPin
-                                                    isMapOpen={isMapOpen}
-                                                    setIsMapOpen={setIsMapOpen}
-                                                    setPos={(pos) => onChange({ latitude: pos.lat, longitude: pos.lng })}
-                                                    currentPos={{
-                                                        latitude: value.latitude,
-                                                        longitude: value.longitude,
-                                                    }}
-                                                />
-                                            )
+                                    <MapWithPin
+                                        isMapOpen={isMapOpen}
+                                        setIsMapOpen={setIsMapOpen}
+                                        setPos={(pos) => {
+                                            setValue("latitude", pos.lat, { shouldDirty: true, shouldValidate: true });
+                                            setValue("longitude", pos.lng, { shouldDirty: true, shouldValidate: true });
+                                        }}
+                                        currentPos={{
+                                            latitude,
+                                            longitude,
                                         }}
                                     />
-                                    {errors.location && (
-                                        <p style={{ color: "#f44336" }}>
-                                            {errors.location.message || errors.location.longitude?.message}
-                                        </p>
-                                    )}
+                                    {
+                                        (errors.latitude || errors.longitude) && (
+                                            <p style={{ color: "#f44336" }}>
+                                                {errors.latitude.message || errors.longitude?.message}
+                                            </p>
+                                        )
+                                    }
 
                                     <ModeAndDesignBox control={control} errors={errors} />
 

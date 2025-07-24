@@ -7,7 +7,7 @@ const initialState = {
     website: "",
     businessEmail: "",
     businessPhone: "",
-    pin:"",
+    pin: "",
     country: "",
     city: "",
     mode: "white",
@@ -44,6 +44,20 @@ const businessSlice = createSlice({
         state.branches = updatedBranches;
       } else {
         state.businessData = { ...state.businessData, ...action.payload };
+      }
+    },
+    updateBusinessDataByIndex: (state, action) => {
+      const { index, ...updatedData } = action.payload;
+      if (state.branches?.[index]) {
+        const updatedBranches = [...state.branches];
+        updatedBranches[index] = {
+          ...updatedBranches[index],
+          ...updatedData,
+        };
+        state.branches = updatedBranches;
+      } else {
+        // fallback to updating businessData if no branches or index is invalid
+        state.businessData = { ...state.businessData, ...updatedData };
       }
     },
     addBranch: (state) => {
@@ -86,7 +100,7 @@ const businessSlice = createSlice({
       state.businessData = {
         businessName: "",
         website: "",
-        pin:"",
+        pin: "",
         businessEmail: "",
         businessPhone: "",
         country: "",
@@ -118,6 +132,7 @@ const businessSlice = createSlice({
 // Export actions
 export const {
   updateBusinessData,
+  updateBusinessDataByIndex,
   addBranch,
   selectBranch,
   clearBusinessData,
