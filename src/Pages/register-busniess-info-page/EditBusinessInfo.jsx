@@ -25,6 +25,21 @@ const EditBusinessInfo = () => {
 
     // dispatch(updateBusinessData(updatedData));
     const [isMapOpen, setIsMapOpen] = useState(false)
+    const days = [
+        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+    ];
+
+    const timeRangeSchema = z
+        .tuple([z.string().min(1, "Start time required"), z.string().min(1, "End time required")])
+        .refine(([start, end]) => start !== end, {
+            message: "Start and end time cannot be the same",
+        });
+
+    const workScheduleSchema = z
+        .record(z.string(), timeRangeSchema)
+        .refine(obj => Object.keys(obj).length > 0, {
+            message: "You must select at least one working day",
+        });
     const PaymentMethodEnum = z.enum(['cash', 'card', 'digitalWaller']);
     const schema = z.object({
         businessName: z.string().min(1, "Name is required"),
@@ -33,7 +48,7 @@ const EditBusinessInfo = () => {
         currency: z.string().min(1, "Name is required"),
         format: z.string().min(1, "Name is required"),
 
-
+        workschedules: workScheduleSchema,
 
         businessPhone: z.string().min(1, "Name is required"),
         country: z.number().min(1, "Name is required"),
@@ -73,6 +88,7 @@ const EditBusinessInfo = () => {
         control,
         watch,
         setValue,
+        getValues,
         formState: { errors },
     } = useForm({
         resolver: zodResolver(schema),
@@ -83,9 +99,11 @@ const EditBusinessInfo = () => {
 
 
     const selectedCountry = watch("country");
+
     const { citysValue, governValue } = useGetGovernAndCityFromQuery(selectedCountry || "")
 
     useEffect(() => { setValue("city", ""); }, [selectedCountry])
+
     const onSubmit = (data) => {
         console.log("Form Data:", data);
     };
@@ -180,7 +198,7 @@ const EditBusinessInfo = () => {
                                         <FormHelperText>{errors.format?.message}</FormHelperText>
                                     </FormControl>
 
-                                    <WorkDays />
+                                    <WorkDays setValue={setValue} watch={watch} getValues={getValues} />
                                 </Stack>
                             </Grid>
                             <Grid item xs={12} md={5}>
@@ -298,7 +316,7 @@ const EditBusinessInfo = () => {
                                     color: "#fff",
                                 }}
                             >
-                                {t("next")}
+                                {t("Done")}
                                 <TrendingFlatIcon sx={{ marginLeft: "8px", fontSize: "18px" }} />
                             </Button>
                         </Grid>
@@ -310,11 +328,3 @@ const EditBusinessInfo = () => {
 }
 
 export default EditBusinessInfo
-
-
-
-
-
-
-
-

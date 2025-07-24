@@ -85,7 +85,7 @@ export const Branches = () => {
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
               <IconButton onClick={() => deleteBranch(index)}>
                 <span className="icon-delete" style={{ fontSize: '16px', color: 'white' }}></span>
-                <p style={{color:'white'}}>delete</p>
+                {/* <p style={{color:'white'}}>delete</p> */}
               </IconButton>
               <IconButton onClick={() => handleEditClick(index)}>
                 <img src="/assets/setting.svg" alt="icon" style={{ width: '18px', height: '18px' }} />

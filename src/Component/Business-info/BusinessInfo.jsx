@@ -91,6 +91,7 @@ export const BusinessInfo = () => {
             setFromTime('9:00 am');
             setToTime('7:00 pm');
         }
+        console.log(schedules)
     }, [currentDay, dataSource.workschedules]);
 
     // Update context whenever values change (excluding workschedules)
