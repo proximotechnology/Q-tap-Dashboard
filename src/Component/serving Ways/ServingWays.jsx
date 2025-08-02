@@ -202,7 +202,7 @@ export const ServingWays = () => {
                     </FormControl>
                 )}
 
-                <Grid item xs={12}>
+                <Grid item xs={12} display={'flex'} justifyContent={'center'} alignItems={'center'}>
                     <Button
                         variant="contained"
                         sx={{
@@ -212,9 +212,9 @@ export const ServingWays = () => {
                             backgroundColor: theme.palette.orangePrimary.main,
                             textTransform: 'none',
                             padding: "6px 15px",
-                            position: "fixed",
-                            bottom: "30px",
-                            left: { xs: '25%', md: '54%' },
+                            // position: "fixed",
+                            // bottom: "30px",
+                            // left: { xs: '25%', md: '54%' },
                             '&:hover': { backgroundColor: theme.palette.orangePrimary.main },
                             color: "#fff"
                         }}
