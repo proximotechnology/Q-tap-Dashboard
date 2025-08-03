@@ -43,7 +43,9 @@ export const Branches = () => {
   const isAr = i18n.language === 'ar';
 
   return (
-    <Box marginTop={'50px'} padding={"10px 40px"} flexGrow={1}>
+    <Box marginTop={'50px'} padding={"10px 40px"}  display={'flex'}  flexDirection={'column'} flexGrow={1} 
+    // sx={{marginBottom:{md:'0px',xs:'200px'}}}
+    >
       <Typography variant="body1" sx={{ fontSize: '18px', color: theme.palette.text.black_white }}>
         {t("branches")}
       </Typography>
@@ -121,9 +123,9 @@ export const Branches = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          position: "fixed",
-          bottom: '30px',
-          [isAr ? 'right' : 'left']: '47%',
+          // position: "fixed",
+          // bottom: '30px',
+          // [isAr ? 'right' : 'left']: '47%',
         }}
       >
         <Typography

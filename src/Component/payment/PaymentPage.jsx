@@ -12,7 +12,7 @@ export const PaymentPage = () => {
       sx={{
         backgroundImage: theme.palette.mode === 'light' ? "url(/images/Rectangle.png)" : undefined,
         backgroundColor: theme.palette.mode === 'light' ? undefined : theme.palette.background.default,
-        backgroundSize: "100% 100%", width: "100%", height: "100vh"
+        backgroundSize: "100% 100%", width: "100%", minHeight: "100vh"
       }}>
       {/* <Grid item xs={12} md={4} position={'relative'}> */}
       <SetupPage />

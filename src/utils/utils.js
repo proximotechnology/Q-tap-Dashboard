@@ -4,6 +4,17 @@ export const printFormData = (formData) => {
         console.log(key, value);
     }
     console.log("=======================================================");
+
+    const plainObject = {};
+    for (const [key, value] of formData.entries()) {
+        // Skip files in the JSON representation
+        if (!(value instanceof File)) {
+            plainObject[key] = value;
+        }
+    }
+
+    // Convert to JSON and print
+    console.log(JSON.stringify(plainObject, null, 2));
 }
 
 export const BusinessTypes = Object.freeze({

@@ -9,7 +9,14 @@ export const ServingWaysPage = () => {
     let isDarkMode = theme.palette.mode === "dark"
     return (
         <Grid container
-            sx={{ backgroundColor: theme.palette.bodyColor.white_333, backgroundImage: isDarkMode ? 'none' : 'url(/images/Rectangle.png)', backgroundSize: "100% 100%", width: "100%", height: "100vh" }}>
+            sx={{
+                backgroundColor: theme.palette.bodyColor.white_333,
+                backgroundImage: isDarkMode ? 'none' : 'url(/images/Rectangle.png)',
+                backgroundSize: "100% 100%",
+                width: "100%",
+                minHeight: "100vh"
+            }}
+        >
             <SetupPage />
 
             <Grid item xs={12} md={8} >
