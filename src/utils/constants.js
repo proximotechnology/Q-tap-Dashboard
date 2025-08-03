@@ -1,8 +1,8 @@
 
 
 
-export const BASE_URL = 'http://159.198.77.150/api/';
-export const BASE_URL_IMG = `http://159.198.77.150/`;
+export const BASE_URL = 'http://159.198.77.150:8080/api/';
+export const BASE_URL_IMG = `http://159.198.77.150:8080/`;
 
 // export const BASE_URL = 'http://127.0.0.1:8000/api/';
 // export const BASE_URL_IMG = `http://127.0.0.1:8000/`;
