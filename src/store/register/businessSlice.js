@@ -126,6 +126,11 @@ const businessSlice = createSlice({
     setBranches: (state, action) => {
       state.branches = action.payload;
     },
+    reset: (state, action) => {
+      state.businessData = initialState.businessData
+      state.branches = initialState.branches
+      state.selectedBranch = initialState.selectedBranch
+    }
   },
 });
 
@@ -137,6 +142,7 @@ export const {
   selectBranch,
   clearBusinessData,
   setBranches,
+  reset,
 } = businessSlice.actions;
 
 // Export reducer

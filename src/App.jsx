@@ -81,6 +81,7 @@ import { OtpSignupPage } from './Component/Otp/OtpSingupPage';
 import ClientPlan from './Pages/DashboardClient/Pages/client-plane-page/ClientPlan';
 import ClientsPlanTables from './Pages/Admin/Clients-Plan-Tables/ClientsPlanTables';
 import EditBusinessInfo from './Pages/register-busniess-info-page/EditBusinessInfo';
+import RegisterLayout from './Pages/layout/RegisterLayout';
 
 const queryClient = new QueryClient();
 
@@ -135,32 +136,37 @@ function App() {
       element: <PasswordResetPageAdmin />,// done  admin reset pass
     },
     {
-      path: "/product",
-      element: <ProductsPage />, // done
-    },
-    {
-      path: "/business-info",
-      element: <BusinessInfoPage />, // done
-    },
-    {
-      path: "/business-info/edit/:id",
-      element: <EditBusinessInfo />, // done
-    },
-    {
-      path: "/serving-ways",
-      element: <ServingWaysPage />, // done
-    },
-    {
-      path: "/branches",
-      element: <BranchesPage />, // done
-    },
-    {
-      path: "/payment",
-      element: <PaymentPage />, // done
-    },
-    {
-      path: "/save",
-      element: <Save />, // DONE
+      element: <RegisterLayout />,
+      children: [
+        {
+          path: "/product",
+          element: <ProductsPage />, // done
+        },
+        {
+          path: "/business-info",
+          element: <BusinessInfoPage />, // done
+        },
+        {
+          path: "/business-info/edit/:id",
+          element: <EditBusinessInfo />, // done
+        },
+        {
+          path: "/serving-ways",
+          element: <ServingWaysPage />, // done
+        },
+        {
+          path: "/branches",
+          element: <BranchesPage />, // done
+        },
+        {
+          path: "/payment",
+          element: <PaymentPage />, // done
+        },
+        {
+          path: "/save",
+          element: <Save />, // DONE
+        },
+      ]
     },
     {
       path: "/welcome",
@@ -387,7 +393,12 @@ function App() {
       path: "*",
       element: <ErrorPage />,
     },
-  ]);
+  ]
+    // ,{
+    //   basename: '/dashboard', // 👈 Important!
+    //   // package.json -> // "homepage": "/dashboard/",
+    // }
+  );
 
 
   useEffect(() => {

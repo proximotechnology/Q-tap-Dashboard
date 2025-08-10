@@ -28,14 +28,17 @@ export const Reset = () => {
             };
 
             setIsLoading(true); // Set loading state
-
+            
+            console.log(
+                'sending otp'
+            )
             const response = await axios.post(`${BASE_URL}sendOTP`, data, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
 
-
+            console.log(response)
             if (response.data.status === true) {
                 toast.success('Email sent successfully check your email');
                 navigate('/receive-code');

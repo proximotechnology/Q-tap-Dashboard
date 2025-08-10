@@ -23,11 +23,13 @@ export const handleClientLoginRedux = createAsyncThunk(
                 pin,
                 brunch_id,
             };
-            console.log()
+
             const response = await axios.post(`${BASE_URL}login`, data, {
-                // withCredentials: true,
+                withCredentials: true,
                 headers: { 'Content-Type': 'application/json' },
             });
+
+            console.log("response login",response)
 
             localStorage.removeItem('clientPassword');
             localStorage.removeItem('clientEmail');
@@ -40,9 +42,9 @@ export const handleClientLoginRedux = createAsyncThunk(
                 localStorage.setItem('branches', JSON.stringify(response.data.brunches));
             }
 
-            return {...response.data,selected_brunch_id:brunch_id};
+            return { ...response.data, selected_brunch_id: brunch_id };
         } catch (error) {
-            console.log("error login",error)
+            console.log("error login", error)
             return rejectWithValue(error.response?.data || error.message);
         }
     }

@@ -40,7 +40,7 @@ const EditBusinessInfo = () => {
         .refine(obj => Object.keys(obj).length > 0, {
             message: "You must select at least one working day",
         });
-    const PaymentMethodEnum = z.enum(['cash', 'card', 'digitalWaller']);
+    const PaymentMethodEnum = z.enum(['cash', 'card', 'wallet']);
     const schema = z.object({
         businessName: z.string().min(1, "Name is required"),
         website: z.string().optional(),
@@ -60,7 +60,7 @@ const EditBusinessInfo = () => {
         }),
 
 
-        latitude: z.number().optional().refine(
+        latitude: z.number({message:"location must selected"}).optional().refine(
             (latitude) => typeof latitude === "number",
             {
                 message: "You must select location",
@@ -119,6 +119,7 @@ const EditBusinessInfo = () => {
 
 
     const navigate = useNavigate();
+    console.log("Form Data:", errors);
     const onSubmit = (data) => {
         console.log("Form Data:", data);
         dispatch(updateBusinessDataByIndex({

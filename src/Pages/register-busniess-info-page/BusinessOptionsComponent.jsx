@@ -25,7 +25,7 @@ const methods = [
         </span>)
     },
     {
-        text: "digitalWaller",
+        text: "wallet",
         icon: (<span className="icon-wallet" style={{ marginRight: '2px', fontSize: "20px" }}>
             <span className="path1"></span><span className="path2"></span><span className="path3"></span>
             <span className="path4"></span><span className="path5"></span><span className="path6"></span>
@@ -138,7 +138,7 @@ export default function BusinessOptions({ control, errors }) {
                             </FormGroup>
                             {errors.paymentMethods && (
                                 <FormHelperText error sx={{ marginLeft: 2 }}>
-                                    {errors.paymentMethods.message}
+                                    {errors.paymentMethods.message || errors.paymentMethods?.[0]?.message}
                                 </FormHelperText>
                             )}
                         </>

@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useTranslation } from 'react-i18next';
 import { BASE_URL, BASE_URL_IMG } from "../../utils/constants";
+import axios from 'axios';
 
 const AddBundle = ({ open, onClose, editData = null }) => {
     const [text, setText] = useState('');
@@ -54,22 +55,20 @@ const AddBundle = ({ open, onClose, editData = null }) => {
             ? `${BASE_URL}pricing/${editData.id}`
             : `${BASE_URL}pricing`;
 
-        const method = editData ? 'PUT' : 'POST';
+        const method = editData ? 'put' : 'post';
 
-        fetch(url, {
+        axios({
             method: method,
+            url: url,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify(bundleData)
+            data: bundleData
         })
             .then(async response => {
-                const data = await response.json();
-                if (!response.ok) {
-                    throw new Error(data.error || 'Failed to save bundle');
-                }
-                return data;
+                console.log(response)
+                return response;
             })
             .then(data => {
                 toast.success(editData ? t("bundleUpdateSucc") : t("bundleCreateSucc"));

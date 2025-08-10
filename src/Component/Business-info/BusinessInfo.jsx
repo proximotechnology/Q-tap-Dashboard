@@ -79,7 +79,7 @@ export const BusinessInfo = () => {
 
     const { citysValue, governValue, loadingCities, loadingGovern } = useGetGovernAndCityFromQuery(country)
 
-
+    console.log(citysValue)
 
     // تحديث fromTime و toTime عند تغيير currentDay
     useEffect(() => {

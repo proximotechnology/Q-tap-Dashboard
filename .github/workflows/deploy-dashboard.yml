@@ -1,0 +1,45 @@
+name: 🚀 Deploy Dashboard to VPS
+
+on:
+  push:
+    branches:
+      - main  # or 'master' or any branch you deploy from
+  workflow_dispatch: # Allow manual run
+
+jobs:
+  deploy:
+    name: Deploy to VPS
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # adjust based on your project
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Archive build folder
+        run: tar -czf build.tar.gz build
+
+      - name: Copy to VPS via SCP
+        run: |
+          scp -o StrictHostKeyChecking=no build.tar.gz ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/tmp/
+
+      - name: Deploy on VPS
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+            set -e
+            SERVER_PATH="/var/www/Q-tap-Dashboard"
+            rm -rf $SERVER_PATH/*
+            rm -rf $SERVER_PATH/.[!.]*
+            tar -xzf /tmp/build.tar.gz -C $SERVER_PATH
+            rm /tmp/build.tar.gz
+          EOF
