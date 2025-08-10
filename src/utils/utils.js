@@ -32,3 +32,5 @@ export const BusinessLang = Object.freeze({
     EN: 'en',
     AR: 'ar'
 });
+
+export const YEAR_SELECT_START_FROM = 1940

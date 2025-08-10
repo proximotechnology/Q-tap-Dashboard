@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { updatePersonalData, clearPersonalData, setPersonalData } from "../../../../store/register/personalSlice";
 import { useDispatch, useSelector } from 'react-redux';
+import { YEAR_SELECT_START_FROM } from '../../../../utils/utils';
 
 export const PersonalInfo = () => {
     const { t } = useTranslation()
@@ -260,11 +261,13 @@ export const PersonalInfo = () => {
                                 sx={{ borderRadius: '10px', height: '33px', fontSize: "12px", color: "gray" }}
                             >
                                 <MenuItem value="" disabled>{t("year")}</MenuItem>
-                                {Array.from({ length: 2025 - 1980 + 1 }, (_, i) => (
-                                    <MenuItem key={i + 1980} value={i + 1980}>
-                                        {i + 1980}
-                                    </MenuItem>
-                                ))}
+                                {
+                                    Array.from({ length: (new Date().getFullYear()) - YEAR_SELECT_START_FROM + 1 }, (_, i) => (
+                                        <MenuItem key={i + YEAR_SELECT_START_FROM} value={i + YEAR_SELECT_START_FROM}>
+                                            {i + YEAR_SELECT_START_FROM}
+                                        </MenuItem>
+                                    ))
+                                }
                             </Select>
                         </FormControl>
                     </Grid>
