@@ -14,6 +14,8 @@ import { updatePersonalData } from "../../store/register/personalSlice";
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetEgyptGovern } from '../../Hooks/Queries/public/citys/useGetEgyptGovern';
 import { YEAR_SELECT_START_FROM } from '../../utils/utils';
+import { COUNTRIES, COUNTRIES_CODES } from '../../utils/constant-variables/countries-codes';
+import PhoneField from '../phone-field/PhoneField';
 
 
 const SignUp = () => {
@@ -29,6 +31,7 @@ const SignUp = () => {
 
     const [fullName, setFullName] = useState('');
     const [phone, setPhone] = useState('');
+    const [countryCode, setCountryCode] = useState('');
     const [email, setEmail] = useState('');
     const [month, setMonth] = useState('');
     const [day, setDay] = useState('');
@@ -147,32 +150,12 @@ const SignUp = () => {
                 />
             </FormControl>
 
-            <FormControl variant="outlined" fullWidth >
-                <OutlinedInput
-                    id="outlined-phone"
-                    endAdornment={
-                        <InputAdornment position="end">
-                            {/* <Typography sx={{ , fontSize: "10px", }} >{t("verify")}</Typography> */}
-                        </InputAdornment>
-                    }
-                    startAdornment={
-                        <InputAdornment position="start">
-                            <PhoneOutlinedIcon sx={{
-                                // ,
-                                fontSize: "16px"
-                            }} />
-                        </InputAdornment>
-                    }
-                    placeholder={t("mobileNumber")}
-                    required
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    sx={{
-                        // ,
-                        borderRadius: '50px', marginTop: "10px", height: '33px', fontSize: "10px"
-                    }}
-                />
-            </FormControl>
+            <PhoneField
+                countryCode={countryCode}
+                phone={phone}
+                setCountryCode={setCountryCode}
+                setPhone={setPhone}
+            />
 
             <FormControl required variant="outlined" fullWidth >
                 <OutlinedInput
