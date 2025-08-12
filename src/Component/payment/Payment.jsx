@@ -42,8 +42,8 @@ export const Payment = () => {
   const [discountCode, setDiscountCode] = useState('');
   const [isLoading, setIsLoading] = useState(true); // حالة تحميل جديدة
   const dispatch = useDispatch();
-  const personalData = useSelector((state) => state.personalStore.personalData);
-  const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
+  const personalData = useSelector((state) => state.registerPersonalDataStore.personalData);
+  const { businessData, branches, selectedBranch } = useSelector((state) => state.registerBranchStore);
 
 
 

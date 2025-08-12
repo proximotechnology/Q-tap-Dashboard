@@ -31,7 +31,7 @@ import { PhoneFieldReactFormHook } from "../../../register-busniess-info-page/Ph
 
 
 
-export default function PersonalInfoForm({ control, watch, setValue, getValues, errors }) {
+export default function PersonalInfoForm({ control, watch, setValue, getValues, errors, trigger }) {
     const YEAR_SELECT_START_FROM = 1950;
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -44,76 +44,91 @@ export default function PersonalInfoForm({ control, watch, setValue, getValues, 
     return (
 
         <Grid container>
-            <Grid item xs={12} md={3}>
-                <ArrowBackIosOutlinedIcon
-                    onClick={() => navigate('/payment')}
-                    sx={{ color: "#4b4a4a", cursor: "pointer", marginInlineStart: { xs: '0px', md: '0px' } }}
-                />
-                <Controller
-                    name="image"
-                    control={control}
-                    rules={{ required: "Image is required" }}
-                    render={({ field }) => (
-                        <Box
-                            sx={{
-                                width: "150px",
-                                height: "150px",
-                                borderRadius: "50%",
-                                overflow: "hidden",
-                                position: "relative",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                marginX: { xs: "auto", md: "0px" },
-                            }}
-                        >
-                            <img
-                                src={preview}
-                                alt="user"
-                                style={{ width: "110%", height: "110%" }}
-                            />
+            <Grid item xs={12} md={3} >
+                <div className="md:ms-2 flex-col">
 
-                            {/* Edit overlay */}
-                            <Box
-                                sx={{
-                                    position: "absolute",
-                                    bottom: 0,
-                                    width: "100%",
-                                    height: "18%",
-                                    backgroundColor: "#4b4a4a",
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    color: "white",
-                                    cursor: "pointer",
-                                }}
-                            >
-                                <EditOutlinedIcon sx={{ color: "white", fontSize: "20px" }} />
-                                <input
-                                    accept="image/*"
-                                    style={{
-                                        display: "block",
-                                        position: "absolute",
-                                        top: 0,
-                                        left: 0,
-                                        width: "100%",
-                                        height: "100%",
-                                        opacity: 0,
-                                        cursor: "pointer",
+
+                    <div className="md:my-2">
+                        <ArrowBackIosOutlinedIcon
+                            onClick={() => navigate('/payment')}
+                            sx={{ color: "#4b4a4a", cursor: "pointer", marginInlineStart: { xs: '0px', md: '0px' } }}
+                        />
+                    </div>
+                    <Controller
+                        name="image"
+                        control={control}
+                        render={({ field }) => (
+                            <div className="flex-col gap-4">
+                                <Box
+                                    sx={{
+                                        width: "150px",
+                                        height: "150px",
+                                        borderRadius: "50%",
+                                        overflow: "hidden",
+                                        position: "relative",
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        marginX: { xs: "auto", md: "0px" },
                                     }}
-                                    type="file"
-                                    onChange={(e) => {
-                                        const file = e.target.files?.[0];
-                                        if (file) {
-                                            field.onChange(file); // update RHF state
-                                            setPreview(URL.createObjectURL(file)); // show preview
-                                        }
-                                    }}
-                                />
-                            </Box>
-                        </Box>
-                    )}
-                />
+                                >
+                                    <img
+                                        src={preview}
+                                        alt="user"
+                                        style={{ width: "110%", height: "110%" }}
+                                    />
+
+                                    {/* Edit overlay */}
+                                    <Box
+                                        sx={{
+                                            position: "absolute",
+                                            bottom: 0,
+                                            width: "100%",
+                                            height: "18%",
+                                            backgroundColor: "#4b4a4a",
+                                            display: "flex",
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            color: "white",
+                                            cursor: "pointer",
+                                        }}
+                                    >
+                                        <EditOutlinedIcon sx={{ color: "white", fontSize: "20px" }} />
+                                        <input
+
+                                            accept="image/*"
+                                            style={{
+                                                display: "block",
+                                                position: "absolute",
+                                                top: 0,
+                                                left: 0,
+                                                width: "100%",
+                                                height: "100%",
+                                                opacity: 0,
+                                                cursor: "pointer",
+                                            }}
+                                            type="file"
+                                            onChange={(e) => {
+                                                const file = e.target.files?.[0];
+                                                console.log("image file ", file)
+                                                field.onChange(file || null); // ✅ trigger RHF even if no file
+                                                if (file) {
+                                                    setPreview(URL.createObjectURL(file));
+                                                }
+                                                trigger("image");
+                                            }}
+                                        />
+                                    </Box>
+                                </Box>
+                                {
+                                    errors.image &&
+                                    <p className="text-red-500 mt-[4px]" > {errors.image.message}</p>
+
+                                }
+                            </div>
+                        )}
+                    />
+                </div>
             </Grid>
             <Grid item xs={12} md={9} >
                 <Typography

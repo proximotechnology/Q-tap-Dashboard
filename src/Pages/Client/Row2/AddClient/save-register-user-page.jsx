@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import BranchForm from './save-page-branch-data-from';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -9,31 +9,42 @@ import {
 } from '@mui/icons-material';
 import { saveNewRegisterUserFormSchema } from './saveNewRegisterUserFormSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSelector } from 'react-redux';
+import { selectRegisterPersonalData } from '../../../../store/register/personalSlice';
 
 
 const SaveRegisterUserDataPage = () => {
   const theme = useTheme();
   const { t, i18n } = useTranslation();
-
-
+  const { businessData, branches, selectedBranch } = useSelector((state) => state.registerBranchStore);
+  const data = useSelector(selectRegisterPersonalData);
+  console.log("selectRegisterPersonalData", data)
   const {
     control,
     handleSubmit,
     watch,
     setValue,
     getValues,
-    formState: { errors }
+    formState: { errors },
+    trigger
   } = useForm({
     resolver: zodResolver(saveNewRegisterUserFormSchema),
     mode: "onBlur",
     defaultValues: {
-      businessName: "",
-      businessPhone: "",
-      businessEmail: "",
+      image: data?.image || "",
+      fullName: data?.fullName || "",
+      countryCode:data?.countryCode || "",
+      phone: data?.phone || "",
+      email: data?.email || "",
       pin: "",
-      country: "",
-      city: "",
-      branches: []
+      website: data?.website || "",
+      country: data?.country || "",
+      day: data?.day || "",
+      month: data?.month || "",
+      year: data?.year || "",
+      password: data?.password || "",
+      confirmPassword: data?.confirmPassword || "",
+      branches: branches || []
     }
   });
 
@@ -45,6 +56,9 @@ const SaveRegisterUserDataPage = () => {
   console.log(currentValues)
 
   console.log("fromError ", errors)
+
+
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} >
@@ -58,6 +72,7 @@ const SaveRegisterUserDataPage = () => {
               t={t}
               watch={watch}
               getValues={getValues}
+              trigger={trigger}
             />
           </div>
           <div className="w-full md:w-1/2 md:pe-1 md:ps-2">

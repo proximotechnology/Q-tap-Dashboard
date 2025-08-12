@@ -21,7 +21,7 @@ import PhoneField from '../phone-field/PhoneField';
 const SignUp = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const personalData = useSelector((state) => state.personalStore.personalData);
+    const personalData = useSelector((state) => state.registerPersonalDataStore.personalData);
 
     const { data } = useGetEgyptGovern()
     const governorates = data?.data?.data;
@@ -107,6 +107,7 @@ const SignUp = () => {
         const personalContextData = {
             fullName,
             phone,
+            countryCode,
             email,
             month,
             day,

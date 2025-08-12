@@ -58,3 +58,5 @@ export const { updatePersonalData, clearPersonalData, setPersonalData } = person
 
 // Export reducer
 export const personalReducer = personalSlice.reducer;
+
+export const selectRegisterPersonalData = (state) => state?.registerPersonalDataStore.personalData;

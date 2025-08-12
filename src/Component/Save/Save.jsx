@@ -40,9 +40,9 @@ import SaveRegisterUserDataPage from '../../Pages/Client/Row2/AddClient/save-reg
 export const Save = () => {
   const [branchErrors, setBranchErrors] = useState({})
   const dispatch = useDispatch();
-  const personalData = useSelector((state) => state.personalStore.personalData);
+  const personalData = useSelector((state) => state.registerPersonalDataStore.personalData);
 
-  const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
+  const { businessData, branches, selectedBranch } = useSelector((state) => state.registerBranchStore);
 
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();

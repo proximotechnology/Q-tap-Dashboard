@@ -22,7 +22,7 @@ export const Branches = () => {
 
 
   const dispatch = useDispatch();
-  const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
+  const { businessData, branches, selectedBranch } = useSelector((state) => state.registerBranchStore);
 
   const navigate = useNavigate();
 

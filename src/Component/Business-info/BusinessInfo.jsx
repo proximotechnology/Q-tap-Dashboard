@@ -42,7 +42,7 @@ export const BusinessInfo = () => {
         marginBottom: "20px"
     });
     const dispatch = useDispatch();
-    const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
+    const { businessData, branches, selectedBranch } = useSelector((state) => state.registerBranchStore);
     const [isMapOpen, setIsMapOpen] = useState(false)
     const [pos, setPos] = useState(null)
 

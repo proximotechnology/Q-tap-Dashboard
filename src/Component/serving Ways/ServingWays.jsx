@@ -31,7 +31,7 @@ export const ServingWays = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch()
-    const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
+    const { businessData, branches, selectedBranch } = useSelector((state) => state.registerBranchStore);
 
     const { t } = useTranslation();
 

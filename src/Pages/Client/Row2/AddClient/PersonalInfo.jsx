@@ -26,7 +26,7 @@ export const PersonalInfo = () => {
     const dispatch = useDispatch();
     const theme = useTheme();
 
-    const personalData = useSelector((state) => state.personalStore.personalData);
+    const personalData = useSelector((state) => state.registerPersonalDataStore.personalData);
 
     const [fullName, setFullName] = useState(personalData.fullName || '');
     const [phone, setPhone] = useState(personalData.phone || '');

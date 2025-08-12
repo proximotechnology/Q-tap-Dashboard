@@ -55,7 +55,7 @@ import { selectBranch, updateBusinessData } from "../../../../store/register/bus
 //{ control, watch, setValue, errors }
 export default function BranchForm({ control, watch, setValue, getValues, errors }) {
     const theme = useTheme();
-    const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
+    const { businessData, branches, selectedBranch } = useSelector((state) => state.registerBranchStore);
     const dispatch = useDispatch()
     const [branchIndex, setBranchIndex] = useState(selectedBranch || 0);
 

@@ -14,9 +14,9 @@ export const store = configureStore({
     reducer: {
         affiliates: affiliateReducer,
         admins: adminReducer,
-        businessStore: businessReducer,
-        personalStore: personalReducer,
-        /* 
+        registerBranchStore: businessReducer,
+        registerPersonalDataStore: personalReducer,
+        /*         
         qtabClient 
         */
         clientDashBoard,            // client role : admin

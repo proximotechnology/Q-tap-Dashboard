@@ -55,7 +55,7 @@ export const BusinessInfo = ({ branchErrors }) => {
   const { t, i18n } = useTranslation();
 
   const dispatch = useDispatch()
-  const { businessData, branches, selectedBranch } = useSelector((state) => state.businessStore);
+  const { businessData, branches, selectedBranch } = useSelector((state) => state.registerBranchStore);
   const [branchIndex, setBranchIndex] = useState(selectedBranch || 0);
   const [branchPosition, setBranchPosition] = useState([]);
   const navigate = useNavigate();

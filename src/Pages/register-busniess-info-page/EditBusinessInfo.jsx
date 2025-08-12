@@ -22,7 +22,7 @@ const EditBusinessInfo = () => {
     const theme = useTheme();
 
     const dispatch = useDispatch();
-    const { branches } = useSelector((state) => state.businessStore);
+    const { branches } = useSelector((state) => state.registerBranchStore);
 
     const { id } = useParams();
 
