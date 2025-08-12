@@ -148,6 +148,9 @@ export default function BusinessOptions({ control, errors }) {
             </FormControl>
 
             {/* 3. Pay Time Radio Buttons */}
+            <Typography variant="body1" sx={{ display: "flex", fontSize: "14px", color: "gray" }}>
+                {t("paymentTime")}
+            </Typography>
             <FormControl error={!!errors.payTime}>
                 <Controller
                     name="paymentTime"
@@ -194,6 +197,6 @@ export default function BusinessOptions({ control, errors }) {
                 />
                 <FormHelperText>{errors.payTime?.message}</FormHelperText>
             </FormControl>
-        </div>
+        </div >
     );
 }

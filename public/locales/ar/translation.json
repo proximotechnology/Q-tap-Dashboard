@@ -679,5 +679,8 @@
     "invalidOtp": "كلمة مرور لمرة واحدة غير صالحة. يُرجى المحاولة مرة أخرى",
     "otpVerificationFailed": "فشل التحقق من كلمة المرور لمرة واحدة. يُرجى المحاولة لاحقًا",
     "clientPlans": "اشتراكت العملاء",
-    "numberOfOrders": "عدد الطلبات"
+    "numberOfOrders": "عدد الطلبات",
+    "validation": {
+        "InvalidPhoneNumber": "رقم الهاتف غير صحيح"
+    }
 }

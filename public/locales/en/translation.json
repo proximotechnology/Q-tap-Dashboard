@@ -679,5 +679,8 @@
     "invalidOtp": "Invalid OTP. Please try again.",
     "otpVerificationFailed": "OTP verification failed. Please try again later.",
     "clientPlans":"Client Plans",
-    "numberOfOrders":"Number of Orders"
+    "numberOfOrders":"Number of Orders",
+    "validation":{
+        "InvalidPhoneNumber":"Invalid Phone Number"
+    }
 }

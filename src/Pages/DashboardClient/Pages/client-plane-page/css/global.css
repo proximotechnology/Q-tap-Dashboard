@@ -1,11 +1,11 @@
-.flex {
+/* .flex {
     display: flex;
     gap: 2px;
 }
 
 .flex-col {
     flex-direction: column;
-}
+} */
 
 .flex-align-items {
     align-items: center;
@@ -53,13 +53,13 @@
     /* text-gray-600 */
 }
 
-.p-0 {
+/* .p-0 {
     padding: 0px;
 }
 
 .m-0 {
     margin: 0px;
-}
+} */
 
 .plan-list-item:hover {
     background-color: #f1f1f1;

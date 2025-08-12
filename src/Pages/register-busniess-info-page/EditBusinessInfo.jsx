@@ -15,6 +15,7 @@ import BusinessOptions from "./BusinessOptionsComponent";
 import ModeAndDesignBox from "./ModeAndDesignBox";
 import useGetGovernAndCityFromQuery from "../../Hooks/Queries/public/citys/useGetGovernAndCityFromQuery";
 import { useNavigate, useParams } from "react-router";
+import { PhoneFieldReactFormHook } from "./PhoneFieldReactFormHook";
 
 const EditBusinessInfo = () => {
     const { t, i18n } = useTranslation();
@@ -50,7 +51,8 @@ const EditBusinessInfo = () => {
 
         workschedules: workScheduleSchema,
 
-        businessPhone: z.string().min(1, "Name is required"),
+        businessPhone: z.string().min(1, "businessPhone is required"),
+        countryCode:z.string().min(1, "country code  is required").min(1, "country code is required"),
         country: z.number({ required_error: "country is required" }).min(1),
         city: z.union([
             z.number().min(1, "Field is required"),
@@ -60,7 +62,7 @@ const EditBusinessInfo = () => {
         }),
 
 
-        latitude: z.number({message:"location must selected"}).optional().refine(
+        latitude: z.number({ message: "location must selected" }).optional().refine(
             (latitude) => typeof latitude === "number",
             {
                 message: "You must select location",
@@ -103,6 +105,7 @@ const EditBusinessInfo = () => {
     } = useForm({
         resolver: zodResolver(schema),
         defaultValues: {
+            countryCode: "",
             ...(branches?.[id]),
             latitude: branches?.[id]?.latitude ?? "",
             longitude: branches?.[id]?.longitude ?? "",
@@ -230,7 +233,7 @@ const EditBusinessInfo = () => {
                             </Grid>
                             <Grid item xs={12} md={5}>
                                 <Stack spacing={2}>
-
+                                    <PhoneFieldReactFormHook control={control} errors={errors} />
                                     <TextField
                                         fullWidth
                                         placeholder="business Phone"

@@ -311,9 +311,7 @@ const SignUp = () => {
                             {i18n.language === 'ar' ? governorate.name_ar : governorate.name_en}
                         </MenuItem>
                     ))}
-                    <MenuItem value="US" sx={{ fontSize: "10px", }} >United States</MenuItem>
-                    <MenuItem value="CA" sx={{ fontSize: "10px", }} >Canada</MenuItem>
-                    <MenuItem value="UK" sx={{ fontSize: "10px", }} >United Kingdom</MenuItem>
+                   
                 </Select>
             </FormControl>
             {/* <FormControl variant="outlined" fullWidth  >
@@ -410,7 +408,7 @@ const SignUp = () => {
                 />}
                 label={<Typography sx={{ fontSize: "10px", }}> {t("registerAgree")}</Typography>}
             />
-            {apiError && <Typography className='error-color' sx={{ fontSize: '13px', textAlign: "center" }}>{apiError}</Typography>}
+            {apiError && <Typography className='text-red-500' sx={{ fontSize: '13px', textAlign: "center" }}>{apiError}</Typography>}
             {apiSuccess && <Typography sx={{ color: theme.palette.text.green, fontSize: '13px', textAlign: "center" }}>{apiSuccess}</Typography>}
             <Button
                 disabled={isLoading}

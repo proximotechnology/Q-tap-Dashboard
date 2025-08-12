@@ -25,6 +25,7 @@ import useRegisterChangeThemeMode from '../../Hooks/Queries/useRegisterChangeThe
 import { useGetEgyptGovern } from '../../Hooks/Queries/public/citys/useGetEgyptGovern';
 import { useGetEgyptCityByGovernID } from '../../Hooks/Queries/public/citys/useGetEgyptCityByGovernID';
 import useGetGovernAndCityFromQuery from '../../Hooks/Queries/public/citys/useGetGovernAndCityFromQuery';
+import PhoneField from '../phone-field/PhoneField';
 
 // تحديد الأيام بأحرف مختصرة للعرض
 const daysOfWeek = ['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr'];
@@ -60,6 +61,7 @@ export const BusinessInfo = () => {
     const [website, setWebsite] = useState(dataSource.website || '');
     const [businessEmail, setBusinessEmail] = useState(dataSource.businessEmail || '');
     const [businessPhone, setBusinessPhone] = useState(dataSource.businessPhone || '');
+    const [businessPhoneCountry, setBusinessPhoneCountry] = useState('');
     const [selectedDays, setSelectedDays] = useState(
         dataSource.workschedules
             ? Object.keys(dataSource.workschedules).map((day) => daysOfWeek[fullDaysOfWeek.indexOf(day)])
@@ -438,9 +440,17 @@ export const BusinessInfo = () => {
                             </Box>
                         </Grid>
 
-                        <Grid item xs={12} md={5} sx={{ marginTop: "-6px" }}>
+                        <Grid item xs={12} md={5} >
 
-                            <TextField
+
+                            <PhoneField
+                                countryCode={businessPhoneCountry}
+                                phone={businessPhone}
+                                setPhone={setBusinessPhone}
+                                setCountryCode={setBusinessPhoneCountry}
+                                isRounded={false}
+                            />
+                            {/* <TextField
                                 fullWidth
                                 placeholder={t("businessPhone")}
                                 value={businessPhone}
@@ -454,7 +464,7 @@ export const BusinessInfo = () => {
                                     sx: { height: "40px", borderRadius: "10px", fontSize: "10px" }
                                 }}
                                 sx={{ marginTop: "15px" }}
-                            />
+                            /> */}
                             <Box sx={{ marginTop: "15px", marginBottom: "10px" }}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12} md={6}>

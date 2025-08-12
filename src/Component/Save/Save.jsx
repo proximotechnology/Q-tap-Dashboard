@@ -35,6 +35,8 @@ import { appendBrunchData, appendUserData } from '../../utils/register-client/cr
 import { registerUser } from '../../api/Client/registerUser';
 import { getValidationError } from '../../utils/register-validation/registerValidation';
 import { printFormData } from '../../utils/utils';
+import BranchForm from '../../Pages/Client/Row2/AddClient/save-page-branch-data-from';
+import SaveRegisterUserDataPage from '../../Pages/Client/Row2/AddClient/save-register-user-page';
 export const Save = () => {
   const [branchErrors, setBranchErrors] = useState({})
   const dispatch = useDispatch();
@@ -326,8 +328,8 @@ export const Save = () => {
       </Box>
 
       <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main, borderBottom: 'none', width: '100%', height: '3px' }} />
-
-      <Box>
+      <SaveRegisterUserDataPage />
+      {/* <Box>
         <Grid container >
           <Grid item xs={12} md={5} sx={{ paddingX: { xs: '20px', md: '0px' } }}>
             <PersonalInfo personalData={personalData} onInputChange={handlePersonalChange} />
@@ -351,10 +353,11 @@ export const Save = () => {
                   <>{field}:{message}</>
                 ))
               ))
-            } </span> : ""} */}
-            <BusinessInfo branchErrors={branchErrors} />
+            } </span> : ""} 
+              {/* <BusinessInfo branchErrors={branchErrors} /> * /}
+            <BranchForm />
           </Grid>
-        </Grid>
+        </Grid >
 
         <Grid container justifyContent="center" sx={{ marginTop: 3 }}>
           {isLoading ?
@@ -388,7 +391,7 @@ export const Save = () => {
               <CheckOutlined sx={{ fontSize: '22px', mr: 1 }} /> {t("save")}
             </Button>}
         </Grid>
-      </Box>
+      </Box> */}
     </Box>
   );
 };
