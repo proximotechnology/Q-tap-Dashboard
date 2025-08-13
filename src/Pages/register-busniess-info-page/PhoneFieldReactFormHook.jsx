@@ -46,7 +46,7 @@ export const PhoneFieldReactFormHook = ({ control, errors, isRounded = false, co
                                 }}
                             >
                                 {COUNTRIES_CODES.map((c) => (
-                                    <SelectItem key={`${countryCodeName}-${c.code}`} value={c.code}>
+                                    <SelectItem key={`${countryCodeName}-${c.code}`} value={c.label}>
                                         {c.label} {c.code}
                                     </SelectItem>
                                 ))}

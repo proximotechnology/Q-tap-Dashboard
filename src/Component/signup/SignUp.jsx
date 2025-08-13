@@ -103,7 +103,7 @@ const SignUp = () => {
             user_type: "qtap_clients"
         };
 
-
+        console.log("countryCode", countryCode)
         const personalContextData = {
             fullName,
             phone,
@@ -312,7 +312,7 @@ const SignUp = () => {
                             {i18n.language === 'ar' ? governorate.name_ar : governorate.name_en}
                         </MenuItem>
                     ))}
-                   
+
                 </Select>
             </FormControl>
             {/* <FormControl variant="outlined" fullWidth  >

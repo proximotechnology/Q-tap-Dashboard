@@ -61,7 +61,7 @@ const PhoneField = ({ phone, setPhone, setCountryCode, countryCode, isRounded = 
                         }}
                     >
                         {COUNTRIES_CODES.map((c) => (
-                            <SelectItem key={c.code} value={c.code}>
+                            <SelectItem key={c.code} value={c.label}>
                                 {c.label} {c.code}
                             </SelectItem>
                         ))}

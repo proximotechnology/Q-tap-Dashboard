@@ -7,7 +7,7 @@ import PersonalInfoForm from './save-page-person-data-from';
 import {
   CheckOutlined,
 } from '@mui/icons-material';
-import { saveNewRegisterUserFormSchema } from './saveNewRegisterUserFormSchema';
+import { phoneSchema, saveNewRegisterUserFormSchema } from './saveNewRegisterUserFormSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSelector } from 'react-redux';
 import { selectRegisterPersonalData } from '../../../../store/register/personalSlice';
@@ -18,7 +18,7 @@ const SaveRegisterUserDataPage = () => {
   const { t, i18n } = useTranslation();
   const { businessData, branches, selectedBranch } = useSelector((state) => state.registerBranchStore);
   const data = useSelector(selectRegisterPersonalData);
-  console.log("selectRegisterPersonalData", data)
+  console.log("form component loaded");
   const {
     control,
     handleSubmit,
@@ -26,14 +26,15 @@ const SaveRegisterUserDataPage = () => {
     setValue,
     getValues,
     formState: { errors },
-    trigger
+    trigger,
+    reset
   } = useForm({
     resolver: zodResolver(saveNewRegisterUserFormSchema),
     mode: "onBlur",
     defaultValues: {
       image: data?.image || "",
       fullName: data?.fullName || "",
-      countryCode:data?.countryCode || "",
+      countryCode: data?.countryCode || "",
       phone: data?.phone || "",
       email: data?.email || "",
       pin: "",
@@ -84,6 +85,7 @@ const SaveRegisterUserDataPage = () => {
               t={t}
               watch={watch}
               getValues={getValues}
+              reset={reset}
             />
           </div>
           <div className='mx-auto mt-auto '>

@@ -1,26 +1,21 @@
 import { z } from "zod";
-import parsePhoneNumber from "libphonenumber-js";
+import parsePhoneNumber, { parsePhoneNumberFromString } from "libphonenumber-js";
 
-const phoneSchema = z
-    .string()
-    .min(1, "Phone number is required")
-    .refine((value) => {
-        try {
-            const phoneNumber = parsePhoneNumber(value);
-            return phoneNumber?.isValid();
-        } catch {
-            return false;
-        }
-    }, "Invalid phone number");
+
+
 
 const branchSchema = z.object({
     businessName: z.string().min(1, "Business name is required"),
-    bussinessCountryCode: z.string().min(1, "Country code is required"),
-    bussinessPhone: phoneSchema,
+    businessCountryCode: z
+        .string()
+        .min(1, "Country code is required")
+        .regex(/^[A-Z]{2}$/, "Country code must be a valid ISO 3166-1 alpha-2 code"),
+
+    businessPhone: z.string().min(1, "Phone number is required"),
     businessEmail: z.string().email("Invalid email address"),
     pin: z.string().min(1, "PIN is required"),
-    country: z.string().min(1, "Country is required"),
-    city: z.string().min(1, "City is required"),
+    country: z.union([z.string().min(1, "Country is required"), z.number()]),
+    city: z.union([z.string().min(1, "City is required"), z.number()]),
     latitude: z.number({ invalid_type_error: "Latitude must be a number" }),
     longitude: z.number({ invalid_type_error: "Longitude must be a number" }),
     currency: z.string().min(1, "Currency is required"),
@@ -29,7 +24,7 @@ const branchSchema = z.object({
     mode: z.string().min(1, "Mode is required"),
     design: z.string().min(1, "Design is required"),
     servingWays: z.array(z.string()).min(1, "At least one serving way is required"),
-    callWaiter: z.boolean(),
+    callWaiter: z.string(),
     paymentMethods: z.array(z.string()).min(1, "At least one payment method is required"),
     paymentTime: z.string().min(1, "Payment time is required"),
 
@@ -42,6 +37,15 @@ const branchSchema = z.object({
             path: ["numberOfTable"],
             code: z.ZodIssueCode.custom,
             message: "Number of tables is required when serving way includes dinein",
+        });
+    }
+}).superRefine((data, ctx) => {
+    const phoneNumber = parsePhoneNumberFromString(data.businessPhone, data.businessCountryCode);
+    if (!phoneNumber?.isValid()) {
+        ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["businessPhone"],
+            message: "Invalid phone number",
         });
     }
 });
@@ -68,9 +72,9 @@ export const saveNewRegisterUserFormSchema = z
         countryCode: z
             .string()
             .min(1, "Country code is required")
-            .regex(/^\+\d+$/, "Country code must start with + and contain digits"),
+            .regex(/^[A-Z]{2}$/, "Country code must be a valid ISO 3166-1 alpha-2 code"),
 
-        phone: phoneSchema,
+        phone: z.string().min(1, "Phone number is required"),
 
         website: z
             .string()
@@ -86,15 +90,14 @@ export const saveNewRegisterUserFormSchema = z
             .string()
             .regex(/^(0?[1-9]|[12][0-9]|3[01])$/, "Invalid day"),
 
-        year: z
-            .string()
+        year: z.coerce.string()
             .regex(/^\d{4}$/, "Invalid year")
             .refine((year) => {
                 const y = Number(year);
                 return y >= 1900 && y <= new Date().getFullYear();
             }, "Year must be between 1900 and current year"),
 
-        country: z.string().min(1, "Country is required"),
+        country: z.union([z.string().min(1, "Country is required"), z.number()]),
 
         password: z
             .string()
@@ -111,4 +114,14 @@ export const saveNewRegisterUserFormSchema = z
     .refine((data) => data.password === data.confirmPassword, {
         message: "Passwords do not match",
         path: ["confirmPassword"],
+    })
+    .superRefine((data, ctx) => {
+        const phoneNumber = parsePhoneNumberFromString(data.phone, data.countryCode);
+        if (!phoneNumber?.isValid()) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                path: ["phone"],
+                message: "Invalid phone number",
+            });
+        }
     });

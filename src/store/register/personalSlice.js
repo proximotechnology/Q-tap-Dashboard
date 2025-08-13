@@ -32,6 +32,7 @@ const personalSlice = createSlice({
       state.personalData = {
         fullName: "",
         phone: "",
+        countryCode: "",
         email: "",
         month: "",
         day: "",
@@ -48,7 +49,7 @@ const personalSlice = createSlice({
       };
     },
     setPersonalData: (state, action) => {
-      state.personalData = {...state.personalData,...action.payload};
+      state.personalData = { ...state.personalData, ...action.payload };
     },
   },
 });

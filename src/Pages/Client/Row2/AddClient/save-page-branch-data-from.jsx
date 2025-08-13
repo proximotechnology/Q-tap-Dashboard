@@ -53,7 +53,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectBranch, updateBusinessData } from "../../../../store/register/businessSlice";
 
 //{ control, watch, setValue, errors }
-export default function BranchForm({ control, watch, setValue, getValues, errors }) {
+export default function BranchForm({ control, watch, setValue, getValues, errors, reset }) {
     const theme = useTheme();
     const { businessData, branches, selectedBranch } = useSelector((state) => state.registerBranchStore);
     const dispatch = useDispatch()
@@ -62,14 +62,19 @@ export default function BranchForm({ control, watch, setValue, getValues, errors
 
     const { t, i18n } = useTranslation();
 
-    const onSubmit = (data) => {
-        console.log(data);
-    };
 
     const handleBranchClick = (index) => {
         setBranchIndex(index);
-        dispatch(selectBranch(index));
-        dispatch(updateBusinessData(branches[index]));
+
+        const selectedBranch = branches[index];
+        const currentValues = getValues();
+
+        reset({
+            ...currentValues,
+            ...selectedBranch,
+        });
+        // dispatch(selectBranch(index));
+        // dispatch(updateBusinessData(branches[index]));
     };
 
     return (
@@ -80,6 +85,7 @@ export default function BranchForm({ control, watch, setValue, getValues, errors
             </Typography>
             <Divider sx={{ width: "35%", borderBottom: "4px solid #ef7d00", marginBottom: "18px" }} />
             <Box display="flex" gap={2}>
+                {/* TODO : save data of branch when switch */}
                 {branches.map((branch, i) => (
                     <Button
                         key={i}
@@ -838,8 +844,8 @@ export const BranchFormColumnOneSectionOne = ({ t, i18n, control, watch, setValu
             {errors.businessPhone && <span>{errors.businessPhone.message}</span>} */}
             <div className="pb-2">
                 <PhoneFieldReactFormHook control={control} errors={errors}
-                    countryCodeName={`branches.${selectedBranch}.bussinessCountryCode`}
-                    phoneName={`branches.${selectedBranch}.bussinessPhone`}
+                    countryCodeName={`branches.${selectedBranch}.businessCountryCode`}
+                    phoneName={`branches.${selectedBranch}.businessPhone`}
                 />
             </div>
             {/* Business Email */}
@@ -1006,6 +1012,11 @@ export const BranchFormColumnOneSectionOne = ({ t, i18n, control, watch, setValu
                         longitude,
                     }}
                 />
+                {
+                    errors.branches?.[selectedBranch]?.latitude && <>
+                        <p className="text-red-500 mt-[4px]" >{errors.branches?.[selectedBranch]?.latitude.message}</p>
+                    </>
+                }
             </div>
         </div>
     )

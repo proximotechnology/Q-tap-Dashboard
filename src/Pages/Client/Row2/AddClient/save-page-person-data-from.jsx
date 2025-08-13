@@ -28,6 +28,7 @@ import { useNavigate } from "react-router";
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { PhoneFieldReactFormHook } from "../../../register-busniess-info-page/PhoneFieldReactFormHook";
+import { useGetEgyptGovern } from "../../../../Hooks/Queries/public/citys/useGetEgyptGovern";
 
 
 
@@ -38,6 +39,9 @@ export default function PersonalInfoForm({ control, watch, setValue, getValues, 
 
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
+
+    const { data: governs, isPending: loadingGovern } = useGetEgyptGovern()
+
 
     const [preview, setPreview] = useState("/images/User.jpg");
 
@@ -282,7 +286,7 @@ export default function PersonalInfoForm({ control, watch, setValue, getValues, 
                                                     (_, i) => (
                                                         <MenuItem
                                                             key={i + YEAR_SELECT_START_FROM}
-                                                            value={i + YEAR_SELECT_START_FROM}
+                                                            value={(i + YEAR_SELECT_START_FROM) + ""}
                                                         >
                                                             {i + YEAR_SELECT_START_FROM}
                                                         </MenuItem>
@@ -324,9 +328,19 @@ export default function PersonalInfoForm({ control, watch, setValue, getValues, 
                                 <MenuItem value="" disabled>
                                     {t("country")}
                                 </MenuItem>
-                                <MenuItem value="US">United States</MenuItem>
-                                <MenuItem value="CA">Canada</MenuItem>
-                                <MenuItem value="UK">United Kingdom</MenuItem>
+                                {!loadingGovern &&
+                                    (governs.data.data || [])?.map(govern => (
+                                        <MenuItem
+                                            key={govern.id}
+                                            value={govern.id + ""}
+                                            sx={{ fontSize: "12px", color: "gray" }}
+                                        >
+                                            {i18n.language === "ar"
+                                                ? govern.name_ar
+                                                : govern.name_en}
+                                        </MenuItem>
+                                    ))
+                                }
                             </Select>
                             {errors.country && (
                                 <FormHelperText>{errors.country.message}</FormHelperText>
