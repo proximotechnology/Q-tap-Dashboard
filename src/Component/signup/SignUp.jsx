@@ -308,7 +308,7 @@ const SignUp = () => {
                         {t("country")}
                     </MenuItem>
                     {(governorates || []).map((governorate) => (
-                        <MenuItem key={governorate.id} value={governorate.code} sx={{ fontSize: "10px", }} >
+                        <MenuItem key={governorate.id} value={governorate.id + ""} sx={{ fontSize: "10px", }} >
                             {i18n.language === 'ar' ? governorate.name_ar : governorate.name_en}
                         </MenuItem>
                     ))}

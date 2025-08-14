@@ -712,7 +712,7 @@ export const BranchFormColumnOneSectionTwo = ({ t, i18n, control, watch, setValu
                     <FormControl
                         variant="outlined"
                         sx={{ width: "100%", marginBottom: "10px" }}
-                        error={!!errors.branches?.[selectedBranch].menuLanguage}
+                        error={!!errors.branches?.[selectedBranch]?.menuLanguage}
                     >
                         <Select
                             {...field}

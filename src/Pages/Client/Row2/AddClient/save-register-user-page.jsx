@@ -11,14 +11,98 @@ import { phoneSchema, saveNewRegisterUserFormSchema } from './saveNewRegisterUse
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSelector } from 'react-redux';
 import { selectRegisterPersonalData } from '../../../../store/register/personalSlice';
+import { printFormData } from '../../../../utils/utils';
+import { useRegisterNewUser } from '../../../../Hooks/Queries/ClientRegister/actions/useRegisterNewUser';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
+
+export const preparePersonalInfoInFormDataObject = ({ personalData, formData }) => {
+  formData.append('name', personalData.fullName?.trim() || '');
+  formData.append('mobile', personalData.phone?.trim() || '');
+  formData.append('email', personalData.email?.trim().toLowerCase() || '');
+  formData.append('birth_date', personalData.year && personalData.month && personalData.day
+    ? `${personalData.year}-${personalData.month}-${personalData.day}`
+    : '');
+  formData.append('country', personalData.country || '');
+  formData.append('password', personalData.password || '1');
+  formData.append('user_type', 'qtap_clients');
+
+  if (personalData.affiliate_code) formData.append('affiliate_code', personalData.affiliate_code);
+
+  // Append image if it exists
+  if (personalData.image instanceof File) {
+    formData.append('img', personalData.image);
+  }
+  if (sessionStorage.getItem('affiliate_code')) {
+    formData.append('affiliate_code', sessionStorage.getItem('affiliate_code'));
+  }
+}
+
+export const prepareBrunchDataInFormDataObject = ({ prefix, data, formData }) => {
+
+  try {
+
+    formData.append(`${prefix}[pin]`, data.pin)
+
+    // Contact info
+    formData.append(`${prefix}[contact_info][business_phone][]`, data.businessCountryCode + data.businessPhone);
+    formData.append(`${prefix}[contact_info][business_email][]`, data.businessEmail);
+    formData.append(`${prefix}[contact_info][facebook][]`, '-');
+    formData.append(`${prefix}[contact_info][twitter][]`, '-');
+    formData.append(`${prefix}[contact_info][instagram][]`, '-');
+    formData.append(`${prefix}[contact_info][address][]`, '-');
+    formData.append(`${prefix}[contact_info][website][]`, '-');
+
+    // Work schedules
+    // Object.entries(data.workschedules).forEach(([day, times]) => {
+    //   times.forEach((time) => {
+    //     formData.append(`${prefix}[workschedules][${day}][]`, time);
+    //   });
+    // });
+    formData.append(`${prefix}[workschedules][Saturday][]`, "9am");
+    formData.append(`${prefix}[workschedules][Saturday][]`, "7pm");
+    // Serving ways
+    data.servingWays.forEach((value) => {
+      formData.append(`${prefix}[serving_ways][]`, value);
+    });
+
+    // Payment services
+    data.paymentMethods.forEach((value) => {
+      formData.append(`${prefix}[payment_services][]`, value);
+    });
+
+    // Other fields
+    if (data.tables_number)
+      formData.append(`${prefix}[tables_number]`, data.tables_number);
+
+    formData.append(`${prefix}[currency_id]`, data.currency);
+
+    formData.append(`${prefix}[business_name]`, data.businessName);
+    formData.append(`${prefix}[business_country]`, data.country);
+    formData.append(`${prefix}[business_city]`, data.city);
+
+    formData.append(`${prefix}[latitude]`, data.latitude);
+    formData.append(`${prefix}[longitude]`, data.longitude);
+    // formData.append(`${prefix}[business_format]`, data.business_format);
+    formData.append(`${prefix}[menu_design]`, data.design);
+    formData.append(`${prefix}[default_mode]`, data.mode);
+    formData.append(`${prefix}[payment_time]`, data.paymentTime);
+    formData.append(`${prefix}[call_waiter]`, data.callWaitter);
+  } catch (error) {
+    throw new Error(`${prefix} missing required fields: ${error.message}`);
+  }
+};
 
 
 const SaveRegisterUserDataPage = () => {
   const theme = useTheme();
   const { t, i18n } = useTranslation();
   const { businessData, branches, selectedBranch } = useSelector((state) => state.registerBranchStore);
-  const data = useSelector(selectRegisterPersonalData);
-  console.log("form component loaded");
+  const personalData = useSelector(selectRegisterPersonalData);
+  const { mutate, isPending } = useRegisterNewUser()
+  const navigate = useNavigate()
+
+
   const {
     control,
     handleSubmit,
@@ -32,29 +116,58 @@ const SaveRegisterUserDataPage = () => {
     resolver: zodResolver(saveNewRegisterUserFormSchema),
     mode: "onBlur",
     defaultValues: {
-      image: data?.image || "",
-      fullName: data?.fullName || "",
-      countryCode: data?.countryCode || "",
-      phone: data?.phone || "",
-      email: data?.email || "",
+      image: personalData?.image || "",
+      fullName: personalData?.fullName || "",
+      countryCode: personalData?.countryCode || "",
+      phone: personalData?.phone || "",
+      email: personalData?.email || "",
       pin: "",
-      website: data?.website || "",
-      country: data?.country || "",
-      day: data?.day || "",
-      month: data?.month || "",
-      year: data?.year || "",
-      password: data?.password || "",
-      confirmPassword: data?.confirmPassword || "",
+      website: personalData?.website || "",
+      country: personalData?.country || "",
+      day: personalData?.day || "",
+      month: personalData?.month || "",
+      year: personalData?.year || "",
+      password: personalData?.password || "",
+      confirmPassword: personalData?.confirmPassword || "",
       branches: branches || []
     }
   });
 
   const onSubmit = (data) => {
     console.log("Form data:", data);
+
+    const formData = new FormData();
+    preparePersonalInfoInFormDataObject({ personalData: data, formData });
+
+    if (data.branches && Array.isArray(data.branches)) {
+      data.branches.map((branch, index) => {
+        prepareBrunchDataInFormDataObject({ data: branch, formData, prefix: `branch${index + 1}` })
+      })
+    }
+    formData.append(`pricing_id`, personalData.pricing_id);
+
+    if (personalData.pricing_way === "monthly")
+      formData.append(`pricing_way`, "monthly_price");
+    else if (personalData.pricing_way === "yearly")
+      formData.append(`pricing_way`, "yearly_price");
+
+
+    formData.append(`payment_method`, personalData.payment_method);
+    if (personalData.coupn_plan_code)
+      formData.append(`coupn_plan_code`, personalData.coupn_plan_code);
+
+
+    mutate({ data: formData }, {
+      onSuccess: (res) => {
+        console.log("onsuccess")
+        navigate('/otp-signup');
+        toast.success(t(false ? "dataUpdatedSuccessfully" : "dataSavedSuccessfully"));
+      },
+      onError: (error) => { toast.error(error.response.data.error_details || error.response.data.message || t("errorWhileSavingData")); },
+    })
   };
 
-  const currentValues = watch();
-  console.log(currentValues)
+
 
   console.log("fromError ", errors)
 
@@ -100,8 +213,9 @@ const SaveRegisterUserDataPage = () => {
                 padding: '5px',
                 '&:hover': { backgroundColor: '#ef7d10' },
               }}
+              disabled={isPending}
             >
-              <CheckOutlined sx={{ fontSize: '22px', mr: 1 }} /> {t("save")}
+              {isPending ? t("loading") : <><CheckOutlined sx={{ fontSize: '22px', mr: 1 }} /> {t("save")}</>}
             </Button>
           </div>
         </div>
