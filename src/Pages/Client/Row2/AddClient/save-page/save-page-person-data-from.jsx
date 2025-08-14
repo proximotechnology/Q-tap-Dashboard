@@ -27,8 +27,8 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { PhoneFieldReactFormHook } from "../../../register-busniess-info-page/PhoneFieldReactFormHook";
-import { useGetEgyptGovern } from "../../../../Hooks/Queries/public/citys/useGetEgyptGovern";
+import { PhoneFieldReactFormHook } from "../../../../register-busniess-info-page/PhoneFieldReactFormHook";
+import { useGetEgyptGovern } from "../../../../../Hooks/Queries/public/citys/useGetEgyptGovern";
 
 
 
@@ -230,6 +230,9 @@ export default function PersonalInfoForm({ control, watch, setValue, getValues, 
                                 }
                                 sx={{ borderRadius: "10px", height: "33px", fontSize: "12px" }}
                             />
+                            {errors.website && (
+                                <FormHelperText>{errors?.website?.message}</FormHelperText>
+                            )}
                         </FormControl>
                     )}
                 />

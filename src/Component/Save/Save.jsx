@@ -35,19 +35,14 @@ import { appendBrunchData, appendUserData } from '../../utils/register-client/cr
 import { registerUser } from '../../api/Client/registerUser';
 import { getValidationError } from '../../utils/register-validation/registerValidation';
 import { printFormData } from '../../utils/utils';
-import BranchForm from '../../Pages/Client/Row2/AddClient/save-page-branch-data-from';
-import SaveRegisterUserDataPage from '../../Pages/Client/Row2/AddClient/save-register-user-page';
+import SaveRegisterUserDataPage from '../../Pages/Client/Row2/AddClient/save-page/save-register-user-page';
 export const Save = () => {
-  const [branchErrors, setBranchErrors] = useState({})
-  const dispatch = useDispatch();
-  const personalData = useSelector((state) => state.registerPersonalDataStore.personalData);
 
-  const { businessData, branches, selectedBranch } = useSelector((state) => state.registerBranchStore);
+  const personalData = useSelector((state) => state.registerPersonalDataStore.personalData);
 
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const theme = useTheme();
-  const [isLoading, setIsLoading] = useState(false);
 
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -55,126 +50,9 @@ export const Save = () => {
   const openUserPopover = Boolean(anchorElUser);
 
   // Handle Personal Info Changes
-  const handlePersonalChange = (field, value) => {
-    const updatedData = { ...personalData, [field]: value };
-    dispatch(updatePersonalData(updatedData));
-  };
 
-  /*  \ 
-       \
-        \ 
-         | => handle save button click
-        /
-       /
-      /
-  \ */
-  const handleSave = async () => {
-    console.log(branches)
-    const branchesData = branches.map(branch => ({ ...branch }))
-    const errors = getValidationError(branchesData)
 
-    if (errors) {
-      setBranchErrors(errors)
-      return;
-    } else {
-      setBranchErrors(null)
-    }
-    setIsLoading(true);
-    const formData = new FormData();
 
-    // Helper function to get currency ID
-    const getCurrencyId = (country) => {
-      const currencyMap = {
-        US: 1,
-        UK: 2,
-        EU: 3,
-        egypt: 4,
-        EG: 4,
-        UAE: 5,
-        SA: 6,
-      };
-      // return currencyMap[country] || 1;
-      return 1;
-    };
-    // Append personal data
-
-    appendUserData({ personalData, formData })
-    // Branch data preparation
-    const apiBranches = (branches.length > 0 ? branches : [businessData]).map((branch, index) => ({
-      brunch: `brunch${index + 1}`,
-      pin: branch.pin || '',
-      contact_info: {
-        business_phone: [branch.businessPhone?.trim() || ''],
-        business_email: [branch.businessEmail?.trim() || ''],
-        facebook: [''],
-        twitter: [''],
-        instagram: [''],
-        address: [''],
-        website: [branch.website?.trim() || ''],
-      },
-      currency_id: getCurrencyId(branch.country),
-      workschedules: branch.workschedules || {},
-      serving_ways: Array.isArray(branch.servingWays) ? branch.servingWays : [],
-      tables_number: parseInt(branch.tableCount) || 0,
-      payment_services: Array.isArray(branch.paymentMethods) ? branch.paymentMethods : [],
-      business_name: branch.businessName?.trim() || '',
-      business_country: branch.country || '',
-      business_city: branch.city || '',
-      latitude: branch.latitude || '',
-      longitude: branch.longitude || '',
-      business_format: (branch.format || 'uk').toLowerCase(),
-      menu_design: branch.design || 'grid',
-      default_mode: branch.mode === 'white' || branch.mode === 'light' ? 'white' : 'dark',
-      payment_time: branch.paymentTime || 'after',
-      call_waiter: branch.callWaiter === 'active' ? 'active' : 'inactive',
-      pricing_id: branch.pricing_id || personalData.pricing_id || 1,
-      payment_method: branch.payment_method || personalData.payment_method || 'cash',
-      discount_id: branch.discount_id || personalData.discount_id || null,
-    }));
-
-    // Append branch data
-
-    try {
-      apiBranches.forEach((branch, index) => {
-        if (!branch.latitude || !branch.longitude) {
-
-          throw new Error(`${branch.brunch} no latitude or longitude`);
-        }
-        appendBrunchData(branch.brunch, branch, formData);
-
-      });
-    } catch (error) {
-      toast.error(`Please select position: ${error.message}`);
-      setIsLoading(false);
-      return;
-    }
-
-    // Determine if this is an update or create operation
-    const isUpdate = personalData.id; // Assuming personalData.id exists for existing users
-    const url = isUpdate ? `${BASE_URL}qtap_clients/${personalData.id}` : `${BASE_URL}qtap_clients`;
-    const method = isUpdate ? 'PUT' : 'POST';
-
-    // Send data to API
-    try {
-      printFormData(formData)
-      const response = await registerUser({ method, url, data: formData })
-
-      if (response.status === 200 || response.status === 201) {
-        const { payment_url } = response.data;
-
-        toast.success(t(isUpdate ? "dataUpdatedSuccessfully" : "dataSavedSuccessfully"));
-        if (payment_url) {
-          sessionStorage.setItem("paymentUrl", payment_url);
-        }
-        navigate('/otp-signup');
-      }
-    } catch (error) {
-      console.error('Network Error:', error);
-      toast.error(error.response.data.error_details || error.response.data.message || t("errorWhileSavingData"));
-    } finally {
-      setIsLoading(false);
-    }
-  };//
 
 
 
@@ -186,13 +64,6 @@ export const Save = () => {
     setAnchorElUser(null);
   };
 
-  // const getLanguageIcon = () => {
-  //   return selectedLanguage === 'ar' ? (
-  //     <span className="icon-translation" style={{ color: theme.palette.orangePrimary.main, fontSize: '22px' }} />
-  //   ) : (
-  //     <LanguageOutlined sx={{ color: theme.palette.orangePrimary.main, fontSize: '22px' }} />
-  //   );
-  // };
 
   return (
     <Box sx={{
@@ -329,69 +200,6 @@ export const Save = () => {
 
       <Divider sx={{ backgroundColor: theme.palette.orangePrimary.main, borderBottom: 'none', width: '100%', height: '3px' }} />
       <SaveRegisterUserDataPage />
-      {/* <Box>
-        <Grid container >
-          <Grid item xs={12} md={5} sx={{ paddingX: { xs: '20px', md: '0px' } }}>
-            <PersonalInfo personalData={personalData} onInputChange={handlePersonalChange} />
-          </Grid>
-          <Box item sx={{ display: { xs: 'none', sm: 'block' } }}>
-            <Divider orientation="vertical" sx={{ backgroundColor: '#f4f6fc', width: '1px', marginTop: '30px', height: '90%' }} />
-          </Box>
-          <Grid item xs={12} md={6} sx={{ marginTop: "10px", paddingInlineStart: "20px", paddingInlineEnd: { xs: '20px', md: '0px' } }}>
-
-
-            {
-              branchErrors?.branchError && branchErrors?.branchError?.map(item =>
-                <span style={{ color: "red" }}>
-                  {item} <br />
-                </span>
-              )
-            }
-            {/* {Object.keys(branchErrors).length !== 0 ? <span style={{ color: "red" }}>error in : {
-              Object.entries(branchErrors).map(([branch, branchErrors]) => (
-                Object.entries(branchErrors).map(([field, message]) => (
-                  <>{field}:{message}</>
-                ))
-              ))
-            } </span> : ""} 
-              {/* <BusinessInfo branchErrors={branchErrors} /> * /}
-            <BranchForm />
-          </Grid>
-        </Grid >
-
-        <Grid container justifyContent="center" sx={{ marginTop: 3 }}>
-          {isLoading ?
-            <Box sx={{
-              width: '160px',
-              textTransform: 'capitalize',
-              backgroundColor: theme.palette.orangePrimary.main,
-              color: 'white',
-              borderRadius: '20px',
-              padding: '5px',
-              display: 'flex',
-              justifyContent: 'center'
-            }}
-            >
-              {t("loading.")} <CircularProgress size={24} color='inherit' sx={{ marginLeft: "2px" }} />
-            </Box>
-            :
-            <Button
-              onClick={handleSave}
-              sx={{
-                width: '160px',
-                textTransform: 'capitalize',
-                backgroundColor: theme.palette.orangePrimary.main,
-                color: 'white',
-                borderRadius: '20px',
-                padding: '5px',
-                '&:hover': { backgroundColor: '#ef7d10' },
-              }}
-              disabled={isLoading}
-            >
-              <CheckOutlined sx={{ fontSize: '22px', mr: 1 }} /> {t("save")}
-            </Button>}
-        </Grid>
-      </Box> */}
     </Box>
   );
 };

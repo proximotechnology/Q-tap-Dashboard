@@ -16,13 +16,17 @@ import ModeAndDesignBox from "./ModeAndDesignBox";
 import useGetGovernAndCityFromQuery from "../../Hooks/Queries/public/citys/useGetGovernAndCityFromQuery";
 import { useNavigate, useParams } from "react-router";
 import { PhoneFieldReactFormHook } from "./PhoneFieldReactFormHook";
+import parsePhoneNumberFromString from "libphonenumber-js";
+import { phoneNumberSuperRefineValidation } from "../Client/Row2/AddClient/save-page/saveNewRegisterUserFormSchema";
+import useBranchStore from "../../store/zustand-store/register-client-branch-store";
 
 const EditBusinessInfo = () => {
     const { t, i18n } = useTranslation();
     const theme = useTheme();
+    const addBranch = useBranchStore(state => state.addBranch)
+    const updateBranch = useBranchStore(state => state.updateBranch)
+    const branches = useBranchStore(state => state.branches)
 
-    const dispatch = useDispatch();
-    const { branches } = useSelector((state) => state.registerBranchStore);
 
     const { id } = useParams();
 
@@ -41,6 +45,7 @@ const EditBusinessInfo = () => {
         .refine(obj => Object.keys(obj).length > 0, {
             message: "You must select at least one working day",
         });
+
     const PaymentMethodEnum = z.enum(['cash', 'card', 'wallet']);
     const schema = z.object({
         businessName: z.string().min(1, "Name is required"),
@@ -52,7 +57,11 @@ const EditBusinessInfo = () => {
         workschedules: workScheduleSchema,
 
         businessPhone: z.string().min(1, "businessPhone is required"),
-        countryCode:z.string().min(1, "country code  is required").min(1, "country code is required"),
+        businessCountryCode: z
+            .string()
+            .min(1, "Country code is required")
+            .regex(/^[A-Z]{2}$/, "Country code must be a valid ISO 3166-1 alpha-2 code"),
+
         country: z.number({ required_error: "country is required" }).min(1),
         city: z.union([
             z.number().min(1, "Field is required"),
@@ -91,7 +100,7 @@ const EditBusinessInfo = () => {
             .refine(val => val === 'before' || val === 'after', {
                 message: "Please select when the payment should happen (before or after)",
             }),
-    });
+    }).superRefine(phoneNumberSuperRefineValidation);
 
 
     const {
@@ -105,15 +114,17 @@ const EditBusinessInfo = () => {
     } = useForm({
         resolver: zodResolver(schema),
         defaultValues: {
-            countryCode: "",
+            businessCountryCode: "",
             ...(branches?.[id]),
             latitude: branches?.[id]?.latitude ?? "",
             longitude: branches?.[id]?.longitude ?? "",
-            workSchedules: {}
+            callWaiter: "inactive",
+            workschedules: { Saturday: ["9:00 am", "5:00 pm"] }
         },
     });
 
-
+    console.log(branches)
+    console.log(errors)
     const selectedCountry = watch("country");
     const latitude = watch("latitude");
     const longitude = watch("longitude");
@@ -122,13 +133,17 @@ const EditBusinessInfo = () => {
 
 
     const navigate = useNavigate();
-    console.log("Form Data:", errors);
+
     const onSubmit = (data) => {
         console.log("Form Data:", data);
-        dispatch(updateBusinessDataByIndex({
-            index: id,
-            ...data
-        }))
+        if (id) {
+            console.log("updata branch")
+            updateBranch(id, data)
+        }
+        else {
+            console.log("create branch")
+            addBranch(data)
+        }
         navigate("/branches", { replace: true });
     };
 
@@ -229,18 +244,30 @@ const EditBusinessInfo = () => {
                                         control={control}
                                         errors={errors}
                                     />
+                                    {
+                                        errors.workschedules &&
+
+                                        Object.entries(errors.workschedules).map(([day, errors]) => {
+
+                                            console.log("errors.workschedules", errors)
+                                            return Array.isArray(errors) && errors.map((err, idx) => (
+                                                <p key={`${day}-${idx}`} className="text-red-500 mt-[4px]">
+                                                    {`${day} :${idx === 0 ? 'from' : 'to'} ${err.message}`}
+                                                </p>
+                                            ))
+                                        })
+
+                                    }
                                 </Stack>
                             </Grid>
                             <Grid item xs={12} md={5}>
                                 <Stack spacing={2}>
-                                    <PhoneFieldReactFormHook control={control} errors={errors} />
-                                    <TextField
-                                        fullWidth
-                                        placeholder="business Phone"
-                                        {...register("businessPhone", { required: "phone is required" })}
-                                        error={!!errors.businessPhone}
-                                        helperText={errors.businessPhone?.message}
+                                    <PhoneFieldReactFormHook control={control}
+                                        errors={errors}
+                                        countryCodeName="businessCountryCode"
+                                        phoneName="businessPhone"
                                     />
+
 
                                     <Box display="flex" justifyContent="left" gap={'.5rem'}>
                                         <FormControl fullWidth error={!!errors.country}>
@@ -324,7 +351,7 @@ const EditBusinessInfo = () => {
                                     {
                                         (errors.latitude || errors.longitude) && (
                                             <p style={{ color: "#f44336" }}>
-                                                {errors.latitude.message || errors.longitude?.message}
+                                                {errors?.latitude?.message || errors?.longitude?.message}
                                             </p>
                                         )
                                     }

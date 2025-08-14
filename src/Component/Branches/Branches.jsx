@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import styles from '../../Pages/DashboardClient/Pages/SupportClient/supportCard.module.css';
 import { useSelector, useDispatch } from "react-redux";
 import { updateBusinessData, addBranch, selectBranch, clearBusinessData, setBranches } from "../../store/register/businessSlice";
+import useBranchStore from '../../store/zustand-store/register-client-branch-store';
 
 
 export const Branches = () => {
@@ -21,14 +22,14 @@ export const Branches = () => {
   });
 
 
-  const dispatch = useDispatch();
-  const { businessData, branches, selectedBranch } = useSelector((state) => state.registerBranchStore);
 
+  const branches = useBranchStore(state => state.branches)
+  const removeBranch = useBranchStore(state => state.removeBranch)
+  console.log("/branches ", branches)
   const navigate = useNavigate();
 
   const deleteBranch = (index) => {
-    const updatedBranches = branches.filter((_, i) => i !== index);
-    dispatch(setBranches(updatedBranches));
+    removeBranch(index)
   };
 
   const { t, i18n } = useTranslation()
@@ -43,7 +44,7 @@ export const Branches = () => {
   const isAr = i18n.language === 'ar';
 
   return (
-    <Box marginTop={'50px'} padding={"10px 40px"}  display={'flex'}  flexDirection={'column'} flexGrow={1} 
+    <Box marginTop={'50px'} padding={"10px 40px"} display={'flex'} flexDirection={'column'} flexGrow={1}
     // sx={{marginBottom:{md:'0px',xs:'200px'}}}
     >
       <Typography variant="body1" sx={{ fontSize: '18px', color: theme.palette.text.black_white }}>

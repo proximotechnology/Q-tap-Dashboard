@@ -35,7 +35,9 @@ const businessSlice = createSlice({
   initialState,
   reducers: {
     updateBusinessData: (state, action) => {
+      console.log("inside updateBusinessData ", state.selectedBranch  )
       if (state.selectedBranch !== null && state.branches[state.selectedBranch]) {
+        console.log("inside updateBusinessData if ", state.selectedBranch  )
         const updatedBranches = [...state.branches];
         updatedBranches[state.selectedBranch] = {
           ...updatedBranches[state.selectedBranch],
@@ -43,6 +45,7 @@ const businessSlice = createSlice({
         };
         state.branches = updatedBranches;
       } else {
+        console.log("inside updateBusinessData else ", action.payload  )
         state.businessData = { ...state.businessData, ...action.payload };
       }
     },

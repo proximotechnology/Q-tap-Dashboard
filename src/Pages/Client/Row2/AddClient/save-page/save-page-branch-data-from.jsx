@@ -27,9 +27,9 @@ import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import MailOutlinedIcon from "@mui/icons-material/MailOutlined";
 import LockKeyhole from "@mui/icons-material/Lock"; // replace with correct import
 import { useTranslation } from "react-i18next";
-import useGetGovernAndCityFromQuery from "../../../../Hooks/Queries/public/citys/useGetGovernAndCityFromQuery";
-import MapWithPin from "../../../../utils/MapWithPin";
-import { useState } from "react";
+import useGetGovernAndCityFromQuery from "../../../../../Hooks/Queries/public/citys/useGetGovernAndCityFromQuery";
+import MapWithPin from "../../../../../utils/MapWithPin";
+import { useEffect, useState } from "react";
 
 import { InputLabel, FormHelperText } from "@mui/material";
 
@@ -43,39 +43,59 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import CardTravelOutlinedIcon from "@mui/icons-material/CardTravelOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
-import { PhoneFieldReactFormHook } from "../../../register-busniess-info-page/PhoneFieldReactFormHook";
+import { PhoneFieldReactFormHook } from "../../../../register-busniess-info-page/PhoneFieldReactFormHook";
 import SellOutlinedIcon from "@mui/icons-material/SellOutlined";
 import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
 import { useNavigate } from "react-router";
-import WorkDays from "../../../register-busniess-info-page/WordDays";
-import BusinessOptions from "../../../register-busniess-info-page/BusinessOptionsComponent";
+import WorkDays from "../../../../register-busniess-info-page/WordDays";
+import BusinessOptions from "../../../../register-busniess-info-page/BusinessOptionsComponent";
 import { useDispatch, useSelector } from "react-redux";
-import { selectBranch, updateBusinessData } from "../../../../store/register/businessSlice";
+import { selectBranch, updateBusinessData } from "../../../../../store/register/businessSlice";
+import useBranchStore from "../../../../../store/zustand-store/register-client-branch-store";
 
 //{ control, watch, setValue, errors }
 export default function BranchForm({ control, watch, setValue, getValues, errors, reset }) {
     const theme = useTheme();
-    const { businessData, branches, selectedBranch } = useSelector((state) => state.registerBranchStore);
-    const dispatch = useDispatch()
-    const [branchIndex, setBranchIndex] = useState(selectedBranch || 0);
+    const branches = useBranchStore(state => state.branches)
+    const updateBranch = useBranchStore(state => state.updateBranch)
 
+    const [branchIndex, setBranchIndex] = useState(0);
+
+    console.log(branches, "  -  ", branchIndex)
 
     const { t, i18n } = useTranslation();
 
 
-    const handleBranchClick = (index) => {
-        setBranchIndex(index);
+    const handleBranchClick = (nextIndex) => {
+        // 1️⃣ Get current form values
+        const formValues = getValues();
 
-        const selectedBranch = branches[index];
-        const currentValues = getValues();
+        // 2️⃣ Save current branch to the store
+        updateBranch(branchIndex, formValues.branches[branchIndex]);
 
-        reset({
-            ...currentValues,
-            ...selectedBranch,
-        });
-        // dispatch(selectBranch(index));
-        // dispatch(updateBusinessData(branches[index]));
+        // 3️⃣ Update the selected branch index first
+        setBranchIndex(nextIndex);
+
+
     };
+
+    useEffect(() => {
+        const formValues = getValues();
+
+        // 4️⃣ Get fresh branches array from store
+        const freshBranches = useBranchStore.getState().branches;
+
+        // 5️⃣ Reset the form with updated branches
+        // The Controllers now use the updated selectedBranch
+        reset({
+            ...formValues,
+            branches: freshBranches,
+        });
+    }, [branchIndex])
+
+
+
+
 
     return (
         <>
@@ -108,7 +128,22 @@ export default function BranchForm({ control, watch, setValue, getValues, errors
                         {t("branch")} {i + 1} {t("info")}
                     </Button>
                 ))}
+
             </Box>
+            {errors?.branches && Array.isArray(errors.branches) && errors.branches.map((branchError, index) => {
+                if (!branchError) return null; // skip branches without errors
+
+                return (
+                    <p key={index} style={{ color: "red" }}>
+                        Branch {index + 1} has errors:{" "}
+                        {Object.entries(branchError).map(([field, errorObj]) => (
+                            <span key={field}>
+                                {errorObj?.message && `${field}: ${errorObj.message} `}
+                            </span>
+                        ))}
+                    </p>
+                );
+            })}
             <Divider sx={{ margin: "12px 0px" }} />
             <div className="flex flex-wrap w-full">
                 <div className="w-full md:w-1/2 md:pe-1">
@@ -626,7 +661,7 @@ export const BranchFormColumnOneSectionTwo = ({ t, i18n, control, watch, setValu
                     <FormControl
                         variant="outlined"
                         sx={{ width: "100%", marginBottom: "10px" }}
-                        error={!!errors.branches?.[selectedBranch].currency}
+                        error={!!errors.branches?.[selectedBranch]?.currency}
                     >
                         <Select
                             {...field}
@@ -651,8 +686,8 @@ export const BranchFormColumnOneSectionTwo = ({ t, i18n, control, watch, setValu
                             <MenuItem value="2">GBP</MenuItem>
                             <MenuItem value="3">EUR</MenuItem>
                         </Select>
-                        {errors.branches?.[selectedBranch].currency && (
-                            <FormHelperText>{errors.branches?.[selectedBranch].currency.message}</FormHelperText>  // Show error message here
+                        {errors.branches?.[selectedBranch]?.currency && (
+                            <FormHelperText>{errors.branches?.[selectedBranch]?.currency.message}</FormHelperText>  // Show error message here
                         )}
                     </FormControl>
                 )}
@@ -666,7 +701,7 @@ export const BranchFormColumnOneSectionTwo = ({ t, i18n, control, watch, setValu
                     <FormControl
                         variant="outlined"
                         sx={{ width: "100%", marginBottom: "10px" }}
-                        error={!!errors.branches?.[selectedBranch].businessType}
+                        error={!!errors.branches?.[selectedBranch]?.businessType}
                     >
                         <Select
                             {...field}
@@ -697,8 +732,8 @@ export const BranchFormColumnOneSectionTwo = ({ t, i18n, control, watch, setValu
                             <MenuItem value="Fruits">{t("fruitsStore")}</MenuItem>
                             <MenuItem value="Retail">{t("retailStore")}</MenuItem>
                         </Select>
-                        {errors.branches?.[selectedBranch].businessType && (
-                            <FormHelperText>{errors.branches?.[selectedBranch].businessType.message}</FormHelperText>  // Show error message here
+                        {errors.branches?.[selectedBranch]?.businessType && (
+                            <FormHelperText>{errors.branches?.[selectedBranch]?.businessType.message}</FormHelperText>  // Show error message here
                         )}
                     </FormControl>
                 )}
@@ -737,8 +772,8 @@ export const BranchFormColumnOneSectionTwo = ({ t, i18n, control, watch, setValu
                             <MenuItem value="CA">English (CA)</MenuItem>
                             <MenuItem value="UK">English (UK)</MenuItem>
                         </Select>
-                        {errors.branches?.[selectedBranch].menuLanguage && (
-                            <FormHelperText>{errors.branches?.[selectedBranch].menuLanguage.message}</FormHelperText>  // Show error message here
+                        {errors.branches?.[selectedBranch]?.menuLanguage && (
+                            <FormHelperText>{errors.branches?.[selectedBranch]?.menuLanguage.message}</FormHelperText>  // Show error message here
                         )}
                     </FormControl>
                 )}
@@ -791,7 +826,7 @@ export const BranchFormColumnOneSectionOne = ({ t, i18n, control, watch, setValu
                 control={control}
                 rules={{ required: t("businessNameRequired") }}
                 render={({ field }) => (
-                    <FormControl variant="outlined" fullWidth error={!!errors.branches?.[selectedBranch].businessName}>
+                    <FormControl variant="outlined" fullWidth error={!!errors.branches?.[selectedBranch]?.businessName}>
                         <OutlinedInput
                             {...field}
                             id="outlined-businessName"
@@ -808,8 +843,8 @@ export const BranchFormColumnOneSectionOne = ({ t, i18n, control, watch, setValu
                                 fontSize: "12px"
                             }}
                         />
-                        {errors.branches?.[selectedBranch].businessName && (
-                            <FormHelperText>{errors.branches?.[selectedBranch].businessName.message}</FormHelperText>  // Show error message here
+                        {errors.branches?.[selectedBranch]?.businessName && (
+                            <FormHelperText>{errors.branches?.[selectedBranch]?.businessName?.message}</FormHelperText>  // Show error message here
                         )}
                     </FormControl>
                 )}
@@ -857,7 +892,7 @@ export const BranchFormColumnOneSectionOne = ({ t, i18n, control, watch, setValu
                     pattern: { value: /^\S+@\S+$/, message: t("invalidEmail") }
                 }}
                 render={({ field }) => (
-                    <FormControl variant="outlined" fullWidth error={!!errors.branches?.[selectedBranch].businessEmail}>
+                    <FormControl variant="outlined" fullWidth error={!!errors.branches?.[selectedBranch]?.businessEmail}>
                         <OutlinedInput
                             {...field}
                             id="outlined-businessEmail"
@@ -875,8 +910,8 @@ export const BranchFormColumnOneSectionOne = ({ t, i18n, control, watch, setValu
                                 fontSize: "12px"
                             }}
                         />
-                        {errors.branches?.[selectedBranch].businessEmail && (
-                            <FormHelperText>{errors.branches?.[selectedBranch].businessEmail.message}</FormHelperText>  // Show error message here
+                        {errors.branches?.[selectedBranch]?.businessEmail && (
+                            <FormHelperText>{errors.branches?.[selectedBranch]?.businessEmail?.message}</FormHelperText>  // Show error message here
                         )}
                     </FormControl>
                 )}
@@ -888,7 +923,7 @@ export const BranchFormColumnOneSectionOne = ({ t, i18n, control, watch, setValu
                 control={control}
                 rules={{ required: t("pinRequired") }}
                 render={({ field }) => (
-                    <FormControl variant="outlined" fullWidth error={!!errors.branches?.[selectedBranch].pin} >
+                    <FormControl variant="outlined" fullWidth error={!!errors.branches?.[selectedBranch]?.pin} >
                         <OutlinedInput
                             {...field}
                             id="outlined-adminPin"
@@ -905,8 +940,8 @@ export const BranchFormColumnOneSectionOne = ({ t, i18n, control, watch, setValu
                                 fontSize: "12px"
                             }}
                         />
-                        {errors.branches?.[selectedBranch].pin && (
-                            <FormHelperText>{errors.branches?.[selectedBranch].pin.message}</FormHelperText>  // Show error message here
+                        {errors.branches?.[selectedBranch]?.pin && (
+                            <FormHelperText>{errors.branches?.[selectedBranch]?.pin?.message}</FormHelperText>  // Show error message here
                         )}
                     </FormControl>
                 )}
@@ -918,7 +953,7 @@ export const BranchFormColumnOneSectionOne = ({ t, i18n, control, watch, setValu
                     name={`branches.${selectedBranch}.country`}
                     control={control}
                     render={({ field }) => (
-                        <FormControl variant="outlined" fullWidth error={errors.branches?.[selectedBranch].country} >
+                        <FormControl variant="outlined" fullWidth error={errors?.branches?.[selectedBranch]?.country} >
                             <Select
                                 {...field}
                                 displayEmpty
@@ -950,8 +985,8 @@ export const BranchFormColumnOneSectionOne = ({ t, i18n, control, watch, setValu
                                 ))}
                             </Select>
 
-                            {errors.branches?.[selectedBranch].country && (
-                                <FormHelperText>{errors.branches?.[selectedBranch].country.message}</FormHelperText>  // Show error message here
+                            {errors.branches?.[selectedBranch]?.country && (
+                                <FormHelperText>{errors.branches?.[selectedBranch]?.country?.message}</FormHelperText>  // Show error message here
                             )}
                         </FormControl>
                     )}
@@ -962,7 +997,7 @@ export const BranchFormColumnOneSectionOne = ({ t, i18n, control, watch, setValu
                     name={`branches.${selectedBranch}.city`}
                     control={control}
                     render={({ field }) => (
-                        <FormControl variant="outlined" fullWidth error={errors.branches?.[selectedBranch].city}>
+                        <FormControl variant="outlined" fullWidth error={errors?.branches?.[selectedBranch]?.city}>
                             <Select
                                 {...field}
                                 displayEmpty
@@ -991,8 +1026,8 @@ export const BranchFormColumnOneSectionOne = ({ t, i18n, control, watch, setValu
                                     </MenuItem>
                                 ))}
                             </Select>
-                            {errors.branches?.[selectedBranch].city && (
-                                <FormHelperText>{errors.branches?.[selectedBranch].city.message}</FormHelperText>  // Show error message here
+                            {errors.branches?.[selectedBranch]?.city && (
+                                <FormHelperText>{errors.branches?.[selectedBranch]?.city.message}</FormHelperText>  // Show error message here
                             )}
                         </FormControl>
                     )}

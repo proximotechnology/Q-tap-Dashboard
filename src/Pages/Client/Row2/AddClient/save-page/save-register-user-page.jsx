@@ -10,11 +10,12 @@ import {
 import { phoneSchema, saveNewRegisterUserFormSchema } from './saveNewRegisterUserFormSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSelector } from 'react-redux';
-import { selectRegisterPersonalData } from '../../../../store/register/personalSlice';
-import { printFormData } from '../../../../utils/utils';
-import { useRegisterNewUser } from '../../../../Hooks/Queries/ClientRegister/actions/useRegisterNewUser';
+import { selectRegisterPersonalData } from '../../../../../store/register/personalSlice';
+import { printFormData } from '../../../../../utils/utils';
+import { useRegisterNewUser } from '../../../../../Hooks/Queries/ClientRegister/actions/useRegisterNewUser';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router';
+import useBranchStore from '../../../../../store/zustand-store/register-client-branch-store';
 
 export const preparePersonalInfoInFormDataObject = ({ personalData, formData }) => {
   formData.append('name', personalData.fullName?.trim() || '');
@@ -97,12 +98,12 @@ export const prepareBrunchDataInFormDataObject = ({ prefix, data, formData }) =>
 const SaveRegisterUserDataPage = () => {
   const theme = useTheme();
   const { t, i18n } = useTranslation();
-  const { businessData, branches, selectedBranch } = useSelector((state) => state.registerBranchStore);
+  const branches = useBranchStore(state=>state.branches)
   const personalData = useSelector(selectRegisterPersonalData);
   const { mutate, isPending } = useRegisterNewUser()
   const navigate = useNavigate()
 
-
+  
   const {
     control,
     handleSubmit,

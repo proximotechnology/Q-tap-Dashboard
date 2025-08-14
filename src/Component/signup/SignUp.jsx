@@ -16,12 +16,12 @@ import { useGetEgyptGovern } from '../../Hooks/Queries/public/citys/useGetEgyptG
 import { YEAR_SELECT_START_FROM } from '../../utils/utils';
 import { COUNTRIES, COUNTRIES_CODES } from '../../utils/constant-variables/countries-codes';
 import PhoneField from '../phone-field/PhoneField';
+import { passwordSchema } from '../../Pages/Client/Row2/AddClient/save-page/saveNewRegisterUserFormSchema';
 
 
 const SignUp = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const personalData = useSelector((state) => state.registerPersonalDataStore.personalData);
 
     const { data } = useGetEgyptGovern()
     const governorates = data?.data?.data;
@@ -44,7 +44,6 @@ const SignUp = () => {
     const [apiError, setApiError] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [apiSuccess, setApiSuccess] = useState('');
-    const [clientDataFromRegist, setClientDataFromRegist] = useState()
 
 
     const { t, i18n } = useTranslation();
@@ -54,8 +53,14 @@ const SignUp = () => {
 
     const theme = useTheme()
     const isValidPassword = (password) => {
-        const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
-        return regex.test(password);
+        const result = passwordSchema.safeParse(password);
+        if (!result.success) {
+            console.log("❌ Errors:", result.error.errors);
+            return false
+        } else {
+            console.log("✅ Valid password:", result.data);
+            return true
+        }
     }
     // call api to register
     const handleSignUp = async () => {

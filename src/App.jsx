@@ -144,7 +144,7 @@ function App() {
         },
         {
           path: "/business-info",
-          element: <BusinessInfoPage />, // done
+          element: <EditBusinessInfo />// <BusinessInfoPage />, // done
         },
         {
           path: "/business-info/edit/:id",

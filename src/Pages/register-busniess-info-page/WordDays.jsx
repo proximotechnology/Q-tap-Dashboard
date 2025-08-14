@@ -20,56 +20,48 @@ const daysOfWeek = [
 const WorkDays = ({ watch, setValue, getValues, control, errors }) => {
     const { t } = useTranslation()
     const theme = useTheme()
-    // const [selectedDays, setSelectedDays] = useState([]);
 
     const [currentDay, setCurrentDay] = useState('Saturday');
-    const [fromTime, setFromTime] = useState();
-    const [toTime, setToTime] = useState();
 
-    // const handleDayToggle = (action) => {
-
-    // }
     const handleSelectedDayChange = (action) => {
+        const currentIndex = daysOfWeek.findIndex((day) => day.value === currentDay);
+        const nextIndex = action === 'prev'
+            ? (currentIndex - 1 + daysOfWeek.length) % daysOfWeek.length
+            : (currentIndex + 1) % daysOfWeek.length;
 
-        if (action === 'prev') {
-            const currentIndex = daysOfWeek.findIndex((day) => day.value === currentDay);
-            const nextIndex = (currentIndex - 1 + daysOfWeek.length) % daysOfWeek.length;
+        const nextDay = daysOfWeek[nextIndex].value;
+        setCurrentDay(nextDay);
 
-            setCurrentDay(daysOfWeek[nextIndex].value);
-        } else if (action === 'next') {
-            const currentIndex = daysOfWeek.findIndex((day) => day.value === currentDay);
-            const nextIndex = (currentIndex + 1) % daysOfWeek.length;
-
-            setCurrentDay(daysOfWeek[nextIndex].value);
+        // If no value exists for next day, initialize it
+        const values = getValues(`workschedules.${nextDay}`);
+        if (!values) {
+            setValue(`workschedules.${nextDay}`, ["9:00 am", "5:00 pm"]); // empty times or defaults
         }
-
-    }
-    const handleTimeChange = (e, day) => {
-
-    }
+    };
 
 
-    const selectedDaysWatch = watch("workschedules");
 
-    useEffect(() => {
-        console.log("watchedWorkSchedules", selectedDaysWatch);
-    }, [selectedDaysWatch]);
 
-    const selectedDays = Object.keys(selectedDaysWatch || {})
+
 
     const handleDayToggle = (day) => {
         const current = getValues(`workschedules.${day}`);
         if (current) {
             const prev = getValues("workschedules") || {};
+
             const updated = { ...prev };
             delete updated[day];
             setValue("workschedules", updated);
         } else {
-            setValue(`workschedules.${day}`, ["09:00 AM", "05:00 PM"]);
+            setValue(`workschedules.${day}`, ["9:00 am", "5:00 pm"]);
         }
     };
 
+
+    const selectedDaysWatch = watch("workschedules");
+
     const isSelected = (day) => Object.keys(selectedDaysWatch || {}).includes(day)
+
     return (
         <Grid container spacing={2} alignItems="center" sx={{ marginTop: "40px" }}>
             <Typography variant="body1" display="flex" alignItems="center"
@@ -135,25 +127,14 @@ const WorkDays = ({ watch, setValue, getValues, control, errors }) => {
                             </Grid>
                             <Grid item>
                                 <Controller
+                                    key={`${currentDay}-0`}
                                     name={`workschedules.${currentDay}.0`}
                                     control={control}
                                     render={({ field }) => (
                                         <Select
                                             {...field}
                                             value={field.value ?? ""}
-                                            onChange={(e) => {
-                                                const selected = e.target.value;
-
-                                                // Initialize if undefined
-                                                const existing = getValues(`workschedules.${currentDay}`) ?? [];
-                                                const updated = [...existing];
-                                                updated[0] = selected;
-                                                console.log(updated)
-                                                setValue(`workschedules.${currentDay}`, updated, {
-                                                    shouldDirty: true,
-                                                    shouldValidate: true,
-                                                });
-                                            }}
+                                            onChange={(e) => field.onChange(e.target.value)}
                                             fullWidth
 
                                             size="small"
@@ -170,7 +151,7 @@ const WorkDays = ({ watch, setValue, getValues, control, errors }) => {
                                             }}
                                         >
                                             {timeOptions.map((t) => (
-                                                <MenuItem key={t} value={t}>{t}</MenuItem>
+                                                <MenuItem key={`${t}-${currentDay}-0`} value={t}>{t}</MenuItem>
                                             ))}
                                         </Select>
                                     )}
@@ -184,25 +165,14 @@ const WorkDays = ({ watch, setValue, getValues, control, errors }) => {
                             </Grid>
                             <Grid item>
                                 <Controller
+                                    key={`${currentDay}-1`}
                                     name={`workschedules.${currentDay}.1`}
                                     control={control}
                                     render={({ field }) => (
                                         <Select
                                             {...field}
                                             value={field.value ?? ""}
-                                            onChange={(e) => {
-                                                const selected = e.target.value;
-
-                                                // Initialize if undefined
-                                                const existing = getValues(`workschedules.${currentDay}`) ?? [];
-                                                const updated = [...existing];
-                                                updated[1] = selected;
-                                                console.log(updated)
-                                                setValue(`workschedules.${currentDay}`, updated, {
-                                                    shouldDirty: true,
-                                                    shouldValidate: true,
-                                                });
-                                            }}
+                                            onChange={(e) => field.onChange(e.target.value)}
                                             fullWidth
 
                                             size="small"
@@ -219,7 +189,7 @@ const WorkDays = ({ watch, setValue, getValues, control, errors }) => {
                                             }}
                                         >
                                             {timeOptions.map((t) => (
-                                                <MenuItem key={t} value={t}>{t}</MenuItem>
+                                                <MenuItem key={`${t}-${currentDay}-1`} value={t}>{t}</MenuItem>
                                             ))}
                                         </Select>
                                     )}

@@ -3,14 +3,38 @@ import parsePhoneNumber, { parsePhoneNumberFromString } from "libphonenumber-js"
 
 
 
+const PaymentMethodEnum = z.enum(['cash', 'card', 'wallet']);
 
-const branchSchema = z.object({
+export const phoneNumberSuperRefineValidation = (data, ctx) => {
+    const phoneNumber = parsePhoneNumberFromString(data.businessPhone, data.businessCountryCode);
+    console.log("phoneNumber", phoneNumber)
+    if (!phoneNumber?.isValid()) {
+        ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["businessPhone"],
+            message: "Invalid phone number",
+        });
+    } else if (data.businessCountryCode === "EG") {
+        const national = phoneNumber.nationalNumber;
+        const mobilePattern = /^(10|11|12|15)\d{8}$/; // Egypt mobile prefixes
+
+        if (!mobilePattern.test(national)) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                path: ["businessPhone"],
+                message: "Invalid phone number",
+            });
+        }
+    }
+}
+
+export const branchSchema = z.object({
     businessName: z.string().min(1, "Business name is required"),
     businessCountryCode: z
         .string()
         .min(1, "Country code is required")
         .regex(/^[A-Z]{2}$/, "Country code must be a valid ISO 3166-1 alpha-2 code"),
-
+    website: z.string().optional(),
     businessPhone: z.string().min(1, "Phone number is required"),
     businessEmail: z.string().email("Invalid email address"),
     pin: z.string().min(1, "PIN is required"),
@@ -24,13 +48,16 @@ const branchSchema = z.object({
     mode: z.string().min(1, "Mode is required"),
     design: z.string().min(1, "Design is required"),
     servingWays: z.array(z.string()).min(1, "At least one serving way is required"),
-    callWaiter: z.string(),
-    paymentMethods: z.array(z.string()).min(1, "At least one payment method is required"),
+    callWaiter: z.enum(["active", "inactive"], {
+        required_error: "Please select call waiter status",
+    }),
+    paymentMethods: z.array(PaymentMethodEnum).min(1, "At least one payment method is required"),
     paymentTime: z.string().min(1, "Payment time is required"),
 
     numberOfTable: z
         .number({ invalid_type_error: "Number of tables must be a number" })
         .optional(),
+
 }).superRefine((data, ctx) => {
     if (data.servingWays.includes("dinein") && (data.numberOfTable == null || isNaN(data.numberOfTable))) {
         ctx.addIssue({
@@ -39,16 +66,7 @@ const branchSchema = z.object({
             message: "Number of tables is required when serving way includes dinein",
         });
     }
-}).superRefine((data, ctx) => {
-    const phoneNumber = parsePhoneNumberFromString(data.businessPhone, data.businessCountryCode);
-    if (!phoneNumber?.isValid()) {
-        ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            path: ["businessPhone"],
-            message: "Invalid phone number",
-        });
-    }
-});
+}).superRefine(phoneNumberSuperRefineValidation);
 
 export const branchesArraySchema = z.array(branchSchema).min(1, "At least one branch is required");
 
@@ -125,3 +143,11 @@ export const saveNewRegisterUserFormSchema = z
             });
         }
     });
+
+export const passwordSchema = z
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+    .regex(/\d/, "Password must contain at least one number")
+    .regex(/[^A-Za-z0-9]/, "Password must contain at least one special character");

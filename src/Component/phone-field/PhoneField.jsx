@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { COUNTRIES_CODES } from '../../utils/constant-variables/countries-codes';
 import { useTranslation } from 'react-i18next';
 import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
-import parsePhoneNumber from "libphonenumber-js";
+import { parsePhoneNumberFromString } from "libphonenumber-js";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../../components/ui/select";
 import { Input } from "../../components/ui/input";
 import { useTheme } from '@emotion/react';
@@ -29,7 +29,7 @@ const PhoneField = ({ phone, setPhone, setCountryCode, countryCode, isRounded = 
 
     const validatePhone = () => {
         try {
-            const parsed = parsePhoneNumber(`${countryCode}${phone}`);
+            const parsed = parsePhoneNumberFromString(phone, countryCode);
             if (!parsed?.isValid()) throw new Error("Invalid number");
             setError("");
         } catch {

@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ReactComponent as Wallet } from '../../assets/cardColor.svg';
 import { ReactComponent as Cash } from '../../assets/cash.svg';
 import { Stack } from '@mui/system';
+import useBranchStore from '../../store/zustand-store/register-client-branch-store';
 
 
 const Divider2 = styled(Box)(({ theme }) => ({
@@ -43,7 +44,8 @@ export const Payment = () => {
   const [isLoading, setIsLoading] = useState(true); // حالة تحميل جديدة
   const dispatch = useDispatch();
   const personalData = useSelector((state) => state.registerPersonalDataStore.personalData);
-  const { businessData, branches, selectedBranch } = useSelector((state) => state.registerBranchStore);
+  // const { businessData, branches, selectedBranch } = useSelector((state) => state.registerBranchStore);
+  const branches = useBranchStore(state => state.branches)
 
 
 
@@ -122,7 +124,7 @@ export const Payment = () => {
     // حساب addOns بناءً على عدد الفروع
     let addOns = 0;
     if (branches.length > 1) {
-      addOns = (subTotal / 2) * (branches.length -1) ; // إضافة نصف سعر الباقة إذا كان هناك أكثر من فرع
+      addOns = (subTotal / 2) * (branches.length - 1); // إضافة نصف سعر الباقة إذا كان هناك أكثر من فرع
     }
 
     const tax = 0; // يمكن تعديله حسب الحاجة
@@ -216,7 +218,7 @@ export const Payment = () => {
               textTransform: 'none',
               padding: "6px 0",
               marginX: 'auto',
-              marginY:"2rem",
+              marginY: "2rem",
               '&:hover': { backgroundColor: theme.palette.orangePrimary.main },
               color: "#fff",
             }}
@@ -281,7 +283,7 @@ const CalculationCard = ({ totals, totalPrice }) => {
         >
           <Typography sx={{ textAlign: 'right', pr: 1, color: theme.palette.text.fixedGray }}>{label}</Typography>
           <Typography sx={{
-            textAlign: 'left', color: index === items.length - 1 ? theme.palette.text.fixedDarkOrange : theme.palette.mode === 'light' ?theme.palette.text.fixedDarkBlue : theme.palette.text.fixedWhite
+            textAlign: 'left', color: index === items.length - 1 ? theme.palette.text.fixedDarkOrange : theme.palette.mode === 'light' ? theme.palette.text.fixedDarkBlue : theme.palette.text.fixedWhite
           }}>
             <Box
               component="span"
@@ -332,9 +334,9 @@ const DiscountSection = ({ discountCode, handleDiscountChange, handleChange, sel
     <Box sx={{ marginTop: "30px" }}>
       <Box sx={{ width: '100%', textAlign: 'center', display: "flex", flexDirection: "column", alignItems: "center" }}>
         <Box sx={{ width: { lg: '220px', md: "100%", xs: "100%" } }}>
-          <Box sx={{ display: "flex", justifyContent: 'start' , alignItems:"end" , gap:".5rem"}}>
+          <Box sx={{ display: "flex", justifyContent: 'start', alignItems: "end", gap: ".5rem" }}>
             <Box>
-              <Typography sx={{ fontSize: '9px'  , textAlign:"start"}}>{t("disCode")}</Typography>
+              <Typography sx={{ fontSize: '9px', textAlign: "start" }}>{t("disCode")}</Typography>
               <TextField
                 variant="outlined"
                 size="small"
@@ -346,8 +348,8 @@ const DiscountSection = ({ discountCode, handleDiscountChange, handleChange, sel
                 }}
               />
             </Box>
-            <Box position={'relative'} sx={{display:"flex" , gap:1}}>
-              <IconButton sx={{ margin: "0px", padding: "0px", position: "relative", bottom: "0px" ,fontWeight:"bold"}}>
+            <Box position={'relative'} sx={{ display: "flex", gap: 1 }}>
+              <IconButton sx={{ margin: "0px", padding: "0px", position: "relative", bottom: "0px", fontWeight: "bold" }}>
                 <DoneIcon sx={{ width: "21px", height: "21px", color: theme.palette.orangePrimary.main }} />
               </IconButton>
               <IconButton sx={{ margin: "0px", padding: "0px", position: "relative", bottom: "0px" }}  >
