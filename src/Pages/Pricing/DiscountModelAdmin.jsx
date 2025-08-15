@@ -7,143 +7,106 @@ import { toast } from 'react-toastify';
 import DoneIcon from '@mui/icons-material/Done';
 import { Select, MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import {BASE_URL,BASE_URL_IMG} from  "../../utils/constants";
+import { BASE_URL, BASE_URL_IMG } from "../../utils/constants";
+import { useGetPlanDiscountCoupons } from '../../Hooks/Queries/admin/plan-discount-coupon/useGetPlanDiscountCoupons';
+import { useUpdatePlanDiscountCoupon } from '../../Hooks/Queries/admin/plan-discount-coupon/actions/useUpdatePlanDiscountCoupon';
+import { useCreatePlanDiscountCoupon } from '../../Hooks/Queries/admin/plan-discount-coupon/actions/useCreatePlanDiscountCoupon';
+import { useDeletePlanDiscountCoupon } from '../../Hooks/Queries/admin/plan-discount-coupon/actions/useDeletePlanDiscountCoupon';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const DiscountModelAdmin = ({ open, handleClose }) => {
-    const [discounts, setDiscounts] = useState([]);
     const [code, setCode] = useState('');
     const [discount, setDiscount] = useState('');
+    const [editDiscount, setEditDiscount] = useState(null);
+    // const [editDiscountFields, setEditDiscountFields] = useState(null);
+
     const { t } = useTranslation();
     const theme = useTheme();
+
+    // const queryClient = useQueryClient();
+    //  queryClient.invalidateQueries({ queryKey: ["todos"] })
+    const { data, refetch, isLoading } = useGetPlanDiscountCoupons()
+    const discounts = data?.data?.data || []
+
+    const { mutate: createPlanDiscountCoupon, isPending: isCreatingPlanDiscountCouponPending } = useCreatePlanDiscountCoupon()
+    const { mutate: deletePlanDiscountCoupon, isPending: isDeletePlanDiscountCouponPending } = useDeletePlanDiscountCoupon()
+    const { mutate: updatePlanDiscountCoupon, isPending: isUpdatePlanDiscountCouponPending } = useUpdatePlanDiscountCoupon()
+
+
     const handleAdd = async () => {
-        try {
-            if (!code || !discount) {
-                toast.error(t("plFillAllField"));
-                return;
-            }
-
-            const formData = {
-                code: code,
-                discount: discount,
-            };
-
-            const response = await axios({
-                method: 'POST',
-
-                url: `${BASE_URL}discount`,
-                data: formData,
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            if (response.data) {
-                getDiscounts();
+        const formData = {
+            code: code,
+            discount: discount,
+            status: "active"
+        };
+        createPlanDiscountCoupon({ data: formData }, {
+            onSuccess: () => {
                 toast.success(t("discount.addSucc"));
-                const newDiscount = {
-                    id: response.data.id, // Ensure the response contains an ID
-                    code: response.data.code,
-                    discount: `${response.data.discount}%`,
-                    created_at: new Date().toISOString(), // Add current date for display
-                    status: 'active', // Default status
-                };
-                setDiscounts((prevDiscounts) => [...prevDiscounts, newDiscount]); // Update state correctly
                 setCode('');
                 setDiscount('');
-            }
-        } catch (error) {
-            console.error('Error adding discount:', error);
-            const errorMessage = error.response?.data?.message || t("discount.addErr");
-            toast.error(errorMessage);
-        }
+                refetch();
+            },
+            onError: (error) => {
+                console.error('Error adding discount:', error);
+                const errorMessage = error.response?.data?.message || t("discount.addErr");
+                toast.error(errorMessage);
+            },
+        })
     };
 
     const handleDelete = async (index, discountId) => {
-        try {
-            const response = await axios({
-                method: 'DELETE',
-                url: `${BASE_URL}discount/${discountId}`,
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,
-                }
-            });
 
-            if (response.data) {
+        deletePlanDiscountCoupon({ coupon_id: discountId }, {
+            onSuccess: () => {
                 toast.success(t("discount.deleteSucc"));
-                const updatedDiscounts = discounts.filter((_, i) => i !== index);
-                setDiscounts(updatedDiscounts);
-            }
-        } catch (error) {
-            console.error('Error deleting discount:', error);
-            toast.error(t("discount.deleteErr"));
-        }
+                refetch();
+            },
+            onError: (error) => {
+                // const errorMessage = error.response?.data?.message || t("discount.addErr");
+                // toast.error(errorMessage);
+
+                console.error('Error deleting discount:', error);
+                toast.error(t("discount.deleteErr"));
+            },
+        })
     };
 
-    const getDiscounts = async () => {
-        try {
-
-            const response = await axios.get(`${BASE_URL}discount`, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,
-                },
-            });
-
-            if (response.data) {
-                setDiscounts(response.data.discounts || []);
-                // console.log("response discount", response.data.discounts);
-            }
-        } catch (error) {
-            console.error('Error fetching discounts:', error);
-            // toast.error(t("discount.fetchErr"));
-        }
-    };
-
-    const handleEditToggle = (index) => {
-        const updatedDiscounts = [...discounts];
-        updatedDiscounts[index].isEditing = !updatedDiscounts[index].isEditing;
-        setDiscounts(updatedDiscounts);
+    const handleEditToggle = (discount) => {
+        setEditDiscount(discount)
     };
 
     const handleInputChange = (index, field, value) => {
-        const updatedDiscounts = [...discounts];
-        updatedDiscounts[index][field] = value;
-        setDiscounts(updatedDiscounts);
+        console.log('field', field)
+        setEditDiscount(prev => ({
+            ...prev,
+            [field]: value,
+        }))
     };
 
-    const handleUpdate = async (index) => {
-        const discountToUpdate = discounts[index];
-
-        try {
-            const response = await axios.put(
-
-                `${BASE_URL}discount/${discountToUpdate.id}`,
-                {
-                    code: discountToUpdate.code,
-                    discount: discountToUpdate.discount,
-                    status: discountToUpdate.status,
-                },
-                {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,
-                    }
-                }
-            );
-
-            if (response.data) {
+    const handleUpdate = async (discountId) => {
+        const formData = {
+            code: editDiscount.code,
+            discount: editDiscount.discount,
+            status: editDiscount.status
+        };
+        updatePlanDiscountCoupon({ coupon_id: discountId, data: formData }, {
+            onSuccess: () => {
                 toast.success(t("discount.updateSucc"));
-                discountToUpdate.isEditing = false; // Stop editing mode after saving
-                setDiscounts([...discounts]);
-            }
-        } catch (error) {
-            console.error('Error updating discount:', error);
-            toast.error(t("discount.updateErr"));
-        }
+                setEditDiscount(null)
+                refetch();
+            },
+            onError: (error) => {
+                // const errorMessage = error.response?.data?.message || t("discount.addErr");
+                // toast.error(errorMessage);
+
+                console.error('Error deleting discount:', error);
+                toast.error(t("discount.deleteErr"));
+            },
+        })
+      
     };
 
-    useEffect(() => {
-        getDiscounts();
-    }, []);
+  
 
     return (
         <Modal open={open} onClose={handleClose} disableScrollLock>
@@ -215,6 +178,7 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
                                         backgroundColor: theme.palette.orangePrimary.main,
                                     },
                                 }}
+                                disabled={isCreatingPlanDiscountCouponPending}
                             >
                                 + Add
                             </Button>
@@ -237,9 +201,9 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
                         {discounts.map((discount, index) => (
                             <TableRow key={index} sx={{ height: '36px' }}>
                                 <TableCell sx={{ textAlign: "center", fontSize: "10px", color: theme.palette.text.gray, padding: '0px', borderBottom: "none" }}>
-                                    {discount.isEditing ? (
+                                    {editDiscount?.id === discount?.id ? (
                                         <TextField
-                                            value={discount.code}
+                                            value={editDiscount.code}
                                             onChange={(e) => handleInputChange(index, "code", e.target.value)}
                                             size="small"
                                             sx={{ fontSize: "5px", width: "70px", borderRadius: "7px" }}
@@ -249,9 +213,9 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
                                     )}
                                 </TableCell>
                                 <TableCell sx={{ textAlign: "center", fontSize: "10px", color: theme.palette.text.gray, padding: '0px', borderBottom: "none" }}>
-                                    {discount.isEditing ? (
+                                    {editDiscount?.id === discount?.id ? (
                                         <TextField
-                                            value={discount.discount}
+                                            value={editDiscount.discount}
                                             onChange={(e) => handleInputChange(index, "discount", e.target.value)}
                                             size="small"
                                             sx={{ fontSize: "5px", width: "60px", borderRadius: "7px" }}
@@ -266,9 +230,9 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
                                 </TableCell>
 
                                 <TableCell sx={{ textAlign: "center", fontSize: "10px", color: theme.palette.text.gray, padding: '0px', borderBottom: "none" }}>
-                                    {discount.isEditing ? (
+                                    {editDiscount?.id === discount?.id ? (
                                         <Select
-                                            value={discount.status}
+                                            value={editDiscount.status}
                                             onChange={(e) => handleInputChange(index, "status", e.target.value)}
                                             size="small"
                                             sx={{ fontSize: "10px", width: "70px", borderRadius: "7px" }}
@@ -291,17 +255,17 @@ export const DiscountModelAdmin = ({ open, handleClose }) => {
                                 </TableCell>
 
                                 <TableCell sx={{ fontSize: "10px", textAlign: "center", padding: '0px', borderBottom: "none" }}>
-                                    {discount.isEditing ? (
-                                        <IconButton size="small" onClick={() => handleUpdate(index)} color="success">
+                                    {editDiscount?.id === discount?.id ? (
+                                        <IconButton size="small" onClick={() => handleUpdate(discount.id)} color="success">
                                             <DoneIcon sx={{ fontSize: "18px" }} />
                                         </IconButton>
                                     ) : (
-                                        <IconButton size="small" onClick={() => handleEditToggle(index)} color="success">
+                                        <IconButton size="small" onClick={() => handleEditToggle(discount)} color="success">
                                             <span className="icon-edit" sx={{ fontSize: "10px", color: "black" }}></span>
                                         </IconButton>
                                     )}
 
-                                    <IconButton size="small" onClick={() => handleDelete(index, discount.id)} color="error">
+                                    <IconButton size="small" disabled={isDeletePlanDiscountCouponPending} onClick={() => handleDelete(index, discount.id)} color="error">
                                         <span className="icon-delete" sx={{ fontSize: "10px" }}></span>
                                     </IconButton>
                                 </TableCell>
