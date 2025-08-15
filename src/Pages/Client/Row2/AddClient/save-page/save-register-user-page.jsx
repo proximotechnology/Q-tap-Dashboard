@@ -154,8 +154,8 @@ const SaveRegisterUserDataPage = () => {
 
 
     formData.append(`payment_method`, personalData.payment_method);
-    if (personalData.coupn_plan_code)
-      formData.append(`coupn_plan_code`, personalData.coupn_plan_code);
+    if (personalData.discount_id)
+      formData.append(`coupn_plan_code`, personalData.discount_id.code);
 
 
     mutate({ data: formData }, {

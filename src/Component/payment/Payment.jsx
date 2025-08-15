@@ -14,6 +14,9 @@ import { ReactComponent as Wallet } from '../../assets/cardColor.svg';
 import { ReactComponent as Cash } from '../../assets/cash.svg';
 import { Stack } from '@mui/system';
 import useBranchStore from '../../store/zustand-store/register-client-branch-store';
+import { useCheckDiscountCoupon } from '../../Hooks/Queries/plan/useCheckPlanCopone';
+import { usePlanPricing } from '../../Hooks/Queries/clientDashBoard/plan/usePlanPricing';
+import { SendHorizontal } from 'lucide-react';
 
 
 const Divider2 = styled(Box)(({ theme }) => ({
@@ -37,60 +40,60 @@ export const Payment = () => {
   const { t } = useTranslation();
   const theme = useTheme();
   const [selectedValue, setSelectedValue] = useState('cash');
-  const [pricing, setPricing] = useState([]);
+  // const [pricing, setPricing] = useState([]);
   const [discounts, setDiscounts] = useState([]);
   const [selectedPlan, setSelectedPlan] = useState(null); // { plan, pricingWay }
   const [discountCode, setDiscountCode] = useState('');
-  const [isLoading, setIsLoading] = useState(true); // حالة تحميل جديدة
   const dispatch = useDispatch();
   const personalData = useSelector((state) => state.registerPersonalDataStore.personalData);
   // const { businessData, branches, selectedBranch } = useSelector((state) => state.registerBranchStore);
   const branches = useBranchStore(state => state.branches)
 
+  const { mutate, isPending } = useCheckDiscountCoupon()
 
+  const [couponStatus, setCouponStatus] = useState("check"); // "check" | "correct" | "wrong"
+  const [validDiscountCode, setValidDiscountCode] = useState(null); // "check" | "correct" | "wrong"
 
+  const { data, error, isPending: isLoading } = usePlanPricing()
+  const pricing = data?.data?.data
 
-  // Fetch pricing and discount data from API
-  useEffect(() => {
-    setIsLoading(true);
-    Promise.all([
-
-      fetch(`${BASE_URL}pricing`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-        .then(response => response.json())
-        .then(data => {
-          setPricing(data.data);
-        })
-        .catch(error => console.error('Error fetching pricing data:', error)),
-
-
-      fetch(`${BASE_URL}discount`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-        .then(response => response.json())
-        .then(data => {
-          setDiscounts(data.discounts);
-        })
-        .catch(error => console.error('Error fetch discount data:', error)),
-    ])
-      .finally(() => setIsLoading(false));
-  }, []);
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
     dispatch(updatePersonalData({ payment_method: event.target.value }));
   };
 
+
+  const handleCheckCoupon = () => {
+    mutate({ data: { code: discountCode } },
+      {
+        onSuccess: (res) => {
+          console.log(res.data.discount)
+          if (res.data.discount) {
+            setCouponStatus("correct");
+            setValidDiscountCode(res.data.discount)
+          } else {
+            setCouponStatus("wrong");
+          }
+        },
+        onError: (err) => {
+          console.log(err)
+          setCouponStatus("wrong");
+        },
+      }
+    )
+
+
+  };
+
   const handleDiscountChange = (event) => {
     setDiscountCode(event.target.value);
     // التحقق من كود الخصم سيتم في handleNext
+
+    if (couponStatus !== "check") {
+      setCouponStatus("check");
+      setValidDiscountCode(null)
+    }
   };
 
   const handlePlanSelect = (plan) => {
@@ -129,9 +132,7 @@ export const Payment = () => {
 
     const tax = 0; // يمكن تعديله حسب الحاجة
     // التحقق الآمن من discounts
-    const discountValue = discountCode && Array.isArray(discounts)
-      ? parseFloat(discounts.find(d => d.code === discountCode && d.status === 'active')?.discount || 0)
-      : 0;
+    const discountValue = validDiscountCode ? ((subTotal + addOns) * validDiscountCode.discount / 100) : 0
     const total = subTotal + addOns + tax - discountValue;
 
     return { subTotal, addOns, tax, discounts: discountValue, total };
@@ -151,13 +152,8 @@ export const Payment = () => {
     }
 
     // التحقق من كود الخصم
-    if (discountCode) {
-      const validDiscount = Array.isArray(discounts) && discounts.find(d => d.code === discountCode && d.status === 'active');
-      if (!validDiscount) {
-        toast.error(t("invalidDiscountCode"));
-        return;
-      }
-      dispatch(updatePersonalData({ discount_id: validDiscount.id }));
+    if (couponStatus === 'correct') {
+      dispatch(updatePersonalData({ discount_id: validDiscountCode }));
     } else {
       dispatch(updatePersonalData({ discount_id: null }));
     }
@@ -183,7 +179,7 @@ export const Payment = () => {
 
       <Box sx={{ display: "flex", flexDirection: 'column' }}>
         <Grid container spacing={1} sx={{ width: "100%", minHeight: "300px", justifyContent: "center" }}>
-          {pricing.map((plan) => (
+          {Array.isArray(pricing) && pricing.map((plan) => (
             <Grid item xs={12} sm={6} md={2} key={plan.id}>
               <PricingCard
                 title={plan.name}
@@ -204,7 +200,14 @@ export const Payment = () => {
         <Box style={{ display: 'flex', gap: "2rem", justifyContent: 'space-around', flexWrap: "wrap" }}>
           <CalculationCard totals={totals} totalPrice={totalPrice} />
 
-          <DiscountSection discountCode={discountCode} handleChange={handleChange} handleDiscountChange={handleDiscountChange} selectedValue={selectedValue} />
+          <DiscountSection
+            discountCode={discountCode}
+            handleDiscountChange={handleDiscountChange}
+            handleChange={handleChange}
+            selectedValue={selectedValue}
+            handleCheckCoupon={handleCheckCoupon}
+            couponStatus={couponStatus}
+          />
         </Box>
         {/* section 3 pay button */}
         <Grid container>
@@ -311,7 +314,7 @@ const CalculationCard = ({ totals, totalPrice }) => {
   </Box>
 }
 
-const DiscountSection = ({ discountCode, handleDiscountChange, handleChange, selectedValue }) => {
+const DiscountSection = ({ discountCode, handleDiscountChange, handleChange, selectedValue, handleCheckCoupon, couponStatus }) => {
   const { t } = useTranslation();
   const theme = useTheme();
   const UncheckedIcon = styled('span')(({ theme }) => ({
@@ -349,12 +352,28 @@ const DiscountSection = ({ discountCode, handleDiscountChange, handleChange, sel
               />
             </Box>
             <Box position={'relative'} sx={{ display: "flex", gap: 1 }}>
-              <IconButton sx={{ margin: "0px", padding: "0px", position: "relative", bottom: "0px", fontWeight: "bold" }}>
-                <DoneIcon sx={{ width: "21px", height: "21px", color: theme.palette.orangePrimary.main }} />
-              </IconButton>
-              <IconButton sx={{ margin: "0px", padding: "0px", position: "relative", bottom: "0px" }}  >
-                <span className="icon-close-1" style={{ width: "15px", height: "15px", fontSize: "15px", color: theme.palette.secondaryColor.main }}></span>
-              </IconButton>
+              {couponStatus === "correct" &&
+                <IconButton sx={{ margin: "0px", padding: "0px", position: "relative", bottom: "0px", fontWeight: "bold" }}>
+                  <DoneIcon sx={{ width: "21px", height: "21px", color: theme.palette.orangePrimary.main }} />
+                </IconButton>
+              }
+              {
+                couponStatus === "wrong" &&
+                <IconButton
+                  onClick={() => handleDiscountChange({ target: { value: "" } })}
+                  sx={{ margin: "0px", padding: "0px", position: "relative", bottom: "0px" }}  >
+                  <span className="icon-close-1" style={{ width: "15px", height: "15px", fontSize: "15px", color: "red" }}></span>
+                </IconButton>
+              }
+
+              {
+                couponStatus === "check" &&
+                <IconButton
+                  onClick={handleCheckCoupon}
+                  sx={{ margin: "0px", padding: "0px", position: "relative", bottom: "0px" }}  >
+                  <SendHorizontal />
+                </IconButton>
+              }
             </Box>
           </Box>
         </Box>
