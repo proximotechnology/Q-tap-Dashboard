@@ -98,12 +98,12 @@ export const prepareBrunchDataInFormDataObject = ({ prefix, data, formData }) =>
 const SaveRegisterUserDataPage = () => {
   const theme = useTheme();
   const { t, i18n } = useTranslation();
-  const branches = useBranchStore(state=>state.branches)
+  const branches = useBranchStore(state => state.branches)
   const personalData = useSelector(selectRegisterPersonalData);
   const { mutate, isPending } = useRegisterNewUser()
   const navigate = useNavigate()
 
-  
+
   const {
     control,
     handleSubmit,
@@ -133,6 +133,7 @@ const SaveRegisterUserDataPage = () => {
       branches: branches || []
     }
   });
+
 
   const onSubmit = (data) => {
     console.log("Form data:", data);
@@ -200,6 +201,7 @@ const SaveRegisterUserDataPage = () => {
               watch={watch}
               getValues={getValues}
               reset={reset}
+              pricing_id={personalData.pricing_id}
             />
           </div>
           <div className='mx-auto mt-auto '>

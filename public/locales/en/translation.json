@@ -664,7 +664,7 @@
     "Matrouh": "Matrouh",
     "North Sinai": "North Sinai",
     "South Sinai": "South Sinai",
-    "passTooShortOrDontHaveNumber": "Password should be at least 6 characters long and consist of both letters and numbers.",
+    "passTooShortOrDontHaveNumber": "At least 8 characters ,One uppercase letter ,One lowercase letter ,One number ,One symbol",
     "errorGetingData": "error getting data check if you login and have permission",
     "Rejection Reason": "Rejection Reason",
     "pinAlreadyBeenTaken": "The pin has already been taken.",
@@ -678,9 +678,9 @@
     "verifying": "Verifying...",
     "invalidOtp": "Invalid OTP. Please try again.",
     "otpVerificationFailed": "OTP verification failed. Please try again later.",
-    "clientPlans":"Client Plans",
-    "numberOfOrders":"Number of Orders",
-    "validation":{
-        "InvalidPhoneNumber":"Invalid Phone Number"
+    "clientPlans": "Client Plans",
+    "numberOfOrders": "Number of Orders",
+    "validation": {
+        "InvalidPhoneNumber": "Invalid Phone Number"
     }
 }

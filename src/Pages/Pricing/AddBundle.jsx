@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { BASE_URL, BASE_URL_IMG } from "../../utils/constants";
 import axios from 'axios';
 
-const AddBundle = ({ open, onClose, editData = null }) => {
+const AddBundle = ({ open, onClose, editData = null, refetch }) => {
     const [text, setText] = useState('');
     const [features, setFeatures] = useState([]);
     const [bundleName, setBundleName] = useState('');
@@ -48,7 +48,7 @@ const AddBundle = ({ open, onClose, editData = null }) => {
             description: description,
             feature: features,
             is_active: "active",
-            orders_limit: numberOfOrders
+            orders_limit: Number(numberOfOrders)
         };
 
         const url = editData
@@ -72,7 +72,7 @@ const AddBundle = ({ open, onClose, editData = null }) => {
             })
             .then(data => {
                 toast.success(editData ? t("bundleUpdateSucc") : t("bundleCreateSucc"));
-                window.location.reload();
+                refetch();
                 onClose();
             })
             .catch(error => {

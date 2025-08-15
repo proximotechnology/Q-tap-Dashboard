@@ -30,6 +30,10 @@ const useBranchStore = create((set) => ({
 
   // Replace all branches
   setBranches: (newBranches) => set({ branches: newBranches }),
+
+  reset: () => set((state) => ({
+    branches: [],
+  }))
 }));
 
 export default useBranchStore;

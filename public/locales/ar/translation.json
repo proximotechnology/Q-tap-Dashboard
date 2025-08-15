@@ -664,7 +664,7 @@
     "Matrouh": "مطروح",
     "North Sinai": "شمال سيناء",
     "South Sinai": "جنوب سيناء",
-    "passTooShortOrDontHaveNumber": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل وتتكون من أحرف وأرقام.",
+    "passTooShortOrDontHaveNumber": "8 أحرف على الأقل، حرف كبير واحد، حرف صغير واحد، رقم واحد، رمز واحد",
     "errorGetingData": "حدث خطاء اثناء جلب البيانات الرجاء التاكد من تسجيل الدخول و الصلاحيات",
     "Rejection Reason": "سبب الرفض",
     "pinAlreadyBeenTaken": "لقد تم أخذ البين بالفعل.",

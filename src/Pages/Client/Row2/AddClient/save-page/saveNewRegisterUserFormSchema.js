@@ -7,7 +7,6 @@ const PaymentMethodEnum = z.enum(['cash', 'card', 'wallet']);
 
 export const phoneNumberSuperRefineValidation = (data, ctx) => {
     const phoneNumber = parsePhoneNumberFromString(data.businessPhone, data.businessCountryCode);
-    console.log("phoneNumber", phoneNumber)
     if (!phoneNumber?.isValid()) {
         ctx.addIssue({
             code: z.ZodIssueCode.custom,
@@ -27,6 +26,18 @@ export const phoneNumberSuperRefineValidation = (data, ctx) => {
         }
     }
 }
+const timeRangeSchema = z
+    .array(z.string().min(1))
+    .length(2, { message: "You must select both start and end time" }) // ✅ custom message
+    .refine(([start, end]) => start !== end, {
+        message: "Start and end time cannot be the same",
+    });
+
+const workScheduleSchema = z
+    .record(z.string(), timeRangeSchema)
+    .refine(obj => Object.keys(obj).length > 0, {
+        message: "You must select at least one working day",
+    });
 
 export const branchSchema = z.object({
     businessName: z.string().min(1, "Business name is required"),
@@ -37,9 +48,22 @@ export const branchSchema = z.object({
     website: z.string().optional(),
     businessPhone: z.string().min(1, "Phone number is required"),
     businessEmail: z.string().email("Invalid email address"),
-    pin: z.string().min(1, "PIN is required"),
-    country: z.union([z.string().min(1, "Country is required"), z.number()]),
-    city: z.union([z.string().min(1, "City is required"), z.number()]),
+    pin: z
+        .string()
+        .min(6, "PIN must be 6 digits")
+        .max(6, "PIN must be 6 digits")
+        .regex(/^\d+$/, "PIN must contain only numbers"),
+    country: z.object({
+        id: z.number(),
+        code: z.string(),
+        name_en: z.string(),
+        name_ar: z.string(),
+    }),
+    city: z.object({
+        id: z.number(),
+        name_en: z.string(),
+        name_ar: z.string(),
+    }),
     latitude: z.number({ invalid_type_error: "Latitude must be a number" }),
     longitude: z.number({ invalid_type_error: "Longitude must be a number" }),
     currency: z.string().min(1, "Currency is required"),
@@ -53,7 +77,7 @@ export const branchSchema = z.object({
     }),
     paymentMethods: z.array(PaymentMethodEnum).min(1, "At least one payment method is required"),
     paymentTime: z.string().min(1, "Payment time is required"),
-
+    workschedules: workScheduleSchema,
     numberOfTable: z
         .number({ invalid_type_error: "Number of tables must be a number" })
         .optional(),

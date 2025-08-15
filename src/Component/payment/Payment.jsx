@@ -171,14 +171,22 @@ export const Payment = () => {
   }
 
   return (
-    <Box marginTop={"50px"} flexGrow={1}>
+    <Box marginTop={"50px"} flexGrow={1} sx={{
+      minHeight: "calc(100vh - 50px )", // full viewport height
+      display: "flex", flexDirection: 'column',
+      flex: 1,         // 👈 fills remaining width
+    }}>
       <Typography variant="body1" sx={{ marginLeft: "50px", fontSize: "18px" }}>
         {t("payment")}
       </Typography>
       <Divider marginLeft={"50px"} />
 
-      <Box sx={{ display: "flex", flexDirection: 'column' }}>
-        <Grid container spacing={1} sx={{ width: "100%", minHeight: "300px", justifyContent: "center" }}>
+      <Box className="here the div" sx={{
+        display: "flex", flexDirection: 'column',
+        flex: 1,         // 👈 fills remaining width
+        minHeight: "100%",
+      }}>
+        <Grid container spacing={1} sx={{ width: "100%", minHeight: "300px", justifyContent: "start" }}>
           {Array.isArray(pricing) && pricing.map((plan) => (
             <Grid item xs={12} sm={6} md={2} key={plan.id}>
               <PricingCard
@@ -210,7 +218,7 @@ export const Payment = () => {
           />
         </Box>
         {/* section 3 pay button */}
-        <Grid container>
+        <Grid container className='mt-auto'>
           <Button
             variant="contained"
             sx={{

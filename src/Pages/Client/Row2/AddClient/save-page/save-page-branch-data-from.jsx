@@ -17,7 +17,8 @@ import {
     FormControlLabel,
     Radio,
     RadioGroup,
-    FormGroup
+    FormGroup,
+    IconButton
 } from "@mui/material";
 
 
@@ -39,6 +40,7 @@ import NightlightIcon from "@mui/icons-material/Nightlight";
 import ViewQuiltIcon from "@mui/icons-material/ViewQuilt";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 //
+import { ArrowForwardIos, ArrowBackIos } from '@mui/icons-material';
 
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import CardTravelOutlinedIcon from "@mui/icons-material/CardTravelOutlined";
@@ -52,9 +54,11 @@ import BusinessOptions from "../../../../register-busniess-info-page/BusinessOpt
 import { useDispatch, useSelector } from "react-redux";
 import { selectBranch, updateBusinessData } from "../../../../../store/register/businessSlice";
 import useBranchStore from "../../../../../store/zustand-store/register-client-branch-store";
+import { usePlanPricing } from "../../../../../Hooks/Queries/clientDashBoard/plan/usePlanPricing";
+import { timeOptions } from "../../../../../Component/Business-info/WorkingHoursDays";
 
 //{ control, watch, setValue, errors }
-export default function BranchForm({ control, watch, setValue, getValues, errors, reset }) {
+export default function BranchForm({ control, watch, setValue, getValues, errors, reset, pricing_id }) {
     const theme = useTheme();
     const branches = useBranchStore(state => state.branches)
     const updateBranch = useBranchStore(state => state.updateBranch)
@@ -164,6 +168,7 @@ export default function BranchForm({ control, watch, setValue, getValues, errors
                         t={t}
                         watch={watch}
                         selectedBranch={branchIndex}
+                        pricing_id={pricing_id}
                     />
                 </div>
                 <div className="w-full md:w-1/2 md:ps-1">
@@ -424,12 +429,13 @@ export const BranchFormColumnTwo = ({ t, i18n, control, watch, setValue, getValu
             {/* WorkDays */}
             <div>
                 {/* TODO: add name {`branches.${selectedBranch}.mode`} */}
-                <WorkDays
+                <WorkDaysBranchVersion
                     setValue={setValue}
                     watch={watch}
                     getValues={getValues}
                     control={control}
                     errors={errors}
+                    selectedBranch={selectedBranch}
                 />
             </div>
             <Divider sx={{ backgroundColor: "#f4f6fc", height: "2px", margin: "8px 0px" }} flexItem />
@@ -551,7 +557,6 @@ export const BranchFormColumnTwo = ({ t, i18n, control, watch, setValue, getValu
                                                         value={method.text}
                                                         checked={field.value.includes(method.text)}
                                                         onChange={(e) => {
-                                                            console.log(field.value)
                                                             const isChecked = e.target.checked;
                                                             const updated = isChecked
                                                                 ? [...field.value, method.text]
@@ -648,9 +653,13 @@ export const BranchFormColumnTwo = ({ t, i18n, control, watch, setValue, getValu
 
     )
 }
-export const BranchFormColumnOneSectionTwo = ({ t, i18n, control, watch, setValue, errors, selectedBranch }) => {
+export const BranchFormColumnOneSectionTwo = ({ t, i18n, control, watch, setValue, errors, selectedBranch, pricing_id }) => {
     const theme = useTheme();
     const navigate = useNavigate();
+    const { data, error, isPending: isLoading } = usePlanPricing()
+    const pricing_array = data?.data?.data || []
+
+    const selectedPlan = pricing_array.find((plan) => plan.id === pricing_id)
     return (
         <>
             {/* Currency */}
@@ -789,7 +798,7 @@ export const BranchFormColumnOneSectionTwo = ({ t, i18n, control, watch, setValu
                     variant="outlined"
                     sx={{ border: "1px solid gray", textTransform: "capitalize", color: "gray", padding: "1px 25px", borderRadius: "8px" }}
                 >
-                    <CheckOutlinedIcon sx={{ fontSize: "20px", marginRight: "6px", color: theme.palette.orangePrimary.main }} /> {t("pro")}
+                    <CheckOutlinedIcon sx={{ fontSize: "20px", marginRight: "6px", color: theme.palette.orangePrimary.main }} /> {selectedPlan ? selectedPlan.name : t("pro")}
                 </Button>
                 <Button
                     onClick={() => navigate('/payment')}
@@ -811,9 +820,10 @@ export const BranchFormColumnOneSectionTwo = ({ t, i18n, control, watch, setValu
     )
 }
 export const BranchFormColumnOneSectionOne = ({ t, i18n, control, watch, setValue, errors, selectedBranch }) => {
-    const selectedCountry = watch("country");
+    const selectedCountry = watch(`branches.${selectedBranch}.country`);
     const latitude = watch(`branches.${selectedBranch}.latitude`);
     const longitude = watch(`branches.${selectedBranch}.longitude`);
+
 
     const { citysValue, governValue } = useGetGovernAndCityFromQuery(selectedCountry || "")
     const [isMapOpen, setIsMapOpen] = useState(false)
@@ -957,6 +967,18 @@ export const BranchFormColumnOneSectionOne = ({ t, i18n, control, watch, setValu
                             <Select
                                 {...field}
                                 displayEmpty
+                                renderValue={(selected) =>
+                                    selected
+                                        ? (i18n.language === "ar" ? selected.name_ar : selected.name_en)
+                                        : t("country")
+                                }
+                                onChange={
+                                    (e) => {
+                                        const selected = e.target.value;
+                                        field.onChange(selected);
+                                        setValue(`branches.${selectedBranch}.city`, "")
+                                    }
+                                }
                                 startAdornment={
                                     <InputAdornment position="start">
                                         <span className="icon-location" />
@@ -975,7 +997,7 @@ export const BranchFormColumnOneSectionOne = ({ t, i18n, control, watch, setValu
                                 {governValue.map((govern) => (
                                     <MenuItem
                                         key={govern.id}
-                                        value={govern.id + ""}
+                                        value={govern}
                                         sx={{ fontSize: "12px", color: "gray" }}
                                     >
                                         {i18n.language === "ar"
@@ -997,10 +1019,26 @@ export const BranchFormColumnOneSectionOne = ({ t, i18n, control, watch, setValu
                     name={`branches.${selectedBranch}.city`}
                     control={control}
                     render={({ field }) => (
-                        <FormControl variant="outlined" fullWidth error={errors?.branches?.[selectedBranch]?.city}>
+                        <FormControl
+                            variant="outlined"
+                            fullWidth
+                            error={!!errors?.branches?.[selectedBranch]?.city}
+                        >
                             <Select
                                 {...field}
                                 displayEmpty
+                                renderValue={(selected) =>
+                                    selected
+                                        ? (i18n.language === "ar" ? selected.name_ar : selected.name_en)
+                                        : t("city")
+                                }
+                                onChange={(event) => {
+                                    // Ensure you store the actual object from citysValue
+                                    const selectedCity = citysValue.find(
+                                        (c) => c.id === event.target.value.id
+                                    );
+                                    field.onChange(selectedCity ?? event.target.value);
+                                }}
                                 startAdornment={
                                     <InputAdornment position="start">
                                         <span className="icon-location" />
@@ -1010,28 +1048,28 @@ export const BranchFormColumnOneSectionOne = ({ t, i18n, control, watch, setValu
                                     borderRadius: "10px",
                                     height: "33px",
                                     fontSize: "12px",
-                                    color: "gray"
+                                    color: "gray",
                                 }}
                             >
                                 <MenuItem value="" disabled>
                                     {t("city")}
                                 </MenuItem>
                                 {citysValue.map((city) => (
-                                    <MenuItem
-                                        key={city.id}
-                                        value={city.id + ""}
-                                        sx={{ fontSize: "12px", color: "gray" }}
-                                    >
+                                    <MenuItem key={city.id} value={city}>
                                         {i18n.language === "ar" ? city.name_ar : city.name_en}
                                     </MenuItem>
                                 ))}
                             </Select>
+
                             {errors.branches?.[selectedBranch]?.city && (
-                                <FormHelperText>{errors.branches?.[selectedBranch]?.city.message}</FormHelperText>  // Show error message here
+                                <FormHelperText>
+                                    {errors.branches?.[selectedBranch]?.city?.message}
+                                </FormHelperText>
                             )}
                         </FormControl>
                     )}
                 />
+
 
             </div>
             <div className="py-2">
@@ -1054,5 +1092,211 @@ export const BranchFormColumnOneSectionOne = ({ t, i18n, control, watch, setValu
                 }
             </div>
         </div>
+    )
+}
+const daysOfWeek = [
+    { symbol: 'Sa', value: 'Saturday' },
+    { symbol: 'Su', value: 'Sunday' },
+    { symbol: 'Mo', value: 'Monday' },
+    { symbol: 'Tu', value: 'Tuesday' },
+    { symbol: 'We', value: 'Wednesday' },
+    { symbol: 'Th', value: 'Thursday' },
+    { symbol: 'Fr', value: 'Friday' },
+];
+
+
+const WorkDaysBranchVersion = ({ watch, setValue, getValues, control, errors, selectedBranch }) => {
+    const { t } = useTranslation()
+    const theme = useTheme()
+
+    const [currentDay, setCurrentDay] = useState('Saturday');
+
+    const handleSelectedDayChange = (action) => {
+        const currentIndex = daysOfWeek.findIndex((day) => day.value === currentDay);
+        const nextIndex = action === 'prev'
+            ? (currentIndex - 1 + daysOfWeek.length) % daysOfWeek.length
+            : (currentIndex + 1) % daysOfWeek.length;
+
+        const nextDay = daysOfWeek[nextIndex].value;
+        setCurrentDay(nextDay);
+
+        // If no value exists for next day, initialize it
+        const values = getValues(`branches.${selectedBranch}.workschedules.${nextDay}`);
+        if (!values) {
+            setValue(`branches.${selectedBranch}.workschedules.${nextDay}`, ["9:00 am", "5:00 pm"]); // empty times or defaults
+        }
+    };
+
+
+
+
+
+
+    const handleDayToggle = (day) => {
+        const current = getValues(`branches.${selectedBranch}.workschedules.${day}`);
+        if (current) {
+            const prev = getValues(`branches.${selectedBranch}.workschedules`) || {};
+
+            const updated = { ...prev };
+            delete updated[day];
+            setValue(`branches.${selectedBranch}.workschedules`, updated);
+        } else {
+            setValue(`branches.${selectedBranch}.workschedules.${day}`, ["9:00 am", "5:00 pm"]);
+        }
+    };
+
+
+    const selectedDaysWatch = watch(`branches.${selectedBranch}.workschedules`);
+
+    console.log("selectedDaysWatch",selectedDaysWatch)
+
+    const isSelected = (day) => Object.keys(selectedDaysWatch || {}).includes(day)
+
+    return (
+        <Grid container spacing={2} alignItems="center" sx={{ marginTop: "40px" }}>
+            <Typography variant="body1" display="flex" alignItems="center"
+                sx={{ fontSize: '15px', marginLeft: "20px" }}>
+                <span className="icon-working-hour" style={{ marginRight: "10px", fontSize: "20px" }}>
+                    <span className="path1"></span><span className="path2"></span><span className="path3"></span>
+                    <span className="path4"></span><span className="path5"></span><span className="path6"></span>
+                    <span className="path7"></span><span className="path8"></span>
+                </span>
+                {t("workHours")}
+            </Typography>
+            <Grid item xs={12} display={"flex"} justifyContent={"space-between"}>
+                <Grid item xs={7}>
+                    <Box display="flex" flexWrap="wrap">
+                        {daysOfWeek.map((day) => (
+                            <Button
+                                key={day.value}
+                                onClick={() => {
+                                    console.log("Click")
+                                    handleDayToggle(day.value)
+                                }}
+                                sx={{
+                                    minWidth: '25px',
+                                    height: "45px",
+                                    width: "45px",
+                                    margin: '3px',
+                                    borderRadius: '5px',
+                                    textTransform: "capitalize",
+                                    fontSize: "14px",
+                                    border: isSelected(day.value) ? '1px solid #ef7d00' : '1px solid gray',
+                                    color: isSelected(day.value) ? '#ef7d00' : 'gray',
+                                }}
+                            >
+                                {day.symbol}
+                            </Button>
+                        ))}
+                    </Box>
+                </Grid>
+                <Grid item xs={4}>
+                    <Grid container spacing={2} alignItems="center" justifyContent="end">
+                        <Grid item xs={3} display="flex" justifyContent="end" alignItems="center">
+                            <Box display="flex" alignItems="center"
+                                sx={{
+                                    backgroundColor: theme.palette.secondaryColor.main,
+                                    borderRadius: '20px',
+                                    height: "30px",
+                                    padding: "0 5px",
+                                }}>
+                                <IconButton onClick={() => handleSelectedDayChange('prev')} sx={{ color: '#ef7d00' }}>
+                                    <ArrowBackIos sx={{ fontSize: "11px" }} />
+                                </IconButton>
+                                <Typography sx={{ width: "60px", textTransform: "capitalize", color: 'white', fontSize: "10px" }}>
+                                    {t(currentDay.toLowerCase())}
+                                </Typography>
+                                <IconButton onClick={() => handleSelectedDayChange('next')} sx={{ color: '#ef7d00' }}>
+                                    <ArrowForwardIos sx={{ fontSize: "11px" }} />
+                                </IconButton>
+                            </Box>
+                        </Grid>
+                        <Box display={"flex"} sx={{ margin: "10px 10px 0 0" }}>
+                            <Grid item>
+                                <Typography variant='body1' sx={{ fontSize: '11px', color: "gray", mr: 1 }}>{t("from")}</Typography>
+                            </Grid>
+                            <Grid item>
+                                <Controller
+                                    key={`${currentDay}-0`}
+                                    name={`branches.${selectedBranch}.workschedules.${currentDay}.0`}
+                                    control={control}
+                                    render={({ field }) => (
+                                        <Select
+                                            {...field}
+                                            value={field.value ?? ""}
+                                            onChange={(e) => field.onChange(e.target.value)}
+                                            fullWidth
+
+                                            size="small"
+                                            sx={{ width: "90px", height: "30px" }}
+                                            inputProps={{ sx: { padding: '2px 10px', fontSize: '12px' } }}
+                                            SelectProps={{
+                                                MenuProps: {
+                                                    PaperProps: {
+                                                        style: {
+                                                            maxHeight: 150, // <-- 👈 الارتفاع الثابت للقائمة المنسدلة (يمكنك تعديله)
+                                                        },
+                                                    },
+                                                },
+                                            }}
+                                        >
+                                            {timeOptions.map((t) => (
+                                                <MenuItem key={`${t}-${currentDay}-0`} value={t}>{t}</MenuItem>
+                                            ))}
+                                        </Select>
+                                    )}
+                                />
+
+                            </Grid>
+                        </Box>
+                        <Box display={"flex"} sx={{ margin: "3px 10px" }}>
+                            <Grid item>
+                                <Typography variant='body1' sx={{ fontSize: '11px', color: "gray", mr: 1 }}>{t("to")}</Typography>
+                            </Grid>
+                            <Grid item>
+                                <Controller
+                                    key={`${currentDay}-1`}
+                                    name={`branches.${selectedBranch}.workschedules.${currentDay}.1`}
+                                    control={control}
+                                    render={({ field }) => (
+                                        <Select
+                                            {...field}
+                                            value={field.value ?? ""}
+                                            onChange={(e) => field.onChange(e.target.value)}
+                                            fullWidth
+
+                                            size="small"
+                                            sx={{ width: "90px", height: "30px" }}
+                                            inputProps={{ sx: { padding: '2px 10px', fontSize: '12px' } }}
+                                            SelectProps={{
+                                                MenuProps: {
+                                                    PaperProps: {
+                                                        style: {
+                                                            maxHeight: 150, // <-- 👈 الارتفاع الثابت للقائمة المنسدلة (يمكنك تعديله)
+                                                        },
+                                                    },
+                                                },
+                                            }}
+                                        >
+                                            {timeOptions.map((t) => (
+                                                <MenuItem key={`${t}-${currentDay}-1`} value={t}>{t}</MenuItem>
+                                            ))}
+                                        </Select>
+                                    )}
+                                />
+                            </Grid>
+                        </Box>
+
+                    </Grid>
+                </Grid>
+            </Grid>
+            {Object.entries(errors?.branches?.[selectedBranch]?.workschedules ?? {}).map(([day, errorObj]) => (
+                errorObj?.root?.message && (
+                    <Typography key={day} color="error">
+                        {day}: {errorObj.root.message}
+                    </Typography>
+                )
+            ))}
+        </Grid>
     )
 }

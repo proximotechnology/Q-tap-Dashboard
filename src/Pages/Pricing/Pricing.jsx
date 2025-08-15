@@ -1,13 +1,14 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Typography, IconButton, Divider, useTheme } from '@mui/material';
 import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import AddBundle from './AddBundle';
 import { DiscountModelAdmin } from './DiscountModelAdmin';
 import { useTranslation } from 'react-i18next';
-import {BASE_URL} from  "../../utils/constants";
+import { BASE_URL } from "../../utils/constants";
 import { Settings } from '@mui/icons-material';
 import { useQuery } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 
 export const Pricing = () => {
   const [open, setOpen] = useState(false);
@@ -38,7 +39,7 @@ export const Pricing = () => {
     setOpenDiscount(false);
   };
   /// card pricing structure 
-  const PricingCard = ({ title, priceMonthly, priceYearly, description, features, id }) => {
+  const PricingCard = ({ title, priceMonthly, priceYearly, description, features, id, refetch }) => {
     // delete pricing data from api
     const handleDelete = () => {
 
@@ -61,7 +62,8 @@ export const Pricing = () => {
         })
         .then(data => {
           console.log('Delete successful:', data);
-          window.location.reload();
+          toast.success("Delete successful")
+          refetch();
         })
         .catch(error => {
           console.error('Error deleting pricing data:', error);
@@ -164,7 +166,7 @@ export const Pricing = () => {
 
   const token = localStorage.getItem('adminToken');
 
-  const { data: pricing = [], isLoading, isError } = useQuery({
+  const { data: pricing = [], isLoading, isError, refetch } = useQuery({
     queryKey: ['price'],
     queryFn: getPrice,
     staleTime: 1000 * 60 * 5,
@@ -199,6 +201,7 @@ export const Pricing = () => {
             open={open}
             onClose={handleClose}
             editData={selectedBundle}
+            refetch={refetch}
           />
         </Box>
       </Box>
@@ -218,6 +221,7 @@ export const Pricing = () => {
             description={item.description}
             features={JSON.parse(item.feature)}
             id={item.id}
+            refetch={refetch}
           />
         )) : null}
       </Box>

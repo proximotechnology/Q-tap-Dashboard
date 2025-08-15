@@ -62,12 +62,16 @@ const EditBusinessInfo = () => {
             .min(1, "Country code is required")
             .regex(/^[A-Z]{2}$/, "Country code must be a valid ISO 3166-1 alpha-2 code"),
 
-        country: z.number({ required_error: "country is required" }).min(1),
-        city: z.union([
-            z.number().min(1, "Field is required"),
-            z.literal(""),
-        ]).refine((val) => typeof val === "number" && val > 0, {
-            message: "This field is required",
+        country: z.object({
+            id: z.number(),
+            code: z.string(),
+            name_en: z.string(),
+            name_ar: z.string(),
+        }),
+        city: z.object({
+            id: z.number(),
+            name_en: z.string(),
+            name_ar: z.string(),
         }),
 
 
@@ -123,8 +127,6 @@ const EditBusinessInfo = () => {
         },
     });
 
-    console.log(branches)
-    console.log(errors)
     const selectedCountry = watch("country");
     const latitude = watch("latitude");
     const longitude = watch("longitude");
@@ -299,7 +301,7 @@ const EditBusinessInfo = () => {
                                                         <MenuItem value="" disabled>
                                                             country
                                                         </MenuItem>
-                                                        {governValue.map(govern => (<MenuItem key={govern?.id} value={govern.id}>{govern?.name_en}</MenuItem>))}
+                                                        {governValue.map(govern => (<MenuItem key={govern?.id} value={govern}>{govern?.name_en}</MenuItem>))}
                                                     </Select>
                                                 )}
                                             />
@@ -327,7 +329,7 @@ const EditBusinessInfo = () => {
                                                         <MenuItem value="" disabled>
                                                             city
                                                         </MenuItem>
-                                                        {citysValue.map(city => (<MenuItem key={city?.id} value={city.id}>{city?.name_en}</MenuItem>))}
+                                                        {citysValue.map(city => (<MenuItem key={city?.id} value={city}>{city?.name_en}</MenuItem>))}
                                                     </Select>
                                                 )}
                                             />
