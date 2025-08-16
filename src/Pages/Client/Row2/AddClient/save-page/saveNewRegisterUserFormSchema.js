@@ -79,11 +79,12 @@ export const branchSchema = z.object({
     paymentTime: z.string().min(1, "Payment time is required"),
     workschedules: workScheduleSchema,
     numberOfTable: z
+        .coerce
         .number({ invalid_type_error: "Number of tables must be a number" })
         .optional(),
 
 }).superRefine((data, ctx) => {
-    if (data.servingWays.includes("dinein") && (data.numberOfTable == null || isNaN(data.numberOfTable))) {
+    if (data.servingWays.includes("dine_in") && (data.numberOfTable == null || isNaN(data.numberOfTable))) {
         ctx.addIssue({
             path: ["numberOfTable"],
             code: z.ZodIssueCode.custom,

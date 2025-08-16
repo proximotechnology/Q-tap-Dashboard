@@ -73,7 +73,7 @@ export const prepareBrunchDataInFormDataObject = ({ prefix, data, formData }) =>
     });
 
     // Other fields
-    if (data.tables_number)
+    if (data.tables_number && data.servingWays.include("dine_in"))
       formData.append(`${prefix}[tables_number]`, data.tables_number);
 
     formData.append(`${prefix}[currency_id]`, data.currency);

@@ -50,13 +50,13 @@ const EditBusinessInfo = () => {
     const schema = z.object({
         businessName: z.string().min(1, "Name is required"),
         website: z.string().optional(),
-        businessEmail: z.string().min(1, "Name is required"),
-        currency: z.string().min(1, "Name is required"),
-        format: z.string().min(1, "Name is required"),
+        businessEmail: z.string().min(1, "email is required"),
+        currency: z.string().min(1, "currency is required"),
+        businessType: z.string().min(1, "business Type is required"),
 
         workschedules: workScheduleSchema,
 
-        businessPhone: z.string().min(1, "businessPhone is required"),
+        businessPhone: z.string().min(1, "phone is required"),
         businessCountryCode: z
             .string()
             .min(1, "Country code is required")
@@ -132,7 +132,7 @@ const EditBusinessInfo = () => {
     const longitude = watch("longitude");
 
     const { citysValue, governValue } = useGetGovernAndCityFromQuery(selectedCountry || "")
-
+    console.log(errors)
 
     const navigate = useNavigate();
 
@@ -146,7 +146,8 @@ const EditBusinessInfo = () => {
             console.log("create branch")
             addBranch(data)
         }
-        navigate("/branches", { replace: true });
+        // navigate("/branches", { replace: true });
+        navigate(`/serving-ways/?index=${id ? id : -1}`, { replace: true });
     };
 
     return (
@@ -208,9 +209,9 @@ const EditBusinessInfo = () => {
                                         <FormHelperText>{errors.currency?.message}</FormHelperText>
                                     </FormControl>
 
-                                    <FormControl fullWidth error={!!errors.format}>
+                                    <FormControl fullWidth error={!!errors.businessType}>
                                         <Controller
-                                            name="format"
+                                            name="businessType"
                                             control={control}
                                             defaultValue=""
                                             render={({ field }) => (
@@ -228,15 +229,21 @@ const EditBusinessInfo = () => {
                                                     displayEmpty
                                                 >
                                                     <MenuItem value="" disabled>
-                                                        business format
+                                                        {t("businessType")}
                                                     </MenuItem>
-                                                    <MenuItem value="USD">USD</MenuItem>
-                                                    <MenuItem value="EUR">EUR</MenuItem>
-                                                    <MenuItem value="EGP">EGP</MenuItem>
+                                                    <MenuItem value="restaurant">{t("restaurant")}</MenuItem>
+                                                    <MenuItem value="cafe">{t("cafe")}</MenuItem>
+                                                    <MenuItem value="cloud">{t("cloudKitchens")}</MenuItem>
+                                                    <MenuItem value="fast">{t("fastFood")}</MenuItem>
+                                                    <MenuItem value="truck">{t("foodTruch")}</MenuItem>
+                                                    <MenuItem value="Bakery">{t("bakeryStore")}</MenuItem>
+                                                    <MenuItem value="Pastry">{t("pastryStore")}</MenuItem>
+                                                    <MenuItem value="Fruits">{t("fruitsStore")}</MenuItem>
+                                                    <MenuItem value="Retail">{t("retailStore")}</MenuItem>
                                                 </Select>
                                             )}
                                         />
-                                        <FormHelperText>{errors.format?.message}</FormHelperText>
+                                        <FormHelperText>{errors?.businessType?.message}</FormHelperText>
                                     </FormControl>
 
                                     <WorkDays

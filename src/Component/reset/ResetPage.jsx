@@ -17,7 +17,7 @@ export const ResetPage = () => {
             backgroundSize: "100% 100%", width: "100%"
           }}>
           <Grid item xs={12} md={6}>
-            <QtapLogo />
+            <QtapLogo inAppNavigationURL={'/'} />
           </Grid>
           <Grid item xs={12} md={6}>
             <Box sx={{

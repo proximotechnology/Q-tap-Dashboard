@@ -41,6 +41,8 @@ import ViewQuiltIcon from "@mui/icons-material/ViewQuilt";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 //
 import { ArrowForwardIos, ArrowBackIos } from '@mui/icons-material';
+import TableBarOutlinedIcon from '@mui/icons-material/TableBarOutlined';
+
 
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import CardTravelOutlinedIcon from "@mui/icons-material/CardTravelOutlined";
@@ -88,13 +90,18 @@ export default function BranchForm({ control, watch, setValue, getValues, errors
 
         // 4️⃣ Get fresh branches array from store
         const freshBranches = useBranchStore.getState().branches;
-
+        console.log("freshBranches", freshBranches)
+        console.log("formValues", formValues)
         // 5️⃣ Reset the form with updated branches
         // The Controllers now use the updated selectedBranch
         reset({
             ...formValues,
-            branches: freshBranches,
-        });
+            branches: freshBranches.map((branch, i) => ({
+                ...branch,
+                pin: branch.pin ?? "", // force empty string if pin missing
+            })),
+        }, { keepErrors: true, keepDirty: true });
+
     }, [branchIndex])
 
 
@@ -223,7 +230,7 @@ export const BranchFormColumnTwo = ({ t, i18n, control, watch, setValue, getValu
 
     const theme = useTheme();
     const selectedServingWays = watch("servingWays");
-    const servingWayValues = ["dine-in", "take-away", "delivery"];
+    const servingWayValues = ["dine_in", "take_away", "delivery"];
     const servingWayLabels = ["Dine In", "Take Away", "Delivery"];
 
     return (
@@ -658,7 +665,7 @@ export const BranchFormColumnOneSectionTwo = ({ t, i18n, control, watch, setValu
     const navigate = useNavigate();
     const { data, error, isPending: isLoading } = usePlanPricing()
     const pricing_array = data?.data?.data || []
-
+    const servingWays = watch(`branches.${selectedBranch}.servingWays`)
     const selectedPlan = pricing_array.find((plan) => plan.id === pricing_id)
     return (
         <>
@@ -787,6 +794,50 @@ export const BranchFormColumnOneSectionTwo = ({ t, i18n, control, watch, setValu
                     </FormControl>
                 )}
             />
+            {/* number of tables */}
+            {
+                servingWays?.includes("dine_in") &&
+                <Controller
+                    name={`branches.${selectedBranch}.numberOfTable`}
+                    control={control}
+                    render={({ field }) => (
+                        <FormControl
+                            variant="outlined"
+                            sx={{ width: "100%", marginBottom: "10px" }}
+                            error={!!errors.branches?.[selectedBranch]?.numberOfTable}
+                        >
+                            <Select
+                                {...field}
+                                value={field.value || ""}
+                                displayEmpty
+                                sx={{
+                                    borderRadius: "10px",
+                                    height: "33px",
+                                    fontSize: "12px",
+                                    color: "gray"
+                                }}
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <TableBarOutlinedIcon sx={{ fontSize: "20px" }} />
+                                    </InputAdornment>
+                                }
+                            >
+                                <MenuItem value="" disabled>
+                                    {t("HowManyTablesDoYouHave") + t("optional")}
+                                </MenuItem>
+                                {
+                                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((number) => (
+                                        <MenuItem key={number} value={number.toString()}>{number}</MenuItem>
+                                    ))
+                                }
+                            </Select>
+                            {errors.branches?.[selectedBranch]?.numberOfTable && (
+                                <FormHelperText>{errors.branches?.[selectedBranch]?.numberOfTable.message}</FormHelperText>  // Show error message here
+                            )}
+                        </FormControl>
+                    )}
+                />
+            }
             <Divider sx={{ width: "100%", borderBottom: "1px solid #9d9d9c", marginBottom: "18px" }} />
 
             <Typography variant="body2" sx={{ fontSize: "14px", color: "gray", display: "flex" }}>
@@ -1148,7 +1199,7 @@ const WorkDaysBranchVersion = ({ watch, setValue, getValues, control, errors, se
 
     const selectedDaysWatch = watch(`branches.${selectedBranch}.workschedules`);
 
-    console.log("selectedDaysWatch",selectedDaysWatch)
+    console.log("selectedDaysWatch", selectedDaysWatch)
 
     const isSelected = (day) => Object.keys(selectedDaysWatch || {}).includes(day)
 

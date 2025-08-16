@@ -1,6 +1,6 @@
 import { Box, Button, FormControl, Grid, InputAdornment, MenuItem, Select, styled, TextField, Typography, useTheme } from '@mui/material';
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import TableBarOutlinedIcon from '@mui/icons-material/TableBarOutlined';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
@@ -9,6 +9,8 @@ import { useTranslation } from 'react-i18next';
 import styles from '../../Pages/DashboardClient/Pages/SupportClient/supportCard.module.css';
 import { useSelector, useDispatch } from "react-redux";
 import { updateBusinessData, addBranch, selectBranch, clearBusinessData, setBranches } from "../../store/register/businessSlice";
+import useBranchStore from '../../store/zustand-store/register-client-branch-store';
+import { useSearchParams } from 'react-router-dom';
 
 export const ServingWays = () => {
 
@@ -31,12 +33,18 @@ export const ServingWays = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch()
-    const { businessData, branches, selectedBranch } = useSelector((state) => state.registerBranchStore);
+    const branchesStore = useBranchStore(state => state.branches)
+    const updateBranch = useBranchStore(state => state.updateBranch)
+    const [searchParams] = useSearchParams();
+    const index = searchParams.get("index");
+
+    console.log(branchesStore)
+    const currentBranchIndex = index === "-1" ? branchesStore?.length - 1 : index;
+    const currentBranch = branchesStore?.[currentBranchIndex]
+
 
     const { t } = useTranslation();
 
-    // Initialize servingWays from businessData
-    const [servingWays, setServingWays] = useState(businessData.servingWays || []);
 
     // Initialize serviceOptions with selected state based on businessData.servingWays
     const [serviceOptions, setServiceOptions] = useState([
@@ -44,65 +52,66 @@ export const ServingWays = () => {
             name: "Dine In",
             value: "dine_in",
             icon: <span className="icon-chair" style={{ fontSize: "80px" }}></span>,
-            selected: businessData.servingWays?.includes("dine_in") || false
+            selected: currentBranch?.servingWays?.includes("dine_in") || false
         },
         {
             name: "Takeaway",
             value: "take_away",
             icon: <span className="icon-takeaway" style={{ fontSize: "80px" }}></span>,
-            selected: businessData.servingWays?.includes("take_away") || false
+            selected: currentBranch?.servingWays?.includes("take_away") || false
         },
         {
             name: "Delivery",
             value: "delivery",
             icon: <span className="icon-fast-shipping" style={{ fontSize: "80px" }}></span>,
-            selected: businessData.servingWays?.includes("delivery") || false
+            selected: currentBranch?.servingWays?.includes("delivery") || false
         }
     ]);
 
-    // Sync local servingWays with businessData.servingWays on mount
-    useEffect(() => {
-        setServingWays(businessData.servingWays || []);
-        setServiceOptions((prevOptions) =>
-            prevOptions.map((option) => ({
-                ...option,
-                selected: businessData.servingWays?.includes(option.value) || false
-            }))
-        );
-    }, [businessData.servingWays]);
 
-    const handleBoxClick = (index) => {
+    const handleBoxClick = (servingIndex) => {
         // Toggle the selected state of the clicked service
         const newOptions = serviceOptions.map((option, i) => ({
             ...option,
-            selected: i === index ? !option.selected : option.selected
+            selected: i === servingIndex ? !option.selected : option.selected
         }));
-        setServiceOptions(newOptions);
+        const serviceValue = serviceOptions[servingIndex].value;
 
-        // Update servingWays array with only the selected services
-        const selectedServices = newOptions
-            .filter(option => option.selected)
-            .map(option => option.value);
+        const updatedBranch = {
+            ...currentBranch,
+            servingWays: currentBranch?.servingWays
+                ? currentBranch.servingWays.includes(serviceValue)
+                    ? currentBranch.servingWays.filter(item => item !== serviceValue) // remove if exists
+                    : [...currentBranch.servingWays, serviceValue] // add if not exists
+                : [serviceValue], // initialize if empty
+        };
+        if (!updatedBranch?.servingWays?.includes("dine_in")) {
+            updatedBranch.numberOfTable = null
+        }
+        // Call updater
+        updateBranch(currentBranchIndex, updatedBranch);
+        setServiceOptions(newOptions)
 
-        setServingWays(selectedServices);
-
-        // Update BusinessContext with the new serving ways
-        dispatch(updateBusinessData({
-            servingWays: selectedServices
-        }));
     };
 
     const handleTableCountChange = (value) => {
-        dispatch(updateBusinessData({ tableCount: value }));
+        const updatedBranch = {
+            ...currentBranch,
+            numberOfTable: value
+        };
+        updateBranch(currentBranchIndex, updatedBranch);
     };
 
     const handleNextClick = () => {
-        if (servingWays.length > 0) {
-            dispatch(addBranch());
-            navigate('/branches');
+        if (
+            currentBranch?.servingWays?.includes("dine_in")
+            && (currentBranch?.numberOfTable === '' || !currentBranch?.numberOfTable)
+        ) {
+            toast.error("must select number of table")
         } else {
-            toast.error(t("plSelectOneService"));
+            navigate('/branches');
         }
+
     };
 
     return (
@@ -175,10 +184,10 @@ export const ServingWays = () => {
                     ))}
                 </Box>
 
-                {servingWays.includes("dine_in") && (
+                {currentBranch?.servingWays?.includes("dine_in") && (
                     <FormControl variant="outlined" fullWidth sx={{ marginTop: 4, maxWidth: { xs: "100%", sm: 330 } }}>
                         <Select
-                            value={businessData.tableCount || ''}
+                            value={currentBranch?.numberOfTable || ''}
                             onChange={(e) => handleTableCountChange(e.target.value)}
                             displayEmpty
                             sx={{

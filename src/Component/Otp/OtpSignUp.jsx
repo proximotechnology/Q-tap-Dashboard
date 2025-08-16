@@ -91,26 +91,26 @@ export const OtpSignUp = () => {
                         sx={{
                             mb: 2,
                             width: "100%",
-                            '& .MuiInputBase-input': {
-                                color: theme.palette.text.primary,
-                                backgroundColor: ' white',
-                                opacity:.8, 
-                                border:'none',
-                                borderRadius:"10px"
-                            },
-                            '& .MuiOutlinedInput-notchedOutline': {
-                                borderColor: theme.palette.grey[300],
-                            },
-                            '&:hover .MuiOutlinedInput-notchedOutline': {
-                                borderColor: theme.palette.orangePrimary.main,
-                            },
-                            '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                borderColor: theme.palette.orangePrimary.main,
-                            },
-                            // Change label color on focus
-                            '& .MuiInputLabel-root.Mui-focused': {
-                                color: theme.palette.orangePrimary.main,
-                            },
+                            // '& .MuiInputBase-input': {
+                            //     color: theme.palette.text.primary,
+                            //     backgroundColor: ' white',
+                            //     opacity:.8, 
+                            //     border:'none',
+                            //     borderRadius:"10px"
+                            // },
+                            // '& .MuiOutlinedInput-notchedOutline': {
+                            //     borderColor: theme.palette.grey[300],
+                            // },
+                            // '&:hover .MuiOutlinedInput-notchedOutline': {
+                            //     borderColor: theme.palette.orangePrimary.main,
+                            // },
+                            // '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+                            //     borderColor: theme.palette.orangePrimary.main,
+                            // },
+                            // // Change label color on focus
+                            // '& .MuiInputLabel-root.Mui-focused': {
+                            //     color: theme.palette.orangePrimary.main,
+                            // },
                         }}
                         inputProps={{
                             style: { textAlign: 'center' },

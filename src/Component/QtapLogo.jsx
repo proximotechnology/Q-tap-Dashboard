@@ -5,6 +5,7 @@ import { styled, useTheme } from '@mui/system';
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
 import { useTranslation } from 'react-i18next';
 import { WEBSITE_SERVER_URL } from '../utils/constants';
+import { useNavigate } from 'react-router';
 
 
 /* 2 backgroundColor
@@ -13,9 +14,11 @@ import { WEBSITE_SERVER_URL } from '../utils/constants';
 text 
 :theme.palette.text.fixedWhite
 */
-const QtapLogo = () => {
+const QtapLogo = ({ outSideAppNavigationURL = null, inAppNavigationURL = null }) => {
     const { t } = useTranslation();
     const theme = useTheme();
+    const navigate = useNavigate()
+
     const ImageContainer = styled(Box)({
         backgroundImage: 'url(/images/Qtop1.jpg)',
         backgroundSize: 'cover',
@@ -73,7 +76,12 @@ const QtapLogo = () => {
                     },
                 }}
                 onClick={() => {
-                    window.location.href = WEBSITE_SERVER_URL;
+                    if (inAppNavigationURL) {
+                        navigate(inAppNavigationURL);
+                    } else {
+                        window.location.href = outSideAppNavigationURL || WEBSITE_SERVER_URL;
+                    }
+
                 }} >
                 <ChevronLeftOutlinedIcon sx={{ fontSize: "33px", }} />
             </Button>

@@ -11,11 +11,8 @@ const useBranchStore = create((set) => ({
 
   // Update branch by index
   updateBranch: (index, updatedData) => {
-    console.log("updateBranch ", index, " - ", updatedData)
     return set((state) => ({
       branches: state.branches.map((branch, i) => {
-        console.log('find index ', branch)
-        console.log('find index ', index, " ", i === index)
         return i === Number(index) ? { ...branch, ...updatedData } : branch
       }
       ),

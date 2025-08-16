@@ -123,28 +123,28 @@ export const Welcome = () => {
 
 
         <Typography variant="body2" sx={{ fontSize: "13px", mb: 3, overflowWrap: 'anywhere' }}>
-          <a href="mailto:your-email@example.com" style={{ color: theme.palette.text.white }}>
+          <a href="mailto:your-email@example.com" style={{ color: theme.palette.text.fixedDarkOrange }}>
             sales@qtap.com</a>
 
-          <a href="tel:+201234567890" style={{ color: theme.palette.text.white, padding: "0px 20px" }}>
+          <a href="tel:+201234567890" style={{ color: theme.palette.text.fixedDarkOrange , padding: "0px 20px" }}>
             +201050727984</a>
 
-          <a href="tel:+201234567890" style={{ color: theme.palette.text.white }}>
+          <a href="tel:+201234567890" style={{ color: theme.palette.text.fixedDarkOrange  }}>
             +201063879878</a>
         </Typography>
 
         <Box sx={{ display: "flex", textAlign: "center", justifyContent: "center", gap: "6px" }}>
-          <IconButton sx={{ color: "#FFFFFF", fontSize: "16px", "&:hover": { color: theme.palette.orangePrimary.main }, }}>
+          <IconButton sx={{ color: "#FFFFFF", fontSize: "16px", "&:hover": { color: theme.palette.text.fixedDarkOrange }, }}>
             <FontAwesomeIcon icon={faInstagram} />
           </IconButton>
 
-          <IconButton sx={{ color: "#FFFFFF", fontSize: "16px", "&:hover": { color: theme.palette.orangePrimary.main }, }}>
+          <IconButton sx={{ color: "#FFFFFF", fontSize: "16px", "&:hover": { color: theme.palette.text.fixedDarkOrange  }, }}>
             <FontAwesomeIcon icon={faFacebookF} />
           </IconButton>
-          <IconButton sx={{ color: "#FFFFFF", fontSize: "16px", "&:hover": { color: theme.palette.orangePrimary.main }, }}>
+          <IconButton sx={{ color: "#FFFFFF", fontSize: "16px", "&:hover": { color: theme.palette.text.fixedDarkOrange  }, }}>
             <FontAwesomeIcon icon={faXTwitter} />
           </IconButton>
-          <IconButton sx={{ color: "#FFFFFF", fontSize: "16px", "&:hover": { color: theme.palette.orangePrimary.main }, }}>
+          <IconButton sx={{ color: "#FFFFFF", fontSize: "16px", "&:hover": { color: theme.palette.text.fixedDarkOrange  }, }}>
             <FontAwesomeIcon icon={faTiktok} />
           </IconButton>
 
